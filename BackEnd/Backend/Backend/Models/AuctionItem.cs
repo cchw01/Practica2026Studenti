@@ -12,12 +12,10 @@
 
         public decimal CurrentPrice { get; set; }
 
-        //TODO IMPLEMENT CATEGORY CLASS
-
-        //public Category Category {get;set;}
+        public string Category {get;set; } //TODO IMPLEMENT CATEGORY CLASS
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public enum AuctionStatus
+        public enum StatusEnum
         {
             Added,
             Validated,
@@ -27,17 +25,15 @@
 
         }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public string Location { get; set; }
 
-        //TO DO IMPLEMENT USER CLASS
+        public string Owner{get;set; } //TODO IMPLEMENT USER CLASS
 
-        //public User User{get;set;}
+        public string? Winner { get; set; } //TO DO IMPLEMENT USER CLASS
 
-        //public User Winner { get; set; }
-
-        public AuctionStatus Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public DateTime StartDate { get; set; }
 
