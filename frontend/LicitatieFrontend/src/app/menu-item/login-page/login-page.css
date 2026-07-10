@@ -1,0 +1,103 @@
+.split-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #ffffff;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.image-section {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .image-section {
+    display: block;
+    flex: 1;
+    /* Aici e imaginea ta de pe Unsplash */
+    background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 1rem 2rem;
+}
+
+h2 {
+  text-align: left;
+  color: #111827;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+/* Fix pentru inputurile de la Angular Material */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 0.85rem;
+}
+
+/* Suprascriem butonul Material ca sa arate ca cel negru din eBay/CSS-ul tau */
+button.submit-btn {
+  width: 100%;
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  background-color: #111827 !important;
+  color: white !important;
+  border: none;
+  border-radius: 30px !important; /* Forma de pastila */
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button.submit-btn:hover:not(:disabled) {
+  background-color: #374151 !important;
+}
+
+button.submit-btn:disabled {
+  background-color: #e5e7eb !important;
+  color: #9ca3af !important;
+  cursor: not-allowed;
+}
+
+/* Containerul pentru link-ul de jos */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* Modificam butonul mic ca sa arate fix a link */
+.btn-register {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0;
+  margin-left: 5px;
+}
+
+.btn-register:hover {
+  text-decoration: underline;
+}
