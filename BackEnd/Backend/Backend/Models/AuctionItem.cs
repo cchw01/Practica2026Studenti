@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
+
 
 namespace Backend.Models
 {
@@ -14,7 +16,7 @@ namespace Backend.Models
 
         public decimal CurrentPrice { get; set; }
 
-        public string Category {get;set; } //TODO IMPLEMENT CATEGORY CLASS
+        public CategoryItem CategoryItem {get;set; } //IMPLEMENTED CATEGORY CLASS
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum StatusEnum
@@ -31,9 +33,9 @@ namespace Backend.Models
 
         public string Location { get; set; }
 
-        public string Owner{get;set; } //TODO IMPLEMENT USER CLASS
+        public User Owner{get;set; } //USER CLASS IMPLEMENTED
 
-        public string? Winner { get; set; } //TO DO IMPLEMENT USER CLASS
+        public User? Winner { get; set; } //USER CLASS IMPLEMENTED
 
         public StatusEnum Status { get; set; }
 
