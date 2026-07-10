@@ -11,4 +11,4 @@ import { ProfilePage } from './profile/profile-page/profile-page';
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }
