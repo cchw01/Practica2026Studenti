@@ -1,0 +1,87 @@
+<div class="profile-wrapper">
+
+  <!-- Cover -->
+  <div class="profile-cover"></div>
+
+  <!-- Header -->
+  <div class="profile-header">
+    <div class="avatar-container">
+      <img class="avatar" [src]="avatarUrl" [alt]="user.name" />
+    </div>
+    <div class="profile-info">
+      <p class="profile-username">&#64;{{ user.username }}</p>
+      <h1 class="profile-name">{{ user.name }}</h1>
+      <p class="profile-email">{{ user.email }}</p>
+    </div>
+
+    <!-- Score -->
+    <div class="score-box">
+      <span class="score-value">{{ score }}</span>
+      <div class="score-stars">
+        <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
+      </div>
+      <span class="score-label">Average Score</span>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <div class="sections">
+
+    <!-- Added Items -->
+    <section class="profile-section">
+      <h2 class="section-title">
+        <span class="section-icon">📦</span> Listed Items
+      </h2>
+      <div class="items-list">
+        <div class="item-card" *ngFor="let item of addedItems">
+          <div class="item-info">
+            <span class="item-title">{{ item.title }}</span>
+            <span class="item-price">{{ item.price }} RON</span>
+          </div>
+          <span class="item-badge badge-{{ item.status.toLowerCase() }}">
+            {{ item.status }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bid Items -->
+    <section class="profile-section">
+      <h2 class="section-title">
+        <span class="section-icon">🔨</span> Bid History
+      </h2>
+      <div class="items-list">
+        <div class="item-card" *ngFor="let item of bidItems">
+          <div class="item-info">
+            <span class="item-title">{{ item.title }}</span>
+            <span class="item-price">{{ item.price }} RON</span>
+          </div>
+          <span class="item-badge badge-{{ item.status.toLowerCase() }}">
+            {{ item.status }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="profile-section full-width">
+      <h2 class="section-title">
+        <span class="section-icon">💬</span> Reviews
+      </h2>
+      <div class="reviews-list">
+        <div class="review-card" *ngFor="let review of reviews">
+          <div class="review-header">
+            <span class="review-author">&#64;{{ review.author }}</span>
+            <span class="review-date">{{ review.date }}</span>
+          </div>
+          <div class="review-stars">
+            <span *ngFor="let s of stars" class="star" [class.filled]="s <= review.rating">★</span>
+          </div>
+          <p class="review-comment">{{ review.comment }}</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
