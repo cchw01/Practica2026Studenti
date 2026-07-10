@@ -13,8 +13,8 @@ import { App } from './app';
     AppRoutingModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
   ],
-  bootstrap: [App],
+  bootstrap: [App]
 })
-export class AppModule {}
+export class AppModule { }
