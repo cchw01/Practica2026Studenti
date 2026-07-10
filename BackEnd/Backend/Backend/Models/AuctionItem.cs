@@ -1,4 +1,7 @@
-﻿namespace Backend.Models
+﻿using System.Text.Json.Serialization;
+
+
+namespace Backend.Models
 {
 
 
