@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 interface Item {
   id: number;
@@ -15,45 +15,98 @@ interface Review {
   date: string;
 }
 
+interface UserProfile {
+  username: string;
+  name: string;
+  email: string;
+  avatarUrl: string;
+}
+
+const STORAGE_KEY = 'profile_user';
+
 @Component({
   selector: 'app-profile-page',
   standalone: false,
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.css',
 })
-export class ProfilePage {
-  user = {
-    username: 'ion_popescu',
-    name: 'Ion Popescu',
-    email: 'ion.popescu@email.com',
+export class ProfilePage implements OnInit {
+
+  // --- Edit mode ---
+  isEditing = false;
+
+  // --- User data ---
+  user: UserProfile = {
+    username: '',
+    name: '',
+    email: '',
+    avatarUrl: '',
   };
 
-  score: number = 4.6;
+  editDraft: UserProfile = { ...this.user };
 
-  addedItems: Item[] = [
-    { id: 1, title: 'Dell XPS 15 Laptop', price: 3500, status: 'Active' },
-    { id: 2, title: 'Vintage Seiko Watch', price: 800, status: 'Sold' },
-    { id: 3, title: 'Canon EOS Camera', price: 1200, status: 'Active' },
-  ];
+  // --- Score ---
+  score: number = 0;
 
-  bidItems: Item[] = [
-    { id: 4, title: 'Original Grigorescu Painting', price: 5000, status: 'Won' },
-    { id: 5, title: 'PS5 Console', price: 1800, status: 'Lost' },
-    { id: 6, title: 'Trek Bicycle', price: 2200, status: 'Pending' },
-  ];
+  // --- Lists (empty until connected to API) ---
+  addedItems: Item[] = [];
+  bidItems: Item[] = [];
+  reviews: Review[] = [];
 
-  reviews: Review[] = [
-    { id: 1, author: 'maria_m', rating: 5, comment: 'Serious seller, fast delivery!', date: 'Jun 10, 2025' },
-    { id: 2, author: 'alex_d', rating: 4, comment: 'Item as described. Recommended.', date: 'May 2, 2025' },
-    { id: 3, author: 'gheorghe_p', rating: 5, comment: 'Excellent experience, everything perfect.', date: 'Apr 15, 2025' },
-  ];
+  // --- Stars helper ---
+  get stars(): number[] {
+    return [1, 2, 3, 4, 5];
+  }
 
-  get avatarUrl(): string {
-    const name = encodeURIComponent(this.user.name);
+  get displayAvatar(): string {
+    if (this.user.avatarUrl) return this.user.avatarUrl;
+    const name = encodeURIComponent(this.user.name || 'User');
     return `https://ui-avatars.com/api/?name=${name}&background=6c63ff&color=fff&size=120`;
   }
 
-  get stars(): number[] {
-    return Array.from({ length: 5 }, (_, i) => i + 1);
+  // --- Lifecycle ---
+  ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  // --- Persistence ---
+  private loadProfile(): void {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      this.user = JSON.parse(saved);
+    }
+  }
+
+  private saveProfile(): void {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
+  }
+
+  // --- Edit actions ---
+  startEdit(): void {
+    this.editDraft = { ...this.user };
+    this.isEditing = true;
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+  }
+
+  saveEdit(): void {
+    this.user = { ...this.editDraft };
+    this.saveProfile();   // persist to localStorage
+    this.isEditing = false;
+    // TODO: replace saveProfile() with an API call when backend is ready
+  }
+
+  // --- Avatar upload ---
+  onAvatarSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.editDraft.avatarUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 }
