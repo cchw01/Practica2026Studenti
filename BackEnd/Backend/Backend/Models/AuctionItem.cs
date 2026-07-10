@@ -1,6 +1,7 @@
 ﻿namespace Backend.Models
 {
 
+
     public enum AuctionStatus
     {
         Added,
@@ -10,7 +11,6 @@
         Sold,
 
     }
-
 
     public class AuctionItem
     {
@@ -25,7 +25,10 @@
         public decimal CurrentPrice { get; set; }
 
 
+
         //TODO IMPLEMENT CATEGORY CLASS
+
+        
 
 
         //public Category Category {get;set;}
@@ -37,12 +40,15 @@
         public string Location { get; set; }
 
 
-        //TODO IMPLEMENT USER CLASS
+
+
+        //TO DO IMPLEMENT USER CLASS
 
 
         //public User User{get;set;}
 
         //public User Winner { get; set; }
+
 
 
 
@@ -52,6 +58,8 @@
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+        
+
 
 
 
