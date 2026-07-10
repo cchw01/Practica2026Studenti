@@ -15,7 +15,7 @@
         public string Category {get;set; } //TODO IMPLEMENT CATEGORY CLASS
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public enum AuctionStatus
+        public enum StatusEnum
         {
             Added,
             Validated,
@@ -25,15 +25,15 @@
 
         }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public string Location { get; set; }
 
-        public string User{get;set; } //TODO IMPLEMENT USER CLASS
+        public string Owner{get;set; } //TODO IMPLEMENT USER CLASS
 
-        public string Winner { get; set; } //TO DO IMPLEMENT USER CLASS
+        public string? Winner { get; set; } //TO DO IMPLEMENT USER CLASS
 
-        public AuctionStatus Status { get; set; }
+        public StatusEnum Status { get; set; }
 
         public DateTime StartDate { get; set; }
 

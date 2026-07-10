@@ -5,11 +5,11 @@ export interface AuctionItem {
   name: string;
   startPrice: number;
   currentPrice: number;
-  category?: string; //TODO category
+  category: string; //TODO category
   description?: string;
   location: string;
   owner: string; //TODO user
-  winner: string; //TODO user
+  winner?: string; //TODO user
   status: StatusEnum;
   startDate: Date;
   endDate: Date;
