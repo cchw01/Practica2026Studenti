@@ -1,11 +1,11 @@
-﻿//using Backend.Models;
+﻿using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        // DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
+        public DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
