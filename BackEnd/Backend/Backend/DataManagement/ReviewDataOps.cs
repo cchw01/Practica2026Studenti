@@ -1,46 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Backend.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.DataManagement
 {
     public class ReviewDataOps
     {
-        private readonly YourAppDbContext dbContext;
+        private readonly ApplicationDbContext DbContext;
 
-        public ReviewDataOps(YourAppDbContext context)
+        public ReviewDataOps(ApplicationDbContext context)
         {
-            dbContext = context;
+            DbContext = context;
         }
 
         public Review[] GetReviews()
         {
-            return dbContext.Reviews.ToArray();
+            return DbContext.Reviews.ToArray();
         }
 
         public Review? GetReviewById(int id)
         {
-            var review = dbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
+            var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
             return review;
         }
 
         public void AddReview(Review review)
         {
-            dbContext.Reviews.Add(review);
-            dbContext.SaveChanges();
+            DbContext.Reviews.Add(review);
+            DbContext.SaveChanges();
         }
 
         public void UpdateReview(Review review)
         {
-            dbContext?.Reviews.Update(review);
-            dbContext?.SaveChanges();
+            DbContext?.Reviews.Update(review);
+            DbContext?.SaveChanges();
         }
 
         public void DeleteReview(int id)
         {
-            var review = dbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
+            var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
             if (review != null)
             {
-                dbContext.Reviews.Remove(review);
-                dbContext.SaveChanges();
+                DbContext.Reviews.Remove(review);
+                DbContext.SaveChanges();
             }
         }
     }

@@ -1,9 +1,11 @@
 ﻿
 
+using Backend.Data;
 using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Controller
+namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -11,10 +13,10 @@ namespace Backend.Controller
     {
         private readonly ReviewDataOps dataOps;
 
-        //public ReviewController(YourAppDbContext dbContext)
-        //{
-        //    dataOps = new ReviewDataOps(dbContext);
-        //}
+        public ReviewController(ApplicationDbContext DbContext)
+        {
+            dataOps = new ReviewDataOps(DbContext);
+        }
 
         [HttpGet]
         public ActionResult<Review> GetReviews()
