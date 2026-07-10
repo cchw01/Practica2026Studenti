@@ -6,6 +6,7 @@ namespace Backend.Data
     public class ApplicationDbContext : DbContext
     {
         // DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
+        public DbSet<Review> Reviews => Set<Review>();
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
