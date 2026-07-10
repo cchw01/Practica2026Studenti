@@ -1,6 +1,6 @@
 import { StatusEnum } from "./status-enum";
 
-export interface ItemModel {
+export interface AuctionItem {
   id: number;
   name: string;
   startPrice: number;
