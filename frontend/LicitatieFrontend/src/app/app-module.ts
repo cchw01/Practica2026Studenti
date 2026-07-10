@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { ItemModel } from './models/item-model/item-model';
+import { ItemModel } from './models/item-model';
 
 @NgModule({
   declarations: [App, ItemModel],
