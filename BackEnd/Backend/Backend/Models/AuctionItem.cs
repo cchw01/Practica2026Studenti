@@ -1,7 +1,6 @@
 ﻿namespace Backend.Models
 {
 
-
     public class AuctionItem
     {
         public int ID { get; set; }
@@ -22,7 +21,6 @@
             ActiveBid,
             NoWinner,
             Sold,
-
         }
 
         public string? Description { get; set; }
