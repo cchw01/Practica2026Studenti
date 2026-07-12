@@ -7,7 +7,7 @@ using System;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] 
+    [Route("api/items")] 
     public class AuctionItemController : ControllerBase
     {
         private readonly AuctionItemDataOps dataOps;
