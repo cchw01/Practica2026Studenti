@@ -18,7 +18,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<AuctionItem> GetAuctionItems()
+        public ActionResult<IEnumerable<AuctionItem>> GetAuctionItems()
         {
             try
             {

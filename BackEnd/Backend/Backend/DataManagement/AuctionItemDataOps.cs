@@ -35,7 +35,7 @@ namespace Backend.DataManagement
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
             }
         }
 
@@ -53,7 +53,7 @@ namespace Backend.DataManagement
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
             }
         }
 
