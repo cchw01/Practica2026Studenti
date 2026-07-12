@@ -39,10 +39,30 @@ namespace Backend.DataManagement
             }
         }
 
+        public void DeleteAuctionItem(int id)
+        {
+            try
+            {
+                var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
+                
+                if (item != null)
+                {
+                    dbContext.AuctionItems.Remove(item);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public AuctionItem? GetAuctionItemById(int id)
         {
             var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
             return item;
         }
+
+        
     }
 }

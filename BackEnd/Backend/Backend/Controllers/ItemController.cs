@@ -65,5 +65,19 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAuctionItem(int id)
+        {
+            try
+            {
+                dataOps.DeleteAuctionItem(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
