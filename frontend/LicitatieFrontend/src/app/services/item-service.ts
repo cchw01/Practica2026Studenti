@@ -23,8 +23,8 @@ export class ItemService {
     return this.http.post<AuctionItem>(this.apiUrl, item);
   }
 
-  updateItem(id: number, item: Partial<AuctionItem>): Observable<AuctionItem> {
-    return this.http.put<AuctionItem>(`${this.apiUrl}/${id}`, item);
+  updateItem(item: AuctionItem): Observable<AuctionItem> {
+    return this.http.put<AuctionItem>(this.apiUrl, item);
   }
 
   deleteItem(id: number): Observable<void> {
