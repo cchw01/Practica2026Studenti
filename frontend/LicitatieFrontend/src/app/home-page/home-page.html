@@ -2,8 +2,23 @@
   <h1>BID. WIN. REPEAT.</h1>
   <p>The safest online auction platform. Sell fast or catch unique deals.</p>
   <div class="hero-buttons">
-    <button mat-flat-button color="primary" class="btn-explore">Explore Auctions</button>
-    <button mat-stroked-button color="primary" class="btn-sell">Start Selling</button>
+    <div class="hero-buttons">
+  <button
+    mat-flat-button
+    color="primary"
+    class="btn-explore"
+    (click)="exploreAuctions()">
+    Explore Auctions
+  </button>
+
+  <button
+    mat-stroked-button
+    color="primary"
+    class="btn-sell"
+    (click)="startSelling()">
+    Start Selling
+  </button>
+</div>
   </div>
 </div>
 
@@ -19,7 +34,7 @@
   <h2>Popular Categories</h2>
   <div class="cards-container">
     @for (category of categories; track category.name) {
-      <mat-card class="card-category">
+      <mat-card class="card-category" matRipple>
         <div class="icon-circle">
           <mat-icon>{{ category.icon }}</mat-icon>
         </div>
@@ -43,8 +58,13 @@
           </span>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button color="primary">Place Bid</button>
-        </mat-card-actions>
+  <button
+    mat-button
+    color="primary"
+    (click)="placeBid(auction.title)">
+    Place Bid
+  </button>
+</mat-card-actions>
       </mat-card>
     }
   </div>
