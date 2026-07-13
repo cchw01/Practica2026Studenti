@@ -1,7 +1,6 @@
-﻿using Backend.Models;
 using Microsoft.EntityFrameworkCore;
-
-namespace Backend.Data
+using Backend.Models;
+namespace Backend.DataManagement
 {
     public class ApplicationDbContext : DbContext
     {
@@ -9,7 +8,7 @@ namespace Backend.Data
         public DbSet<User> Users => Set<User>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
-
+        public DbSet<ForumPost> ForumPosts => Set<Forumpost>();
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
