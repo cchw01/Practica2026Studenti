@@ -1,0 +1,40 @@
+<div class="auction-page">
+  <div class="auction-card">
+    <div class="auction-image">📦</div>
+    <div class="auction-content">
+      <p class="status">{{ auctionItem.status }}</p>
+      <h1>{{ auctionItem.name }}</h1>
+      <p class="description">{{ auctionItem.description }}</p>
+
+      <div class="info-grid">
+        <div>
+          <span>Current price</span>
+          <strong>${{ auctionItem.currentPrice }}</strong>
+        </div>
+        <div>
+          <span>Start price</span>
+          <strong>${{ auctionItem.startPrice }}</strong>
+        </div>
+        <div>
+          <span>Category</span>
+          <strong>{{ auctionItem.category }}</strong>
+        </div>
+        <div>
+          <span>Location</span>
+          <strong>{{ auctionItem.location }}</strong>
+        </div>
+      </div>
+
+      <div class="owner-box">
+        <p><strong>Owner:</strong> {{ auctionItem.owner }}</p>
+        <p><strong>Ends:</strong> {{ auctionItem.endDate | date:'mediumDate' }}</p>
+      </div>
+
+      <div class="bid-box">
+        <label for="bid">Your bid</label>
+        <input id="bid" type="number" [(ngModel)]="bidAmount" min="{{ auctionItem.currentPrice + 1 }}" />
+        <button type="button" (click)="placeBid()">Place bid</button>
+      </div>
+    </div>
+  </div>
+</div>
