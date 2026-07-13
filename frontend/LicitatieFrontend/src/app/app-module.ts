@@ -7,15 +7,11 @@ import { App } from './app';
 import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
+import { ContactPage } from './menu-item/contact-page/contact-page';
 
 @NgModule({
-  declarations: [App, ProfilePage, LoginPage, RegisterPage],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  declarations: [App, ProfilePage, LoginPage, RegisterPage, ContactPage],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
