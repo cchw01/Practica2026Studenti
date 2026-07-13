@@ -18,7 +18,7 @@ import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage],
+  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,50 +1,65 @@
 .contact-page-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
-}
-
-.contact-page-container h2, h3 {
+  padding: 40px 50px;
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif; /* Fontul standard Angular Material */
   color: #333;
 }
 
-.contact-details {
+.contact-page-container h2 {
+  font-size: 32px;
+  color: #3f51b5; /* Albastru Indigo (Material Design) */
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.contact-page-container h3 {
+  font-size: 24px;
+  color: #333;
+  margin-top: 40px;
   margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spațiere uniformă între rânduri */
 }
 
 .detail-item {
-  margin: 10px 0;
-  font-size: 16px;
+  font-size: 18px;
+  color: #555;
+  display: flex;
+  align-items: center;
 }
 
 .detail-item strong {
-  margin-right: 10px;
+  display: inline-block;
+  min-width: 220px; /* Aliniază toate valorile pe o coloană dreaptă */
+  color: #222;
+}
+
+.detail-item a, .social-links a {
+  color: #e91e63; /* Roz Accent (Material Design) */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.detail-item a:hover, .social-links a:hover {
+  color: #c2185b;
 }
 
 hr {
   border: 0;
-  border-top: 1px solid #ddd;
-  margin: 20px 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 40px 0;
 }
 
 .social-links {
   list-style-type: none;
   padding: 0;
   display: flex;
-  gap: 15px;
-}
-
-.social-links a {
-  text-decoration: none;
-  color: #0056b3;
-  font-weight: bold;
-}
-
-.social-links a:hover {
-  text-decoration: underline;
-  color: #003d82;
+  gap: 30px;
+  font-size: 18px;
 }
