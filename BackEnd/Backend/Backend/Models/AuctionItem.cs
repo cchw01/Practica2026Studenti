@@ -1,6 +1,8 @@
-﻿namespace Backend.Models
-{
+﻿using System.Text.Json.Serialization;
 
+
+namespace Backend.Models
+{
 
     public class AuctionItem
     {
@@ -22,7 +24,6 @@
             ActiveBid,
             NoWinner,
             Sold,
-
         }
 
         public string? Description { get; set; }
