@@ -16,7 +16,7 @@ export class RegisterPage implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      name: ['', Validators.required],
+      name: ['', Validators.required], // Aici se află controlul reactiv pt. "Full Name"
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],

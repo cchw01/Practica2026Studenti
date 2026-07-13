@@ -6,87 +6,77 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReviewController : ControllerBase
+    public class ForumPostController : ControllerBase
     {
-        private readonly ReviewDataOps dataOps;
+        private readonly ForumPostDataOps dataOps;
 
-        public ReviewController(ApplicationDbContext DbContext)
+        public ForumPostController(ApplicationDbContext DbContext)
         {
-            dataOps = new ReviewDataOps(DbContext);
+            dataOps = new ForumPostDataOps(DbContext);
         }
 
         [HttpGet]
-        public ActionResult<Review> GetReviews()
+        public ActionResult<ForumPost> GetForumPosts()
         {
             try
             {
-                var reviews = dataOps.GetReviews();
-                return Ok(reviews);
+                var forumPosts = dataOps.GetForumPosts();
+                return Ok(forumPosts);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpGet("{id}")]
-        public ActionResult<Review> GetReview(int id)
+        public ActionResult<ForumPost> GetForumPostById(int id)
         {
             try
             {
-                var review = dataOps.GetReviewById(id);
-
-                if (review == null)
+                var forumPost = dataOps.GetForumPostById(id);
+                if (forumPost == null)
+                {
                     return NotFound();
-
-                return Ok(review);
+                }
+                return Ok(forumPost);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpPost]
-        public ActionResult<Review> AddReview(Review review)
+        public ActionResult<ForumPost> AddForumPost(ForumPost forumPost)
         {
             try
             {
-                if (review.Rating < 0 || review.Rating > 5)
-                    return BadRequest("Ratings need to be between 0 and 5.");
-
-                dataOps.AddReview(review);
-                return Ok(review);
+                dataOps.AddForumPost(forumPost);
+                return Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpPut]
-        public ActionResult<Review> UpdateReview(Review review)
+        public ActionResult<ForumPost> UpdateForumPost(ForumPost forumPost)
         {
             try
             {
-                if (review.Rating < 0 || review.Rating > 5)
-                    return BadRequest("Ratings need to be between 0 and 5.");
-
-                dataOps.UpdateReview(review);
-                return Ok(review);
+                dataOps.UpdateForumPost(forumPost);
+                return Ok();
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteReview(int id)
+    [HttpDelete("{id}")]
+        public ActionResult<ForumPost> DeleteForumPost(int id)
         {
             try
             {
-                dataOps.DeleteReview(id);
+                dataOps.DeleteForumPost(id);
                 return Ok();
             }
             catch (Exception ex)
