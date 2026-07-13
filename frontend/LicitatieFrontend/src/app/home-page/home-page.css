@@ -23,10 +23,25 @@
   gap: 12px;
 }
 
-.btn-explore, .btn-sell {
-  padding: 8px 24px;
-  border-radius: 28px;
+.btn-explore,
+.btn-sell {
+  padding: 12px 28px !important;
+  border-radius: 30px !important;
   font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-explore:hover,
+.btn-sell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.btn-explore:active,
+.btn-sell:active {
+  transform: scale(0.97);
 }
 
 .search-section {
@@ -60,7 +75,7 @@
   flex-wrap: wrap;
 }
 
-
+/* Modificări pentru cardurile Angular Material */
 .card-category {
   display: flex;
   flex-direction: column;
@@ -70,7 +85,7 @@
   width: 130px;
   padding: 24px 16px;
   border-radius: 16px;
-  box-shadow: none ;
+  box-shadow: none !important;
   background-color: transparent;
   transition: transform 0.2s ease-in-out;
 }
@@ -92,7 +107,7 @@
 }
 
 .card-category:hover .icon-circle {
-  background-color: #e0f2f1; 
+  background-color: #e0f2f1; /* Un hover subtil */
 }
 
 .icon-circle mat-icon {
@@ -128,7 +143,7 @@
 
 .card-auction:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) ;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
 }
 
 .card-auction img {
@@ -161,3 +176,12 @@
 .time-urgent { background-color: #fdecea; color: #c0392b; }
 .time-medium { background-color: #fef6e0; color: #b8860b; }
 .time-safe   { background-color: #e8f6ec; color: #2e7d32; }
+
+mat-card-actions button {
+  transition: all 0.2s ease;
+  border-radius: 20px;
+}
+
+mat-card-actions button:hover {
+  transform: scale(1.05);
+}
