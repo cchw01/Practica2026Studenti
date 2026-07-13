@@ -8,6 +8,10 @@ import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [App, ProfilePage, LoginPage, RegisterPage],
   imports: [
@@ -15,6 +19,9 @@ import { LoginPage } from './menu-item/login-page/login-page';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

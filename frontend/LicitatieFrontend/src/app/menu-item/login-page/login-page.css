@@ -18,7 +18,6 @@
   .image-section {
     display: block;
     flex: 1;
-    /* Aici e imaginea ta de pe Unsplash */
     background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
     background-size: cover;
     background-position: center;
@@ -48,13 +47,11 @@ h2 {
   letter-spacing: -0.03em;
 }
 
-/* Fix pentru inputurile de la Angular Material */
 mat-form-field {
   width: 100%;
   margin-bottom: 0.85rem;
 }
 
-/* Suprascriem butonul Material ca sa arate ca cel negru din eBay/CSS-ul tau */
 button.submit-btn {
   width: 100%;
   padding: 0.85rem;
@@ -62,7 +59,7 @@ button.submit-btn {
   background-color: #111827 !important;
   color: white !important;
   border: none;
-  border-radius: 30px !important; /* Forma de pastila */
+  border-radius: 30px !important;
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
@@ -79,7 +76,6 @@ button.submit-btn:disabled {
   cursor: not-allowed;
 }
 
-/* Containerul pentru link-ul de jos */
 .login-link {
   text-align: center;
   margin-top: 20px;
@@ -87,7 +83,6 @@ button.submit-btn:disabled {
   color: #4b5563;
 }
 
-/* Modificam butonul mic ca sa arate fix a link */
 .btn-register {
   background: none;
   border: none;
