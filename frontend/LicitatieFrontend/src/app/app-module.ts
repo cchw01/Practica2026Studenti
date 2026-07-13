@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { ProfilePage } from './profile/profile-page/profile-page';
+import { ProfilePage } from './menu-item/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 
@@ -29,4 +29,4 @@ import { LoginPage } from './menu-item/login-page/login-page';
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }

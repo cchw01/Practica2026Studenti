@@ -1,4 +1,4 @@
-﻿using Backend.Data;
+using Backend.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.DataManagement
