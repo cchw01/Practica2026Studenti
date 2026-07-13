@@ -1,6 +1,6 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,20 +12,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
+import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage],
+  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage],
   imports: [
    BrowserModule,
     AppRoutingModule,
-    MatButtonModule,
+    FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatCardModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

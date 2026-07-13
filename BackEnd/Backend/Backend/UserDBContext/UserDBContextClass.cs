@@ -1,4 +1,4 @@
-﻿namespace Backend.UserDBContext
+namespace Backend.UserDBContext
 {
     public class UserDBContextClass
     {
