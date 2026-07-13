@@ -1,7 +1,4 @@
-﻿
-
-using Backend.Data;
-using Backend.DataManagement;
+﻿using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

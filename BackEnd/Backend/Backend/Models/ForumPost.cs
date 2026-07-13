@@ -13,4 +13,3 @@ namespace Backend.Models
 		// TODO: Add photos
     }
 }
-}

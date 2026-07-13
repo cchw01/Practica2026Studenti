@@ -1,4 +1,4 @@
-﻿  using System;
+﻿using System;
 using Backend.Models;
 namespace Backend.DataManagement
 {
@@ -14,7 +14,7 @@ namespace Backend.DataManagement
 
         public ForumPost[]? GetForumPosts()
         {
-            return DbContext?.ForumPosts;
+            return DbContext?.ForumPosts.ToArray();
         }
 
         public ForumPost? GetForumPostById(int id)
@@ -30,7 +30,12 @@ namespace Backend.DataManagement
 
         public void DeleteForumPost(int id)
         {
-            DbContext?.ForumPosts.Remove.Where(x = > x.Id == id).FirstOrDefault();
+            var forumPost = DbContext?.ForumPosts.Where(x => x.Id == id).FirstOrDefault();
+            if (forumPost != null)
+            {
+                DbContext?.ForumPosts.Remove(forumPost);
+                DbContext?.SaveChanges();
+            }
         }
 
         public void UpdateForumPost(ForumPost forumPost)

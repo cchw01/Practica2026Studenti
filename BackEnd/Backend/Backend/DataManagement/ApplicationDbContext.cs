@@ -1,13 +1,13 @@
 ﻿//using Backend.Models;
 using Microsoft.EntityFrameworkCore;
-
-namespace Backend.Data
+using Backend.Models;
+namespace Backend.DataManagement
 {
     public class ApplicationDbContext : DbContext
     {
         // DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
         public DbSet<Review> Reviews => Set<Review>();
-
+        public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {

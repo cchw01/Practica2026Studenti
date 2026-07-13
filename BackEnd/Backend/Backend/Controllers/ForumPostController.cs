@@ -1,6 +1,7 @@
 ﻿using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Backend.Models;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -28,11 +29,11 @@ namespace Backend.Controllers
             }
         }
         [HttpGet("{id}")]
-        public ActionResult<ForumPost> GetForumPost(int id)
+        public ActionResult<ForumPost> GetForumPostById(int id)
         {
             try
             {
-                var forumPost = dataOps.GetForumPost(id);
+                var forumPost = dataOps.GetForumPostById(id);
                 if (forumPost == null)
                 {
                     return NotFound();
@@ -70,7 +71,6 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    }
     [HttpDelete("{id}")]
         public ActionResult<ForumPost> DeleteForumPost(int id)
         {
