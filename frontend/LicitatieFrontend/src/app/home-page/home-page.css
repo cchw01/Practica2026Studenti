@@ -25,8 +25,8 @@
 
 .btn-explore,
 .btn-sell {
-  padding: 12px 28px !important;
-  border-radius: 30px !important;
+  padding: 12px 28px;
+  border-radius: 30px;
   font-size: 16px;
   font-weight: 600;
   transition: all 0.25s ease;
@@ -75,7 +75,7 @@
   flex-wrap: wrap;
 }
 
-/* Modificări pentru cardurile Angular Material */
+
 .card-category {
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@
 }
 
 .card-category:hover .icon-circle {
-  background-color: #e0f2f1; /* Un hover subtil */
+  background-color: #e0f2f1; 
 }
 
 .icon-circle mat-icon {
