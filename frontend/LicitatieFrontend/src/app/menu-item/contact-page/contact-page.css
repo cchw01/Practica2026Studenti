@@ -19,10 +19,17 @@
   font-weight: 500;
 }
 
-.contact-details {
+.contact-content {
   display: flex;
-  flex-direction: column;
-  gap: 15px; /* Spațiere uniformă între rânduri */
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.contact-details,
+.social-media-section {
+  flex: 1;
+  min-width: 280px;
 }
 
 .detail-item {
