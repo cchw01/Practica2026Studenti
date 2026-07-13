@@ -16,4 +16,5 @@ export class AuthService {
     // Face un POST request catre backend cu datele din formular
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
+
 }
