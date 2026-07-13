@@ -45,10 +45,6 @@ export class LoginPage implements OnInit {
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
       },
     });
   }
