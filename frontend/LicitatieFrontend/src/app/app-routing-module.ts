@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfilePage } from './profile/profile-page/profile-page';
 
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
+import { HomePage } from './home-page/home-page';
 
 const routes: Routes = [
-  { path: 'login', component: LoginPage },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'register', component: RegisterPage },
+
+  {path: 'home-page', component: HomePage},
+  { path: 'login-page', component: LoginPage },
+  { path: 'register-page', component: RegisterPage },
   { path: '', redirectTo: '/register', pathMatch: 'full' }
 
 ];
@@ -16,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
