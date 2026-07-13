@@ -1,0 +1,187 @@
+.hero {
+  text-align: center;
+  padding: 48px 16px 32px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.hero p {
+  color: #666;
+  font-size: 15px;
+  max-width: 500px;
+  margin: 0 auto 24px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-explore,
+.btn-sell {
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-explore:hover,
+.btn-sell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.btn-explore:active,
+.btn-sell:active {
+  transform: scale(0.97);
+}
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 32px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 800px;
+}
+
+.PopularCategory {
+  text-align: center;
+  padding: 24px 16px 40px;
+}
+
+.PopularCategory h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+
+.card-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 130px;
+  padding: 24px 16px;
+  border-radius: 16px;
+  box-shadow: none !important;
+  background-color: transparent;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-category:hover {
+  transform: translateY(-5px);
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: background-color 0.2s;
+}
+
+.card-category:hover .icon-circle {
+  background-color: #e0f2f1; 
+}
+
+.icon-circle mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #555;
+}
+
+.card-category h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.active-auctions {
+  padding: 0 16px 40px;
+}
+
+.active-auctions h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.card-auction {
+  width: 250px;
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-auction:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-auction img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-auction h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.current-bid {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.time-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.time-urgent { background-color: #fdecea; color: #c0392b; }
+.time-medium { background-color: #fef6e0; color: #b8860b; }
+.time-safe   { background-color: #e8f6ec; color: #2e7d32; }
+
+mat-card-actions button {
+  transition: all 0.2s ease;
+  border-radius: 20px;
+}
+
+mat-card-actions button:hover {
+  transform: scale(1.05);
+}

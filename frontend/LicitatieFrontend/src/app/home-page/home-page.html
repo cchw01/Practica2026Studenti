@@ -1,0 +1,71 @@
+<div class="hero">
+  <h1>BID. WIN. REPEAT.</h1>
+  <p>The safest online auction platform. Sell fast or catch unique deals.</p>
+  <div class="hero-buttons">
+    <div class="hero-buttons">
+  <button
+    mat-flat-button
+    color="primary"
+    class="btn-explore"
+    (click)="exploreAuctions()">
+    Explore Auctions
+  </button>
+
+  <button
+    mat-stroked-button
+    color="primary"
+    class="btn-sell"
+    (click)="startSelling()">
+    Start Selling
+  </button>
+</div>
+  </div>
+</div>
+
+<div class="search-section">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search products, auctions...</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput placeholder="Ex: BMW, Gold Earrings" />
+  </mat-form-field>
+</div>
+
+<div class="PopularCategory">
+  <h2>Popular Categories</h2>
+  <div class="cards-container">
+    @for (category of categories; track category.name) {
+      <mat-card class="card-category" matRipple>
+        <div class="icon-circle">
+          <mat-icon>{{ category.icon }}</mat-icon>
+        </div>
+        <h3>{{ category.name }}</h3>
+      </mat-card>
+    }
+  </div>
+</div>
+
+<div class="active-auctions">
+  <h2>Active Auctions</h2>
+  <div class="cards-container">
+    @for (auction of auctions; track auction.title) {
+      <mat-card class="card-auction">
+        <img mat-card-image [src]="auction.image" [alt]="auction.title" />
+        <mat-card-content>
+          <h3>{{ auction.title }}</h3>
+          <p class="current-bid">Current Bid: <strong>${{ auction.currentBid }}</strong></p>
+          <span class="time-left" [ngClass]="'time-' + auction.urgency">
+            <mat-icon inline>schedule</mat-icon> {{ auction.timeLeft }}
+          </span>
+        </mat-card-content>
+        <mat-card-actions>
+  <button
+    mat-button
+    color="primary"
+    (click)="placeBid(auction.title)">
+    Place Bid
+  </button>
+</mat-card-actions>
+      </mat-card>
+    }
+  </div>
+</div>
