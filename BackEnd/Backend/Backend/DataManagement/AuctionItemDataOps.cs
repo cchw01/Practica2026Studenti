@@ -35,7 +35,25 @@ namespace Backend.DataManagement
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
+            }
+        }
+
+        public void DeleteAuctionItem(int id)
+        {
+            try
+            {
+                var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
+                
+                if (item != null)
+                {
+                    dbContext.AuctionItems.Remove(item);
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
             }
         }
 
@@ -44,5 +62,7 @@ namespace Backend.DataManagement
             var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
             return item;
         }
+
+        
     }
 }

@@ -7,7 +7,7 @@ using System;
 namespace Backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] 
+    [Route("api/items")] 
     public class AuctionItemController : ControllerBase
     {
         private readonly AuctionItemDataOps dataOps;
@@ -18,7 +18,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<AuctionItem> GetAuctionItems()
+        public ActionResult<IEnumerable<AuctionItem>> GetAuctionItems()
         {
             try
             {
@@ -59,6 +59,20 @@ namespace Backend.Controllers
             {
                 var auctionItem = dataOps.GetAuctionItemById(id);
                 return Ok(auctionItem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAuctionItem(int id)
+        {
+            try
+            {
+                dataOps.DeleteAuctionItem(id);
+                return Ok();
             }
             catch (Exception ex)
             {
