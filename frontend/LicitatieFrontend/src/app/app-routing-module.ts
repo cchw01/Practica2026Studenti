@@ -4,15 +4,15 @@ import { ProfilePage } from './profile/profile-page/profile-page';
 
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
+import { HomePage } from './home-page/home-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 
 const routes: Routes = [
-  { path: 'login', component: LoginPage },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'register', component: RegisterPage },
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'home-page', component: HomePage },
+  { path: 'login-page', component: LoginPage },
+  { path: 'register-page', component: RegisterPage },
   { path: 'contact', component: ContactPage },
-  { path: '', redirectTo: '/contact', pathMatch: 'full' },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
 ];
 
 @NgModule({
