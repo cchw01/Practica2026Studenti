@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
@@ -18,6 +19,11 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 
 @NgModule({
   declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, Add, AuctionsPage],
+
+import { ContactPage } from './menu-item/contact-page/contact-page';
+
+@NgModule({
+  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage],
   imports: [
     BrowserModule,
     AppRoutingModule,
