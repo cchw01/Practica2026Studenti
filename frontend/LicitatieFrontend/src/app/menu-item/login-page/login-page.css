@@ -18,8 +18,7 @@
   .image-section {
     display: block;
     flex: 1;
-    /* Aici e imaginea ta de pe Unsplash */
-    background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+    background-image: url('https://iili.io/C0goSsV.jpg');
     background-size: cover;
     background-position: center;
   }
@@ -60,7 +59,8 @@ button.submit-btn {
   background-color: #111827 !important;
   color: white !important;
   border: none;
-  border-radius: 30px !important; /* Forma de pastila */
+  border-radius: 30px !important;
+  /* Forma de pastila */
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;

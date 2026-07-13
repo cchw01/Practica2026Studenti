@@ -18,7 +18,7 @@ interface ForumPostPreview {
   styleUrl: './forum-page.css',
 })
 export class ForumPage {
-  sortOption = '';
+  sortOption: SortOption = 'latest';
 
   //TEMPORAR TO BE REPLACED
   readonly posts: ForumPostPreview[] = [
