@@ -5,6 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -21,6 +24,8 @@ import { LoginPage } from './menu-item/login-page/login-page';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule,
+    MatIconModule,
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

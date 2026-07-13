@@ -2,67 +2,50 @@
   <h1>BID. WIN. REPEAT.</h1>
   <p>The safest online auction platform. Sell fast or catch unique deals.</p>
   <div class="hero-buttons">
-    <button class="btn-explore">Explore Auctions</button>
-    <button class="btn-sell">Start Selling</button>
+    <button mat-flat-button color="primary" class="btn-explore">Explore Auctions</button>
+    <button mat-stroked-button color="primary" class="btn-sell">Start Selling</button>
   </div>
 </div>
 
 <div class="search-section">
-  <input type="text" class="search-input" placeholder="Search products, auctions..." />
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search products, auctions...</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput placeholder="Ex: BMW, Gold Earrings" />
+  </mat-form-field>
 </div>
 
 <div class="PopularCategory">
   <h2>Popular Categories</h2>
   <div class="cards-container">
-    <div class="card-category">
-      <div class="icon-circle"><span class="material-symbols-outlined">diamond</span></div>
-      <h3>Jewelry</h3>
-    </div>
-    <div class="card-category">
-      <div class="icon-circle"><span class="material-symbols-outlined">directions_car</span></div>
-      <h3>Auto</h3>
-    </div>
-    <div class="card-category">
-      <div class="icon-circle"><span class="material-symbols-outlined">palette</span></div>
-      <h3>Art & Collectibles</h3>
-    </div>
-    <div class="card-category">
-      <div class="icon-circle"><span class="material-symbols-outlined">devices</span></div>
-      <h3>Electronics</h3>
-    </div>
-    <div class="card-category">
-      <div class="icon-circle"><span class="material-symbols-outlined">home</span></div>
-      <h3>Real Estate</h3>
-    </div>
+    @for (category of categories; track category.name) {
+      <mat-card class="card-category">
+        <div class="icon-circle">
+          <mat-icon>{{ category.icon }}</mat-icon>
+        </div>
+        <h3>{{ category.name }}</h3>
+      </mat-card>
+    }
   </div>
 </div>
 
 <div class="active-auctions">
-  <h2>Active Auctions</h2><br />
+  <h2>Active Auctions</h2>
   <div class="cards-container">
-    <div class="card-auction">
-      <img [src]="bmw.image" [alt]="bmw.title" />
-      <h3>{{ bmw.title }}</h3>
-      <p>Current Bid: ${{ bmw.currentBid }}</p>
-      <span class="time-left time-urgent">{{ bmw.timeLeft }}</span>
-    </div>
-    <div class="card-auction">
-      <img [src]="earrings.image" [alt]="earrings.title" />
-      <h3>{{ earrings.title }}</h3>
-      <p>Current Bid: ${{ earrings.currentBid }}</p>
-      <span class="time-left time-medium">{{ earrings.timeLeft }}</span>
-    </div>
-    <div class="card-auction">
-      <img [src]="watch.image" [alt]="watch.title" />
-      <h3>{{ watch.title }}</h3>
-      <p>Current Bid: ${{ watch.currentBid }}</p>
-      <span class="time-left time-safe">{{ watch.timeLeft }}</span>
-    </div>
-    <div class="card-auction">
-      <img [src]="villa.image" [alt]="villa.title" />
-      <h3>{{ villa.title }}</h3>
-      <p>Current Bid: ${{ villa.currentBid }}</p>
-      <span class="time-left time-urgent">{{ villa.timeLeft }}</span>
-    </div>
+    @for (auction of auctions; track auction.title) {
+      <mat-card class="card-auction">
+        <img mat-card-image [src]="auction.image" [alt]="auction.title" />
+        <mat-card-content>
+          <h3>{{ auction.title }}</h3>
+          <p class="current-bid">Current Bid: <strong>${{ auction.currentBid }}</strong></p>
+          <span class="time-left" [ngClass]="'time-' + auction.urgency">
+            <mat-icon inline>schedule</mat-icon> {{ auction.timeLeft }}
+          </span>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary">Place Bid</button>
+        </mat-card-actions>
+      </mat-card>
+    }
   </div>
 </div>
