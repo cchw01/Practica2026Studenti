@@ -1,7 +1,7 @@
 ﻿using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Backend.Models;
 namespace Backend.Controllers
 {
     [ApiController]
