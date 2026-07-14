@@ -17,9 +17,6 @@ import { AuctionsPage } from './auctions-page/auctions-page';import { AuctionIte
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
-
-import { ContactPage } from './menu-item/contact-page/contact-page';
-import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 
 //am scos Add din declarations
