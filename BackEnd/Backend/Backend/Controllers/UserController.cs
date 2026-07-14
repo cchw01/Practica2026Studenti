@@ -11,10 +11,11 @@
         public class UserController : ControllerBase
         {
             private readonly UserDataOps dataOps;
-
-            public UserController(ApplicationDbContext DbContext)
+            private readonly TokenProvider tokenProvider;
+            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider)
             {
                 dataOps = new UserDataOps(DbContext);
+                this.tokenProvider = tokenProvider;
             }
 
             [HttpGet]
@@ -81,17 +82,17 @@
         {
             try
             {
-                var user = dataOps.GetUserByUsername(request.UserName);
+                var user = dataOps.GetUserByEmail(request.Email);
 
                 if (user == null)
-                    return Unauthorized("Utilizator sau parolă incorectă.");
+                    return Unauthorized("Email sau parolă incorectă.");
 
                 bool parolaCorecta = PasswordHasher.VerifyPassword(request.Password, user.Password);
 
                 if (!parolaCorecta)
-                    return Unauthorized("Utilizator sau parolă incorectă.");
-
-                return Ok("Login reușit.");
+                    return Unauthorized("Email sau parolă incorectă.");
+                var token = tokenProvider.Create(user);
+                return Ok(token);
             }
             catch (Exception ex)
             {
