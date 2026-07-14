@@ -1,10 +1,39 @@
-<nav class="navbar">
-    <a routerLink="/home-page">Home</a>
-    <a routerLink="/login-page">Login</a>
-    <a routerLink="/register-page">Register</a>
-    <a routerLink="/auctions">Auctions</a>
-    <a routerLink="/contact-page">Contact</a>
-    <a routerLink="/forum-page">Forum</a>
+<div class="app-container">
+  
+  <!-- Header -->
+  <header class="navbar">
+    
+    <!-- left Logo -->
+    <div class="nav-brand">
+      <a routerLink="/home-page" class="logo">Auctions</a>
+    </div>
 
-</nav>
-<router-outlet />
+    <!-- Nav-bar-->
+    <nav class="nav-links">
+      <a routerLink="/home-page">Home</a>
+      <a routerLink="/action-item-page">Auctions</a>
+      <a routerLink="/forum-page">Forum</a>
+    </nav>
+
+    <!-- Autentification-->
+    <div class="nav-actions">
+      <a routerLink="/login-page" class="btn-login">Login</a>
+      <a routerLink="/register-page" class="btn-register">Register</a>
+    </div>
+
+  </header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a routerLink="/contact-page">Contact</a>
+      <a routerLink="/help-page">Help</a>
+    </div>
+    <p class="copyright">© 2026</p>
+  </footer>
+
+</div>
