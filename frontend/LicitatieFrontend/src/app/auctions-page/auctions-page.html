@@ -32,12 +32,12 @@
   <div class="active-auctions">
     <div class="cards-container" *ngIf="filteredItems.length > 0">
       <div class="card-auction" *ngFor="let item of filteredItems">
-        <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
+        <img [src]="'assets/images/placeholder.png'" [alt]="item.Name" />
         <div class="card-content">
-          <h3>{{ item.name }}</h3>
-          <p class="current-bid">Preț curent: {{ item.currentPrice }} RON</p>
-          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.endDate)">
-            {{ getRemainingTime(item.endDate) }}
+          <h3>{{ item.Name }}</h3>
+          <p class="current-bid">Preț curent: {{ item.CurrentPrice }} RON</p>
+          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
+            {{ getRemainingTime(item.EndDate) }}
           </span>
         </div>
       </div>

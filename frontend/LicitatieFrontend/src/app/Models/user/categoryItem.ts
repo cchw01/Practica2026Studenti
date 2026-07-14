@@ -1,7 +1,9 @@
+import { AuctionItem } from "../item-model";
+
 export class Category {
   id!: number;
   name!: string;
-  items!: string; // to be modified later (with ArrayList - Item) when Item class is written
+  items!: Array<AuctionItem>;
 
   constructor(item?: Partial<Category>) {
     if (item) {
