@@ -18,7 +18,6 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 
-//am scos Add din declarations
 @NgModule({
   declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage],
   imports: [
