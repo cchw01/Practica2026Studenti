@@ -3,7 +3,6 @@
 namespace Backend.Models
 {
 
-
     public class AuctionItem
     {
         public int ID { get; set; }
@@ -24,7 +23,6 @@ namespace Backend.Models
             ActiveBid,
             NoWinner,
             Sold,
-
         }
 
         public string? Description { get; set; }
