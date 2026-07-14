@@ -7,7 +7,7 @@ namespace Backend.Services
 {
     public sealed class TokenProvider(IConfiguration configuration)
     {
-        public string Create(User user)
+        public string GenerateAccesToken(User user)
         {
             string secretKey = configuration["Jwt:Secret"];
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -29,6 +29,10 @@ namespace Backend.Services
             };
             var tokenHandler = new JsonWebTokenHandler();
             return tokenHandler.CreateToken(tokenDescriptor);
+        }
+        public string GenerateRefreshToken()
+        {
+            return null;
         }
     }
 }

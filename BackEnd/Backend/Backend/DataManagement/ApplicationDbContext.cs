@@ -10,6 +10,7 @@ namespace Backend.DataManagement
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
