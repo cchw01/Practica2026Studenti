@@ -6,19 +6,17 @@ import { LoginPage } from './menu-item/login-page/login-page';
 import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-import { ForumPage } from './forum-page/forum-page'
-
+import { ForumPage } from './forum-page/forum-page';
 
 const routes: Routes = [
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'auctions', component: AuctionsPage },
-
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
-  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home-page' },
 ];
 
 @NgModule({
