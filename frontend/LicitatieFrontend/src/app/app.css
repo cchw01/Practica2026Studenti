@@ -1,8 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 .app-container {
-  font-family: 'Poppins', sans-serif; 
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -13,28 +12,29 @@
 .content {
   flex: 1;
   padding: 2rem;
-  background-color: #f4f7f6; 
+  background-color: #f4f7f6;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 4rem; 
-  
-  background-color: rgba(59, 42, 92, 0.90); 
-  backdrop-filter: blur(12px); 
-  -webkit-backdrop-filter: blur(12px); 
-  
+  padding: 1rem 4rem;
+
+  background-color: rgba(59, 42, 92, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  
+
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.nav-brand, .nav-actions {
+.nav-brand,
+.nav-actions {
   flex: 1;
 }
 
@@ -48,8 +48,8 @@
 
 .nav-links {
   display: flex;
-  gap: 2.5rem; 
   justify-content: center;
+  gap: 2.5rem;
 }
 
 .nav-links a {
@@ -74,7 +74,7 @@
   bottom: -4px;
   left: 50%;
   transform: translateX(-50%) scale(0);
-  background-color: #ffb74d; 
+  background-color: #ffb74d;
   border-radius: 50%;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -85,15 +85,15 @@
 
 .nav-actions {
   display: flex;
-  justify-content: flex-end; 
-  gap: 1.2rem;
+  justify-content: flex-end;
   align-items: center;
+  gap: 1.2rem;
 }
 
 .nav-actions a {
   text-decoration: none;
   padding: 0.6rem 1.8rem;
-  border-radius: 30px; 
+  border-radius: 30px;
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.3s ease;
@@ -101,7 +101,7 @@
 
 .btn-login {
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.4); 
+  border: 1px solid rgba(255, 255, 255, 0.4);
   background-color: transparent;
 }
 
@@ -122,6 +122,36 @@
   box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
 }
 
+/* Language selector */
+
+.lang-select {
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: auto;
+}
+
+.lang-select:hover {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.lang-select option {
+  color: #3b2a5c;
+  background-color: white;
+  font-weight: 500;
+}
+
+/* Footer */
+
 .footer {
   display: flex;
   flex-direction: column;
@@ -130,7 +160,7 @@
   padding: 3rem 2rem;
   background-color: #1a1a24;
   color: white;
-  border-top: 4px solid #3b2a5c; 
+  border-top: 4px solid #3b2a5c;
 }
 
 .footer-links {
@@ -156,32 +186,4 @@
   font-size: 0.85rem;
   color: #718096;
   margin: 0;
-}
-
-/* --- Language Selector Styles --- */
-.lang-select {
-  background-color: transparent;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 30px; /* Matches your other buttons */
-  padding: 0.5rem 1rem;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-  appearance: auto; /* Keeps the native dropdown arrow */
-}
-
-.lang-select:hover {
-  border-color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Style the dropdown options so the text is visible when opened */
-.lang-select option {
-  color: #3b2a5c; /* Your theme's purple */
-  background-color: white;
-  font-weight: 500;
 }
