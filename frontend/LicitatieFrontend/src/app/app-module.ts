@@ -16,12 +16,10 @@ import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page'
 import { ForumPage } from './forum-page/forum-page'
-import { Add } from './menu-item/add/add';
 import { AuctionsPage } from './auctions-page/auctions-page';
 
-
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, Add, AuctionsPage],
+  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage],
   imports: [
     BrowserModule,
     AppRoutingModule,
