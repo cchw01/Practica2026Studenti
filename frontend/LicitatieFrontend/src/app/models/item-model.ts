@@ -1,6 +1,7 @@
-import { StatusEnum } from "./status-enum";
-import { Category } from "./user/categoryItem";
-import { User } from "./user/user";
+import { StatusEnum } from './status-enum';
+import { Category } from './user/categoryItem';
+import { User } from './user/user';
+import { Bid } from './bid/bid';
 
 export interface AuctionItem {
   ID: number;

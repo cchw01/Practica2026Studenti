@@ -1,10 +1,11 @@
-import { AuctionItem } from "../item-model";
-import { Review } from "../review/review.model";
+import { AuctionItem } from '../item-model';
+import { Review } from '../review/review.model';
+import { Bid } from '../bid/bid';
 
-export enum RoleEnum{
+export enum RoleEnum {
   ADMIN = 'ADMIN',
   USER = 'USER',
-  GUEST = 'GUEST'
+  GUEST = 'GUEST',
 }
 
 export class User {
@@ -18,9 +19,9 @@ export class User {
   WonItemsList!: Array<AuctionItem>;
   WhishList!: Array<AuctionItem>;
   Rating?: number;
-  ReviewList!: Array<Review>;  
-  
-  constructor( user?: Partial<User>){
+  ReviewList!: Array<Review>;
+
+  constructor(user?: Partial<User>) {
     Object.assign(this, user);
   }
 }
