@@ -25,7 +25,7 @@ namespace Backend.Models
             Sold,
         }
 
-        public List<User> WishingUsers { get; set; }
+        public List<User> WishingUsers { get; set; } = new();
         public string? Description { get; set; }
 
         public string Location { get; set; }
@@ -43,8 +43,8 @@ namespace Backend.Models
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-        
-        public List<Bid> BidList { get; set; }
+
+        public List<Bid> BidList { get; set; } = new();
         //Photolist here if needed
 
 

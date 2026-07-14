@@ -127,6 +127,62 @@
                 return BadRequest(ex.ToString());
             }
         }
+
+
+
+        [HttpPost("{userId}/wishlist/{itemId}")]
+        public ActionResult AddToWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var added = dataOps.AddToWishlist(userId, itemId);
+
+                if (!added)
+                    return BadRequest("Userul sau itemul nu există, sau itemul este deja în wishlist.");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{userId}/wishlist")]
+        public ActionResult<AuctionItem[]> GetWishlist(int userId)
+        {
+            try
+            {
+                var wishlist = dataOps.GetWishlist(userId);
+
+                if (wishlist == null)
+                    return NotFound();
+
+                return Ok(wishlist);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{userId}/wishlist/{itemId}")]
+        public ActionResult RemoveFromWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var removed = dataOps.RemoveFromWishlist(userId, itemId);
+
+                if (!removed)
+                    return NotFound();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
 
