@@ -22,10 +22,23 @@ import { ForumPage } from './forum-page/forum-page';
 //import { Add } from './menu-item/add/add';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { ReviewComponent } from './Models/review/review';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 
 //am scos Add din declarations
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage],
+  declarations: [
+    App,
+    LoginPage,
+    RegisterPage,
+    HomePage,
+    ProfilePage,
+    ContactPage,
+    ForumPage,
+    AuctionsPage,
+    AuctionDetail,
+    ShareListingButton,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,9 +54,7 @@ import { ReviewComponent } from './Models/review/review';
     ReviewComponent,
   ],
 
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-  ],
-  bootstrap: [App]
+  providers: [provideBrowserGlobalErrorListeners()],
+  bootstrap: [App],
 })
 export class AppModule {}
