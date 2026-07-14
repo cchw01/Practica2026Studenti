@@ -1,0 +1,51 @@
+<div class="auctions-page-container">
+  <div class="page-header">
+    <h1>Licitații Active</h1>
+    <p>Descoperă obiecte unice și licitează în timp real</p>
+  </div>
+
+  <div class="search-section">
+    <div class="search-field">
+      <input
+        type="text"
+        placeholder="Caută după nume..."
+        [(ngModel)]="searchText"
+        (ngModelChange)="onFilterChange()"
+      />
+    </div>
+  </div>
+
+  <div class="filters-row">
+    <select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()">
+      <option value="">Toate categoriile</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+
+    <select [(ngModel)]="sortBy" (ngModelChange)="onFilterChange()">
+      <option value="endingSoon">Se termină curând</option>
+      <option value="priceLowHigh">Preț crescător</option>
+      <option value="priceHighLow">Preț descrescător</option>
+      <option value="newest">Cele mai noi</option>
+    </select>
+  </div>
+
+  <div class="active-auctions">
+    <div class="cards-container" *ngIf="filteredItems.length > 0">
+      <div class="card-auction" *ngFor="let item of filteredItems">
+        <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
+        <div class="card-content">
+          <h3>{{ item.name }}</h3>
+          <p class="current-bid">Preț curent: {{ item.currentPrice }} RON</p>
+          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.endDate)">
+            {{ getRemainingTime(item.endDate) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredItems.length === 0">
+      <h3>Niciun item găsit</h3>
+      <p>Momentan nu există licitații active care să corespundă căutării tale.</p>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
-﻿namespace Backend.UserSpace
+﻿namespace Backend.Models
 {
-    public enum roleEnum
+    public enum RoleEnum
     {
         User,
         Guest,

@@ -1,5 +1,6 @@
 using Backend.Data;
 using Backend.UserDBContext;
+using Backend.DataManagement;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -27,9 +28,9 @@ builder.Services.AddControllers()
 
 // ── OpenAPI / Swagger ──
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
-// ── ProfileDBContextClass (UserSpace: User, Review, AuctionItem) ──
-builder.Services.AddDbContext<ProfileDBContextClass>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ── ApplicationDbContext (legacy ReviewController) ──
@@ -42,6 +43,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
