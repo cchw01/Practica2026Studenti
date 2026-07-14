@@ -1,4 +1,5 @@
 using Backend.DataManagement;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -27,9 +28,8 @@ builder.Services.AddControllers()
 // ── OpenAPI / Swagger ──
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<TokenProvider>();
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 var app = builder.Build();
 

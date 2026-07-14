@@ -1,4 +1,6 @@
-﻿using Backend.Models;
+using Backend.DataManagement;
+
+using Backend.Models;
 
 namespace Backend.DataManagement
 {
@@ -55,6 +57,13 @@ namespace Backend.DataManagement
                 .Where(x => x.UserName == userName)
                 .FirstOrDefault();
 
+            return user;
+        }
+        public User? GetUserByEmail(string email)
+        {
+            var user = DbContext.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault(); 
             return user;
         }
     }
