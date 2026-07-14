@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
 
 
