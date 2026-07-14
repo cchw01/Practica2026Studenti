@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './contact-page.css',
 })
 export class ContactPage {
-  contactEmail: string = 'contact@echipa5.ro'; // schimbam cu mailul final
+  contactEmail: string = 'contact@echipa5.ro';
   phoneNumber: string = '+40 123 456 789';
-  callCenterSchedule: string = 'Monday - Friday: 9am - 6pm';
+  callCenterSchedule = 'Monday–Friday, 9:00 AM–6:00 PM';;
 
   socialMediaLinks = [
     { name: 'Facebook', url: 'https://facebook.com' },

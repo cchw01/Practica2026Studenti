@@ -1,5 +1,4 @@
-﻿using Backend.Data;
-using Backend.DataManagement;
+﻿using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,6 +29,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         //not found
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
