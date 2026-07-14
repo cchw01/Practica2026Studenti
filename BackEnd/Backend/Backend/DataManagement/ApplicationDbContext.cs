@@ -15,6 +15,14 @@ namespace Backend.DataManagement
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        
+        public DbSet<ForumComment> ForumComments => Set<ForumComment>();
+        protected override void OnConfiguring(
+            DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\MSSQLLocalDB;Database=AuctionApplicationDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
