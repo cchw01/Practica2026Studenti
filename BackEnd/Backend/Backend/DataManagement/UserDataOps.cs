@@ -1,5 +1,4 @@
-﻿using Backend.Data;
-using Backend.Models;
+﻿using Backend.Models;
 
 namespace Backend.DataManagement
 {
@@ -49,6 +48,21 @@ namespace Backend.DataManagement
                 DbContext.Users.Remove(user);
                 DbContext.SaveChanges();
             }
+        }
+        public User? GetUserByUsername(string userName)
+        {
+            var user = DbContext.Users
+                .Where(x => x.UserName == userName)
+                .FirstOrDefault();
+
+            return user;
+        }
+        public User? GetUserByEmail(string email)
+        {
+            var user = DbContext.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault(); 
+            return user;
         }
     }
 }
