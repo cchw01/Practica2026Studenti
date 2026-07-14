@@ -157,3 +157,31 @@
   color: #718096;
   margin: 0;
 }
+
+/* --- Language Selector Styles --- */
+.lang-select {
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px; /* Matches your other buttons */
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: auto; /* Keeps the native dropdown arrow */
+}
+
+.lang-select:hover {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Style the dropdown options so the text is visible when opened */
+.lang-select option {
+  color: #3b2a5c; /* Your theme's purple */
+  background-color: white;
+  font-weight: 500;
+}
