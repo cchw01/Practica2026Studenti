@@ -8,7 +8,9 @@ namespace Backend.DataManagement
         public DbSet<User> Users => Set<User>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
-        public DbSet<ForumPost> ForumPosts => Set<Forumpost>();
+        public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        
+        public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
         {
