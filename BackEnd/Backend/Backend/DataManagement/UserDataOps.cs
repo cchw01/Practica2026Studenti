@@ -49,5 +49,13 @@ namespace Backend.DataManagement
                 DbContext.SaveChanges();
             }
         }
+        public User? GetUserByUsername(string userName)
+        {
+            var user = DbContext.Users
+                .Where(x => x.UserName == userName)
+                .FirstOrDefault();
+
+            return user;
+        }
     }
 }
