@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
+import { HomePage } from './home-page/home-page';
 import { AppRoutingModule } from './app-routing-module';
 
 import { App } from './app';
