@@ -17,9 +17,14 @@ namespace Backend.Models
         [JsonIgnore]
         public string? Password { get; set; }
 
+
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
+        public int AddedItemsListId { get; set; };
+
         public List<AuctionItem> BiddedItemsList { get; set; } = new();
+
+        public List<AuctionItem> WonItemsList { get; set; } = new();
 
         public List<AuctionItem> WhishList { get; set; } = new();
 
