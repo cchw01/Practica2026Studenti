@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuctionItem } from '../Models/item-model';
+import { AuctionItem } from '../Models/item/item-model';
 import { ItemService } from '../services/item-service';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
