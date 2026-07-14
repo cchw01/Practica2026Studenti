@@ -6,8 +6,8 @@ namespace Backend.Models
     {
         public int Id { get; set; }
         public string Token { get; set; }
-        [ForeignKey("UserId")]
         public int UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiresAt { get; set; }
     }
