@@ -1,0 +1,34 @@
+<div class="contact-page-container">
+  <h2>Contactează-ne</h2>
+
+  <div class="contact-details">
+    <!-- Email -->
+    <div class="detail-item">
+      <strong>Email:</strong> 
+      <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>
+    </div>
+
+    <!-- Telefon -->
+    <div class="detail-item">
+      <strong>Telefon:</strong> 
+      <a [href]="'tel:' + phoneNumber">{{ phoneNumber }}</a>
+    </div>
+
+    <!-- Program -->
+    <div class="detail-item">
+      <strong>Program Call Center:</strong> 
+      <span>{{ callCenterSchedule }}</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Social Media -->
+  <div class="social-media-section">
+    <h3>Urmărește-ne:</h3>
+    <ul class="social-links">
+      <li *ngFor="let link of socialMediaLinks">
+        <a [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.name }}</a>
+      </li>
+    </ul>
+  </div>

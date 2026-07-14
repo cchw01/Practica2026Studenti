@@ -1,0 +1,129 @@
+<div class="profile-wrapper">
+
+  <!-- Cover -->
+  <div class="profile-cover"></div>
+
+  <!-- ===== VIEW MODE ===== -->
+  <ng-container *ngIf="!isEditing">
+
+    <div class="profile-header">
+      <div class="avatar-container">
+        <img class="avatar" [src]="displayAvatar" alt="Profile picture" />
+      </div>
+      <div class="profile-info">
+        <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
+        <p class="profile-username empty-field" *ngIf="!user.username">&#64;username not set</p>
+        <h1 class="profile-name" *ngIf="user.name">{{ user.name }}</h1>
+        <h1 class="profile-name empty-field" *ngIf="!user.name">Name not set</h1>
+        <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
+        <p class="profile-email empty-field" *ngIf="!user.email">Email not set</p>
+      </div>
+      <div class="score-box">
+        <span class="score-value">{{ score || '—' }}</span>
+        <div class="score-stars">
+          <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
+        </div>
+        <span class="score-label">Average Score</span>
+      </div>
+      <button class="btn-edit" (click)="startEdit()">✏️ Edit Profile</button>
+    </div>
+
+    <!-- Sections -->
+    <div class="sections">
+
+      <!-- Listed Items -->
+      <section class="profile-section">
+        <h2 class="section-title"><span class="section-icon">📦</span> Listed Items</h2>
+        <div class="items-list" *ngIf="addedItems.length > 0">
+          <div class="item-card" *ngFor="let item of addedItems">
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
+            </div>
+            <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+          </div>
+        </div>
+        <p class="empty-state" *ngIf="addedItems.length === 0">No items listed yet.</p>
+      </section>
+
+      <!-- Bid History -->
+      <section class="profile-section">
+        <h2 class="section-title"><span class="section-icon">🔨</span> Bid History</h2>
+        <div class="items-list" *ngIf="bidItems.length > 0">
+          <div class="item-card" *ngFor="let item of bidItems">
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
+            </div>
+            <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+          </div>
+        </div>
+        <p class="empty-state" *ngIf="bidItems.length === 0">No bids placed yet.</p>
+      </section>
+
+      <!-- Reviews -->
+      <section class="profile-section full-width">
+        <h2 class="section-title"><span class="section-icon">💬</span> Reviews</h2>
+        <div class="reviews-list" *ngIf="reviews.length > 0">
+          <div class="review-card" *ngFor="let review of reviews">
+            <div class="review-header">
+              <span class="review-author">&#64;{{ review.author }}</span>
+              <span class="review-date">{{ review.date }}</span>
+            </div>
+            <div class="review-stars">
+              <span *ngFor="let s of stars" class="star" [class.filled]="s <= review.rating">★</span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
+        <p class="empty-state" *ngIf="reviews.length === 0">No reviews yet.</p>
+      </section>
+
+    </div>
+  </ng-container>
+
+  <!-- ===== EDIT MODE ===== -->
+  <div class="edit-panel" *ngIf="isEditing">
+
+    <h2 class="edit-title">Edit Profile</h2>
+
+    <!-- Avatar upload -->
+    <div class="avatar-upload-area">
+      <img class="avatar avatar-large"
+           [src]="editDraft.avatarUrl || displayAvatar"
+           alt="Profile picture preview" />
+      <label class="btn-upload" for="avatarInput">
+        📷 Change Photo
+      </label>
+      <input id="avatarInput" type="file" accept="image/*"
+             (change)="onAvatarSelected($event)" hidden />
+    </div>
+
+    <!-- Form fields -->
+    <div class="edit-form">
+      <div class="form-group">
+        <label for="editUsername">Username</label>
+        <input id="editUsername" type="text" [(ngModel)]="editDraft.username"
+               placeholder="e.g. john_doe" />
+      </div>
+      <div class="form-group">
+        <label for="editName">Full Name</label>
+        <input id="editName" type="text" [(ngModel)]="editDraft.name"
+               placeholder="e.g. John Doe" />
+      </div>
+      <div class="form-group">
+        <label for="editEmail">Email</label>
+        <input id="editEmail" type="email" [(ngModel)]="editDraft.email"
+               placeholder="e.g. john@email.com" />
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="edit-actions">
+      <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+      <button class="btn-save" (click)="saveEdit()">💾 Save Changes</button>
+    </div>
+
+  </div>
+
+</div>
