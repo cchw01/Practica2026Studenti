@@ -1,24 +1,39 @@
-<header class="hero">
-  <nav class="navbar">
-    <span class="logo">MyAuction</span>
-    <div class="navbar-links">
-      <a routerLink="/auctions-page">Auctions</a>
-      <a routerLink="/forum-page">Forum</a>
-      <a routerLink="/login-page">Login</a>
+<div class="app-container">
+  
+  <!-- Header -->
+  <header class="navbar">
+    
+    <!-- left Logo -->
+    <div class="nav-brand">
+      <a routerLink="/home-page" class="logo">Auctions</a>
     </div>
-    <a routerLink="/register-page" class="cta">Register</a>
-  </nav>
 
-  <div class="hero-text">
-    <h1>Find your next great deal</h1>
-    <p>Bid live, sell fast, and connect with buyers on the auction platform built for you.</p>
-    <a routerLink="/auctions-page" class="hero-cta">Browse auctions</a>
-  </div>
-</header>
+    <!-- Nav-bar-->
+    <nav class="nav-links">
+      <a routerLink="/home-page">Home</a>
+      <a routerLink="/action-item-page">Auctions</a>
+      <a routerLink="/forum-page">Forum</a>
+    </nav>
 
-<router-outlet />
+    <!-- Autentification-->
+    <div class="nav-actions">
+      <a routerLink="/login-page" class="btn-login">Login</a>
+      <a routerLink="/register-page" class="btn-register">Register</a>
+    </div>
 
-<footer class="footer">
-  <a routerLink="/help-page" class="pill">Help</a>
-  <a routerLink="/contact-page" class="pill">Contact</a>
-</footer>
+  </header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a routerLink="/contact-page">Contact</a>
+      <a routerLink="/help-page">Help</a>
+    </div>
+    <p class="copyright">© 2026</p>
+  </footer>
+
+</div>
