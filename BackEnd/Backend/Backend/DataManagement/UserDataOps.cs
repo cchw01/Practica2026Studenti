@@ -57,5 +57,12 @@ namespace Backend.DataManagement
 
             return user;
         }
+        public User? GetUserByEmail(string email)
+        {
+            var user = DbContext.Users
+                .Where(x => x.Email == email)
+                .FirstOrDefault(); 
+            return user;
+        }
     }
 }
