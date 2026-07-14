@@ -4,6 +4,6 @@
     {
         public int id { get; set; }
         public string name { get; set; }
-        public List<AuctionItem> items { get; set; }// List<item>
+        public List<AuctionItem> items { get; set; }
     }
 }

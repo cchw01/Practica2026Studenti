@@ -41,6 +41,23 @@ namespace Backend.DataManagement
                 .WithMany(w => w.WonItemsList)
                 .HasForeignKey(i => i.WinnerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AuctionItem>() // Relatie Item -> (wishlist) -> user
+                .HasMany(i => i.WishingUsers)
+                .WithMany(u => u.WishList);
+
+            modelBuilder.Entity<Bid>() // Bid -> User
+                .HasOne(b => b.Bidder)
+                .WithMany(u => u.BidList)
+                .HasForeignKey(b => b.BidderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Bid>() // Bid -> Item
+                .HasOne(b => b.BiddedItem)
+                .WithMany(i => i.BidList)
+                .HasForeignKey(b => b.BiddedItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
            
 
         }
