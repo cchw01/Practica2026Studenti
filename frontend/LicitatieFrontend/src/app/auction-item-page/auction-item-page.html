@@ -1,9 +1,30 @@
 <div class="auction-page">
   <div class="auction-card">
-    <div class="auction-image">📦</div>
+    <div class="auction-image-gallery">
+      <div class="auction-image">📦</div>
+      <div class="thumbnails" *ngIf="auctionItem.photoGallery?.length">
+        <img *ngFor="let img of auctionItem.photoGallery" [src]="img" alt="Item photo" />
+      </div>
+    </div>
+
     <div class="auction-content">
-      <p class="status">{{ auctionItem.status }}</p>
-      <h1>{{ auctionItem.name }}</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <p class="status">{{ auctionItem.status }}</p>
+        <button *ngIf="authService.isLoggedIn() && authService.getCurrentUser() === auctionItem.owner" type="button" class="btn btn-edit" (click)="onEditClick()">Edit</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px;">
+        <h1 class="page-title">{{ auctionItem.name }}</h1>
+        
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-primary" (click)="onAddClick()">Add New Item</button>
+          
+          <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-secondary" (click)="toggleWishlist()">
+            {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
+          </button>
+        </div>
+      </div>
+
       <p class="description">{{ auctionItem.description }}</p>
 
       <div class="info-grid">
@@ -12,7 +33,7 @@
           <strong>${{ auctionItem.currentPrice }}</strong>
         </div>
         <div>
-          <span>Start price</span>
+          <span>Minimum price</span>
           <strong>${{ auctionItem.startPrice }}</strong>
         </div>
         <div>
@@ -31,9 +52,16 @@
       </div>
 
       <div class="bid-box">
-        <label for="bid">Your bid</label>
-        <input id="bid" type="number" [(ngModel)]="bidAmount" min="{{ auctionItem.currentPrice + 1 }}" />
-        <button type="button" (click)="placeBid()">Place bid</button>
+        <ng-container *ngIf="authService.isLoggedIn(); else loginRedirectTemplate">
+          <label for="bid">Your bid</label>
+          <input id="bid" type="number" [(ngModel)]="bidAmount" class="form-control" />
+          <button type="button" class="btn btn-success" (click)="placeBid()">Place bid</button>
+          <p *ngIf="errorMessage" style="color: red; margin-top: 5px; font-size: 14px;">{{ errorMessage }}</p>
+        </ng-container>
+
+        <ng-template #loginRedirectTemplate>
+          <button type="button" class="btn btn-login" (click)="redirectToLogin()">Login to Bid</button>
+        </ng-template>
       </div>
     </div>
   </div>
