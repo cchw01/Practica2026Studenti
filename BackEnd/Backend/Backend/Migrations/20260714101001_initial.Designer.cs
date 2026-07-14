@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260714090258_initial")]
+    [Migration("20260714101001_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -120,7 +120,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("BidderId");
 
-                    b.ToTable("Bid");
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("Backend.Models.CategoryItem", b =>

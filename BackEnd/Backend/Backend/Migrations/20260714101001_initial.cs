@@ -149,7 +149,7 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bid",
+                name: "Bids",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -161,14 +161,14 @@ namespace Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bid", x => x.id);
+                    table.PrimaryKey("PK_Bids", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Bid_AuctionItems_BiddedItemId",
+                        name: "FK_Bids_AuctionItems_BiddedItemId",
                         column: x => x.BiddedItemId,
                         principalTable: "AuctionItems",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Bid_Users_BidderId",
+                        name: "FK_Bids_Users_BidderId",
                         column: x => x.BidderId,
                         principalTable: "Users",
                         principalColumn: "ID");
@@ -195,13 +195,13 @@ namespace Backend.Migrations
                 column: "WishingUsersID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bid_BiddedItemId",
-                table: "Bid",
+                name: "IX_Bids_BiddedItemId",
+                table: "Bids",
                 column: "BiddedItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bid_BidderId",
-                table: "Bid",
+                name: "IX_Bids_BidderId",
+                table: "Bids",
                 column: "BidderId");
 
             migrationBuilder.CreateIndex(
@@ -222,7 +222,7 @@ namespace Backend.Migrations
                 name: "AuctionItemUser");
 
             migrationBuilder.DropTable(
-                name: "Bid");
+                name: "Bids");
 
             migrationBuilder.DropTable(
                 name: "ForumPosts");
