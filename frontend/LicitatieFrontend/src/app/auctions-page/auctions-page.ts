@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
