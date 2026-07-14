@@ -17,6 +17,8 @@ namespace Backend.Services
                 Subject = new ClaimsIdentity([
                     new Claim(JwtRegisteredClaimNames.Sub, user.ID.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                    new Claim("Username", user.UserName),
                     new Claim("Role", user.Role.ToString())
 
                     ]),
