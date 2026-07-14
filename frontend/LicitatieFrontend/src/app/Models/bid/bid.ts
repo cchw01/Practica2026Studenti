@@ -1,6 +1,7 @@
 import { AuctionItem } from '../item/item-model';
 import { User } from '../user/user';
 
+
 export interface Bid {
   id: number;
   Bidder: User;
@@ -10,3 +11,5 @@ export interface Bid {
   price: number;
   date: Date;
 }
+
+
