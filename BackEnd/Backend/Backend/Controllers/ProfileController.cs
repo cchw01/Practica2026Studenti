@@ -1,9 +1,6 @@
 using Backend.DataManagement;
 using Backend.Models;
-using Backend.UserDBContext;
-using Backend.UserSpace;
 using Microsoft.AspNetCore.Mvc;
-using UserSpaceReview = Backend.UserSpace.Review;
 
 namespace Backend.Controllers
 {
@@ -13,7 +10,7 @@ namespace Backend.Controllers
     {
         private readonly ProfileDataOps _dataOps;
 
-        public ProfileController(ProfileDBContextClass dbContext)
+        public ProfileController(ApplicationDbContext dbContext)
         {
             _dataOps = new ProfileDataOps(dbContext);
         }
@@ -128,13 +125,19 @@ namespace Backend.Controllers
                 if (string.IsNullOrWhiteSpace(request.ReviewerId))
                     return BadRequest(new { message = "ReviewerId este obligatoriu." });
 
-                var review = new UserSpaceReview(
-                    id: Guid.NewGuid().ToString(),
-                    reviewerId: request.ReviewerId,
-                    revieweeId: id,
-                    score: request.Score,
-                    comment: request.Comment ?? string.Empty
-                );
+                if (!int.TryParse(id, out var reviewedUserId))
+                    return BadRequest(new { message = "Id-ul utilizatorului nu este valid." });
+
+                if (!int.TryParse(request.ReviewerId, out var reviewerId))
+                    return BadRequest(new { message = "ReviewerId nu este valid." });
+
+                var review = new Review
+                {
+                    ReviewerId = reviewerId,
+                    ReviewedUserId = reviewedUserId,
+                    Rating = request.Score,
+                    Comment = request.Comment ?? string.Empty
+                };
 
                 var dto = _dataOps.AddReview(review);
                 return CreatedAtAction(nameof(GetReviewsForUser), new { id }, dto);

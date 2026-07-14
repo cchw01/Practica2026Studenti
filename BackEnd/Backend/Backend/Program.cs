@@ -1,6 +1,3 @@
-using Backend.Data;
-
-using Backend.UserDBContext;
 using Backend.DataManagement;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -31,10 +28,6 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// ── ApplicationDbContext (legacy ReviewController) ──
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

@@ -1,10 +1,5 @@
-
-
-using Backend.Data;
 using Backend.DataManagement;
-﻿using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 namespace Backend.Controllers
 {
@@ -14,9 +9,9 @@ namespace Backend.Controllers
     {
         private readonly ReviewDataOps dataOps;
 
-        public ReviewController(ApplicationDbContext DbContext)
+        public ReviewController(ApplicationDbContext dbContext)
         {
-            dataOps = new ReviewDataOps(DbContext);
+            dataOps = new ReviewDataOps(dbContext);
         }
 
         [HttpGet]
