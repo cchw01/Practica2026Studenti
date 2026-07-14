@@ -91,8 +91,8 @@
 
                 if (!parolaCorecta)
                     return Unauthorized("Utilizator sau parolă incorectă.");
-
-                return Ok("Login reușit.");
+                var token = tokenProvider.Create(user);
+                return Ok(token);
             }
             catch (Exception ex)
             {
