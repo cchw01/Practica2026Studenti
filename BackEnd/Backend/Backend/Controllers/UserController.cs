@@ -1,7 +1,8 @@
-﻿    using Backend.Data;
-    using Backend.DataManagement;
+﻿    using Backend.DataManagement;
     using Backend.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Backend.Services;
+    using Backend.DTOs;
 
     namespace Backend.Controllers
     {
@@ -48,46 +49,86 @@
                 }
             }
 
-            [HttpPost]
-            public ActionResult<User> AddUser(User user)
+        [HttpPost("register")]
+        public ActionResult<User> Register(RegisterDto request)
+        {
+            try
             {
-                try
-                {
-                    dataOps.AddUser(user);
-                    return Ok(user);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
+                var existingUser = dataOps.GetUserByUsername(request.UserName);
+                if (existingUser != null)
+                    return BadRequest("Acest username este deja folosit.");
 
-            [HttpPut]
-            public ActionResult<User> UpdateUser(User user)
-            {
-                try
+                var user = new User
                 {
-                    dataOps.UpdateUser(user);
-                    return Ok(user);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
+                    UserName = request.UserName,
+                    Name = request.Name,
+                    Email = request.Email,
+                    Password = PasswordHasher.HashPassword(request.Password),
+                    Role = RoleEnum.User
+                };
 
-            [HttpDelete("{id}")]
-            public ActionResult DeleteUser(int id)
+                dataOps.AddUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    dataOps.DeleteUser(id);
-                    return Ok();
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.ToString());
-                }
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("login")]
+        public ActionResult Login(LoginDto request)
+        {
+            try
+            {
+                var user = dataOps.GetUserByUsername(request.UserName);
+
+                if (user == null)
+                    return Unauthorized("Utilizator sau parolă incorectă.");
+
+                bool parolaCorecta = PasswordHasher.VerifyPassword(request.Password, user.Password);
+
+                if (!parolaCorecta)
+                    return Unauthorized("Utilizator sau parolă incorectă.");
+
+                return Ok("Login reușit.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public ActionResult<User> UpdateUser(User user)
+        {
+            try
+            {
+                dataOps.UpdateUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+            try
+            {
+                dataOps.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
             }
         }
     }
+}
+
+            
+        
+    
