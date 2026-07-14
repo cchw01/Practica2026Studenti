@@ -20,13 +20,11 @@ namespace Backend.Models
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
-        public int AddedItemsListId { get; set; };
-
-        public List<AuctionItem> BiddedItemsList { get; set; } = new();
+        public List<Bid> BidList { get; set; } = new();
 
         public List<AuctionItem> WonItemsList { get; set; } = new();
 
-        public List<AuctionItem> WhishList { get; set; } = new();
+        public List<AuctionItem> WishList { get; set; } = new();
 
         public float Rating { get; private set; }
 
