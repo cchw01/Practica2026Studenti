@@ -5,14 +5,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
 
-// Angular Material Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-// Component Imports
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
 import { ProfilePage } from './profile/profile-page/profile-page';
