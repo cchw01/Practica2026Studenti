@@ -1,12 +1,14 @@
-﻿//using Backend.Models;
+﻿using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        // DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
+        public DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
+        public DbSet<User> Users => Set<User>();
         public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<CategoryItem> Category => Set<CategoryItem>();
 
         protected override void OnConfiguring(
             DbContextOptionsBuilder optionsBuilder)
@@ -19,15 +21,9 @@ namespace Backend.Data
         {
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Reviewer)
-                .WithMany()
+                .WithMany(s => s.ReviewList)
                 .HasForeignKey(r => r.ReviewerId)
-                .IsRequired();
-
-            //modelBuilder.Entity<Review>()
-            //    .HasOne(r => r.ReviewedUser)
-            //    .WithMany(u => u.ReviewList)
-            //    .HasForeignKey(r => r.ReviewedUserId)
-            //    .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 
