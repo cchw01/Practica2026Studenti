@@ -17,6 +17,8 @@ const routes: Routes = [
   { path: 'auctions', component: AuctionsPage },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
   { path: 'review-page', component: ReviewComponent}
 ];
