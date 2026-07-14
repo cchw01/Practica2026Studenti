@@ -10,25 +10,17 @@
 .navbar a {
   color: white;
   text-decoration: none;
-  padding: 0.7rem 1.4rem;
+  padding: 0.6rem 1.2rem;
   border: 2px solid white;
   border-radius: 25px;
-  background-color: transparent;
-
   font-weight: 600;
-  font-size: 1rem;
-
+  font-size: 0.9rem;
   transition: all 0.3s ease;
 }
 
-.navbar a:hover {
+.footer .pill:hover {
   background-color: white;
-  color: var(--mat-sys-primary);
+  color: #0f2b3d;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.navbar a:active {
-  transform: translateY(0);
-  box-shadow: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }

@@ -1,8 +1,24 @@
-<nav class="navbar">
-    <a routerLink="/home-page">Home page</a>
-    <a routerLink="/login-page">Login</a>
-    <a routerLink="/register-page">Register</a>
-    <a routerLink="/contact-page">Contact</a>
-    <a routerLink="/forum-page">Forum</a>
-</nav>
+<header class="hero">
+  <nav class="navbar">
+    <span class="logo">MyAuction</span>
+    <div class="navbar-links">
+      <a routerLink="/auctions-page">Auctions</a>
+      <a routerLink="/forum-page">Forum</a>
+      <a routerLink="/login-page">Login</a>
+    </div>
+    <a routerLink="/register-page" class="cta">Register</a>
+  </nav>
+
+  <div class="hero-text">
+    <h1>Find your next great deal</h1>
+    <p>Bid live, sell fast, and connect with buyers on the auction platform built for you.</p>
+    <a routerLink="/auctions-page" class="hero-cta">Browse auctions</a>
+  </div>
+</header>
+
 <router-outlet />
+
+<footer class="footer">
+  <a routerLink="/help-page" class="pill">Help</a>
+  <a routerLink="/contact-page" class="pill">Contact</a>
+</footer>
