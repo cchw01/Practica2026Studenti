@@ -1,5 +1,5 @@
 ﻿using System;
-using Backend.UserSpace;
+using Backend.Models;
 namespace Backend.Models
 {
 	public class ForumPost
