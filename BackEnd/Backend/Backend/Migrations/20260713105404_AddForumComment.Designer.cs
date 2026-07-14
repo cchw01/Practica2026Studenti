@@ -4,6 +4,7 @@ using Backend.DataManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260713105404_AddForumComment")]
+    partial class AddForumComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,6 +134,10 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ForumPostId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("ForumComments");
                 });
 
@@ -242,6 +249,25 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.User", null)
                         .WithMany("WhishList")
                         .HasForeignKey("UserID2");
+                });
+
+            modelBuilder.Entity("Backend.Models.ForumComment", b =>
+                {
+                    b.HasOne("Backend.Models.ForumPost", "Post")
+                        .WithMany()
+                        .HasForeignKey("ForumPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Backend.Models.Review", b =>
