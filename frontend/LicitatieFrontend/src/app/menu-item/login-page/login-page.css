@@ -59,7 +59,8 @@ button.submit-btn {
   background-color: #111827 !important;
   color: white !important;
   border: none;
-  border-radius: 30px !important; 
+  border-radius: 30px !important;
+  /* Forma de pastila */
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;

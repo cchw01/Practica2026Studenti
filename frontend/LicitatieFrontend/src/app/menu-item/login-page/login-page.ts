@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../app-logic/auth';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-login-page',
   standalone: false,
@@ -44,7 +45,6 @@ export class LoginPage implements OnInit {
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-
       },
     });
   }

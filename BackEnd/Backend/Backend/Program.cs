@@ -1,4 +1,5 @@
 using Backend.DataManagement;
+using Backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 
 var app = builder.Build();
