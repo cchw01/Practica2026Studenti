@@ -1,7 +1,7 @@
-﻿    using Backend.Data;
-    using Backend.DataManagement;
-    using Backend.Models;
-    using Microsoft.AspNetCore.Mvc;
+﻿using Backend.DataManagement;
+using Backend.Models;
+using Backend.Services;
+using Microsoft.AspNetCore.Mvc;
 
     namespace Backend.Controllers
     {
@@ -10,10 +10,11 @@
         public class UserController : ControllerBase
         {
             private readonly UserDataOps dataOps;
-
-            public UserController(ApplicationDbContext DbContext)
+            private readonly TokenProvider tokenProvider;
+            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider)
             {
                 dataOps = new UserDataOps(DbContext);
+                this.tokenProvider = tokenProvider;
             }
 
             [HttpGet]
