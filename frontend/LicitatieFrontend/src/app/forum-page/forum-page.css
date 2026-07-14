@@ -1,0 +1,240 @@
+:host {
+    display: block;
+    min-height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.forum-page {
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.forum-container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+}
+
+.forum-introduction {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.forum-introduction h1 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.forum-introduction p {
+    max-width: 550px;
+    margin: 0 auto;
+    color: #666666;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.discussion-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.sort-control select {
+    min-height: 40px;
+    padding: 0 38px 0 16px;
+    border: 1px solid #dddddd;
+    border-radius: 28px;
+    background-color: #ffffff;
+    color: #555555;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition:
+        border-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out;
+}
+
+.sort-control select:focus {
+    border-color: #26a69a;
+    box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.12);
+}
+
+.discussion-total {
+    margin: 0;
+    color: #777777;
+    font-size: 14px;
+}
+
+.discussion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discussion-card {
+    width: 100%;
+    min-height: 145px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: inherit;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
+}
+
+.discussion-card:hover {
+    transform: translateY(-5px);
+    border-color: #d7eeee;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.discussion-card:focus-visible {
+    outline: 3px solid rgba(38, 166, 154, 0.2);
+    outline-offset: 2px;
+}
+
+
+.author-avatar {
+    width: 58px;
+    height: 58px;
+    align-self: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    color: #555555;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.discussion-card:hover .author-avatar {
+    background-color: #e0f2f1;
+}
+
+
+.discussion-main {
+    min-width: 0;
+}
+
+.discussion-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.discussion-heading h2 {
+    margin: 0;
+    color: #333333;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.discussion-heading time {
+    flex-shrink: 0;
+    color: #888888;
+    font-size: 12px;
+}
+
+.discussion-author {
+    margin: 7px 0 0;
+    color: #777777;
+    font-size: 12px;
+}
+
+.discussion-author strong {
+    color: #555555;
+    font-weight: 600;
+}
+
+.discussion-description {
+    margin: 14px 0 0;
+    display: -webkit-box;
+    overflow: hidden;
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+}
+
+
+
+.discussion-comments {
+    min-width: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.comment-count {
+    margin: 0;
+    text-align: center;
+}
+
+.comment-icon {
+    width: 24px;
+    height: 19px;
+    position: relative;
+    border: 2px solid #666666;
+    border-radius: 8px;
+}
+
+.comment-icon::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    left: 2px;
+    bottom: -5px;
+    background-color: #ffffff;
+    border-left: 2px solid #666666;
+    transform: skew(-25deg);
+}
+
+
+.empty-state {
+    padding: 60px 24px;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin: 0 0 10px;
+    color: #333333;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.empty-state p {
+    margin: 0;
+    color: #666666;
+    font-size: 14px;
+}
