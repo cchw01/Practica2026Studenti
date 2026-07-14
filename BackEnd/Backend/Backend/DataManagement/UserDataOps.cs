@@ -1,5 +1,4 @@
-﻿using Backend.Data;
-using Backend.Models;
+﻿using Backend.Models;
 
 namespace Backend.DataManagement
 {
