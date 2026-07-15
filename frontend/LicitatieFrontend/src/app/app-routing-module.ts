@@ -10,6 +10,7 @@ import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
@@ -18,20 +19,11 @@ const routes: Routes = [
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent },
-
-  // Shorter alias paths for compatibility
-  { path: 'login', component: LoginPage },
-  { path: 'register', component: RegisterPage },
-  { path: 'profile', component: ProfilePage },
-
-  // Default routes
-  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home-page' },
+  { path: 'review-page', component: ReviewComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

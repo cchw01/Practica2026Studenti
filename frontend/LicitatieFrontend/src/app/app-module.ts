@@ -15,6 +15,7 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,6 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
     ReviewComponent
+
   ],
 
   providers: [
