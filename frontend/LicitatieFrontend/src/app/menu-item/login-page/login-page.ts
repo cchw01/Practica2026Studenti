@@ -50,6 +50,6 @@ export class LoginPage implements OnInit {
   }
 
   goToRegister(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register-page']);
   }
 }

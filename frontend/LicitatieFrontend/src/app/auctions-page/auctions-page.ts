@@ -28,7 +28,7 @@ export class AuctionsPage implements OnInit {
         this.categories = [...new Set(items.map(i => i.category))];
         this.applyFiltersAndSort();
       },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err)
+      error: (err) => console.error('Error loading items', err)
     });
   }
 
@@ -67,13 +67,13 @@ export class AuctionsPage implements OnInit {
 
   getRemainingTime(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return 'Licitație încheiată';
+    if (diff <= 0) return 'Auction ended';
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-    if (days > 0) return `${days}z ${hours}h rămase`;
-    return `${hours}h rămase`;
+    if (days > 0) return `${days}d ${hours}h left`;
+    return `${hours}h left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
