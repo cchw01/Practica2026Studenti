@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { StatusEnum } from '../Models/status-enum';
 
+
 interface TestAuctionItem extends AuctionItem {
   photoGallery?: string[];
 }
