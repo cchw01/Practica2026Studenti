@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../app-logic/auth';
+import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 
 
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  errorMessage: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -39,14 +40,15 @@ export class LoginPage implements OnInit {
     const formData = this.loginForm.value;
     console.log('Trimitem datele:', formData);
 
-    this.authService.login(formData).subscribe({
-      next: (response) => {
-        console.log('Login cu succes!', response);
-      },
-      error: (err) => {
-        console.error('Eroare de la server:', err);
-      },
-    });
+this.authService.login(formData.email,formData.password ).subscribe({  next: (response: any) => {
+    console.log('Login cu succes!', response);
+    this.router.navigate(['/profile']);
+  },
+  error: (err) => {
+    console.error('Eroare de la server:', err);
+    this.errorMessage = 'Email sau parolă incorecte.';
+  },
+});
   }
 
   goToRegister(): void {

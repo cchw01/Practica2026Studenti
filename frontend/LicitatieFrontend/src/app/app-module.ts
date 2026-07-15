@@ -1,6 +1,14 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
@@ -8,8 +16,21 @@ import { App } from './app';
 import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
+import { ContactPage } from './menu-item/contact-page/contact-page';
+
+import { AuthInterceptor } from './services/auth-interceptor';
+
+@NgModule({
+  declarations: [
+    App, 
+    LoginPage, 
+    RegisterPage, 
+    HomePage, 
+    ProfilePage, 
+    ContactPage
+  ],
 import { HomePage } from './home-page/home-page';
-//import { Add } from './menu-item/add/add';
+
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
@@ -19,7 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-//am scos Add din declarations
+
 @NgModule({
   declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage],
   imports: [
@@ -33,14 +54,17 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    ReviewComponent
- 
+    MatButtonModule
   ],
-
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptorsFromDi()), 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
-  bootstrap: [App]
+  bootstrap: [App],
 })
 export class AppModule {}
