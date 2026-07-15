@@ -1,4 +1,4 @@
-﻿    using Backend.DataManagement;
+    using Backend.DataManagement;
     using Backend.Models;
     using Microsoft.AspNetCore.Mvc;
     using Backend.Services;
@@ -11,11 +11,13 @@
         public class UserController : ControllerBase
         {
             private readonly UserDataOps dataOps;
+            private readonly RefreshTokenDataOps refreshTokenDataOps;
             private readonly TokenProvider tokenProvider;
-            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider)
+            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
             {
                 dataOps = new UserDataOps(DbContext);
                 this.tokenProvider = tokenProvider;
+                this.refreshTokenDataOps = refreshTokenDataOps;
             }
 
             [HttpGet]
@@ -91,7 +93,8 @@
 
                 if (!parolaCorecta)
                     return Unauthorized("Email sau parolă incorectă.");
-                var token = tokenProvider.Create(user);
+                var token = tokenProvider.GenerateAccesToken(user);
+                refreshTokenDataOps.CreateRefreshToken(user);
                 return Ok(token);
             }
             catch (Exception ex)
@@ -99,7 +102,36 @@
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpPost]
+        public ActionResult RegenerateAccessToken(int userId)
+        {
+            try
+            {
+                var user = dataOps.GetUserById(userId);
+                if(user==null)
+                {
+                    return Unauthorized("Utilizator neconectat");
+                }
+                var refreshToken = refreshTokenDataOps.GetRefreshToken(user);
+                if(refreshToken == null)
+                {
+                    return Unauthorized("Refresh Token invalid, se redirectioneaza la Login");
+                }
+                else if(refreshToken.ExpiresAt < DateTime.Now)
+                {
+                    return Unauthorized("Refresh Token expirat, se redirectioneaza la Login");
+                }
+                else
+                {
+                    var accessToken = tokenProvider.GenerateAccesToken(user);
+                    return Ok(accessToken);
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPut]
         public ActionResult<User> UpdateUser(User user)
         {

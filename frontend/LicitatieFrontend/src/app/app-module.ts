@@ -1,22 +1,29 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AppRoutingModule } from './app-routing-module';
-import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
+
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
 import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
-import { ContactPage } from './menu-item/contact-page/contact-page'
+import { ContactPage } from './menu-item/contact-page/contact-page';
+
+import { AuthInterceptor } from './services/auth-interceptor';
 import { ForumPage } from './forum-page/forum-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
+
+
 
 
 @NgModule({
@@ -31,9 +38,17 @@ import { AuctionsPage } from './auctions-page/auctions-page';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    HttpClientModule,
+    MatButtonModule
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptorsFromDi()), 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [App],
 })
 export class AppModule {}

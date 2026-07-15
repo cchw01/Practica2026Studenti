@@ -25,10 +25,10 @@ export class AuctionsPage implements OnInit {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map((i) => i.Category.name))];
+        this.categories = [...new Set(items.map(i => i.Category.name))];
         this.applyFiltersAndSort();
       },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err),
+      error: (err) => console.error('Eroare la încărcarea item-urilor', err)
     });
   }
 
@@ -36,12 +36,12 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter((i) => i.Category?.name === this.selectedCategory);
+      result = result.filter(i => i.Category?.name === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter((i) => i.Name.toLowerCase().includes(search));
+      result = result.filter(i => i.Name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
@@ -67,13 +67,13 @@ export class AuctionsPage implements OnInit {
 
   getRemainingTime(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return 'Licitație încheiată';
+    if (diff <= 0) return 'Auction ended';
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-    if (days > 0) return `${days}z ${hours}h rămase`;
-    return `${hours}h rămase`;
+    if (days > 0) return `${days}d ${hours}h left`;
+    return `${hours}h left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
