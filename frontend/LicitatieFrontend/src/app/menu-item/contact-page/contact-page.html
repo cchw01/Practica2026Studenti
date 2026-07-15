@@ -1,0 +1,81 @@
+<div class="contact-page-container">
+  <section class="contact-card">
+    <div class="contact-header">
+
+      <h1>Contact Us</h1>
+
+      <p>
+        Do you have any questions? Our team is ready to help you.
+      </p>
+    </div>
+
+    <div class="contact-details">
+      <!-- Email -->
+      <article class="detail-item">
+        <div class="detail-icon">
+          <span>✉</span>
+        </div>
+
+        <div class="detail-content">
+          <span class="detail-label">Email</span>
+
+          <a [href]="'mailto:' + contactEmail">
+            {{ contactEmail }}
+          </a>
+        </div>
+      </article>
+
+      <!-- Phone -->
+      <article class="detail-item">
+        <div class="detail-icon">
+          <span>☎</span>
+        </div>
+
+        <div class="detail-content">
+          <span class="detail-label">Phone number</span>
+
+          <a [href]="'tel:' + phoneNumber">
+            {{ phoneNumber }}
+          </a>
+        </div>
+      </article>
+
+      <!-- Schedule -->
+      <article class="detail-item">
+        <div class="detail-icon">
+          <span>◷</span>
+        </div>
+
+        <div class="detail-content">
+          <span class="detail-label">Call Center Hours</span>
+
+          <span class="detail-value">
+            {{ callCenterSchedule }}
+          </span>
+        </div>
+      </article>
+    </div>
+
+    <div class="social-media-section">
+      <div class="social-text">
+        <h2>Follow Us</h2>
+
+        <p>
+          Stay connected with us on social media.
+        </p>
+      </div>
+
+      <ul class="social-links">
+        <li *ngFor="let link of socialMediaLinks">
+          <a
+            [href]="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ link.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>

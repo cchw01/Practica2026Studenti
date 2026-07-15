@@ -16,22 +16,27 @@
           }
         </div>
 
-        <div class="name-row">
-          <div class="form-group">
-            <label for="first_name">First Name</label>
-            <input id="first_name" type="text" formControlName="first_name" placeholder="First name" />
-            @if (registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched) {
-              <div class="error">First name is required.</div>
-            }
-          </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" formControlName="name" placeholder="Full name" />
+          @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+            <div class="error">Full name is required.</div>
+          }
+        </div>
 
-          <div class="form-group">
-            <label for="last_name">Last Name</label>
-            <input id="last_name" type="text" formControlName="last_name" placeholder="Last name" />
-            @if (registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched) {
-              <div class="error">Last name is required.</div>
-            }
-          </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" placeholder="Email" />
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <div class="error">
+              @if (registerForm.get('email')?.errors?.['required']) {
+                <span>Email is required.</span>
+              }
+              @if (registerForm.get('email')?.errors?.['email']) {
+                <span>Please enter a valid email.</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -83,7 +88,8 @@
       </form>
       
       <div class="login-link">
-        Already have an account? <a routerLink="/login">Sign in</a>
+        Already have an account? <a
+         routerLink="/login-page"> Sing in </a>
       </div>
     </div>
   </div>

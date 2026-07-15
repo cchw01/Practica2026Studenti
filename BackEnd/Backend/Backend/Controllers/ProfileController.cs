@@ -1,9 +1,6 @@
 using Backend.DataManagement;
 using Backend.Models;
-using Backend.UserDBContext;
-using Backend.UserSpace;
 using Microsoft.AspNetCore.Mvc;
-using UserSpaceReview = Backend.UserSpace.Review;
 
 namespace Backend.Controllers
 {
@@ -13,7 +10,7 @@ namespace Backend.Controllers
     {
         private readonly ProfileDataOps _dataOps;
 
-        public ProfileController(ProfileDBContextClass dbContext)
+        public ProfileController(ApplicationDbContext dbContext)
         {
             _dataOps = new ProfileDataOps(dbContext);
         }
@@ -37,7 +34,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var profile = _dataOps.GetProfileById(id);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var profile = _dataOps.GetProfileById(userId);
                 if (profile is null)
                     return NotFound(new { message = $"Utilizatorul cu id='{id}' nu a fost găsit." });
 
@@ -74,7 +74,10 @@ namespace Backend.Controllers
                 if (request is null)
                     return BadRequest(new { message = "Corpul cererii este null." });
 
-                var updated = _dataOps.UpdateProfile(id, request);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var updated = _dataOps.UpdateProfile(userId, request);
                 if (updated is null)
                     return NotFound(new { message = $"Utilizatorul cu id='{id}' nu a fost găsit." });
 
@@ -91,7 +94,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var reviews = _dataOps.GetReviewsForUser(id);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var reviews = _dataOps.GetReviewsForUser(userId);
                 return Ok(reviews);
             }
             catch (Exception ex)
@@ -105,7 +111,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var reviews = _dataOps.GetReviewsByUser(id);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var reviews = _dataOps.GetReviewsByUser(userId);
                 return Ok(reviews);
             }
             catch (Exception ex)
@@ -128,13 +137,20 @@ namespace Backend.Controllers
                 if (string.IsNullOrWhiteSpace(request.ReviewerId))
                     return BadRequest(new { message = "ReviewerId este obligatoriu." });
 
-                var review = new UserSpaceReview(
-                    id: Guid.NewGuid().ToString(),
-                    reviewerId: request.ReviewerId,
-                    revieweeId: id,
-                    score: request.Score,
-                    comment: request.Comment ?? string.Empty
-                );
+                if (!int.TryParse(id, out int reviewedUserId))
+                    return BadRequest(new { message = "ReviewedUserId (id) trebuie să fie un număr întreg." });
+
+                if (!int.TryParse(request.ReviewerId, out int reviewerId))
+                    return BadRequest(new { message = "ReviewerId trebuie să fie un număr întreg." });
+
+                var review = new Review
+                {
+                    ReviewerId = reviewerId,
+                    ReviewedUserId = reviewedUserId,
+                    Rating = request.Score,
+                    Comment = request.Comment ?? string.Empty,
+                    ReviewDate = DateTime.UtcNow
+                };
 
                 var dto = _dataOps.AddReview(review);
                 return CreatedAtAction(nameof(GetReviewsForUser), new { id }, dto);
@@ -150,7 +166,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var deleted = _dataOps.DeleteReview(reviewId);
+                if (!int.TryParse(reviewId, out int rid))
+                    return BadRequest(new { message = "ReviewId trebuie să fie un număr întreg." });
+
+                var deleted = _dataOps.DeleteReview(rid);
                 if (!deleted)
                     return NotFound(new { message = $"Review-ul cu id='{reviewId}' nu a fost găsit." });
 
@@ -167,7 +186,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var items = _dataOps.GetAddedItemsByUser(id);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var items = _dataOps.GetAddedItemsByUser(userId);
                 return Ok(items);
             }
             catch (Exception ex)
@@ -181,7 +203,10 @@ namespace Backend.Controllers
         {
             try
             {
-                var items = _dataOps.GetWonItemsByUser(id);
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+
+                var items = _dataOps.GetWonItemsByUser(userId);
                 return Ok(items);
             }
             catch (Exception ex)
