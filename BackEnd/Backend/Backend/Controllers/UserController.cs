@@ -1,9 +1,10 @@
+using Azure.Core;
     using Backend.DataManagement;
-    using Backend.Models;
-    using Microsoft.AspNetCore.Mvc;
-    using Backend.Services;
     using Backend.DTOs;
+    using Backend.Models;
+    using Backend.Services;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
 
     namespace Backend.Controllers
     {
@@ -103,7 +104,8 @@
                     Secure = true,
                 };
                 Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-                return Ok(token);
+
+                return Ok(new { accessToken = token });
             }
             catch (Exception ex)
             {
@@ -152,7 +154,8 @@
                         Secure = true,
                     };
                     Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-                    return Ok(accessToken);
+
+                    return Ok(new { accessToken = accessToken });
                 }
                 else
                 {

@@ -11,12 +11,13 @@ namespace Backend.DataManagement
             dbContext = context;
         }
 
-        public RefreshToken CreateRefreshToken(User user)
+        public RefreshToken? CreateRefreshToken(User user)
         {
             var token = dbContext?.RefreshTokens.Where(x => x.UserId == user.ID).FirstOrDefault();
             if(token != null)
             {
                 DeleteRefreshToken(user);
+                token = null;
             }
             if (token == null || token.ExpiresAt < DateTime.Now)
             {
@@ -27,8 +28,9 @@ namespace Backend.DataManagement
                 newToken.ExpiresAt = newToken.CreatedAt.AddDays(DAYS_TO_ADD);
                 dbContext?.RefreshTokens.Add(newToken);
                 dbContext?.SaveChanges();
+                return newToken;
             }
-            return token;
+            return null;
         }
         public void DeleteRefreshToken(User user)
         {
