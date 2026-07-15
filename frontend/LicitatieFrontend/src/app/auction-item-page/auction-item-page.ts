@@ -50,13 +50,7 @@ export class AuctionItemPage {
   isInWishlist: boolean = false;
   errorMessage: string = '';
 
-  onAddClick(): void {
-    alert('Butonul Add New Item functioneaza');
-  }
 
-  onEditClick(): void {
-    alert('Butonul Edit functioneaza');
-  }
 
   placeBid(): void {
     this.errorMessage = '';

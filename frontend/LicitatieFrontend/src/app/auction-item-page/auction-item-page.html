@@ -10,14 +10,14 @@
     <div class="auction-content">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <p class="status">{{ auctionItem.status }}</p>
-        <button *ngIf="authService.isLoggedIn() && authService.getCurrentUser() === auctionItem.owner" type="button" class="btn btn-edit" (click)="onEditClick()">Edit</button>
+       
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px;">
         <h1 class="page-title">{{ auctionItem.name }}</h1>
         
         <div style="display: flex; gap: 10px; align-items: center;">
-          <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-primary" (click)="onAddClick()">Add New Item</button>
+         
           
           <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-secondary" (click)="toggleWishlist()">
             {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
