@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Backend.Services;
     using Backend.DTOs;
+    using Microsoft.AspNetCore.Http;
 
     namespace Backend.Controllers
     {
@@ -94,7 +95,14 @@
                 if (!parolaCorecta)
                     return Unauthorized("Email sau parolă incorectă.");
                 var token = tokenProvider.GenerateAccesToken(user);
-                refreshTokenDataOps.CreateRefreshToken(user);
+                RefreshToken? refreshToken = refreshTokenDataOps.CreateRefreshToken(user);
+                var refreshTokenCookie = new CookieOptions
+                {
+                    Expires = refreshToken.ExpiresAt,
+                    HttpOnly = true,
+                    Secure = true,
+                };
+                Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
                 return Ok(token);
             }
             catch (Exception ex)
@@ -103,12 +111,23 @@
             }
         }
         [HttpPost]
-        public ActionResult RegenerateAccessToken(int userId)
+        public ActionResult RegenerateAccessToken()
         {
             try
             {
-                var user = dataOps.GetUserById(userId);
-                if(user==null)
+
+                var refreshTokenFromRequest = Request.Cookies["refreshToken"];
+                if(refreshTokenFromRequest==null)
+                {
+                    return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
+                }
+                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                if(token==null)
+                {
+                    return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
+                }
+                var user = dataOps.GetUserById(token.UserId);
+                if (user==null)
                 {
                     return Unauthorized("Utilizator neconectat");
                 }
@@ -121,10 +140,23 @@
                 {
                     return Unauthorized("Refresh Token expirat, se redirectioneaza la Login");
                 }
-                else
+                else if(refreshToken.Token == refreshTokenFromRequest)
                 {
                     var accessToken = tokenProvider.GenerateAccesToken(user);
+                    Response.Cookies.Delete("refreshToken");
+                    var newRefreshToken = refreshTokenDataOps.CreateRefreshToken(user);
+                    var refreshTokenCookie = new CookieOptions
+                    {
+                        Expires = refreshToken.ExpiresAt,
+                        HttpOnly = true,
+                        Secure = true,
+                    };
+                    Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
                     return Ok(accessToken);
+                }
+                else
+                {
+                    return Unauthorized("Refresh Token expirat sau invalid, se redirectioneaza la Login");
                 }
             }
             catch(Exception ex)
