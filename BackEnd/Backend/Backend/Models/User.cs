@@ -20,7 +20,7 @@ namespace Backend.Models
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
-        public int AddedItemsListId { get; set; };
+        public int AddedItemsListId { get; set; }
 
         public List<AuctionItem> BiddedItemsList { get; set; } = new();
 
@@ -30,7 +30,8 @@ namespace Backend.Models
 
         public float Rating { get; private set; }
 
-        public List<Review> ReviewList { get; set; } = new();
+        public List<Review> ReviewsWritten { get; set; } = new();
+        public List<Review> ReviewsReceived { get; set; } = new();
 
         public User()
         {

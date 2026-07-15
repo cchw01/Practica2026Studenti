@@ -20,8 +20,14 @@ namespace Backend.DataManagement
         {
             modelBuilder.Entity<Review>() // Relatie Review -> Reviewer
                 .HasOne(r => r.Reviewer)
-                .WithMany(s => s.ReviewList)
+                .WithMany(u => u.ReviewsWritten)
                 .HasForeignKey(r => r.ReviewerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Review>() // Relatie Review -> ReviewedUser
+                .HasOne(r => r.ReviewedUser)
+                .WithMany(u => u.ReviewsReceived)
+                .HasForeignKey(r => r.ReviewedUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<AuctionItem>() // Relatiee Item -> Categorie

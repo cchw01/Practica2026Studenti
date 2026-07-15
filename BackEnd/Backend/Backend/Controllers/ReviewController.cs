@@ -47,6 +47,12 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpGet("user/{userId}")]
+        public ActionResult<Review[]> GetReviewsForUser(int userId)
+        {
+            return Ok(dataOps.GetReviewsByUserId(userId));
+        }
+
         [HttpPost]
         public ActionResult<Review> AddReview(Review review)
         {

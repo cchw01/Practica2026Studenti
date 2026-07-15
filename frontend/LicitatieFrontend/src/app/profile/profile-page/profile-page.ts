@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReviewService } from '../../app-logic/review';
 
 interface Item {
   id: number;
@@ -53,6 +54,8 @@ export class ProfilePage implements OnInit {
   bidItems: Item[] = [];
   reviews: Review[] = [];
 
+   constructor(private reviewService: ReviewService) {}
+
   // --- Stars helper ---
   get stars(): number[] {
     return [1, 2, 3, 4, 5];
@@ -67,6 +70,7 @@ export class ProfilePage implements OnInit {
   // --- Lifecycle ---
   ngOnInit(): void {
     this.loadProfile();
+    this.loadReviews();
   }
 
   // --- Persistence ---
@@ -79,6 +83,38 @@ export class ProfilePage implements OnInit {
 
   private saveProfile(): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
+  }
+
+
+  private loadReviews(): void {
+    const userId = this.getCurrentUserId();
+    if (!userId) return;
+
+    this.reviewService.getReviewsForUser(userId).subscribe({
+      next: (data: any[]) => {
+        this.reviews = data.map(r => ({
+          id: r.id,
+          author: r.reviewer?.username ?? 'Unknown',
+          rating: r.rating,
+          comment: r.comment,
+          date: new Date(r.reviewDate).toLocaleDateString(),
+        }));
+        this.score = this.reviews.length
+          ? this.reviews.reduce((sum, r) => sum + r.rating, 0) / this.reviews.length
+          : 0;
+      },
+      error: (err: any) => console.error('Eroare la încărcarea review-urilor', err),
+    });
+  }
+
+  private getCurrentUserId(): number | null {
+    // TODO: adapteaza in functie de unde stochezi id-ul userului logat (auth service / token)
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return parsed.id ?? null;
+    }
+    return null;
   }
 
   // --- Edit actions ---
