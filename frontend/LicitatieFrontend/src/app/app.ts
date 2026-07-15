@@ -12,7 +12,6 @@ export class App {
   protected readonly title = signal('BidSphere');
   protected readonly menuOpen = signal(false);
 
-  // TranslateService is already correctly injected.
   readonly translate = inject(TranslateService);
 
   // Languages available in the application.
@@ -61,7 +60,6 @@ export class App {
     // Update the language attribute of the HTML document.
     document.documentElement.lang = language;
 
-    // Optional: close the mobile navbar after selecting a language.
     this.closeMenu();
   }
 
