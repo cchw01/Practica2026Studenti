@@ -38,12 +38,20 @@ namespace Backend.DataManagement
             DbContext.SaveChanges();
         }
 
-        public void UpdateReview(Review review)
+        public bool UpdateReview(Review review)
         {
-            DbContext?.Reviews.Update(review);
-            DbContext?.SaveChanges();
-        }
+            var existing = DbContext.Reviews.Find(review.Id);
+            if (existing == null)
+                return false;
 
+            existing.Rating = review.Rating;
+            existing.Comment = review.Comment;
+            existing.ReviewerId = review.ReviewerId;
+            existing.ReviewedUserId = review.ReviewedUserId;
+
+            DbContext.SaveChanges();
+            return true;
+        }
         public void DeleteReview(int id)
         {
             var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();

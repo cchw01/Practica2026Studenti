@@ -70,6 +70,7 @@ namespace Backend.Controllers
             }
         }
 
+
         [HttpPut]
         public ActionResult<Review> UpdateReview(Review review)
         {
@@ -78,7 +79,10 @@ namespace Backend.Controllers
                 if (review.Rating < 0 || review.Rating > 5)
                     return BadRequest("Ratings need to be between 0 and 5.");
 
-                dataOps.UpdateReview(review);
+                var success = dataOps.UpdateReview(review);
+                if (!success)
+                    return NotFound($"Review with id {review.Id} not found.");
+
                 return Ok(review);
             }
             catch (Exception ex)
