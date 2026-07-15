@@ -24,6 +24,8 @@ import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 
 @NgModule({
   declarations: [
