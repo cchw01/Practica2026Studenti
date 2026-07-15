@@ -1,6 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,11 +15,19 @@ import { HomePage } from './home-page/home-page';
 import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
-
 import { ContactPage } from './menu-item/contact-page/contact-page';
 
+import { AuthInterceptor } from './services/auth-interceptor';
+
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage],
+  declarations: [
+    App, 
+    LoginPage, 
+    RegisterPage, 
+    HomePage, 
+    ProfilePage, 
+    ContactPage
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,8 +37,17 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptorsFromDi()), 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [App],
 })
 export class AppModule {}
