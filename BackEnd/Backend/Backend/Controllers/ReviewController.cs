@@ -36,7 +36,7 @@ namespace Backend.Controllers
             {
                 var review = dataOps.GetReviewById(id);
 
-                if (review == null)
+                if (review== null)
                     return NotFound();
 
                 return Ok(review);

@@ -7,7 +7,7 @@ import { Review, ReviewCreate } from '../Models/review/review.model';
   providedIn: 'root'
 })
 export class ReviewService {
-  private readonly baseUrl = '/api/Review';
+  private readonly baseUrl = '/api/Review'; // ajustează dacă backend-ul rulează pe alt host/port
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +28,7 @@ export class ReviewService {
   }
 
   updateReview(review: Review): Observable<Review> {
+    // Controllerul așteaptă [HttpPut] fără id în rută, review-ul complet vine în body
     return this.http.put<Review>(this.baseUrl, review);
   }
 
