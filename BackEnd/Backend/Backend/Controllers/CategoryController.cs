@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
-using Backend.Data;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Backend.Controllers
 {
@@ -16,7 +17,7 @@ namespace Backend.Controllers
             dataOps = new CategoryDataOps(DbContext);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public ActionResult<CategoryItem> GetCategories()
         {
             try

@@ -1,0 +1,51 @@
+<div class="auctions-page-container">
+  <div class="page-header">
+    <h1>Active Auctions</h1>
+    <p>Discover unique items and bid in real time</p>
+  </div>
+
+  <div class="search-section">
+    <div class="search-field">
+      <input
+        type="text"
+        placeholder="Search by name..."
+        [(ngModel)]="searchText"
+        (ngModelChange)="onFilterChange()"
+      />
+    </div>
+  </div>
+
+  <div class="filters-row">
+    <select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()">
+      <option value="">All categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+
+    <select [(ngModel)]="sortBy" (ngModelChange)="onFilterChange()">
+      <option value="endingSoon">Ending soon</option>
+      <option value="priceLowHigh">Price: Low to High</option>
+      <option value="priceHighLow">Price: High to Low</option>
+      <option value="newest">Newest</option>
+    </select>
+  </div>
+
+  <div class="active-auctions">
+    <div class="cards-container" *ngIf="filteredItems.length > 0">
+      <div class="card-auction" *ngFor="let item of filteredItems">
+        <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
+        <div class="card-content">
+          <h3>{{ item.name }}</h3>
+          <p class="current-bid">Current price: {{ item.currentPrice }} RON</p>
+          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.endDate)">
+            {{ getRemainingTime(item.endDate) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredItems.length === 0">
+      <h3>No items found</h3>
+      <p>There are currently no active auctions matching your search.</p>
+    </div>
+  </div>
+</div>
