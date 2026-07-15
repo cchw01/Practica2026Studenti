@@ -39,10 +39,9 @@
 
   <div class="active-auctions">
     <div class="cards-container" *ngIf="filteredItems.length > 0">
-      <div class="card-auction" *ngFor="let item of filteredItems" [routerLink]="['/auctions', item.id]">        <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
-        <div class="card-content">
-          <h3>{{ item.name }}</h3>
-          <p class="current-bid">Current price: {{ item.currentPrice }} RON</p>
+      <div class="card-auction" *ngFor="let item of filteredItems" [routerLink]="['/auctions', item.id]">
+        <div class="card-image-wrap">
+          <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
           <span class="time-left" [ngClass]="getTimeUrgencyClass(item.endDate)">
             {{ getRemainingTime(item.endDate) }}
           </span>

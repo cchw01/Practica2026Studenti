@@ -22,6 +22,8 @@ import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 
 import { AuthInterceptor } from './services/auth-interceptor';
 
