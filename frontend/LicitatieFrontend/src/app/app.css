@@ -226,3 +226,48 @@
     border-color: rgba(255, 255, 255, 0.5);
   }
 }
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.language-button {
+  min-width: 38px;
+  padding: 7px 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+
+  background-color: transparent;
+  color: white;
+
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.language-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.language-button.active-language {
+  background-color: white;
+  color: var(--mat-sys-primary);
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 0;
+  }
+}

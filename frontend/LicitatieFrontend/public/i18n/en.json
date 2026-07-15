@@ -1,0 +1,12 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "AUCTIONS": "Auctions",
+    "FORUM": "Forum",
+    "CONTACT": "Contact",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "TOGGLE_MENU": "Toggle navigation",
+    "SELECT_LANGUAGE": "Select language"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "NAV": {
+    "HOME": "Acasă",
+    "AUCTIONS": "Licitații",
+    "FORUM": "Forum",
+    "CONTACT": "Contact",
+    "LOGIN": "Autentificare",
+    "REGISTER": "Înregistrare",
+    "TOGGLE_MENU": "Deschide sau închide meniul",
+    "SELECT_LANGUAGE": "Selectează limba"
+  }
+}

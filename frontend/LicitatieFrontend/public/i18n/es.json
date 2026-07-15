@@ -1,0 +1,12 @@
+{
+  "NAV": {
+    "HOME": "Inicio",
+    "AUCTIONS": "Subastas",
+    "FORUM": "Foro",
+    "CONTACT": "Contacto",
+    "LOGIN": "Iniciar sesión",
+    "REGISTER": "Registrarse",
+    "TOGGLE_MENU": "Abrir o cerrar la navegación",
+    "SELECT_LANGUAGE": "Seleccionar idioma"
+  }
+}
