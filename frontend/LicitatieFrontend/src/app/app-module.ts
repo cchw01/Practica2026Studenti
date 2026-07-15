@@ -24,14 +24,14 @@ import { ReviewComponent } from './Models/review/review';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 import { AuthInterceptor } from './services/auth-interceptor';
-import { ForumPage } from './forum-page/forum-page';
-import { AuctionsPage } from './auctions-page/auctions-page';
+
+
 
 
 
 
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage],
+  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage,ShareListingButton, AuctionDetail],
   imports: [
     BrowserModule,
     AppRoutingModule,
