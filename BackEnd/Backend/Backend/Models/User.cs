@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Backend.Models
 {
@@ -30,9 +30,6 @@ namespace Backend.Models
 
         public List<Review> ReviewList { get; set; } = new();
 
-        public User()
-        {
-        }
 
         public User(
             int id,
