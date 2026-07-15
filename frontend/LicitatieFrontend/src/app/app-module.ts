@@ -34,7 +34,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     ProfilePage,
     ContactPage,
     ForumPage,
-    AuctionsPage
+    AuctionsPage,
+    AuctionDetail,
+    ShareListingButton,
   ],
   imports: [
     BrowserModule,
