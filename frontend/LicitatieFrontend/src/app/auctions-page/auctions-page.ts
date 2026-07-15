@@ -28,7 +28,7 @@ export class AuctionsPage implements OnInit {
         this.categories = [...new Set(items.map((i) => i.category))];
         this.applyFiltersAndSort();
       },
-      error: (err) => console.error('Error loading items', err),
+      error: (err) => console.error('Error loading items', err)
     });
   }
 
