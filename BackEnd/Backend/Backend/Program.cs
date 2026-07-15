@@ -5,16 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+// ── CORS ── permite cereri din Angular (localhost:4200)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
     {
-        options.JsonSerializerOptions.ReferenceHandler =
-            ReferenceHandler.IgnoreCycles;
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
+});
 
 // ── Controllers cu serializare JSON (enum ca string, ignoră cicli) ──
 builder.Services.AddControllers()
@@ -28,36 +31,28 @@ builder.Services.AddControllers()
 // ── OpenAPI / Swagger ──
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(
-                    builder.Configuration["Jwt:Secret"]!
-                )
-            ),
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"])),
 
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-
-            RoleClaimType = "role"
-        };
-    });
-
-builder.Services.AddAuthorization();
+        RoleClaimType = "role",
+    };
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -71,8 +66,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseCors("AllowAngular");
+
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
