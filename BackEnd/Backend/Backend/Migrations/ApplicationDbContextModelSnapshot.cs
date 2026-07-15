@@ -117,7 +117,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("BidderId");
 
-                    b.ToTable("Bid");
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("Backend.Models.CategoryItem", b =>

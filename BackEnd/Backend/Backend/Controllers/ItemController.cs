@@ -30,13 +30,23 @@ namespace Backend.Controllers
             }
         }
 
-        //not found
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
         {
             dataOps.AddAuctionItem(item);
             return Ok();
+            try
+            {
+                dataOps.AddAuctionItem(item);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(errorMessage);
+            }
         }
+
 
         [HttpPut]
         public ActionResult<AuctionItem> UpdateAuctionItem(AuctionItem item)
