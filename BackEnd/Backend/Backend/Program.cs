@@ -2,6 +2,7 @@ using Backend.DataManagement;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -15,6 +16,16 @@ builder.Services.AddControllers()
             ReferenceHandler.IgnoreCycles;
     });
 
+// ── Controllers cu serializare JSON (enum ca string, ignoră cicli) ──
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
+// ── OpenAPI / Swagger ──
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
@@ -50,6 +61,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
+// ── HTTP pipeline ──
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
