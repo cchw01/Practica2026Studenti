@@ -1,8 +1,13 @@
 .split-layout {
   display: flex;
-  min-height: 100vh;
+  min-height: 640px;
   width: 100%;
+  max-width: 1100px;
+  margin: 40px auto;
+  border-radius: 28px;
+  overflow: hidden;
   background-color: #ffffff;
+  box-shadow: 0 30px 60px rgba(30, 42, 90, 0.16);
   font-family:
     'Inter',
     system-ui,
@@ -18,10 +23,25 @@
   .image-section {
     display: block;
     flex: 1;
-    /* Aici e imaginea ta de pe Unsplash */
-    background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+    position: relative;
+    background-image: url('https://iili.io/C0goSsV.jpg');
     background-size: cover;
     background-position: center;
+  }
+
+  .image-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(63, 81, 181, 0.25), rgba(233, 30, 99, 0.2));
+  }
+}
+
+@media (max-width: 767px) {
+  .split-layout {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
   }
 }
 
@@ -48,13 +68,11 @@ h2 {
   letter-spacing: -0.03em;
 }
 
-/* Fix pentru inputurile de la Angular Material */
 mat-form-field {
   width: 100%;
   margin-bottom: 0.85rem;
 }
 
-/* Suprascriem butonul Material ca sa arate ca cel negru din eBay/CSS-ul tau */
 button.submit-btn {
   width: 100%;
   padding: 0.85rem;
@@ -62,7 +80,8 @@ button.submit-btn {
   background-color: #111827 !important;
   color: white !important;
   border: none;
-  border-radius: 30px !important; /* Forma de pastila */
+  border-radius: 30px !important;
+  /* Forma de pastila */
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
@@ -79,7 +98,6 @@ button.submit-btn:disabled {
   cursor: not-allowed;
 }
 
-/* Containerul pentru link-ul de jos */
 .login-link {
   text-align: center;
   margin-top: 20px;
@@ -87,7 +105,6 @@ button.submit-btn:disabled {
   color: #4b5563;
 }
 
-/* Modificam butonul mic ca sa arate fix a link */
 .btn-register {
   background: none;
   border: none;

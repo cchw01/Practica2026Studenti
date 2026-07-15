@@ -1,27 +1,31 @@
-﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Review
+namespace Backend.Models
 {
-    public int Id { get; set; }
+    public class Review
+    {
+        public int Id { get; set; }
 
-    [Required]
-    public int ReviewerId { get; set; }
+        [Required]
+        public int ReviewerId { get; set; }
 
-    [ForeignKey(nameof(ReviewerId))]
-    public string Reviewer { get; set; }
+        [ForeignKey(nameof(ReviewerId))]
+        public User Reviewer { get; set; }
 
-    [Required]
-    public int ReviewedUserId { get; set; }
+        [Required]
+        public int ReviewedUserId { get; set; }
 
-    [ForeignKey(nameof(ReviewedUserId))]
-    public string ReviewedUser { get; set; }
+        [ForeignKey(nameof(ReviewedUserId))]
+        public User ReviewedUser { get; set; }
 
-    [Range(0, 5)]
-    public int Rating { get; set; }
+        [Range(0, 5)]
+        public float Rating { get; set; }
 
-    [MaxLength(1000)]
-    public string Comment { get; set; }
+        [MaxLength(1000)]
+        public string Comment { get; set; }
 
-    public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
+        public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
+    }
 }

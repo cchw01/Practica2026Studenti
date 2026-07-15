@@ -1,0 +1,270 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 64px 16px 48px;
+  margin: 24px 16px 8px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(63, 81, 181, 0.08), rgba(233, 30, 99, 0.06));
+  box-shadow: 0 20px 40px rgba(30, 42, 90, 0.06);
+}
+
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-blob-1 {
+  width: 260px;
+  height: 260px;
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(63, 81, 181, 0.35), transparent 70%);
+}
+
+.hero-blob-2 {
+  width: 320px;
+  height: 320px;
+  bottom: -140px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(233, 30, 99, 0.28), transparent 70%);
+}
+
+.hero-tag {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 6px 16px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--mat-sys-primary, #3f51b5);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(30, 42, 90, 0.08);
+}
+
+.hero h1 {
+  position: relative;
+  z-index: 1;
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.hero p {
+  position: relative;
+  z-index: 1;
+  color: #666;
+  font-size: 15px;
+  max-width: 500px;
+  margin: 0 auto 24px;
+}
+
+.hero-buttons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-explore,
+.btn-sell {
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-explore:hover,
+.btn-sell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.btn-explore:active,
+.btn-sell:active {
+  transform: scale(0.97);
+}
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 32px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 800px;
+}
+
+.PopularCategory {
+  text-align: center;
+  padding: 24px 16px 40px;
+}
+
+.PopularCategory h2 {
+  position: relative;
+  display: inline-block;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.PopularCategory h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--mat-sys-primary, #3f51b5), #e91e63);
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+
+.card-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 130px;
+  padding: 24px 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.06) !important;
+  background-color: rgba(255, 255, 255, 0.75);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-category:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(30, 42, 90, 0.12) !important;
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: background-color 0.2s;
+}
+
+.card-category:hover .icon-circle {
+  background-color: #e0f2f1; 
+}
+
+.icon-circle mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #555;
+}
+
+.card-category h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.active-auctions {
+  padding: 0 16px 40px;
+}
+
+.active-auctions h2 {
+  position: relative;
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.active-auctions h2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--mat-sys-primary, #3f51b5), #e91e63);
+}
+
+.card-auction {
+  width: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08) !important;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-auction:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(30, 42, 90, 0.15) !important;
+}
+
+.card-auction img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-auction h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.current-bid {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.time-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.time-urgent { background-color: #fdecea; color: #c0392b; }
+.time-medium { background-color: #fef6e0; color: #b8860b; }
+.time-safe   { background-color: #e8f6ec; color: #2e7d32; }
+
+mat-card-actions button {
+  transition: all 0.2s ease;
+  border-radius: 20px;
+}
+
+mat-card-actions button:hover {
+  transform: scale(1.05);
+}

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../app-logic/auth';
+import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login-page',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  errorMessage: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -38,20 +40,18 @@ export class LoginPage implements OnInit {
     const formData = this.loginForm.value;
     console.log('Trimitem datele:', formData);
 
-    // Aici apelam metoda din serviciu catre backend
-    this.authService.login(formData).subscribe({
-      next: (response) => {
-        console.log('Login cu succes!', response);
-        // Mai incolo, aici vei pune logica de salvare token si redirect
-      },
-      error: (err) => {
-        console.error('Eroare de la server:', err);
-        // Aici poti prinde eroarea de la C# ca parola e gresita
-      },
-    });
+this.authService.login(formData.email,formData.password ).subscribe({  next: (response: any) => {
+    console.log('Login cu succes!', response);
+    this.router.navigate(['/profile']);
+  },
+  error: (err) => {
+    console.error('Eroare de la server:', err);
+    this.errorMessage = 'Email sau parolă incorecte.';
+  },
+});
   }
 
   goToRegister(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register-page']);
   }
 }

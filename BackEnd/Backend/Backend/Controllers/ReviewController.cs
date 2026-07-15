@@ -1,10 +1,7 @@
-﻿
-
-using Backend.Data;
-using Backend.DataManagement;
+﻿using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Backend.Models;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -39,7 +36,7 @@ namespace Backend.Controllers
             {
                 var review = dataOps.GetReviewById(id);
 
-                if (review == null)
+                if (review== null)
                     return NotFound();
 
                 return Ok(review);
