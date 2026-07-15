@@ -1,6 +1,5 @@
-﻿
-using System;
-using Backend.UserSpace;
+﻿using System;
+
 namespace Backend.Models
 {
     public class ForumComment
