@@ -12,6 +12,16 @@ namespace Backend.DataManagement
             _db = db;
         }
 
+        public User? GetRawUserById(int userId)
+        {
+            return _db.Users.Find(userId);
+        }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
+        }
+
         public ProfileDto? GetProfileById(int userId)
         {
             var user = _db.Users.Find(userId);

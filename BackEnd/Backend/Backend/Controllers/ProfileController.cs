@@ -214,6 +214,35 @@ namespace Backend.Controllers
                 return StatusCode(500, new { message = "Eroare internă.", detail = ex.Message });
             }
         }
+
+        [HttpPost("{id}/change-password")]
+        public ActionResult ChangePassword(string id, [FromBody] ChangePasswordRequest request)
+        {
+            try
+            {
+                if (request is null)
+                    return BadRequest(new { message = "Request body is null." });
+
+                if (!int.TryParse(id, out int userId))
+                    return BadRequest(new { message = "ID must be an integer." });
+
+                var user = _dataOps.GetRawUserById(userId);
+                if (user is null)
+                    return NotFound(new { message = $"User with ID '{id}' was not found." });
+
+                if (!Backend.Services.PasswordHasher.VerifyPassword(request.CurrentPassword, user.Password))
+                    return BadRequest(new { message = "Current password is incorrect." });
+
+                user.Password = Backend.Services.PasswordHasher.HashPassword(request.NewPassword);
+                _dataOps.SaveChanges();
+
+                return Ok(new { message = "Password updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal error.", detail = ex.Message });
+            }
+        }
     }
 
     public class AddReviewRequest
@@ -221,5 +250,11 @@ namespace Backend.Controllers
         public string ReviewerId { get; set; } = string.Empty;
         public float Score { get; set; }
         public string? Comment { get; set; }
+    }
+
+    public class ChangePasswordRequest
+    {
+        public string CurrentPassword { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
     }
 }
