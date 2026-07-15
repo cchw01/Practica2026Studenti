@@ -2,7 +2,6 @@ import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +17,12 @@ import { ProfilePage } from './profile/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-
+import { ForumPage } from './forum-page/forum-page';
+//import { Add } from './menu-item/add/add';
+import { AuctionsPage } from './auctions-page/auctions-page';
+import { ReviewComponent } from './Models/review/review';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { ForumPage } from './forum-page/forum-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
@@ -38,11 +42,12 @@ import { AuctionsPage } from './auctions-page/auctions-page';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    ReviewComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptorsFromDi()), 
+    provideHttpClient(withInterceptorsFromDi()),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
