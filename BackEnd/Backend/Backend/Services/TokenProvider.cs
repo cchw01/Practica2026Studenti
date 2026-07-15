@@ -30,9 +30,5 @@ namespace Backend.Services
             var tokenHandler = new JsonWebTokenHandler();
             return tokenHandler.CreateToken(tokenDescriptor);
         }
-        public string GenerateRefreshToken()
-        {
-            return null;
-        }
     }
 }

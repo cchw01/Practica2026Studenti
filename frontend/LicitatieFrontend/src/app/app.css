@@ -1,34 +1,159 @@
-.navbar {
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.app-container {
+  font-family: 'Poppins', sans-serif; 
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1rem 2rem;
-  background-color: var(--mat-sys-primary);
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar a {
+.content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f4f7f6; 
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem; 
+  
+  background-color: rgba(59, 42, 92, 0.90); 
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px); 
+  
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-brand, .nav-actions {
+  flex: 1;
+}
+
+.nav-brand .logo {
   color: white;
   text-decoration: none;
-  padding: 0.7rem 1.4rem;
-  border: 2px solid white;
-  border-radius: 25px;
-  background-color: transparent;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
 
+.nav-links {
+  display: flex;
+  gap: 2.5rem; 
+  justify-content: center;
+}
+
+.nav-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.05rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background-color: #ffb74d; 
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-links a:hover::after {
+  transform: translateX(-50%) scale(1);
+}
+
+.nav-actions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.nav-actions a {
+  text-decoration: none;
+  padding: 0.6rem 1.8rem;
+  border-radius: 30px; 
   font-weight: 600;
-  font-size: 1rem;
-
+  font-size: 0.95rem;
   transition: all 0.3s ease;
 }
 
-.navbar a:hover {
-  background-color: white;
-  color: var(--mat-sys-primary);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+.btn-login {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4); 
+  background-color: transparent;
 }
 
-.navbar a:active {
-  transform: translateY(0);
-  box-shadow: none;
+.btn-login:hover {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-register {
+  color: #3b2a5c;
+  background-color: white;
+  border: 1px solid white;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  background-color: #1a1a24;
+  color: white;
+  border-top: 4px solid #3b2a5c; 
+}
+
+.footer-links {
+  display: flex;
+  gap: 3rem;
+}
+
+.footer-links a {
+  color: #a0aec0;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: #718096;
+  margin: 0;
 }

@@ -1,4 +1,4 @@
-﻿    using Backend.DataManagement;
+    using Backend.DataManagement;
     using Backend.Models;
     using Microsoft.AspNetCore.Mvc;
     using Backend.Services;
