@@ -5,10 +5,10 @@ import { ItemService } from '../services/item-service';
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
 @Component({
-  selector: 'app-auctions-page',  
+  selector: 'app-auctions-page',
   standalone: false,
   templateUrl: './auctions-page.html',
-  styleUrls: ['./auctions-page.css']
+  styleUrls: ['./auctions-page.css'],
 })
 export class AuctionsPage implements OnInit {
   allItems: AuctionItem[] = [];
@@ -25,7 +25,7 @@ export class AuctionsPage implements OnInit {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map(i => i.category))];
+        this.categories = [...new Set(items.map((i) => i.category))];
         this.applyFiltersAndSort();
       },
       error: (err) => console.error('Error loading items', err)
@@ -36,12 +36,12 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter(i => i.category === this.selectedCategory);
+      result = result.filter((i) => i.category === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter(i => i.name.toLowerCase().includes(search));
+      result = result.filter((i) => i.name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
@@ -77,12 +77,11 @@ export class AuctionsPage implements OnInit {
   }
 
   getTimeUrgencyClass(endDate: Date): string {
-  const diff = new Date(endDate).getTime() - new Date().getTime();
-  const hoursLeft = diff / (1000 * 60 * 60);
+    const diff = new Date(endDate).getTime() - new Date().getTime();
+    const hoursLeft = diff / (1000 * 60 * 60);
 
-  if (hoursLeft <= 24) return 'time-urgent';
-  if (hoursLeft <= 72) return 'time-medium';
-  return 'time-safe';
+    if (hoursLeft <= 24) return 'time-urgent';
+    if (hoursLeft <= 72) return 'time-medium';
+    return 'time-safe';
   }
-
 }
