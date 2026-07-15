@@ -88,9 +88,10 @@
       </form>
       
       <div class="login-link">
-        Already have an account? <a
-         routerLink="/login-page"> Sing in </a>
+        Already have an account? <a routerLink="/login-page">Sign in</a>
       </div>
     </div>
   </div>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
 </div>
+
