@@ -1,0 +1,86 @@
+<div class="help-wrapper">
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Centrul de Asistență</h1>
+        <p>Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.</p>
+    </div>
+
+    <div class="content-grid">
+
+        <!-- Secțiunea FAQ Interactivă -->
+        <div class="card faq-card">
+            <h2>❓ Întrebări Frecvente</h2>
+            <div class="faq-list">
+                <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)"
+                    [class.active]="faq.isOpen">
+                    <div class="faq-question">
+                        <span>{{ faq.question }}</span>
+                        <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
+                    </div>
+                    <div class="faq-answer" *ngIf="faq.isOpen">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coloana din dreapta: Telefon și Formular -->
+        <div class="right-column">
+
+            <!-- Call Center Card -->
+            <div class="card call-card">
+                <h2>📞 Suport Telefonic Rapid</h2>
+                <div class="phone-number">+40 123 456 789</div>
+                <p>Luni - Vineri: 09:00 - 18:00</p>
+            </div>
+
+            <!-- Formular Contact -->
+            <div class="card form-card">
+                <h2>📝 Deschide un Tichet</h2>
+                <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
+                    <div class="input-group">
+                        <input type="text" formControlName="name" placeholder="Nume complet">
+                    </div>
+                    <div class="input-group">
+                        <input type="email" formControlName="email" placeholder="Adresa de email">
+                    </div>
+                    <div class="input-group">
+                        <textarea formControlName="issue" rows="4"
+                            placeholder="Descrie detaliat problema întâmpinată..."></textarea>
+                    </div>
+                    <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">Trimite Solicitarea</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AI Chat Widget Premium -->
+    <div class="chat-widget">
+        <button class="chat-toggle" (click)="toggleChat()" [class.chat-open]="isChatOpen">
+            {{ isChatOpen ? '✖' : '💬 Asistent AI' }}
+        </button>
+
+        <div class="chat-box" *ngIf="isChatOpen">
+            <div class="chat-header">
+                <span class="status-dot"></span> Asistent Virtual Live
+            </div>
+
+            <div class="chat-messages">
+                <div *ngFor="let msg of chatMessages" class="message" [ngClass]="msg.sender">
+                    {{ msg.text }}
+                </div>
+                <div class="message ai typing" *ngIf="isTyping">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" placeholder="Întreabă ceva...">
+                <button (click)="sendMessage(chatInput)">➤</button>
+            </div>
+        </div>
+    </div>
+
+</div>

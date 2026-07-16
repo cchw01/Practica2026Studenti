@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace Backend.Models
 {
@@ -9,11 +10,9 @@ namespace Backend.Models
 
         public string Name { get; set; }
         public decimal StartPrice { get; set; }
-
         public decimal CurrentPrice { get; set; }
+        public CategoryItem? Category { get; set; }
 
-        public CategoryItem Category {get;set; }
-        
         public int CategoryId { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -26,11 +25,12 @@ namespace Backend.Models
             Sold,
         }
 
+        public List<User>? WishingUsers { get; set; }
         public string? Description { get; set; }
 
         public string Location { get; set; }
 
-        public User Owner{get;set; }
+        public User? Owner { get; set; }
 
         public int OwnerId { get; set; }
 
@@ -43,10 +43,11 @@ namespace Backend.Models
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-        
+
+        public List<Bid>? BidList { get; set; }
         //Photolist here if needed
 
 
 
-     }
+    }
 }

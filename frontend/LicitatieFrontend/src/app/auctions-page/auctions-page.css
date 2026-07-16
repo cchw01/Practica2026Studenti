@@ -131,6 +131,7 @@
   overflow: hidden;
   background: white;
   box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08);
+  cursor: pointer;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 

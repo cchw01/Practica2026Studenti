@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfilePage } from './profile/profile-page/profile-page';
+import { ProfilePage } from './menu-item/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-import { ForumPage } from './forum-page/forum-page'
+import { ForumPage } from './forum-page/forum-page';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
@@ -27,12 +28,12 @@ const routes: Routes = [
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent}
-
+  { path: 'help-page', component: HelpPageComponent },
+  { path: 'review-page', component: ReviewComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
