@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -61,8 +60,9 @@ import { Footer } from './app-logic/footer/footer';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule,
     ReviewComponent,
+    HelpPageComponent,
+    DatePipe,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
