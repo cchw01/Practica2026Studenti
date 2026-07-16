@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "material": "^1.0.3"
+    "material": "^1.0.3",
+    "material-symbols": "^0.45.8"
   }
 }

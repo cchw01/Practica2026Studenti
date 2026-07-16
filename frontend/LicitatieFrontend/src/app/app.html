@@ -1,11 +1,13 @@
+<!-- NAV-UL TĂU -->
 <nav class="navbar">
   <div class="navbar-inner">
     <a routerLink="/home-page" class="brand" (click)="closeMenu()">
       <span class="brand-icon-wrap">
         <mat-icon class="brand-icon">gavel</mat-icon>
       </span>
-      <span class="brand-name"><span class="brand-name-primary">Bid</span><span
-          class="brand-name-accent">Sphere</span></span>
+      <span class="brand-name">
+        <span class="brand-name-primary">Bid</span><span class="brand-name-accent">Sphere</span>
+      </span>
     </a>
 
     <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-label="Toggle navigation"
@@ -38,18 +40,26 @@
       </div>
 
       <div class="nav-links-actions">
-        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction" title="Add Auction">
+        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction"
+          title="Add Auction">
           <mat-icon>add</mat-icon>
         </a>
         <div class="auth-pill">
           <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
           <span class="auth-pill-divider"></span>
-          <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Register</a>
+          <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()"
+            class="auth-pill-link">Register</a>
         </div>
       </div>
     </div>
   </div>
 </nav>
-<router-outlet />
 
+<!-- Aici se încarcă paginile tale -->
+<router-outlet></router-outlet>
+
+<!-- Footer-ul paginii -->
 <app-footer></app-footer>
+
+<!-- Asistentul AI - Plasat la final pentru a fi întotdeauna deasupra -->
+<app-ai-widget></app-ai-widget>

@@ -4,17 +4,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
+// Material Design Imports
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+// Components
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
-
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { ProfilePage } from './menu-item/profile-page/profile-page';
@@ -23,13 +23,18 @@ import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
-import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
-import { ReviewComponent } from './Models/review/review';
-
-
-import { AuthInterceptor } from './services/auth-interceptor';
 import { Footer } from './app-logic/footer/footer';
+
+// Standalone Components
+import { ReviewComponent } from './Models/review/review';
+import { AiWidgetComponent } from './ai-widget/ai-widget';
+
+// Servicii / Interceptoare
+import { AuthInterceptor } from './services/auth-interceptor';
+
+// ATENȚIE: Această componentă era importată în fișierul tău, dar nefolosită în modul
+import { HelpPageComponent } from './menu-item/help-page/help-page';
 
 @NgModule({
   declarations: [
@@ -44,21 +49,27 @@ import { Footer } from './app-logic/footer/footer';
     ShareListingButton,
     AuctionDetail,
     Footer,
+    // HelpPageComponent // Dacă ai erori pe pagina de Help, decomentează această linie!
   ],
   imports: [
+    // Angular Core & Routing
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+
+    // Angular Material
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule,
+
+    // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
+    AiWidgetComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
