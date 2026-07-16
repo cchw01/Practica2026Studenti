@@ -1,7 +1,8 @@
 using Backend.DataManagement;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Backend.DTOs;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Backend.Controllers
 {
     [ApiController]
@@ -16,12 +17,13 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Review> GetReviews()
+        public ActionResult<IEnumerable<ReviewDTO>> GetReviews()
         {
             try
             {
                 var reviews = dataOps.GetReviews();
-                return Ok(reviews);
+                var dtos = reviews.Select(MapToDTO);
+                return Ok(dtos);
             }
             catch (Exception ex)
             {
@@ -30,16 +32,16 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Review> GetReview(int id)
+        public ActionResult<ReviewDTO> GetReview(int id)
         {
             try
             {
                 var review = dataOps.GetReviewById(id);
 
-                if (review== null)
+                if (review == null)
                     return NotFound();
 
-                return Ok(review);
+                return Ok(MapToDTO(review));
             }
             catch (Exception ex)
             {
@@ -48,15 +50,26 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Review> AddReview(Review review)
+        public ActionResult<ReviewDTO> AddReview(ReviewCreateDTO dto)
         {
             try
             {
-                if (review.Rating < 0 || review.Rating > 5)
+                if (dto.Rating < 0 || dto.Rating > 5)
                     return BadRequest("Ratings need to be between 0 and 5.");
 
+                var review = new Review
+                {
+                    ReviewerId = dto.ReviewerId,
+                    ReviewedUserId = dto.ReviewedUserId,
+                    Rating = dto.Rating,
+                    Comment = dto.Comment,
+                    ReviewDate = DateTime.UtcNow
+                };
+
                 dataOps.AddReview(review);
-                return Ok(review);
+
+                var created = dataOps.GetReviewById(review.Id);
+                return Ok(MapToDTO(created!));
             }
             catch (Exception ex)
             {
@@ -64,16 +77,27 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpPut]
-        public ActionResult<Review> UpdateReview(Review review)
+        [HttpPut("{id}")]
+        public ActionResult<ReviewDTO> UpdateReview(int id, ReviewCreateDTO dto)
         {
             try
             {
-                if (review.Rating < 0 || review.Rating > 5)
+                if (dto.Rating < 0 || dto.Rating > 5)
                     return BadRequest("Ratings need to be between 0 and 5.");
 
-                dataOps.UpdateReview(review);
-                return Ok(review);
+                var existing = dataOps.GetReviewById(id);
+                if (existing == null)
+                    return NotFound();
+
+                existing.ReviewerId = dto.ReviewerId;
+                existing.ReviewedUserId = dto.ReviewedUserId;
+                existing.Rating = dto.Rating;
+                existing.Comment = dto.Comment;
+
+                dataOps.UpdateReview(existing);
+
+                var updated = dataOps.GetReviewById(id);
+                return Ok(MapToDTO(updated!));
             }
             catch (Exception ex)
             {
@@ -93,6 +117,21 @@ namespace Backend.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        private static ReviewDTO MapToDTO(Review review)
+        {
+            return new ReviewDTO
+            {
+                Id = review.Id,
+                ReviewerId = review.ReviewerId,
+                ReviewerUserName = review.Reviewer?.UserName ?? "",
+                ReviewedUserId = review.ReviewedUserId,
+                ReviewedUserUserName = review.ReviewedUser?.UserName ?? "",
+                Rating = review.Rating,
+                Comment = review.Comment,
+                ReviewDate = review.ReviewDate
+            };
         }
     }
 }
