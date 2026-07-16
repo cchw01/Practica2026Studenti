@@ -1,28 +1,17 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-.app-container {
-  font-family: 'Poppins', sans-serif; 
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-.content {
-  flex: 1;
-  padding: 2rem;
-  background-color: #f4f7f6; 
-}
-
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   padding: 16px 20px 0;
   background: transparent;
   box-shadow: none;
+  transition: transform 0.35s ease;
+}
+
+.navbar.nav-hidden {
+  transform: translateY(-130%);
 }
 
 .navbar-inner {

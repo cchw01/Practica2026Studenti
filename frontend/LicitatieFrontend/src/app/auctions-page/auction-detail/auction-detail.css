@@ -1,7 +1,7 @@
 .auction-detail-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 24px;
+  padding: calc(24px + var(--navbar-space, 96px)) 24px 24px;
 }
 
 .detail-content img {
