@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -45,6 +46,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpPost]
         public ActionResult<ForumPost> AddForumPost(ForumPost forumPost)
         {
@@ -58,6 +61,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpPut]
         public ActionResult<ForumPost> UpdateForumPost(ForumPost forumPost)
         {
@@ -71,7 +76,9 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    [HttpDelete("{id}")]
+
+        [Authorize]
+        [HttpDelete("{id}")]
         public ActionResult<ForumPost> DeleteForumPost(int id)
         {
             try

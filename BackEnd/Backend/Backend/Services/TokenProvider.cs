@@ -15,10 +15,10 @@ namespace Backend.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity([
-                    new Claim("id", user.ID.ToString()),
-                    new Claim("email", user.Email),
-                    new Claim("name", user.Name),
-                    new Claim("username", user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.ID.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                    new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                     new Claim("role", user.Role.ToString())
 
                     ]),

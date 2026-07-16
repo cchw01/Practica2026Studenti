@@ -17,7 +17,7 @@ namespace Backend.Controllers
             dataOps = new CategoryDataOps(DbContext);
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult<CategoryItem> GetCategories()
         {
             try
@@ -49,6 +49,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult<CategoryItem> AddInventoryItem(CategoryItem category)
         {
@@ -56,6 +57,7 @@ namespace Backend.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public ActionResult UpdateCategory(CategoryItem categoryItem)
         {
@@ -70,6 +72,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public ActionResult DeleteCategory(int id)
         {

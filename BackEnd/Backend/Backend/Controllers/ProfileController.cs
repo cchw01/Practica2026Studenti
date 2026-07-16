@@ -1,5 +1,6 @@
 using Backend.DataManagement;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -66,6 +67,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<ProfileDto> UpdateProfile(string id, [FromBody] UpdateProfileRequest request)
         {
@@ -123,6 +125,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("{id}/reviews")]
         public ActionResult<ReviewDto> AddReview(string id, [FromBody] AddReviewRequest request)
         {
@@ -161,6 +164,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}/reviews/{reviewId}")]
         public ActionResult DeleteReview(string id, string reviewId)
         {
@@ -215,6 +219,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("{id}/change-password")]
         public ActionResult ChangePassword(string id, [FromBody] ChangePasswordRequest request)
         {

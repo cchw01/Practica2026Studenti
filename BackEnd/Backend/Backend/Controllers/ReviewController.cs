@@ -2,6 +2,7 @@ using Backend.DataManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -47,6 +48,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Review> AddReview(Review review)
         {
@@ -64,6 +66,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public ActionResult<Review> UpdateReview(Review review)
         {
@@ -81,6 +84,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteReview(int id)
         {

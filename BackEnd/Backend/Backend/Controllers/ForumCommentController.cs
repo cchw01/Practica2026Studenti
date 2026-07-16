@@ -1,5 +1,6 @@
 ﻿using Backend.DataManagement;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers
 {
@@ -54,6 +55,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpPost]
         public ActionResult<ForumComment> AddForumComment(ForumComment forumComment)
         {
@@ -67,6 +70,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpPut]
         public ActionResult<ForumComment> UpdateForumComment(ForumComment forumComment)
         {
@@ -80,6 +85,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteForumComment(int id)
         {

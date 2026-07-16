@@ -1,5 +1,6 @@
 ﻿using Backend.DataManagement;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -30,6 +31,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
         {
@@ -47,6 +49,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public ActionResult<AuctionItem> UpdateAuctionItem(AuctionItem item)
         {
@@ -75,6 +78,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteAuctionItem(int id)
         {

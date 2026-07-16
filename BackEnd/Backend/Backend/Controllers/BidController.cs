@@ -1,5 +1,6 @@
 ﻿using Backend.DataManagement;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -48,6 +49,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Bid> AddBid(Bid bid)
         {
@@ -61,7 +63,7 @@ namespace Backend.Controllers
                 throw;
             }
         }
-
+        [Authorize]
         [HttpPut]
         public ActionResult<Bid> UpdateBid(Bid bid)
         {
@@ -76,6 +78,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteBid(int id)
         {

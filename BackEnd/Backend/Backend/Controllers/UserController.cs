@@ -3,7 +3,8 @@ using Azure.Core;
     using Backend.DTOs;
     using Backend.Models;
     using Backend.Services;
-    using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     namespace Backend.Controllers
@@ -112,6 +113,7 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
         public ActionResult RegenerateAccessToken()
         {
@@ -167,6 +169,8 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpPut]
         public ActionResult<User> UpdateUser(User user)
         {
@@ -181,6 +185,7 @@ using Azure.Core;
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
@@ -195,6 +200,7 @@ using Azure.Core;
             }
         }
 
+        [Authorize]
         [HttpPost]
 
         public ActionResult LogoutUser()
