@@ -8,5 +8,59 @@
     "REGISTER": "Register",
     "TOGGLE_MENU": "Toggle navigation",
     "SELECT_LANGUAGE": "Select language"
-  }
+  },
+
+
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "DESCRIPTION": "Do you have any questions? Our team is ready to help you.",
+    "EMAIL": "Email",
+    "PHONE": "Phone number",
+    "CALL_CENTER_HOURS": "Call Center Hours",
+    "SCHEDULE": "Monday–Friday, 09:00–17:00",
+    "FOLLOW_US": "Follow Us",
+    "SOCIAL_DESCRIPTION": "Stay connected with us on social media."
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email address",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Invalid email format",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters",
+    "SUBMIT": "Log In",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER_HERE": "Register here"
+  },
+  "REGISTER": {
+    "TITLE": "Create an account",
+    "USERNAME_LABEL": "Username",
+    "USERNAME_PLACEHOLDER": "Username",
+    "USERNAME_REQUIRED": "Username is required.",
+    "FULL_NAME_LABEL": "Full Name",
+    "FULL_NAME_PLACEHOLDER": "Full name",
+    "FULL_NAME_REQUIRED": "Full name is required.",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email",
+    "EMAIL_REQUIRED": "Email is required.",
+    "EMAIL_INVALID": "Please enter a valid email.",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "PASSWORD_REQUIRED": "Password is required.",
+    "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
+    "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm password",
+    "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password.",
+    "PASSWORDS_MISMATCH": "Passwords do not match.",
+    "PHONE_LABEL": "Phone Number",
+    "PHONE_PLACEHOLDER": "Phone Number (+40...)",
+    "PHONE_REQUIRED": "Phone number is required.",
+    "PHONE_INVALID": "Please enter a valid phone number.",
+    "SUBMIT": "Create account",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "SIGN_IN": "Sign in"
+}
 }

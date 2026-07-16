@@ -8,5 +8,58 @@
     "REGISTER": "Înregistrare",
     "TOGGLE_MENU": "Deschide sau închide meniul",
     "SELECT_LANGUAGE": "Selectează limba"
-  }
+  },
+
+  "CONTACT": {
+    "TITLE": "Contactează-ne",
+    "DESCRIPTION": "Ai întrebări? Echipa noastră este pregătită să te ajute.",
+    "EMAIL": "E-mail",
+    "PHONE": "Număr de telefon",
+    "CALL_CENTER_HOURS": "Program call center",
+    "SCHEDULE": "Luni–Vineri, 09:00–17:00",
+    "FOLLOW_US": "Urmărește-ne",
+    "SOCIAL_DESCRIPTION": "Rămâi conectat cu noi pe rețelele sociale."
+  },
+  "LOGIN": {
+  "TITLE": "Autentificare",
+  "EMAIL_LABEL": "E-mail",
+  "EMAIL_PLACEHOLDER": "Adresa de e-mail",
+  "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie",
+  "EMAIL_INVALID": "Formatul adresei de e-mail nu este valid",
+  "PASSWORD_LABEL": "Parolă",
+  "PASSWORD_PLACEHOLDER": "Introdu parola",
+  "PASSWORD_REQUIRED": "Parola este obligatorie",
+  "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere",
+  "SUBMIT": "Autentificare",
+  "NO_ACCOUNT": "Nu ai un cont?",
+  "REGISTER_HERE": "Înregistrează-te aici"
+},
+  "REGISTER": {
+    "TITLE": "Creează un cont",
+    "USERNAME_LABEL": "Nume de utilizator",
+    "USERNAME_PLACEHOLDER": "Nume de utilizator",
+    "USERNAME_REQUIRED": "Numele de utilizator este obligatoriu.",
+    "FULL_NAME_LABEL": "Nume complet",
+    "FULL_NAME_PLACEHOLDER": "Nume complet",
+    "FULL_NAME_REQUIRED": "Numele complet este obligatoriu.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Adresă de e-mail",
+    "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie.",
+    "EMAIL_INVALID": "Introdu o adresă de e-mail validă.",
+    "PASSWORD_LABEL": "Parolă",
+    "PASSWORD_PLACEHOLDER": "Parolă",
+    "PASSWORD_REQUIRED": "Parola este obligatorie.",
+    "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere.",
+    "CONFIRM_PASSWORD_LABEL": "Confirmă parola",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmă parola",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirmă parola.",
+    "PASSWORDS_MISMATCH": "Parolele nu coincid.",
+    "PHONE_LABEL": "Număr de telefon",
+    "PHONE_PLACEHOLDER": "Număr de telefon (+40...)",
+    "PHONE_REQUIRED": "Numărul de telefon este obligatoriu.",
+    "PHONE_INVALID": "Introdu un număr de telefon valid.",
+    "SUBMIT": "Creează contul",
+    "ALREADY_HAVE_ACCOUNT": "Ai deja un cont?",
+    "SIGN_IN": "Autentifică-te"
+}
 }
