@@ -12,6 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { ProfilePage } from './menu-item/profile-page/profile-page';
@@ -23,8 +26,7 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
-import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
-import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
+
 
 import { AuthInterceptor } from './services/auth-interceptor';
 import { Footer } from './app-logic/footer/footer';
@@ -39,24 +41,24 @@ import { Footer } from './app-logic/footer/footer';
     ContactPage,
     ForumPage,
     AuctionsPage,
-    AuctionDetail,
     ShareListingButton,
+    AuctionDetail,
     Footer,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
-    HttpClientModule,
+    MatFormFieldModule,
+    MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    ReviewComponent
+    ReviewComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -67,6 +69,6 @@ import { Footer } from './app-logic/footer/footer';
       multi: true,
     },
   ],
-  bootstrap: [App]
+  bootstrap: [App],
 })
 export class AppModule {}

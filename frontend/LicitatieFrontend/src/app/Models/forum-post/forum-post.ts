@@ -1,7 +1,7 @@
 export class ForumPost{
-    id!: number;
-    userId!: number;
-    title!: string;
+    Id!: number;
+    UserId!: number;
+    Title!: string;
     Date!: Date;
     Description!: string;
     CommentList!: undefined // List<Comment>;
