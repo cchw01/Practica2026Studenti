@@ -92,6 +92,7 @@ import { MatMenuModule } from '@angular/material/menu';
     TranslateDirective,
 
     // These components must have standalone: true
+    
     ReviewComponent,
     HelpPageComponent,
     ShareListingButton,
