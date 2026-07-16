@@ -16,6 +16,7 @@ import {
   provideHttpClient,
   withInterceptorsFromDi
 } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -47,26 +48,32 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 
 import { ReviewComponent } from './Models/review/review';
-
 import { AuthInterceptor } from './services/auth-interceptor';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
+import { Footer } from './app-logic/footer/footer';
 
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 @NgModule({
   declarations: [
     App,
-  LoginPage,
-  RegisterPage,
-  HomePage,
-  ProfilePage,
-  ContactPage,
-  ForumPage,
-  AuctionsPage,
-  AuctionDetail,
+    LoginPage,
+    RegisterPage,
+    HomePage,
+    ProfilePage,
+    ContactPage,
+    ForumPage,
+    AuctionsPage,
+    ForumPostDetails,
+    CreateForumPost,
+    AuctionDetail,
+    Footer,
   ],
 
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
 
@@ -75,7 +82,6 @@ import { ShareListingButton } from './shared/share-listing-button/share-listing-
 
     MatCardModule,
     MatIconModule,
-    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
 
@@ -86,7 +92,7 @@ import { ShareListingButton } from './shared/share-listing-button/share-listing-
     // These components must have standalone: true
     ReviewComponent,
     HelpPageComponent,
-    ShareListingButton
+    ShareListingButton,
   ],
 
   providers: [
@@ -113,7 +119,6 @@ import { ShareListingButton } from './shared/share-listing-button/share-listing-
       lang: 'en'
     })
   ],
-
-  bootstrap: [App]
+  bootstrap: [App],
 })
 export class AppModule {}

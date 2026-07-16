@@ -9,7 +9,7 @@ import {
   selector: 'app-share-listing-button',
   standalone: true,
   templateUrl: './share-listing-button.html',
-  styleUrl: './share-listing-button.css'
+  styleUrls: ['./share-listing-button.scss']
 })
 export class ShareListingButton implements OnDestroy {
   @Input({ required: true }) itemId!: number;

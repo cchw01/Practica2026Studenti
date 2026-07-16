@@ -1,10 +1,12 @@
+import { ForumComment } from "../forum-comment/forum-comment";
+
 export class ForumPost{
     id!: number;
     userId!: number;
     title!: string;
-    Date!: Date;
-    Description!: string;
-    CommentList!: undefined // List<Comment>;
+    date!: string;
+    description!: string;
+    commentList?: ForumComment[];
 
     constructor( forumPost?: Partial<ForumPost>){
         Object.assign(this, forumPost);

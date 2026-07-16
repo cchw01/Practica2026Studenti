@@ -27,10 +27,10 @@ export class AuctionsPage implements OnInit {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map((i) => i.category))];
+        this.categories = [...new Set(items.map(i => i.Category.name))];
         this.applyFiltersAndSort();
       },
-      error: (err) => console.error('Error loading items', err)
+      error: (err) => console.error('Eroare la încărcarea item-urilor', err)
     });
   }
 
@@ -38,25 +38,25 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter((i) => i.category === this.selectedCategory);
+      result = result.filter(i => i.Category?.name === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter((i) => i.name.toLowerCase().includes(search));
+      result = result.filter(i => i.Name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
       switch (this.sortBy) {
         case 'priceLowHigh':
-          return a.currentPrice - b.currentPrice;
+          return a.CurrentPrice - b.CurrentPrice;
         case 'priceHighLow':
-          return b.currentPrice - a.currentPrice;
+          return b.CurrentPrice - a.CurrentPrice;
         case 'newest':
-          return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+          return new Date(b.StartDate).getTime() - new Date(a.StartDate).getTime();
         case 'endingSoon':
         default:
-          return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+          return new Date(a.EndDate).getTime() - new Date(b.EndDate).getTime();
       }
     });
 
