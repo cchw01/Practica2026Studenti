@@ -26,9 +26,9 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
-
-
 import { AuthInterceptor } from './services/auth-interceptor';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
 
 @NgModule({
@@ -42,6 +42,8 @@ import { Footer } from './app-logic/footer/footer';
     ForumPage,
     AuctionsPage,
     ShareListingButton,
+    ForumPostDetails,
+    CreateForumPost,
     AuctionDetail,
     Footer,
   ],
