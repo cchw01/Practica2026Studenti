@@ -10,6 +10,7 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
+import { AddItemPage } from './add-item-page/add-item-page';
 import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
@@ -27,21 +28,23 @@ const routes: Routes = [
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
-  { path: 'forum/:id', component: ForumPostDetails} ,
+  { path: 'forum/:id', component: ForumPostDetails },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
   { path: 'help-page', component: HelpPageComponent },
+  { path: 'add-item', component: AddItemPage },
+
   { path: 'add', component: Add },
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
-  { path: 'action-item-page', component: AuctionItemPage }
+  { path: 'action-item-page', component: AuctionItemPage },
   { path: 'help-page', component: HelpPageComponent },
-  { path: 'review-page', component: ReviewComponent }
+  { path: 'review-page', component: ReviewComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
