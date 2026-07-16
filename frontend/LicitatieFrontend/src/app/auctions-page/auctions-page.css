@@ -1,6 +1,7 @@
 .auctions-page-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: var(--navbar-space, 96px);
 }
 
 .page-header {
