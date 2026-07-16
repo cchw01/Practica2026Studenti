@@ -151,8 +151,9 @@
   width: 130px;
   padding: 24px 16px;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.06) !important;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: #ffffff;
+  border: 1px solid #eeeef8;
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08) !important;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -165,7 +166,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #f5f5f5;
+  background-color: #f0f0fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,21 +175,21 @@
 }
 
 .card-category:hover .icon-circle {
-  background-color: #e0f2f1; 
+  background-color: #e0f2f1;
 }
 
 .icon-circle mat-icon {
   font-size: 32px;
   width: 32px;
   height: 32px;
-  color: #555;
+  color: #4a4a6a;
 }
 
 .card-category h3 {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   margin: 0;
-  color: #333;
+  color: #1e1e2e;
 }
 
 .active-auctions {

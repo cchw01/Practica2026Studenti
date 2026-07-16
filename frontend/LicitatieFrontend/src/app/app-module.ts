@@ -71,4 +71,4 @@ import { Footer } from './app-logic/footer/footer';
   ],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }
