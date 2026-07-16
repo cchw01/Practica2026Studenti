@@ -23,7 +23,7 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
-import { ReviewComponent } from './Models/review/review';
+
 
 @NgModule({
   declarations: [
@@ -59,4 +59,4 @@ import { ReviewComponent } from './Models/review/review';
   ],
   bootstrap: [App]
 })
-export class AppModule {}
+export class AppModule { }
