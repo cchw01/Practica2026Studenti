@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,8 +33,6 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
         {
-            dataOps.AddAuctionItem(item);
-            return Ok();
             try
             {
                 dataOps.AddAuctionItem(item);

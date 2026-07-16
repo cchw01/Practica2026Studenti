@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -58,7 +58,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 

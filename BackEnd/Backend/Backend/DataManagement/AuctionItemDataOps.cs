@@ -1,5 +1,6 @@
-﻿using Backend.DataManagement; 
+using Backend.DataManagement; 
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -16,7 +17,12 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetAuctionItems()
         {
-            return dbContext.AuctionItems.ToArray();
+            return dbContext.AuctionItems
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .Include(i => i.BidList)
+                .ToArray();
         }
 
         public void AddAuctionItem(AuctionItem item)
@@ -58,8 +64,13 @@ namespace Backend.DataManagement
 
         public AuctionItem? GetAuctionItemById(int id)
         {
-            var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
-            return item;
+            return dbContext.AuctionItems
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .Include(i => i.BidList)
+                    .ThenInclude(b => b.Bidder)
+                .FirstOrDefault(x => x.ID == id);
         }
 
         

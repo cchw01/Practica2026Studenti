@@ -1,4 +1,4 @@
-﻿using Backend.Models;
+using Backend.Models;
 using Backend.DataManagement;
 using System;
 using System.Linq;
@@ -30,7 +30,30 @@ namespace Backend.DataManagement
 
         public void AddBid(Bid bid)
         {
+            var item = DbContext.AuctionItems.FirstOrDefault(i => i.ID == bid.BiddedItemId);
+            if (item == null)
+            {
+                throw new Exception("Bidded item not found.");
+            }
+
+            decimal minimumBid = item.CurrentPrice > 0 ? item.CurrentPrice : item.StartPrice;
+            if (bid.price <= minimumBid)
+            {
+                throw new Exception($"Bid price must be higher than the current price of {minimumBid}.");
+            }
+
+            var checkDate = bid.date != default ? bid.date : DateTime.Now;
+            if (checkDate < item.StartDate)
+            {
+                throw new Exception("The auction has not started yet.");
+            }
+            if (checkDate > item.EndDate)
+            {
+                throw new Exception("The auction has already ended.");
+            }
+
             DbContext.Bids.Add(bid);
+            item.CurrentPrice = bid.price;
             DbContext.SaveChanges();
         }
 
