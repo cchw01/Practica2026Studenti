@@ -35,6 +35,7 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { NotFound } from './not-found/not-found';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { View } from './menu-item/view/view';
     ContactPage,
     ForumPage,
     AuctionsPage,
-    AddItemPage, 
+    AddItemPage,
     AuctionItemPage,
     Add,
     Edit,
@@ -57,6 +58,7 @@ import { View } from './menu-item/view/view';
     CreateForumPost,
     AuctionDetail,
     Footer,
+    NotFound,
   ],
   imports: [
     BrowserModule,
@@ -83,4 +85,4 @@ import { View } from './menu-item/view/view';
   ],
   bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
