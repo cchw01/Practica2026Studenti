@@ -1,5 +1,8 @@
 import { Component, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { AuthService } from './services/auth';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +14,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly title = signal('BidSphere');
   protected readonly menuOpen = signal(false);
   protected readonly navHidden = signal(false);
+  protected readonly isLoggedIn = signal(false);
 
   private lastScrollY = 0;
 
@@ -24,12 +28,21 @@ export class App implements OnInit, OnDestroy {
     this.lastScrollY = currentY;
   };
 
-  constructor(iconRegistry: MatIconRegistry, private zone: NgZone) {
+  constructor(
+    iconRegistry: MatIconRegistry,
+    private zone: NgZone,
+    private authService: AuthService,
+    private router: Router,
+  ) {
     iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
   }
 
   ngOnInit(): void {
     this.zone.runOutsideAngular(() => {
+      this.isLoggedIn.set(this.authService.isLoggedIn());
+      this.router.events
+        .pipe(filter((e) => e instanceof NavigationEnd))
+        .subscribe(() => this.isLoggedIn.set(this.authService.isLoggedIn()));
       window.addEventListener('scroll', this.onScroll, { passive: true });
     });
   }
@@ -44,5 +57,10 @@ export class App implements OnInit, OnDestroy {
 
   closeMenu() {
     this.menuOpen.set(false);
+  }
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn.set(false);
+    this.router.navigate(['/home-page']);
   }
 }
