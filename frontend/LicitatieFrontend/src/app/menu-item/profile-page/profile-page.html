@@ -39,9 +39,8 @@
     <!-- Sections Layout -->
     <div class="sections">
 
-      <!-- LEFT COLUMN -->
-      <div class="left-col">
-
+      <!-- Top Row: Theme & Sell -->
+      <div class="theme-action-row full-width">
         <!-- Theme Switcher Card -->
         <div class="profile-section theme-card">
           <h2 class="section-title"><span class="section-icon">🎨</span> Customize Theme</h2>
@@ -60,21 +59,12 @@
           </div>
         </div>
 
-        <!-- Change Password Card -->
-
-
-      </div>
-
-      <!-- RIGHT COLUMN -->
-      <div class="right-col">
-
         <!-- Sell Item Button -->
         <div class="profile-section add-item-card">
           <h2 class="section-title"><span class="section-icon">💰</span> Sell a New Item</h2>
-          <p class="add-item-desc">Ready to list something? Click to create a new auction listing.</p>
+          <p class="add-item-desc">Ready to list something?</p>
           <button class="btn-submit btn-sell" (click)="goToAddItem()">➕ Add New Item</button>
         </div>
-
       </div>
 
       <!-- Parallel Sales and Won Items -->
@@ -158,6 +148,41 @@
       <div class="form-group">
         <label for="editEmail">Email</label>
         <input id="editEmail" type="email" [(ngModel)]="editDraft.email" placeholder="e.g. john@email.com" />
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="form-divider"></div>
+
+    <!-- Toggle Password Form -->
+    <div class="toggle-password-section">
+      <button type="button" class="btn-toggle-password" (click)="showPasswordForm = !showPasswordForm">
+        🔑 {{ showPasswordForm ? 'Hide Password Settings' : 'Change Password' }}
+      </button>
+    </div>
+
+    <!-- Password Form Fields -->
+    <div class="edit-form password-fields-container" *ngIf="showPasswordForm">
+      <div class="form-group">
+        <label for="currentPassword">Current Password</label>
+        <input id="currentPassword" type="password" [(ngModel)]="currentPassword"
+          placeholder="Enter current password" />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New Password</label>
+        <input id="newPassword" type="password" [(ngModel)]="newPassword" placeholder="Enter new password" />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password" />
+      </div>
+
+      <button type="button" class="btn-submit btn-change-password" (click)="onChangePassword()">
+        Update Password
+      </button>
+
+      <div class="msg-box" [class.error]="passwordError" *ngIf="passwordMessage">
+        {{ passwordMessage }}
       </div>
     </div>
 

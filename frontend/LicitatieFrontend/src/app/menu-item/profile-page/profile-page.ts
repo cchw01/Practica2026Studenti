@@ -185,16 +185,34 @@ export class ProfilePage implements OnInit {
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   cancelEdit(): void {
     this.isEditing = false;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   saveEdit(): void {
     this.user = { ...this.editDraft };
     this.saveProfile();
     this.isEditing = false;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   // --- Avatar upload ---
