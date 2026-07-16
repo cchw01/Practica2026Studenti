@@ -23,6 +23,7 @@ import { ReviewComponent } from './Models/review/review';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AddItem } from './add-item/add-item';
 //am scos Add din declarations
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     AuctionsPage,
     AuctionDetail,
     ShareListingButton,
+    AddItem,
   ],
   imports: [
     BrowserModule,
@@ -57,8 +59,8 @@ import { AuthInterceptor } from './services/auth-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [App],
 })

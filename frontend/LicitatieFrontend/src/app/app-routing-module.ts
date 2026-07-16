@@ -7,8 +7,9 @@ import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-import { ForumPage } from './forum-page/forum-page'
+import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+import { AddItem } from './add-item/add-item';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -17,17 +18,18 @@ const routes: Routes = [
   { path: 'register-page', component: RegisterPage },
   { path: 'auctions', component: AuctionsPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionDetail }, 
+  { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: 'add-item', component: AddItem },
   { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent}
+  { path: 'review-page', component: ReviewComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
