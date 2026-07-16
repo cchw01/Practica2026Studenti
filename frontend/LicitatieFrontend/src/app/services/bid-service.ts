@@ -19,12 +19,12 @@ export class BidService {
 
  
   getBidsByItem(itemId: number): Observable<BidDto[]> {
-    return this.http.get<BidDto[]>(${this.apiUrl}/item/${itemId});
+    return this.http.get<BidDto[]>(`${this.apiUrl}/item/${itemId}`);
   }
 
 
   getBidById(id: number): Observable<BidDto> {
-    return this.http.get<BidDto>(${this.apiUrl}/${id});
+    return this.http.get<BidDto>(`${this.apiUrl}/${id}`);
   }
 
  
@@ -34,6 +34,6 @@ export class BidService {
 
   
   deleteBid(id: number): Observable<void> {
-    return this.http.delete<void>(${this.apiUrl}/${id});
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
