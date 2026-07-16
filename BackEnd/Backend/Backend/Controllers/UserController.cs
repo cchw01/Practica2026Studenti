@@ -69,7 +69,8 @@ using Azure.Core;
                     Name = request.Name,
                     Email = request.Email,
                     Password = PasswordHasher.HashPassword(request.Password),
-                    Role = RoleEnum.User
+                    Role = RoleEnum.User,
+                    PhoneNumber = request.PhoneNumber
                 };
 
                 dataOps.AddUser(user);
@@ -112,7 +113,7 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("regenerate-token")]
         public ActionResult RegenerateAccessToken()
         {
             try
@@ -195,7 +196,7 @@ using Azure.Core;
             }
         }
 
-        [HttpPost]
+        [HttpPost("logout")]
 
         public ActionResult LogoutUser()
         {

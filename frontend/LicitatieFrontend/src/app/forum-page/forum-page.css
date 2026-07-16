@@ -54,6 +54,29 @@
     margin-bottom: 24px;
 }
 
+.create-discussion-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 18px;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.create-discussion-button:hover {
+    background-color: #111111;
+}
+
+.empty-state .create-discussion-button {
+    margin-top: 18px;
+}
+
+
 .sort-control select {
     min-height: 40px;
     padding: 0 38px 0 16px;
