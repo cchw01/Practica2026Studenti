@@ -7,6 +7,8 @@
 
         <section class="discussion-section">
             <div class="discussion-toolbar">
+                <a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
+
                 <div class="sort-control">
                     <select [(ngModel)]="sortOption" aria-label="Sort discussions">
                         <option value="latest">Latest first</option>
@@ -24,7 +26,6 @@
             @if (isLoading) {
             <div class="empty-state" aria-live="polite">
                 <h2>Loading discussions</h2>
-                <p>Please wait while the forum discussions are loaded.</p>
             </div>
             } @else if (errorMessage) {
             <div class="empty-state" role="alert">

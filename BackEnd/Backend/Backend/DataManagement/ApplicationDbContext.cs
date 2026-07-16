@@ -15,6 +15,7 @@ namespace Backend.DataManagement
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        public DbSet<ForumComment>ForumComments=> Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

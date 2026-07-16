@@ -1,0 +1,143 @@
+<div class="create-post-page">
+    <main class="create-post-container">
+        <button type="button" class="back-button" (click)="cancel()">
+            ← Back to discussions
+        </button>
+
+        <section class="create-post-card">
+            <header class="create-post-header">
+                <h1>Start a discussion</h1>
+
+                <p>
+                    Create a new discussion and share it with
+                    other forum users.
+                </p>
+            </header>
+
+            <form class="create-post-form" [formGroup]="createPostForm" (ngSubmit)="submitPost()">
+                <div class="form-field">
+                    <label for="title">
+                        Title
+                    </label>
+
+                    <input id="title" type="text" formControlName="title" maxlength="150"
+                        placeholder="Enter a clear discussion title" autocomplete="off">
+
+                    <div class="field-information">
+                        <div class="validation-message">
+                            @if (
+                            titleControl.touched &&
+                            titleControl.hasError('required')
+                            ) {
+                            <p>A title is required.</p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('whitespace')
+                            ) {
+                            <p>
+                                The title cannot contain only
+                                spaces.
+                            </p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('minlength')
+                            ) {
+                            <p>
+                                The title must contain at least
+                                3 characters.
+                            </p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('maxlength')
+                            ) {
+                            <p>
+                                The title cannot exceed
+                                150 characters.
+                            </p>
+                            }
+                        </div>
+
+                        <p class="character-count">
+                            {{ titleControl.value.length }}/150
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea id="description" formControlName="description" rows="10" maxlength="5000"
+                        placeholder="Describe the topic you would like to discuss..."></textarea>
+
+                    <div class="field-information">
+                        <div class="validation-message">
+                            @if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('required')
+                            ) {
+                            <p>A description is required.</p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('whitespace')
+                            ) {
+                            <p>
+                                The description cannot contain
+                                only spaces.
+                            </p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('minlength')
+                            ) {
+                            <p>
+                                The description must contain at
+                                least 10 characters.
+                            </p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('maxlength')
+                            ) {
+                            <p>
+                                The description cannot exceed
+                                5000 characters.
+                            </p>
+                            }
+                        </div>
+
+                        <p class="character-count">
+                            {{
+                            descriptionControl.value.length
+                            }}/5000
+                        </p>
+                    </div>
+                </div>
+
+                @if (submitErrorMessage) {
+                <div class="submit-error" role="alert">
+                    <h2>Unable to create discussion</h2>
+
+                    <p>{{ submitErrorMessage }}</p>
+                </div>
+                }
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-button" [disabled]="isSubmitting" (click)="cancel()">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="primary-button" [disabled]="
+                            createPostForm.invalid ||
+                            isSubmitting
+                        ">
+                        {{
+                        isSubmitting
+                        ? 'Creating discussion...'
+                        : 'Start discussion'
+                        }}
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>
