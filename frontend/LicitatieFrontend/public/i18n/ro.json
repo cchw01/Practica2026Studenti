@@ -21,19 +21,19 @@
     "SOCIAL_DESCRIPTION": "Rămâi conectat cu noi pe rețelele sociale."
   },
   "LOGIN": {
-  "TITLE": "Autentificare",
-  "EMAIL_LABEL": "E-mail",
-  "EMAIL_PLACEHOLDER": "Adresa de e-mail",
-  "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie",
-  "EMAIL_INVALID": "Formatul adresei de e-mail nu este valid",
-  "PASSWORD_LABEL": "Parolă",
-  "PASSWORD_PLACEHOLDER": "Introdu parola",
-  "PASSWORD_REQUIRED": "Parola este obligatorie",
-  "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere",
-  "SUBMIT": "Autentificare",
-  "NO_ACCOUNT": "Nu ai un cont?",
-  "REGISTER_HERE": "Înregistrează-te aici"
-},
+    "TITLE": "Autentificare",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Adresa de e-mail",
+    "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie",
+    "EMAIL_INVALID": "Formatul adresei de e-mail nu este valid",
+    "PASSWORD_LABEL": "Parolă",
+    "PASSWORD_PLACEHOLDER": "Introdu parola",
+    "PASSWORD_REQUIRED": "Parola este obligatorie",
+    "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere",
+    "SUBMIT": "Autentificare",
+    "NO_ACCOUNT": "Nu ai un cont?",
+    "REGISTER_HERE": "Înregistrează-te aici"
+  },
   "REGISTER": {
     "TITLE": "Creează un cont",
     "USERNAME_LABEL": "Nume de utilizator",
@@ -61,5 +61,5 @@
     "SUBMIT": "Creează contul",
     "ALREADY_HAVE_ACCOUNT": "Ai deja un cont?",
     "SIGN_IN": "Autentifică-te"
-}
+  }
 }
