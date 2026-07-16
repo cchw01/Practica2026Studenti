@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
-  { path: 'forum/:id', component: ForumPostDetails} ,
+  { path: 'forum/:id', component: ForumPostDetails },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
@@ -38,13 +38,13 @@ const routes: Routes = [
   { path: 'add', component: Add },
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
-  { path: 'action-item-page', component: AuctionItemPage }
+  { path: 'action-item-page', component: AuctionItemPage },
   { path: 'help-page', component: HelpPageComponent },
-  { path: 'review-page', component: ReviewComponent }
+  { path: 'review-page', component: ReviewComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
