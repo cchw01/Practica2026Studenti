@@ -560,3 +560,9 @@
     justify-content: center
   }
 }
+
+.add-item-desc {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0 0 16px;
+}
