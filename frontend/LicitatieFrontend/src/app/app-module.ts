@@ -12,8 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 
-import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { ProfilePage } from './menu-item/profile-page/profile-page';
@@ -27,15 +28,22 @@ import { ReviewComponent } from './Models/review/review';
 
 import { AuthInterceptor } from './services/auth-interceptor';
 
-
-
-
-
-
 @NgModule({
-  declarations: [App, LoginPage, RegisterPage, HomePage, ProfilePage, ContactPage, ForumPage, AuctionsPage,ShareListingButton, AuctionDetail],
+  declarations: [
+    App,
+    LoginPage,
+    RegisterPage,
+    HomePage,
+    ProfilePage,
+    ContactPage,
+    ForumPage,
+    AuctionsPage,
+    ShareListingButton,
+    AuctionDetail,
+  ],
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
@@ -46,7 +54,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    ReviewComponent
+    ReviewComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -54,9 +62,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [App]
+  bootstrap: [App],
 })
 export class AppModule {}

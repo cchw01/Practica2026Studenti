@@ -1,4 +1,4 @@
-import { User } from "../user/user";
+import { User } from '../user/user';
 
 export interface Review {
   Id: number;
@@ -12,4 +12,4 @@ export interface Review {
 }
 
 // Folosit la creare, unde id și reviewDate sunt setate de backend
-export type ReviewCreate = Omit<Review, 'id' | 'ReviewDate'>;
+export type ReviewCreate = Omit<Review, 'Id' | 'ReviewDate'>;
