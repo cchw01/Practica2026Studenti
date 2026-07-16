@@ -1,0 +1,52 @@
+@use '../../styles/variables' as v;
+
+.auction-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: v.$space-lg;
+  font-family: v.$font-family;
+}
+
+.detail-content img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: v.$radius-md;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: v.$space-md;
+}
+
+.detail-header h1 {
+  margin: 0;
+  color: v.$color-text-heading;
+  font-size: v.$font-size-heading-lg;
+  font-weight: v.$font-weight-bold;
+}
+
+.description {
+  margin-top: v.$space-sm;
+  color: v.$color-text-body;
+  font-size: v.$font-size-body;
+  line-height: 1.6;
+}
+
+.detail-info {
+  margin-top: v.$space-lg;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+  color: v.$color-text-label;
+  font-size: v.$font-size-body;
+}
+
+.not-found,
+.loading-state {
+  text-align: center;
+  padding: v.$space-2xl 0;
+  color: v.$color-text-body;
+}
