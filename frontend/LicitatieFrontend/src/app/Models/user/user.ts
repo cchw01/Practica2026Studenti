@@ -1,23 +1,27 @@
+import { AuctionItem } from '../item-model';
+import { Review } from '../review/review.model';
+import { Bid } from '../bid/bid';
 
-export enum RoleEnum{
+export enum RoleEnum {
   ADMIN = 'ADMIN',
   USER = 'USER',
-  GUEST = 'GUEST'
+  GUEST = 'GUEST',
 }
 
 export class User {
-  id!: string;
-  userName!: string;
-  name!: string;
-  email!: string;
-  role!: RoleEnum;
-  addedItemsList!: string //List<Item>;
-  biddedItemsList!: string; //List<Item>;
-  whishList!: string; //List<Item>;
-  rating?: number;
-  reviewList!: string; //List<Review>;  
-  
-  constructor( user?: Partial<User>){
+  ID!: string;
+  UserName!: string;
+  Name!: string;
+  Email!: string;
+  Role!: RoleEnum;
+  AddedItemsList!: Array<AuctionItem>;
+  BidList!: Array<Bid>;
+  WonItemsList!: Array<AuctionItem>;
+  WhishList!: Array<AuctionItem>;
+  Rating?: number;
+  ReviewList!: Array<Review>;
+
+  constructor(user?: Partial<User>) {
     Object.assign(this, user);
   }
 }

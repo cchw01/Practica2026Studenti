@@ -5,20 +5,20 @@
   </div>
 
   <div class="detail-content" *ngIf="item()">
-    <img [src]="'assets/images/placeholder.png'" [alt]="item()!.name" />
+    <img [src]="'assets/images/placeholder.png'" [alt]="item()!.Name" />
 
     <div class="detail-header">
-      <h1>{{ item()!.name }}</h1>
-      <app-share-listing-button [itemId]="item()!.id"></app-share-listing-button>
+      <h1>{{ item()!.Name }}</h1>
+      <app-share-listing-button [itemId]="item()!.ID"></app-share-listing-button>
     </div>
 
-    <p class="description" *ngIf="item()!.description">{{ item()!.description }}</p>
+    <p class="description" *ngIf="item()!.Description">{{ item()!.Description }}</p>
 
     <div class="detail-info">
-      <p><strong>Preț curent:</strong> {{ item()!.currentPrice }} RON</p>
-      <p><strong>Preț de pornire:</strong> {{ item()!.startPrice }} RON</p>
-      <p><strong>Categorie:</strong> {{ item()!.category }}</p>
-      <p><strong>Locație:</strong> {{ item()!.location }}</p>
+      <p><strong>Preț curent:</strong> {{ item()!.CurrentPrice }} RON</p>
+      <p><strong>Preț de pornire:</strong> {{ item()!.StartPrice }} RON</p>
+      <p><strong>Categorie:</strong> {{ item()!.Category }}</p>
+      <p><strong>Locație:</strong> {{ item()!.Location }}</p>
     </div>
   </div>
 </div>
