@@ -27,7 +27,7 @@ export class AddItem {
     private router: Router,
     private itemService: ItemService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   onSubmit() {
     if (!this.name || this.startPrice <= 0 || !this.location || !this.startDate || !this.endDate) {
@@ -49,7 +49,7 @@ export class AddItem {
       Description: this.description,
       Location: this.location,
       OwnerId: ownerId,
-      Status: StatusEnum.Added,
+      Status: 'Added',
       StartDate: new Date(this.startDate).toISOString(),
       EndDate: new Date(this.endDate).toISOString(),
     };
