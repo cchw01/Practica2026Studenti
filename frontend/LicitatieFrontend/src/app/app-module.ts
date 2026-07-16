@@ -48,10 +48,16 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 
 import { ReviewComponent } from './Models/review/review';
+import { AddItemPage } from './add-item-page/add-item-page';
+
 import { AuthInterceptor } from './services/auth-interceptor';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { Add } from './menu-item/add/add';
+import { Edit } from './menu-item/edit/edit';
+import { View } from './menu-item/view/view';
 
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
@@ -66,6 +72,13 @@ import { MatMenuModule } from '@angular/material/menu';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    AddItemPage, 
+    AuctionItemPage,
+    Add,
+    Edit,
+    View,
+    AuctionDetail,
+    ShareListingButton,
     ForumPostDetails,
     CreateForumPost,
     AuctionDetail,
@@ -84,7 +97,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule,
     MatMenuModule,
 
     // ngx-translate v18
@@ -124,4 +136,4 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }

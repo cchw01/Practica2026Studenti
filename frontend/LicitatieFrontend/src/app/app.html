@@ -1,6 +1,7 @@
-<nav class="navbar">
+<nav class="navbar" [class.nav-hidden]="navHidden()">
   <div class="navbar-inner">
 
+    <!-- Brand -->
     <a
       routerLink="/home-page"
       class="brand"
@@ -16,6 +17,7 @@
       </span>
     </a>
 
+    <!-- Mobile menu button -->
     <button
       class="menu-toggle"
       type="button"
@@ -32,6 +34,7 @@
       class="nav-links"
       [class.open]="menuOpen()"
     >
+      <!-- Main navigation -->
       <div class="nav-links-main">
 
         <a
@@ -81,93 +84,110 @@
 
       </div>
 
+      <!-- Navigation actions -->
       <div class="nav-links-actions">
 
-<div class="language-switcher">
-  <button
-    type="button"
-    mat-button
-    class="language-dropdown-trigger"
-    [matMenuTriggerFor]="languageMenu"
-    [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate"
-  >
-    <mat-icon>language</mat-icon>
+        <!-- Language selector -->
+        <div class="language-switcher">
+          <button
+            type="button"
+            mat-button
+            class="language-dropdown-trigger"
+            [matMenuTriggerFor]="languageMenu"
+            [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate"
+          >
+            <mat-icon>language</mat-icon>
 
-    <span>{{ currentLanguageLabel() }}</span>
+            <span>{{ currentLanguageLabel() }}</span>
 
-    <mat-icon class="dropdown-arrow">
-      expand_more
-    </mat-icon>
-  </button>
+            <mat-icon class="dropdown-arrow">
+              expand_more
+            </mat-icon>
+          </button>
 
-  <mat-menu #languageMenu="matMenu">
+          <mat-menu #languageMenu="matMenu">
 
-    <button
-      mat-menu-item
-      type="button"
-      (click)="changeLanguage('en')"
-    >
-      <span class="language-code">EN</span>
-      <span>English</span>
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('en')"
+            >
+              <span class="language-code">EN</span>
+              <span>English</span>
 
-      @if (translate.currentLang() === 'en') {
-        <mat-icon class="selected-language-icon">
-          check
-        </mat-icon>
-      }
-    </button>
+              @if (translate.currentLang() === 'en') {
+                <mat-icon class="selected-language-icon">
+                  check
+                </mat-icon>
+              }
+            </button>
 
-    <button
-      mat-menu-item
-      type="button"
-      (click)="changeLanguage('ro')"
-    >
-      <span class="language-code">RO</span>
-      <span>Română</span>
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('ro')"
+            >
+              <span class="language-code">RO</span>
+              <span>Română</span>
 
-      @if (translate.currentLang() === 'ro') {
-        <mat-icon class="selected-language-icon">
-          check
-        </mat-icon>
-      }
-    </button>
+              @if (translate.currentLang() === 'ro') {
+                <mat-icon class="selected-language-icon">
+                  check
+                </mat-icon>
+              }
+            </button>
 
-    <button
-      mat-menu-item
-      type="button"
-      (click)="changeLanguage('es')"
-    >
-      <span class="language-code">ES</span>
-      <span>Español</span>
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('es')"
+            >
+              <span class="language-code">ES</span>
+              <span>Español</span>
 
-      @if (translate.currentLang() === 'es') {
-        <mat-icon class="selected-language-icon">
-          check
-        </mat-icon>
-      }
-    </button>
+              @if (translate.currentLang() === 'es') {
+                <mat-icon class="selected-language-icon">
+                  check
+                </mat-icon>
+              }
+            </button>
 
-  </mat-menu>
-</div>
+          </mat-menu>
+        </div>
 
+        <!-- Add auction -->
         <a
-          routerLink="/login-page"
-          routerLinkActive="active"
+          routerLink="/profile-page"
+          class="btn-add-auction"
+          [attr.aria-label]="'NAV.ADD_AUCTION' | translate"
+          [attr.title]="'NAV.ADD_AUCTION' | translate"
           (click)="closeMenu()"
-          class="nav-link-login"
         >
-          <mat-icon>login</mat-icon>
-          <span>{{ 'NAV.LOGIN' | translate }}</span>
+          <mat-icon>add</mat-icon>
         </a>
 
-        <a
-          routerLink="/register-page"
-          routerLinkActive="active"
-          (click)="closeMenu()"
-          class="nav-link-register"
-        >
-          <span>{{ 'NAV.REGISTER' | translate }}</span>
-        </a>
+        <!-- Login and register -->
+        <div class="auth-pill">
+          <a
+            routerLink="/login-page"
+            routerLinkActive="active"
+            class="auth-pill-link"
+            (click)="closeMenu()"
+          >
+            {{ 'NAV.LOGIN' | translate }}
+          </a>
+
+          <span class="auth-pill-divider"></span>
+
+          <a
+            routerLink="/register-page"
+            routerLinkActive="active"
+            class="auth-pill-link"
+            (click)="closeMenu()"
+          >
+            {{ 'NAV.REGISTER' | translate }}
+          </a>
+        </div>
 
       </div>
     </div>

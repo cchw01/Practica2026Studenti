@@ -2,6 +2,9 @@ import {
   Component,
   computed,
   inject,
+  NgZone,
+  OnDestroy,
+  OnInit,
   signal
 } from '@angular/core';
 
@@ -10,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 const SUPPORTED_LANGUAGES = ['en', 'ro', 'es'] as const;
 
-type AppLanguage = typeof SUPPORTED_LANGUAGES[number];
+type AppLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 @Component({
   selector: 'app-root',
@@ -18,23 +21,47 @@ type AppLanguage = typeof SUPPORTED_LANGUAGES[number];
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit, OnDestroy {
   protected readonly title = signal('BidSphere');
   protected readonly menuOpen = signal(false);
+  protected readonly navHidden = signal(false);
 
   readonly translate = inject(TranslateService);
-
   readonly languages = SUPPORTED_LANGUAGES;
 
-  readonly currentLanguageLabel = computed(() => {
-    const language = this.translate.currentLang();
+  protected readonly currentLanguage =
+    signal<AppLanguage>('en');
 
-    return language
-      ? language.toUpperCase()
-      : 'EN';
-  });
+  readonly currentLanguageLabel = computed(() =>
+    this.currentLanguage().toUpperCase()
+  );
 
-  constructor(iconRegistry: MatIconRegistry) {
+  private lastScrollY = 0;
+
+  private readonly onScroll = (): void => {
+    if (this.menuOpen()) {
+      return;
+    }
+
+    const currentY = window.scrollY;
+
+    const shouldHide =
+      currentY > this.lastScrollY &&
+      currentY > 120;
+
+    if (shouldHide !== this.navHidden()) {
+      this.zone.run(() => {
+        this.navHidden.set(shouldHide);
+      });
+    }
+
+    this.lastScrollY = currentY;
+  };
+
+  constructor(
+    iconRegistry: MatIconRegistry,
+    private readonly zone: NgZone
+  ) {
     iconRegistry.setDefaultFontSetClass(
       'material-symbols-outlined'
     );
@@ -60,8 +87,28 @@ export class App {
     this.changeLanguage(initialLanguage);
   }
 
+  ngOnInit(): void {
+    this.lastScrollY = window.scrollY;
+
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener(
+        'scroll',
+        this.onScroll,
+        { passive: true }
+      );
+    });
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener(
+      'scroll',
+      this.onScroll
+    );
+  }
+
   changeLanguage(language: AppLanguage): void {
     this.translate.use(language);
+    this.currentLanguage.set(language);
 
     localStorage.setItem(
       'language',
@@ -74,9 +121,11 @@ export class App {
   }
 
   toggleMenu(): void {
-    this.menuOpen.update(
-      open => !open
-    );
+    this.menuOpen.update(open => !open);
+
+    if (this.menuOpen()) {
+      this.navHidden.set(false);
+    }
   }
 
   closeMenu(): void {
@@ -87,8 +136,7 @@ export class App {
     language: string | null | undefined
   ): language is AppLanguage {
     return (
-      language !== null &&
-      language !== undefined &&
+      language != null &&
       this.languages.includes(
         language as AppLanguage
       )
