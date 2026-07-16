@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Backend.Models
 {
@@ -20,7 +20,7 @@ namespace Backend.Models
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
-        public int AddedItemsListId { get; set; };
+        public int AddedItemsListId { get; set; }
 
         public List<AuctionItem> BiddedItemsList { get; set; } = new();
 

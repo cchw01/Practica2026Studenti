@@ -1,11 +1,59 @@
 <nav class="navbar">
-    <a routerLink="/home-page">Home page</a>
-    <a routerLink="/login-page">Login</a>
-    <a routerLink="/register-page">Register</a>
-    <a routerLink="/contact-page">Contact</a>
-    <a routerLink="/forum-page">Forum</a>
-     <a routerLink="/action-item-page">Action</a>
-</nav>
-<router-outlet/>
+  <div class="navbar-inner">
+    <a routerLink="/home-page" class="brand" (click)="closeMenu()">
+      <span class="brand-icon-wrap">
+        <mat-icon class="brand-icon">gavel</mat-icon>
+      </span>
+      <span class="brand-name"><span class="brand-name-primary">Bid</span><span
+          class="brand-name-accent">Sphere</span></span>
+    </a>
 
-    
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-label="Toggle navigation"
+      (click)="toggleMenu()">
+      <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <div class="nav-links" [class.open]="menuOpen()">
+      <div class="nav-links-main">
+        <a routerLink="/home-page" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </a>
+        <a routerLink="/auctions" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>gavel</mat-icon>
+          <span>Auctions</span>
+        </a>
+        <a routerLink="/forum-page" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>forum</mat-icon>
+          <span>Forum</span>
+        </a>
+        <a routerLink="/contact-page" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>mail</mat-icon>
+          <span>Contact</span>
+        </a>
+        <a routerLink="/help-page" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>help</mat-icon>
+          <span>Help</span>
+        </a>
+        <a routerLink="/action-item-page" routerLinkActive="active" (click)="closeMenu()">
+          <mat-icon>gavel</mat-icon>
+          <span>Action</span>
+        </a>
+      </div>
+
+      <div class="nav-links-actions">
+        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction" title="Add Auction">
+          <mat-icon>add</mat-icon>
+        </a>
+        <div class="auth-pill">
+          <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
+          <span class="auth-pill-divider"></span>
+          <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<router-outlet />
+
+<app-footer></app-footer>
