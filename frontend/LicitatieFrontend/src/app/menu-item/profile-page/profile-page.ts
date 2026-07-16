@@ -36,7 +36,6 @@ const STORAGE_KEY = 'profile_user';
   styleUrl: './profile-page.css',
 })
 export class ProfilePage implements OnInit {
-
   // --- Edit mode ---
   isEditing = false;
   currentUserId: number = 3; // Default fallback
@@ -96,11 +95,10 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
-
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email;
@@ -133,7 +131,9 @@ export class ProfilePage implements OnInit {
       next: (items) => {
         // Filter items where OwnerId matches current user ID
         this.addedItems = items
-          .filter((item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username)
+          .filter(
+            (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
+          )
           .map((item: any) => ({
             id: item.id || 0,
             title: item.name,
@@ -156,15 +156,17 @@ export class ProfilePage implements OnInit {
 
     // Load reviews
     this.reviewService.getReviews().subscribe({
-      next: (reviews) => {
+      next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.reviewedUserId === this.currentUserId)
+          .filter((r) => r.ReviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.id,
-            author: r.reviewer || 'Anonymous',
-            rating: r.rating,
-            comment: r.comment,
-            date: r.reviewDate ? new Date(r.reviewDate).toLocaleDateString() : new Date().toLocaleDateString(),
+            id: r.Id,
+            author: r.Reviewer?.UserName || 'Anonymous',
+            rating: r.Rating,
+            comment: r.Comment,
+            date: r.ReviewDate
+              ? new Date(r.ReviewDate).toLocaleDateString()
+              : new Date().toLocaleDateString(),
           }));
 
         if (this.reviews.length > 0) {
@@ -177,7 +179,6 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading reviews:', err),
     });
   }
-
   // --- Persistence ---
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -232,20 +233,23 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    this.authService.changePassword(this.currentUserId, this.currentPassword, this.newPassword).subscribe({
-      next: (res) => {
-        this.passwordError = false;
-        this.passwordMessage = 'Password updated successfully!';
-        this.currentPassword = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
-        setTimeout(() => (this.passwordMessage = ''), 3000);
-      },
-      error: (err) => {
-        this.passwordError = true;
-        this.passwordMessage = err.error?.message || 'Error updating password. Please check your current password.';
-      },
-    });
+    this.authService
+      .changePassword(this.currentUserId, this.currentPassword, this.newPassword)
+      .subscribe({
+        next: (res) => {
+          this.passwordError = false;
+          this.passwordMessage = 'Password updated successfully!';
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.confirmPassword = '';
+          setTimeout(() => (this.passwordMessage = ''), 3000);
+        },
+        error: (err) => {
+          this.passwordError = true;
+          this.passwordMessage =
+            err.error?.message || 'Error updating password. Please check your current password.';
+        },
+      });
   }
 
   // --- Add Item ---
