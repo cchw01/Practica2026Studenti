@@ -78,7 +78,6 @@ import { MatMenuModule } from '@angular/material/menu';
     Edit,
     View,
     AuctionDetail,
-    ShareListingButton,
     ForumPostDetails,
     CreateForumPost,
     AuctionDetail,
