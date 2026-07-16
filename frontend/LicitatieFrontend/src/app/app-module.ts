@@ -55,6 +55,7 @@ import { Footer } from './app-logic/footer/footer';
 
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     App,
@@ -84,6 +85,7 @@ import { ShareListingButton } from './shared/share-listing-button/share-listing-
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatMenuModule,
 
     // ngx-translate v18
     TranslatePipe,

@@ -1,8 +1,6 @@
-```html
 <nav class="navbar">
   <div class="navbar-inner">
 
-    <!-- Brand / logo -->
     <a
       routerLink="/home-page"
       class="brand"
@@ -18,7 +16,6 @@
       </span>
     </a>
 
-    <!-- Mobile menu button -->
     <button
       class="menu-toggle"
       type="button"
@@ -31,12 +28,10 @@
       </mat-icon>
     </button>
 
-    <!-- Navigation menu -->
     <div
       class="nav-links"
       [class.open]="menuOpen()"
     >
-      <!-- Main navigation links -->
       <div class="nav-links-main">
 
         <a
@@ -86,44 +81,75 @@
 
       </div>
 
-      <!-- Language and account actions -->
-  <div class="nav-links-actions">
+      <div class="nav-links-actions">
 
-        <!-- Language switcher -->
-        <div
-          class="language-switcher"
-          role="group"
-          [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate"
-        >
-          <button
-            type="button"
-            class="language-button"
-            [class.active-language]="translate.currentLang() === 'en'"
-            (click)="changeLanguage('en')"
-          >
-            EN
-          </button>
+<div class="language-switcher">
+  <button
+    type="button"
+    mat-button
+    class="language-dropdown-trigger"
+    [matMenuTriggerFor]="languageMenu"
+    [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate"
+  >
+    <mat-icon>language</mat-icon>
 
-          <button
-            type="button"
-            class="language-button"
-            [class.active-language]="translate.currentLang() === 'ro'"
-            (click)="changeLanguage('ro')"
-          >
-            RO
-          </button>
+    <span>{{ currentLanguageLabel() }}</span>
 
-          <button
-            type="button"
-            class="language-button"
-            [class.active-language]="translate.currentLang() === 'es'"
-            (click)="changeLanguage('es')"
-          >
-            ES
-          </button>
-        </div>
+    <mat-icon class="dropdown-arrow">
+      expand_more
+    </mat-icon>
+  </button>
 
-        <!-- Login -->
+  <mat-menu #languageMenu="matMenu">
+
+    <button
+      mat-menu-item
+      type="button"
+      (click)="changeLanguage('en')"
+    >
+      <span class="language-code">EN</span>
+      <span>English</span>
+
+      @if (translate.currentLang() === 'en') {
+        <mat-icon class="selected-language-icon">
+          check
+        </mat-icon>
+      }
+    </button>
+
+    <button
+      mat-menu-item
+      type="button"
+      (click)="changeLanguage('ro')"
+    >
+      <span class="language-code">RO</span>
+      <span>Română</span>
+
+      @if (translate.currentLang() === 'ro') {
+        <mat-icon class="selected-language-icon">
+          check
+        </mat-icon>
+      }
+    </button>
+
+    <button
+      mat-menu-item
+      type="button"
+      (click)="changeLanguage('es')"
+    >
+      <span class="language-code">ES</span>
+      <span>Español</span>
+
+      @if (translate.currentLang() === 'es') {
+        <mat-icon class="selected-language-icon">
+          check
+        </mat-icon>
+      }
+    </button>
+
+  </mat-menu>
+</div>
+
         <a
           routerLink="/login-page"
           routerLinkActive="active"
@@ -134,7 +160,6 @@
           <span>{{ 'NAV.LOGIN' | translate }}</span>
         </a>
 
-        <!-- Register -->
         <a
           routerLink="/register-page"
           routerLinkActive="active"
@@ -148,7 +173,9 @@
     </div>
   </div>
 </nav>
-<router-outlet />
+
+<main class="page-content">
+  <router-outlet></router-outlet>
+</main>
 
 <app-footer></app-footer>
-

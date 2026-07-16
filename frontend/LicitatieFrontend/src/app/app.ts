@@ -1,6 +1,16 @@
-import { Component, signal, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal
+} from '@angular/core';
+
 import { MatIconRegistry } from '@angular/material/icon';
 import { TranslateService } from '@ngx-translate/core';
+
+const SUPPORTED_LANGUAGES = ['en', 'ro', 'es'] as const;
+
+type AppLanguage = typeof SUPPORTED_LANGUAGES[number];
 
 @Component({
   selector: 'app-root',
@@ -14,31 +24,35 @@ export class App {
 
   readonly translate = inject(TranslateService);
 
-  // Languages available in the application.
-  readonly languages = ['en', 'ro', 'es'];
+  readonly languages = SUPPORTED_LANGUAGES;
+
+  readonly currentLanguageLabel = computed(() => {
+    const language = this.translate.currentLang();
+
+    return language
+      ? language.toUpperCase()
+      : 'EN';
+  });
 
   constructor(iconRegistry: MatIconRegistry) {
-    iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+    iconRegistry.setDefaultFontSetClass(
+      'material-symbols-outlined'
+    );
 
-    // Register the available languages.
-    this.translate.addLangs(this.languages);
+    this.translate.addLangs([...this.languages]);
 
-    const savedLanguage = localStorage.getItem('language');
-    const browserLanguage = this.translate.getBrowserLang();
+    const savedLanguage =
+      localStorage.getItem('language');
 
-    let initialLanguage = 'en';
+    const browserLanguage =
+      this.translate.getBrowserLang();
 
-    // First use the language previously selected by the user.
-    if (
-      savedLanguage !== null &&
-      this.languages.includes(savedLanguage)
-    ) {
+    let initialLanguage: AppLanguage = 'en';
+
+    if (this.isSupportedLanguage(savedLanguage)) {
       initialLanguage = savedLanguage;
-    }
-    // Otherwise, use the browser language if it is supported.
-    else if (
-      browserLanguage !== undefined &&
-      this.languages.includes(browserLanguage)
+    } else if (
+      this.isSupportedLanguage(browserLanguage)
     ) {
       initialLanguage = browserLanguage;
     }
@@ -46,28 +60,38 @@ export class App {
     this.changeLanguage(initialLanguage);
   }
 
-  changeLanguage(language: string): void {
-    if (!this.languages.includes(language)) {
-      return;
-    }
-
-    // Load and activate the selected JSON translation.
+  changeLanguage(language: AppLanguage): void {
     this.translate.use(language);
 
-    // Remember the selected language after refreshing.
-    localStorage.setItem('language', language);
+    localStorage.setItem(
+      'language',
+      language
+    );
 
-    // Update the language attribute of the HTML document.
     document.documentElement.lang = language;
 
     this.closeMenu();
   }
 
   toggleMenu(): void {
-    this.menuOpen.update((open) => !open);
+    this.menuOpen.update(
+      open => !open
+    );
   }
 
   closeMenu(): void {
     this.menuOpen.set(false);
+  }
+
+  private isSupportedLanguage(
+    language: string | null | undefined
+  ): language is AppLanguage {
+    return (
+      language !== null &&
+      language !== undefined &&
+      this.languages.includes(
+        language as AppLanguage
+      )
+    );
   }
 }
