@@ -1,23 +1,22 @@
 using Backend.DataManagement;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// ── CORS ── permite cereri din Angular (localhost:4200)
+var myAngularPolicy = "AllowAngularApp";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy(myAngularPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
+builder.Services.AddControllers();
 
 // ── Controllers cu serializare JSON (enum ca string, ignoră cicli) ──
 builder.Services.AddControllers()
@@ -56,7 +55,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// ── HTTP pipeline ──
+app.UseRouting();
+app.UseCors(myAngularPolicy);
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
