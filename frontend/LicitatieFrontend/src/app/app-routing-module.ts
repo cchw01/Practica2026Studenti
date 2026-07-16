@@ -11,6 +11,8 @@ import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
 import { AddItem } from './add-item/add-item';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
+  { path: 'forum/new', component: CreateForumPost },
+  { path: 'forum/:id', component: ForumPostDetails },
   { path: 'profile-page', component: ProfilePage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'help-page', component: HelpPageComponent },
