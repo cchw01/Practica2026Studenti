@@ -1,27 +1,49 @@
-/* Layout General */
+/* =========================================
+   Layout General & Fundal
+   ========================================= */
+body {
+  /* Aplicăm gradientul pastelat similar cu pagina de Home */
+  margin: 0;
+  background: linear-gradient(135deg, #e6ebfa 0%, #ffffff 40%, #ffffff 60%, #fae2ea 100%);
+  min-height: 100vh;
+}
+
 .help-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px 20px;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: #333;
 }
 
-/* Hero Section */
+/* =========================================
+   Hero Section (Fără cutie colorată)
+   ========================================= */
 .hero-section {
   text-align: center;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-  color: white;
-  padding: 50px 20px;
-  border-radius: 12px;
-  margin-bottom: 40px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  background: transparent; /* Am eliminat cutia albastră */
+  color: #111; /* Text negru/închis */
+  padding: 40px 20px 60px;
+  margin-bottom: 20px;
+  box-shadow: none;
 }
 
-.hero-section h1 { margin: 0; font-size: 2.5rem; }
-.hero-section p { margin-top: 10px; font-size: 1.2rem; opacity: 0.9; }
+.hero-section h1 { 
+  margin: 0; 
+  font-size: 3.2rem; 
+  font-weight: 900; 
+  letter-spacing: -1px;
+}
 
-/* Grid și Carduri */
+.hero-section p { 
+  margin-top: 15px; 
+  font-size: 1.2rem; 
+  color: #555; 
+}
+
+/* =========================================
+   Grid și Carduri
+   ========================================= */
 .content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -29,115 +51,177 @@
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
-  border: 1px solid #eee;
+  background: rgba(255, 255, 255, 0.8); /* Ușor transparent */
+  backdrop-filter: blur(10px); /* Efect subtil de modernitate */
+  border-radius: 24px; /* Colțuri mult mai rotunde */
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Umbră fină */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 1);
 }
 
-.card:hover { transform: translateY(-5px); }
-.card h2 { margin-top: 0; color: #2c3e50; font-size: 1.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px;}
+.card:hover { 
+  transform: translateY(-5px); 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.07);
+}
+
+.card h2 { 
+  margin-top: 0; 
+  color: #111; 
+  font-size: 1.6rem; 
+  border-bottom: 2px solid rgba(0,0,0,0.05); 
+  padding-bottom: 15px;
+  font-weight: 800;
+}
 
 .right-column { display: flex; flex-direction: column; gap: 30px; }
 
-/* FAQ Acordeon */
+/* =========================================
+   FAQ Acordeon
+   ========================================= */
 .faq-item {
-  border-bottom: 1px solid #eee;
-  padding: 15px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 18px 0;
   cursor: pointer;
 }
 .faq-question {
   display: flex;
   justify-content: space-between;
-  font-weight: 600;
-  color: #34495e;
+  font-weight: 700;
+  color: #111;
   font-size: 1.1rem;
 }
-.toggle-icon { color: #3498db; font-weight: bold; font-size: 1.2rem; }
+.toggle-icon { color: #0a58ca; font-weight: bold; font-size: 1.3rem; }
 .faq-answer {
-  margin-top: 10px; color: #666; line-height: 1.5;
+  margin-top: 10px; color: #555; line-height: 1.6;
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Call Center */
-.call-card { text-align: center; background: #f8fbff; border-color: #dbeafe; }
-.phone-number { font-size: 2.5rem; font-weight: bold; color: #2563eb; margin: 15px 0; }
+/* =========================================
+   Call Center
+   ========================================= */
+.call-card { 
+  text-align: center; 
+  background: linear-gradient(to right, #f8fbff, #ffffff); 
+  border: 1px solid #dbeafe; 
+}
+.phone-number { font-size: 2.8rem; font-weight: 900; color: #0a58ca; margin: 15px 0; }
 
-/* Formular */
+/* =========================================
+   Formular (Aspect de Pastilă)
+   ========================================= */
 .input-group { margin-bottom: 20px; }
 .input-group input, .input-group textarea {
-  width: 100%; padding: 12px 15px; border: 1px solid #ccc;
-  border-radius: 8px; font-size: 1rem; box-sizing: border-box;
-  transition: border-color 0.3s;
+  width: 100%; 
+  padding: 15px 20px; 
+  border: 1px solid #e2e8f0;
+  border-radius: 30px; /* Pill shape pentru input */
+  font-size: 1rem; 
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background: white;
+}
+.input-group textarea {
+  border-radius: 20px; /* Textarea arată mai bine puțin mai pătrat, dar tot cu margini mari */
+  resize: vertical;
+  min-height: 120px;
 }
 .input-group input:focus, .input-group textarea:focus {
-  border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  border-color: #0a58ca; outline: none; box-shadow: 0 0 0 4px rgba(10, 88, 202, 0.1);
 }
-.submit-btn {
-  width: 100%; background: #2563eb; color: white; border: none;
-  padding: 15px; border-radius: 8px; font-size: 1.1rem;
-  font-weight: bold; cursor: pointer; transition: background 0.3s;
-}
-.submit-btn:hover:not(:disabled) { background: #1d4ed8; }
-.submit-btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
-/* Chat AI Widget */
+.submit-btn {
+  width: 100%; 
+  background: #0a58ca; /* Albastrul de pe Home */
+  color: white; 
+  border: none;
+  padding: 16px; 
+  border-radius: 40px; /* Pill shape pentru buton */
+  font-size: 1.1rem;
+  font-weight: 700; 
+  cursor: pointer; 
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 15px rgba(10, 88, 202, 0.2);
+}
+.submit-btn:hover:not(:disabled) { 
+  background: #084298; 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(10, 88, 202, 0.3);
+}
+.submit-btn:disabled { background: #9ca3af; cursor: not-allowed; box-shadow: none; transform: none;}
+
+/* =========================================
+   Chat AI Widget
+   ========================================= */
 .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
 .chat-toggle {
-  background: #2563eb; color: white; border: none; padding: 15px 25px;
-  border-radius: 30px; cursor: pointer; font-size: 1.1rem; font-weight: bold;
-  box-shadow: 0 10px 20px rgba(37,99,235,0.3); transition: all 0.3s;
+  background: #0a58ca; color: white; border: none; padding: 15px 30px;
+  border-radius: 40px; cursor: pointer; font-size: 1.1rem; font-weight: bold;
+  box-shadow: 0 10px 25px rgba(10, 88, 202, 0.3); transition: all 0.3s;
 }
-.chat-toggle.chat-open { border-radius: 50%; padding: 15px 20px; background: #ef4444; }
+.chat-toggle.chat-open { 
+  border-radius: 50%; 
+  padding: 15px 20px; 
+  background: #ef4444; 
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
 
 .chat-box {
-  position: absolute; bottom: 70px; right: 0; width: 350px;
-  background: white; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  position: absolute; bottom: 80px; right: 0; width: 360px;
+  background: white; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.12);
   display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.3s;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 .chat-header {
-  background: #1e3c72; color: white; padding: 15px;
-  font-weight: bold; display: flex; align-items: center; gap: 10px;
+  background: #f8fbff; color: #111; padding: 20px;
+  font-weight: 800; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid #eee;
 }
-.status-dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; }
+.status-dot { width: 12px; height: 12px; background: #10b981; border-radius: 50%; }
 
 .chat-messages {
-  height: 300px; overflow-y: auto; padding: 15px;
-  background: #f8fafc; display: flex; flex-direction: column; gap: 12px;
+  height: 320px; overflow-y: auto; padding: 20px;
+  background: #ffffff; display: flex; flex-direction: column; gap: 15px;
 }
-.message { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 0.95rem; line-height: 1.4; }
-.message.ai { background: #e2e8f0; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 0; }
-.message.user { background: #2563eb; color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+.message { padding: 12px 18px; border-radius: 20px; max-width: 80%; font-size: 0.95rem; line-height: 1.5; }
+.message.ai { background: #f1f5f9; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
+.message.user { background: #0a58ca; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
 
 .chat-input-area {
-  display: flex; border-top: 1px solid #eee; padding: 10px; background: white;
+  display: flex; border-top: 1px solid #eee; padding: 15px; background: white; gap: 10px;
 }
 .chat-input-area input {
-  flex: 1; border: none; padding: 10px; outline: none; font-size: 1rem;
+  flex: 1; border: 1px solid #eee; padding: 12px 15px; border-radius: 25px; 
+  outline: none; font-size: 1rem; background: #f8fafc; transition: border-color 0.3s;
 }
+.chat-input-area input:focus { border-color: #0a58ca; }
 .chat-input-area button {
-  background: #2563eb; color: white; border: none; border-radius: 8px;
-  padding: 0 20px; cursor: pointer; font-weight: bold;
+  background: #0a58ca; color: white; border: none; border-radius: 25px;
+  padding: 0 20px; cursor: pointer; font-weight: bold; transition: background 0.3s;
 }
+.chat-input-area button:hover { background: #084298; }
 
-/* Animații */
+/* =========================================
+   Animații
+   ========================================= */
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Indicator de scriere (typing dots) */
+/* Indicator de scriere */
 .typing .dot {
   display: inline-block; width: 6px; height: 6px;
-  background: #64748b; border-radius: 50%; margin: 0 2px;
+  background: #94a3b8; border-radius: 50%; margin: 0 2px;
   animation: typingBounce 1.4s infinite ease-in-out both;
 }
 .typing .dot:nth-child(1) { animation-delay: -0.32s; }
 .typing .dot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-/* Responsivitate Mobile */
+/* =========================================
+   Responsivitate Mobile
+   ========================================= */
 @media(max-width: 768px) {
   .content-grid { grid-template-columns: 1fr; }
   .chat-box { width: 300px; right: -10px; }
+  .hero-section h1 { font-size: 2.2rem; }
 }
