@@ -29,6 +29,8 @@ const routes: Routes = [
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
   { path: 'forum/:id', component: ForumPostDetails },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
   { path: 'help-page', component: HelpPageComponent },
   { path: 'add-item', component: AddItemPage },
@@ -36,10 +38,9 @@ const routes: Routes = [
   { path: 'add', component: Add },
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
-  { path: 'action-item-page', component: AuctionItemPage }
+  { path: 'action-item-page', component: AuctionItemPage },
   { path: 'help-page', component: HelpPageComponent },
-  { path: 'add-item', component: AddItem },
-  { path: '**', redirectTo: '/home-page' },
+  { path: 'review-page', component: ReviewComponent },
 ];
 
 @NgModule({
