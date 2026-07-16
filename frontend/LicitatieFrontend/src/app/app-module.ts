@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,9 +27,14 @@ import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 import { AddItemPage } from './add-item-page/add-item-page';
 
-
 import { AuthInterceptor } from './services/auth-interceptor';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { Add } from './menu-item/add/add';
+import { Edit } from './menu-item/edit/edit';
+import { View } from './menu-item/view/view';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,14 @@ import { Footer } from './app-logic/footer/footer';
     ForumPage,
     AuctionsPage,
     AddItemPage, 
+    AuctionItemPage,
+    Add,
+    Edit,
+    View,
+    AuctionDetail,
     ShareListingButton,
+    ForumPostDetails,
+    CreateForumPost,
     AuctionDetail,
     Footer,
   ],
@@ -59,7 +70,6 @@ import { Footer } from './app-logic/footer/footer';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule,
     ReviewComponent,
   ],
   providers: [
@@ -73,4 +83,4 @@ import { Footer } from './app-logic/footer/footer';
   ],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }
