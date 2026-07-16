@@ -112,7 +112,7 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("regenerate-token")]
         public ActionResult RegenerateAccessToken()
         {
             try
@@ -195,7 +195,7 @@ using Azure.Core;
             }
         }
 
-        [HttpPost]
+        [HttpPost("logout")]
 
         public ActionResult LogoutUser()
         {
