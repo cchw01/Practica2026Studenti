@@ -16,6 +16,7 @@ namespace Backend.DataManagement
         public DbSet<Bid> Bids => Set<Bid>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         
