@@ -20,7 +20,7 @@ interface ForumPostPreview {
   selector: 'app-forum-page',
   standalone: false,
   templateUrl: './forum-page.html',
-  styleUrl: './forum-page.css',
+  styleUrl: './forum-page.scss',
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
