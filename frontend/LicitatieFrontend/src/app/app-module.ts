@@ -23,6 +23,7 @@ import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { HomePage } from './home-page/home-page';
 import { AuctionsPage } from './auctions-page/auctions-page';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
 

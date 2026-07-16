@@ -8,6 +8,7 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
 
 const routes: Routes = [
@@ -21,6 +22,9 @@ const routes: Routes = [
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'profile-page', component: ProfilePage },
+  { path: 'review-page', component: ReviewComponent},
+  { path: 'help-page', component: HelpPageComponent },
+
   { path: 'review-page', component: ReviewComponent }
 ];
 
