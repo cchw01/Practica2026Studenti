@@ -1,0 +1,145 @@
+.add-item-container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.add-item-card {
+  width: 100%;
+  max-width: 640px;
+  padding: 32px;
+  border-radius: 12px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.6rem;
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #6c63ff;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 28px;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #666;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.upload-box:hover {
+  border-color: #6c63ff;
+  background: rgba(108, 99, 255, 0.05);
+}
+
+.upload-box small {
+  color: #999;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid #d32f2f;
+  color: #d32f2f;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-remove:hover {
+  background: rgba(211, 47, 47, 0.08);
+}
+
+.message {
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.success-msg {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.error-msg {
+  background: #fdecea;
+  color: #d32f2f;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 560px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

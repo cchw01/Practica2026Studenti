@@ -10,7 +10,11 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
-import { AddItem } from './add-item/add-item';
+import { AddItemPage } from './add-item-page/add-item-page';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { Add } from './menu-item/add/add';
+import { Edit } from './menu-item/edit/edit';
+import { View } from './menu-item/view/view';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 
@@ -26,7 +30,13 @@ const routes: Routes = [
   { path: 'forum/new', component: CreateForumPost },
   { path: 'forum/:id', component: ForumPostDetails },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent },
+  { path: 'help-page', component: HelpPageComponent },
+  { path: 'add-item', component: AddItemPage },
+
+  { path: 'add', component: Add },
+  { path: 'edit', component: Edit },
+  { path: 'view', component: View },
+  { path: 'action-item-page', component: AuctionItemPage }
   { path: 'help-page', component: HelpPageComponent },
   { path: 'add-item', component: AddItem },
   { path: '**', redirectTo: '/home-page' },
