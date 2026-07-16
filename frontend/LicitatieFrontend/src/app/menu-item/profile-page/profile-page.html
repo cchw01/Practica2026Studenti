@@ -1,0 +1,234 @@
+<div class="profile-wrapper">
+
+  <!-- Cover -->
+  <div class="profile-cover"></div>
+
+  <!-- ===== VIEW MODE ===== -->
+  <ng-container *ngIf="!isEditing">
+
+    <!-- Profile Header Info -->
+    <div class="profile-header">
+      <div class="avatar-container">
+        <img class="avatar" [src]="displayAvatar" alt="Profile picture" />
+      </div>
+      <div class="profile-info">
+        <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
+        <p class="profile-username empty-field" *ngIf="!user.username">&#64;username not set</p>
+        <h1 class="profile-name" *ngIf="user.name">{{ user.name }}</h1>
+        <h1 class="profile-name empty-field" *ngIf="!user.name">Name not set</h1>
+        <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
+        <p class="profile-email empty-field" *ngIf="!user.email">Email not set</p>
+      </div>
+
+      <!-- Rating box -->
+      <div class="score-box">
+        <span class="score-value">{{ score || '—' }}</span>
+        <div class="score-stars">
+          <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
+        </div>
+        <span class="score-label">Average Score</span>
+      </div>
+
+      <!-- Header actions -->
+      <div class="header-actions">
+        <button class="btn-edit" (click)="startEdit()">✏️ Edit Profile</button>
+        <button class="btn-logout" (click)="onLogout()">🚪 Log Out</button>
+      </div>
+    </div>
+
+    <!-- Sections Layout -->
+    <div class="sections">
+
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+
+        <!-- Theme Switcher Card -->
+        <div class="profile-section theme-card">
+          <h2 class="section-title"><span class="section-icon">🎨</span> Customize Theme</h2>
+          <p class="theme-desc">Choose a visual style that matches your mood.</p>
+          <div class="theme-options">
+            <button class="theme-btn light-btn" [class.active]="currentTheme === 'light'" (click)="setTheme('light')">
+              ☀️ Light
+            </button>
+            <button class="theme-btn dark-btn" [class.active]="currentTheme === 'dark'" (click)="setTheme('dark')">
+              🌙 Dark
+            </button>
+            <button class="theme-btn neon-btn" [class.active]="currentTheme === 'neon'" (click)="setTheme('neon')">
+              🌌 Neon
+            </button>
+          </div>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="profile-section change-password-card">
+          <h2 class="section-title"><span class="section-icon">🔑</span> Change Password</h2>
+          <div class="form-container">
+            <div class="form-group">
+              <label for="currentPass">Current Password</label>
+              <input id="currentPass" type="password" [(ngModel)]="currentPassword" placeholder="••••••••" />
+            </div>
+            <div class="form-group">
+              <label for="newPass">New Password</label>
+              <input id="newPass" type="password" [(ngModel)]="newPassword" placeholder="••••••••" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPass">Confirm New Password</label>
+              <input id="confirmPass" type="password" [(ngModel)]="confirmPassword" placeholder="••••••••" />
+            </div>
+            <button class="btn-submit" (click)="onChangePassword()">Update Password</button>
+            <p class="msg-box" *ngIf="passwordMessage" [class.error]="passwordError">{{ passwordMessage }}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-col">
+
+        <!-- Add Item to Sell Card -->
+        <div class="profile-section add-item-card">
+          <h2 class="section-title"><span class="section-icon">💰</span> Sell a New Item</h2>
+          <div class="form-container">
+            <div class="form-group">
+              <label for="itemName">Item Name</label>
+              <input id="itemName" type="text" [(ngModel)]="newItemName" placeholder="e.g. Vintage Gold Watch" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="itemPrice">Starting Price (RON)</label>
+                <input id="itemPrice" type="number" [(ngModel)]="newItemPrice" placeholder="e.g. 250" />
+              </div>
+              <div class="form-group">
+                <label for="itemCategory">Category</label>
+                <select id="itemCategory" [(ngModel)]="newItemCategory">
+                  <option value="1">Electronics</option>
+                  <option value="2">Fashion</option>
+                  <option value="3">Home</option>
+                  <option value="4">Art</option>
+                  <option value="5">Vehicles</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemLocation">Location</label>
+              <input id="itemLocation" type="text" [(ngModel)]="newItemLocation" placeholder="e.g. Bucharest" />
+            </div>
+            <div class="form-group">
+              <label for="itemDuration">Auction Duration</label>
+              <select id="itemDuration" [(ngModel)]="newItemDuration">
+                <option [value]="1">1 Day</option>
+                <option [value]="3">3 Days</option>
+                <option [value]="5">5 Days</option>
+                <option [value]="7">7 Days</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="itemDesc">Description</label>
+              <textarea id="itemDesc" [(ngModel)]="newItemDescription" placeholder="Provide details about the item's condition..." rows="3"></textarea>
+            </div>
+            <button class="btn-submit btn-sell" (click)="onAddItem()">Publish Auction</button>
+            <p class="msg-box" *ngIf="itemMessage" [class.error]="itemError">{{ itemMessage }}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Parallel Sales and Won Items -->
+      <div class="sales-won-row full-width">
+        <!-- Listed Items List -->
+        <div class="profile-section">
+          <h2 class="section-title"><span class="section-icon">📦</span> My Active Sales</h2>
+          <div class="items-list" *ngIf="addedItems.length > 0">
+            <div class="item-card" *ngFor="let item of addedItems">
+              <div class="item-info">
+                <span class="item-title">{{ item.title }}</span>
+                <span class="item-price">{{ item.price }} RON</span>
+              </div>
+              <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+            </div>
+          </div>
+          <p class="empty-state" *ngIf="addedItems.length === 0">No items listed yet.</p>
+        </div>
+
+        <!-- Won Items List -->
+        <div class="profile-section">
+          <h2 class="section-title"><span class="section-icon">🔨</span> Items Won</h2>
+          <div class="items-list" *ngIf="bidItems.length > 0">
+            <div class="item-card" *ngFor="let item of bidItems">
+              <div class="item-info">
+                <span class="item-title">{{ item.title }}</span>
+                <span class="item-price">{{ item.price }} RON</span>
+              </div>
+              <span class="item-badge badge-won">{{ item.status }}</span>
+            </div>
+          </div>
+          <p class="empty-state" *ngIf="bidItems.length === 0">No items won yet.</p>
+        </div>
+      </div>
+
+      <!-- REVIEWS (Full Width) -->
+      <div class="profile-section full-width reviews-section">
+        <h2 class="section-title"><span class="section-icon">💬</span> Reviews Received</h2>
+        <div class="reviews-list" *ngIf="reviews.length > 0">
+          <div class="review-card" *ngFor="let review of reviews">
+            <div class="review-header">
+              <span class="review-author">&#64;{{ review.author }}</span>
+              <span class="review-date">{{ review.date }}</span>
+            </div>
+            <div class="review-stars">
+              <span *ngFor="let s of stars" class="star" [class.filled]="s <= review.rating">★</span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
+        <p class="empty-state" *ngIf="reviews.length === 0">No reviews received yet.</p>
+      </div>
+
+    </div>
+  </ng-container>
+
+  <!-- ===== EDIT MODE ===== -->
+  <div class="edit-panel" *ngIf="isEditing">
+
+    <h2 class="edit-title">Edit Profile</h2>
+
+    <!-- Avatar upload -->
+    <div class="avatar-upload-area">
+      <img class="avatar avatar-large"
+           [src]="editDraft.avatarUrl || displayAvatar"
+           alt="Profile picture preview" />
+      <label class="btn-upload" for="avatarInput">
+        📷 Change Photo
+      </label>
+      <input id="avatarInput" type="file" accept="image/*"
+             (change)="onAvatarSelected($event)" hidden />
+    </div>
+
+    <!-- Form fields -->
+    <div class="edit-form">
+      <div class="form-group">
+        <label for="editUsername">Username</label>
+        <input id="editUsername" type="text" [(ngModel)]="editDraft.username"
+               placeholder="e.g. john_doe" />
+      </div>
+      <div class="form-group">
+        <label for="editName">Full Name</label>
+        <input id="editName" type="text" [(ngModel)]="editDraft.name"
+               placeholder="e.g. John Doe" />
+      </div>
+      <div class="form-group">
+        <label for="editEmail">Email</label>
+        <input id="editEmail" type="email" [(ngModel)]="editDraft.email"
+               placeholder="e.g. john@email.com" />
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="edit-actions">
+      <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+      <button class="btn-save" (click)="saveEdit()">💾 Save Changes</button>
+    </div>
+
+  </div>
+
+</div>

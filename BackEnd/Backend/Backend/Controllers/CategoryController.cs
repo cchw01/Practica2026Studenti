@@ -17,7 +17,7 @@ namespace Backend.Controllers
             dataOps = new CategoryDataOps(DbContext);
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult<CategoryItem> GetCategories()
         {
             try
