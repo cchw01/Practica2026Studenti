@@ -212,13 +212,13 @@
   color: #333
 }
 
-.dark-btn {
-  background: #1e1e2e;
+.sunset-btn {
+  background: linear-gradient(135deg, #e8602c, #e6a817);
   color: #fff
 }
 
-.neon-btn {
-  background: linear-gradient(135deg, #6c63ff, #00f2fe);
+.ocean-btn {
+  background: linear-gradient(135deg, #0891b2, #0d9488);
   color: #fff
 }
 

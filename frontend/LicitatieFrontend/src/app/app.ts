@@ -13,6 +13,14 @@ export class App {
 
   constructor(iconRegistry: MatIconRegistry) {
     iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+    // Apply saved theme on every page load
+    const validThemes = ['light', 'sunset', 'ocean'];
+    let savedTheme = localStorage.getItem('app_theme') || 'light';
+    if (!validThemes.includes(savedTheme)) {
+      savedTheme = 'light';
+      localStorage.setItem('app_theme', 'light');
+    }
+    document.body.className = `theme-${savedTheme}`;
   }
 
   toggleMenu() {
