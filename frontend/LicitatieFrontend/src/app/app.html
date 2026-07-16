@@ -94,15 +94,18 @@
       </div>
 
       <div class="nav-links-actions">
-        <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-login">
-          <mat-icon>login</mat-icon>
-          <span>Login</span>
+        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction" title="Add Auction">
+          <mat-icon>add</mat-icon>
         </a>
-        <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-register">
-          <span>Register</span>
-        </a>
+        <div class="auth-pill">
+          <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
+          <span class="auth-pill-divider"></span>
+          <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Register</a>
+        </div>
       </div>
     </div>
   </div>
 </nav>
 <router-outlet />
+
+<app-footer></app-footer>

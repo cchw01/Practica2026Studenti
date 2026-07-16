@@ -23,8 +23,11 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { Footer } from './app-logic/footer/footer';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     AuctionsPage,
     AuctionDetail,
     ShareListingButton,
+    Footer,
   ],
   imports: [
     BrowserModule,
@@ -60,9 +64,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [App]
 })
-export class AppModule { }
+export class AppModule {}
