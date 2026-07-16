@@ -1,15 +1,17 @@
-import { User } from '../user/user';
-
 export interface Review {
-  Id: number;
-  ReviewerId: number;
-  Reviewer: User;
-  ReviewedUserId: number;
-  ReviewedUser: User;
-  Rating: number;
-  Comment: string;
-  ReviewDate: Date; // ISO date string primit de la backend
+  id: number;
+  reviewerId: number;
+  reviewerUserName: string;
+  reviewedUserId: number;
+  reviewedUserUserName: string;
+  rating: number;
+  comment: string;
+  reviewDate: string;
 }
 
-// Folosit la creare, unde id și reviewDate sunt setate de backend
-export type ReviewCreate = Omit<Review, 'Id' | 'ReviewDate'>;
+export interface ReviewCreate {
+  reviewerId: number;
+  reviewedUserId: number;
+  rating: number;
+  comment: string;
+}

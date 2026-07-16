@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Review } from './review.model';
-import { ReviewService } from '../../app-logic/review';
+import { Review, ReviewCreate } from './review.model';
+import { ReviewService } from '../../services/review-service'; // <-- ajusteaza dupa calea reala la tine
 
 @Component({
   selector: 'app-review',
@@ -35,9 +35,7 @@ export class ReviewComponent implements OnInit {
   ) {
     this.reviewForm = this.fb.group({
       reviewerId: [null, [Validators.required]],
-      reviewer: ['', [Validators.required]],
       reviewedUserId: [null, [Validators.required]],
-      reviewedUser: ['', [Validators.required]],
       rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
       comment: ['', [Validators.maxLength(1000)]]
     });
@@ -50,7 +48,7 @@ export class ReviewComponent implements OnInit {
   loadReviews(): void {
     this.reviewService.getReviews().subscribe({
       next: (data) => (this.reviews = data),
-      error: (err) => (this.errorMessage = 'Nu am putut încărca review-urile.')
+      error: () => (this.errorMessage = 'Nu am putut încărca review-urile.')
     });
   }
 
@@ -59,16 +57,10 @@ export class ReviewComponent implements OnInit {
       return;
     }
 
-    const formValue = this.reviewForm.value;
+    const formValue: ReviewCreate = this.reviewForm.value;
 
     if (this.editingReviewId !== null) {
-      const updatedReview: Review = {
-        id: this.editingReviewId,
-        reviewDate: new Date().toISOString(),
-        ...formValue
-      };
-
-      this.reviewService.updateReview(updatedReview).subscribe({
+      this.reviewService.updateReview(this.editingReviewId, formValue).subscribe({
         next: () => {
           this.resetForm();
           this.loadReviews();
@@ -81,20 +73,21 @@ export class ReviewComponent implements OnInit {
           this.resetForm();
           this.loadReviews();
         },
-        error: () => (this.errorMessage = 'Eroare la adăugarea review-ului.')
+        error: (err) => {
+          this.errorMessage = err.error ?? 'Eroare la adăugarea review-ului.';
+          console.error(err);
+        }
       });
     }
   }
 
   editReview(review: Review): void {
-    this.editingReviewId = review.Id;
+    this.editingReviewId = review.id;
     this.reviewForm.patchValue({
-      reviewerId: review.ReviewerId,
-      reviewer: review.Reviewer,
-      reviewedUserId: review.ReviewedUserId,
-      reviewedUser: review.ReviewedUser,
-      rating: review.Rating,
-      comment: review.Comment
+      reviewerId: review.reviewerId,
+      reviewedUserId: review.reviewedUserId,
+      rating: review.rating,
+      comment: review.comment
     });
   }
 

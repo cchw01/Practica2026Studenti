@@ -10,18 +10,8 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Reviewer</mat-label>
-      <input matInput formControlName="reviewer" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
       <mat-label>Reviewed User ID</mat-label>
       <input matInput type="number" formControlName="reviewedUserId" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Reviewed User</mat-label>
-      <input matInput formControlName="reviewedUser" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -50,17 +40,17 @@
   <div class="review-list">
     <div *ngFor="let review of reviews" class="review-item">
       <div class="review-header">
-        <strong>{{ review.Reviewer?.Name }}</strong> → <strong>{{ review.ReviewedUser?.Name }}</strong>
-        <span class="rating">⭐ {{ review.Rating }}/5</span>
+        <strong>{{ review.reviewerUserName }}</strong> → <strong>{{ review.reviewedUserUserName }}</strong>
+        <span class="rating">⭐ {{ review.rating }}/5</span>
       </div>
-      <p class="comment">{{ review.Comment }}</p>
-      <small>{{ review.ReviewDate | date: 'medium' }}</small>
+      <p class="comment">{{ review.comment }}</p>
+      <small>{{ review.reviewDate | date: 'medium' }}</small>
 
       <div class="review-actions">
         <button mat-icon-button (click)="editReview(review)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteReview(review.Id)">
+        <button mat-icon-button color="warn" (click)="deleteReview(review.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
