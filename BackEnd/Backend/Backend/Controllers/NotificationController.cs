@@ -37,11 +37,11 @@ namespace Backend.Controllers
         [HttpPost("{id}/read")]
         public ActionResult MarkRead(int id) { dataOps.MarkAsRead(id); return Ok(); }
 
-        // TEMPORARY - lets you create a test notification for yourself. Delete once badge works.
+
         [HttpPost("test")]
         public ActionResult CreateTest()
         {
-            dataOps.Create(CurrentUserId, "Test notification 🎉");
+            dataOps.Create(CurrentUserId, "Test notification ");
             return Ok();
         }
     }
