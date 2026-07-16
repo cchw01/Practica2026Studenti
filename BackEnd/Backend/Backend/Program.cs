@@ -1,25 +1,25 @@
 using Backend.DataManagement;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+var jwtSecret = builder.Configuration["Jwt:Secret"];
 
-// ── CORS ── permite cereri din Angular (localhost:4200)
+var myAngularPolicy = "AllowAngularApp";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy(myAngularPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
+builder.Services.AddControllers();
 
-// ── Controllers cu serializare JSON (enum ca string, ignoră cicli) ──
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -28,11 +28,17 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 
-// ── OpenAPI / Swagger ──
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
+
+if (string.IsNullOrWhiteSpace(jwtSecret))
+{
+    throw new InvalidOperationException(
+        "Jwt:Secret is missing. Configure it using user secrets."
+    );
+}
 
 builder.Services.AddAuthentication(options =>
 {
@@ -56,7 +62,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// ── HTTP pipeline ──
+app.UseRouting();
+app.UseCors(myAngularPolicy);
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -65,12 +73,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowAngular");
-
 app.UseAuthorization();
 app.UseAuthentication();
-
 app.MapControllers();
 
 app.Run();

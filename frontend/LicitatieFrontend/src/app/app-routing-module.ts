@@ -14,6 +14,8 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -24,13 +26,18 @@ const routes: Routes = [
   { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
+  { path: 'forum/new', component: CreateForumPost },
+  { path: 'forum/:id', component: ForumPostDetails} ,
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent },
   { path: 'help-page', component: HelpPageComponent },
   { path: 'add', component: Add },
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage }
+  { path: 'help-page', component: HelpPageComponent },
+  { path: 'review-page', component: ReviewComponent }
 ];
 
 @NgModule({
