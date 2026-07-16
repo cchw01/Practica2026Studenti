@@ -33,8 +33,6 @@ namespace Backend.Controllers
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
         {
-            dataOps.AddAuctionItem(item);
-            return Ok();
             try
             {
                 dataOps.AddAuctionItem(item);
