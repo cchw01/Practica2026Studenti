@@ -7,7 +7,7 @@ import { AuctionItem } from '../Models/item-model';
   providedIn: 'root',
 })
 export class ItemService {
-  private readonly apiUrl = 'http://localhost:5000/api/items';
+  private readonly apiUrl = 'http://localhost:5153/api/AuctionItem';
 
   constructor(private http: HttpClient) { }
 

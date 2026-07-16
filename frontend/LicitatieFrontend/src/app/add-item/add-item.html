@@ -61,10 +61,15 @@
           </mat-form-field>
         </p>
 
-        <button mat-raised-button color="primary" type="submit">Add Item</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Publishing...' : 'Add Item' }}
+        </button>
 
         @if (successMessage) {
           <p class="success-message">{{ successMessage }}</p>
+        }
+        @if (errorMessage) {
+          <p class="error-message">{{ errorMessage }}</p>
         }
       </form>
     </div>
