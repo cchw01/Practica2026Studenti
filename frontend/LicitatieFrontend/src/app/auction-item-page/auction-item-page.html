@@ -1,68 +1,130 @@
-<div class="auction-page">
-  <div class="auction-card">
-    <div class="auction-image-gallery">
-      <div class="auction-image">📦</div>
-      <div class="thumbnails" *ngIf="auctionItem.photoGallery?.length">
-        <img *ngFor="let img of auctionItem.photoGallery" [src]="img" alt="Item photo" />
+<div class="auction-item-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-badge">🏷️ Auction Detail</div>
+    <h1 class="page-title">{{ auctionItem.Name }}</h1>
+    <p class="page-subtitle">{{ auctionItem.Description }}</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="auction-layout">
+
+    <!-- Left: Image Gallery -->
+    <div class="image-panel">
+      <div class="image-main">
+        <ng-container *ngIf="auctionItem.photoGallery && auctionItem.photoGallery.length > 0; else imagePlaceholder">
+          <img [src]="auctionItem.photoGallery[0]" [alt]="auctionItem.Name" class="main-image" />
+        </ng-container>
+        <ng-template #imagePlaceholder>
+          <div class="image-placeholder">
+            <span class="placeholder-icon">📦</span>
+          </div>
+        </ng-template>
+        <span class="status-badge" [ngClass]="'status-' + auctionItem.Status?.toLowerCase()">
+          {{ auctionItem.Status }}
+        </span>
+      </div>
+
+      <div class="thumbnails" *ngIf="auctionItem.photoGallery && auctionItem.photoGallery.length > 1">
+        <img
+          *ngFor="let img of auctionItem.photoGallery"
+          [src]="img"
+          alt="Item photo"
+          class="thumbnail"
+        />
       </div>
     </div>
 
-    <div class="auction-content">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <p class="status">{{ auctionItem.status }}</p>
-       
-      </div>
+    <!-- Right: Details & Bidding -->
+    <div class="details-panel">
 
-      <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px;">
-        <h1 class="page-title">{{ auctionItem.name }}</h1>
-        
-        <div style="display: flex; gap: 10px; align-items: center;">
-         
-          
-          <button *ngIf="authService.isLoggedIn()" type="button" class="btn btn-secondary" (click)="toggleWishlist()">
-            {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
-          </button>
-        </div>
-      </div>
-
-      <p class="description">{{ auctionItem.description }}</p>
-
+      <!-- Info Grid -->
       <div class="info-grid">
-        <div>
-          <span>Current price</span>
-          <strong>${{ auctionItem.currentPrice }}</strong>
+        <div class="info-card highlighted">
+          <span class="info-label">Current Price</span>
+          <strong class="info-value price">${{ auctionItem.CurrentPrice }}</strong>
         </div>
-        <div>
-          <span>Minimum price</span>
-          <strong>${{ auctionItem.startPrice }}</strong>
+        <div class="info-card">
+          <span class="info-label">Starting Price</span>
+          <strong class="info-value">${{ auctionItem.StartPrice }}</strong>
         </div>
-        <div>
-          <span>Category</span>
-          <strong>{{ auctionItem.category }}</strong>
+        <div class="info-card">
+          <span class="info-label">Category</span>
+          <strong class="info-value">{{ auctionItem.Category?.name }}</strong>
         </div>
-        <div>
-          <span>Location</span>
-          <strong>{{ auctionItem.location }}</strong>
+        <div class="info-card">
+          <span class="info-label">Location</span>
+          <strong class="info-value">📍 {{ auctionItem.Location }}</strong>
         </div>
       </div>
 
-      <div class="owner-box">
-        <p><strong>Owner:</strong> {{ auctionItem.owner }}</p>
-        <p><strong>Ends:</strong> {{ auctionItem.endDate | date:'mediumDate' }}</p>
+      <!-- Owner & End Date -->
+      <div class="meta-row">
+        <div class="meta-item">
+          <span class="meta-icon">👤</span>
+          <div>
+            <span class="meta-label">Owner</span>
+            <span class="meta-val">{{ auctionItem.Owner?.Name }}</span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon">⏳</span>
+          <div>
+            <span class="meta-label">Ends</span>
+            <span class="meta-val">{{ auctionItem.EndDate | date:'mediumDate' }}</span>
+          </div>
+        </div>
       </div>
 
-      <div class="bid-box">
-        <ng-container *ngIf="authService.isLoggedIn(); else loginRedirectTemplate">
-          <label for="bid">Your bid</label>
-          <input id="bid" type="number" [(ngModel)]="bidAmount" class="form-control" />
-          <button type="button" class="btn btn-success" (click)="placeBid()">Place bid</button>
-          <p *ngIf="errorMessage" style="color: red; margin-top: 5px; font-size: 14px;">{{ errorMessage }}</p>
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Bid Section -->
+      <div class="bid-section">
+        <ng-container *ngIf="authService.isLoggedIn(); else loginPrompt">
+          <h3 class="bid-title">Place Your Bid</h3>
+          <div class="bid-input-row">
+            <div class="bid-input-wrap">
+              <span class="bid-currency">$</span>
+              <input
+                id="bid"
+                type="number"
+                [(ngModel)]="bidAmount"
+                class="bid-input"
+                placeholder="Enter bid amount"
+                [min]="auctionItem.CurrentPrice + 1"
+              />
+            </div>
+            <button type="button" class="btn-bid" (click)="placeBid()">
+              🔨 Place Bid
+            </button>
+          </div>
+          <p *ngIf="errorMessage" class="error-msg">⚠️ {{ errorMessage }}</p>
+          <p class="bid-hint">Minimum bid: <strong>${{ auctionItem.CurrentPrice + 1 }}</strong></p>
         </ng-container>
 
-        <ng-template #loginRedirectTemplate>
-          <button type="button" class="btn btn-login" (click)="redirectToLogin()">Login to Bid</button>
+        <ng-template #loginPrompt>
+          <div class="login-prompt">
+            <p class="login-text">Sign in to place a bid on this item.</p>
+            <button type="button" class="btn-login" (click)="redirectToLogin()">
+              Login to Bid
+            </button>
+          </div>
         </ng-template>
       </div>
+
+      <!-- Wishlist -->
+      <button
+        *ngIf="authService.isLoggedIn()"
+        type="button"
+        class="btn-wishlist"
+        [class.in-wishlist]="isInWishlist"
+        (click)="toggleWishlist()"
+      >
+        {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
+      </button>
+
     </div>
   </div>
 </div>
