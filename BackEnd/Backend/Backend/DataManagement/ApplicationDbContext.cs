@@ -61,8 +61,23 @@ namespace Backend.DataManagement
                 .HasForeignKey(b => b.BiddedItemId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-           
+            modelBuilder.Entity<ForumPost>() // ForumPost -> ForumComment
+                .HasMany(p => p.Comments)
+                .WithOne(i => i.ForumPost)
+                .HasForeignKey(b => b.ForumPostId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ForumPost>() // ForumPost -> User
+              .HasOne(p => p.User)
+              .WithMany(i => i.ForumPosts)
+              .HasForeignKey(b => b.UserId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ForumComment>() // ForumComment -> User
+              .HasOne(p => p.User)
+              .WithMany(i => i.ForumComments)
+              .HasForeignKey(b => b.UserId)
+              .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

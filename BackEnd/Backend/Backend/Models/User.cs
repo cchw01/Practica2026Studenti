@@ -29,6 +29,8 @@ namespace Backend.Models
         public float Rating { get; private set; }
 
         public List<Review> ReviewList { get; set; } = new();
+        public List<ForumPost> ForumPosts { get; set; } = new();
+        public List<ForumComment> ForumComments { get; set; } = new();
 
 
         public User() { }
