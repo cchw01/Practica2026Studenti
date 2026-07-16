@@ -42,9 +42,10 @@
 }
 
 .review-actions {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 8px;
 }
 
 .error {
