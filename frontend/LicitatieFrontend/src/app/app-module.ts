@@ -25,6 +25,7 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+import { AddItemPage } from './add-item-page/add-item-page';
 
 import { AuthInterceptor } from './services/auth-interceptor';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
@@ -45,6 +46,7 @@ import { View } from './menu-item/view/view';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    AddItemPage, 
     AuctionItemPage,
     Add,
     Edit,
