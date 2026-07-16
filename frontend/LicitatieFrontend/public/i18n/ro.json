@@ -8,7 +8,8 @@
     "REGISTER": "Înregistrare",
     "TOGGLE_MENU": "Deschide sau închide meniul",
     "SELECT_LANGUAGE": "Selectează limba",
-    "HELP": "Ajutor"
+    "HELP": "Ajutor",
+    "ADD_AUCTION": "Adaugă licitație"
   },
 
   "CONTACT": {
@@ -21,6 +22,7 @@
     "FOLLOW_US": "Urmărește-ne",
     "SOCIAL_DESCRIPTION": "Rămâi conectat cu noi pe rețelele sociale."
   },
+
   "LOGIN": {
     "TITLE": "Autentificare",
     "EMAIL_LABEL": "E-mail",
@@ -35,6 +37,7 @@
     "NO_ACCOUNT": "Nu ai un cont?",
     "REGISTER_HERE": "Înregistrează-te aici"
   },
+
   "REGISTER": {
     "TITLE": "Creează un cont",
     "USERNAME_LABEL": "Nume de utilizator",
@@ -62,5 +65,74 @@
     "SUBMIT": "Creează contul",
     "ALREADY_HAVE_ACCOUNT": "Ai deja un cont?",
     "SIGN_IN": "Autentifică-te"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
+      "TAG": "🔥 Licitații live în fiecare zi",
+      "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
+      "EXPLORE_AUCTIONS": "Explorează licitațiile",
+      "START_SELLING": "Începe să vinzi",
+      "SEARCH_LABEL": "Caută produse și licitații...",
+      "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categorii",
+      "TITLE_START": "Explorează",
+      "TITLE_END": "categoriile",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tehnologie",
+          "DESCRIPTION": "Gadgeturi de ultimă generație și cele mai noi produse electronice."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Auto și moto",
+          "DESCRIPTION": "Mașini, motociclete și piese rare."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Artă și obiecte de colecție",
+          "DESCRIPTION": "Opere de artă exclusive și colecții speciale."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Imobiliare",
+          "DESCRIPTION": "Proprietăți și terenuri deosebite."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Piață",
+      "TITLE_START": "Licitații",
+      "TITLE_END": "active",
+      "PLACE_BID": "Licitează",
+
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW Seria 7, anul 2022, în stare impecabilă, cu un singur proprietar."
+        },
+
+        "GOLD_EARRINGS": {
+          "TITLE": "Cercei din aur",
+          "DESCRIPTION": "Cercei din aur de 18 karate cu diamante certificate."
+        },
+
+        "PATEK_PHILIPPE": {
+          "TITLE": "Ceas Patek Philippe",
+          "DESCRIPTION": "Ceas de colecție în ediție limitată, cu cutie și certificat incluse."
+        },
+
+        "VILLA": {
+          "TITLE": "Vilă",
+          "DESCRIPTION": "Vilă de lux cu piscină, cinci dormitoare și vedere panoramică."
+        }
+      }
+    }
   }
 }

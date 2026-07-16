@@ -1,40 +1,68 @@
 <div class="hero" #heroRef>
-  <canvas #particleCanvas class="hero-canvas"></canvas>
+  <canvas
+    #particleCanvas
+    class="hero-canvas">
+  </canvas>
 
   <div class="hero-content">
     <div class="hero-logo">
-      <span class="hero-logo-icon"><mat-icon>gavel</mat-icon></span>
-      <span class="hero-logo-text">Bid<span class="hero-logo-accent">Sphere</span></span>
+      <span class="hero-logo-icon">
+        <mat-icon>gavel</mat-icon>
+      </span>
+
+      <span class="hero-logo-text">
+        Bid<span class="hero-logo-accent">Sphere</span>
+      </span>
     </div>
 
-    <span class="hero-tag">🔥 Live auctions every day</span>
+    <span class="hero-tag">
+      {{ 'HOME.HERO.TAG' | translate }}
+    </span>
 
-    <h1><span>{{ displayedTitle() }}</span><span class="typing-cursor"></span></h1>
-    <p>The safest online auction platform. Sell fast or catch unique deals.</p>
+    <h1>
+      <span>{{ displayedTitle() }}</span>
+      <span class="typing-cursor"></span>
+    </h1>
+
+    <p>
+      {{ 'HOME.HERO.DESCRIPTION' | translate }}
+    </p>
 
     <div class="hero-buttons">
       <button
         mat-flat-button
         color="primary"
         class="btn-explore"
-        (click)="exploreAuctions()">
-        Explore Auctions
+        (click)="exploreAuctions()"
+      >
+        {{ 'HOME.HERO.EXPLORE_AUCTIONS' | translate }}
       </button>
 
       <button
         mat-stroked-button
         color="primary"
         class="btn-sell"
-        (click)="startSelling()">
-        Start Selling
+        (click)="startSelling()"
+      >
+        {{ 'HOME.HERO.START_SELLING' | translate }}
       </button>
     </div>
 
     <div class="hero-search">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>Search products, auctions...</mat-label>
+      <mat-form-field
+        appearance="outline"
+        class="search-field"
+      >
+        <mat-label>
+          {{ 'HOME.HERO.SEARCH_LABEL' | translate }}
+        </mat-label>
+
         <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Ex: BMW, Gold Earrings" />
+
+        <input
+          matInput
+          [placeholder]="'HOME.HERO.SEARCH_PLACEHOLDER' | translate"
+        />
       </mat-form-field>
     </div>
   </div>
@@ -46,17 +74,32 @@
 
 <div class="content-section categories-section">
   <div class="section-inner">
-    <span class="section-eyebrow">Categories</span>
-    <h2 class="section-title">Explore <span class="gradient-text">Categories</span></h2>
+    <span class="section-eyebrow">
+      {{ 'HOME.CATEGORIES.EYEBROW' | translate }}
+    </span>
+
+    <h2 class="section-title">
+      {{ 'HOME.CATEGORIES.TITLE_START' | translate }}
+
+      <span class="gradient-text">
+        {{ 'HOME.CATEGORIES.TITLE_END' | translate }}
+      </span>
+    </h2>
 
     <div class="categories-grid reveal-on-scroll">
-      @for (category of categories; track category.name) {
+      @for (category of categories; track category.nameKey) {
         <div class="category-card">
           <div class="category-icon">
             <mat-icon>{{ category.icon }}</mat-icon>
           </div>
-          <h3>{{ category.name }}</h3>
-          <p>{{ category.description }}</p>
+
+          <h3>
+            {{ category.nameKey | translate }}
+          </h3>
+
+          <p>
+            {{ category.descriptionKey | translate }}
+          </p>
         </div>
       }
     </div>
@@ -65,23 +108,52 @@
 
 <div class="content-section auctions-section">
   <div class="section-inner">
-    <span class="section-eyebrow">Marketplace</span>
-    <h2 class="section-title">Active <span class="gradient-text">Auctions</span></h2>
+    <span class="section-eyebrow">
+      {{ 'HOME.AUCTIONS.EYEBROW' | translate }}
+    </span>
+
+    <h2 class="section-title">
+      {{ 'HOME.AUCTIONS.TITLE_START' | translate }}
+
+      <span class="gradient-text">
+        {{ 'HOME.AUCTIONS.TITLE_END' | translate }}
+      </span>
+    </h2>
 
     <div class="auctions-grid reveal-on-scroll">
-      @for (auction of auctions; track auction.title) {
-        <div class="auction-card" (click)="goToAuction(auction)">
+      @for (auction of auctions; track auction.titleKey) {
+        <div
+          class="auction-card"
+          (click)="goToAuction(auction)"
+        >
           <div class="auction-image-wrap">
-            <img [src]="auction.image" [alt]="auction.title" />
+            <img
+              [src]="auction.image"
+              [alt]="auction.titleKey | translate"
+            />
           </div>
+
           <div class="auction-body">
-            <h3>{{ auction.title }}</h3>
-            <span class="auction-price">${{ auction.currentBid }}</span>
+            <h3>
+              {{ auction.titleKey | translate }}
+            </h3>
+
+            <span class="auction-price">
+              ${{ auction.currentBid }}
+            </span>
           </div>
+
           <div class="auction-details-overlay">
-            <p>{{ auction.description }}</p>
-            <button mat-flat-button color="primary" (click)="placeBid(auction); $event.stopPropagation()">
-              Place Bid
+            <p>
+              {{ auction.descriptionKey | translate }}
+            </p>
+
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="placeBid(auction); $event.stopPropagation()"
+            >
+              {{ 'HOME.AUCTIONS.PLACE_BID' | translate }}
             </button>
           </div>
         </div>

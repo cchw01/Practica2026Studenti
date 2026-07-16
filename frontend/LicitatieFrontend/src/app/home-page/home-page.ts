@@ -1,16 +1,37 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  signal,
+  ViewChild
+} from '@angular/core';
+
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Category {
-  name: string;
+  id: string;
+  nameKey: string;
   icon: string;
-  description: string;
+  descriptionKey: string;
 }
 
 export interface Auction {
-  title: string;
+  id: string;
+  titleKey: string;
   currentBid: number;
   image: string;
+  descriptionKey: string;
+}
+
+interface LocalizedAuction extends Auction {
+  title: string;
   description: string;
 }
 
@@ -23,203 +44,452 @@ interface Particle {
   accent: boolean;
 }
 
-const HERO_TITLE = 'BID. WIN. REPEAT.';
-
 @Component({
   selector: 'home-page',
   standalone: false,
   templateUrl: './home-page.html',
-  styleUrls: ['./home-page.css'],
+  styleUrls: ['./home-page.css']
 })
-export class HomePage implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
+export class HomePage
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  @ViewChild('particleCanvas', { static: true })
+  canvasRef!: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('heroRef', { static: true })
+  heroRef!: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
+  readonly categories: Category[] = [
+    {
+      id: 'technology',
+      nameKey: 'HOME.CATEGORIES.ITEMS.TECHNOLOGY.NAME',
+      icon: 'memory',
+      descriptionKey:
+        'HOME.CATEGORIES.ITEMS.TECHNOLOGY.DESCRIPTION'
+    },
+    {
+      id: 'auto-motors',
+      nameKey: 'HOME.CATEGORIES.ITEMS.AUTO_MOTORS.NAME',
+      icon: 'directions_car',
+      descriptionKey:
+        'HOME.CATEGORIES.ITEMS.AUTO_MOTORS.DESCRIPTION'
+    },
+    {
+      id: 'art-collectibles',
+      nameKey:
+        'HOME.CATEGORIES.ITEMS.ART_COLLECTIBLES.NAME',
+      icon: 'palette',
+      descriptionKey:
+        'HOME.CATEGORIES.ITEMS.ART_COLLECTIBLES.DESCRIPTION'
+    },
+    {
+      id: 'real-estate',
+      nameKey: 'HOME.CATEGORIES.ITEMS.REAL_ESTATE.NAME',
+      icon: 'home_work',
+      descriptionKey:
+        'HOME.CATEGORIES.ITEMS.REAL_ESTATE.DESCRIPTION'
+    }
+  ];
+
+  readonly auctions: Auction[] = [
+    {
+      id: 'bmw',
+      titleKey: 'HOME.AUCTIONS.ITEMS.BMW.TITLE',
+      currentBid: 100,
+      image: 'assets/images/car.png',
+      descriptionKey:
+        'HOME.AUCTIONS.ITEMS.BMW.DESCRIPTION'
+    },
+    {
+      id: 'gold-earrings',
+      titleKey:
+        'HOME.AUCTIONS.ITEMS.GOLD_EARRINGS.TITLE',
+      currentBid: 200,
+      image: 'assets/images/cercei.jpeg',
+      descriptionKey:
+        'HOME.AUCTIONS.ITEMS.GOLD_EARRINGS.DESCRIPTION'
+    },
+    {
+      id: 'patek-philippe',
+      titleKey:
+        'HOME.AUCTIONS.ITEMS.PATEK_PHILIPPE.TITLE',
+      currentBid: 300,
+      image: 'assets/images/ceas.jpeg',
+      descriptionKey:
+        'HOME.AUCTIONS.ITEMS.PATEK_PHILIPPE.DESCRIPTION'
+    },
+    {
+      id: 'villa',
+      titleKey: 'HOME.AUCTIONS.ITEMS.VILLA.TITLE',
+      currentBid: 400,
+      image: 'assets/images/vila.jpeg',
+      descriptionKey:
+        'HOME.AUCTIONS.ITEMS.VILLA.DESCRIPTION'
+    }
+  ];
+
+  private readonly destroyRef = inject(DestroyRef);
+
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
-  private mouse = { x: -9999, y: -9999 };
-  private animationFrameId = 0;
-  private revealObserver?: IntersectionObserver;
 
-  private readonly onMouseMove = (e: MouseEvent) => {
-    const rect = this.heroRef.nativeElement.getBoundingClientRect();
-    this.mouse.x = e.clientX - rect.left;
-    this.mouse.y = e.clientY - rect.top;
+  private mouse = {
+    x: -9999,
+    y: -9999
   };
 
-  private readonly onMouseLeave = () => {
+  private animationFrameId = 0;
+  private typingTimeoutId?: ReturnType<typeof setTimeout>;
+  private revealObserver?: IntersectionObserver;
+
+  private readonly onMouseMove = (
+    event: MouseEvent
+  ): void => {
+    const rect =
+      this.heroRef.nativeElement.getBoundingClientRect();
+
+    this.mouse.x = event.clientX - rect.left;
+    this.mouse.y = event.clientY - rect.top;
+  };
+
+  private readonly onMouseLeave = (): void => {
     this.mouse.x = -9999;
     this.mouse.y = -9999;
   };
 
-  private readonly onResize = () => this.initParticles();
+  private readonly onResize = (): void => {
+    this.initParticles();
+  };
 
-  constructor(private zone: NgZone, private hostRef: ElementRef<HTMLElement>, private router: Router) {}
+  constructor(
+    private readonly zone: NgZone,
+    private readonly hostRef: ElementRef<HTMLElement>,
+    private readonly router: Router,
+    private readonly translate: TranslateService
+  ) {}
 
-  categories: Category[] = [
-    { name: 'Technology', icon: 'memory', description: 'Cutting-edge gadgets and the latest electronics.' },
-    { name: 'Auto & Motors', icon: 'directions_car', description: 'Cars, motorcycles, and rare parts.' },
-    { name: 'Art & Collectibles', icon: 'palette', description: 'Exclusive art pieces and collections.' },
-    { name: 'Real Estate', icon: 'home_work', description: 'Exceptional properties and land.' },
-  ];
-
-  auctions: Auction[] = [
-    {
-      title: 'BMW',
-      currentBid: 100,
-      image: 'assets/images/car.png',
-      description: 'BMW 7 Series, 2022, pristine condition, single owner.',
-    },
-    {
-      title: 'Gold Earrings',
-      currentBid: 200,
-      image: 'assets/images/cercei.jpeg',
-      description: '18k gold earrings with certified diamonds.',
-    },
-    {
-      title: 'Watch Patek Philippe',
-      currentBid: 300,
-      image: 'assets/images/ceas.jpeg',
-      description: 'Limited edition collector watch, box and certificate included.',
-    },
-    {
-      title: 'Villa',
-      currentBid: 400,
-      image: 'assets/images/vila.jpeg',
-      description: 'Luxury villa with pool, 5 bedrooms, panoramic view.',
-    },
-  ];
-
-  exploreAuctions() {
-    this.router.navigate(['/auctions']);
+  ngOnInit(): void {
+    /*
+     * Emits the translated title initially and again
+     * whenever the active language changes.
+     */
+    this.translate
+      .stream('HOME.HERO.TITLE')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((title) => {
+        if (typeof title === 'string') {
+          this.typeHeroTitle(title);
+        }
+      });
   }
-
-  startSelling() {
-    console.log('Navigating to sell page...');
-  }
-
-  placeBid(auction: Auction) {
-    this.router.navigate(['/action-item-page'], { state: { auction } });
-  }
-
-  goToAuction(auction: Auction) {
-    this.router.navigate(['/action-item-page'], { state: { auction } });
-  }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.initParticles();
+
     const hero = this.heroRef.nativeElement;
-    hero.addEventListener('mousemove', this.onMouseMove);
-    hero.addEventListener('mouseleave', this.onMouseLeave);
-    window.addEventListener('resize', this.onResize);
-    this.zone.runOutsideAngular(() => this.animate());
+
+    hero.addEventListener(
+      'mousemove',
+      this.onMouseMove
+    );
+
+    hero.addEventListener(
+      'mouseleave',
+      this.onMouseLeave
+    );
+
+    window.addEventListener(
+      'resize',
+      this.onResize
+    );
+
+    this.zone.runOutsideAngular(() => {
+      this.animate();
+    });
 
     this.setupScrollReveal();
-    this.typeHeroTitle();
   }
 
   ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrameId);
+
+    if (this.typingTimeoutId) {
+      clearTimeout(this.typingTimeoutId);
+    }
+
     const hero = this.heroRef.nativeElement;
-    hero.removeEventListener('mousemove', this.onMouseMove);
-    hero.removeEventListener('mouseleave', this.onMouseLeave);
-    window.removeEventListener('resize', this.onResize);
+
+    hero.removeEventListener(
+      'mousemove',
+      this.onMouseMove
+    );
+
+    hero.removeEventListener(
+      'mouseleave',
+      this.onMouseLeave
+    );
+
+    window.removeEventListener(
+      'resize',
+      this.onResize
+    );
+
     this.revealObserver?.disconnect();
   }
 
-  private typeHeroTitle(): void {
-    let i = 0;
-    const step = () => {
-      i++;
-      this.displayedTitle.set(HERO_TITLE.slice(0, i));
-      if (i < HERO_TITLE.length) {
-        setTimeout(step, 45 + Math.random() * 35);
+  exploreAuctions(): void {
+    void this.router.navigate(['/auctions']);
+  }
+
+  startSelling(): void {
+    void this.router.navigate(['/profile-page']);
+  }
+
+  placeBid(auction: Auction): void {
+    this.navigateToAuction(auction);
+  }
+
+  goToAuction(auction: Auction): void {
+    this.navigateToAuction(auction);
+  }
+
+  private navigateToAuction(
+    auction: Auction
+  ): void {
+    this.translate
+      .get([
+        auction.titleKey,
+        auction.descriptionKey
+      ])
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((translations) => {
+        const values = translations as Record<
+          string,
+          unknown
+        >;
+
+        const localizedAuction: LocalizedAuction = {
+          ...auction,
+          title: String(
+            values[auction.titleKey] ??
+              auction.titleKey
+          ),
+          description: String(
+            values[auction.descriptionKey] ??
+              auction.descriptionKey
+          )
+        };
+
+        void this.router.navigate(
+          ['/action-item-page'],
+          {
+            state: {
+              auction: localizedAuction
+            }
+          }
+        );
+      });
+  }
+
+  private typeHeroTitle(title: string): void {
+    if (this.typingTimeoutId) {
+      clearTimeout(this.typingTimeoutId);
+    }
+
+    this.displayedTitle.set('');
+
+    if (!title) {
+      return;
+    }
+
+    let index = 0;
+
+    const step = (): void => {
+      index++;
+
+      this.displayedTitle.set(
+        title.slice(0, index)
+      );
+
+      if (index < title.length) {
+        this.typingTimeoutId = setTimeout(
+          step,
+          45 + Math.random() * 35
+        );
       }
     };
+
     step();
   }
 
   private setupScrollReveal(): void {
-    const targets = this.hostRef.nativeElement.querySelectorAll('.reveal-on-scroll');
-    this.revealObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+    const targets =
+      this.hostRef.nativeElement.querySelectorAll(
+        '.reveal-on-scroll'
+      );
+
+    this.revealObserver =
+      new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            entry.target.classList.toggle(
+              'is-visible',
+              entry.isIntersecting
+            );
+          }
+        },
+        {
+          threshold: 0.15
         }
-      },
-      { threshold: 0.15 },
-    );
-    targets.forEach((el) => this.revealObserver!.observe(el));
+      );
+
+    targets.forEach((element) => {
+      this.revealObserver?.observe(element);
+    });
   }
 
   private initParticles(): void {
     const canvas = this.canvasRef.nativeElement;
     const hero = this.heroRef.nativeElement;
+
     const dpr = window.devicePixelRatio || 1;
     const width = hero.clientWidth;
     const height = hero.clientHeight;
 
     canvas.width = width * dpr;
     canvas.height = height * dpr;
+
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    this.ctx = canvas.getContext('2d')!;
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const context = canvas.getContext('2d');
 
-    const count = Math.min(260, Math.round((width * height) / 5500));
-    this.particles = Array.from({ length: count }, () => {
-      const ox = Math.random() * width;
-      const oy = Math.random() * height;
-      const accent = Math.random() < 0.18;
-      return {
-        ox,
-        oy,
-        x: ox,
-        y: oy,
-        radius: accent ? 2.2 + Math.random() * 1.6 : 1.1 + Math.random() * 1.2,
-        accent,
-      };
-    });
+    if (!context) {
+      return;
+    }
+
+    this.ctx = context;
+
+    this.ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    const count = Math.min(
+      260,
+      Math.round((width * height) / 5500)
+    );
+
+    this.particles = Array.from(
+      { length: count },
+      () => {
+        const ox = Math.random() * width;
+        const oy = Math.random() * height;
+        const accent = Math.random() < 0.18;
+
+        return {
+          ox,
+          oy,
+          x: ox,
+          y: oy,
+          radius: accent
+            ? 2.2 + Math.random() * 1.6
+            : 1.1 + Math.random() * 1.2,
+          accent
+        };
+      }
+    );
   }
 
   private readonly animate = (): void => {
-    const width = this.heroRef.nativeElement.clientWidth;
-    const height = this.heroRef.nativeElement.clientHeight;
-    this.ctx.clearRect(0, 0, width, height);
+    if (!this.ctx) {
+      return;
+    }
+
+    const width =
+      this.heroRef.nativeElement.clientWidth;
+
+    const height =
+      this.heroRef.nativeElement.clientHeight;
+
+    this.ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
 
     const repelRadius = 170;
-    for (const p of this.particles) {
-      const dx = p.ox - this.mouse.x;
-      const dy = p.oy - this.mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
 
-      let targetX = p.ox;
-      let targetY = p.oy;
+    for (const particle of this.particles) {
+      const dx =
+        particle.ox - this.mouse.x;
+
+      const dy =
+        particle.oy - this.mouse.y;
+
+      const distance = Math.sqrt(
+        dx * dx + dy * dy
+      );
+
+      let targetX = particle.ox;
+      let targetY = particle.oy;
       let nearBoost = 0;
 
-      if (dist < repelRadius) {
-        nearBoost = (repelRadius - dist) / repelRadius;
+      if (distance < repelRadius) {
+        nearBoost =
+          (repelRadius - distance) /
+          repelRadius;
+
         const angle = Math.atan2(dy, dx);
-        targetX = p.ox + Math.cos(angle) * nearBoost * 60;
-        targetY = p.oy + Math.sin(angle) * nearBoost * 60;
+
+        targetX =
+          particle.ox +
+          Math.cos(angle) *
+            nearBoost *
+            60;
+
+        targetY =
+          particle.oy +
+          Math.sin(angle) *
+            nearBoost *
+            60;
       }
 
-      p.x += (targetX - p.x) * 0.16;
-      p.y += (targetY - p.y) * 0.16;
+      particle.x +=
+        (targetX - particle.x) * 0.16;
+
+      particle.y +=
+        (targetY - particle.y) * 0.16;
 
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius + nearBoost * 2, 0, Math.PI * 2);
-      this.ctx.fillStyle = p.accent
-        ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
-        : `rgba(20, 20, 30, ${0.12 + nearBoost * 0.35})`;
+
+      this.ctx.arc(
+        particle.x,
+        particle.y,
+        particle.radius + nearBoost * 2,
+        0,
+        Math.PI * 2
+      );
+
+      this.ctx.fillStyle = particle.accent
+        ? `rgba(63, 81, 181, ${
+            0.35 + nearBoost * 0.6
+          })`
+        : `rgba(20, 20, 30, ${
+            0.12 + nearBoost * 0.35
+          })`;
+
       this.ctx.fill();
     }
 
-    this.animationFrameId = requestAnimationFrame(this.animate);
+    this.animationFrameId =
+      requestAnimationFrame(this.animate);
   };
 }

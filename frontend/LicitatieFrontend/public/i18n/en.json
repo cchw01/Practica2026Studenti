@@ -8,9 +8,9 @@
     "REGISTER": "Register",
     "TOGGLE_MENU": "Toggle navigation",
     "SELECT_LANGUAGE": "Select language",
-    "HELP": "Help"
+    "HELP": "Help",
+    "ADD_AUCTION": "Add auction"
   },
-
 
   "CONTACT": {
     "TITLE": "Contact Us",
@@ -22,6 +22,7 @@
     "FOLLOW_US": "Follow Us",
     "SOCIAL_DESCRIPTION": "Stay connected with us on social media."
   },
+
   "LOGIN": {
     "TITLE": "Login",
     "EMAIL_LABEL": "Email",
@@ -36,6 +37,7 @@
     "NO_ACCOUNT": "Don't have an account?",
     "REGISTER_HERE": "Register here"
   },
+
   "REGISTER": {
     "TITLE": "Create an account",
     "USERNAME_LABEL": "Username",
@@ -63,5 +65,74 @@
     "SUBMIT": "Create account",
     "ALREADY_HAVE_ACCOUNT": "Already have an account?",
     "SIGN_IN": "Sign in"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "BID. WIN. REPEAT.",
+      "TAG": "🔥 Live auctions every day",
+      "DESCRIPTION": "The safest online auction platform. Sell fast or catch unique deals.",
+      "EXPLORE_AUCTIONS": "Explore Auctions",
+      "START_SELLING": "Start Selling",
+      "SEARCH_LABEL": "Search products and auctions...",
+      "SEARCH_PLACEHOLDER": "Example: BMW, gold earrings"
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categories",
+      "TITLE_START": "Explore",
+      "TITLE_END": "Categories",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Technology",
+          "DESCRIPTION": "Cutting-edge gadgets and the latest electronics."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Auto & Motors",
+          "DESCRIPTION": "Cars, motorcycles, and rare parts."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Art & Collectibles",
+          "DESCRIPTION": "Exclusive art pieces and collections."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Real Estate",
+          "DESCRIPTION": "Exceptional properties and land."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Marketplace",
+      "TITLE_START": "Active",
+      "TITLE_END": "Auctions",
+      "PLACE_BID": "Place Bid",
+
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW 7 Series, 2022, pristine condition, single owner."
+        },
+
+        "GOLD_EARRINGS": {
+          "TITLE": "Gold Earrings",
+          "DESCRIPTION": "18k gold earrings with certified diamonds."
+        },
+
+        "PATEK_PHILIPPE": {
+          "TITLE": "Patek Philippe Watch",
+          "DESCRIPTION": "Limited-edition collector's watch with box and certificate included."
+        },
+
+        "VILLA": {
+          "TITLE": "Villa",
+          "DESCRIPTION": "Luxury villa with a pool, five bedrooms, and a panoramic view."
+        }
+      }
+    }
   }
 }

@@ -8,7 +8,8 @@
     "REGISTER": "Registrarse",
     "TOGGLE_MENU": "Abrir o cerrar la navegación",
     "SELECT_LANGUAGE": "Seleccionar idioma",
-    "HELP": "Ayuda"
+    "HELP": "Ayuda",
+    "ADD_AUCTION": "Añadir subasta"
   },
 
   "CONTACT": {
@@ -21,6 +22,7 @@
     "FOLLOW_US": "Síguenos",
     "SOCIAL_DESCRIPTION": "Mantente conectado con nosotros en las redes sociales."
   },
+
   "LOGIN": {
     "TITLE": "Iniciar sesión",
     "EMAIL_LABEL": "Correo electrónico",
@@ -35,6 +37,7 @@
     "NO_ACCOUNT": "¿No tienes una cuenta?",
     "REGISTER_HERE": "Regístrate aquí"
   },
+
   "REGISTER": {
     "TITLE": "Crear una cuenta",
     "USERNAME_LABEL": "Nombre de usuario",
@@ -62,5 +65,74 @@
     "SUBMIT": "Crear cuenta",
     "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
     "SIGN_IN": "Iniciar sesión"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "PUJA. GANA. REPITE.",
+      "TAG": "🔥 Subastas en vivo todos los días",
+      "DESCRIPTION": "La plataforma de subastas en línea más segura. Vende rápidamente o encuentra ofertas únicas.",
+      "EXPLORE_AUCTIONS": "Explorar subastas",
+      "START_SELLING": "Empezar a vender",
+      "SEARCH_LABEL": "Buscar productos y subastas...",
+      "SEARCH_PLACEHOLDER": "Ejemplo: BMW, pendientes de oro"
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categorías",
+      "TITLE_START": "Explora las",
+      "TITLE_END": "categorías",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tecnología",
+          "DESCRIPTION": "Dispositivos de última generación y los productos electrónicos más recientes."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Automóviles y motos",
+          "DESCRIPTION": "Coches, motocicletas y piezas poco comunes."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Arte y coleccionables",
+          "DESCRIPTION": "Obras de arte exclusivas y colecciones especiales."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Bienes raíces",
+          "DESCRIPTION": "Propiedades y terrenos excepcionales."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Mercado",
+      "TITLE_START": "Subastas",
+      "TITLE_END": "activas",
+      "PLACE_BID": "Hacer una puja",
+
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW Serie 7 de 2022, en estado impecable y con un único propietario."
+        },
+
+        "GOLD_EARRINGS": {
+          "TITLE": "Pendientes de oro",
+          "DESCRIPTION": "Pendientes de oro de 18 quilates con diamantes certificados."
+        },
+
+        "PATEK_PHILIPPE": {
+          "TITLE": "Reloj Patek Philippe",
+          "DESCRIPTION": "Reloj de colección de edición limitada con caja y certificado incluidos."
+        },
+
+        "VILLA": {
+          "TITLE": "Villa",
+          "DESCRIPTION": "Villa de lujo con piscina, cinco dormitorios y vistas panorámicas."
+        }
+      }
+    }
   }
 }
