@@ -26,6 +26,7 @@ import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
 import { ReviewComponent } from './Models/review/review';
+import { AddItemPage } from './add-item-page/add-item-page';
 
 
 import { AuthInterceptor } from './services/auth-interceptor';
@@ -41,6 +42,7 @@ import { Footer } from './app-logic/footer/footer';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    AddItemPage, 
     ShareListingButton,
     AuctionDetail,
     Footer,

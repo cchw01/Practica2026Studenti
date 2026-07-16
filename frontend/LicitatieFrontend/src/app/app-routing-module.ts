@@ -10,6 +10,7 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
+import { AddItemPage } from './add-item-page/add-item-page';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'profile-page', component: ProfilePage },
   { path: 'review-page', component: ReviewComponent},
   { path: 'help-page', component: HelpPageComponent },
+  { path: 'add-item', component: AddItemPage },
 
   { path: 'review-page', component: ReviewComponent }
 ];
