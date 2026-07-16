@@ -1,7 +1,7 @@
 .add-item-container {
   display: flex;
   justify-content: center;
-  padding: 32px 16px;
+  padding: calc(32px + var(--navbar-space, 96px)) 16px 32px;
 }
 
 .add-item-card {

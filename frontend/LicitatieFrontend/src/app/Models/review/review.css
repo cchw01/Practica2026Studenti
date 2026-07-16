@@ -1,7 +1,7 @@
 .review-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 16px;
+  padding: calc(16px + var(--navbar-space, 96px)) 16px 16px;
 }
 
 .review-form {
