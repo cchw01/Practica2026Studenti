@@ -87,14 +87,14 @@ export class ReviewComponent implements OnInit {
   }
 
   editReview(review: Review): void {
-    this.editingReviewId = review.id;
+    this.editingReviewId = review.Id;
     this.reviewForm.patchValue({
-      reviewerId: review.reviewerId,
-      reviewer: review.reviewer,
-      reviewedUserId: review.reviewedUserId,
-      reviewedUser: review.reviewedUser,
-      rating: review.rating,
-      comment: review.comment
+      reviewerId: review.ReviewerId,
+      reviewer: review.Reviewer,
+      reviewedUserId: review.ReviewedUserId,
+      reviewedUser: review.ReviewedUser,
+      rating: review.Rating,
+      comment: review.Comment
     });
   }
 

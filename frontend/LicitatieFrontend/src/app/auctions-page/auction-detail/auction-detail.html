@@ -1,0 +1,28 @@
+<div class="auction-detail-container" *ngIf="!loading()">
+  <div class="not-found" *ngIf="notFound()">
+    <h3>Licitația nu a fost găsită</h3>
+    <p>Linkul poate fi invalid sau licitația a fost eliminată.</p>
+  </div>
+
+  <div class="detail-content" *ngIf="item()">
+    <img [src]="'assets/images/placeholder.png'" [alt]="item()!.Name" />
+
+    <div class="detail-header">
+      <h1>{{ item()!.Name }}</h1>
+      <app-share-listing-button [itemId]="item()!.ID"></app-share-listing-button>
+    </div>
+
+    <p class="description" *ngIf="item()!.Description">{{ item()!.Description }}</p>
+
+    <div class="detail-info">
+      <p><strong>Preț curent:</strong> {{ item()!.CurrentPrice }} RON</p>
+      <p><strong>Preț de pornire:</strong> {{ item()!.StartPrice }} RON</p>
+      <p><strong>Categorie:</strong> {{ item()!.Category }}</p>
+      <p><strong>Locație:</strong> {{ item()!.Location }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="loading-state" *ngIf="loading()">
+  <p>Se încarcă...</p>
+</div>
