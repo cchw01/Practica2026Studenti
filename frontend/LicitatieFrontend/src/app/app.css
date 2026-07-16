@@ -339,3 +339,95 @@
     width: 100%;
   }
 }
+
+/* =====================================================
+   FIXED NAVBAR POSITIONS FOR DIFFERENT LANGUAGES
+   ===================================================== */
+
+@media (min-width: 769px) {
+  /* Fixed space for the BidSphere logo */
+  .brand {
+    width: 190px;
+    flex: 0 0 190px;
+  }
+
+  /* Separate navigation and action sections */
+  .nav-links {
+    flex: 1;
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 390px;
+    align-items: center;
+    gap: 1rem;
+
+    margin-left: 1rem;
+    justify-content: initial;
+  }
+
+  /* Five navigation buttons with equal widths */
+  .nav-links-main {
+    width: 100%;
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav-links-main a {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    justify-content: center;
+
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Fixed space for language, login and register */
+  .nav-links-actions {
+    width: 390px;
+    min-width: 390px;
+
+    display: grid;
+    grid-template-columns: 126px 254px;
+    align-items: center;
+    justify-content: end;
+    gap: 0.6rem;
+  }
+
+  /* Fixed language selector width */
+  .language-switcher {
+    width: 126px;
+    min-width: 126px;
+  }
+
+  .language-dropdown-trigger {
+    width: 126px;
+    min-width: 126px;
+    box-sizing: border-box;
+  }
+
+  /* Fixed login and register section */
+  .auth-pill {
+    width: 254px;
+    min-width: 254px;
+    box-sizing: border-box;
+  }
+
+  .auth-pill-link {
+    flex: 1 1 0;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    text-align: center;
+  }
+}
