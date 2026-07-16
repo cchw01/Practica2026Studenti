@@ -29,6 +29,7 @@ import { ReviewComponent } from './Models/review/review';
 
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AddItem } from './add-item/add-item';
 import { Footer } from './app-logic/footer/footer';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { Footer } from './app-logic/footer/footer';
     ForumPage,
     AuctionsPage,
     ShareListingButton,
+    AddItem,
     AuctionDetail,
     Footer,
   ],
