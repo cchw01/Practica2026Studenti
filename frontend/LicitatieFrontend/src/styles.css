@@ -46,3 +46,78 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.35);
 }
+
+/* ===== GLOBAL THEME VARIABLES ===== */
+
+body.theme-light {
+  background-color: #f7f7fc;
+  --txt: #1e1e2e;
+  --ttl: #1e1e2e;
+  --sub: #666;
+  --bg: #fff;
+  --bg-alt: #f8f8ff;
+  --brd: #e8e8f0;
+  --pri: #6c63ff;
+  --prh: #574fd6;
+  --inbg: #fff;
+  --shf: rgba(108, 99, 255, .15);
+  --cov: linear-gradient(135deg, #6c63ff, #48cfad);
+}
+
+body.theme-dark {
+  background-color: #121214;
+  --txt: #cfcde6;
+  --ttl: #fff;
+  --sub: #8e8ca2;
+  --bg: #1a1a1e;
+  --bg-alt: #222227;
+  --brd: #2e2d35;
+  --pri: #8c85ff;
+  --prh: #736aff;
+  --inbg: #1e1e24;
+  --shf: rgba(140, 133, 255, .25);
+  --cov: linear-gradient(135deg, #2b1f4d, #1a122e);
+}
+
+body.theme-neon {
+  background-color: #050409;
+  --txt: #bbf8ff;
+  --ttl: #00ffcc;
+  --sub: #74a0b3;
+  --bg: #0c0b1a;
+  --bg-alt: #13122c;
+  --brd: #00ffcc44;
+  --pri: #ff007f;
+  --prh: #e6006f;
+  --inbg: #080713;
+  --shf: rgba(0, 255, 204, .4);
+  --cov: linear-gradient(135deg, #ff007f, #7f00ff);
+}
+
+body.theme-neon .profile-section {
+  border: 1px solid #00ffcc33;
+  box-shadow: 0 0 15px rgba(0, 255, 204, .05);
+}
+
+body.theme-neon .profile-section:hover {
+  border-color: #ff007f99;
+  box-shadow: 0 0 25px rgba(255, 0, 127, .15);
+}
+
+body.theme-neon .btn-sell {
+  background: #00ffcc;
+  color: #050409;
+}
+
+body.theme-neon .btn-sell:hover {
+  background: #00ccaa;
+}
+
+body.theme-neon .score-value {
+  color: #00ffcc;
+  text-shadow: 0 0 10px rgba(0, 255, 204, .4);
+}
+
+body.theme-neon .item-price {
+  color: #00ffcc;
+}
