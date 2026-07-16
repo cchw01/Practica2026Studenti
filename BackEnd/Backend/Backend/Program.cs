@@ -1,23 +1,24 @@
 using Backend.DataManagement;
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 
+var myAngularPolicy = "AllowAngularApp";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy(myAngularPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
+builder.Services.AddControllers();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -60,6 +61,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+app.UseRouting();
+app.UseCors(myAngularPolicy);
 
 if (app.Environment.IsDevelopment())
 {
