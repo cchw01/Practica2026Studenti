@@ -191,6 +191,25 @@
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpPost]
+
+        public ActionResult LogoutUser()
+        {
+            try
+            {
+                var refreshTokenFromRequest = Request.Cookies["refreshToken"];
+                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                var userToken = dataOps.GetUserById(token.UserId);
+                refreshTokenDataOps.DeleteRefreshToken(userToken);
+                Response.Cookies.Delete("refreshToken");
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
 
