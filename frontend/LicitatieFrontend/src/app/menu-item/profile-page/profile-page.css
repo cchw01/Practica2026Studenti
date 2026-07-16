@@ -1,9 +1,9 @@
 .profile-wrapper {
   max-width: 1000px;
   margin: 0 auto;
-  font-family: 'Poppins', 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--txt, #1e1e2e);
-  padding: 0 16px 48px;
+  padding: var(--navbar-space, 96px) 16px 48px;
   transition: all .3s ease
 }
 

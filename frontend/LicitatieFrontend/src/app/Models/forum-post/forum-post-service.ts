@@ -6,7 +6,7 @@ import { ForumPost } from './forum-post';
   providedIn: 'root',
 })
 export class ForumPostService {
-    private readonly apiUrl = ''; // Will replace this with the standard URL
+    private readonly apiUrl = 'https://localhost:7137/api/ForumPost'; 
     constructor(private http: HttpClient) {}
     getForumPosts() : Observable<ForumPost[]> {
         return this.http.get<ForumPost[]>(this.apiUrl);

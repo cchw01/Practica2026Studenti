@@ -1,8 +1,10 @@
+using Azure.Core;
     using Backend.DataManagement;
-    using Backend.Models;
-    using Microsoft.AspNetCore.Mvc;
-    using Backend.Services;
     using Backend.DTOs;
+    using Backend.Models;
+    using Backend.Services;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
 
     namespace Backend.Controllers
     {
@@ -67,7 +69,8 @@
                     Name = request.Name,
                     Email = request.Email,
                     Password = PasswordHasher.HashPassword(request.Password),
-                    Role = RoleEnum.User
+                    Role = RoleEnum.User,
+                    PhoneNumber = request.PhoneNumber
                 };
 
                 dataOps.AddUser(user);
@@ -94,21 +97,40 @@
                 if (!parolaCorecta)
                     return Unauthorized("Email sau parolă incorectă.");
                 var token = tokenProvider.GenerateAccesToken(user);
-                refreshTokenDataOps.CreateRefreshToken(user);
-                return Ok(token);
+                RefreshToken? refreshToken = refreshTokenDataOps.CreateRefreshToken(user);
+                var refreshTokenCookie = new CookieOptions
+                {
+                    Expires = refreshToken.ExpiresAt,
+                    HttpOnly = true,
+                    Secure = true,
+                };
+                Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
+
+                return Ok(new { accessToken = token });
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
-        public ActionResult RegenerateAccessToken(int userId)
+        [HttpPost("regenerate-token")]
+        public ActionResult RegenerateAccessToken()
         {
             try
             {
-                var user = dataOps.GetUserById(userId);
-                if(user==null)
+
+                var refreshTokenFromRequest = Request.Cookies["refreshToken"];
+                if(refreshTokenFromRequest==null)
+                {
+                    return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
+                }
+                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                if(token==null)
+                {
+                    return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
+                }
+                var user = dataOps.GetUserById(token.UserId);
+                if (user==null)
                 {
                     return Unauthorized("Utilizator neconectat");
                 }
@@ -121,10 +143,24 @@
                 {
                     return Unauthorized("Refresh Token expirat, se redirectioneaza la Login");
                 }
-                else
+                else if(refreshToken.Token == refreshTokenFromRequest)
                 {
                     var accessToken = tokenProvider.GenerateAccesToken(user);
-                    return Ok(accessToken);
+                    Response.Cookies.Delete("refreshToken");
+                    var newRefreshToken = refreshTokenDataOps.CreateRefreshToken(user);
+                    var refreshTokenCookie = new CookieOptions
+                    {
+                        Expires = refreshToken.ExpiresAt,
+                        HttpOnly = true,
+                        Secure = true,
+                    };
+                    Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
+
+                    return Ok(new { accessToken = accessToken });
+                }
+                else
+                {
+                    return Unauthorized("Refresh Token expirat sau invalid, se redirectioneaza la Login");
                 }
             }
             catch(Exception ex)
@@ -160,57 +196,20 @@
             }
         }
 
+        [HttpPost("logout")]
 
-
-        [HttpPost("{userId}/wishlist/{itemId}")]
-        public ActionResult AddToWishlist(int userId, int itemId)
+        public ActionResult LogoutUser()
         {
             try
             {
-                var added = dataOps.AddToWishlist(userId, itemId);
-
-                if (!added)
-                    return BadRequest("Userul sau itemul nu există, sau itemul este deja în wishlist.");
-
+                var refreshTokenFromRequest = Request.Cookies["refreshToken"];
+                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                var userToken = dataOps.GetUserById(token.UserId);
+                refreshTokenDataOps.DeleteRefreshToken(userToken);
+                Response.Cookies.Delete("refreshToken");
                 return Ok();
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("{userId}/wishlist")]
-        public ActionResult<AuctionItem[]> GetWishlist(int userId)
-        {
-            try
-            {
-                var wishlist = dataOps.GetWishlist(userId);
-
-                if (wishlist == null)
-                    return NotFound();
-
-                return Ok(wishlist);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete("{userId}/wishlist/{itemId}")]
-        public ActionResult RemoveFromWishlist(int userId, int itemId)
-        {
-            try
-            {
-                var removed = dataOps.RemoveFromWishlist(userId, itemId);
-
-                if (!removed)
-                    return NotFound();
-
-                return Ok();
-            }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
