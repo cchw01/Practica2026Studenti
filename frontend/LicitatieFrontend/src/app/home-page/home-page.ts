@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface Category {
   name: string;
@@ -20,6 +21,7 @@ export interface Auction {
   styleUrls: ['./home-page.css'],
 })
 export class HomePage implements OnInit {
+  constructor(private router: Router) {}
   categories: Category[] = [
     { name: 'Jewelry', icon: 'diamond' },
     { name: 'Auto', icon: 'directions_car' },
@@ -66,8 +68,12 @@ export class HomePage implements OnInit {
     console.log('Navigăm către pagina de vânzare...');
   }
 
-  placeBid(auctionTitle: string) {
-    console.log('Licitezi pentru: ' + auctionTitle);
+  placeBid(auction: Auction) {
+    this.router.navigate(['/action-item-page'], { state: { auction } });
+  }
+
+  goToAuction(auction: Auction) {
+    this.router.navigate(['/action-item-page'], { state: { auction } });
   }
   ngOnInit(): void {}
 }

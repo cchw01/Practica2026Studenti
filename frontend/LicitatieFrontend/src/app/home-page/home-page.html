@@ -50,7 +50,9 @@
   <div class="cards-container">
     @for (auction of auctions; track auction.title) {
       <mat-card class="card-auction">
-        <img mat-card-image [src]="auction.image" [alt]="auction.title" />
+        <img mat-card-image [src]="auction.image" [alt]="auction.title"
+             style="cursor: pointer;"
+             (click)="goToAuction(auction)" />
         <mat-card-content>
           <h3>{{ auction.title }}</h3>
           <p class="current-bid">Current Bid: <strong>${{ auction.currentBid }}</strong></p>
@@ -59,13 +61,13 @@
           </span>
         </mat-card-content>
         <mat-card-actions>
-  <button
-    mat-button
-    color="primary"
-    (click)="placeBid(auction.title)">
-    Place Bid
-  </button>
-</mat-card-actions>
+          <button
+            mat-button
+            color="primary"
+            (click)="placeBid(auction)">
+            Place Bid
+          </button>
+        </mat-card-actions>
       </mat-card>
     }
   </div>

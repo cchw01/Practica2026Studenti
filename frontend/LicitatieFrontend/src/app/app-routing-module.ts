@@ -10,6 +10,10 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { Add } from './menu-item/add/add';
+import { Edit } from './menu-item/edit/edit';
+import { View } from './menu-item/view/view';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 
@@ -19,8 +23,7 @@ const routes: Routes = [
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionDetail }, 
+  { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
@@ -28,6 +31,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
+  { path: 'help-page', component: HelpPageComponent },
+  { path: 'add', component: Add },
+  { path: 'edit', component: Edit },
+  { path: 'view', component: View },
+  { path: 'action-item-page', component: AuctionItemPage }
   { path: 'help-page', component: HelpPageComponent },
   { path: 'review-page', component: ReviewComponent }
 ];
