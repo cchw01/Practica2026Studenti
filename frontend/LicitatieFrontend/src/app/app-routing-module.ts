@@ -18,18 +18,14 @@ const routes: Routes = [
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions', component: AuctionsPage },
   { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
-  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
-  { path: 'add-item', component: AddItem },
-  { path: '**', redirectTo: '/home-page' },
   { path: 'profile-page', component: ProfilePage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'help-page', component: HelpPageComponent },
-
-  { path: 'review-page', component: ReviewComponent }
+  { path: 'add-item', component: AddItem },
+  { path: '**', redirectTo: '/home-page' },
 ];
 
 @NgModule({
