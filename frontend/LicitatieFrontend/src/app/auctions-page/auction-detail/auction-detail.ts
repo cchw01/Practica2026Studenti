@@ -7,7 +7,7 @@ import { ItemService } from '../../services/item-service';
   selector: 'app-auction-detail',
   standalone: false,
   templateUrl: './auction-detail.html',
-  styleUrls: ['./auction-detail.css']
+  styleUrl: './auction-detail.css'
 })
 export class AuctionDetail implements OnInit {
   item = signal<AuctionItem | null>(null);

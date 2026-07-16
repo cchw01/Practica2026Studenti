@@ -7,7 +7,8 @@
     "LOGIN": "Login",
     "REGISTER": "Register",
     "TOGGLE_MENU": "Toggle navigation",
-    "SELECT_LANGUAGE": "Select language"
+    "SELECT_LANGUAGE": "Select language",
+    "HELP": "Help"
   },
 
 

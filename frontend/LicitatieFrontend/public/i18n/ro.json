@@ -7,7 +7,8 @@
     "LOGIN": "Autentificare",
     "REGISTER": "Înregistrare",
     "TOGGLE_MENU": "Deschide sau închide meniul",
-    "SELECT_LANGUAGE": "Selectează limba"
+    "SELECT_LANGUAGE": "Selectează limba",
+    "HELP": "Ajutor"
   },
 
   "CONTACT": {

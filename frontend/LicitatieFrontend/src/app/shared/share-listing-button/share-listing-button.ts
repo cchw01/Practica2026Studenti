@@ -1,15 +1,21 @@
-import { Component, Input, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  signal
+} from '@angular/core';
 
 @Component({
   selector: 'app-share-listing-button',
-  standalone: false,
+  standalone: true,
   templateUrl: './share-listing-button.html',
-  styleUrls: ['./share-listing-button.css']
+  styleUrl: './share-listing-button.css'
 })
-export class ShareListingButton {
+export class ShareListingButton implements OnDestroy {
   @Input({ required: true }) itemId!: number;
 
-  copied = signal(false);
+  readonly copied = signal(false);
+
   private resetTimeout?: ReturnType<typeof setTimeout>;
 
   async copyLink(): Promise<void> {
@@ -19,30 +25,46 @@ export class ShareListingButton {
       await navigator.clipboard.writeText(url);
       this.showCopiedState();
     } catch {
-      const textarea = document.createElement('textarea');
-      textarea.value = url;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
+      this.copyUsingFallback(url);
+    }
+  }
 
-      try {
-        document.execCommand('copy');
+  private copyUsingFallback(url: string): void {
+    const textarea = document.createElement('textarea');
+
+    textarea.value = url;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+
+      if (successful) {
         this.showCopiedState();
-      } catch {
-        console.error('Nu s-a putut copia linkul în clipboard.');
-      } finally {
-        document.body.removeChild(textarea);
+      } else {
+        console.error('Nu s-a putut copia linkul.');
       }
+    } catch (error) {
+      console.error(
+        'Nu s-a putut copia linkul în clipboard.',
+        error
+      );
+    } finally {
+      textarea.remove();
     }
   }
 
   private showCopiedState(): void {
     this.copied.set(true);
+
     if (this.resetTimeout) {
       clearTimeout(this.resetTimeout);
     }
+
     this.resetTimeout = setTimeout(() => {
       this.copied.set(false);
     }, 2000);
