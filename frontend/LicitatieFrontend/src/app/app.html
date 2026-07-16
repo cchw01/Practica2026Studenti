@@ -35,62 +35,6 @@
           <mat-icon>help</mat-icon>
           <span>Help</span>
         </a>
-        <nav class="navbar">
-  <div class="navbar-inner">
-    <a routerLink="/home-page" class="brand" (click)="closeMenu()">
-      <span class="brand-icon-wrap">
-        <mat-icon class="brand-icon">gavel</mat-icon>
-      </span>
-      <span class="brand-name"><span class="brand-name-primary">Bid</span><span class="brand-name-accent">Sphere</span></span>
-    </a>
-
-    <button
-      class="menu-toggle"
-      type="button"
-      [attr.aria-expanded]="menuOpen()"
-      aria-label="Toggle navigation"
-      (click)="toggleMenu()">
-      <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
-    </button>
-
-    <div class="nav-links" [class.open]="menuOpen()">
-      <div class="nav-links-main">
-        <a routerLink="/home-page" routerLinkActive="active" (click)="closeMenu()">
-          <mat-icon>home</mat-icon>
-          <span>Home</span>
-        </a>
-        <a routerLink="/auctions" routerLinkActive="active" (click)="closeMenu()">
-          <mat-icon>gavel</mat-icon>
-          <span>Auctions</span>
-        </a>
-        <a routerLink="/forum-page" routerLinkActive="active" (click)="closeMenu()">
-          <mat-icon>forum</mat-icon>
-          <span>Forum</span>
-        </a>
-        <a routerLink="/contact-page" routerLinkActive="active" (click)="closeMenu()">
-          <mat-icon>mail</mat-icon>
-          <span>Contact</span>
-        </a>
-        <a routerLink="/help-page" routerLinkActive="active" (click)="closeMenu()">
-          <mat-icon>help</mat-icon>
-          <span>Help</span>
-        </a>
-      </div>
-
-      <div class="nav-links-actions">
-        <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-login">
-          <mat-icon>login</mat-icon>
-          <span>Login</span>
-        </a>
-        <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-register">
-          <span>Register</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</nav>
-<router-outlet />
-
       </div>
 
       <div class="nav-links-actions">
