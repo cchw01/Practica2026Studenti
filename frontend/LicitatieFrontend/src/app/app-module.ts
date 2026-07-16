@@ -42,6 +42,7 @@ import { Footer } from './app-logic/footer/footer';
     ForumPage,
     AuctionsPage,
     ShareListingButton,
+    AuctionDetail,
     Footer,
   ],
   imports: [
