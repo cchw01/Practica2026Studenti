@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-contact',
   standalone: false,
   templateUrl: './contact-page.html',
-  styleUrl: './contact-page.css',
+  styleUrl: './contact-page.scss',
 })
 export class ContactPage {
   contactEmail: string = 'contact@echipa5.ro';
