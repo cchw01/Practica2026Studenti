@@ -16,8 +16,11 @@ namespace Backend.DataManagement
         public DbSet<Bid> Bids => Set<Bid>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
+        
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<Notification> Notifications => Set<Notification>();
+
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,6 +81,12 @@ namespace Backend.DataManagement
               .WithMany(i => i.ForumComments)
               .HasForeignKey(b => b.UserId)
               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Notification>() //Notification ->User
+            .HasOne(n => n.User)
+            .WithMany()
+            .HasForeignKey(n => n.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

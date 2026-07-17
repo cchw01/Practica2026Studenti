@@ -4,7 +4,7 @@ import { Component, Input, signal } from '@angular/core';
   selector: 'app-share-listing-button',
   standalone: false,
   templateUrl: './share-listing-button.html',
-  styleUrls: ['./share-listing-button.css']
+  styleUrls: ['./share-listing-button.scss']
 })
 export class ShareListingButton {
   @Input({ required: true }) itemId!: number;

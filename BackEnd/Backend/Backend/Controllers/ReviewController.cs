@@ -10,11 +10,14 @@ namespace Backend.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly ReviewDataOps dataOps;
+        private readonly ApplicationDbContext DbContext;
 
-        public ReviewController(ApplicationDbContext DbContext)
+        public ReviewController(ApplicationDbContext dbContext)
         {
-            dataOps = new ReviewDataOps(DbContext);
+            DbContext = dbContext;
+            dataOps = new ReviewDataOps(dbContext);
         }
+
 
         [HttpGet]
         public ActionResult<IEnumerable<ReviewDTO>> GetReviews()
