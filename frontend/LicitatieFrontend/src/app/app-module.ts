@@ -5,6 +5,7 @@ import {
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+<<<<<<< HEAD
 
 import {
   FormsModule,
@@ -17,6 +18,11 @@ import {
   withInterceptorsFromDi
 } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+=======
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -51,6 +57,7 @@ import { ReviewComponent } from './Models/review/review';
 import { AddItemPage } from './add-item-page/add-item-page';
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AddItem } from './add-item/add-item';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
@@ -58,6 +65,11 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { NotFound } from './not-found/not-found';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
+import { NotificationBell } from './menu-item/notification-bell/notification-bell';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
@@ -72,16 +84,24 @@ import { MatMenuModule } from '@angular/material/menu';
     ContactPage,
     ForumPage,
     AuctionsPage,
-    AddItemPage, 
+    AddItemPage,
     AuctionItemPage,
     Add,
     Edit,
     View,
     AuctionDetail,
+<<<<<<< HEAD
+=======
+    ShareListingButton,
+    AddItem,
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
     ForumPostDetails,
     CreateForumPost,
     AuctionDetail,
     Footer,
+    NotFound,
+    ProfileMenu,
+    NotificationBell,
   ],
 
   imports: [
@@ -106,7 +126,13 @@ import { MatMenuModule } from '@angular/material/menu';
     
     ReviewComponent,
     HelpPageComponent,
+<<<<<<< HEAD
     ShareListingButton,
+=======
+    DatePipe,
+    MatMenuModule,
+    MatBadgeModule,
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
   ],
 
   providers: [
@@ -135,4 +161,4 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}

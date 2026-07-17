@@ -9,11 +9,17 @@ import {
 } from '@angular/core';
 
 import { MatIconRegistry } from '@angular/material/icon';
+<<<<<<< HEAD
 import { TranslateService } from '@ngx-translate/core';
 
 const SUPPORTED_LANGUAGES = ['en', 'ro', 'es'] as const;
 
 type AppLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+=======
+import { AuthService } from './services/auth';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
 
 @Component({
   selector: 'app-root',
@@ -25,6 +31,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly title = signal('BidSphere');
   protected readonly menuOpen = signal(false);
   protected readonly navHidden = signal(false);
+  protected readonly isLoggedIn = signal(false);
 
   readonly translate = inject(TranslateService);
   readonly languages = SUPPORTED_LANGUAGES;
@@ -60,6 +67,7 @@ export class App implements OnInit, OnDestroy {
 
   constructor(
     iconRegistry: MatIconRegistry,
+<<<<<<< HEAD
     private readonly zone: NgZone
   ) {
     iconRegistry.setDefaultFontSetClass(
@@ -85,17 +93,40 @@ export class App implements OnInit, OnDestroy {
     }
 
     this.changeLanguage(initialLanguage);
+=======
+    private zone: NgZone,
+    private authService: AuthService,
+    private router: Router,
+  ) {
+    iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+    // Apply saved theme on every page load
+    const validThemes = ['light', 'sunset', 'ocean'];
+    let savedTheme = localStorage.getItem('app_theme') || 'light';
+    if (!validThemes.includes(savedTheme)) {
+      savedTheme = 'light';
+      localStorage.setItem('app_theme', 'light');
+    }
+    document.body.className = `theme-${savedTheme}`;
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
   }
 
   ngOnInit(): void {
     this.lastScrollY = window.scrollY;
 
     this.zone.runOutsideAngular(() => {
+<<<<<<< HEAD
       window.addEventListener(
         'scroll',
         this.onScroll,
         { passive: true }
       );
+=======
+      this.isLoggedIn.set(this.authService.isLoggedIn());
+      this.router.events
+        .pipe(filter((e) => e instanceof NavigationEnd))
+        .subscribe(() => this.isLoggedIn.set(this.authService.isLoggedIn()));
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
     });
   }
 
@@ -131,6 +162,7 @@ export class App implements OnInit, OnDestroy {
   closeMenu(): void {
     this.menuOpen.set(false);
   }
+<<<<<<< HEAD
 
   private isSupportedLanguage(
     language: string | null | undefined
@@ -143,3 +175,11 @@ export class App implements OnInit, OnDestroy {
     );
   }
 }
+=======
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn.set(false);
+    this.router.navigate(['/home-page']);
+  }
+}
+>>>>>>> 847390ef5cedc796872eb804373654a2a86bfd6a
