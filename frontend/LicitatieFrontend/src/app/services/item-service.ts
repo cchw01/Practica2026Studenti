@@ -47,7 +47,7 @@ interface AuctionItemResponseDto {
 export class ItemService {
   private readonly apiUrl = 'https://localhost:7137/api/AuctionItem';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getItems(): Observable<AuctionItem[]> {
     return this.http
@@ -120,42 +120,8 @@ export class ItemService {
   deleteItem(id: number): Observable<void> {
     const saved = localStorage.getItem(this.storageKey);
     let items: AuctionItem[] = saved ? JSON.parse(saved) : [];
-    items = items.filter(i => i.ID !== id);
+    items = items.filter((i) => i.ID !== id);
     localStorage.setItem(this.storageKey, JSON.stringify(items));
     return of(void 0);
-  }
-
-  private mapResponse(item: AuctionItemResponseDto): AuctionItem {
-    return {
-      ID: item.id,
-      Name: item.name,
-      StartPrice: item.startPrice,
-      CurrentPrice: item.currentPrice,
-      Category: {
-        id: item.categoryId,
-        name: item.categoryName,
-        items: []
-      } as any,
-      CategoryId: item.categoryId,
-      WishingUsers: [],
-      Description: item.description,
-      Location: item.location,
-      Owner: {
-        ID: item.ownerId,
-        UserName: item.ownerUserName
-      } as any,
-      OwnerId: item.ownerId,
-      Winner: item.winnerId
-        ? {
-            ID: item.winnerId,
-            UserName: item.winnerUserName ?? ''
-          } as any
-        : undefined,
-      WinnerId: item.winnerId,
-      Status: item.status,
-      StartDate: new Date(item.startDate),
-      EndDate: new Date(item.endDate),
-      BidList: []
-    };
   }
 }

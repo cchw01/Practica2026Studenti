@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ItemService } from '../services/item-service';
 import { CategoryService } from '../services/category-service';
 import { AuthService } from '../services/auth';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 
 @Component({
   selector: 'app-add-item-page',

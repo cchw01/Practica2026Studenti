@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 // AJUSTARE: Modifică calea string ('../Services/auth.service') și numele clasei (AuthService) conform folderului creat de colegi
-//import { AuthService } from '../Services/auth.service'; 
+//import { AuthService } from '../Services/auth.service';
 import { AuctionItem } from '../Models/item-model';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 
 interface TestAuctionItem extends AuctionItem {
@@ -12,13 +12,15 @@ interface TestAuctionItem extends AuctionItem {
 class MockAuthService {
   isLoggedIn(): boolean {
     return true;
+    return true;
   }
   getCurrentUser(): string {
+    return 'Alex Popescu';
     return 'Alex Popescu';
   }
 }
 
-const mockCategory = new Category({ id: 1, name: 'Electronics', items: [] });
+const mockCategory = new Category({ Id: 1, name: 'Electronics' });
 
 const mockOwner = new User({
   ID: '1',
@@ -30,7 +32,7 @@ const mockOwner = new User({
   BidList: [],
   WonItemsList: [],
   WhishList: [],
-  ReviewList: []
+  ReviewList: [],
 });
 
 @Component({
@@ -38,7 +40,7 @@ const mockOwner = new User({
   standalone: false,
   templateUrl: './auction-item-page.html',
   styleUrl: './auction-item-page.css',
-  providers: [MockAuthService]
+  providers: [MockAuthService],
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
 

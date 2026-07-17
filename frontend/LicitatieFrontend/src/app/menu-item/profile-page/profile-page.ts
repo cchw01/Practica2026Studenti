@@ -4,6 +4,7 @@ import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../app-logic/review';
+import { CategoryService } from '../../services/category-service';
 
 interface Item {
   id: number;
@@ -39,6 +40,7 @@ export class ProfilePage implements OnInit {
   // --- Edit mode ---
   isEditing = false;
   currentUserId: number = 3; // Default fallback
+  categories: any[] = [];
 
   // --- User data ---
   user: UserProfile = {
@@ -64,7 +66,6 @@ export class ProfilePage implements OnInit {
   passwordMessage = '';
   passwordError = false;
 
-
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
@@ -86,6 +87,7 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
+    private categoryService: CategoryService,
     private router: Router,
   ) {}
 
@@ -101,6 +103,14 @@ export class ProfilePage implements OnInit {
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
+
+    // ---- Aici adaugi citirea categoriilor ----
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+    });
   }
 
   // --- Theme actions ---
