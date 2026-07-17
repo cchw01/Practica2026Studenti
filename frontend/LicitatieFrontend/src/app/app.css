@@ -1,8 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 .app-container {
-  font-family: 'Poppins', sans-serif; 
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -13,7 +12,7 @@
 .content {
   flex: 1;
   padding: 2rem;
-  background-color: #f4f7f6; 
+  background-color: #f4f7f6;
 }
 
 .navbar {
@@ -65,7 +64,11 @@
   width: 36px;
   height: 36px;
   border-radius: 11px;
-  background: linear-gradient(135deg, #22254a, var(--mat-sys-primary, #3f51b5));
+  background: linear-gradient(
+    135deg,
+    #22254a,
+    var(--mat-sys-primary, #3f51b5)
+  );
   box-shadow: 0 4px 10px rgba(20, 22, 50, 0.3);
   transition: transform 0.25s ease;
 }
@@ -91,7 +94,11 @@
 }
 
 .brand-name-accent {
-  background: linear-gradient(90deg, var(--mat-sys-primary, #3f51b5), #e91e63);
+  background: linear-gradient(
+    90deg,
+    var(--mat-sys-primary, #3f51b5),
+    #e91e63
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -154,7 +161,11 @@
 }
 
 .nav-links-main a.active {
-  background: linear-gradient(135deg, var(--mat-sys-primary, #3f51b5), #6c4bd6);
+  background: linear-gradient(
+    135deg,
+    var(--mat-sys-primary, #3f51b5),
+    #6c4bd6
+  );
   color: white;
   box-shadow: 0 4px 12px rgba(63, 81, 181, 0.35);
 }
@@ -176,7 +187,11 @@
   height: 40px;
   border-radius: 50%;
   color: white;
-  background: linear-gradient(135deg, var(--mat-sys-primary, #3f51b5), #6c4bd6);
+  background: linear-gradient(
+    135deg,
+    var(--mat-sys-primary, #3f51b5),
+    #6c4bd6
+  );
   box-shadow: 0 4px 14px rgba(63, 81, 181, 0.35);
   text-decoration: none;
   transition: all 0.25s ease;
@@ -217,7 +232,11 @@
 }
 
 .auth-pill-link.active {
-  background: linear-gradient(135deg, var(--mat-sys-primary, #3f51b5), #6c4bd6);
+  background: linear-gradient(
+    135deg,
+    var(--mat-sys-primary, #3f51b5),
+    #6c4bd6
+  );
   color: white;
 }
 
@@ -264,14 +283,57 @@
     gap: 0.35rem;
   }
 
+  .nav-links-main a {
+    justify-content: flex-start;
+  }
+
   .nav-links-actions {
-    justify-content: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    gap: 0.6rem;
     padding-top: 0.75rem;
     border-top: 1px solid rgba(63, 81, 181, 0.15);
   }
 
-  .nav-links-main a {
-    justify-content: flex-start;
+  .language-switcher {
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    min-width: 0;
+    justify-content: stretch;
+    padding: 0;
+  }
+
+  .language-dropdown-trigger {
+    width: 92px;
+    min-width: 92px;
+  }
+
+  .auth-pill {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .auth-pill-link {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+    text-align: center;
+  }
+
+  .btn-add-auction {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
   }
 }
 
@@ -325,7 +387,6 @@
   display: inline-block;
   min-width: 32px;
   margin-right: 10px;
-
   color: var(--mat-sys-primary, #3f51b5);
   font-weight: 700;
 }
@@ -335,21 +396,6 @@
   color: var(--mat-sys-primary, #3f51b5);
 }
 
-@media (max-width: 768px) {
-  .language-switcher {
-    width: 100%;
-    justify-content: center;
-    padding: 10px 0;
-  }
-
-  .language-dropdown-trigger {
-    width: 100%;
-  }
-}
-
-/* =====================================================
-   FIXED NAVBAR POSITIONS FOR DIFFERENT LANGUAGES
-   ===================================================== */
 
 @media (min-width: 769px) {
   /* Fixed space for the BidSphere logo */
@@ -358,13 +404,12 @@
     flex: 0 0 190px;
   }
 
-  /* Separate navigation and action sections */
   .nav-links {
     flex: 1;
     min-width: 0;
 
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 390px;
+    grid-template-columns: minmax(0, 1fr) 440px;
     align-items: center;
     gap: 1rem;
 
@@ -372,7 +417,6 @@
     justify-content: initial;
   }
 
-  /* Five navigation buttons with equal widths */
   .nav-links-main {
     width: 100%;
     min-width: 0;
@@ -387,27 +431,25 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-
     justify-content: center;
-
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  /* Fixed space for language, login and register */
   .nav-links-actions {
-    width: 390px;
-    min-width: 390px;
+    width: 440px;
+    min-width: 440px;
 
     display: grid;
-    grid-template-columns: 126px 254px;
+    grid-template-columns: 126px 254px 40px;
     align-items: center;
     justify-content: end;
     gap: 0.6rem;
   }
 
-  /* Fixed language selector width */
   .language-switcher {
+    grid-column: 1;
+    grid-row: 1;
     width: 126px;
     min-width: 126px;
   }
@@ -418,8 +460,9 @@
     box-sizing: border-box;
   }
 
-  /* Fixed login and register section */
   .auth-pill {
+    grid-column: 2;
+    grid-row: 1;
     width: 254px;
     min-width: 254px;
     box-sizing: border-box;
@@ -436,5 +479,10 @@
     padding-left: 0.4rem;
     padding-right: 0.4rem;
     text-align: center;
+  }
+
+  .btn-add-auction {
+    grid-column: 3;
+    grid-row: 1;
   }
 }
