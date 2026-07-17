@@ -73,15 +73,15 @@ export class RegisterPage implements OnInit {
           next: (loginResponse: any) => {
             console.log('Logare automata cu succes!');
 
-            if (loginResponse && loginResponse.token) {
-              localStorage.setItem('token', loginResponse.token);
+            if (loginResponse && loginResponse.accessToken) {
+              localStorage.setItem('id_token', loginResponse.accessToken);
             }
 
-            this.router.navigate(['/home']);
+            this.router.navigate(['/home-page']);
           },
           error: (loginErr: any) => {
             console.error('Eroare la logarea automata:', loginErr);
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login-page']);
           },
         });
       },

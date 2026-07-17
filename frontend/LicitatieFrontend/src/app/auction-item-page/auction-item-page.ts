@@ -112,7 +112,7 @@ export class AuctionItemPage implements OnInit {
 
   redirectToLogin(): void {
     // AJUSTARE: Modifică ruta '/login' în cazul în care colegii din echipa de rutare au definit altă cale (ex: '/auth/login')
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-page']);
   }
 
   toggleWishlist(): void {

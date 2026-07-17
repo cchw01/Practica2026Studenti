@@ -88,7 +88,7 @@ export class CreateForumPost {
           return;
         }
 
-        this.router.navigate(['/forum']);
+        this.router.navigate(['/forum-page']);
       },
 
       error: (error: HttpErrorResponse) => {
@@ -103,7 +103,7 @@ export class CreateForumPost {
   }
 
   cancel(): void {
-    this.router.navigate(['/forum']);
+    this.router.navigate(['/forum-page']);
   }
 
   get titleControl(): FormControl<string> {

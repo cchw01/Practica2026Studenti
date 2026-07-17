@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
 
 this.authService.login(formData.email,formData.password ).subscribe({  next: (response: any) => {
     console.log('Login cu succes!', response);
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile-page']);
   },
   error: (err) => {
     console.error('Eroare de la server:', err);
