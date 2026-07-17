@@ -1,5 +1,5 @@
-﻿using Backend.Models;
-
+using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Backend.DataManagement
 {
     public class ForumCommentDataOps
@@ -12,17 +12,17 @@ namespace Backend.DataManagement
         }
         public ForumComment[]? GetForumComments()
         {
-            return DbContext?.ForumComments.ToArray();
+            return DbContext?.ForumComments.Include(c => c.User).ToArray();
         }
 
         public ForumComment[]? GetCommentsByPostId(int postId)
         {
-            return DbContext?.ForumComments.Where(c => c.ForumPostId == postId).ToArray();
+            return DbContext?.ForumComments.Include(c => c.User).Where(c => c.ForumPostId == postId).ToArray();
         }
 
         public ForumComment? GetForumCommentById(int id)
         {
-            return DbContext?.ForumComments.Where(x => x.Id == id).FirstOrDefault();
+            return DbContext?.ForumComments.Include(c => c.User).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void AddForumComment(ForumComment forumComment)
