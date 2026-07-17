@@ -41,6 +41,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
 import { MatBadgeModule } from '@angular/material/badge';
+import {
+  provideTranslateService,
+  TranslateDirective,
+  TranslatePipe
+} from '@ngx-translate/core';
+
+import {
+  provideTranslateHttpLoader
+} from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -85,6 +94,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     DatePipe,
     MatMenuModule,
     MatBadgeModule,
+    TranslatePipe,
+    TranslateDirective,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -94,6 +105,16 @@ import { MatBadgeModule } from '@angular/material/badge';
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './i18n/',
+        suffix: '.json',
+        failOnError: true
+      }),
+
+      fallbackLang: 'en',
+      lang: 'en'
+    })
   ],
   bootstrap: [App],
 })
