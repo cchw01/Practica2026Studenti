@@ -616,8 +616,68 @@ body.theme-ocean .item-price {
 
 /* --- Footer --- */
 body.theme-ocean app-footer,
-body.theme-ocean footer {
-  background: var(--bg) !important;
-  color: var(--txt) !important;
+body.theme-ocean footer,
+body.theme-ocean .site-footer {
+  background: var(--bg-alt) !important;
+  color: #111 !important;
   border-top: 1px solid var(--brd) !important;
+}
+body.theme-ocean .footer-col h3 {
+  color: #111 !important;
+}
+body.theme-ocean .footer-col a {
+  color: #444 !important;
+}
+body.theme-ocean .footer-col a:hover {
+  color: var(--pri) !important;
+}
+body.theme-ocean .footer-col ul li {
+  color: #333 !important;
+}
+body.theme-ocean .footer-col p,
+body.theme-ocean .footer-col span {
+  color: #333 !important;
+}
+body.theme-ocean .social-icons a {
+  border-color: var(--brd) !important;
+  color: #444 !important;
+}
+body.theme-ocean .footer-bottom {
+  border-top-color: var(--brd);
+  color: #666 !important;
+}
+
+/* ==========================================================================
+   LIGHT THEME — FOOTER OVERRIDES
+   ========================================================================== */
+body.theme-light app-footer,
+body.theme-light footer,
+body.theme-light .site-footer {
+  background: var(--bg-alt) !important;
+  color: #111 !important;
+  border-top: 1px solid var(--brd) !important;
+}
+body.theme-light .footer-col h3 {
+  color: #111 !important;
+}
+body.theme-light .footer-col a {
+  color: #444 !important;
+}
+body.theme-light .footer-col a:hover {
+  color: var(--pri) !important;
+}
+body.theme-light .footer-col ul li {
+  color: #333 !important;
+}
+body.theme-light .footer-col p,
+body.theme-light .footer-col span {
+  color: #333 !important;
+}
+body.theme-light .social-icons a {
+  border-color: var(--brd) !important;
+  color: #444 !important;
+}
+body.theme-light .footer-bottom {
+  border-top-color: var(--brd);
+  color: #666 !important;
 }
