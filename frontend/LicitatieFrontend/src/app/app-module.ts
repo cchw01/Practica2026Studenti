@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,7 @@ import { ReviewComponent } from './Models/review/review';
 import { AddItemPage } from './add-item-page/add-item-page';
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AddItem } from './add-item/add-item';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
@@ -57,6 +59,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     View,
     AuctionDetail,
     ShareListingButton,
+    AddItem,
     ForumPostDetails,
     CreateForumPost,
     AuctionDetail,
@@ -77,6 +80,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatIconModule,
     MatInputModule,
     ReviewComponent,
+    HelpPageComponent,
+    DatePipe,
     MatMenuModule,
     MatBadgeModule,
   ],
@@ -91,4 +96,4 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }

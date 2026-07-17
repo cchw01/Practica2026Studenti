@@ -64,16 +64,6 @@ export class ProfilePage implements OnInit {
   passwordMessage = '';
   passwordError = false;
 
-  // --- Add Item Form ---
-  showAddItemForm = false;
-  newItemName = '';
-  newItemPrice = 0;
-  newItemCategory = '1'; // Default Category ID
-  newItemDescription = '';
-  newItemLocation = '';
-  newItemDuration = 3; // Days
-  itemMessage = '';
-  itemError = false;
 
   // --- Lists ---
   addedItems: Item[] = [];
@@ -195,16 +185,34 @@ export class ProfilePage implements OnInit {
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   cancelEdit(): void {
     this.isEditing = false;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   saveEdit(): void {
     this.user = { ...this.editDraft };
     this.saveProfile();
     this.isEditing = false;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   // --- Avatar upload ---
@@ -252,47 +260,9 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  // --- Add Item ---
-  onAddItem(): void {
-    if (!this.newItemName || this.newItemPrice <= 0 || !this.newItemLocation) {
-      this.itemError = true;
-      this.itemMessage = 'Name, starting price, and location are required.';
-      return;
-    }
-
-    const startDate = new Date();
-    const endDate = new Date(startDate.getTime() + this.newItemDuration * 24 * 60 * 60 * 1000);
-
-    const newItem: any = {
-      name: this.newItemName,
-      startPrice: this.newItemPrice,
-      currentPrice: this.newItemPrice,
-      categoryId: +this.newItemCategory,
-      description: this.newItemDescription,
-      location: this.newItemLocation,
-      ownerId: this.currentUserId,
-      status: 'Added',
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-    };
-
-    this.itemService.createItem(newItem).subscribe({
-      next: () => {
-        this.itemError = false;
-        this.itemMessage = 'Item successfully published for auction!';
-        this.newItemName = '';
-        this.newItemPrice = 0;
-        this.newItemDescription = '';
-        this.newItemLocation = '';
-        this.loadItemsAndReviews(); // Reload list
-        setTimeout(() => (this.itemMessage = ''), 3000);
-      },
-      error: (err) => {
-        this.itemError = true;
-        this.itemMessage = 'Error publishing the item.';
-        console.error(err);
-      },
-    });
+  // --- Navigate to Add Item ---
+  goToAddItem(): void {
+    this.router.navigate(['/add-item']);
   }
 
   // --- Logout ---
