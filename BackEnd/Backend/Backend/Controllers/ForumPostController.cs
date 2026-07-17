@@ -88,7 +88,7 @@ namespace Backend.Controllers
                 };
 
                 dataOps.AddForumPost(forumPost);
-                return Ok();
+                return Ok(forumPost);
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace Backend.Controllers
                 forumPost.Description = updateDto.Description;
 
                 dataOps.UpdateForumPost(forumPost);
-                return Ok();
+                return Ok(forumPost);
             }
             catch (Exception ex)
             {
