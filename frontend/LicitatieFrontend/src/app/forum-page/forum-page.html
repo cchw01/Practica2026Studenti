@@ -7,7 +7,11 @@
 
         <section class="discussion-section">
             <div class="discussion-toolbar">
-                <a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
+                @if (currentUserId !== null) {
+<a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
+} @else {
+<a class="create-discussion-button" routerLink="/login-page"> Log in to start a discussion </a>
+}
 
                 <div class="sort-control">
                     <select [(ngModel)]="sortOption" aria-label="Sort discussions">
