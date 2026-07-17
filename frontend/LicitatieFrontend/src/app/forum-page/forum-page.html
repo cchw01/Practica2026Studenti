@@ -2,12 +2,13 @@
     <main class="forum-container">
         <header class="forum-introduction">
             <h1>Forum discussions</h1>
-
-            <p>Browse current discussions and participate in conversations with other users.</p>
+            <p> Browse current discussions and participate in conversations with other users. </p>
         </header>
 
         <section class="discussion-section">
             <div class="discussion-toolbar">
+                <a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
+
                 <div class="sort-control">
                     <select [(ngModel)]="sortOption" aria-label="Sort discussions">
                         <option value="latest">Latest first</option>
@@ -22,49 +23,55 @@
                 </p>
             </div>
 
+            @if (isLoading) {
+            <div class="empty-state" aria-live="polite">
+                <h2>Loading discussions</h2>
+            </div>
+            } @else if (errorMessage) {
+            <div class="empty-state" role="alert">
+                <h2>Unable to load discussions</h2>
+                <p>{{ errorMessage }}</p>
+                <button type="button" class="retry-button" (click)="retryLoading()"> Try again </button>
+            </div>
+            } @else {
             <div class="discussion-list">
                 @for (post of visiblePosts; track post.id) {
                 <a class="discussion-card" [routerLink]="['/forum', post.id]">
                     <div class="author-avatar">
-                        {{ getInitials(post.userName) }}
+                        {{ getInitials(post.userId) }}
                     </div>
-
                     <div class="discussion-main">
                         <div class="discussion-heading">
                             <h2>{{ post.title }}</h2>
-
-                            <time [attr.datetime]="post.dateTime">
-                                {{ post.dateTime | date: 'mediumDate' }}
+                            <time [attr.datetime]="post.date">
+                                {{ post.date | date: 'mediumDate' }}
                             </time>
                         </div>
 
                         <p class="discussion-author">
-                            Latest activity by
-                            <strong>{{ post.userName }}</strong>
+                            Posted by
+                            <strong> {{ getUserLabel(post.userId) }} </strong>
                         </p>
 
-                        <p class="discussion-description">
-                            {{ post.description }}
-                        </p>
+                        <p class="discussion-description"> {{ post.description }} </p>
                     </div>
 
                     <div class="discussion-comments">
                         <div class="comment-icon" aria-hidden="true"></div>
 
                         <p class="comment-count">
-                            {{ post.commentsCount }}
-                            {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
+                            {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
                         </p>
                     </div>
                 </a>
                 } @empty {
                 <div class="empty-state">
                     <h2>No discussions available</h2>
-
-                    <p>There are currently no discussions in the forum.</p>
+                    <p> There are currently no discussions in the forum. </p>
                 </div>
                 }
             </div>
+            }
         </section>
     </main>
 </div>

@@ -2,6 +2,7 @@ using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using Backend.DTOs;
 
@@ -19,6 +20,8 @@ namespace Backend.Controllers
             dataOps = new BidDataOps(DbContext);
             itemDataOps = new AuctionItemDataOps(DbContext);
         }
+
+
 
         [HttpGet]
         public ActionResult<BidDto[]> GetBids()

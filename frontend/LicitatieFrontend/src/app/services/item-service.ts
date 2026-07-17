@@ -118,7 +118,11 @@ export class ItemService {
   }
 
   deleteItem(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    const saved = localStorage.getItem(this.storageKey);
+    let items: AuctionItem[] = saved ? JSON.parse(saved) : [];
+    items = items.filter(i => i.ID !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(items));
+    return of(void 0);
   }
 
   private mapResponse(item: AuctionItemResponseDto): AuctionItem {

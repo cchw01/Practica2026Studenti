@@ -1,8 +1,9 @@
-﻿using Backend.DataManagement; 
+using Backend.DataManagement; 
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataManagement
 {
