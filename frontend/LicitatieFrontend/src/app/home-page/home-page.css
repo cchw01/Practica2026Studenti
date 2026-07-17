@@ -104,9 +104,7 @@
 }
 
 @keyframes caret-blink {
-  50% {
-    opacity: 0;
-  }
+  50% { opacity: 0; }
 }
 
 .hero p {
@@ -171,17 +169,8 @@
 }
 
 @keyframes hero-bounce {
-
-  0%,
-  100% {
-    transform: translate(-50%, 0);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: translate(-50%, 8px);
-    opacity: 1;
-  }
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.5; }
+  50% { transform: translate(-50%, 8px); opacity: 1; }
 }
 
 /* ============ SHARED CONTENT SECTION ============ */
@@ -233,23 +222,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 24px;
-  flex-wrap: wrap;
 }
 
-
-.card-category {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 130px;
-  padding: 24px 16px;
-  border-radius: 16px;
-  background-color: #ffffff;
-  border: 1px solid #eeeef8;
-  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08) !important;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.category-card {
+  position: relative;
+  padding: 36px 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(63, 81, 181, 0.1);
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.06);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category-card:hover {
@@ -258,11 +240,7 @@
   box-shadow: 0 20px 40px rgba(63, 81, 181, 0.16);
 }
 
-.icon-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #f0f0fa;
+.category-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,22 +253,28 @@
   transition: transform 0.35s ease;
 }
 
-.card-category:hover .icon-circle {
-  background-color: #e0f2f1;
+.category-card:hover .category-icon {
+  transform: scale(1.1) rotate(-6deg);
 }
 
-.icon-circle mat-icon {
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  color: #4a4a6a;
+.category-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
 }
 
-.card-category h3 {
-  font-size: 16px;
-  font-weight: 600;
+.category-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #222;
+}
+
+.category-card p {
   margin: 0;
-  color: #1e1e2e;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #777;
 }
 
 /* ============ ACTIVE AUCTIONS ============ */
