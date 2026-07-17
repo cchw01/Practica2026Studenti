@@ -26,6 +26,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
 builder.Services.AddOpenApi();
@@ -96,5 +97,12 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try { db.Database.ExecuteSqlRaw("ALTER TABLE Users ADD PhoneNumber nvarchar(max) NULL"); } catch { }
+    try { db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Users ON; INSERT INTO Users (ID, UserName, Name, Email, Role, Rating, PhoneNumber) VALUES (3, 'test', 'Test', 'test@test.com', 0, 0, '123456'); SET IDENTITY_INSERT Users OFF;"); } catch { }
+}
 
 app.Run();
