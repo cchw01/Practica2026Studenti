@@ -31,8 +31,8 @@
 
       <!-- Header actions -->
       <div class="header-actions">
-        <button class="btn-edit" (click)="startEdit()">✏️ Edit Profile</button>
-        <button class="btn-logout" (click)="onLogout()">🚪 Log Out</button>
+        <button class="btn-edit" (click)="startEdit()">Edit Profile</button>
+        <button class="btn-logout" (click)="onLogout()">Log Out</button>
       </div>
     </div>
 
@@ -43,27 +43,27 @@
       <div class="theme-action-row full-width">
         <!-- Theme Switcher Card -->
         <div class="profile-section theme-card">
-          <h2 class="section-title"><span class="section-icon">🎨</span> Customize Theme</h2>
+          <h2 class="section-title"><span class="section-icon"></span> Customize Theme</h2>
           <p class="theme-desc">Choose a visual style that matches your mood.</p>
           <div class="theme-options">
             <button class="theme-btn light-btn" [class.active]="currentTheme === 'light'" (click)="setTheme('light')">
-              ☀️ Light
+              Light
             </button>
             <button class="theme-btn sunset-btn" [class.active]="currentTheme === 'sunset'"
               (click)="setTheme('sunset')">
-              🌅 Sunset
+              Sunset
             </button>
             <button class="theme-btn ocean-btn" [class.active]="currentTheme === 'ocean'" (click)="setTheme('ocean')">
-              🌊 Ocean
+              Ocean
             </button>
           </div>
         </div>
 
         <!-- Sell Item Button -->
         <div class="profile-section add-item-card">
-          <h2 class="section-title"><span class="section-icon">💰</span> Sell a New Item</h2>
+          <h2 class="section-title"><span class="section-icon"></span> Sell a New Item</h2>
           <p class="add-item-desc">Ready to list something?</p>
-          <button class="btn-submit btn-sell" (click)="goToAddItem()">➕ Add New Item</button>
+          <button class="btn-submit btn-sell" (click)="goToAddItem()">Add New Item</button>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
       <div class="sales-won-row full-width">
         <!-- Listed Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon">📦</span> My Active Sales</h2>
+          <h2 class="section-title"><span class="section-icon"></span> My Active Sales</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
             <div class="item-card" *ngFor="let item of addedItems">
               <div class="item-info">
@@ -86,7 +86,7 @@
 
         <!-- Won Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon">🔨</span> Items Won</h2>
+          <h2 class="section-title"><span class="section-icon"></span> Items Won</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
             <div class="item-card" *ngFor="let item of bidItems">
               <div class="item-info">
@@ -100,9 +100,24 @@
         </div>
       </div>
 
+      <!-- Wish List (Full Width) -->
+      <div class="profile-section full-width wishlist-section">
+        <h2 class="section-title"><span class="section-icon"></span> My Wish List</h2>
+        <div class="items-list" *ngIf="wishItems.length > 0">
+          <div class="item-card" *ngFor="let item of wishItems">
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
+            </div>
+            <span class="item-badge badge-wish">{{ item.status }}</span>
+          </div>
+        </div>
+        <p class="empty-state" *ngIf="wishItems.length === 0">No items in your wish list yet.</p>
+      </div>
+
       <!-- REVIEWS (Full Width) -->
       <div class="profile-section full-width reviews-section">
-        <h2 class="section-title"><span class="section-icon">💬</span> Reviews Received</h2>
+        <h2 class="section-title"><span class="section-icon"></span> Reviews Received</h2>
         <div class="reviews-list" *ngIf="reviews.length > 0">
           <div class="review-card" *ngFor="let review of reviews">
             <div class="review-header">
@@ -130,7 +145,7 @@
     <div class="avatar-upload-area">
       <img class="avatar avatar-large" [src]="editDraft.avatarUrl || displayAvatar" alt="Profile picture preview" />
       <label class="btn-upload" for="avatarInput">
-        📷 Change Photo
+        Change Photo
       </label>
       <input id="avatarInput" type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden />
     </div>
@@ -157,7 +172,7 @@
     <!-- Toggle Password Form -->
     <div class="toggle-password-section">
       <button type="button" class="btn-toggle-password" (click)="showPasswordForm = !showPasswordForm">
-        🔑 {{ showPasswordForm ? 'Hide Password Settings' : 'Change Password' }}
+        {{ showPasswordForm ? 'Hide Password Settings' : 'Change Password' }}
       </button>
     </div>
 
@@ -189,7 +204,7 @@
     <!-- Actions -->
     <div class="edit-actions">
       <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
-      <button class="btn-save" (click)="saveEdit()">💾 Save Changes</button>
+      <button class="btn-save" (click)="saveEdit()">Save Changes</button>
     </div>
 
   </div>
