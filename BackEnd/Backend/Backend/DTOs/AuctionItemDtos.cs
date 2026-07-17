@@ -5,33 +5,33 @@ namespace Backend.DTOs
 {
     public class CreateAuctionItemDto : IValidatableObject
     {
-        [Required(ErrorMessage = "Numele itemului este obligatoriu.")]
+        [Required(ErrorMessage = "Item name is required.")]
         [StringLength(
-            100,
-            ErrorMessage = "Numele poate avea maximum 100 de caractere.")]
+            30,
+            ErrorMessage = "Name can have a maximum of 30 characters.")]
         public string Name { get; set; } = string.Empty;
 
         [Range(
             0.01,
             double.MaxValue,
-            ErrorMessage = "Prețul de pornire trebuie să fie mai mare decât 0.")]
+            ErrorMessage = "Starting price must be greater than 0.")]
         public decimal StartPrice { get; set; }
 
         [Range(
             1,
             int.MaxValue,
-            ErrorMessage = "CategoryId trebuie să fie mai mare decât 0.")]
+            ErrorMessage = "CategoryId must be greater than 0.")]
         public int CategoryId { get; set; }
 
         [StringLength(
-            1000,
-            ErrorMessage = "Descrierea poate avea maximum 1000 de caractere.")]
+            200,
+            ErrorMessage = "Description can have a maximum of 200 characters.")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Locația este obligatorie.")]
+        [Required(ErrorMessage = "Location is required.")]
         [StringLength(
-            100,
-            ErrorMessage = "Locația poate avea maximum 100 de caractere.")]
+            50,
+            ErrorMessage = "Location can have a maximum of 50 characters.")]
         public string Location { get; set; } = string.Empty;
 
         public DateTime StartDate { get; set; }
@@ -44,7 +44,7 @@ namespace Backend.DTOs
             if (EndDate <= StartDate)
             {
                 yield return new ValidationResult(
-                    "Data de final trebuie să fie după data de început.",
+                    "End date must be after start date.",
                     new[] { nameof(EndDate) });
             }
         }
@@ -52,33 +52,33 @@ namespace Backend.DTOs
 
     public class UpdateAuctionItemDto : IValidatableObject
     {
-        [Required(ErrorMessage = "Numele itemului este obligatoriu.")]
+        [Required(ErrorMessage = "Item name is required.")]
         [StringLength(
-            100,
-            ErrorMessage = "Numele poate avea maximum 100 de caractere.")]
+            30,
+            ErrorMessage = "Name can have a maximum of 30 characters.")]
         public string Name { get; set; } = string.Empty;
 
         [Range(
             0.01,
             double.MaxValue,
-            ErrorMessage = "Prețul de pornire trebuie să fie mai mare decât 0.")]
+            ErrorMessage = "Starting price must be greater than 0.")]
         public decimal StartPrice { get; set; }
 
         [Range(
             1,
             int.MaxValue,
-            ErrorMessage = "CategoryId trebuie să fie mai mare decât 0.")]
+            ErrorMessage = "CategoryId must be greater than 0.")]
         public int CategoryId { get; set; }
 
         [StringLength(
-            1000,
-            ErrorMessage = "Descrierea poate avea maximum 1000 de caractere.")]
+            200,
+            ErrorMessage = "Description can have a maximum of 200 characters.")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Locația este obligatorie.")]
+        [Required(ErrorMessage = "Location is required.")]
         [StringLength(
-            100,
-            ErrorMessage = "Locația poate avea maximum 100 de caractere.")]
+            50,
+            ErrorMessage = "Location can have a maximum of 50 characters.")]
         public string Location { get; set; } = string.Empty;
 
         public DateTime StartDate { get; set; }
@@ -91,7 +91,7 @@ namespace Backend.DTOs
             if (EndDate <= StartDate)
             {
                 yield return new ValidationResult(
-                    "Data de final trebuie să fie după data de început.",
+                    "End date must be after start date.",
                     new[] { nameof(EndDate) });
             }
         }

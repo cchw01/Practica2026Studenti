@@ -18,6 +18,7 @@ namespace Backend.DataManagement
         public Bid[] GetBids()
         {
             return DbContext.Bids
+                .AsNoTracking()
                 .Include(b => b.Bidder)
                 .Include(b => b.BiddedItem)
                 .ToArray();
@@ -26,6 +27,7 @@ namespace Backend.DataManagement
         public Bid? GetBidById(int id)
         {
             var bid = DbContext.Bids
+                .AsNoTracking()
                 .Include(b => b.Bidder)
                 .Include(b => b.BiddedItem)
                 .Where(x => x.Id == id)
@@ -56,6 +58,7 @@ namespace Backend.DataManagement
         public Bid[] GetBidsByItemId(int itemId)
         {
             return DbContext.Bids
+                .AsNoTracking()
                 .Include(b => b.Bidder)
                 .Include(b => b.BiddedItem)
                 .Where(x => x.BiddedItemId == itemId)
