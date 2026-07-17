@@ -32,6 +32,7 @@ export interface ProfileDto {
   reviewsReceived: ReviewDto[];
   addedItems: AuctionItemSummaryDto[];
   biddedItems: AuctionItemSummaryDto[];
+  wishList: AuctionItemSummaryDto[];
 }
 
 export interface UpdateProfileDto {

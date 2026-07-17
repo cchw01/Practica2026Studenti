@@ -13,6 +13,7 @@ namespace Backend.DTOs
         public List<ReviewDto> ReviewsReceived { get; set; } = new();
         public List<AuctionItemSummaryDto> AddedItems { get; set; } = new();
         public List<AuctionItemSummaryDto> BiddedItems { get; set; } = new();
+        public List<AuctionItemSummaryDto> WishList { get; set; } = new();
     }
 
     public class ReviewDto

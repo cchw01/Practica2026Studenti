@@ -25,7 +25,9 @@ namespace Backend.DataManagement
 
         public ProfileDto? GetProfileById(int userId)
         {
-            var user = _db.Users.Find(userId);
+            var user = _db.Users
+                .Include(u => u.WishList)
+                .FirstOrDefault(u => u.ID == userId);
             if (user is null) return null;
             return BuildProfileDto(user);
         }
@@ -140,6 +142,8 @@ namespace Backend.DataManagement
                 .Where(a => a.WinnerId == user.ID)
                 .ToList();
 
+            var wishItems = user.WishList ?? new List<AuctionItem>();
+
             double? avgRating = reviewsReceived.Count > 0
                 ? Math.Round(reviewsReceived.Average(r => (double)r.Rating), 2)
                 : null;
@@ -156,7 +160,8 @@ namespace Backend.DataManagement
                 TotalReviewsReceived = reviewsReceived.Count,
                 ReviewsReceived = reviewsReceived.Select(r => MapReviewToDto(r)).ToList(),
                 AddedItems = addedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
-                BiddedItems = biddedItems.Select(a => MapAuctionItemToDto(a)).ToList()
+                BiddedItems = biddedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
+                WishList = wishItems.Select(a => MapAuctionItemToDto(a)).ToList()
             };
         }
 
