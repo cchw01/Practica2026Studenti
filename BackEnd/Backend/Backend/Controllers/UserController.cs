@@ -15,6 +15,7 @@ using Azure.Core;
             private readonly UserDataOps dataOps;
             private readonly RefreshTokenDataOps refreshTokenDataOps;
             private readonly TokenProvider tokenProvider;
+            private const int EXPIRES_IN = 900;
             public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
             {
                 dataOps = new UserDataOps(DbContext);
@@ -69,7 +70,8 @@ using Azure.Core;
                     Name = request.Name,
                     Email = request.Email,
                     Password = PasswordHasher.HashPassword(request.Password),
-                    Role = RoleEnum.User
+                    Role = RoleEnum.User,
+                    PhoneNumber = request.PhoneNumber
                 };
 
                 dataOps.AddUser(user);
@@ -104,8 +106,8 @@ using Azure.Core;
                     Secure = true,
                 };
                 Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-
-                return Ok(new { accessToken = token });
+                var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
+                return Ok(tokenInfo);
             }
             catch (Exception ex)
             {
@@ -154,8 +156,8 @@ using Azure.Core;
                         Secure = true,
                     };
                     Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-
-                    return Ok(new { accessToken = accessToken });
+                    var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
+                    return Ok(tokenInfo);
                 }
                 else
                 {

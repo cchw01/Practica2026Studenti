@@ -4,7 +4,7 @@
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
-  padding: 0 16px 32px;
+  padding: var(--navbar-space, 96px) 16px 32px;
 }
 
 /* ── Page Header ── */
