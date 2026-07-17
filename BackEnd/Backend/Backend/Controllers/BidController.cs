@@ -1,6 +1,7 @@
 ﻿using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Backend.Controllers
@@ -10,11 +11,14 @@ namespace Backend.Controllers
     public class BidController : ControllerBase
     {
         private readonly BidDataOps dataOps;
-
-        public BidController(ApplicationDbContext DbContext)
+        private readonly ApplicationDbContext DbContext;
+        public BidController(ApplicationDbContext dbContext)
         {
-            dataOps = new BidDataOps(DbContext);
+            DbContext = dbContext;
+            dataOps = new BidDataOps(dbContext);
         }
+
+
 
         [HttpGet]
         public ActionResult<Bid[]> GetBids()
@@ -53,7 +57,38 @@ namespace Backend.Controllers
         {
             try
             {
+                var previousBids = dataOps.GetBidsByItemId(bid.BiddedItemId);
+                var previousTopBid = previousBids
+                    .OrderByDescending(b => b.price)
+                    .FirstOrDefault();
+
                 dataOps.AddBid(bid);
+
+                var itemOps = new AuctionItemDataOps(DbContext);
+                var item = itemOps.GetAuctionItemById(bid.BiddedItemId);
+                var itemName = item != null ? item.Name : "an item";
+                var notifOps = new NotificationDataOps(DbContext);
+
+                //  notify the item owner that someone bid
+                if (item != null && item.OwnerId != bid.BidderId)
+                {
+                    notifOps.Create(
+                        item.OwnerId,
+                        $"Someone placed a bid of {bid.price} on your item \"{itemName}\""
+                    );
+                }
+
+                //  notify the previous top bidder that they got outbid
+                if (previousTopBid != null
+                    && previousTopBid.price < bid.price
+                    && previousTopBid.BidderId != bid.BidderId)
+                {
+                    notifOps.Create(
+                        previousTopBid.BidderId,
+                        $"You've been outbid on \"{itemName}\" — new bid is {bid.price}. Bid again to stay in the race!"
+                    );
+                }
+
                 return Ok(bid);
             }
             catch (Exception ex)

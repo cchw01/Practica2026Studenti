@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,7 @@ import { ReviewComponent } from './Models/review/review';
 import { AddItemPage } from './add-item-page/add-item-page';
 
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AddItem } from './add-item/add-item';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
@@ -35,6 +37,10 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
+import { NotificationBell } from './menu-item/notification-bell/notification-bell';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -46,17 +52,20 @@ import { View } from './menu-item/view/view';
     ContactPage,
     ForumPage,
     AuctionsPage,
-    AddItemPage, 
+    AddItemPage,
     AuctionItemPage,
     Add,
     Edit,
     View,
     AuctionDetail,
     ShareListingButton,
+    AddItem,
     ForumPostDetails,
     CreateForumPost,
     AuctionDetail,
     Footer,
+    ProfileMenu,
+    NotificationBell,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +80,10 @@ import { View } from './menu-item/view/view';
     MatIconModule,
     MatInputModule,
     ReviewComponent,
+    HelpPageComponent,
+    DatePipe,
+    MatMenuModule,
+    MatBadgeModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

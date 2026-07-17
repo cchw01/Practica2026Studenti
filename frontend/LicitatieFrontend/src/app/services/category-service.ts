@@ -7,7 +7,7 @@ import { Category } from '../Models/user/categoryItem';
   providedIn: 'root',
 })
 export class CategoryService {
-  private readonly apiUrl = 'https://localhost:7137/api/Category';
+  private readonly apiUrl = 'assets/categories.json';
 
   constructor(private http: HttpClient) {}
 

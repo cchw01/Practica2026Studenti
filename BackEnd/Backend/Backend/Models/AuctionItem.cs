@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Backend.Models
@@ -45,6 +45,7 @@ namespace Backend.Models
         public DateTime EndDate { get; set; }
 
         public List<Bid>? BidList { get; set; }
+        public string? ImageUrl { get; set; }
         //Photolist here if needed
 
 
