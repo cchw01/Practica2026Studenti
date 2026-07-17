@@ -17,12 +17,19 @@
 }
 
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   padding: 16px 20px 0;
   background: transparent;
   box-shadow: none;
+  transition: transform 0.35s ease;
+}
+
+.navbar.nav-hidden {
+  transform: translateY(-130%);
 }
 
 .navbar-inner {
