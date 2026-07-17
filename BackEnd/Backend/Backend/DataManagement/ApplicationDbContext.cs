@@ -21,7 +21,7 @@ namespace Backend.DataManagement
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Notification> Notifications => Set<Notification>();
 
-        
+        public DbSet<Picture> Pictures => Set<Picture>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Review>() // Relatie Review -> Reviewer
