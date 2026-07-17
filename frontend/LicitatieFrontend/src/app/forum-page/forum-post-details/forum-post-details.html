@@ -25,7 +25,12 @@
                 <div class="author-avatar"> {{ getInitials(post.userId) }} </div>
 
                 <div class="post-heading">
+                    <div class="post-title-row">
                     <h1>{{ post.title }}</h1>
+                     @if (currentUserId !== null && post.userId === currentUserId) {
+                        <button type="button" class="delete-button" (click)="deletePost()">Delete</button>
+                        }
+                    </div>
 
                     <p class="post-metadata"> Posted by
                         <strong> {{ getUserLabel(post.userId) }} </strong>
@@ -46,46 +51,53 @@
                 </div>
             </header>
 
-            <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
-                <label for="commentText"> Add a comment </label>
+            @if (currentUserId !== null) {
+<form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <label for="commentText"> Add a comment </label>
 
-                <textarea id="commentText" formControlName="commentText" rows="5" maxlength="1000"
-                    placeholder="Write your comment here..."></textarea>
+    <textarea id="commentText" formControlName="commentText" rows="5" maxlength="1000"
+        placeholder="Write your comment here..."></textarea>
 
-                <div class="form-information">
-                    <div class="validation-message">
-                        @if (
-                        commentTextControl?.touched &&
-                        commentTextControl?.hasError('required')
-                        ) {
-                        <p>A comment is required.</p>
-                        } @else if (
-                        commentTextControl?.touched && commentTextControl?.hasError('minlength')
-                        ) {
-                        <p> The comment must contain at least 2 characters. </p>
-                        } @else if (
-                        commentTextControl?.touched && commentTextControl?.hasError('maxlength')
-                        ) {
-                        <p>
-                            The comment cannot exceed 1000 characters.
-                        </p>
-                        }
+    <div class="form-information">
+        <div class="validation-message">
+            @if (
+            commentTextControl?.touched &&
+            commentTextControl?.hasError('required')
+            ) {
+            <p>A comment is required.</p>
+            } @else if (
+            commentTextControl?.touched && commentTextControl?.hasError('minlength')
+            ) {
+            <p> The comment must contain at least 2 characters. </p>
+            } @else if (
+            commentTextControl?.touched && commentTextControl?.hasError('maxlength')
+            ) {
+            <p>
+                The comment cannot exceed 1000 characters.
+            </p>
+            }
 
-                        @if (submitErrorMessage) {
-                        <p>{{ submitErrorMessage }}</p>
-                        }
-                    </div>
+            @if (submitErrorMessage) {
+            <p>{{ submitErrorMessage }}</p>
+            }
+        </div>
 
-                    <p class="character-count">
-                        {{ commentTextControl?.value?.length ?? 0 }}/1000
-                    </p>
-                </div>
+        <p class="character-count">
+            {{ commentTextControl?.value?.length ?? 0 }}/1000
+        </p>
+    </div>
 
-                <button type="submit" class="primary-button" [disabled]=" commentForm.invalid || isSubmittingComment ">
-                    {{ isSubmittingComment ? 'Publishing...' : 'Publish comment' }}
-                </button>
-            </form>
-
+    <button type="submit" class="primary-button" [disabled]=" commentForm.invalid || isSubmittingComment ">
+        {{ isSubmittingComment ? 'Publishing...' : 'Publish comment' }}
+    </button>
+</form>
+} @else {
+<div class="comment-form login-required">
+    <p>You need to be logged in to post a comment.
+        <a routerLink="/login-page">Log in</a>
+    </p>
+</div>
+}
             @if (isLoadingComments) {
             <div class="status-card comments-status" aria-live="polite">
                 <h3>Loading comments</h3>
@@ -117,6 +129,10 @@
                         </header>
 
                         <p>{{ comment.commentText }}</p>
+
+                        @if (currentUserId !== null && comment.userId === currentUserId) {
+                        <button type="button" class="delete-comment-button" (click)="deleteComment(comment.id)">Delete</button>
+                        }
                     </div>
                 </article>
                 } @empty {

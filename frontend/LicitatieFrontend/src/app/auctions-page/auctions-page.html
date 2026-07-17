@@ -37,35 +37,37 @@
     </a>
   </div>
 
-<p class="results-count" *ngIf="filteredItems.length > 0">
-  {{ filteredItems.length }} {{ filteredItems.length === 1 ? 'auction found' : 'auctions found' }}
-</p>
+  <p class="results-count" *ngIf="filteredItems.length > 0">
+    {{ filteredItems.length }} {{ filteredItems.length === 1 ? 'auction found' : 'auctions found' }}
+  </p>
 
-<div class="active-auctions">
-  <div class="cards-container" *ngIf="filteredItems.length > 0">
-    <div class="card-auction" *ngFor="let item of filteredItems" style="cursor: pointer;" [routerLink]="['/action-item-page']" [state]="{ auction: { title: item.Name, currentBid: item.CurrentPrice, image: item.ImageUrl || 'assets/images/placeholder.png' } }">
-      <div class="card-image-wrap">
-        <img [src]="item.ImageUrl || 'assets/images/placeholder.png'" [alt]="item.Name" />
-        <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
-          {{ getRemainingTime(item.EndDate) }}
-        </span>
-      </div>
-      <div class="card-content">
-        <h3>{{ item.Name }}</h3>
-        <p class="current-bid">Current price: <strong>{{ item.CurrentPrice }} RON</strong></p>
+  <div class="active-auctions">
+    <div class="cards-container" *ngIf="filteredItems.length > 0">
+      <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
+        <div class="card-image-wrap">
+          <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
+            [alt]="item.Name" />
+          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
+            {{ getRemainingTime(item.EndDate) }}
+          </span>
+        </div>
+        <div class="card-content">
+          <h3>{{ item.Name }}</h3>
+          <p class="current-bid">Current price: <strong>{{ item.CurrentPrice }} RON</strong></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="empty-state" *ngIf="filteredItems.length === 0">
-    <div class="empty-icon">
-      <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="7"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
+    <div class="empty-state" *ngIf="filteredItems.length === 0">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>No items found</h3>
+      <p>There are currently no active auctions matching your search.</p>
     </div>
-    <h3>No items found</h3>
-    <p>There are currently no active auctions matching your search.</p>
   </div>
 </div>

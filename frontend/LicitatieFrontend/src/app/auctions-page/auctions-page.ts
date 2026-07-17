@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
+import { Router } from '@angular/router';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -20,7 +21,11 @@ export class AuctionsPage implements OnInit {
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
 
-  constructor(private itemService: ItemService, private route: ActivatedRoute) {}
+  constructor(
+    private itemService: ItemService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
@@ -89,5 +94,9 @@ export class AuctionsPage implements OnInit {
     if (hoursLeft <= 24) return 'time-urgent';
     if (hoursLeft <= 72) return 'time-medium';
     return 'time-safe';
+  }
+
+  goToAuctionDetail(item: AuctionItem): void {
+    this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }
