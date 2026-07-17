@@ -17,6 +17,8 @@ namespace Backend.Models
         [JsonIgnore]
         public string? Password { get; set; }
 
+        public string PhoneNumber { get; set; }
+
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
@@ -40,13 +42,15 @@ namespace Backend.Models
             string userName,
             string name,
             string email,
-            RoleEnum role)
+            RoleEnum role,
+            string phoneNumber)
         {
             ID = id;
             UserName = userName;
             Name = name;
             Email = email;
             Role = role;
+            PhoneNumber = phoneNumber;
         }
     }
 }

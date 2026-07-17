@@ -1,0 +1,123 @@
+<div class="add-item-container">
+  <mat-card class="add-item-card">
+    <h1>Add New Auction Item</h1>
+    <p class="subtitle">Fill in the details below to publish your item for auction.</p>
+
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <!-- Name -->
+      <div class="form-field">
+        <label for="name">Item name *</label>
+        <input id="name" type="text" formControlName="name" placeholder="e.g. Vintage bicycle" />
+        <div class="error" *ngIf="f['name'].touched && f['name'].errors">
+          <span *ngIf="f['name'].errors['required']">Name is required.</span>
+          <span *ngIf="f['name'].errors['minlength']">Name must be at least 3 characters.</span>
+        </div>
+      </div>
+
+      <!-- Price + Duration -->
+      <div class="form-row">
+        <div class="form-field">
+          <label for="startPrice">Starting price (RON) *</label>
+          <input
+            id="startPrice"
+            type="number"
+            formControlName="startPrice"
+            min="0.01"
+            step="0.01"
+          />
+          <div class="error" *ngIf="f['startPrice'].touched && f['startPrice'].errors">
+            <span *ngIf="f['startPrice'].errors['required']">Starting price is required.</span>
+            <span *ngIf="f['startPrice'].errors['min']">Price must be greater than 0.</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="durationDays">Auction duration (days) *</label>
+          <input id="durationDays" type="number" formControlName="durationDays" min="1" max="30" />
+          <div class="error" *ngIf="f['durationDays'].touched && f['durationDays'].errors">
+            <span>Duration must be between 1 and 30 days.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="form-field">
+        <label for="categoryId">Category *</label>
+        <select id="categoryId" formControlName="categoryId">
+          <option [ngValue]="null" disabled>Select a category</option>
+          <option *ngFor="let cat of categories" [ngValue]="cat.Id">{{ cat.name }}</option>
+        </select>
+        <div class="error" *ngIf="f['categoryId'].touched && f['categoryId'].errors">
+          <span>Please select a category.</span>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-field">
+        <label for="location">Location *</label>
+        <input id="location" type="text" formControlName="location" placeholder="e.g. Brașov" />
+        <div class="error" *ngIf="f['location'].touched && f['location'].errors">
+          <span>Location is required.</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-field">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Describe the item's condition, history, details..."
+        ></textarea>
+      </div>
+
+      <!-- Image upload -->
+      <div class="form-field">
+        <label>Item photo</label>
+
+        <div class="image-upload" *ngIf="!imagePreview">
+          <label for="imageInput" class="upload-box">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>Click to upload an image</span>
+            <small>JPG, PNG or WEBP, max 5 MB</small>
+          </label>
+          <input
+            id="imageInput"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            (change)="onFileSelected($event)"
+            hidden
+          />
+        </div>
+
+        <div class="image-preview" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Item preview" />
+          <button type="button" class="btn-remove" (click)="removeImage()">
+            <mat-icon>close</mat-icon> Remove
+          </button>
+        </div>
+
+        <div class="error" *ngIf="imageError">{{ imageError }}</div>
+      </div>
+
+      <!-- Feedback -->
+      <div
+        class="message"
+        [class.error-msg]="isError"
+        [class.success-msg]="!isError"
+        *ngIf="message"
+      >
+        {{ message }}
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" mat-stroked-button routerLink="/auctions">Cancel</button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Publishing...' : 'Publish Item' }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

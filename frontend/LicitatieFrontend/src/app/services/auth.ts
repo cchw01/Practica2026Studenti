@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://localhost:7137/api/User';
 
   constructor(private http: HttpClient) {}
 
@@ -18,13 +18,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    const fakeResponse = {
-      idToken:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2NvdW50IiwiaXNzIjoiQXVjdGlvbkFwcCIsImV4cCI6MTc4NDAxOTY4MCwiaWQiOiIzIiwiZW1haWwiOiJzdHJpbmcyIiwibmFtZSI6InN0cmluZzIiLCJ1c2VybmFtZSI6InN0cmluZzIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTc4NDAxNzg4MCwibmJmIjoxNzg0MDE3ODgwfQ.kuwa9eEmXqGVPrl-1NRXc-4xva--XpC-p3n31Y6S9Cw',
-      expiresIn: 3600,
-    };
-
-    return of(fakeResponse).pipe(tap((res) => this.setSession(res)));
+    return this.http
+      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+      .pipe(
+        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
+      );
   }
 
   private setSession(authResult: any): void {
@@ -50,7 +48,13 @@ export class AuthService {
     const token = localStorage.getItem('id_token');
     if (!token) return null;
     try {
-      const payloadBase64 = token.split('.')[1];
+      let payloadBase64 = token.split('.')[1];
+      // convert base64url -> standard base64
+      payloadBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      // re-add padding if missing
+      while (payloadBase64.length % 4 !== 0) {
+        payloadBase64 += '=';
+      }
       const payloadJson = atob(payloadBase64);
       return JSON.parse(payloadJson);
     } catch (e) {
