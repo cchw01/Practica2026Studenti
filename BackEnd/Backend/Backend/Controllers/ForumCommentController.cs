@@ -1,6 +1,8 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
+using Backend.DTOs;
 using Microsoft.AspNetCore.Mvc;
+
 namespace Backend.Controllers
 {
     [ApiController]
@@ -13,53 +15,110 @@ namespace Backend.Controllers
         {
             dataOps = new ForumCommentDataOps(DbContext);
         }
+
         [HttpGet]
-        public ActionResult<ForumComment[]> GetForumComments()
+        public ActionResult<ForumCommentDto[]> GetForumComments()
         {
             try
             {
                 var comments = dataOps.GetForumComments();
-                return Ok(comments);
+                if (comments == null) return NotFound();
+
+                var dtos = comments.Select(c => new ForumCommentDto
+                {
+                    Id = c.Id,
+                    ForumPostId = c.ForumPostId,
+                    UserId = c.UserId,
+                    UserName = c.User?.UserName ?? string.Empty,
+                    Date = c.Date,
+                    CommentText = c.CommentText
+                }).ToArray();
+
+                return Ok(dtos);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("post/{postid}")]
-        public ActionResult<ForumComment[]> GetForumCommentsByPostId(int postid)
+        public ActionResult<ForumCommentDto[]> GetForumCommentsByPostId(int postid)
         {
             try
             {
+                if (!dataOps.DoesPostExist(postid))
+                {
+                    return NotFound("Post does not exist.");
+                }
+
                 var comments = dataOps.GetCommentsByPostId(postid);
-                return Ok(comments);
+                if (comments == null) return NotFound();
+
+                var dtos = comments.Select(c => new ForumCommentDto
+                {
+                    Id = c.Id,
+                    ForumPostId = c.ForumPostId,
+                    UserId = c.UserId,
+                    UserName = c.User?.UserName ?? string.Empty,
+                    Date = c.Date,
+                    CommentText = c.CommentText
+                }).ToArray();
+
+                return Ok(dtos);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("{id}")]
-        public ActionResult<ForumComment> GetForumComment(int id)
+        public ActionResult<ForumCommentDto> GetForumComment(int id)
         {
             try
             {
                 var comment = dataOps.GetForumCommentById(id);
                 if (comment == null)
                     return NotFound();
-                return Ok(comment);
+
+                var dto = new ForumCommentDto
+                {
+                    Id = comment.Id,
+                    ForumPostId = comment.ForumPostId,
+                    UserId = comment.UserId,
+                    UserName = comment.User?.UserName ?? string.Empty,
+                    Date = comment.Date,
+                    CommentText = comment.CommentText
+                };
+
+                return Ok(dto);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
-        public ActionResult<ForumComment> AddForumComment(ForumComment forumComment)
+        public ActionResult AddForumComment(CreateForumCommentDto createDto)
         {
             try
             {
-                dataOps.AddForumComment(forumComment);
+                if (!dataOps.DoesPostExist(createDto.ForumPostId))
+                {
+                    return BadRequest("Post does not exist.");
+                }
+
+                var newComment = new ForumComment
+                {
+                    ForumPostId = createDto.ForumPostId,
+                    UserId = createDto.UserId,
+                    CommentText = createDto.CommentText,
+                    Date = DateTime.Now
+                };
+
+                dataOps.AddForumComment(newComment);
                 return Ok();
             }
             catch (Exception ex)
@@ -67,12 +126,18 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        public ActionResult<ForumComment> UpdateForumComment(ForumComment forumComment)
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateForumComment(int id, UpdateForumCommentDto updateDto)
         {
             try
             {
-                dataOps.UpdateForumComment(forumComment);
+                var existingComment = dataOps.GetForumCommentById(id);
+                if (existingComment == null) return NotFound("Comment not found.");
+
+                existingComment.CommentText = updateDto.CommentText;
+                
+                dataOps.UpdateForumComment(existingComment);
                 return Ok();
             }
             catch (Exception ex)
@@ -80,6 +145,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("{id}")]
         public ActionResult DeleteForumComment(int id)
         {
