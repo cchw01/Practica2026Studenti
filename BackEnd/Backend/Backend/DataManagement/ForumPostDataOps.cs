@@ -1,5 +1,6 @@
 ﻿using System;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Backend.DataManagement
 {
     public class ForumPostDataOps
@@ -14,7 +15,7 @@ namespace Backend.DataManagement
 
         public ForumPost[]? GetForumPosts()
         {
-            return DbContext?.ForumPosts.ToArray();
+            return DbContext?.ForumPosts.Include(x => x.Comments).Include(x => x.User).ToArray();
         }
 
         public ForumPost? GetForumPostById(int id)
