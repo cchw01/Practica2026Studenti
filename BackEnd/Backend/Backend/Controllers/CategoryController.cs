@@ -36,7 +36,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        // GET by id
+      
         [HttpGet("{id}")]
         public ActionResult<CategoryDto> GetCategoryById(int id)
         {
@@ -56,7 +56,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        // POST - primesti DTO de la frontend, convertesti în model
+        
         [HttpPost]
         public ActionResult<CategoryDto> AddCategory(CategoryCreateDto dto)
         {
@@ -68,7 +68,7 @@ namespace Backend.Controllers
             var result = new CategoryDto { Id = category.id, Name = category.name };
             return Ok(result);
         }
-        // PUT - primesti DTO, convertesti în model
+      
         [HttpPut]
         public ActionResult UpdateCategory(CategoryDto dto)
         {
