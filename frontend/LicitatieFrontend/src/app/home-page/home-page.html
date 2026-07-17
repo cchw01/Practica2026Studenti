@@ -35,7 +35,7 @@
   <h2>Popular Categories</h2>
   <div class="cards-container">
     @for (category of categories; track category.name) {
-      <mat-card class="card-category" matRipple>
+      <mat-card class="card-category" matRipple [routerLink]="['/auctions']" [queryParams]="{ category: category.name }">
         <div class="icon-circle">
           <mat-icon>{{ category.icon }}</mat-icon>
         </div>

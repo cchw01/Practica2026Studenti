@@ -1,8 +1,9 @@
-﻿using Backend.DataManagement;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+using Backend.DataManagement;
+using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Backend.Controllers
@@ -18,50 +19,67 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<CategoryItem> GetCategories()
+        public ActionResult<List<CategoryDto>> GetCategories()
         {
             try
             {
                 var categories = dataOps.GetCategories();
-                return Ok(categories);
+                var dtos = categories.Select(c => new CategoryDto
+                {
+                    Id = c.id,
+                    Name = c.name
+                }).ToList();
+                return Ok(dtos);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+        // GET by id
         [HttpGet("{id}")]
-        public ActionResult<Review> GetCategoryById(int id)
+        public ActionResult<CategoryDto> GetCategoryById(int id)
         {
             try
             {
                 var category = dataOps.GetCategoryById(id);
-
-                if (category == null)
-                    return NotFound();
-
-                return Ok(category);
+                if (category == null) return NotFound();
+                var dto = new CategoryDto
+                {
+                    Id = category.id,
+                    Name = category.name
+                };
+                return Ok(dto);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+        // POST - primesti DTO de la frontend, convertesti în model
         [HttpPost]
-        public ActionResult<CategoryItem> AddInventoryItem(CategoryItem category)
+        public ActionResult<CategoryDto> AddCategory(CategoryCreateDto dto)
         {
+            var category = new CategoryItem
+            {
+                name = dto.Name
+            };
             dataOps.AddCategory(category);
-            return Ok();
+            var result = new CategoryDto { Id = category.id, Name = category.name };
+            return Ok(result);
         }
-
+        // PUT - primesti DTO, convertesti în model
         [HttpPut]
-        public ActionResult UpdateCategory(CategoryItem categoryItem)
+        public ActionResult UpdateCategory(CategoryDto dto)
         {
             try
             {
-                dataOps.UpdateCategory(categoryItem);
+                var category = new CategoryItem
+                {
+                    id = dto.Id,
+                    name = dto.Name
+                };
+                dataOps.UpdateCategory(category);
                 return Ok();
             }
             catch (Exception ex)

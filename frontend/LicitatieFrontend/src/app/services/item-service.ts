@@ -7,9 +7,9 @@ import { AuctionItem } from '../Models/item-model';
   providedIn: 'root',
 })
 export class ItemService {
-  private readonly apiUrl = 'http://localhost:5000/api/items';
+  private readonly apiUrl = 'https://localhost:7137/api/AuctionItem';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getItems(): Observable<AuctionItem[]> {
     return this.http.get<AuctionItem[]>(this.apiUrl);
