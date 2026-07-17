@@ -1,0 +1,32 @@
+[
+  {
+    "ID": 1,
+    "Name": "Vintage Leather Jacket",
+    "StartPrice": 150.0,
+    "CurrentPrice": 150.0,
+    "Category": { "id": 4, "name": "Clothing", "items": [] },
+    "CategoryId": 4,
+    "Description": "An authentic vintage leather jacket in excellent condition.",
+    "Location": "Cluj-Napoca",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-01T10:00:00Z",
+    "EndDate": "2026-07-20T10:00:00Z",
+    "ImageUrl": null
+  },
+  {
+    "ID": 2,
+    "Name": "Antique Watch",
+    "StartPrice": 500.0,
+    "CurrentPrice": 550.0,
+    "Category": { "id": 3, "name": "Art", "items": [] },
+    "CategoryId": 3,
+    "Description": "A beautiful antique pocket watch from the 1920s.",
+    "Location": "București",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-10T10:00:00Z",
+    "EndDate": "2026-07-25T10:00:00Z",
+    "ImageUrl": null
+  }
+]
