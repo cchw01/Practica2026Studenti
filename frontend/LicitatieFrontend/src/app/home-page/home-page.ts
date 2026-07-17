@@ -92,12 +92,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
+  protected readonly searchQuery = signal('');
+
   exploreAuctions() {
     this.router.navigate(['/auctions']);
   }
 
   startSelling() {
-    console.log('Navigating to sell page...');
+    this.router.navigate(['/add-item']);
+  }
+
+  runSearch() {
+    const query = this.searchQuery().trim();
+    this.router.navigate(['/auctions'], query ? { queryParams: { search: query } } : {});
   }
 
   placeBid(auction: Auction) {
