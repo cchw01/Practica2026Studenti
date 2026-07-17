@@ -87,6 +87,18 @@ namespace Backend.DataManagement
             .WithMany()
             .HasForeignKey(n => n.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AuctionItem>()
+                .Property(a => a.StartPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<AuctionItem>()
+                .Property(a => a.CurrentPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Bid>()
+                .Property(b => b.price)
+                .HasPrecision(18, 2);
         }
     }
 }

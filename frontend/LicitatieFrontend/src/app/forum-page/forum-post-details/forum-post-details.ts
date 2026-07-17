@@ -170,7 +170,7 @@ submitComment(): void {
   }
 
   goBackToForum(): void {
-    this.router.navigate(['/forum']);
+    this.router.navigate(['/forum-page']);
   }
 
   get commentTextControl() {
