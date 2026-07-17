@@ -17,6 +17,8 @@ import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
+import { AdminPage } from './admin-page/admin-page/admin-page';
+import { AdminGuard } from './services/admin-guard';  
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -37,6 +39,7 @@ const routes: Routes = [
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
+  { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: '**', redirectTo: '/home-page' },
 ];
 

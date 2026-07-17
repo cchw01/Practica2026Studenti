@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -41,6 +40,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AdminPage } from './admin-page/admin-page/admin-page';
 
 @NgModule({
   declarations: [
@@ -66,6 +66,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     Footer,
     ProfileMenu,
     NotificationBell,
+    AdminPage,
   ],
   imports: [
     BrowserModule,
@@ -96,4 +97,4 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}

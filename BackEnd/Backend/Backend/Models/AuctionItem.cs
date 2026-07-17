@@ -23,6 +23,7 @@ namespace Backend.Models
             ActiveBid,
             NoWinner,
             Sold,
+            Rejected,
         }
 
         public List<User>? WishingUsers { get; set; }

@@ -83,6 +83,35 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    const string adminEmail = "admin@bidsphere.com";
+    const string adminPassword = "admin1234"; 
+    var admin = dbContext.Users.FirstOrDefault(u => u.Email == adminEmail);
+
+    if (admin == null)
+    {
+        dbContext.Users.Add(new Backend.Models.User
+        {
+            UserName = "admin",
+            Name = "Administrator",
+            Email = adminEmail,
+            Role = Backend.Models.RoleEnum.Admin,
+            Password = Backend.Services.PasswordHasher.HashPassword(adminPassword),
+            PhoneNumber = "0714253647",
+            IsBanned = false,
+        });
+        dbContext.SaveChanges();
+    }
+    else if (admin.Role != Backend.Models.RoleEnum.Admin)
+    {
+        admin.Role = Backend.Models.RoleEnum.Admin;
+        dbContext.SaveChanges();
+    }
+}
+
 app.UseRouting();
 app.UseCors(myAngularPolicy);
 

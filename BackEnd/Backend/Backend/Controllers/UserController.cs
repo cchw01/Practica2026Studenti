@@ -90,6 +90,9 @@ using Azure.Core;
             {
                 var user = dataOps.GetUserByEmail(request.Email);
 
+                if (user.IsBanned)
+                    return Unauthorized("Contul tău a fost suspendat.");
+
                 if (user == null)
                     return Unauthorized("Email sau parolă incorectă.");
 
@@ -108,6 +111,7 @@ using Azure.Core;
                 Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
                 var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
                 return Ok(tokenInfo);
+
             }
             catch (Exception ex)
             {

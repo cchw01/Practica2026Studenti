@@ -15,6 +15,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly menuOpen = signal(false);
   protected readonly navHidden = signal(false);
   protected readonly isLoggedIn = signal(false);
+  protected readonly isAdmin = signal(false);
 
   private lastScrollY = 0;
 
@@ -46,14 +47,20 @@ export class App implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.zone.runOutsideAngular(() => {
-      this.isLoggedIn.set(this.authService.isLoggedIn());
-      this.router.events
-        .pipe(filter((e) => e instanceof NavigationEnd))
-        .subscribe(() => this.isLoggedIn.set(this.authService.isLoggedIn()));
-      window.addEventListener('scroll', this.onScroll, { passive: true });
-    });
-  }
+  this.zone.runOutsideAngular(() => {
+    this.isLoggedIn.set(this.authService.isLoggedIn());
+    this.isAdmin.set(this.authService.getCurrentUser()?.role === 'Admin');
+
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.isLoggedIn.set(this.authService.isLoggedIn());
+        this.isAdmin.set(this.authService.getCurrentUser()?.role === 'Admin');
+      });
+
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  });
+}
 
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.onScroll);
@@ -69,6 +76,7 @@ export class App implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
     this.isLoggedIn.set(false);
+    this.isAdmin.set(false);
     this.router.navigate(['/home-page']);
   }
 }

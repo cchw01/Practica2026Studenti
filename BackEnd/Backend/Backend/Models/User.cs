@@ -33,6 +33,8 @@ namespace Backend.Models
         public List<Review> ReviewList { get; set; } = new();
         public List<ForumPost> ForumPosts { get; set; } = new();
         public List<ForumComment> ForumComments { get; set; } = new();
+        public bool IsBanned { get; set; } = false;
+
 
 
         public User() { }
