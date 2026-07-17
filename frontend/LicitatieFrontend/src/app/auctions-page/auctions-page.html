@@ -39,8 +39,8 @@
 
   <div class="active-auctions">
     <div class="cards-container" *ngIf="filteredItems.length > 0">
-      <div class="card-auction" *ngFor="let item of filteredItems">
-        <img [src]="'assets/images/placeholder.png'" [alt]="item.Name" />
+      <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
+        <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : 'assets/images/placeholder.png'" [alt]="item.Name" />
         <div class="card-content">
           <h3>{{ item.Name }}</h3>
           <p class="current-bid">Preț curent: {{ item.CurrentPrice }} RON</p>
