@@ -2,8 +2,8 @@
 .help-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: calc(20px + var(--navbar-space, 96px)) 20px 20px;
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
   color: #333;
 }
 
