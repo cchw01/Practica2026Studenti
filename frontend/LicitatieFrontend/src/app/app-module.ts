@@ -37,6 +37,10 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
+import { NotificationBell } from './menu-item/notification-bell/notification-bell';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -60,6 +64,8 @@ import { View } from './menu-item/view/view';
     CreateForumPost,
     AuctionDetail,
     Footer,
+    ProfileMenu,
+    NotificationBell,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +82,8 @@ import { View } from './menu-item/view/view';
     ReviewComponent,
     HelpPageComponent,
     DatePipe,
+    MatMenuModule,
+    MatBadgeModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
