@@ -1,3 +1,4 @@
+using Backend.DTOs;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,7 +53,7 @@ namespace Backend.DataManagement
                 .ToList();
         }
 
-        public ProfileDto? UpdateProfile(int userId, UpdateProfileRequest request)
+        public ProfileDto? UpdateProfile(int userId, UpdateProfileDto request)
         {
             var user = _db.Users.Find(userId);
             if (user is null) return null;
@@ -62,6 +63,9 @@ namespace Backend.DataManagement
 
             if (!string.IsNullOrWhiteSpace(request.Email))
                 user.Email = request.Email;
+
+            if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+                user.PhoneNumber = request.PhoneNumber;
 
             _db.SaveChanges();
             return BuildProfileDto(user);
@@ -101,7 +105,7 @@ namespace Backend.DataManagement
             return true;
         }
 
-        public List<AuctionItemDto> GetAddedItemsByUser(int userId)
+        public List<AuctionItemSummaryDto> GetAddedItemsByUser(int userId)
         {
             return _db.AuctionItems
                 .AsNoTracking()
@@ -110,7 +114,7 @@ namespace Backend.DataManagement
                 .ToList();
         }
 
-        public List<AuctionItemDto> GetWonItemsByUser(int userId)
+        public List<AuctionItemSummaryDto> GetWonItemsByUser(int userId)
         {
             return _db.AuctionItems
                 .AsNoTracking()
@@ -146,6 +150,7 @@ namespace Backend.DataManagement
                 UserName = user.UserName,
                 Name = user.Name,
                 Email = user.Email,
+                PhoneNumber = user.PhoneNumber ?? string.Empty,
                 Role = user.Role.ToString(),
                 AverageRating = avgRating,
                 TotalReviewsReceived = reviewsReceived.Count,
@@ -155,17 +160,22 @@ namespace Backend.DataManagement
             };
         }
 
-        private static ReviewDto MapReviewToDto(Review r) => new ReviewDto
+        private ReviewDto MapReviewToDto(Review r)
         {
-            Id = r.Id.ToString(),
-            ReviewerId = r.ReviewerId.ToString(),
-            RevieweeId = r.ReviewedUserId.ToString(),
-            Score = r.Rating,
-            Comment = r.Comment,
-            CreatedAt = r.ReviewDate
-        };
+            var reviewer = _db.Users.Find(r.ReviewerId);
+            return new ReviewDto
+            {
+                Id = r.Id.ToString(),
+                ReviewerId = r.ReviewerId.ToString(),
+                ReviewerName = reviewer?.Name ?? reviewer?.UserName ?? string.Empty,
+                RevieweeId = r.ReviewedUserId.ToString(),
+                Score = r.Rating,
+                Comment = r.Comment,
+                CreatedAt = r.ReviewDate
+            };
+        }
 
-        private static AuctionItemDto MapAuctionItemToDto(AuctionItem a) => new AuctionItemDto
+        private static AuctionItemSummaryDto MapAuctionItemToDto(AuctionItem a) => new AuctionItemSummaryDto
         {
             ID = a.ID,
             Name = a.Name,
@@ -175,7 +185,7 @@ namespace Backend.DataManagement
             Status = a.Status.ToString(),
             StartDate = a.StartDate,
             EndDate = a.EndDate,
-            Owner = a.OwnerId.ToString()
+            OwnerName = a.OwnerId.ToString()
         };
     }
 }
