@@ -5,8 +5,8 @@
   min-height: 640px;
   width: 100%;
   max-width: 1100px;
-  margin: 40px auto;
-  border-radius: v.$radius-lg;
+  margin: calc(40px + var(--navbar-space, 96px)) auto 40px;
+  border-radius: 28px;
   overflow: hidden;
   background-color: v.$color-surface;
   box-shadow: v.$shadow-md;
@@ -44,6 +44,7 @@
     margin: 0;
     border-radius: 0;
     min-height: 100vh;
+    padding-top: var(--navbar-space, 96px);
   }
 }
 
