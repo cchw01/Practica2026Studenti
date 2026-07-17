@@ -11,6 +11,7 @@ import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
 import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { AddItemPage } from './add-item-page/add-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
