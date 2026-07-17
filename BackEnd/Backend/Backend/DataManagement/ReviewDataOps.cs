@@ -17,6 +17,7 @@ namespace Backend.DataManagement
             return DbContext.Reviews
                 .Include(r => r.Reviewer)
                 .Include(r => r.ReviewedUser)
+                .OrderByDescending(r => r.ReviewDate)
                 .ToArray();
         }
 
