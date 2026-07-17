@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +36,7 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
+import { NotFound } from './not-found/not-found';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
@@ -64,6 +64,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     CreateForumPost,
     AuctionDetail,
     Footer,
+    NotFound,
     ProfileMenu,
     NotificationBell,
   ],
@@ -96,4 +97,4 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
