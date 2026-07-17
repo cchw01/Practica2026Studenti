@@ -11,7 +11,6 @@ namespace Backend.Models
 		public DateTime Date { get; set; }
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
-        public List<ForumComment> Comments { get; set;  } = new List<ForumComment>();
-		// TODO: Add photos
+    public List<ForumComment> Comments { get; set;  } = new List<ForumComment>();
     }
 }
