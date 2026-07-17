@@ -9,7 +9,7 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   selector: 'app-auctions-page',
   standalone: false,
   templateUrl: './auctions-page.html',
-  styleUrls: ['./auctions-page.css'],
+  styleUrls: ['./auctions-page.scss'],
 })
 export class AuctionsPage implements OnInit {
   allItems: AuctionItem[] = [];

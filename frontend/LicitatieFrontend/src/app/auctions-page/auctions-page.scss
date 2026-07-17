@@ -1,3 +1,5 @@
+@use '../styles/variables' as v;
+
 .auctions-page-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -8,22 +10,26 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: 56px 16px 40px;
-  margin: 24px 16px 8px;
+  padding: 56px v.$space-md 40px;
+  margin: v.$space-md v.$space-md v.$space-xs;
   border-radius: 28px;
-  background: linear-gradient(135deg, rgba(63, 81, 181, 0.08), rgba(233, 30, 99, 0.06));
-  box-shadow: 0 20px 40px rgba(30, 42, 90, 0.06);
+  background: linear-gradient(
+    135deg,
+    v.$color-primary-tint,
+    v.$color-accent-tint
+  );
+  box-shadow: v.$shadow-md;
 }
 
 .page-header h1 {
   font-size: 40px;
   font-weight: 800;
-  margin-bottom: 12px;
+  margin-bottom: v.$space-sm;
   letter-spacing: 0.5px;
 }
 
 .page-header p {
-  color: #666;
+  color: v.$color-text-body;
   font-size: 15px;
   max-width: 500px;
   margin: 0 auto;
@@ -32,7 +38,7 @@
 .search-section {
   display: flex;
   justify-content: center;
-  padding: 0 16px 16px;
+  padding: 0 v.$space-md v.$space-md;
 }
 
 .search-field {
@@ -53,60 +59,53 @@
 .search-field input {
   width: 100%;
   padding: 14px 24px 14px 52px;
-  border-radius: 30px;
+  border-radius: v.$radius-pill;
   border: 1px solid #e4e4ee;
-  background: white;
+  background: v.$color-surface;
   font-size: 15px;
-  box-shadow: 0 6px 16px rgba(30, 42, 90, 0.06);
-  transition: all 0.25s ease;
+  box-shadow: v.$shadow-sm;
+  transition: v.$transition-base;
   box-sizing: border-box;
 }
 
 .search-field input:focus {
   outline: none;
-  border-color: var(--mat-sys-primary, #3f51b5);
+  border-color: v.$color-primary;
   box-shadow: 0 6px 18px rgba(63, 81, 181, 0.16);
 }
 
 .filters-row {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  padding: 0 16px 40px;
+  gap: v.$space-sm;
+  padding: 0 v.$space-md 40px;
   flex-wrap: wrap;
 }
 
 .filters-row select {
   padding: 10px 36px 10px 20px;
-  border-radius: 30px;
+  border-radius: v.$radius-pill;
   border: 1px solid #e4e4ee;
   font-size: 14px;
   font-weight: 500;
-  color: #333;
-  background: white;
-  box-shadow: 0 4px 12px rgba(30, 42, 90, 0.05);
+  color: v.$color-text-label;
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 16px;
-  transition: all 0.25s ease;
+  transition: v.$transition-base;
 }
 
-.filters-row select:hover {
-  border-color: var(--mat-sys-primary, #3f51b5);
-}
-
+.filters-row select:hover,
 .filters-row select:focus {
   outline: none;
-  border-color: var(--mat-sys-primary, #3f51b5);
+  border-color: v.$color-primary;
   box-shadow: 0 6px 16px rgba(63, 81, 181, 0.16);
 }
 
 .results-count {
-  margin: 0 0 16px;
-  padding: 0 16px;
+  margin: 0 0 v.$space-md;
+  padding: 0 v.$space-md;
   text-align: center;
   color: #888;
   font-size: 13px;
@@ -114,31 +113,30 @@
 }
 
 .active-auctions {
-  padding: 0 16px 40px;
+  padding: 0 v.$space-md 40px;
 }
 
 .cards-container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: stretch;
-  gap: 24px;
+  gap: v.$space-lg;
   flex-wrap: wrap;
 }
 
 .card-auction {
   width: 250px;
-  border-radius: 16px;
+  border-radius: v.$radius-md;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08);
+  background: v.$color-surface;
+  box-shadow: v.$shadow-sm;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: v.$transition-fast;
 }
 
 .card-auction:hover {
   transform: translateY(-6px);
-  box-shadow: 0 14px 28px rgba(30, 42, 90, 0.15);
+  box-shadow: v.$shadow-md;
 }
 
 .card-image-wrap {
@@ -158,24 +156,24 @@
 }
 
 .card-content {
-  padding: 16px;
+  padding: v.$space-md;
 }
 
 .card-auction h3 {
   font-size: 16px;
   font-weight: 600;
-  margin: 0 0 8px;
-  color: #222;
+  margin: 0 0 v.$space-sm;
+  color: v.$color-text-heading;
 }
 
 .current-bid {
   font-size: 14px;
-  color: #555;
+  color: v.$color-text-secondary;
   margin: 0;
 }
 
 .current-bid strong {
-  color: var(--mat-sys-primary, #3f51b5);
+  color: v.$color-primary;
 }
 
 .time-left {
@@ -188,13 +186,24 @@
   font-size: 12px;
   font-weight: 600;
   padding: 5px 12px;
-  border-radius: 20px;
+  border-radius: v.$radius-pill;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
-.time-urgent { background-color: #fdecea; color: #c0392b; }
-.time-medium { background-color: #fef6e0; color: #b8860b; }
-.time-safe   { background-color: #e8f6ec; color: #2e7d32; }
+.time-urgent {
+  background-color: v.$color-status-urgent-bg;
+  color: v.$color-status-urgent-text;
+}
+
+.time-medium {
+  background-color: v.$color-status-medium-bg;
+  color: v.$color-status-medium-text;
+}
+
+.time-safe {
+  background-color: v.$color-status-safe-bg;
+  color: v.$color-status-safe-text;
+}
 
 .empty-state {
   max-width: 420px;
@@ -202,8 +211,8 @@
   text-align: center;
   padding: 56px 32px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.06);
+  background: v.$color-surface-translucent;
+  box-shadow: v.$shadow-sm;
   color: #999;
 }
 
@@ -213,19 +222,32 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  margin: 0 auto 16px;
+  margin: 0 auto v.$space-md;
   border-radius: 50%;
-  background: #f5f5fa;
+  background: #f5f5f5;
   color: #aaa;
 }
 
 .empty-state h3 {
-  margin: 0 0 8px;
-  color: #555;
+  margin: 0 0 v.$space-sm;
+  color: v.$color-text-secondary;
   font-size: 1.3em;
 }
 
 .empty-state p {
   margin: 0;
   font-size: 0.95em;
+}
+.add-item-btn {
+  background-color: purple;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-item-btn:hover {
+  background-color: darkviolet;
 }
