@@ -34,6 +34,32 @@
         v.$color-accent-tint
     );
     box-shadow: v.$shadow-md;
+    animation: fade-in-up 0.6s ease both;
+}
+
+.discussion-toolbar {
+    animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.discussion-card {
+    animation: fade-in-up 0.5s ease both;
+}
+
+.discussion-list .discussion-card:nth-child(1) { animation-delay: 0.05s; }
+.discussion-list .discussion-card:nth-child(2) { animation-delay: 0.1s; }
+.discussion-list .discussion-card:nth-child(3) { animation-delay: 0.15s; }
+.discussion-list .discussion-card:nth-child(4) { animation-delay: 0.2s; }
+.discussion-list .discussion-card:nth-child(n + 5) { animation-delay: 0.25s; }
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .forum-introduction h1 {

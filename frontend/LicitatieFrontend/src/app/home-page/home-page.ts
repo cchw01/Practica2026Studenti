@@ -25,6 +25,7 @@ export interface Auction {
   currentBid: number;
   image: string;
   description: string;
+  PhotoList?: string[];
 }
 
 interface Particle {
@@ -108,33 +109,60 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       currentBid: 100,
       image: 'assets/images/car.png',
       description: 'BMW 7 Series, 2022, pristine condition, single owner.',
+      PhotoList: [
+        'assets/images/car.png',
+        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Gold Earrings',
       currentBid: 200,
       image: 'assets/images/cercei.jpeg',
       description: '18k gold earrings with certified diamonds.',
+      PhotoList: [
+        'assets/images/cercei.jpeg',
+        'https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Watch Patek Philippe',
       currentBid: 300,
       image: 'assets/images/ceas.jpeg',
       description: 'Limited edition collector watch, box and certificate included.',
+      PhotoList: [
+        'assets/images/ceas.jpeg',
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Villa',
       currentBid: 400,
       image: 'assets/images/vila.jpeg',
       description: 'Luxury villa with pool, 5 bedrooms, panoramic view.',
+      PhotoList: [
+        'assets/images/vila.jpeg',
+        'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop'
+      ]
     },
   ];
+
+  protected readonly searchQuery = signal('');
 
   exploreAuctions() {
     this.router.navigate(['/auctions']);
   }
 
   startSelling() {
-    console.log('Navigating to sell page...');
+    this.router.navigate(['/add-item']);
+  }
+
+  runSearch() {
+    const query = this.searchQuery().trim();
+    this.router.navigate(['/auctions'], query ? { queryParams: { search: query } } : {});
   }
 
   placeBid(auction: Auction) {
