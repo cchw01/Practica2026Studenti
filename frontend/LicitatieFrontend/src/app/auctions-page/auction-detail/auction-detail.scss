@@ -4,6 +4,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: v.$space-lg;
+  padding-top: calc(v.$space-lg + var(--navbar-space, 96px));
   font-family: v.$font-family;
 }
 

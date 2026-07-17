@@ -9,11 +9,14 @@ namespace Backend.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly ReviewDataOps dataOps;
+        private readonly ApplicationDbContext DbContext;
 
-        public ReviewController(ApplicationDbContext DbContext)
+        public ReviewController(ApplicationDbContext dbContext)
         {
-            dataOps = new ReviewDataOps(DbContext);
+            DbContext = dbContext;
+            dataOps = new ReviewDataOps(dbContext);
         }
+
 
         [HttpGet]
         public ActionResult<Review> GetReviews()
@@ -56,6 +59,13 @@ namespace Backend.Controllers
                     return BadRequest("Ratings need to be between 0 and 5.");
 
                 dataOps.AddReview(review);
+                //  notify the person who got reviewed
+                var notifOps = new NotificationDataOps(DbContext);
+                notifOps.Create(
+                    review.ReviewedUserId,
+                    $"You received a new {review.Rating}-star review!"
+                );
+
                 return Ok(review);
             }
             catch (Exception ex)
@@ -63,6 +73,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPut]
         public ActionResult<Review> UpdateReview(Review review)

@@ -29,21 +29,21 @@ const routes: Routes = [
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
   { path: 'forum/:id', component: ForumPostDetails },
-
   { path: 'profile-page', component: ProfilePage },
   { path: 'help-page', component: HelpPageComponent },
+  { path: 'add-item', component: AddItemPage },
   { path: 'add', component: Add },
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
-  { path: 'help-page', component: HelpPageComponent },
   { path: 'review-page', component: ReviewComponent },
 
   { path: '**', component: NotFound },
+ // { path: '**', redirectTo: '/home-page' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
