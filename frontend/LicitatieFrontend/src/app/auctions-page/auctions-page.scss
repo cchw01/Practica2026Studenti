@@ -3,6 +3,7 @@
 .auctions-page-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-top: var(--navbar-space, 96px);
 }
 
 .page-header {
@@ -236,4 +237,17 @@
 .empty-state p {
   margin: 0;
   font-size: 0.95em;
+}
+.add-item-btn {
+  background-color: purple;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add-item-btn:hover {
+  background-color: darkviolet;
 }

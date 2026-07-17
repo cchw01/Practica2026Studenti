@@ -1,4 +1,5 @@
 using Backend.DataManagement;
+using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,7 +68,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ProfileDto> UpdateProfile(string id, [FromBody] UpdateProfileRequest request)
+        public ActionResult<ProfileDto> UpdateProfile(string id, [FromBody] UpdateProfileDto request)
         {
             try
             {
@@ -182,7 +183,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}/items")]
-        public ActionResult<IEnumerable<AuctionItemDto>> GetAddedItems(string id)
+        public ActionResult<IEnumerable<AuctionItemSummaryDto>> GetAddedItems(string id)
         {
             try
             {
@@ -199,7 +200,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}/items/won")]
-        public ActionResult<IEnumerable<AuctionItemDto>> GetWonItems(string id)
+        public ActionResult<IEnumerable<AuctionItemSummaryDto>> GetWonItems(string id)
         {
             try
             {
