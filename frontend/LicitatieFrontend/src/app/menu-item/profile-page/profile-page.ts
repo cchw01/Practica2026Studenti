@@ -68,6 +68,7 @@ export class ProfilePage implements OnInit {
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
+  wishItems: Item[] = [];
   reviews: Review[] = [];
 
   // --- Stars helper ---
@@ -139,6 +140,21 @@ export class ProfilePage implements OnInit {
             title: item.name,
             price: item.currentPrice,
             status: 'Won',
+          }));
+
+        // Filter wish list items (items where current user is in WishingUsers)
+        this.wishItems = items
+          .filter((item: any) =>
+            Array.isArray(item.wishingUsers) &&
+            item.wishingUsers.some(
+              (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId
+            )
+          )
+          .map((item: any) => ({
+            id: item.id || item.ID || 0,
+            title: item.name || item.Name,
+            price: item.currentPrice || item.startPrice,
+            status: item.status ? item.status.toString() : 'Active',
           }));
       },
       error: (err) => console.error('Error loading items:', err),
