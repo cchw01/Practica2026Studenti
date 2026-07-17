@@ -47,6 +47,11 @@ namespace Backend.Controllers
         {
             try
             {
+                if (!dataOps.DoesPostExist(postid))
+                {
+                    return NotFound("Post does not exist.");
+                }
+
                 var comments = dataOps.GetCommentsByPostId(postid);
                 if (comments == null) return NotFound();
 
@@ -100,6 +105,11 @@ namespace Backend.Controllers
         {
             try
             {
+                if (!dataOps.DoesPostExist(createDto.ForumPostId))
+                {
+                    return BadRequest("Post does not exist.");
+                }
+
                 var newComment = new ForumComment
                 {
                     ForumPostId = createDto.ForumPostId,
@@ -118,12 +128,12 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateForumComment(int id, CreateForumCommentDto updateDto)
+        public ActionResult UpdateForumComment(int id, UpdateForumCommentDto updateDto)
         {
             try
             {
                 var existingComment = dataOps.GetForumCommentById(id);
-                if (existingComment == null) return NotFound();
+                if (existingComment == null) return NotFound("Comment not found.");
 
                 existingComment.CommentText = updateDto.CommentText;
                 

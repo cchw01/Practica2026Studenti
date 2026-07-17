@@ -20,6 +20,11 @@ namespace Backend.DataManagement
             return DbContext?.ForumComments.Include(c => c.User).Where(c => c.ForumPostId == postId).ToArray();
         }
 
+        public bool DoesPostExist(int postId)
+        {
+            return DbContext?.ForumPosts.Any(p => p.Id == postId) ?? false;
+        }
+
         public ForumComment? GetForumCommentById(int id)
         {
             return DbContext?.ForumComments.Include(c => c.User).Where(x => x.Id == id).FirstOrDefault();

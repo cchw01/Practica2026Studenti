@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.Contracts;
+using System.Diagnostics.Contracts;
 
 namespace Backend.DTOs
 {
@@ -18,4 +18,9 @@ namespace Backend.DTOs
         public int UserId { get; set; }
         public string CommentText { get; set; } = string.Empty;
     }   
+
+    public class UpdateForumCommentDto
+    {
+        public string CommentText { get; set; } = string.Empty;
+    }
 }
