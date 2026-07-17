@@ -158,6 +158,10 @@
   width: 100%;
 }
 
+.search-go {
+  color: var(--mat-sys-primary, #3f51b5);
+}
+
 .hero-scroll-cue {
   position: absolute;
   z-index: 1;
