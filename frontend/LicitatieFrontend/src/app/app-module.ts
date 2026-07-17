@@ -73,7 +73,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
-import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     App,
