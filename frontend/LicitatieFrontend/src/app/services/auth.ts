@@ -10,33 +10,34 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://localhost:7137/api';
 
   constructor(private http: HttpClient) { }
 
   register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData).pipe(
-      tap(res => this.setSession(res))
+    return this.http.post(`${this.apiUrl}/User/register`, userData);
+  }
+
+  login(email: string, password: string): Observable<string> {
+    return this.http.post(`${this.apiUrl}/User/login`, { email, password }, { responseType: 'text' }).pipe(
+      tap(token => this.setSession(token))
     );
   }
 
-  login(email: string, password: string): Observable<any> {
-
-    const fakeResponse = {
-      idToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2NvdW50IiwiaXNzIjoiQXVjdGlvbkFwcCIsImV4cCI6MTc4NDAxOTY4MCwiaWQiOiIzIiwiZW1haWwiOiJzdHJpbmcyIiwibmFtZSI6InN0cmluZzIiLCJ1c2VybmFtZSI6InN0cmluZzIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTc4NDAxNzg4MCwibmJmIjoxNzg0MDE3ODgwfQ.kuwa9eEmXqGVPrl-1NRXc-4xva--XpC-p3n31Y6S9Cw',
-      expiresIn: 3600
-    };
-
-    return of(fakeResponse).pipe(
-      tap(res => this.setSession(res))
-    );
-
-  }
-
-  private setSession(authResult: any): void {
-    const expiresAt = new Date().getTime() + (authResult.expiresIn * 1000);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt));
+  private setSession(token: string): void {
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      const payload = JSON.parse(payloadJson);
+      
+      // Valabilitatea token-ului în milisecunde (exp este în secunde, deci înmulțim cu 1000)
+      const expiresAt = payload.exp * 1000;
+      
+      localStorage.setItem('id_token', token);
+      localStorage.setItem('expires_at', JSON.stringify(expiresAt));
+    } catch (e) {
+      console.error("Eroare la procesarea token-ului de autentificare:", e);
+    }
   }
 
   logout(): void {
