@@ -31,7 +31,7 @@ namespace Backend.DataManagement
             dbContext?.SaveChanges();
         }
 
-
+      
 
         public bool DeleteAuctionItem(int id)
         {
@@ -46,6 +46,7 @@ namespace Backend.DataManagement
 
             return true;
         }
+
         public AuctionItem? GetAuctionItemById(int id)
         {
             var item = dbContext.AuctionItems
@@ -57,7 +58,7 @@ namespace Backend.DataManagement
             return item;
         }
 
-        public AuctionItem? GetAuctionItemForUpdate(int id)
+        public AuctionItem? GetTrackedAuctionItemById(int id)
         {
             var item = dbContext.AuctionItems
                 .FirstOrDefault(i => i.ID == id);

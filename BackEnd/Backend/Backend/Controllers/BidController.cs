@@ -80,7 +80,8 @@ namespace Backend.Controllers
         {
             try
             {
-                var item = itemDataOps.GetAuctionItemById(bidDto.AuctionItemId);
+                var item = itemDataOps.GetTrackedAuctionItemById(
+                                bidDto.AuctionItemId);
                 if (item == null)
                     return NotFound("Item not found.");
 
@@ -110,7 +111,8 @@ namespace Backend.Controllers
                 item.WinnerId = currentUserId;
                 item.Status = AuctionItem.StatusEnum.ActiveBid;
 
-                itemDataOps.UpdateAuctionItem(item);
+                itemDataOps.SaveChanges();
+
                 return Ok(new BidDto
                 {
                     Id = newBid.Id,
