@@ -134,5 +134,16 @@
         }
       }
     }
+  },
+
+  "HELP": {
+  "TITLE": "Centrul de Ajutor",
+  "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
+  "FAQ": "❓ Întrebări Frecvente",
+  "SUPPORT": "📞 Asistență Telefonică Rapidă",
+  "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
+  "FORM": "📝 Deschide un Tichet",
+  "REQUEST":"Trimite solicitarea",
+  "ASSISTANT": "Asistent Virtual Live"
   }
 }
