@@ -1,18 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Category {
   name: string;
   icon: string;
+  description: string;
 }
 
 export interface Auction {
   title: string;
   currentBid: number;
   image: string;
-  timeLeft: string;
-  urgency: 'urgent' | 'medium' | 'safe';
+  description: string;
+  PhotoList?: string[];
 }
+
+interface Particle {
+  ox: number;
+  oy: number;
+  x: number;
+  y: number;
+  radius: number;
+  accent: boolean;
+}
+
+const HERO_TITLE = 'BID. WIN. REPEAT.';
 
 @Component({
   selector: 'home-page',
@@ -20,14 +45,62 @@ export interface Auction {
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.css'],
 })
-export class HomePage implements OnInit {
-  constructor(private router: Router) {}
+export class HomePage implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
+
+  protected readonly displayedTitle = signal('');
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  private ctx!: CanvasRenderingContext2D;
+  private particles: Particle[] = [];
+  private mouse = { x: -9999, y: -9999 };
+  private animationFrameId = 0;
+  private titleTypingTimeoutId?: ReturnType<typeof setTimeout>;
+  private revealObserver?: IntersectionObserver;
+
+  private readonly onMouseMove = (e: MouseEvent) => {
+    const rect = this.heroRef.nativeElement.getBoundingClientRect();
+    this.mouse.x = e.clientX - rect.left;
+    this.mouse.y = e.clientY - rect.top;
+  };
+
+  private readonly onMouseLeave = () => {
+    this.mouse.x = -9999;
+    this.mouse.y = -9999;
+  };
+
+  private readonly onResize = () => this.initParticles();
+
+  constructor(
+    private zone: NgZone,
+    private hostRef: ElementRef<HTMLElement>,
+    private router: Router,
+    private readonly translate: TranslateService,
+  ) {}
+
   categories: Category[] = [
-    { name: 'Jewelry', icon: 'diamond' },
-    { name: 'Auto', icon: 'directions_car' },
-    { name: 'Art & Collectibles', icon: 'palette' },
-    { name: 'Electronics', icon: 'devices' },
-    { name: 'Real Estate', icon: 'home' },
+    {
+      name: 'Technology',
+      icon: 'memory',
+      description: 'Cutting-edge gadgets and the latest electronics.',
+    },
+    {
+      name: 'Auto & Motors',
+      icon: 'directions_car',
+      description: 'Cars, motorcycles, and rare parts.',
+    },
+    {
+      name: 'Art & Collectibles',
+      icon: 'palette',
+      description: 'Exclusive art pieces and collections.',
+    },
+    {
+      name: 'Real Estate',
+      icon: 'home_work',
+      description: 'Exceptional properties and land.',
+    },
   ];
 
   auctions: Auction[] = [
@@ -35,37 +108,61 @@ export class HomePage implements OnInit {
       title: 'BMW',
       currentBid: 100,
       image: 'assets/images/car.png',
-      timeLeft: '02:45m',
-      urgency: 'urgent',
+      description: 'BMW 7 Series, 2022, pristine condition, single owner.',
+      PhotoList: [
+        'assets/images/car.png',
+        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Gold Earrings',
       currentBid: 200,
       image: 'assets/images/cercei.jpeg',
-      timeLeft: '01:12m',
-      urgency: 'medium',
+      description: '18k gold earrings with certified diamonds.',
+      PhotoList: [
+        'assets/images/cercei.jpeg',
+        'https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Watch Patek Philippe',
       currentBid: 300,
       image: 'assets/images/ceas.jpeg',
-      timeLeft: '04:21m',
-      urgency: 'safe',
+      description: 'Limited edition collector watch, box and certificate included.',
+      PhotoList: [
+        'assets/images/ceas.jpeg',
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&auto=format&fit=crop'
+      ]
     },
     {
       title: 'Villa',
       currentBid: 400,
       image: 'assets/images/vila.jpeg',
-      timeLeft: '00:30s',
-      urgency: 'urgent',
+      description: 'Luxury villa with pool, 5 bedrooms, panoramic view.',
+      PhotoList: [
+        'assets/images/vila.jpeg',
+        'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop'
+      ]
     },
   ];
+
+  protected readonly searchQuery = signal('');
+
   exploreAuctions() {
-    console.log('Navigăm către lista de licitații...');
+    this.router.navigate(['/auctions']);
   }
 
   startSelling() {
-    console.log('Navigăm către pagina de vânzare...');
+    this.router.navigate(['/add-item']);
+  }
+
+  runSearch() {
+    const query = this.searchQuery().trim();
+    this.router.navigate(['/auctions'], query ? { queryParams: { search: query } } : {});
   }
 
   placeBid(auction: Auction) {
@@ -75,5 +172,172 @@ export class HomePage implements OnInit {
   goToAuction(auction: Auction) {
     this.router.navigate(['/action-item-page'], { state: { auction } });
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.translate
+      .stream('HOME.HERO.TITLE')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((title) => {
+        if (typeof title === 'string') {
+          const heroTitle =
+            title === 'HOME.HERO.TITLE'
+              ? HERO_TITLE
+              : title;
+
+          this.typeHeroTitle(heroTitle);
+        }
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this.initParticles();
+
+    const hero = this.heroRef.nativeElement;
+
+    hero.addEventListener('mousemove', this.onMouseMove);
+    hero.addEventListener('mouseleave', this.onMouseLeave);
+    window.addEventListener('resize', this.onResize);
+
+    this.zone.runOutsideAngular(() => this.animate());
+
+    this.setupScrollReveal();
+  }
+
+  ngOnDestroy(): void {
+    cancelAnimationFrame(this.animationFrameId);
+
+    if (this.titleTypingTimeoutId !== undefined) {
+      clearTimeout(this.titleTypingTimeoutId);
+    }
+
+    const hero = this.heroRef.nativeElement;
+
+    hero.removeEventListener('mousemove', this.onMouseMove);
+    hero.removeEventListener('mouseleave', this.onMouseLeave);
+    window.removeEventListener('resize', this.onResize);
+
+    this.revealObserver?.disconnect();
+  }
+
+  private typeHeroTitle(title: string): void {
+    if (this.titleTypingTimeoutId !== undefined) {
+      clearTimeout(this.titleTypingTimeoutId);
+    }
+
+    let i = 0;
+    this.displayedTitle.set('');
+
+    const step = () => {
+      i++;
+
+      this.displayedTitle.set(title.slice(0, i));
+
+      if (i < title.length) {
+        this.titleTypingTimeoutId = setTimeout(
+          step,
+          45 + Math.random() * 35,
+        );
+      }
+    };
+
+    step();
+  }
+
+  private setupScrollReveal(): void {
+    const targets = this.hostRef.nativeElement.querySelectorAll('.reveal-on-scroll');
+
+    this.revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        }
+      },
+      { threshold: 0.15 },
+    );
+
+    targets.forEach((el) => this.revealObserver!.observe(el));
+  }
+
+  private initParticles(): void {
+    const canvas = this.canvasRef.nativeElement;
+    const hero = this.heroRef.nativeElement;
+    const dpr = window.devicePixelRatio || 1;
+    const width = hero.clientWidth;
+    const height = hero.clientHeight;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    this.ctx = canvas.getContext('2d')!;
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(260, Math.round((width * height) / 5500));
+
+    this.particles = Array.from({ length: count }, () => {
+      const ox = Math.random() * width;
+      const oy = Math.random() * height;
+      const accent = Math.random() < 0.18;
+
+      return {
+        ox,
+        oy,
+        x: ox,
+        y: oy,
+        radius: accent
+          ? 2.2 + Math.random() * 1.6
+          : 1.1 + Math.random() * 1.2,
+        accent,
+      };
+    });
+  }
+
+  private readonly animate = (): void => {
+    const width = this.heroRef.nativeElement.clientWidth;
+    const height = this.heroRef.nativeElement.clientHeight;
+
+    this.ctx.clearRect(0, 0, width, height);
+
+    const repelRadius = 170;
+
+    for (const p of this.particles) {
+      const dx = p.ox - this.mouse.x;
+      const dy = p.oy - this.mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      let targetX = p.ox;
+      let targetY = p.oy;
+      let nearBoost = 0;
+
+      if (dist < repelRadius) {
+        nearBoost = (repelRadius - dist) / repelRadius;
+
+        const angle = Math.atan2(dy, dx);
+
+        targetX = p.ox + Math.cos(angle) * nearBoost * 60;
+        targetY = p.oy + Math.sin(angle) * nearBoost * 60;
+      }
+
+      p.x += (targetX - p.x) * 0.16;
+      p.y += (targetY - p.y) * 0.16;
+
+      this.ctx.beginPath();
+      this.ctx.arc(
+        p.x,
+        p.y,
+        p.radius + nearBoost * 2,
+        0,
+        Math.PI * 2,
+      );
+
+      this.ctx.fillStyle = p.accent
+        ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
+        : `rgba(20, 20, 30, ${0.12 + nearBoost * 0.35})`;
+
+      this.ctx.fill();
+    }
+
+    this.animationFrameId = requestAnimationFrame(this.animate);
+  };
 }

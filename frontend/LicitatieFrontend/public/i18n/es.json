@@ -1,0 +1,138 @@
+{
+  "NAV": {
+    "HOME": "Inicio",
+    "AUCTIONS": "Subastas",
+    "FORUM": "Foro",
+    "CONTACT": "Contacto",
+    "LOGIN": "Iniciar sesión",
+    "REGISTER": "Registrarse",
+    "TOGGLE_MENU": "Abrir o cerrar la navegación",
+    "SELECT_LANGUAGE": "Seleccionar idioma",
+    "HELP": "Ayuda",
+    "ADD_AUCTION": "Añadir subasta"
+  },
+
+  "CONTACT": {
+    "TITLE": "Contáctanos",
+    "DESCRIPTION": "¿Tienes alguna pregunta? Nuestro equipo está listo para ayudarte.",
+    "EMAIL": "Correo electrónico",
+    "PHONE": "Número de teléfono",
+    "CALL_CENTER_HOURS": "Horario del centro de atención",
+    "SCHEDULE": "Lunes–Viernes, 09:00–17:00",
+    "FOLLOW_US": "Síguenos",
+    "SOCIAL_DESCRIPTION": "Mantente conectado con nosotros en las redes sociales."
+  },
+
+  "LOGIN": {
+    "TITLE": "Iniciar sesión",
+    "EMAIL_LABEL": "Correo electrónico",
+    "EMAIL_PLACEHOLDER": "Dirección de correo electrónico",
+    "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
+    "EMAIL_INVALID": "El formato del correo electrónico no es válido",
+    "PASSWORD_LABEL": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "Introduce la contraseña",
+    "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+    "PASSWORD_MIN_LENGTH": "La contraseña debe tener al menos 6 caracteres",
+    "SUBMIT": "Iniciar sesión",
+    "NO_ACCOUNT": "¿No tienes una cuenta?",
+    "REGISTER_HERE": "Regístrate aquí"
+  },
+
+  "REGISTER": {
+    "TITLE": "Crear una cuenta",
+    "USERNAME_LABEL": "Nombre de usuario",
+    "USERNAME_PLACEHOLDER": "Nombre de usuario",
+    "USERNAME_REQUIRED": "El nombre de usuario es obligatorio.",
+    "FULL_NAME_LABEL": "Nombre completo",
+    "FULL_NAME_PLACEHOLDER": "Nombre completo",
+    "FULL_NAME_REQUIRED": "El nombre completo es obligatorio.",
+    "EMAIL_LABEL": "Correo electrónico",
+    "EMAIL_PLACEHOLDER": "Correo electrónico",
+    "EMAIL_REQUIRED": "El correo electrónico es obligatorio.",
+    "EMAIL_INVALID": "Introduce un correo electrónico válido.",
+    "PASSWORD_LABEL": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "Contraseña",
+    "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
+    "PASSWORD_MIN_LENGTH": "La contraseña debe tener al menos 6 caracteres.",
+    "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmar contraseña",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirma tu contraseña.",
+    "PASSWORDS_MISMATCH": "Las contraseñas no coinciden.",
+    "PHONE_LABEL": "Número de teléfono",
+    "PHONE_PLACEHOLDER": "Número de teléfono (+40...)",
+    "PHONE_REQUIRED": "El número de teléfono es obligatorio.",
+    "PHONE_INVALID": "Introduce un número de teléfono válido.",
+    "SUBMIT": "Crear cuenta",
+    "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
+    "SIGN_IN": "Iniciar sesión"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "PUJA. GANA. REPITE.",
+      "TAG": "🔥 Subastas en vivo todos los días",
+      "DESCRIPTION": "La plataforma de subastas en línea más segura. Vende rápidamente o encuentra ofertas únicas.",
+      "EXPLORE_AUCTIONS": "Explorar subastas",
+      "START_SELLING": "Empezar a vender",
+      "SEARCH_LABEL": "Buscar productos y subastas...",
+      "SEARCH_PLACEHOLDER": "Ejemplo: BMW, pendientes de oro"
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categorías",
+      "TITLE_START": "Explora las",
+      "TITLE_END": "categorías",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tecnología",
+          "DESCRIPTION": "Dispositivos de última generación y los productos electrónicos más recientes."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Automóviles y motos",
+          "DESCRIPTION": "Coches, motocicletas y piezas poco comunes."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Arte y coleccionables",
+          "DESCRIPTION": "Obras de arte exclusivas y colecciones especiales."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Bienes raíces",
+          "DESCRIPTION": "Propiedades y terrenos excepcionales."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Mercado",
+      "TITLE_START": "Subastas",
+      "TITLE_END": "activas",
+      "PLACE_BID": "Hacer una puja",
+
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW Serie 7 de 2022, en estado impecable y con un único propietario."
+        },
+
+        "GOLD_EARRINGS": {
+          "TITLE": "Pendientes de oro",
+          "DESCRIPTION": "Pendientes de oro de 18 quilates con diamantes certificados."
+        },
+
+        "PATEK_PHILIPPE": {
+          "TITLE": "Reloj Patek Philippe",
+          "DESCRIPTION": "Reloj de colección de edición limitada con caja y certificado incluidos."
+        },
+
+        "VILLA": {
+          "TITLE": "Villa",
+          "DESCRIPTION": "Villa de lujo con piscina, cinco dormitorios y vistas panorámicas."
+        }
+      }
+    }
+  }
+}

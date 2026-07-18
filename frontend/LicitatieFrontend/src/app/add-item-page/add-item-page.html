@@ -1,8 +1,11 @@
-<div class="add-item-container">
-  <mat-card class="add-item-card">
+<div class="add-item-page-container">
+  <div class="page-header">
+    <span class="header-badge">🔨 Sell on BidSphere</span>
     <h1>Add New Auction Item</h1>
-    <p class="subtitle">Fill in the details below to publish your item for auction.</p>
+    <p>Fill in the details below to publish your item for auction.</p>
+  </div>
 
+  <mat-card class="add-item-card">
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <!-- Name -->
       <div class="form-field">

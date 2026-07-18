@@ -1,0 +1,138 @@
+{
+    "NAV": {
+    "HOME": "Acasă",
+    "AUCTIONS": "Licitații",
+    "FORUM": "Forum",
+    "CONTACT": "Contact",
+    "LOGIN": "Autentificare",
+    "REGISTER": "Înregistrare",
+    "TOGGLE_MENU": "Deschide sau închide meniul",
+    "SELECT_LANGUAGE": "Selectează limba",
+    "HELP": "Ajutor",
+    "ADD_AUCTION": "Adaugă licitație"
+  },
+
+  "CONTACT": {
+    "TITLE": "Contactează-ne",
+    "DESCRIPTION": "Ai întrebări? Echipa noastră este pregătită să te ajute.",
+    "EMAIL": "E-mail",
+    "PHONE": "Număr de telefon",
+    "CALL_CENTER_HOURS": "Program call center",
+    "SCHEDULE": "Luni–Vineri, 09:00–17:00",
+    "FOLLOW_US": "Urmărește-ne",
+    "SOCIAL_DESCRIPTION": "Rămâi conectat cu noi pe rețelele sociale."
+  },
+
+  "LOGIN": {
+    "TITLE": "Autentificare",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Adresa de e-mail",
+    "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie",
+    "EMAIL_INVALID": "Formatul adresei de e-mail nu este valid",
+    "PASSWORD_LABEL": "Parolă",
+    "PASSWORD_PLACEHOLDER": "Introdu parola",
+    "PASSWORD_REQUIRED": "Parola este obligatorie",
+    "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere",
+    "SUBMIT": "Autentificare",
+    "NO_ACCOUNT": "Nu ai un cont?",
+    "REGISTER_HERE": "Înregistrează-te aici"
+  },
+
+  "REGISTER": {
+    "TITLE": "Creează un cont",
+    "USERNAME_LABEL": "Nume de utilizator",
+    "USERNAME_PLACEHOLDER": "Nume de utilizator",
+    "USERNAME_REQUIRED": "Numele de utilizator este obligatoriu.",
+    "FULL_NAME_LABEL": "Nume complet",
+    "FULL_NAME_PLACEHOLDER": "Nume complet",
+    "FULL_NAME_REQUIRED": "Numele complet este obligatoriu.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Adresă de e-mail",
+    "EMAIL_REQUIRED": "Adresa de e-mail este obligatorie.",
+    "EMAIL_INVALID": "Introdu o adresă de e-mail validă.",
+    "PASSWORD_LABEL": "Parolă",
+    "PASSWORD_PLACEHOLDER": "Parolă",
+    "PASSWORD_REQUIRED": "Parola este obligatorie.",
+    "PASSWORD_MIN_LENGTH": "Parola trebuie să conțină cel puțin 6 caractere.",
+    "CONFIRM_PASSWORD_LABEL": "Confirmă parola",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmă parola",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirmă parola.",
+    "PASSWORDS_MISMATCH": "Parolele nu coincid.",
+    "PHONE_LABEL": "Număr de telefon",
+    "PHONE_PLACEHOLDER": "Număr de telefon (+40...)",
+    "PHONE_REQUIRED": "Numărul de telefon este obligatoriu.",
+    "PHONE_INVALID": "Introdu un număr de telefon valid.",
+    "SUBMIT": "Creează contul",
+    "ALREADY_HAVE_ACCOUNT": "Ai deja un cont?",
+    "SIGN_IN": "Autentifică-te"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
+      "TAG": "🔥 Licitații live în fiecare zi",
+      "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
+      "EXPLORE_AUCTIONS": "Explorează licitațiile",
+      "START_SELLING": "Începe să vinzi",
+      "SEARCH_LABEL": "Caută produse și licitații...",
+      "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categorii",
+      "TITLE_START": "Explorează",
+      "TITLE_END": "categoriile",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tehnologie",
+          "DESCRIPTION": "Gadgeturi de ultimă generație și cele mai noi produse electronice."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Auto și moto",
+          "DESCRIPTION": "Mașini, motociclete și piese rare."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Artă și obiecte de colecție",
+          "DESCRIPTION": "Opere de artă exclusive și colecții speciale."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Imobiliare",
+          "DESCRIPTION": "Proprietăți și terenuri deosebite."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Piață",
+      "TITLE_START": "Licitații",
+      "TITLE_END": "active",
+      "PLACE_BID": "Licitează",
+
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW Seria 7, anul 2022, în stare impecabilă, cu un singur proprietar."
+        },
+
+        "GOLD_EARRINGS": {
+          "TITLE": "Cercei din aur",
+          "DESCRIPTION": "Cercei din aur de 18 karate cu diamante certificate."
+        },
+
+        "PATEK_PHILIPPE": {
+          "TITLE": "Ceas Patek Philippe",
+          "DESCRIPTION": "Ceas de colecție în ediție limitată, cu cutie și certificat incluse."
+        },
+
+        "VILLA": {
+          "TITLE": "Vilă",
+          "DESCRIPTION": "Vilă de lux cu piscină, cinci dormitoare și vedere panoramică."
+        }
+      }
+    }
+  }
+}

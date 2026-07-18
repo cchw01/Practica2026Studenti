@@ -17,7 +17,7 @@
     width: 100%;
     max-width: 1050px;
     margin: 0 auto;
-    padding: 40px 24px 64px;
+    padding: calc(40px + var(--navbar-space, 96px)) 24px 64px;
 }
 
 .back-button {
@@ -327,4 +327,24 @@
         display: block;
         margin-top: 4px;
     }
+}
+.login-required {
+    text-align: center;
+    padding: 24px;
+}
+
+.login-required p {
+    margin: 0;
+    color: #555555;
+    font-size: 14px;
+}
+
+.login-required a {
+    color: #26a69a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-required a:hover {
+    text-decoration: underline;
 }

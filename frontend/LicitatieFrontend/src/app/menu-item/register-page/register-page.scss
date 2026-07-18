@@ -1,14 +1,28 @@
+@use '../../styles/variables' as v;
+
 .split-layout {
   display: flex;
   min-height: 640px;
   width: 100%;
   max-width: 1100px;
-  margin: 40px auto;
+  margin: calc(40px + var(--navbar-space, 96px)) auto 40px;
   border-radius: 28px;
   overflow: hidden;
-  background-color: #ffffff;
-  box-shadow: 0 30px 60px rgba(30, 42, 90, 0.16);
+  background-color: v.$color-surface;
+  box-shadow: v.$shadow-md;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  animation: fade-in-up 0.6s ease both;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .image-section {
@@ -29,7 +43,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(160deg, rgba(63, 81, 181, 0.25), rgba(233, 30, 99, 0.2));
+    background: linear-gradient(
+      160deg,
+      v.$color-primary-tint,
+      v.$color-accent-tint
+    );
   }
 }
 
@@ -38,77 +56,78 @@
     margin: 0;
     border-radius: 0;
     min-height: 100vh;
+    padding-top: var(--navbar-space, 96px);
   }
 }
 
 .form-section {
   flex: 1;
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: v.$space-md;
 }
 
 .register-container {
   width: 100%;
   max-width: 420px;
-  padding: 1rem 2rem;
+  padding: v.$space-md v.$space-lg;
 }
 
 h2 {
   text-align: left;
-  color: #111827;
-  margin-bottom: 1.5rem;
+  color: v.$color-text-heading;
+  margin-bottom: v.$space-lg;
   font-weight: 700;
   font-size: 2rem;
   letter-spacing: -0.03em;
 }
 
 .form-group {
-  margin-bottom: 0.85rem; 
+  margin-bottom: v.$space-sm;
   display: flex;
   flex-direction: column;
 }
 
 label {
-  display: none; 
+  display: none;
 }
 
 input {
   padding: 0.75rem 1rem;
-  border: 1px solid #767676; 
-  border-radius: 8px;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
   font-size: 1rem;
-  width: 100%; 
-  box-sizing: border-box; 
-  color: #1f2937;
-  background-color: #ffffff;
-  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  color: v.$color-text-heading;
+  background-color: v.$color-surface;
+  transition: v.$transition-fast;
 }
 
 input::placeholder {
-  color: #767676;
+  color: v.$color-text-body;
 }
 
 input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: v.$color-primary;
+  box-shadow: 0 0 0 2px v.$color-primary-tint;
 }
 
 .name-row {
   display: flex;
-  gap: 12px; 
+  gap: v.$space-sm;
   width: 100%;
 }
 
 .name-row .form-group {
   flex: 1;
-  margin-bottom: 0.85rem; 
+  margin-bottom: v.$space-sm;
 }
 
 .error {
-  color: #ef4444;
+  color: v.$color-status-urgent-text;
   font-size: 0.8rem;
   margin-top: 0.2rem;
   font-weight: 500;
@@ -116,8 +135,8 @@ input:focus {
 
 .terms {
   font-size: 0.75rem;
-  color: #767676;
-  margin: 1rem 0;
+  color: v.$color-text-body;
+  margin: v.$space-md 0;
   line-height: 1.4;
 }
 
@@ -125,38 +144,31 @@ button {
   width: 100%;
   padding: 0.85rem;
   margin-top: 0.5rem;
-  background-color: #111827; 
-  color: white;
+  background-color: v.$color-text-heading;
+  color: v.$color-white;
   border: none;
-  border-radius: 30px; 
+  border-radius: v.$radius-pill;
   font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: v.$transition-fast;
 }
 
 button:hover:not(:disabled) {
-  background-color: #374151;
+  background-color: v.$color-text-secondary;
 }
 
 button:disabled {
-  background-color: #e5e7eb;
-  color: #9ca3af;
+  background-color: v.$color-border;
+  color: v.$color-text-body;
   cursor: not-allowed;
 }
 
 .login-link {
-  text-align: right; 
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #4b5563;
-}
-
-.login-link {
   text-align: center;
-  margin-top: 20px;
+  margin-top: v.$space-lg;
   font-size: 0.9rem;
-  color: #4b5563;
+  color: v.$color-text-secondary;
 }
 
 .login-link a:hover {

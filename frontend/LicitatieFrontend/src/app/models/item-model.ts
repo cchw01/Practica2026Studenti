@@ -21,5 +21,6 @@ export interface AuctionItem {
   StartDate: Date;
   EndDate: Date;
   BidList: Array<Bid>;
-  //photoList ???
+  PhotoList?: string[];
+  ImageUrl?: string;
 }

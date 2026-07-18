@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { ForumPost } from '../Models/forum-post/forum-post';
 import { ForumPostService } from '../Models/forum-post/forum-post-service';
 import { ForumComment } from '../Models/forum-comment/forum-comment';
 import { ForumCommentService } from '../Models/forum-comment/forum-comment-service';
+import { AuthService } from  '../services/auth';
 
 type SortOption = 'latest' | 'oldest' | 'comments';
 
@@ -20,7 +21,7 @@ interface ForumPostPreview {
   selector: 'app-forum-page',
   standalone: false,
   templateUrl: './forum-page.html',
-  styleUrl: './forum-page.css',
+  styleUrl: './forum-page.scss',
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
@@ -29,15 +30,20 @@ export class ForumPage implements OnInit {
 
   isLoading = false;
   errorMessage = '';
+  public  currentUserId: number | null = null;
 
   private commentCounts = new Map<number, number>();
 
   constructor(
     private forumPostService: ForumPostService,
     private forumCommentService: ForumCommentService,
+    private cdr: ChangeDetectorRef,
+     private authService: AuthService, 
+    
   ) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getCurrentUserId();
     this.loadForumPosts();
     this.loadForumComments();
   }
@@ -53,6 +59,7 @@ export class ForumPage implements OnInit {
         );
 
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
 
       error: (error) => {
@@ -62,6 +69,7 @@ export class ForumPage implements OnInit {
           'The forum discussions could not be loaded.';
 
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -71,13 +79,12 @@ export class ForumPage implements OnInit {
       next: (forumComments: ForumComment[]) => {
         this.calculateCommentCounts(forumComments);
         this.updatePostCommentCounts();
+        this.cdr.detectChanges();
       },
 
       error: (error) => {
-        console.error(
-          'Error loading forum comments:',
-          error,
-        );
+        console.error('Error loading forum comments:', error);
+        this.cdr.detectChanges();
       },
     });
   }
@@ -111,8 +118,8 @@ export class ForumPage implements OnInit {
   }
 
   retryLoading(): void {
-  this.loadForumPosts();
-  this.loadForumComments();
+    this.loadForumPosts();
+    this.loadForumComments();
   }
 
   private calculateCommentCounts(

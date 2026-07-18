@@ -18,10 +18,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    // Trimitem un apel HTTP POST real către backend la ruta /api/User/login
     return this.http
-      .post(`${this.apiUrl}/login`, { email, password })
-      .pipe(tap((res) => this.setSession(res)));
+      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+      .pipe(
+        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
+      );
   }
 
   private setSession(authResult: any): void {
@@ -47,12 +48,26 @@ export class AuthService {
     const token = localStorage.getItem('id_token');
     if (!token) return null;
     try {
-      const payloadBase64 = token.split('.')[1];
+      let payloadBase64 = token.split('.')[1];
+      // convert base64url -> standard base64
+      payloadBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      // re-add padding if missing
+      while (payloadBase64.length % 4 !== 0) {
+        payloadBase64 += '=';
+      }
       const payloadJson = atob(payloadBase64);
       return JSON.parse(payloadJson);
     } catch (e) {
       return null;
     }
+  }
+  getCurrentUserId(): number | null {
+    const user = this.getCurrentUser();
+    if (!user || !user.id) {
+      return null;
+    }
+    const id = Number(user.id);
+    return Number.isNaN(id) ? null : id;
   }
 
   public isLoggedIn(): boolean {
