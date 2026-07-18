@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
+import { Router } from '@angular/router';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -8,7 +10,7 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   selector: 'app-auctions-page',
   standalone: false,
   templateUrl: './auctions-page.html',
-  styleUrls: ['./auctions-page.css'],
+  styleUrls: ['./auctions-page.scss'],
 })
 export class AuctionsPage implements OnInit {
   allItems: AuctionItem[] = [];
@@ -19,9 +21,18 @@ export class AuctionsPage implements OnInit {
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
 
-  constructor(private itemService: ItemService) {}
+  constructor(
+    private itemService: ItemService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
+    const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
+    if (searchFromUrl) {
+      this.searchText = searchFromUrl;
+    }
+
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
@@ -83,5 +94,9 @@ export class AuctionsPage implements OnInit {
     if (hoursLeft <= 24) return 'time-urgent';
     if (hoursLeft <= 72) return 'time-medium';
     return 'time-safe';
+  }
+
+  goToAuctionDetail(item: AuctionItem): void {
+    this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }

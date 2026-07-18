@@ -1,3 +1,5 @@
+@use '../styles/variables' as v;
+
 :host {
     display: block;
     min-height: 100%;
@@ -10,26 +12,54 @@
 .forum-page {
     min-height: 100vh;
     padding-top: var(--navbar-space, 96px);
-    color: #333333;
+    color: v.$color-text-label;
 }
 
 .forum-container {
     width: 100%;
     max-width: 1050px;
     margin: 0 auto;
-    padding: 48px 24px 64px;
+    padding: v.$space-2xl v.$space-md 64px;
 }
 
 .forum-introduction {
     margin-bottom: 40px;
     text-align: center;
+
+    padding: v.$space-xl v.$space-md 40px;
+    border-radius: 28px;
+    background: linear-gradient(
+        135deg,
+        v.$color-primary-tint,
+        v.$color-accent-tint
+    );
+    box-shadow: v.$shadow-md;
+    animation: fade-in-up 0.6s ease both;
 }
 
-.forum-introduction {
-    padding: 32px 16px 40px;
-    border-radius: 28px;
-    background: linear-gradient(135deg, rgba(63, 81, 181, 0.08), rgba(233, 30, 99, 0.06));
-    box-shadow: 0 20px 40px rgba(30, 42, 90, 0.06);
+.discussion-toolbar {
+    animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.discussion-card {
+    animation: fade-in-up 0.5s ease both;
+}
+
+.discussion-list .discussion-card:nth-child(1) { animation-delay: 0.05s; }
+.discussion-list .discussion-card:nth-child(2) { animation-delay: 0.1s; }
+.discussion-list .discussion-card:nth-child(3) { animation-delay: 0.15s; }
+.discussion-list .discussion-card:nth-child(4) { animation-delay: 0.2s; }
+.discussion-list .discussion-card:nth-child(n + 5) { animation-delay: 0.25s; }
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .forum-introduction h1 {
@@ -42,7 +72,7 @@
 .forum-introduction p {
     max-width: 550px;
     margin: 0 auto;
-    color: #666666;
+    color: v.$color-text-body;
     font-size: 15px;
     line-height: 1.6;
 }
@@ -51,8 +81,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: v.$space-md;
+    margin-bottom: v.$space-lg;
 }
 
 .create-discussion-button {
@@ -80,23 +110,21 @@
 
 .sort-control select {
     min-height: 40px;
-    padding: 0 38px 0 16px;
+    padding: 0 38px 0 v.$space-md;
     border: 1px solid #dddddd;
-    border-radius: 28px;
-    background-color: #ffffff;
-    color: #555555;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    color: v.$color-text-secondary;
     font: inherit;
     font-size: 14px;
     cursor: pointer;
     outline: none;
-    transition:
-        border-color 0.2s ease-in-out,
-        box-shadow 0.2s ease-in-out;
+    transition: v.$transition-fast;
 }
 
 .sort-control select:focus {
-    border-color: #26a69a;
-    box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.12);
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-primary-tint;
 }
 
 .discussion-total {
@@ -114,17 +142,23 @@
 .discussion-card {
     width: 100%;
     min-height: 145px;
+
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 20px;
-    padding: 24px;
+
+    padding: v.$space-lg;
+
     border: 1px solid #eeeeee;
-    border-radius: 16px;
-    background-color: #ffffff;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
     color: inherit;
     text-decoration: none;
-    box-shadow: 0 8px 20px rgba(30, 42, 90, 0.05);
+
+    box-shadow: v.$shadow-sm;
+
     transition:
         transform 0.2s ease-in-out,
         box-shadow 0.2s ease-in-out,
@@ -134,35 +168,38 @@
 .discussion-card:hover {
     transform: translateY(-5px);
     border-color: #d7eeee;
-    box-shadow: 0 14px 28px rgba(30, 42, 90, 0.12);
+    box-shadow: v.$shadow-md;
 }
 
 .discussion-card:focus-visible {
-    outline: 3px solid rgba(38, 166, 154, 0.2);
+    outline: 3px solid v.$color-primary-tint;
     outline-offset: 2px;
 }
-
 
 .author-avatar {
     width: 58px;
     height: 58px;
-    align-self: start;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     flex-shrink: 0;
+
     border-radius: 50%;
     background-color: #f5f5f5;
-    color: #555555;
+
+    color: v.$color-text-secondary;
+
     font-size: 15px;
     font-weight: 600;
-    transition: background-color 0.2s ease-in-out;
+
+    transition: v.$transition-fast;
 }
 
 .discussion-card:hover .author-avatar {
     background-color: #e0f2f1;
 }
-
 
 .discussion-main {
     min-width: 0;
@@ -177,7 +214,9 @@
 
 .discussion-heading h2 {
     margin: 0;
-    color: #333333;
+
+    color: v.$color-text-label;
+
     font-size: 19px;
     font-weight: 600;
     line-height: 1.4;
@@ -196,29 +235,35 @@
 }
 
 .discussion-author strong {
-    color: #555555;
+    color: v.$color-text-secondary;
     font-weight: 600;
 }
 
 .discussion-description {
     margin: 14px 0 0;
+
     display: -webkit-box;
     overflow: hidden;
-    color: #666666;
+
+    color: v.$color-text-body;
+
     font-size: 14px;
     line-height: 1.6;
+
     -webkit-box-orient: vertical;
 }
 
-
-
 .discussion-comments {
     min-width: 105px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    color: #555555;
+
+    gap: v.$space-sm;
+
+    color: v.$color-text-secondary;
+
     font-size: 12px;
     font-weight: 500;
 }
@@ -231,41 +276,55 @@
 .comment-icon {
     width: 24px;
     height: 19px;
+
     position: relative;
+
     border: 2px solid #666666;
     border-radius: 8px;
 }
 
 .comment-icon::after {
     content: '';
+
     width: 7px;
     height: 7px;
+
     position: absolute;
+
     left: 2px;
     bottom: -5px;
-    background-color: #ffffff;
+
+    background-color: v.$color-surface;
+
     border-left: 2px solid #666666;
+
     transform: skew(-25deg);
 }
 
-
 .empty-state {
     padding: 60px 24px;
+
     border: 1px solid #eeeeee;
-    border-radius: 12px;
-    background-color: #ffffff;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
+
     text-align: center;
 }
 
 .empty-state h2 {
     margin: 0 0 10px;
-    color: #333333;
+
+    color: v.$color-text-label;
+
     font-size: 22px;
     font-weight: 600;
 }
 
 .empty-state p {
     margin: 0;
-    color: #666666;
+
+    color: v.$color-text-body;
+
     font-size: 14px;
 }

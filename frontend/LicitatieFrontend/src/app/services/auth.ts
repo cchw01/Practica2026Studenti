@@ -59,6 +59,14 @@ export class AuthService {
       return null;
     }
   }
+  getCurrentUserId(): number | null {
+  const user = this.getCurrentUser();
+  if (!user || !user.id) {
+    return null;
+  }
+  const id = Number(user.id);
+  return Number.isNaN(id) ? null : id;
+}
 
   public isLoggedIn(): boolean {
     return new Date().getTime() < this.getExpiration();

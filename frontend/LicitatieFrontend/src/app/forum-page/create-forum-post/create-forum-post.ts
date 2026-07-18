@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { ForumPost } from '../../Models/forum-post/forum-post';
 import { ForumPostService } from '../../Models/forum-post/forum-post-service';
+import { AuthService } from '../../services/auth';
 
 function noWhitespaceValidator(
   control: AbstractControl,
@@ -27,17 +28,25 @@ function noWhitespaceValidator(
 export class CreateForumPost {
   isSubmitting = false;
   submitErrorMessage = '';
+  public  currentUserId: number | null = null;
 
-  readonly createPostForm: FormGroup<{
+  readonly createPostForm!: FormGroup<{
     title: FormControl<string>;
     description: FormControl<string>;
   }>;
+  
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly forumPostService: ForumPostService,
     private readonly router: Router,
+     private readonly authService: AuthService,
   ) {
+    this.currentUserId = this.authService.getCurrentUserId();
+    if (this.currentUserId === null) {
+    this.router.navigate(['/login-page']);
+    return;
+  }
     this.createPostForm = this.formBuilder.nonNullable.group({
       title: [ '',
         [
@@ -72,6 +81,7 @@ export class CreateForumPost {
       this.createPostForm.controls.description.value.trim();
 
     const forumPost = new ForumPost({
+       userId: this.currentUserId!,
       title,
       description,
       date: new Date().toISOString(),
@@ -88,7 +98,7 @@ export class CreateForumPost {
           return;
         }
 
-        this.router.navigate(['/forum']);
+        this.router.navigate(['/forum-page']);
       },
 
       error: (error: HttpErrorResponse) => {
@@ -103,7 +113,7 @@ export class CreateForumPost {
   }
 
   cancel(): void {
-    this.router.navigate(['/forum']);
+    this.router.navigate(['/forum-page']);
   }
 
   get titleControl(): FormControl<string> {
