@@ -3,9 +3,9 @@ using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Services;
+
 namespace Backend.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class PictureController : ControllerBase
@@ -13,7 +13,8 @@ namespace Backend.Controllers
         private readonly ApplicationDbContext DbContext;
         private readonly PictureDataOps dataOps;
         private readonly PictureService pictureService;
-        PictureController(ApplicationDbContext dbContext, PictureDataOps dataOps, PictureService pictureService)
+
+        public PictureController(ApplicationDbContext dbContext, PictureDataOps dataOps, PictureService pictureService)
         {
             DbContext = dbContext;
             this.dataOps = dataOps;
@@ -21,46 +22,58 @@ namespace Backend.Controllers
         }
 
         [HttpPost("upload")]
-        public ActionResult<Picture> AddPicture(List<AddPictureDto> pictureDtos)
+        [Consumes("multipart/form-data")]
+        public ActionResult<Picture> AddPicture([FromForm] List<AddPictureDto> pictureDtos)
         {
             if (pictureDtos == null)
-                return BadRequest("Nu a fost selectat niciun fișier.");
+                return BadRequest("No files have been selected.");
+
             var AllowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var savedPictures = new List<Picture>();
+            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
             foreach (var dto in pictureDtos)
             {
-                string name = dto.Name + DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 IFormFile picture = dto.Picture;
                 var extension = Path.GetExtension(picture.FileName).ToLowerInvariant();
+
                 if (!AllowedExtensions.Contains(extension))
                 {
-                    return BadRequest("Extensia nu este acceptata.");
+                    return BadRequest("The file extension is not allowed.");
                 }
+
+                string name = $"{dto.Name}_{timestamp}{extension}";
                 pictureService.SavePicture(picture, name);
-                dataOps.AddPicture(new Picture { Name = name });
+
+                var newPicture = new Picture { Name = name };
+                dataOps.AddPicture(newPicture);
+                savedPictures.Add(newPicture);
             }
-            return Ok();
+            return Ok(savedPictures);
         }
+
         [HttpPost("delete-picture")]
-        public ActionResult<Picture> DeletePicture(List<int> pictureIds)
+        public ActionResult<Picture> DeletePicture([FromBody] List<int> pictureIds)
         {
-            if(pictureIds == null)
+            if (pictureIds == null)
             {
-                return BadRequest("Nu a fost selectat niciun fișier.");
+                return BadRequest("No picture IDs were provided.");
             }
-            foreach(var id in pictureIds)
+
+            foreach (var id in pictureIds)
             {
                 var picture = dataOps.GetPictureById(id);
                 if (picture == null)
                 {
-                    return NotFound($"Nu s-a găsit fișierul cu ID-ul {id}.");
+                    return NotFound($"Could not find picture with ID {id}.");
                 }
-                if(!pictureService.DeletePicture(picture.Name))
+                if (!pictureService.DeletePicture(picture.Name))
                 {
-                    return BadRequest($"Nu s-a putut șterge fișierul cu ID-ul {id}.");
+                    return BadRequest($"Could not delete picture with ID {id}.");
                 }
                 dataOps.DeletePicture(id);
             }
-            return Ok();
+            return Ok(new { Message = "All selected images were successfully deleted.", DeletedIds = pictureIds });
         }
     }
 }
