@@ -134,5 +134,15 @@
         }
       }
     }
+  },
+  "HELP": {
+  "TITLE": "Centro de Ayuda",
+  "INFORMATION": "Encuentra respuestas rápidas, contáctanos por teléfono o chatea con nuestro asistente de IA.",
+  "FAQ": "❓ Preguntas Frecuentes",
+  "SUPPORT": "📞 Asistencia Telefónica Rápida",
+  "PROGRAM": "Lunes - Viernes: 09:00 - 18:00",
+  "FORM": "📝 Abrir un Ticket",
+  "REQUEST": "Enviar solicitud",
+  "ASSISTANT": "Asistente Virtual en Vivo"
   }
 }
