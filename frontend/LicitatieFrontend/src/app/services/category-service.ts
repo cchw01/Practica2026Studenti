@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Category, CategoryCreate } from '../Models/categoryItem';
 
 @Injectable({ providedIn: 'root' })
@@ -10,7 +10,9 @@ export class CategoryService {
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(cats => cats.map(c => ({ Id: c.id, name: c.name } as Category)))
+    );
   }
 
   getCategoryById(id: number): Observable<Category> {

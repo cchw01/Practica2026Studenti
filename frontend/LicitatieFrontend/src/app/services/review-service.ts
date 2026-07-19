@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Review, ReviewCreate } from '../Models/review/review.model';
-import { environment } from '../../environments/environment';
+const environment = {
+  apiUrl: 'https://localhost:7137/api',
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReviewService {
   private baseUrl = `${environment.apiUrl}/Review`;

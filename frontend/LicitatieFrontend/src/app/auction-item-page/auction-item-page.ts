@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
+import { BidService } from '../services/bid-service';
+import { CreateBidDto } from '../Models/bid/bid';
 
 interface TestAuctionItem extends AuctionItem {
 }
@@ -55,7 +57,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   constructor(
     public authService: MockAuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private bidService: BidService
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -95,6 +98,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     const auction = this.navState?.auction;
     if (auction) {
+      if (auction.ID || auction.id) this.auctionItem.ID = auction.ID || auction.id;
       if (auction.title || auction.Name) this.auctionItem.Name = auction.title || auction.Name;
 
       if (auction.currentBid || auction.CurrentPrice) {
@@ -107,8 +111,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const photos = auction.PhotoList || auction.photoList;
       if (photos && photos.length > 0) {
         this.auctionItem.PhotoList = photos;
+      } else if (auction.ImageUrl || auction.imageUrl) {
+        this.auctionItem.PhotoList = [auction.ImageUrl || auction.imageUrl];
       } else if (auction.image) {
         this.auctionItem.PhotoList = [auction.image];
+      } else {
+        this.auctionItem.PhotoList = [];
       }
 
       const desc = auction.description || auction.Description;
@@ -129,6 +137,21 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const end = auction.EndDate || auction.endDate;
       if (end) {
         this.auctionItem.EndDate = new Date(end);
+      }
+
+      const owner = auction.Owner || auction.owner;
+      if (owner) {
+        this.auctionItem.Owner = owner;
+        this.auctionItem.OwnerId = owner.ID || owner.id;
+        if (!this.auctionItem.Owner.Name) {
+          this.auctionItem.Owner.Name = owner.Name || owner.name || owner.UserName || owner.username;
+        }
+      } else if (auction.ownerUserName || auction.OwnerUserName) {
+        this.auctionItem.Owner = new User({
+          ID: auction.ownerId || auction.OwnerId,
+          Name: auction.ownerUserName || auction.OwnerUserName,
+          UserName: auction.ownerUserName || auction.OwnerUserName
+        });
       }
     }
 
@@ -194,8 +217,22 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
 
-    this.auctionItem.CurrentPrice = this.bidAmount;
-    this.bidAmount = this.auctionItem.CurrentPrice + 10;
+    const bidData: CreateBidDto = {
+      auctionItemId: this.auctionItem.ID,
+      price: this.bidAmount
+    };
+
+    this.bidService.addBid(bidData).subscribe({
+      next: (response) => {
+        this.auctionItem.CurrentPrice = response.price;
+        this.bidAmount = this.auctionItem.CurrentPrice + 10;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.errorMessage = typeof err.error === 'string' ? err.error : (err.error?.message || err.message || 'Failed to place bid. Please try again.');
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   redirectToLogin(): void {

@@ -8,9 +8,7 @@ import { BidDto, CreateBidDto } from '../Models/bid/bid';
 })
 export class BidService {
   
- 
-  private readonly apiUrl = 'http://localhost:5153/api/Bid';
-
+  private readonly apiUrl = 'https://localhost:7137/api/Bid';
   constructor(private http: HttpClient) { }
 
   getAllBids(): Observable<BidDto[]> {

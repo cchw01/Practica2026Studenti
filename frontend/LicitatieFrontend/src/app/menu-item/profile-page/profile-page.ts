@@ -179,7 +179,7 @@ export class ProfilePage implements OnInit {
           .filter((r) => r.ReviewedUserId === this.currentUserId)
           .map((r) => ({
             id: r.Id,
-            author: r.Reviewer?.UserName || 'Anonymous',
+            author: r.ReviewerUserName || 'Anonymous',
             rating: r.Rating,
             comment: r.Comment,
             date: r.ReviewDate
@@ -194,7 +194,7 @@ export class ProfilePage implements OnInit {
           this.score = 4.5; // Default fallback score
         }
       },
-      error: (err) => console.error('Error loading reviews:', err),
+      error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
     });
   }
   // --- Persistence ---
