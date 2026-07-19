@@ -5,8 +5,9 @@ using Azure.Core;
     using Backend.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
-    namespace Backend.Controllers
+namespace Backend.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
@@ -92,6 +93,8 @@ using Azure.Core;
 
                 if (user == null)
                     return Unauthorized("Email sau parolă incorectă.");
+                if (user.IsBanned)
+                    return Unauthorized("Contul tău a fost suspendat.");
 
                 bool parolaCorecta = PasswordHasher.VerifyPassword(request.Password, user.Password);
 
@@ -182,7 +185,7 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {

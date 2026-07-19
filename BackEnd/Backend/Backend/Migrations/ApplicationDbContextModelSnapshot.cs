@@ -49,6 +49,7 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("CurrentPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -75,6 +76,7 @@ namespace Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("StartPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
@@ -112,6 +114,7 @@ namespace Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("id");
@@ -298,6 +301,9 @@ namespace Backend.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

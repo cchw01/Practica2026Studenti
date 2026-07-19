@@ -1,6 +1,7 @@
 ﻿using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 namespace Backend.Controllers
 {
     [ApiController]
@@ -80,6 +81,7 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public ActionResult DeleteForumComment(int id)
         {
