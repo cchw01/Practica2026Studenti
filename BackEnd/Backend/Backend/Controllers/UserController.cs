@@ -37,7 +37,7 @@ using Azure.Core;
                         Email = u.Email,
                         Role = u.Role,
                         Rating = u.Rating,
-                        Password = u.Password
+                        PhoneNumber = u.PhoneNumber
                     }).ToArray();
                     return Ok(userDtos);
                 }
@@ -65,7 +65,7 @@ using Azure.Core;
                         Email = user.Email,
                         Role = user.Role,
                         Rating = user.Rating,
-                        Password = user.Password
+                        PhoneNumber = user.PhoneNumber
                     };
 
                     return Ok(userDto);
@@ -221,7 +221,7 @@ using Azure.Core;
                     Email = user.Email,
                     Role = user.Role,
                     Rating = user.Rating,
-                    Password = user.Password
+                    PhoneNumber=user.PhoneNumber
                 };
 
                 return Ok(userRead);

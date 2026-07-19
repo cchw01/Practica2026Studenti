@@ -11,7 +11,7 @@ namespace Backend.DTOs
         public string Email { get; set; } 
         public RoleEnum Role { get; set; }
         public float Rating { get; set; }
-        public string? Password { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 
     public class UserUpdateDto

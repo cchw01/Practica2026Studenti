@@ -79,8 +79,18 @@ namespace Backend.Controllers
                     id = dto.Id,
                     name = dto.Name
                 };
-                dataOps.UpdateCategory(category);
-                return Ok();
+
+
+                if (dataOps.UpdateCategory(category))
+                {
+                    return Ok();
+
+                }
+                else
+                {
+                    return NotFound();
+
+                }
             }
             catch (Exception ex)
             {
@@ -93,8 +103,17 @@ namespace Backend.Controllers
         {
             try
             {
-                dataOps.DeleteCategory(id);
-                return Ok();
+
+                if (dataOps.DeleteCategory(id))
+                {
+                    return Ok();
+
+                }
+                else
+                {
+                    return NotFound();
+
+                }
             }
             catch (Exception ex)
             {
