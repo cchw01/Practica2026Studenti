@@ -5,6 +5,21 @@
     <div class="register-container">
       <h2>Login</h2>
 
+      @if (errorMessage) {
+        <div
+          style="
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ffeeee;
+            border-radius: 5px;
+          "
+        >
+          {{ errorMessage }}
+        </div>
+      }
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field appearance="outline">
@@ -49,14 +64,11 @@
         </button>
 
         <div class="login-link">
-  <span>Don't have an account?</span>
-  <button
-    type="button"
-    class="btn-register"
-    routerLink="/register-page">
-    Register here
-  </button>
-</div>
+          <span>Don't have an account?</span>
+          <button type="button" class="btn-register" routerLink="/register-page">
+            Register here
+          </button>
+        </div>
       </form>
     </div>
   </div>

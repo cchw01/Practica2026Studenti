@@ -60,6 +60,9 @@ using Azure.Core;
         {
             try
             {
+                if (dataOps.EmailExists(request.Email))
+                    return BadRequest(new { message = "Acest email este deja înregistrat. Vă recomandăm să vă logați." });
+
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
                     return BadRequest("Acest username este deja folosit.");
