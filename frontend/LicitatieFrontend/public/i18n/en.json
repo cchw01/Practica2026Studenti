@@ -375,6 +375,10 @@
  "SHARE": {
   "BUTTON": "Share",
   "COPIED": "Copied!"
+},
+ "USER_MENU": {
+  "PROFILE": "Profile",
+  "LOGOUT": "Log out"
 }
 
 }

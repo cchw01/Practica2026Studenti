@@ -372,5 +372,10 @@
 "SHARE": {
   "BUTTON": "Distribuie",
   "COPIED": "Copiat!"
+},
+
+"USER_MENU": {
+  "PROFILE": "Profil",
+  "LOGOUT": "Deconectare"
 }
 }
