@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -26,7 +27,8 @@ export class AuctionsPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+    private translate: TranslateService,
+  ) { }
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
@@ -41,7 +43,7 @@ export class AuctionsPage implements OnInit {
         this.applyFiltersAndSort();
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err)
+      error: (err) => console.error('Eroare la încărcarea item-urilor', err),
     });
   }
 
@@ -49,12 +51,12 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter(i => i.Category?.name === this.selectedCategory);
+      result = result.filter((i) => i.Category?.name === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter(i => i.Name.toLowerCase().includes(search));
+      result = result.filter((i) => i.Name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
@@ -80,11 +82,11 @@ export class AuctionsPage implements OnInit {
 
   getRemainingTime(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return 'Auction ended';
+    if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
+    const left = this.translate.instant('AUCTIONS_PAGE.TIME.LEFT');
     if (days > 0) return `${days}d ${hours}h left`;
     return `${hours}h left`;
   }
