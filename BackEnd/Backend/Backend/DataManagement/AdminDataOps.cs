@@ -37,8 +37,12 @@ namespace Backend.DataManagement
             var item = DbContext.AuctionItems.Find(itemId);
             if (item == null) throw new Exception("Item not found");
 
+            bool statusChanged = item.Status != status;
+
             item.Status = status;
             DbContext.SaveChanges();
+
+            if (!statusChanged) return; 
 
             var notifOps = new NotificationDataOps(DbContext);
 

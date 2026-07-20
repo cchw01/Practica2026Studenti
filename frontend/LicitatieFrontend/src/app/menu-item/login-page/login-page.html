@@ -5,6 +5,10 @@
     <div class="register-container">
       <h2>Login</h2>
 
+      <div *ngIf="errorMessage" class="login-error">
+        {{ errorMessage }}
+      </div>
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field appearance="outline">
@@ -49,14 +53,14 @@
         </button>
 
         <div class="login-link">
-  <span>Don't have an account?</span>
-  <button
-    type="button"
-    class="btn-register"
-    routerLink="/register-page">
-    Register here
-  </button>
-</div>
+          <span>Don't have an account?</span>
+          <button
+            type="button"
+            class="btn-register"
+            routerLink="/register-page">
+            Register here
+          </button>
+        </div>
       </form>
     </div>
   </div>

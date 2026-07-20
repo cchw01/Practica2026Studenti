@@ -45,10 +45,19 @@ export class AdminPage implements OnInit {
   }
 
   toggleBan(user: any): void {
-    const action = user.isBanned
+    const wasBanned = user.isBanned;
+    user.isBanned = !wasBanned; // actualizare instanta, vizual
+
+    const action = wasBanned
       ? this.adminService.unbanUser(user.id)
       : this.adminService.banUser(user.id);
-    action.subscribe(() => this.loadUsers());
+
+    action.subscribe({
+      error: () => {
+        user.isBanned = wasBanned; // daca a esuat, revino la starea reala
+        this.loadUsers();
+      },
+    });
   }
 
   removeUser(userId: number): void {
@@ -64,11 +73,17 @@ export class AdminPage implements OnInit {
   }
 
   validate(id: number): void {
-    this.adminService.validateAuction(id).subscribe(() => this.loadPendingAuctions());
+    this.pendingAuctions = this.pendingAuctions.filter((a) => a.id !== id); // dispare instant
+    this.adminService.validateAuction(id).subscribe({
+      error: () => this.loadPendingAuctions(), // daca a esuat, reincarca lista reala
+    });
   }
 
   reject(id: number): void {
-    this.adminService.rejectAuction(id).subscribe(() => this.loadPendingAuctions());
+    this.pendingAuctions = this.pendingAuctions.filter((a) => a.id !== id);
+    this.adminService.rejectAuction(id).subscribe({
+      error: () => this.loadPendingAuctions(),
+    });
   }
 
   removeAuction(id: number): void {
