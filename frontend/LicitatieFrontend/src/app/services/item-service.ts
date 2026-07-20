@@ -48,8 +48,6 @@ export class ItemService {
   private readonly apiUrl = 'https://localhost:7137/api/AuctionItem';
   private readonly storageKey = 'auctionItems';
 
-  private readonly storageKey = 'auction_items_cache';
-
   private mapResponse(item: any): AuctionItem {
     return {
       ID: item.id,
