@@ -23,4 +23,5 @@ export interface AuctionItem {
   BidList: Array<BidDto>;
   PhotoList?: string[];
   ImageUrl?: string;
+  isFavorite?: boolean;
 }

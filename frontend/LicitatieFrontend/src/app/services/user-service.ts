@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserReadDto } from '../Models/user/userDto';
 import { AuctionItem } from '../Models/item-model';
+import { AuctionItemSummaryDto } from '../Models/profile/profile-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +34,8 @@ export class UserService {
     return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
   }
 
-  getWishlist(userId: number): Observable<AuctionItem[]> {
-    return this.http.get<AuctionItem[]>(`${this.apiUrl}/${userId}/wishlist`);
+  getWishlist(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`${this.apiUrl}/${userId}/wishlist`);
   }
 
   removeFromWishlist(userId: number, itemId: number): Observable<void> {

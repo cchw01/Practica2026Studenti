@@ -5,6 +5,8 @@ import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
+import { UserService } from '../services/user-service';
+import { AuthService } from '../services/auth';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -33,7 +35,11 @@ export class AuctionsPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private categoryService: CategoryService,
+    private userService: UserService,
+    private authService: AuthService
   ) {}
+
+  currentUserId: number = 3; // hardcoded like in profile-page
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -44,6 +50,11 @@ export class AuctionsPage implements OnInit {
         }
       }
     });
+
+    const authUserId = this.authService.getCurrentUserId();
+    if (authUserId !== null) {
+      this.currentUserId = authUserId;
+    }
 
     this.loadActiveAuctions();
 
@@ -70,6 +81,21 @@ export class AuctionsPage implements OnInit {
         this.applyFiltersAndSort();
         this.isLoading = false;
         this.cdr.detectChanges();
+        
+        // Fetch wishlist
+        this.userService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            const wishlistIds = wishlistItems.map(w => w.id || w.ID);
+            console.log("AUCTIONS PAGE WISHLIST:", wishlistItems, "IDS:", wishlistIds);
+            this.allItems.forEach(item => {
+              item.isFavorite = wishlistIds.includes(item.ID);
+              if (item.isFavorite) console.log("Marked as favorite:", item.Name);
+            });
+            this.applyFiltersAndSort();
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Error loading wishlist in auctions page', err)
+        });
       },
       error: (err) => {
         console.error('Eroare la încărcarea licitațiilor active', err);
@@ -113,7 +139,36 @@ export class AuctionsPage implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  getRemainingTime(endDate: Date): string {
+  toggleFavorite(item: any, event: Event): void {
+    event.stopPropagation();
+    
+    // Update instantly (optimistic update)
+    const originalState = item.isFavorite;
+    item.isFavorite = !originalState;
+    this.cdr.detectChanges();
+    
+    if (originalState) {
+      this.userService.removeFromWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => { /* Server confirmed */ },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error removing from wishlist', err);
+        }
+      });
+    } else {
+      this.userService.addToWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => { /* Server confirmed */ },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error adding to wishlist', err);
+        }
+      });
+    }
+  }
+
+  getRemainingTime(endDate: string | Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
     if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
 

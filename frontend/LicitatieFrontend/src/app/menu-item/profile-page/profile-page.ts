@@ -1,4 +1,4 @@
-import { Component, OnInit, Service } from '@angular/core';
+import { Component, OnInit, Service, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
@@ -12,6 +12,7 @@ interface Item {
   title: string;
   price: number;
   status: string;
+  image?: string;
 }
 
 interface Review {
@@ -86,11 +87,12 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private UserService: UserService, 
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private categoryService: CategoryService,
     private router: Router,
+    private UserService: UserService,
+    private categoryService: CategoryService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +144,7 @@ export class ProfilePage implements OnInit {
             title: item.name,
             price: item.currentPrice || item.startPrice,
             status: item.status ? item.status.toString() : 'Added',
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
           }));
 
         // Filter won items
@@ -152,26 +155,27 @@ export class ProfilePage implements OnInit {
             title: item.name,
             price: item.currentPrice,
             status: 'Won',
-          }));
-
-        // Filter wish list items (items where current user is in WishingUsers)
-        this.wishItems = items
-          .filter((item: any) =>
-            Array.isArray(item.wishingUsers) &&
-            item.wishingUsers.some(
-              (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId
-            )
-          )
-          .map((item: any) => ({
-            id: item.id || item.ID || 0,
-            title: item.name || item.Name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status ? item.status.toString() : 'Active',
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
           }));
       },
       error: (err) => console.error('Error loading items:', err),
     });
 
+    // Load wish list items
+    this.UserService.getWishlist(this.currentUserId).subscribe({
+      next: (wishlistItems: any[]) => {
+        console.log('WISHLIST ITEMS FROM BACKEND:', wishlistItems);
+        this.wishItems = wishlistItems.map((item: any) => ({
+          id: item.id || item.ID || 0,
+          title: item.name || item.Name || item.title,
+          price: item.currentPrice || item.startPrice || item.price,
+          status: item.status ? item.status.toString() : 'Active',
+          image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
+        }));
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error loading wishlist:', err),
+    });
     // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
@@ -197,6 +201,17 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
     });
   }
+
+  removeFromWishlist(itemId: number): void {
+    this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
+      next: () => {
+        this.wishItems = this.wishItems.filter(i => i.id !== itemId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error removing from wishlist', err)
+    });
+  }
+
   // --- Persistence ---
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);

@@ -74,12 +74,13 @@
           <h2 class="section-title"><span class="section-icon"></span> My Active Sales</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
             <div class="item-card" *ngFor="let item of addedItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
-              </div>
-              <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
             </div>
+            <span class="item-badge badge-added">{{ item.status }}</span>
+          </div>
           </div>
           <p class="empty-state" *ngIf="addedItems.length === 0">No items listed yet.</p>
         </div>
@@ -89,12 +90,13 @@
           <h2 class="section-title"><span class="section-icon"></span> Items Won</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
             <div class="item-card" *ngFor="let item of bidItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
-              </div>
-              <span class="item-badge badge-won">{{ item.status }}</span>
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
             </div>
+            <span class="item-badge badge-won">{{ item.status }}</span>
+          </div>
           </div>
           <p class="empty-state" *ngIf="bidItems.length === 0">No items won yet.</p>
         </div>
@@ -105,11 +107,13 @@
         <h2 class="section-title"><span class="section-icon"></span> My Wish List</h2>
         <div class="items-list" *ngIf="wishItems.length > 0">
           <div class="item-card" *ngFor="let item of wishItems">
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
             <span class="item-badge badge-wish">{{ item.status }}</span>
+            <button class="btn-remove-wish" (click)="removeFromWishlist(item.id)" title="Remove from Wishlist">✕</button>
           </div>
         </div>
         <p class="empty-state" *ngIf="wishItems.length === 0">No items in your wish list yet.</p>

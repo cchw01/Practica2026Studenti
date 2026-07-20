@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-// AJUSTARE: Modifică calea string ('../Services/auth.service') și numele clasei (AuthService) conform folderului creat de colegi
-//import { AuthService } from '../Services/auth.service';
+import { AuthService } from '../services/auth';
+import { UserService } from '../services/user-service';
 import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
@@ -9,19 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BidService } from '../services/bid-service';
 import { CreateBidDto } from '../Models/bid/bid';
 
-interface TestAuctionItem extends AuctionItem {
-}
-
-class MockAuthService {
-  isLoggedIn(): boolean {
-    return true;
-    return true;
-  }
-  getCurrentUser(): string {
-    return 'Alex Popescu';
-    return 'Alex Popescu';
-  }
-}
+interface TestAuctionItem extends AuctionItem {}
 
 const mockCategory = new Category({ Id: 1, name: 'Electronics' });
 
@@ -43,9 +31,9 @@ const mockOwner = new User({
   standalone: false,
   templateUrl: './auction-item-page.html',
   styleUrl: './auction-item-page.scss',
-  providers: [MockAuthService],
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
+  currentUserId: number = 0;
   private navState: any;
   selectedImageIndex = 0;
   peekOffset = 0;
@@ -55,11 +43,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   private timerInterval: any;
 
   constructor(
-    public authService: MockAuthService,
+    public authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private bidService: BidService
+    private bidService: BidService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -144,21 +133,28 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         this.auctionItem.Owner = owner;
         this.auctionItem.OwnerId = owner.ID || owner.id;
         if (!this.auctionItem.Owner.Name) {
-          this.auctionItem.Owner.Name = owner.Name || owner.name || owner.UserName || owner.username;
+          this.auctionItem.Owner.Name =
+            owner.Name || owner.name || owner.UserName || owner.username;
         }
       } else if (auction.ownerUserName || auction.OwnerUserName) {
         this.auctionItem.Owner = new User({
           ID: auction.ownerId || auction.OwnerId,
           Name: auction.ownerUserName || auction.OwnerUserName,
-          UserName: auction.ownerUserName || auction.OwnerUserName
+          UserName: auction.ownerUserName || auction.OwnerUserName,
         });
       }
     }
 
     this.startCountdown();
 
-    const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    this.isInWishlist = wishlist.includes(this.auctionItem.ID);
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.currentUserId = +currentUser.id || 3;
+      this.userService.getWishlist(this.currentUserId).subscribe((wishlist) => {
+        const itemId = (this.auctionItem as any).id || this.auctionItem.ID;
+        this.isInWishlist = wishlist.some((i) => i.id === itemId);
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -222,7 +218,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     const bidData: CreateBidDto = {
       auctionItemId: this.auctionItem.ID,
-      price: this.bidAmount
+      price: this.bidAmount,
     };
 
     this.bidService.addBid(bidData).subscribe({
@@ -232,9 +228,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.errorMessage = typeof err.error === 'string' ? err.error : (err.error?.message || err.message || 'Failed to place bid. Please try again.');
+        this.errorMessage =
+          typeof err.error === 'string'
+            ? err.error
+            : err.error?.message || err.message || 'Failed to place bid. Please try again.';
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -244,16 +243,37 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   toggleWishlist(): void {
-    this.isInWishlist = !this.isInWishlist;
-    let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    if (this.isInWishlist) {
-      if (!wishlist.includes(this.auctionItem.ID)) {
-        wishlist.push(this.auctionItem.ID);
-      }
-    } else {
-      wishlist = wishlist.filter((id) => id !== this.auctionItem.ID);
+    if (!this.currentUserId) {
+      this.redirectToLogin();
+      return;
     }
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+    const itemId = (this.auctionItem as any).id || this.auctionItem.ID;
+    
+    // Update instantly (optimistic update)
+    const originalState = this.isInWishlist;
+    this.isInWishlist = !originalState;
+    this.cdr.detectChanges();
+
+    if (originalState) {
+      this.userService.removeFromWishlist(this.currentUserId, itemId).subscribe({
+        next: () => { /* Server confirmed */ },
+        error: (err) => {
+          this.isInWishlist = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error removing from wishlist', err);
+        },
+      });
+    } else {
+      this.userService.addToWishlist(this.currentUserId, itemId).subscribe({
+        next: () => { /* Server confirmed */ },
+        error: (err) => {
+          this.isInWishlist = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error adding to wishlist', err);
+        },
+      });
+    }
   }
 
   prevImage(event: Event): void {
