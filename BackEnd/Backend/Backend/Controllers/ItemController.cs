@@ -34,7 +34,6 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         [HttpPost]
         public ActionResult<AuctionItem> AddAuctionItem(AuctionItem item)
         {

@@ -4,7 +4,7 @@ import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../app-logic/review';
-
+import { PictureService, LocalPicture } from '../../services/picture-service'
 interface Item {
   id: number;
   title: string;
@@ -86,6 +86,7 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
+    private pictureService: PictureService,
     private router: Router,
   ) {}
 
@@ -232,16 +233,29 @@ export class ProfilePage implements OnInit {
   }
 
   // --- Avatar upload ---
-  onAvatarSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
-    const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.editDraft.avatarUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+    onAvatarSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (!input.files || input.files.length === 0) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.editDraft.avatarUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+      const picture : LocalPicture[] = [
+      {
+        name: file.name,
+        file: file,
+      }];
+      this.pictureService.addPictures(picture).subscribe({
+      next: (res) => {
+           console.log('Upload reușit!', res);
+      },
+      error: (err) => {
+          console.error('Eroare la upload:', err);
   }
+});
+    }
 
   // --- Change Password ---
   onChangePassword(): void {

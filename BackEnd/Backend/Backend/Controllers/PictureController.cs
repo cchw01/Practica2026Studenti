@@ -23,7 +23,7 @@ namespace Backend.Controllers
 
         [HttpPost("upload")]
         [Consumes("multipart/form-data")]
-        public ActionResult<Picture> AddPicture([FromForm] List<AddPictureDto> pictureDtos)
+        public async Task<IActionResult> AddPicture([FromForm] List<AddPictureDto> pictureDtos)
         {
             if (pictureDtos == null)
                 return BadRequest("No files have been selected.");

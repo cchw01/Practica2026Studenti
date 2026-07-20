@@ -1,33 +1,59 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.IO;
+using System.Threading.Tasks;
 
 public class PictureService
 {
     private readonly IWebHostEnvironment _env;
+
     public PictureService(IWebHostEnvironment env)
     {
         _env = env;
     }
-    public async void SavePicture(IFormFile picture, string name)
+
+    public async Task<string> SavePicture(IFormFile picture, string fileName)
     {
-        string picturesPath = Path.Combine(_env.WebRootPath, "Pictures", name);
-        if (!Directory.Exists(picturesPath))
+        if (picture == null || picture.Length == 0)
         {
-            Directory.CreateDirectory(picturesPath);
+            throw new ArgumentException("Fișierul încărcat este gol sau nevalid.");
         }
-        using (var stream = new FileStream(picturesPath, FileMode.Create))
+
+        
+        string webRoot = _env.WebRootPath
+                         ?? Path.Combine(_env.ContentRootPath, "wwwroot");
+        
+        string folderPath = Path.Combine(webRoot, "Pictures");
+        
+        if (!Directory.Exists(folderPath))
         {
-            await  picture.CopyToAsync(stream);
+            Directory.CreateDirectory(folderPath);
         }
+
+        string filePath = Path.Combine(folderPath, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await picture.CopyToAsync(stream);
+        }
+
+        return fileName;
     }
-    public bool DeletePicture(string name)
+
+    public bool DeletePicture(string fileName)
     {
-        string fullPath = Path.Combine(_env.WebRootPath, "Pictures", name);
+        string webRoot = _env.WebRootPath
+                         ?? Path.Combine(_env.ContentRootPath, "wwwroot");
+
+        string fullPath = Path.Combine(webRoot, "Pictures", fileName);
+
         if (File.Exists(fullPath))
         {
             File.Delete(fullPath);
             return true;
         }
-        else return false;
+
+        return false;
     }
 }

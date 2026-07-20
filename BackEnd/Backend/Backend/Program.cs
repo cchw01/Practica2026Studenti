@@ -33,6 +33,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
+builder.Services.AddScoped<PictureDataOps>();
+builder.Services.AddScoped<PictureService>();
 
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
