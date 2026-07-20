@@ -5,7 +5,7 @@ import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
-import { Category } from '../Models/categoryItem';
+import { Category } from '../Models/user/categoryItem';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -45,8 +45,10 @@ export class AuctionsPage implements OnInit {
 
     this.itemService.getItems().subscribe({
       next: (items) => {
-        this.allItems = items;
-        this.categories = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
+        this.allItems = items.filter((i) => i.Status !== 'Added' && i.Status !== 'Rejected');
+        this.categories = [
+          ...new Set(this.allItems.filter((i) => i.Category?.name).map((i) => i.Category.name)),
+        ];
         this.applyFiltersAndSort();
         this.cdr.detectChanges();
       },

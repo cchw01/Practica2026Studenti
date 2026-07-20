@@ -51,4 +51,20 @@ export class AdminService {
   deleteAuction(id: number): Observable<any> {
     return this.http.delete(`${this.itemUrl}/${id}`);
   }
+
+  private forumPostUrl = 'https://localhost:7137/api/ForumPost';
+private forumCommentUrl = 'https://localhost:7137/api/ForumComment';
+
+getForumPosts(): Observable<any[]> {
+  return this.http.get<any[]>(this.forumPostUrl);
+}
+deleteForumPost(id: number): Observable<any> {
+  return this.http.delete(`${this.forumPostUrl}/${id}`);
+}
+getForumComments(): Observable<any[]> {
+  return this.http.get<any[]>(this.forumCommentUrl);
+}
+deleteForumComment(id: number): Observable<any> {
+  return this.http.delete(`${this.forumCommentUrl}/${id}`);
+}
 }

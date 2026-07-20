@@ -5,6 +5,7 @@
     <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">Statistici</button>
     <button (click)="setTab('users')" [class.active]="activeTab === 'users'">Useri</button>
     <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">Licitații de validat</button>
+    <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">Forum</button>
   </div>
 
   <div *ngIf="activeTab === 'stats' && stats" class="stats-grid">
@@ -57,4 +58,25 @@
     </div>
     <p *ngIf="pendingAuctions.length === 0">Nimic de validat momentan.</p>
   </div>
+
+  <div *ngIf="activeTab === 'forum'" class="forum-moderation">
+  <h3>Postări</h3>
+  <div class="pending-list">
+    <div *ngFor="let post of forumPosts" class="pending-card">
+      <h4>{{ post.title }}</h4>
+      <p>{{ post.userName }} — {{ post.commentsCount }} comentarii</p>
+      <button (click)="removePost(post.id)" class="danger">Șterge postarea</button>
+    </div>
+    <p *ngIf="forumPosts.length === 0">Nicio postare.</p>
+  </div>
+
+  <h3>Comentarii</h3>
+  <div class="pending-list">
+    <div *ngFor="let comment of forumComments" class="pending-card">
+      <p><strong>{{ comment.userName }}:</strong> {{ comment.commentText }}</p>
+      <button (click)="removeComment(comment.id)" class="danger">Șterge comentariul</button>
+    </div>
+    <p *ngIf="forumComments.length === 0">Niciun comentariu.</p>
+  </div>
+</div>
 </div>
