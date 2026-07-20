@@ -46,7 +46,7 @@ interface AuctionItemResponseDto {
 })
 export class ItemService {
   private readonly apiUrl = 'https://localhost:7137/api/AuctionItem';
-  private readonly storageKey = 'auctionItems';
+
 
   private readonly storageKey = 'auction_items_cache';
 
@@ -70,15 +70,21 @@ export class ItemService {
       EndDate: new Date(item.endDate),
       BidList: item.bidList || [],
       PhotoList: item.photoList || [],
-      ImageUrl: item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : 'https://localhost:7137' + item.imageUrl) : undefined
+      ImageUrl: item.imageUrl ? (item.imageUrl.startsWith('http') || item.imageUrl.startsWith('data:') ? item.imageUrl : (item.imageUrl.startsWith('/') ? 'https://localhost:7137' + item.imageUrl : 'https://localhost:7137/' + item.imageUrl)) : undefined
     } as unknown as AuctionItem;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getItems(): Observable<AuctionItem[]> {
     return this.http
       .get<AuctionItemResponseDto[]>(this.apiUrl)
+      .pipe(map((items) => items.map((item) => this.mapResponse(item))));
+  }
+
+  getActiveItems(): Observable<AuctionItem[]> {
+    return this.http
+      .get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`)
       .pipe(map((items) => items.map((item) => this.mapResponse(item))));
   }
 
