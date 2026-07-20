@@ -134,5 +134,126 @@
         }
       }
     }
+  },
+
+  "HELP": {
+    "TITLE": "Help Center",
+    "INFORMATION": "Find quick answers, reach us by phone, or chat with our AI assistant.",
+    "FAQ":"❓ Frequently Asked Questions",
+    "SUPPORT":"📞 Quick Phone Support",
+    "PROGRAM":"Monday - Friday: 09:00 - 18:00",
+    "FORM":"📝 Open a Ticket",
+    "REQUEST":"Send Request",
+    "ASSISTANT":"Live Virtual Assistant"
   }
-}
+,
+"AUCTIONS_PAGE": {
+  "TITLE": "Active Auctions",
+  "DESCRIPTION": "Discover unique items and bid in real time",
+
+  "SEARCH_PLACEHOLDER": "Search by name...",
+
+  "ALL_CATEGORIES": "All categories",
+
+  "SORT": {
+    "ENDING_SOON": "Ending soon",
+    "PRICE_LOW_HIGH": "Price: low to high",
+    "PRICE_HIGH_LOW": "Price: high to low",
+    "NEWEST": "Newest"
+  },
+
+  "ADD_ITEM": "Add Item",
+
+  "RESULT": {
+    "ONE": "auction found",
+    "MANY": "auctions found"
+  },
+
+  "CURRENT_PRICE": "Current price",
+
+  "EMPTY": {
+    "TITLE": "No items found",
+    "DESCRIPTION": "There are currently no active auctions matching your search."
+  },
+
+  "TIME": {
+    "ENDED": "Auction ended",
+    "LEFT": "left"
+  }
+
+},
+"ADD_ITEM_PAGE": {
+  "BADGE": "🔨 Sell on BidSphere",
+  "TITLE": "Add New Auction Item",
+  "DESCRIPTION": "Fill in the details below to publish your item for auction.",
+
+  "FIELDS": {
+    "NAME": "Item name *",
+    "NAME_PLACEHOLDER": "e.g. Vintage bicycle",
+
+    "START_PRICE": "Starting price (RON) *",
+
+    "DURATION": "Auction duration (days) *",
+
+    "CATEGORY": "Category *",
+    "CATEGORY_PLACEHOLDER": "Select a category",
+
+    "LOCATION": "Location *",
+    "LOCATION_PLACEHOLDER": "e.g. Brașov",
+
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the item's condition, history and details..."
+  },
+
+  "IMAGE": {
+    "TITLE": "Item photo",
+    "UPLOAD": "Click to upload an image",
+    "DETAILS": "JPG, PNG or WEBP, max 5 MB",
+    "REMOVE": "Remove"
+  },
+
+  "BUTTONS": {
+    "CANCEL": "Cancel",
+    "PUBLISH": "Publish Item",
+    "PUBLISHING": "Publishing..."
+  },
+
+  "VALIDATION": {
+    "NAME_REQUIRED": "Name is required.",
+    "NAME_MIN": "Name must be at least 3 characters.",
+
+    "PRICE_REQUIRED": "Starting price is required.",
+    "PRICE_MIN": "Price must be greater than 0.",
+
+    "DURATION": "Duration must be between 1 and 30 days.",
+
+    "CATEGORY": "Please select a category.",
+
+    "LOCATION": "Location is required.",
+
+    "IMAGE_TYPE": "Only JPG, PNG or WEBP images are allowed.",
+    "IMAGE_SIZE": "Image must be smaller than 5 MB."
+  },
+
+  "MESSAGES": {
+    "SUCCESS": "Item successfully published for auction!",
+    "SUCCESS_LOCAL": "Item successfully published for auction (saved locally - backend not ready)."
+  }
+}, "FOOTER": {
+  "ABOUT_TITLE": "About us",
+  "ABOUT_TEXT_1": "BidSphere is a modern online auction platform designed to make buying and selling through bidding simple, secure, and exciting.",
+  "ABOUT_TEXT_2": "We connect thousands of buyers and sellers across a wide range of categories, offering a transparent and fair bidding process for everyone. Whether you're looking for a great deal or hoping to sell to the right buyer, BidSphere gives you the tools and trust you need to bid with confidence.",
+
+  "LINKS": "Links",
+  "HOME": "Home",
+  "SERVICES": "Auctions",
+  "CONTACT": "Contact",
+  "HELP": "Help",
+  "FORUM": "Forum",
+
+  "CONTACT_TITLE": "Contact",
+
+  "SOCIAL": "Social media",
+
+  "COPYRIGHT": "All rights reserved."
+}}
