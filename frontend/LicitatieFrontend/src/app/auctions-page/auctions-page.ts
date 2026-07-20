@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
@@ -22,10 +23,16 @@ export class AuctionsPage implements OnInit {
 
   constructor(
     private itemService: ItemService,
-    private router: Router
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
+    if (searchFromUrl) {
+      this.searchText = searchFromUrl;
+    }
+
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
