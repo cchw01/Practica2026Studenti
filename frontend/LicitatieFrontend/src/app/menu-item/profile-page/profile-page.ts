@@ -35,7 +35,7 @@ const STORAGE_KEY = 'profile_user';
   selector: 'app-profile-page',
   standalone: false,
   templateUrl: './profile-page.html',
-  styleUrl: './profile-page.css',
+  styleUrl: './profile-page.scss',
 })
 export class ProfilePage implements OnInit {
   // --- Edit mode ---
