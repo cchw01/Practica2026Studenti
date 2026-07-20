@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
 import { Category } from '../Models/categoryItem';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -25,16 +25,15 @@ export class AuctionsPage implements OnInit {
   sortBy: SortOption = 'endingSoon';
 
   constructor(
-    
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
-    private categoryService: CategoryService,
     private translate: TranslateService,
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params['category']) {
         this.selectedCategory = params['category'];
         if (this.allItems.length > 0) {
@@ -46,6 +45,7 @@ export class AuctionsPage implements OnInit {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
+        this.categories = [...new Set(items.map((i) => i.Category.name))];
         this.applyFiltersAndSort();
       },
       error: (err) => console.error('Eroare la încărcarea item-urilor', err),
