@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
+import { ItemService } from '../services/item-service';
 
 export interface Category {
   name: string;
@@ -21,11 +22,16 @@ export interface Category {
 }
 
 export interface Auction {
+  id?: number;
   title: string;
   currentBid: number;
   image: string;
   description: string;
   PhotoList?: string[];
+  Category?: any;
+  Location?: string;
+  StartDate?: any;
+  EndDate?: any;
 }
 
 interface Particle {
@@ -78,6 +84,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private hostRef: ElementRef<HTMLElement>,
     private router: Router,
     private readonly translate: TranslateService,
+    private itemService: ItemService,
   ) {}
 
   categories: Category[] = [
@@ -105,47 +112,48 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   auctions: Auction[] = [
     {
-      title: 'BMW',
-      currentBid: 100,
-      image: 'assets/images/car.png',
-      description: 'BMW 7 Series, 2022, pristine condition, single owner.',
+      id: 1,
+      title: 'Vintage Leather Jacket',
+      currentBid: 180,
+      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
+      description: 'An authentic vintage leather jacket in excellent condition.',
       PhotoList: [
-        'assets/images/car.png',
+        'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 2,
+      title: 'Antique Pocket Watch 1920s',
+      currentBid: 550,
+      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
+      description: 'A handcrafted antique pocket watch from the 1920s in working condition.',
+      PhotoList: [
+        'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 3,
+      title: 'BMW 3 Series 2021 M-Sport',
+      currentBid: 16200,
+      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
+      description: 'Full service history, accident-free, luxury interior package.',
+      PhotoList: [
+        'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
       ]
     },
     {
-      title: 'Gold Earrings',
-      currentBid: 200,
-      image: 'assets/images/cercei.jpeg',
-      description: '18k gold earrings with certified diamonds.',
+      id: 4,
+      title: 'Apple iPhone 15 Pro Max',
+      currentBid: 950,
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
+      description: 'Brand new sealed box in Natural Titanium.',
       PhotoList: [
-        'assets/images/cercei.jpeg',
-        'https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop'
-      ]
-    },
-    {
-      title: 'Watch Patek Philippe',
-      currentBid: 300,
-      image: 'assets/images/ceas.jpeg',
-      description: 'Limited edition collector watch, box and certificate included.',
-      PhotoList: [
-        'assets/images/ceas.jpeg',
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&auto=format&fit=crop'
-      ]
-    },
-    {
-      title: 'Villa',
-      currentBid: 400,
-      image: 'assets/images/vila.jpeg',
-      description: 'Luxury villa with pool, 5 bedrooms, panoramic view.',
-      PhotoList: [
-        'assets/images/vila.jpeg',
-        'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop'
       ]
     },
   ];
@@ -166,14 +174,44 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   placeBid(auction: Auction) {
-    this.router.navigate(['/action-item-page'], { state: { auction } });
+    if (auction.id) {
+      this.router.navigate(['/action-item-page', auction.id], { state: { auction } });
+    } else {
+      this.router.navigate(['/action-item-page'], { state: { auction } });
+    }
   }
 
   goToAuction(auction: Auction) {
-    this.router.navigate(['/action-item-page'], { state: { auction } });
+    if (auction.id) {
+      this.router.navigate(['/action-item-page', auction.id], { state: { auction } });
+    } else {
+      this.router.navigate(['/action-item-page'], { state: { auction } });
+    }
   }
 
   ngOnInit(): void {
+    this.itemService.getItems().subscribe({
+      next: (items: any[]) => {
+        if (items && items.length > 0) {
+          this.auctions = items.slice(0, 4).map((item: any) => ({
+            id: item.ID,
+            title: item.Name,
+            currentBid: item.CurrentPrice,
+            image: item.ImageUrl
+              ? (item.ImageUrl.startsWith('http') ? item.ImageUrl : `https://localhost:7137${item.ImageUrl}`)
+              : (item.PhotoList && item.PhotoList[0] ? item.PhotoList[0] : 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'),
+            description: item.Description || '',
+            PhotoList: item.PhotoList || (item.ImageUrl ? [item.ImageUrl] : []),
+            Category: item.Category,
+            Location: item.Location,
+            StartDate: item.StartDate,
+            EndDate: item.EndDate,
+          }));
+        }
+      },
+      error: (err: any) => console.error('Could not load live homepage items', err),
+    });
+
     this.translate
       .stream('HOME.HERO.TITLE')
       .pipe(takeUntilDestroyed(this.destroyRef))

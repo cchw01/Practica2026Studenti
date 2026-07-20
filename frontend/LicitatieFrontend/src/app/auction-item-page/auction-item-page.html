@@ -129,10 +129,17 @@
       </div>
 
 
-      <button *ngIf="authService.isLoggedIn()" type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist"
-        (click)="toggleWishlist()">
-        {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
-      </button>
+      <div class="wishlist-container">
+        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()">
+          <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
+          <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
+        </button>
+
+        <div *ngIf="showWishlistToast" class="wishlist-toast" [class.toast-added]="toastAction === 'added'" [class.toast-removed]="toastAction === 'removed'" [class.toast-hiding]="isToastHiding">
+          <span class="toast-badge">{{ toastAction === 'added' ? '💖' : '💔' }}</span>
+          <span class="toast-msg">{{ toastMessage }}</span>
+        </div>
+      </div>
 
     </div>
   </div>

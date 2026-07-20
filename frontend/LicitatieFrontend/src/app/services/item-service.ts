@@ -13,27 +13,116 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
+  private sanitizeItem(item: any): AuctionItem {
+    if (!item) return item;
+
+    const categoryMap: { [key: number]: string } = {
+      1: 'Vehicles',
+      2: 'Electronics',
+      3: 'Art',
+      4: 'Clothing',
+      5: 'Home & Garden',
+      6: 'Real Estate'
+    };
+
+    let catId = item.CategoryId || (item.Category && item.Category.id) || 1;
+    let catName = (item.Category && typeof item.Category === 'object' && item.Category.name)
+      ? item.Category.name
+      : (typeof item.Category === 'string' ? item.Category : (categoryMap[catId] || 'Vehicles'));
+
+    item.CategoryId = catId;
+    item.Category = { id: catId, name: catName, items: [] };
+
+    const galleryMap: { [key: string]: string[] } = {
+      'Vehicles': [
+        'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
+      ],
+      'Art': [
+        'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop'
+      ],
+      'Clothing': [
+        'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop'
+      ],
+      'Electronics': [
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop'
+      ],
+      'Real Estate': [
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop'
+      ]
+    };
+
+    if (item.ID === 2 || (item.Name && item.Name.toLowerCase().includes('watch'))) {
+      item.ImageUrl = 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
+      item.PhotoList = galleryMap['Art'];
+    }
+
+    const defaultGallery = galleryMap[catName] || galleryMap['Vehicles'];
+
+    if (!item.PhotoList || !Array.isArray(item.PhotoList) || item.PhotoList.length === 0) {
+      if (item.ImageUrl) {
+        const mainImg = item.ImageUrl.startsWith('http') ? item.ImageUrl : `https://localhost:7137${item.ImageUrl}`;
+        item.PhotoList = [mainImg, ...defaultGallery.slice(1)];
+      } else {
+        item.PhotoList = [...defaultGallery];
+      }
+    } else if (item.PhotoList.length === 1 && defaultGallery.length > 1) {
+      item.PhotoList.push(defaultGallery[1]);
+    }
+
+    if (!item.ImageUrl && item.PhotoList.length > 0) {
+      item.ImageUrl = item.PhotoList[0];
+    }
+
+    return item;
+  }
+
+  private getLocalItems(): AuctionItem[] {
+    const saved1 = localStorage.getItem(this.storageKey);
+    const items1: AuctionItem[] = saved1 ? JSON.parse(saved1) : [];
+    const saved2 = localStorage.getItem('local_auctions');
+    const items2: AuctionItem[] = saved2 ? JSON.parse(saved2) : [];
+    const combined = [...items2, ...items1];
+    const map = new Map<number, AuctionItem>();
+    for (const item of combined) {
+      if (item && item.ID) {
+        map.set(item.ID, this.sanitizeItem(item));
+      }
+    }
+    return Array.from(map.values());
+  }
+
   getItems(): Observable<AuctionItem[]> {
     return new Observable<AuctionItem[]>(observer => {
       this.http.get<AuctionItem[]>(this.apiUrl).subscribe({
         next: (backendItems) => {
-          const saved = localStorage.getItem(this.storageKey);
-          const localItems = saved ? JSON.parse(saved) : [];
-          observer.next([...localItems, ...backendItems]);
+          const sanitizedBackend = (backendItems || []).map(i => this.sanitizeItem(i));
+          const localItems = this.getLocalItems();
+          observer.next([...localItems, ...sanitizedBackend]);
           observer.complete();
         },
         error: () => {
-          // Fallback la local storage + mock-items.json
           this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
             next: (mockItems) => {
-              const saved = localStorage.getItem(this.storageKey);
-              const localItems = saved ? JSON.parse(saved) : [];
-              observer.next([...localItems, ...mockItems]);
+              const sanitizedMock = (mockItems || []).map(i => this.sanitizeItem(i));
+              const localItems = this.getLocalItems();
+              const map = new Map<number, AuctionItem>();
+              for (const m of sanitizedMock) {
+                map.set(m.ID, m);
+              }
+              for (const l of localItems) {
+                map.set(l.ID, l);
+              }
+              observer.next(Array.from(map.values()));
               observer.complete();
             },
             error: () => {
-              const saved = localStorage.getItem(this.storageKey);
-              const localItems = saved ? JSON.parse(saved) : [];
+              const localItems = this.getLocalItems();
               observer.next(localItems);
               observer.complete();
             }
@@ -44,52 +133,77 @@ export class ItemService {
   }
 
   getItemById(id: number): Observable<AuctionItem> {
-    const saved = localStorage.getItem(this.storageKey);
-    const localItems = saved ? JSON.parse(saved) : [];
+    const localItems = this.getLocalItems();
     const localItem = localItems.find((item: any) => item.ID === id);
     if (localItem) {
-      return of(localItem);
+      return of(this.sanitizeItem(localItem));
     }
-    return this.http.get<AuctionItem>(`${this.apiUrl}/${id}`);
+    return new Observable<AuctionItem>(observer => {
+      this.http.get<AuctionItem>(`${this.apiUrl}/${id}`).subscribe({
+        next: (res) => {
+          observer.next(this.sanitizeItem(res));
+          observer.complete();
+        },
+        error: (err) => {
+          // Fallback to mock item if network request fails
+          this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
+            next: (mockItems) => {
+              const found = mockItems.find(i => i.ID === id) || mockItems[0];
+              observer.next(this.sanitizeItem(found));
+              observer.complete();
+            },
+            error: () => observer.error(err)
+          });
+        }
+      });
+    });
   }
 
   createItem(item: AuctionItem): Observable<AuctionItem> {
     return new Observable<AuctionItem>(observer => {
       this.http.post<AuctionItem>(this.apiUrl, item).subscribe({
         next: (res) => {
-          observer.next(res);
+          observer.next(this.sanitizeItem(res));
           observer.complete();
         },
         error: () => {
-          const saved = localStorage.getItem(this.storageKey);
-          const items: AuctionItem[] = saved ? JSON.parse(saved) : [];
+          const items: AuctionItem[] = this.getLocalItems();
           item.ID = Math.floor(Math.random() * 100000);
-          items.push(item);
+          const sanitized = this.sanitizeItem(item);
+          items.push(sanitized);
           localStorage.setItem(this.storageKey, JSON.stringify(items));
-          observer.next(item);
+          observer.next(sanitized);
           observer.complete();
         }
       });
     });
   }
 
-  // Multipart: campurile itemului + fisierul imagine.
   createItemWithImage(formData: FormData): Observable<AuctionItem> {
     return new Observable<AuctionItem>(observer => {
       this.http.post<AuctionItem>(`${this.apiUrl}/with-image`, formData).subscribe({
         next: (res) => {
-          observer.next(res);
+          observer.next(this.sanitizeItem(res));
           observer.complete();
         },
         error: () => {
           const categoryId = Number(formData.get('CategoryId'));
+          const categoryNames: { [key: number]: string } = {
+            1: 'Vehicles',
+            2: 'Electronics',
+            3: 'Art',
+            4: 'Clothing',
+            5: 'Home & Garden',
+            6: 'Real Estate'
+          };
+          const catName = categoryNames[categoryId] || 'Other';
           const item: any = {
             ID: Math.floor(Math.random() * 100000),
             Name: formData.get('Name'),
             StartPrice: Number(formData.get('StartPrice')),
             CurrentPrice: Number(formData.get('StartPrice')),
             CategoryId: categoryId,
-            Category: { id: categoryId, name: 'Mock Category', items: [] },
+            Category: { id: categoryId, name: catName, items: [] },
             Description: formData.get('Description'),
             Location: formData.get('Location'),
             OwnerId: Number(formData.get('OwnerId')),
@@ -99,11 +213,12 @@ export class ItemService {
             PhotoList: []
           };
 
-          const saved = localStorage.getItem(this.storageKey);
-          const items: AuctionItem[] = saved ? JSON.parse(saved) : [];
-          items.push(item);
+          const sanitized = this.sanitizeItem(item);
+          const items: AuctionItem[] = this.getLocalItems();
+          items.push(sanitized);
           localStorage.setItem(this.storageKey, JSON.stringify(items));
-          observer.next(item);
+          localStorage.setItem('local_auctions', JSON.stringify(items));
+          observer.next(sanitized);
           observer.complete();
         }
       });
@@ -111,21 +226,21 @@ export class ItemService {
   }
 
   updateItem(item: AuctionItem): Observable<AuctionItem> {
-    const saved = localStorage.getItem(this.storageKey);
-    const items: AuctionItem[] = saved ? JSON.parse(saved) : [];
+    const items: AuctionItem[] = this.getLocalItems();
     const index = items.findIndex(i => i.ID === item.ID);
     if (index !== -1) {
-      items[index] = item;
+      items[index] = this.sanitizeItem(item);
       localStorage.setItem(this.storageKey, JSON.stringify(items));
+      localStorage.setItem('local_auctions', JSON.stringify(items));
     }
-    return of(item);
+    return of(this.sanitizeItem(item));
   }
 
   deleteItem(id: number): Observable<void> {
-    const saved = localStorage.getItem(this.storageKey);
-    let items: AuctionItem[] = saved ? JSON.parse(saved) : [];
+    let items: AuctionItem[] = this.getLocalItems();
     items = items.filter(i => i.ID !== id);
     localStorage.setItem(this.storageKey, JSON.stringify(items));
+    localStorage.setItem('local_auctions', JSON.stringify(items));
     return of(void 0);
   }
 }

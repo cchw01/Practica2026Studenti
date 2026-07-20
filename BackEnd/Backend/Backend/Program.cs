@@ -106,6 +106,12 @@ using (var scope = app.Services.CreateScope())
             END");
     }
     catch { }
+
+    try
+    {
+        DbInitializer.Seed(db);
+    }
+    catch { }
 }
 
 app.Run();
