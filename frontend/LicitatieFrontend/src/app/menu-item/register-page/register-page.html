@@ -17,11 +17,7 @@
         "
       >
         {{ errorMessage }}
-        <span
-          *ngIf="
-            errorMessage.includes('already registered') || errorMessage.includes('already used')
-          "
-        >
+        <span *ngIf="errorMessage.includes('înregistrat') || errorMessage.includes('folosit')">
           <br />
           <a
             routerLink="/login-page"
