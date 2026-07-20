@@ -76,6 +76,27 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+    try
+    {
+        dbContext.Database.ExecuteSqlRaw(@"
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'PhoneNumber'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [PhoneNumber] nvarchar(max) NULL;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'IsBanned'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
+            END");
+    }
+    catch { }
+
     const string adminEmail = "admin@bidsphere.com";
     const string adminPassword = "admin123!";
 
@@ -130,6 +151,14 @@ using (var scope = app.Services.CreateScope())
             )
             BEGIN
                 ALTER TABLE [Users] ADD [PhoneNumber] nvarchar(max) NULL;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'IsBanned'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
             END");
     }
     catch { }
