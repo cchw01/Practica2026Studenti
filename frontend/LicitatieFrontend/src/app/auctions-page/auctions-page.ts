@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
@@ -25,6 +25,7 @@ export class AuctionsPage implements OnInit {
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +37,9 @@ export class AuctionsPage implements OnInit {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map(i => i.Category.name))];
+        this.categories = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
         this.applyFiltersAndSort();
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Eroare la încărcarea item-urilor', err)
     });
