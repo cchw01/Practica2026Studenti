@@ -1,82 +1,226 @@
-<div class="admin-page">
-  <h1>Admin panel</h1>
-
-  <div class="tabs">
-    <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">Statistici</button>
-    <button (click)="setTab('users')" [class.active]="activeTab === 'users'">Useri</button>
-    <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">Licitații de validat</button>
-    <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">Forum</button>
-  </div>
-
-  <div *ngIf="activeTab === 'stats' && stats" class="stats-grid">
-    <div class="stat-card"><h3>{{ stats.totalUsers }}</h3><p>Total useri</p></div>
-    <div class="stat-card"><h3>{{ stats.bannedUsers }}</h3><p>Useri banați</p></div>
-    <div class="stat-card"><h3>{{ stats.totalAuctions }}</h3><p>Total licitații</p></div>
-    <div class="stat-card"><h3>{{ stats.pendingValidation }}</h3><p>De validat</p></div>
-    <div class="stat-card"><h3>{{ stats.activeAuctions }}</h3><p>Active</p></div>
-    <div class="stat-card"><h3>{{ stats.totalForumPosts }}</h3><p>Postări forum</p></div>
-    <div class="stat-card"><h3>{{ stats.totalBids }}</h3><p>Total licitări</p></div>
-  </div>
-
-  <table *ngIf="activeTab === 'users'" class="admin-table">
-    <thead>
-      <tr>
-        <th>Nume</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th>Status</th>
-        <th>Acțiuni</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of users">
-        <td>{{ u.name }}</td>
-        <td>{{ u.email }}</td>
-        <td>
-          <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">
-            <option value="User">User</option>
-            <option value="Guest">Guest</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </td>
-        <td>{{ u.isBanned ? 'Banat' : 'Activ' }}</td>
-        <td>
-          <button (click)="toggleBan(u)">{{ u.isBanned ? 'Unban' : 'Ban' }}</button>
-          <button (click)="removeUser(u.id)" class="danger">Șterge</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="activeTab === 'auctions'" class="pending-list">
-    <div *ngFor="let item of pendingAuctions" class="pending-card">
-      <h3>{{ item.name }}</h3>
-      <p>{{ item.description }}</p>
-      <button (click)="validate(item.id)">Validează</button>
-      <button (click)="reject(item.id)" class="danger">Respinge</button>
-      <button (click)="removeAuction(item.id)" class="danger">Șterge definitiv</button>
+<div class="vuexy-admin-container">
+  
+  <!-- MENIUL LATERAL (SIDEBAR) -->
+  <aside class="vuexy-sidebar">
+    <div class="sidebar-header">
+      <div class="vuexy-logo-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 22h9v-8h2v8h9L12 2z"/>
+        </svg>
+      </div>
+      <span class="vuexy-brand-name">BidSphere</span>
     </div>
-    <p *ngIf="pendingAuctions.length === 0">Nimic de validat momentan.</p>
-  </div>
 
-  <div *ngIf="activeTab === 'forum'" class="forum-moderation">
-  <h3>Postări</h3>
-  <div class="pending-list">
-    <div *ngFor="let post of forumPosts" class="pending-card">
-      <h4>{{ post.title }}</h4>
-      <p>{{ post.userName }} — {{ post.commentsCount }} comentarii</p>
-      <button (click)="removePost(post.id)" class="danger">Șterge postarea</button>
-    </div>
-    <p *ngIf="forumPosts.length === 0">Nicio postare.</p>
-  </div>
+    <!-- BUTOANELE NAVIGARE -->
+    <nav class="sidebar-nav-links">
+      <div class="menu-section-label">MANAGEMENT PLATFORMĂ</div>
+      <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">
+        <span class="menu-icon">📊</span> Dashboard & Grafice
+      </button>
+      <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">
+        <span class="menu-icon">🔨</span> 3. Validare Licitații
+      </button>
+      <button (click)="setTab('users')" [class.active]="activeTab === 'users'">
+        <span class="menu-icon">👤</span> 1. Evidență Conturi / Ban
+      </button>
+      <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
+        <span class="menu-icon">💬</span> 4. Moderare Forum
+      </button>
+      <button (click)="setTab('tickets')" [class.active]="activeTab === 'tickets'">
+        <span class="menu-icon">✉️</span> 5. Tichete Contact & Help
+      </button>
+      <button (click)="setTab('categories')" [class.active]="activeTab === 'categories'">
+        <span class="menu-icon">📁</span> 6. Categorii Produse
+      </button>
+    </nav>
 
-  <h3>Comentarii</h3>
-  <div class="pending-list">
-    <div *ngFor="let comment of forumComments" class="pending-card">
-      <p><strong>{{ comment.userName }}:</strong> {{ comment.commentText }}</p>
-      <button (click)="removeComment(comment.id)" class="danger">Șterge comentariul</button>
+    <!-- ZONA DE JOS: PROFIL + BUTON DECONECTARE -->
+    <div class="sidebar-footer-box">
+      <div class="admin-profile-info">
+        <div class="profile-image-avatar">JD</div>
+        <div class="profile-text-details">
+          <span class="profile-display-name">John Doe</span>
+          <span class="profile-display-role">Administrator</span>
+        </div>
+      </div>
+      
+      <!-- BUTONUL DE LOGOUT ACCESIBIL RECONECTAT -->
+      <button class="vuexy-logout-sidebar-btn" (click)="logout()">
+        Deconectare Cont ↗
+      </button>
     </div>
-    <p *ngIf="forumComments.length === 0">Niciun comentariu.</p>
+  </aside>
+
+  <!-- SPAȚIUL CENTRAL (CONȚINUTUL INTERFEȚEI) -->
+  <div class="vuexy-main-content">
+    <main class="vuexy-page-body">
+      
+      <!-- TAB 2: PAGINA DE STATISTICI CU GRAFICE -->
+      <div *ngIf="activeTab === 'stats' && stats" class="vuexy-dashboard-view">
+        <div class="welcome-banner-card">
+          <h2>Salut, John! 👋</h2>
+          <p>Sistemul de monitorizare BidSphere este activ.</p>
+          <div class="banner-highlight-value">{{ pendingAuctions.length }} Licitații de verificat azi</div>
+        </div>
+
+        <div class="vuexy-stats-row">
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper blue-bg">👥</div>
+            <div><h3>{{ stats.totalUsers || 0 }}</h3><p>Total Utilizatori</p></div>
+          </div>
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper red-bg">🚫</div>
+            <div><h3>{{ stats.bannedUsers || 0 }}</h3><p>Utilizatori Banați</p></div>
+          </div>
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper green-bg">📦</div>
+            <div><h3>{{ stats.totalAuctions || 0 }}</h3><p>Total Licitații</p></div>
+          </div>
+        </div>
+
+        <div class="vuexy-charts-grid">
+          <div class="vuexy-card chart-card-box">
+            <h4>Evoluție Licitații Săptămânale</h4>
+            <div class="chart-container-svg">
+              <svg viewBox="0 0 400 150" class="line-chart-svg">
+                <path d="M 0,130 L 80,90 L 160,110 L 240,40 L 320,60 L 400,10" fill="none" stroke="#7367f0" stroke-width="4"></path>
+                <circle cx="80" cy="90" r="4" fill="#7367f0"></circle>
+                <circle cx="160" cy="110" r="4" fill="#7367f0"></circle>
+                <circle cx="240" cy="40" r="4" fill="#7367f0"></circle>
+                <circle cx="320" cy="60" r="4" fill="#7367f0"></circle>
+              </svg>
+            </div>
+            <div class="chart-labels"><small>Lun</small><small>Mar</small><small>Mie</small><small>Joi</small><small>Vin</small><small>Sâm</small></div>
+          </div>
+
+          <div class="vuexy-card chart-card-box">
+            <h4>Rapoarte utilizatori vs. Rezolvări</h4>
+            <div class="chart-container-svg">
+              <svg viewBox="0 0 200 150" class="bar-chart-svg">
+                <rect x="20" y="40" width="25" height="90" fill="#7367f0" rx="4"></rect>
+                <rect x="60" y="70" width="25" height="60" fill="#ea5455" rx="4"></rect>
+                <rect x="100" y="20" width="25" height="110" fill="#28c76f" rx="4"></rect>
+                <rect x="140" y="50" width="25" height="80" fill="#ff9f43" rx="4"></rect>
+              </svg>
+            </div>
+            <div class="chart-labels"><small>Ban</small><small>Rapoarte</small><small>Validări</small><small>Tichete</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: VALIDARE LICITAȚII -->
+      <div *ngIf="activeTab === 'auctions'" class="vuexy-card table-responsive-wrapper">
+        <div class="card-header-title">Licitații transmise spre control și aprobare</div>
+        <table class="vuexy-table">
+          <thead>
+            <tr><th>Titlu Produs</th><th>Vânzător</th><th>Preț Pornire</th><th class="text-right">Decizie Vizibilitate</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of pendingAuctions">
+              <td><strong>{{ item.title }}</strong></td>
+              <td>{{ item.sellerName || 'Utilizator platformă' }}</td>
+              <td class="bold-price-cell">{{ item.startingPrice }} €</td>
+              <td class="text-right">
+                <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Aprobă postarea</button>
+                <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Respinge</button>
+              </td>
+            </tr>
+            <tr *ngIf="pendingAuctions.length === 0">
+              <td colspan="4" class="vuexy-empty-row">Nicio licitație în coada de moderare preliminară.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 1: EVIDENȚĂ CONTURI / STRIKE SYSTEM -->
+      <div *ngIf="activeTab === 'users'" class="vuexy-card table-responsive-wrapper">
+        <div class="card-header-title">Evidența conturilor (Închidere automată la 3 Rapoarte)</div>
+        <table class="vuexy-table">
+          <thead>
+            <tr><th>Nume Utilizator</th><th>Email</th><th>Istoric Rapoarte</th><th>Status</th><th class="text-right">Acțiuni Drepturi</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td><strong>{{ user.username }}</strong></td>
+              <td>{{ user.email }}</td>
+              <td>
+                <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
+                  {{ user.reports || 0 }} / 3 Rapoarte primite
+                </span>
+              </td>
+              <td>
+                <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
+              </td>
+              <td class="text-right">
+                <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează / Închide</button>
+                <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează restricția</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 4: MODERARE FORUM -->
+      <div *ngIf="activeTab === 'forum'" class="vuexy-card">
+        <div class="card-header-title">Controlul postărilor și comentariilor active pe forum</div>
+        <div class="vuexy-list-stack">
+          <div *ngFor="let post of forumPosts" class="vuexy-stack-item">
+            <div class="stack-left">
+              <span class="vuexy-author-headline">Postat de: @{{ post.author || 'Membru' }}</span>
+              <h4>{{ post.title }}</h4>
+              <p class="forum-body-text">"{{ post.content }}"</p>
+            </div>
+            <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge conținut licențios</button>
+          </div>
+          <div *ngIf="forumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj licențios.</div>
+        </div>
+      </div>
+
+      <!-- TAB 5: TICHETE SUPORT -->
+      <div *ngIf="activeTab === 'tickets'" class="vuexy-card table-responsive-wrapper">
+        <div class="card-header-title">Mesaje primite prin Formularul de Contact / Pagina Help</div>
+        <table class="vuexy-table">
+          <thead>
+            <tr><th>Expeditor</th><th>Subiect Problemă</th><th>Mesaj Utilizator</th><th class="text-right">Remediere</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ticket of forumComments">
+              <td><strong>{{ ticket.name }}</strong><br><small>{{ ticket.email }}</small></td>
+              <td><span class="subject-emphasis">{{ ticket.subject || 'Ticket Help' }}</span></td>
+              <td><p class="vuexy-truncate-cell">{{ ticket.message || ticket.content }}</p></td>
+              <td class="text-right">
+                <button class="vuexy-btn btn-vuexy-success" (click)="resolveTicket(ticket.id)">Rezolvă tichet</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 6: ADAUGARE CATEGORII -->
+      <div class="vuexy-categories-split" *ngIf="activeTab === 'categories'">
+        <div class="vuexy-card">
+          <div class="card-header-title">6. Creează categorie nouă</div>
+          <div class="vuexy-form-group">
+            <input #newCatName type="text" placeholder="Nume categorie (ex: Artă & Antichități)">
+            <textarea #newCatDesc rows="3" placeholder="Scurtă descriere a specificului categoriei..."></textarea>
+            <button class="vuexy-btn-block" (click)="addCategory(newCatName.value, newCatDesc.value); newCatName.value=''; newCatDesc.value=''">Adaugă în Meniu</button>
+          </div>
+        </div>
+
+        <div class="vuexy-card table-responsive-wrapper">
+          <div class="card-header-title">Nomenclator categorii active</div>
+          <table class="vuexy-table">
+            <thead><tr><th>Nume nomenclator</th><th>Descriere extinsă</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let cat of categories">
+                <td><strong>{{ cat.name }}</strong></td>
+                <td><small>{{ cat.description }}</small></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
   </div>
-</div>
 </div>

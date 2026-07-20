@@ -191,7 +191,7 @@
 .chat-toggle.chat-open {
   border-radius: 50%;
   padding: v.$space-md 20px;
-  background: linear-gradient(135deg, v.$color-accent, darken(v.$color-accent, 10%));
+  background: linear-gradient(135deg, v.$color-accent, color-mix(in srgb, v.$color-accent, #000 10%));
 }
 
 .chat-box {

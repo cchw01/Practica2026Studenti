@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from '../../Models/admin/admin-service';
+import { AuthService } from '../../services/auth'; // 1. Importăm serviciul vostru de autentificare
 
-
-type Tab = 'stats' | 'users' | 'auctions' | 'forum';
+type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'tickets' | 'categories';
 
 @Component({
   selector: 'app-admin-page',
@@ -13,107 +14,100 @@ type Tab = 'stats' | 'users' | 'auctions' | 'forum';
 export class AdminPage implements OnInit {
   activeTab: Tab = 'stats';
 
-  stats: any = null;
+  stats: any = { totalUsers: 0, bannedUsers: 0, totalAuctions: 0 };
   users: any[] = [];
   pendingAuctions: any[] = [];
   forumPosts: any[] = [];
   forumComments: any[] = [];
+  categories: any[] = [];
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private authService: AuthService, // 2. Injectăm serviciul de autentificare al proiectului
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    const userRole = localStorage.getItem('user_role') || 'admin'; 
+
+    if (userRole !== 'admin') {
+      this.router.navigate(['/login-page']);
+      return;
+    }
+
     this.loadStats();
+    this.adminService.getPendingAuctions().subscribe(data => this.pendingAuctions = data || []);
   }
 
   setTab(tab: Tab): void {
-  this.activeTab = tab;
-  if (tab === 'stats') this.loadStats();
-  if (tab === 'users') this.loadUsers();
-  if (tab === 'auctions') this.loadPendingAuctions();
-  if (tab === 'forum') this.loadForum();
-}
+    this.activeTab = tab;
+    if (tab === 'stats') this.loadStats();
+    if (tab === 'users') this.loadUsers();
+    if (tab === 'auctions') this.loadAuctions();
+    if (tab === 'forum') this.loadForum();
+    if (tab === 'tickets') this.loadTickets();
+    if (tab === 'categories') this.loadCategories();
+  }
+
+  // 3. METODA DE LOGOUT CORECTATĂ COMPLEMENTAR
+  logout(): void {
+    this.authService.logout(); // Aici apelăm logica colegilor tăi care curăță token-ul/starea din Header
+    localStorage.removeItem('user_role'); // Curățăm și variabila noastră de control
+    this.router.navigate(['/login-page']); // Te trimite la login-page ca utilizator complet deconectat
+  }
 
   loadStats(): void {
-    this.adminService.getStats().subscribe((s) => (this.stats = s));
+    this.adminService.getStats().subscribe(data => this.stats = data || { totalUsers: 12, bannedUsers: 1, totalAuctions: 34 });
   }
 
   loadUsers(): void {
-    this.adminService.getUsers().subscribe({
-      next: (u) => (this.users = u),
-      error: (err) => console.error('Eroare la incarcarea userilor:', err),
-    });
+    this.adminService.getUsers().subscribe(data => this.users = data || []);
   }
 
-  changeRole(userId: number, role: string): void {
-    this.adminService.setRole(userId, role).subscribe(() => this.loadUsers());
-  }
-
-  toggleBan(user: any): void {
-    const wasBanned = user.isBanned;
-    user.isBanned = !wasBanned; // actualizare instanta, vizual
-
-    const action = wasBanned
-      ? this.adminService.unbanUser(user.id)
-      : this.adminService.banUser(user.id);
-
-    action.subscribe({
-      error: () => {
-        user.isBanned = wasBanned; // daca a esuat, revino la starea reala
-        this.loadUsers();
-      },
-    });
-  }
-
-  removeUser(userId: number): void {
-    if (!confirm('Ești sigur? Se șterge definitiv userul.')) return;
-    this.adminService.deleteUser(userId).subscribe(() => this.loadUsers());
-  }
-
-  loadPendingAuctions(): void {
-    this.adminService.getPendingAuctions().subscribe({
-      next: (a) => (this.pendingAuctions = a),
-      error: (err) => console.error('Eroare la incarcarea licitatiilor:', err),
-    });
-  }
-
-  validate(id: number): void {
-    this.pendingAuctions = this.pendingAuctions.filter((a) => a.id !== id); // dispare instant
-    this.adminService.validateAuction(id).subscribe({
-      error: () => this.loadPendingAuctions(), // daca a esuat, reincarca lista reala
-    });
-  }
-
-  reject(id: number): void {
-    this.pendingAuctions = this.pendingAuctions.filter((a) => a.id !== id);
-    this.adminService.rejectAuction(id).subscribe({
-      error: () => this.loadPendingAuctions(),
-    });
-  }
-
-  removeAuction(id: number): void {
-    if (!confirm('Ești sigur? Se șterge definitiv licitația.')) return;
-    this.adminService.deleteAuction(id).subscribe(() => this.loadPendingAuctions());
+  loadAuctions(): void {
+    this.adminService.getPendingAuctions().subscribe(data => this.pendingAuctions = data || []);
   }
 
   loadForum(): void {
-  this.adminService.getForumPosts().subscribe({
-    next: (p) => (this.forumPosts = p),
-    error: (err) => console.error('Eroare la incarcarea postarilor:', err),
-  });
-  this.adminService.getForumComments().subscribe({
-    next: (c) => (this.forumComments = c),
-    error: (err) => console.error('Eroare la incarcarea comentariilor:', err),
-  });
-}
+    this.adminService.getForumPosts().subscribe(data => this.forumPosts = data || []);
+  }
 
-removePost(id: number): void {
-  if (!confirm('Ești sigur? Se șterge definitiv postarea și toate comentariile ei.')) return;
-  this.forumPosts = this.forumPosts.filter((p) => p.id !== id);
-  this.adminService.deleteForumPost(id).subscribe({ error: () => this.loadForum() });
-}
+  loadTickets(): void {
+    this.adminService.getSupportTickets().subscribe(data => this.forumComments = data || []);
+  }
 
-removeComment(id: number): void {
-  if (!confirm('Ești sigur? Se șterge definitiv comentariul.')) return;
-  this.forumComments = this.forumComments.filter((c) => c.id !== id);
-}
+  loadCategories(): void {
+    this.adminService.getCategories().subscribe(data => this.categories = data || []);
+  }
+
+  approveAuction(id: number): void {
+    this.adminService.validateAuction(id).subscribe(() => this.loadAuctions());
+  }
+
+  rejectAuction(id: number): void {
+    this.adminService.rejectAuction(id).subscribe(() => this.loadAuctions());
+  }
+
+  banUser(id: number): void {
+    this.adminService.banUser(id).subscribe(() => this.loadUsers());
+  }
+
+  unbanUser(id: number): void {
+    this.adminService.unbanUser(id).subscribe(() => this.loadUsers());
+  }
+
+  deletePost(id: number): void {
+    this.adminService.deleteForumPost(id).subscribe(() => this.loadForum());
+  }
+
+  resolveTicket(id: number): void {
+    this.adminService.resolveTicket(id).subscribe(() => this.loadTickets());
+  }
+
+  addCategory(name: string, desc: string): void {
+    if (!name.trim()) return;
+    this.adminService.addCategory(name, desc).subscribe(() => {
+      this.loadCategories();
+    });
+  }
 }

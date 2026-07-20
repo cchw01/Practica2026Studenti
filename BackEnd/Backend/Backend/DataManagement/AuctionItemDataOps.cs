@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement; 
+using Backend.DataManagement; 
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +23,23 @@ namespace Backend.DataManagement
                 .Include(i => i.Category)
                 .Include(i => i.Owner)
                 .Include(i => i.Winner)
+                .ToArray();
+        }
+
+        public AuctionItem[] GetActiveAuctionItems()
+        {
+            var now = DateTime.UtcNow;
+            return dbContext.AuctionItems
+                .AsNoTracking()
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .Where(i =>
+                    (i.Status == AuctionItem.StatusEnum.Added ||
+                     i.Status == AuctionItem.StatusEnum.Validated ||
+                     i.Status == AuctionItem.StatusEnum.ActiveBid) &&
+                    i.EndDate > now)
+                .OrderBy(i => i.EndDate)
                 .ToArray();
         }
 

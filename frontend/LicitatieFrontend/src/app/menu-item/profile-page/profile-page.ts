@@ -95,6 +95,18 @@ export class ProfilePage implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
+    
+    // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
+    if (currentUser) {
+      // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
+      if (currentUser.role === 'admin' || currentUser.email === 'admin@bidsphere.com') {
+        localStorage.setItem('user_role', 'admin'); // Salvează starea pentru panoul Vuexy
+        this.router.navigate(['/admin']);
+        return; // Oprim execuția codului pentru a nu mai încărca restul paginii
+      }
+    }
+
+    // --- Fluxul normal pentru utilizatorii simpli ---
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email;
       this.user.name = currentUser.name || 'User';
@@ -129,10 +141,8 @@ export class ProfilePage implements OnInit {
 
   // --- Load API data ---
   loadItemsAndReviews(): void {
-    // Load Items listed by user
     this.itemService.getItems().subscribe({
       next: (items) => {
-        // Filter items where OwnerId matches current user ID
         this.addedItems = items
           .filter(
             (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
@@ -144,9 +154,8 @@ export class ProfilePage implements OnInit {
             status: item.status ? item.status.toString() : 'Added',
           }));
 
-        // Filter won items
         this.bidItems = items
-          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0) // Mock bid items or won
+          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0)
           .map((item: any) => ({
             id: item.id || 0,
             title: item.name,
@@ -154,7 +163,6 @@ export class ProfilePage implements OnInit {
             status: 'Won',
           }));
 
-        // Filter wish list items (items where current user is in WishingUsers)
         this.wishItems = items
           .filter((item: any) =>
             Array.isArray(item.wishingUsers) &&
@@ -172,7 +180,6 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
@@ -191,13 +198,13 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5; // Default fallback score
+          this.score = 4.5;
         }
       },
       error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
     });
   }
-  // --- Persistence ---
+
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -209,7 +216,6 @@ export class ProfilePage implements OnInit {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
   }
 
-  // --- Edit actions ---
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
@@ -251,7 +257,6 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // --- Avatar upload ---
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
@@ -263,7 +268,6 @@ export class ProfilePage implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  // --- Change Password ---
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
@@ -296,15 +300,14 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  // --- Navigate to Add Item ---
   goToAddItem(): void {
     this.router.navigate(['/add-item']);
   }
 
-  // --- Logout ---
   onLogout(): void {
     this.authService.logout();
-    this.setTheme('light'); // Reset theme classes
+    localStorage.removeItem('user_role');
+    this.setTheme('light');
     document.body.className = '';
     this.router.navigate(['/login-page']);
   }
