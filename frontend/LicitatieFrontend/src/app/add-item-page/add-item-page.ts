@@ -11,7 +11,7 @@ import { Category } from '../Models/categoryItem';
   selector: 'app-add-item-page',
   standalone: false,
   templateUrl: './add-item-page.html',
-  styleUrl: './add-item-page.css',
+  styleUrl: './add-item-page.scss',
 })
 export class AddItemPage implements OnInit {
   itemForm: FormGroup;

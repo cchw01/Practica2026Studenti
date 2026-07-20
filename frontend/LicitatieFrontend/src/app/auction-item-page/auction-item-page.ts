@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
+import { TranslateService } from '@ngx-translate/core';
 import { BidService } from '../services/bid-service';
 import { CreateBidDto } from '../Models/bid/bid';
 
@@ -41,11 +42,10 @@ const mockOwner = new User({
   selector: 'app-auction-item-page',
   standalone: false,
   templateUrl: './auction-item-page.html',
-  styleUrl: './auction-item-page.css',
+  styleUrl: './auction-item-page.scss',
   providers: [MockAuthService],
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
-
   private navState: any;
   selectedImageIndex = 0;
   peekOffset = 0;
@@ -58,6 +58,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     public authService: MockAuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
     private bidService: BidService
   ) {
     const nav = this.router.getCurrentNavigation();
@@ -72,7 +73,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     Category: mockCategory,
     CategoryId: 1,
     WishingUsers: [],
-    Description: 'A premium item with excellent condition, full service history, fast shipping, and exceptional luxury features.',
+    Description:
+      'A premium item with excellent condition, full service history, fast shipping, and exceptional luxury features.',
     Location: 'Bucharest',
     Owner: mockOwner,
     OwnerId: 1,
@@ -83,8 +85,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     PhotoList: [
       'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
-    ]
+      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop',
+    ],
   };
 
   bidAmount = this.auctionItem.CurrentPrice + 10;
@@ -92,9 +94,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
-
     this.selectedImageIndex = 0;
-
 
     const auction = this.navState?.auction;
     if (auction) {
@@ -155,9 +155,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       }
     }
 
-
     this.startCountdown();
-
 
     const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     this.isInWishlist = wishlist.includes(this.auctionItem.ID);
@@ -180,7 +178,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const diff = end - now;
 
       if (diff <= 0) {
-        this.countdownText = 'Auction ended';
+        this.countdownText = this.translate.instant('AUCTION_ITEM_PAGE.MESSAGES.AUCTION_ENDED');
         this.cdr.detectChanges();
         clearInterval(this.timerInterval);
         return;
@@ -191,10 +189,15 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      const dStr = days > 0 ? `${days}d ` : '';
-      const hStr = hours.toString().padStart(2, '0') + 'h ';
-      const mStr = minutes.toString().padStart(2, '0') + 'm ';
-      const sStr = seconds.toString().padStart(2, '0') + 's';
+      const d = this.translate.instant('AUCTION_ITEM_PAGE.COUNTDOWN.DAYS');
+      const h = this.translate.instant('AUCTION_ITEM_PAGE.COUNTDOWN.HOURS');
+      const m = this.translate.instant('AUCTION_ITEM_PAGE.COUNTDOWN.MINUTES');
+      const s = this.translate.instant('AUCTION_ITEM_PAGE.COUNTDOWN.SECONDS');
+
+      const dStr = days > 0 ? `${days}${d} ` : '';
+      const hStr = hours.toString().padStart(2, '0') + h + ' ';
+      const mStr = minutes.toString().padStart(2, '0') + m + ' ';
+      const sStr = seconds.toString().padStart(2, '0') + s;
 
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
       this.cdr.detectChanges();
@@ -208,12 +211,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.errorMessage = '';
 
     if (this.bidAmount <= this.auctionItem.CurrentPrice) {
-      this.errorMessage = 'The bid must be greater than the current price.';
+      this.errorMessage = this.translate.instant('AUCTION_ITEM_PAGE.MESSAGES.BID_HIGHER_CURRENT');
       return;
     }
 
     if (this.bidAmount <= this.auctionItem.StartPrice) {
-      this.errorMessage = 'The bid must be greater than the minimum price.';
+      this.errorMessage = this.translate.instant('AUCTION_ITEM_PAGE.MESSAGES.BID_HIGHER_MINIMUM');
       return;
     }
 
@@ -248,7 +251,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         wishlist.push(this.auctionItem.ID);
       }
     } else {
-      wishlist = wishlist.filter(id => id !== this.auctionItem.ID);
+      wishlist = wishlist.filter((id) => id !== this.auctionItem.ID);
     }
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }
@@ -256,7 +259,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   prevImage(event: Event): void {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
-      this.selectedImageIndex = (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) % this.auctionItem.PhotoList.length;
+      this.selectedImageIndex =
+        (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) %
+        this.auctionItem.PhotoList.length;
       this.cdr.detectChanges();
     }
   }
