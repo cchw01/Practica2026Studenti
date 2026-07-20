@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 namespace Backend.Controllers
+
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -71,7 +73,8 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
         public ActionResult<ForumPost> DeleteForumPost(int id)
         {
             try
