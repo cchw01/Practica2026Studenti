@@ -5,7 +5,7 @@ import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -16,6 +16,24 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   styleUrls: ['./auctions-page.scss'],
 })
 export class AuctionsPage implements OnInit {
+  loadActiveAuctions(): void {
+    this.isLoading = true;
+    this.hasError = false;
+    this.itemService.getItems().subscribe({
+      next: (items) => {
+        this.allItems = items.filter((i) => i.Status !== 'Added' && i.Status !== 'Rejected');
+        this.applyFiltersAndSort();
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Eroare la încărcarea item-urilor', err);
+        this.hasError = true;
+        this.isLoading = false;
+      },
+    });
+  }
+
   allItems: AuctionItem[] = [];
   filteredItems: AuctionItem[] = [];
 
@@ -33,8 +51,6 @@ export class AuctionsPage implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private categoryService: CategoryService,
-  ) {}
     private categoryService: CategoryService,
   ) {}
 
@@ -55,9 +71,15 @@ export class AuctionsPage implements OnInit {
           ...new Set(this.allItems.filter((i) => i.Category?.name).map((i) => i.Category.name)),
         ];
         this.applyFiltersAndSort();
+        this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err),
+      error: (err) => {
+        console.error('Eroare la încărcarea item-urilor', err);
+        this.isLoading = false;
+        this.hasError = true;
+        this.cdr.detectChanges();
+      },
     });
 
     this.categoryService.getCategories().subscribe({
@@ -126,4 +148,3 @@ export class AuctionsPage implements OnInit {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }
-

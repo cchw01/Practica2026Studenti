@@ -12,27 +12,29 @@
     </div>
 
     <!-- BUTOANELE NAVIGARE -->
-    <nav class="sidebar-nav-links">
+    <div class="sidebar-nav-links">
       <div class="menu-section-label">MANAGEMENT PLATFORMĂ</div>
       <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">
-        <span class="menu-icon">📊</span> Dashboard & Grafice
+        <span class="menu-icon"></span> Dashboard & Grafice
       </button>
       <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">
-        <span class="menu-icon">🔨</span> 3. Validare Licitații
-      </button>
+  <span class="menu-icon"></span>  Validare Licitații
+  <span *ngIf="pendingAuctions.length > 0" class="sidebar-badge">{{ pendingAuctions.length }}</span>
+</button>
       <button (click)="setTab('users')" [class.active]="activeTab === 'users'">
-        <span class="menu-icon">👤</span> 1. Evidență Conturi / Ban
+        <span class="menu-icon"></span> Evidență Conturi / Ban
       </button>
       <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
-        <span class="menu-icon">💬</span> 4. Moderare Forum
-      </button>
+  <span class="menu-icon"></span>  Moderare Forum
+  <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
+</button>
       <button (click)="setTab('tickets')" [class.active]="activeTab === 'tickets'">
-        <span class="menu-icon">✉️</span> 5. Tichete Contact & Help
+        <span class="menu-icon"></span> Tichete Contact & Help
       </button>
       <button (click)="setTab('categories')" [class.active]="activeTab === 'categories'">
-        <span class="menu-icon">📁</span> 6. Categorii Produse
+        <span class="menu-icon"></span> Categorii Produse
       </button>
-    </nav>
+    </div>
 
     <!-- ZONA DE JOS: PROFIL + BUTON DECONECTARE -->
     <div class="sidebar-footer-box">
@@ -116,15 +118,16 @@
             <tr><th>Titlu Produs</th><th>Vânzător</th><th>Preț Pornire</th><th class="text-right">Decizie Vizibilitate</th></tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of pendingAuctions">
-              <td><strong>{{ item.title }}</strong></td>
-              <td>{{ item.sellerName || 'Utilizator platformă' }}</td>
-              <td class="bold-price-cell">{{ item.startingPrice }} €</td>
-              <td class="text-right">
-                <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Aprobă postarea</button>
-                <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Respinge</button>
-              </td>
-            </tr>
+                <tr *ngFor="let item of pendingAuctions">
+                 <td><strong>{{ item.name }}</strong></td>
+                 <td>{{ item.owner?.userName || 'Utilizator platformă' }}</td>
+                 <td class="bold-price-cell">{{ item.startPrice }} RON</td>
+                 <td class="text-right">
+                   <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Aprobă postarea</button>
+                   <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Respinge</button>
+                   <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Șterge definitiv</button>
+                </td>
+              </tr>
             <tr *ngIf="pendingAuctions.length === 0">
               <td colspan="4" class="vuexy-empty-row">Nicio licitație în coada de moderare preliminară.</td>
             </tr>
@@ -137,26 +140,34 @@
         <div class="card-header-title">Evidența conturilor (Închidere automată la 3 Rapoarte)</div>
         <table class="vuexy-table">
           <thead>
-            <tr><th>Nume Utilizator</th><th>Email</th><th>Istoric Rapoarte</th><th>Status</th><th class="text-right">Acțiuni Drepturi</th></tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of users">
-              <td><strong>{{ user.username }}</strong></td>
-              <td>{{ user.email }}</td>
-              <td>
-                <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
-                  {{ user.reports || 0 }} / 3 Rapoarte primite
-                </span>
-              </td>
-              <td>
-                <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
-              </td>
-              <td class="text-right">
-                <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează / Închide</button>
-                <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează restricția</button>
-              </td>
-            </tr>
-          </tbody>
+                          <tr><th>Nume Utilizator</th><th>Email</th><th>Rol</th><th>Status</th><th class="text-right">Acțiuni Drepturi</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+  <td><strong>{{ user.userName }}</strong></td>
+  <td>{{ user.email }}</td>
+  <td>
+    <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
+      {{ user.reports || 0 }} / 3 Rapoarte primite
+    </span>
+  </td>
+  <td>
+    <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
+  </td>
+ <td class="text-right">
+  <div class="user-actions-cell">
+    <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
+      <option value="User">User</option>
+      <option value="Guest">Guest</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează</button>
+    <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează restricția</button>
+    <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Șterge</button>
+  </div>
+</td>
+</tr>
+              </tbody>
         </table>
       </div>
 
@@ -165,13 +176,13 @@
         <div class="card-header-title">Controlul postărilor și comentariilor active pe forum</div>
         <div class="vuexy-list-stack">
           <div *ngFor="let post of forumPosts" class="vuexy-stack-item">
-            <div class="stack-left">
-              <span class="vuexy-author-headline">Postat de: @{{ post.author || 'Membru' }}</span>
-              <h4>{{ post.title }}</h4>
-              <p class="forum-body-text">"{{ post.content }}"</p>
-            </div>
-            <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge conținut licențios</button>
-          </div>
+  <div class="stack-left">
+    <span class="vuexy-author-headline">Postat de: @{{ post.userName || 'Membru' }}</span>
+    <h4>{{ post.title }}</h4>
+    <p class="forum-body-text">"{{ post.description }}"</p>
+  </div>
+  <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge postarea</button>
+</div>
           <div *ngIf="forumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj licențios.</div>
         </div>
       </div>

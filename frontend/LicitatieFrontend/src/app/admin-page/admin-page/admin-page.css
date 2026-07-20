@@ -263,3 +263,27 @@
 .vuexy-truncate-cell { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
 .subject-emphasis { font-weight: 600; color: #5d596c; }
 .forum-body-text { font-style: italic; color: #6f6b7d; }
+
+.table-responsive-wrapper {
+  overflow-x: auto;
+}
+
+.table-responsive-wrapper .vuexy-table {
+  min-width: 720px;
+}
+.user-actions-cell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.sidebar-badge {
+  margin-left: auto;
+  background: #ea5455;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+}

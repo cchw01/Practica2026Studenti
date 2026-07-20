@@ -52,7 +52,7 @@ namespace Backend.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rating = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -198,16 +198,16 @@ namespace Backend.Migrations
                 name: "Bids",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BidderId = table.Column<int>(type: "int", nullable: false),
                     BiddedItemId = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bids", x => x.id);
+                    table.PrimaryKey("PK_Bids", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Bids_AuctionItems_BiddedItemId",
                         column: x => x.BiddedItemId,

@@ -13,6 +13,8 @@ namespace Backend.DataManagement
 
         public bool HasUnread(int userId) =>
             DbContext.Notifications.Any(n => n.UserId == userId && !n.IsRead);
+        public int GetUnreadCount(int userId) =>
+    DbContext.Notifications.Count(n => n.UserId == userId && !n.IsRead);
 
         public void MarkAsRead(int id)
         {
@@ -34,6 +36,7 @@ namespace Backend.DataManagement
         {
             DbContext.Notifications.Add(new Notification { UserId = userId, Message = message });
             DbContext.SaveChanges();
+
         }
     }
 }

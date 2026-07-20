@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../../Models/admin/admin-service';
-import { AuthService } from '../../services/auth'; // 1. Importăm serviciul vostru de autentificare
+import { AuthService } from '../../services/auth';
 
 type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'tickets' | 'categories';
 
@@ -23,20 +23,27 @@ export class AdminPage implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private authService: AuthService, // 2. Injectăm serviciul de autentificare al proiectului
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    const userRole = localStorage.getItem('user_role') || 'admin'; 
-
-    if (userRole !== 'admin') {
+    const role = this.authService.getCurrentUser()?.role;
+    if (!this.authService.isLoggedIn() || role !== 'Admin') {
       this.router.navigate(['/login-page']);
       return;
     }
 
     this.loadStats();
-    this.adminService.getPendingAuctions().subscribe(data => this.pendingAuctions = data || []);
+    this.adminService.getPendingAuctions().subscribe((data) => {
+      this.pendingAuctions = data || [];
+      this.cdr.detectChanges();
+    });
+    this.adminService.getForumPosts().subscribe((data) => {
+      this.forumPosts = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   setTab(tab: Tab): void {
@@ -57,27 +64,45 @@ export class AdminPage implements OnInit {
   }
 
   loadStats(): void {
-    this.adminService.getStats().subscribe(data => this.stats = data || { totalUsers: 12, bannedUsers: 1, totalAuctions: 34 });
+    this.adminService.getStats().subscribe((data) => {
+      this.stats = data || { totalUsers: 12, bannedUsers: 1, totalAuctions: 34 };
+      this.cdr.detectChanges();
+    });
   }
 
   loadUsers(): void {
-    this.adminService.getUsers().subscribe(data => this.users = data || []);
+    this.adminService.getUsers().subscribe((data) => {
+      this.users = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   loadAuctions(): void {
-    this.adminService.getPendingAuctions().subscribe(data => this.pendingAuctions = data || []);
+    this.adminService.getPendingAuctions().subscribe((data) => {
+      this.pendingAuctions = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   loadForum(): void {
-    this.adminService.getForumPosts().subscribe(data => this.forumPosts = data || []);
+    this.adminService.getForumPosts().subscribe((data) => {
+      this.forumPosts = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   loadTickets(): void {
-    this.adminService.getSupportTickets().subscribe(data => this.forumComments = data || []);
+    this.adminService.getSupportTickets().subscribe((data) => {
+      this.forumComments = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   loadCategories(): void {
-    this.adminService.getCategories().subscribe(data => this.categories = data || []);
+    this.adminService.getCategories().subscribe((data) => {
+      this.categories = data || [];
+      this.cdr.detectChanges();
+    });
   }
 
   approveAuction(id: number): void {
@@ -88,12 +113,24 @@ export class AdminPage implements OnInit {
     this.adminService.rejectAuction(id).subscribe(() => this.loadAuctions());
   }
 
+  removeAuction(id: number): void {
+    this.adminService.deleteAuction(id).subscribe(() => this.loadAuctions());
+  }
+
   banUser(id: number): void {
     this.adminService.banUser(id).subscribe(() => this.loadUsers());
   }
 
   unbanUser(id: number): void {
     this.adminService.unbanUser(id).subscribe(() => this.loadUsers());
+  }
+  changeRole(userId: number, role: string): void {
+    this.adminService.setRole(userId, role).subscribe(() => this.loadUsers());
+  }
+
+  removeUser(userId: number): void {
+    if (!confirm('Ești sigur? Se șterge definitiv userul.')) return;
+    this.adminService.deleteUser(userId).subscribe(() => this.loadUsers());
   }
 
   deletePost(id: number): void {
