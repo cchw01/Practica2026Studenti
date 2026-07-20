@@ -265,6 +265,49 @@
     "TITLE": "Oops! Page not found",
     "MESSAGE": "The page you're looking for doesn't exist or has been moved.",
     "BUTTON":"Go BACK HOME"
+  },
+
+  "FORUM": {
+    "TITLE": "Forum discussions",
+    "DESCRIPTION": "Browse current discussions and participate in conversations with other users.",
+
+    "START_DISCUSSION": "Start a discussion",
+    "LOGIN_TO_START": "Log in to start a discussion",
+
+    "SORT": {
+      "ARIA_LABEL": "Sort discussions",
+      "LATEST": "Latest first",
+      "OLDEST": "Oldest first",
+      "MOST_COMMENTED": "Most commented"
+    },
+
+    "DISCUSSION": "discussion",
+    "DISCUSSIONS": "discussions",
+
+    "LOADING": {
+      "TITLE": "Loading discussions"
+    },
+
+    "ERROR": {
+      "TITLE": "Unable to load discussions",
+      "RETRY": "Try again"
+    },
+
+    "POSTED_BY": "Posted by",
+
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+
+    "EMPTY": {
+      "TITLE": "No discussions available",
+      "MESSAGE": "There are currently no discussions in the forum."
+    }
+  },
+
+    "NOTIFICATIONS":{
+      "TRUE": "Notifications",
+      "FALSE": "No notifications yet."
+    }
   }, 
   "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Auction Detail",
