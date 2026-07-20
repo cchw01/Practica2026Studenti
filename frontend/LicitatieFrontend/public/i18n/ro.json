@@ -303,11 +303,8 @@
   "NOTIFICATIONS": {
   "TRUE": "Notificări",
   "FALSE": "Nu există notificări încă."
-}
-
-}
-  "BUTTON": "Mergi ACASĂ"
 }, 
+ 
 "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Detalii licitație",
 
