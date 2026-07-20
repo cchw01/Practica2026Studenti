@@ -367,5 +367,10 @@
   "CANCEL": "Cancelar",
   "EDIT": "Editar reseña",
   "DELETE": "Eliminar reseña"
-  }
+  },
+  
+  "SHARE": {
+  "BUTTON": "Compartir",
+  "COPIED": "¡Copiado!"
+}
 }

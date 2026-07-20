@@ -371,6 +371,10 @@
   "CANCEL": "Cancel",
   "EDIT": "Edit review",
   "DELETE": "Delete review"
+},
+ "SHARE": {
+  "BUTTON": "Share",
+  "COPIED": "Copied!"
 }
 
 }
