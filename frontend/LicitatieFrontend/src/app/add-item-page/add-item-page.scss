@@ -1,0 +1,201 @@
+@use '../../styles/variables' as v;
+
+.add-item-page-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: calc(24px + var(--navbar-space, 96px)) v.$space-md 48px;
+}
+
+.page-header {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: v.$space-2xl v.$space-lg v.$space-xl;
+  margin-bottom: v.$space-lg;
+  border-radius: v.$radius-md;
+  background: linear-gradient(135deg, v.$color-primary-tint, v.$color-accent-tint);
+  box-shadow: 0 16px 32px rgba(30, 42, 90, 0.07);
+  animation: fade-in-up 0.6s ease both;
+}
+
+.header-badge {
+  display: inline-block;
+  margin-bottom: v.$space-sm;
+  padding: 6px v.$space-md;
+  border-radius: v.$radius-pill;
+  background: rgba(v.$color-primary, 0.1);
+  color: v.$color-primary;
+  font-size: v.$font-size-label;
+  font-weight: v.$font-weight-bold;
+  letter-spacing: 0.5px;
+}
+
+.page-header h1 {
+  margin: 0 0 v.$space-sm;
+  font-size: 1.9rem;
+  font-weight: v.$font-weight-extra-bold;
+  color: v.$color-text-heading;
+  letter-spacing: -0.01em;
+}
+
+.page-header p {
+  margin: 0;
+  color: v.$color-text-body;
+  font-size: v.$font-size-body;
+}
+
+.add-item-card {
+  width: 100%;
+  padding: v.$space-xl;
+  border-radius: v.$radius-md;
+  box-shadow: 0 8px 24px rgba(30, 42, 90, 0.08);
+  animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: v.$space-md;
+}
+
+.form-row {
+  display: flex;
+  gap: v.$space-md;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+label {
+  font-weight: v.$font-weight-semibold;
+  font-size: v.$font-size-body;
+  margin-bottom: 6px;
+  color: v.$color-text-label;
+}
+
+input,
+select,
+textarea {
+  padding: 11px 14px;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  font-size: v.$font-size-body;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: v.$color-primary;
+  box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+
+.error {
+  color: v.$color-status-urgent-text;
+  font-size: v.$font-size-label;
+  margin-top: 4px;
+}
+
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 28px;
+  border: 2px dashed v.$color-border;
+  border-radius: v.$radius-md;
+  cursor: pointer;
+  color: v.$color-text-body;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.upload-box:hover {
+  border-color: v.$color-primary;
+  background: v.$color-primary-tint;
+  transform: translateY(-2px);
+}
+
+.upload-box small {
+  color: v.$color-text-secondary;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: v.$radius-md;
+  display: block;
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.1);
+}
+
+.btn-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: v.$space-sm;
+  padding: 6px v.$space-sm;
+  border: 1px solid v.$color-status-urgent-text;
+  color: v.$color-status-urgent-text;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-remove:hover {
+  background: rgba(v.$color-status-urgent-text, 0.08);
+}
+
+.message {
+  padding: v.$space-sm v.$space-md;
+  border-radius: v.$radius-sm;
+  margin-bottom: v.$space-md;
+  font-size: v.$font-size-body;
+  animation: fade-in-up 0.3s ease both;
+}
+
+.success-msg {
+  background: v.$color-status-safe-bg;
+  color: v.$color-status-safe-text;
+}
+
+.error-msg {
+  background: v.$color-status-urgent-bg;
+  color: v.$color-status-urgent-text;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: v.$space-sm;
+  margin-top: v.$space-sm;
+}
+
+.form-actions button[mat-flat-button] {
+  border-radius: v.$radius-pill;
+  padding: 0 8px;
+}
+
+.form-actions button[mat-stroked-button] {
+  border-radius: v.$radius-pill;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 560px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
