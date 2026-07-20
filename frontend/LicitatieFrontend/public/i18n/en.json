@@ -358,4 +358,94 @@
     "MINUTES": "m",
     "SECONDS": "s"
   }
+}, 
+"PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username not set",
+    "NAME_NOT_SET": "Name not set",
+    "EMAIL_NOT_SET": "Email not set",
+    "AVERAGE_SCORE": "Average Score"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Edit Profile",
+    "LOG_OUT": "Log Out",
+    "ADD_ITEM": "Add New Item",
+    "CHANGE_PHOTO": "Change Photo",
+    "HIDE_PASSWORD": "Hide Password Settings",
+    "CHANGE_PASSWORD": "Change Password",
+    "UPDATE_PASSWORD": "Update Password",
+    "CANCEL": "Cancel",
+    "SAVE": "Save Changes"
+  },
+
+  "THEME": {
+    "TITLE": "Customize Theme",
+    "DESCRIPTION": "Choose a visual style that matches your mood.",
+    "LIGHT": "Light",
+    "SUNSET": "Sunset",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Sell a New Item",
+    "DESCRIPTION": "Ready to list something?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "My Active Sales",
+    "WON_ITEMS": "Items Won",
+    "WISHLIST": "My Wish List",
+    "REVIEWS": "Reviews Received"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "No items listed yet.",
+    "WON_ITEMS": "No items won yet.",
+    "WISHLIST": "No items in your wish list yet.",
+    "REVIEWS": "No reviews received yet."
+  },
+
+  "EDIT": {
+    "TITLE": "Edit Profile",
+    "USERNAME": "Username",
+    "FULL_NAME": "Full Name",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "e.g. john_doe",
+    "FULL_NAME_PLACEHOLDER": "e.g. John Doe",
+    "EMAIL_PLACEHOLDER": "e.g. john@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Current Password",
+    "NEW": "New Password",
+    "CONFIRM": "Confirm Password",
+
+    "CURRENT_PLACEHOLDER": "Enter current password",
+    "NEW_PLACEHOLDER": "Enter new password",
+    "CONFIRM_PLACEHOLDER": "Confirm new password",
+
+    "REQUIRED": "All fields are required.",
+    "NOT_MATCH": "The new password and its confirmation do not match.",
+    "SUCCESS": "Password updated successfully!",
+    "ERROR": "Error updating password. Please check your current password."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Active",
+    "ADDED": "Added",
+    "WON": "Won"
+  },
+  "DEFAULTS": {
+  "USER": "User"
+}, 
+   "ERRORS": {
+  "LOAD_CATEGORIES": "Error loading categories.",
+  "LOAD_ITEMS": "Error loading items.",
+  "LOAD_REVIEWS": "Error loading reviews."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Profile updated successfully."
+}
 }}

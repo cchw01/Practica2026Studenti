@@ -353,4 +353,94 @@
     "MINUTES": "min",
     "SECONDS": "s"
   }
+}, 
+"PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@nombre de usuario no establecido",
+    "NAME_NOT_SET": "Nombre no establecido",
+    "EMAIL_NOT_SET": "Correo electrónico no establecido",
+    "AVERAGE_SCORE": "Puntuación media"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Editar perfil",
+    "LOG_OUT": "Cerrar sesión",
+    "ADD_ITEM": "Añadir artículo",
+    "CHANGE_PHOTO": "Cambiar foto",
+    "HIDE_PASSWORD": "Ocultar configuración de contraseña",
+    "CHANGE_PASSWORD": "Cambiar contraseña",
+    "UPDATE_PASSWORD": "Actualizar contraseña",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar cambios"
+  },
+
+  "THEME": {
+    "TITLE": "Personalizar tema",
+    "DESCRIPTION": "Elige un estilo visual que se adapte a tu estado de ánimo.",
+    "LIGHT": "Claro",
+    "SUNSET": "Atardecer",
+    "OCEAN": "Océano"
+  },
+
+  "SELL": {
+    "TITLE": "Vender un artículo nuevo",
+    "DESCRIPTION": "¿Listo para publicar un artículo?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Mis ventas activas",
+    "WON_ITEMS": "Artículos ganados",
+    "WISHLIST": "Mi lista de deseos",
+    "REVIEWS": "Reseñas recibidas"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Todavía no has publicado artículos.",
+    "WON_ITEMS": "Todavía no has ganado ningún artículo.",
+    "WISHLIST": "Tu lista de deseos está vacía.",
+    "REVIEWS": "Todavía no has recibido reseñas."
+  },
+
+  "EDIT": {
+    "TITLE": "Editar perfil",
+    "USERNAME": "Nombre de usuario",
+    "FULL_NAME": "Nombre completo",
+    "EMAIL": "Correo electrónico",
+
+    "USERNAME_PLACEHOLDER": "ej. john_doe",
+    "FULL_NAME_PLACEHOLDER": "ej. Juan Pérez",
+    "EMAIL_PLACEHOLDER": "ej. juan@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Contraseña actual",
+    "NEW": "Nueva contraseña",
+    "CONFIRM": "Confirmar contraseña",
+
+    "CURRENT_PLACEHOLDER": "Introduce la contraseña actual",
+    "NEW_PLACEHOLDER": "Introduce la nueva contraseña",
+    "CONFIRM_PLACEHOLDER": "Confirma la nueva contraseña",
+
+    "REQUIRED": "Todos los campos son obligatorios.",
+    "NOT_MATCH": "La nueva contraseña y la confirmación no coinciden.",
+    "SUCCESS": "¡Contraseña actualizada correctamente!",
+    "ERROR": "Error al actualizar la contraseña. Comprueba tu contraseña actual."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activo",
+    "ADDED": "Añadido",
+    "WON": "Ganado"
+  }, 
+  "DEFAULTS": {
+  "USER": "Usuario"
+}, 
+"ERRORS": {
+  "LOAD_CATEGORIES": "Error al cargar las categorías.",
+  "LOAD_ITEMS": "Error al cargar los artículos.",
+  "LOAD_REVIEWS": "Error al cargar las reseñas."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Perfil actualizado con éxito."
+}
 }}
