@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CategoryService } from '../services/category-service';
+import { Category } from '../Models/categoryItem';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -26,25 +28,38 @@ export class AuctionsPage implements OnInit {
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
-    const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
-    if (searchFromUrl) {
-      this.searchText = searchFromUrl;
-    }
+    this.route.queryParams.subscribe((params) => {
+      if (params['category']) {
+        this.selectedCategory = params['category'];
+        if (this.allItems.length > 0) {
+          this.applyFiltersAndSort();
+        }
+      }
+    });
 
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map((i) => i.Category.name))];
+        this.categories = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
         this.applyFiltersAndSort();
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Eroare la încărcarea item-urilor', err),
     });
-  }
 
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories.map((c) => c.name);
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+    });
+  }
   applyFiltersAndSort(): void {
     let result = [...this.allItems];
 
