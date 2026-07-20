@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 // Material Design Imports
 import { MatButtonModule } from '@angular/material/button';
@@ -49,6 +50,7 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     ShareListingButton,
     AuctionDetail,
     Footer,
+
     // HelpPageComponent // Dacă ai erori pe pagina de Help, decomentează această linie!
   ],
   imports: [
@@ -56,6 +58,7 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
+    AiWidgetComponent,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -69,7 +72,6 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
 
     // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
-    AiWidgetComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

@@ -1,0 +1,5 @@
+Proiectul BidSphere a fost creat în anul 2026.
+Licitațiile principale se desfășoară în fiecare zi de joi, începând cu ora 10:00.
+Prețul minim de pornire pentru orice licitație standard este de 500 de lei.
+Pentru suport tehnic, utilizatorii pot trimite un email la adresa contact@bidsphere.ro.
+Regulamentul strict interzice anularea unei oferte odată ce aceasta a fost plasată pe platformă.

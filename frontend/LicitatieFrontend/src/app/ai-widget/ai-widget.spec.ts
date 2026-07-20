@@ -1,37 +1,38 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ai-widget',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './ai-widget.html',
   styleUrls: ['./ai-widget.css'],
 })
 export class AiWidgetComponent {
-  isChatOpen: boolean = false;
-  userInput: string = '';
+  mesaj: string = '';
+  raspuns: string = '';
+  isChatOpen: boolean = false; // <-- Fereastra este ascunsă la început
 
-  messages: Array<{ text: string; isUser: boolean }> = [
-    { text: 'Salut! Cu ce te pot ajuta pe BidSphere astăzi?', isUser: false },
-  ];
+  constructor(private http: HttpClient) {}
 
+  // Funcția care deschide/închide fereastra
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
   }
 
-  sendMessage() {
-    if (this.userInput.trim()) {
-      this.messages.push({ text: this.userInput, isUser: true });
-      this.userInput = '';
+  trimiteIntrebare() {
+    if (!this.mesaj.trim()) return;
 
-      setTimeout(() => {
-        this.messages.push({
-          text: 'Momentan sunt în faza de testare, dar te aud!',
-          isUser: false,
-        });
-      }, 1000);
-    }
+    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: this.mesaj }).subscribe({
+      next: (data) => {
+        this.raspuns = data.raspuns;
+      },
+      error: (err) => {
+        console.error('Eroare de la server:', err);
+        this.raspuns = 'Eroare de conectare la serverul AI.';
+      },
+    });
   }
 }
