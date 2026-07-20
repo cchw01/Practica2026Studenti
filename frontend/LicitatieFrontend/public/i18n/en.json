@@ -258,6 +258,13 @@
     "SOCIAL": "Social media",
 
     "COPYRIGHT": "All rights reserved."
+  }, 
+
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Oops! Page not found",
+    "MESSAGE": "The page you're looking for doesn't exist or has been moved.",
+    "BUTTON":"Go BACK HOME"
   }
 
 }
