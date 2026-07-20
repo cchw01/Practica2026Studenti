@@ -377,5 +377,39 @@
 "USER_MENU": {
   "PROFILE": "Perfil",
   "LOGOUT": "Cerrar sesión"
+},
+
+"FORUM_DETAILS": {
+  "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
+
+  "LOADING_DISCUSSION_TITLE": "Cargando la discusión",
+  "LOADING_DISCUSSION_MESSAGE": "La discusión se está cargando.",
+  "LOAD_DISCUSSION_ERROR": "No se pudo cargar la discusión",
+  "TRY_AGAIN": "Intentar de nuevo",
+
+  "DELETE_POST": "Eliminar",
+  "POSTED_BY": "Publicado por",
+
+  "DISCUSSION": "Discusión",
+  "COMMENT": "comentario",
+  "COMMENTS": "comentarios",
+
+  "ADD_COMMENT": "Añadir un comentario",
+  "COMMENT_PLACEHOLDER": "Escribe tu comentario aquí...",
+  "COMMENT_REQUIRED": "El comentario es obligatorio.",
+  "COMMENT_MIN_LENGTH": "El comentario debe contener al menos 2 caracteres.",
+  "COMMENT_MAX_LENGTH": "El comentario no puede superar los 1000 caracteres.",
+
+  "PUBLISHING": "Publicando...",
+  "PUBLISH_COMMENT": "Publicar comentario",
+
+  "LOGIN_REQUIRED": "Debes iniciar sesión para publicar un comentario.",
+  "LOGIN": "Iniciar sesión",
+
+  "LOADING_COMMENTS": "Cargando comentarios",
+  "LOAD_COMMENTS_ERROR": "No se pudieron cargar los comentarios",
+
+  "DELETE_COMMENT": "Eliminar",
+  "NO_COMMENTS": "Todavía no hay comentarios"
 }
 }

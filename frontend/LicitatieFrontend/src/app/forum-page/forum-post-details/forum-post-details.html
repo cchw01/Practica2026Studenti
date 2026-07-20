@@ -1,22 +1,22 @@
 <div class="forum-details-page">
     <main class="forum-details-container">
-        <button type="button" class="back-button" (click)="goBackToForum()"> ← Back to discussions
+        <button type="button" class="back-button" (click)="goBackToForum()"> ← {{ 'FORUM_DETAILS.BACK_TO_DISCUSSIONS' | translate }}
         </button>
 
         @if (isLoadingPost) {
         <section class="status-card" aria-live="polite">
-            <h1>Loading discussion</h1>
+            <h1>{{ 'FORUM_DETAILS.LOADING_DISCUSSION_TITLE' | translate }}</h1>
 
-            <p> Discussions are loading. </p>
+            <p> {{ 'FORUM_DETAILS.LOADING_DISCUSSION_MESSAGE' | translate }} </p>
         </section>
         } @else if (postErrorMessage) {
         <section class="status-card" role="alert">
-            <h1>Unable to load discussion</h1>
+            <h1>{{ 'FORUM_DETAILS.LOAD_DISCUSSION_ERROR' | translate }}</h1>
 
             <p>{{ postErrorMessage }}</p>
 
             @if (postId > 0) {
-            <button type="button" class="primary-button" (click)="loadForumPost()"> Try again </button>
+            <button type="button" class="primary-button" (click)="loadForumPost()"> {{ 'FORUM_DETAILS.TRY_AGAIN' | translate }} </button>
             }
         </section>
         } @else if (post) {
@@ -28,11 +28,11 @@
                     <div class="post-title-row">
                     <h1>{{ post.title }}</h1>
                      @if (currentUserId !== null && post.userId === currentUserId) {
-                        <button type="button" class="delete-button" (click)="deletePost()">Delete</button>
+                        <button type="button" class="delete-button" (click)="deletePost()">{{ 'FORUM_DETAILS.DELETE_POST' | translate }}</button>
                         }
                     </div>
 
-                    <p class="post-metadata"> Posted by
+                    <p class="post-metadata"> {{ 'FORUM_DETAILS.POSTED_BY' | translate }}
                         <strong> {{ getUserLabel(post.userId) }} </strong>
                         <time [attr.datetime]="post.date"> {{ post.date | date: 'medium' }} </time>
                     </p>
@@ -45,18 +45,18 @@
         <section class="comments-section">
             <header class="comments-header">
                 <div>
-                    <h2>Discussion</h2>
+                    <h2>{{ 'FORUM_DETAILS.DISCUSSION' | translate }}</h2>
 
-                    <p> {{ comments.length }} {{ comments.length === 1 ? 'comment' : 'comments' }} </p>
+                    <p> {{ (comments.length === 1 ? 'FORUM_DETAILS.COMMENT' : 'FORUM_DETAILS.COMMENTS') | translate}} </p>
                 </div>
             </header>
 
             @if (currentUserId !== null) {
 <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
-    <label for="commentText"> Add a comment </label>
+    <label for="commentText"> {{ 'FORUM_DETAILS.ADD_COMMENT' | translate }} </label>
 
     <textarea id="commentText" formControlName="commentText" rows="5" maxlength="1000"
-        placeholder="Write your comment here..."></textarea>
+        placeholder="'FORUM_DETAILS.COMMENT_PLACEHOLDER' | translate "></textarea>
 
     <div class="form-information">
         <div class="validation-message">
@@ -64,16 +64,16 @@
             commentTextControl?.touched &&
             commentTextControl?.hasError('required')
             ) {
-            <p>A comment is required.</p>
+            <p>{{ 'FORUM_DETAILS.COMMENT_REQUIRED' | translate }}</p>
             } @else if (
             commentTextControl?.touched && commentTextControl?.hasError('minlength')
             ) {
-            <p> The comment must contain at least 2 characters. </p>
+            <p> {{ 'FORUM_DETAILS.COMMENT_MIN_LENGTH' | translate }} </p>
             } @else if (
             commentTextControl?.touched && commentTextControl?.hasError('maxlength')
             ) {
             <p>
-                The comment cannot exceed 1000 characters.
+                {{ 'FORUM_DETAILS.COMMENT_MAX_LENGTH' | translate }}
             </p>
             }
 
@@ -88,26 +88,26 @@
     </div>
 
     <button type="submit" class="primary-button" [disabled]=" commentForm.invalid || isSubmittingComment ">
-        {{ isSubmittingComment ? 'Publishing...' : 'Publish comment' }}
+        {{ ( isSubmittingComment ? 'FORUM_DETAILS.PUBLISHING' : 'FORUM_DETAILS.PUBLISH_COMMENT') | translate }}
     </button>
 </form>
 } @else {
 <div class="comment-form login-required">
-    <p>You need to be logged in to post a comment.
-        <a routerLink="/login-page">Log in</a>
+    <p>{{ 'FORUM_DETAILS.LOGIN_REQUIRED' | translate }}
+        <a routerLink="/login-page">{{ 'FORUM_DETAILS.LOGIN' | translate }}</a>
     </p>
 </div>
 }
             @if (isLoadingComments) {
             <div class="status-card comments-status" aria-live="polite">
-                <h3>Loading comments</h3>
+                <h3>{{ 'FORUM_DETAILS.LOADING_COMMENTS' | translate }}</h3>
             </div>
             } @else if (commentsErrorMessage) {
             <div class="status-card comments-status" role="alert">
-                <h3>Unable to load comments</h3>
+                <h3>{{ 'FORUM_DETAILS.LOAD_COMMENTS_ERROR' | translate }}</h3>
                 <p>{{ commentsErrorMessage }}</p>
 
-                <button type="button" class="secondary-button" (click)="loadForumComments()"> Try again </button>
+                <button type="button" class="secondary-button" (click)="loadForumComments()">{{ 'FORUM_DETAILS.TRY_AGAIN' | translate }}</button>
             </div>
             } @else {
             <div class="comments-list">
@@ -131,13 +131,13 @@
                         <p>{{ comment.commentText }}</p>
 
                         @if (currentUserId !== null && comment.userId === currentUserId) {
-                        <button type="button" class="delete-comment-button" (click)="deleteComment(comment.id)">Delete</button>
+                        <button type="button" class="delete-comment-button" (click)="deleteComment(comment.id)">{{ 'FORUM_DETAILS.DELETE_COMMENT' | translate }}</button>
                         }
                     </div>
                 </article>
                 } @empty {
                 <div class="empty-comments">
-                    <h3>No comments yet</h3>
+                    <h3>{{ 'FORUM_DETAILS.NO_COMMENTS' | translate }}</h3>
                 </div>
                 }
             </div>

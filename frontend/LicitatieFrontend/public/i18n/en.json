@@ -379,6 +379,40 @@
  "USER_MENU": {
   "PROFILE": "Profile",
   "LOGOUT": "Log out"
+},
+
+"FORUM_DETAILS": {
+  "BACK_TO_DISCUSSIONS": "Back to discussions",
+
+  "LOADING_DISCUSSION_TITLE": "Loading discussion",
+  "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
+  "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
+  "TRY_AGAIN": "Try again",
+
+  "DELETE_POST": "Delete",
+  "POSTED_BY": "Posted by",
+
+  "DISCUSSION": "Discussion",
+  "COMMENT": "comment",
+  "COMMENTS": "comments",
+
+  "ADD_COMMENT": "Add a comment",
+  "COMMENT_PLACEHOLDER": "Write your comment here...",
+  "COMMENT_REQUIRED": "A comment is required.",
+  "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
+  "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
+
+  "PUBLISHING": "Publishing...",
+  "PUBLISH_COMMENT": "Publish comment",
+
+  "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
+  "LOGIN": "Log in",
+
+  "LOADING_COMMENTS": "Loading comments",
+  "LOAD_COMMENTS_ERROR": "Unable to load comments",
+
+  "DELETE_COMMENT": "Delete",
+  "NO_COMMENTS": "No comments yet"
 }
 
 }

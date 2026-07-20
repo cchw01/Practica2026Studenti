@@ -377,5 +377,39 @@
 "USER_MENU": {
   "PROFILE": "Profil",
   "LOGOUT": "Deconectare"
+},
+
+"FORUM_DETAILS": {
+  "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
+
+  "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
+  "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
+  "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
+  "TRY_AGAIN": "Încearcă din nou",
+
+  "DELETE_POST": "Șterge",
+  "POSTED_BY": "Publicat de",
+
+  "DISCUSSION": "Discuție",
+  "COMMENT": "comentariu",
+  "COMMENTS": "comentarii",
+
+  "ADD_COMMENT": "Adaugă un comentariu",
+  "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
+  "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
+  "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
+  "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
+
+  "PUBLISHING": "Se publică...",
+  "PUBLISH_COMMENT": "Publică comentariul",
+
+  "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
+  "LOGIN": "Autentifică-te",
+
+  "LOADING_COMMENTS": "Se încarcă comentariile",
+  "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
+
+  "DELETE_COMMENT": "Șterge",
+  "NO_COMMENTS": "Nu există comentarii încă"
 }
 }
