@@ -353,4 +353,19 @@
     "MINUTES": "min",
     "SECONDS": "s"
   }
-}}
+},
+
+"REVIEWS": {
+  "TITLE": "Reseñas",
+  "REVIEWER_ID": "ID del autor de la reseña",
+  "REVIEWED_USER_ID": "ID del usuario evaluado",
+  "RATING": "Valoración (0–5)",
+  "RATING_ERROR": "La valoración debe estar entre 0 y 5.",
+  "COMMENT": "Comentario",
+  "ADD": "Añadir",
+  "UPDATE": "Actualizar",
+  "CANCEL": "Cancelar",
+  "EDIT": "Editar reseña",
+  "DELETE": "Eliminar reseña"
+  }
+}

@@ -354,4 +354,19 @@
     "MINUTES": "m",
     "SECONDS": "s"
   }
-}}
+},
+
+"REVIEWS": {
+  "TITLE": "Recenzii",
+  "REVIEWER_ID": "ID-ul autorului recenziei",
+  "REVIEWED_USER_ID": "ID-ul utilizatorului evaluat",
+  "RATING": "Evaluare (0–5)",
+  "RATING_ERROR": "Evaluarea trebuie să fie între 0 și 5.",
+  "COMMENT": "Comentariu",
+  "ADD": "Adaugă",
+  "UPDATE": "Actualizează",
+  "CANCEL": "Anulează",
+  "EDIT": "Editează recenzia",
+  "DELETE": "Șterge recenzia"
+}
+}

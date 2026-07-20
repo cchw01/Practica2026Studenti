@@ -358,4 +358,19 @@
     "MINUTES": "m",
     "SECONDS": "s"
   }
-}}
+},
+"REVIEWS": {
+  "TITLE": "Reviews",
+  "REVIEWER_ID": "Reviewer ID",
+  "REVIEWED_USER_ID": "Reviewed User ID",
+  "RATING": "Rating (0–5)",
+  "RATING_ERROR": "The rating must be between 0 and 5.",
+  "COMMENT": "Comment",
+  "ADD": "Add",
+  "UPDATE": "Update",
+  "CANCEL": "Cancel",
+  "EDIT": "Edit review",
+  "DELETE": "Delete review"
+}
+
+}
