@@ -1,0 +1,108 @@
+.admin-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.admin-page h1 {
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tabs button {
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: #666;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs button.active {
+  color: #1a1a2e;
+  border-bottom: 3px solid #4a4de7;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: #f7f7fb;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 28px;
+  margin: 0 0 4px 0;
+  color: #4a4de7;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.admin-table button,
+.pending-card button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #4a4de7;
+  color: white;
+  cursor: pointer;
+  margin-right: 6px;
+  font-size: 13px;
+}
+
+.admin-table button.danger,
+.pending-card button.danger {
+  background: #e74c3c;
+}
+
+.pending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pending-card {
+  background: #f7f7fb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.pending-card h3 {
+  margin: 0 0 8px 0;
+}

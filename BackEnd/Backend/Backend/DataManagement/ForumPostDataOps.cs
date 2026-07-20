@@ -15,19 +15,12 @@ namespace Backend.DataManagement
 
         public ForumPost[]? GetForumPosts()
         {
-            return DbContext?.ForumPosts
-                .Include(p => p.User)
-                .Include(p => p.Comments)
-                .ToArray();
+            return DbContext?.ForumPosts.Include(x => x.Comments).Include(x => x.User).ToArray();
         }
 
         public ForumPost? GetForumPostById(int id)
         {
-            return DbContext?.ForumPosts
-                .Include(p => p.User)
-                .Include(p => p.Comments)
-                .Where(x => x.Id == id)
-                .FirstOrDefault();
+            return DbContext?.ForumPosts.Include(x => x.Comments).Include(x => x.User).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void AddForumPost(ForumPost forumPost)

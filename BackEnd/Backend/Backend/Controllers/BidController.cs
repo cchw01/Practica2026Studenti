@@ -1,8 +1,10 @@
-using Backend.DataManagement;
+﻿using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Backend.DTOs;
 
 namespace Backend.Controllers
 {
@@ -11,22 +13,34 @@ namespace Backend.Controllers
     public class BidController : ControllerBase
     {
         private readonly BidDataOps dataOps;
-        private readonly ApplicationDbContext DbContext;
-        public BidController(ApplicationDbContext dbContext)
+        private readonly AuctionItemDataOps itemDataOps;
+
+        public BidController(ApplicationDbContext DbContext)
         {
-            DbContext = dbContext;
-            dataOps = new BidDataOps(dbContext);
+            dataOps = new BidDataOps(DbContext);
+            itemDataOps = new AuctionItemDataOps(DbContext);
         }
 
 
 
         [HttpGet]
-        public ActionResult<Bid[]> GetBids()
+        public ActionResult<BidDto[]> GetBids()
         {
             try
             {
                 var bids = dataOps.GetBids();
-                return Ok(bids);
+                var bidDtos = bids.Select(b => new BidDto
+                {
+                    Id = b.Id,
+                    AuctionItemId = b.BiddedItemId,
+                    UserId = b.BidderId,
+                    UserName = b.Bidder != null ? b.Bidder.UserName : "Unknown",
+                    ItemName = b.BiddedItem != null ? b.BiddedItem.Name : "Unknown",
+                    Price = b.Price,
+                    Date = b.Date
+                }).ToArray();
+
+                return Ok(bidDtos);
             }
             catch (Exception ex)
             {
@@ -35,7 +49,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Bid> GetBid(int id)
+        public ActionResult<BidDto> GetBid(int id)
         {
             try
             {
@@ -44,7 +58,18 @@ namespace Backend.Controllers
                 if (bid == null)
                     return NotFound();
 
-                return Ok(bid);
+                var bidDto = new BidDto
+                {
+                    Id = bid.Id,
+                    AuctionItemId = bid.BiddedItemId,
+                    UserId = bid.BidderId,
+                    UserName = bid.Bidder != null ? bid.Bidder.UserName : "Unknown",
+                    ItemName = bid.BiddedItem != null ? bid.BiddedItem.Name : "Unknown",
+                    Price = bid.Price,
+                    Date = bid.Date
+                };
+
+                return Ok(bidDto);
             }
             catch (Exception ex)
             {
@@ -53,64 +78,52 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Bid> AddBid(Bid bid)
+        [Authorize]
+        public ActionResult<BidDto> AddBid(CreateBidDto bidDto)
         {
             try
             {
-                var previousBids = dataOps.GetBidsByItemId(bid.BiddedItemId);
-                var previousTopBid = previousBids
-                    .OrderByDescending(b => b.price)
-                    .FirstOrDefault();
+                var item = itemDataOps.GetTrackedAuctionItemById(
+                                bidDto.AuctionItemId);
+                if (item == null)
+                    return NotFound("Item not found.");
 
-                dataOps.AddBid(bid);
+                if (DateTime.Now > item.EndDate)
+                    return BadRequest("Licitation has ended.");
 
-                var itemOps = new AuctionItemDataOps(DbContext);
-                var item = itemOps.GetAuctionItemById(bid.BiddedItemId);
-                var itemName = item != null ? item.Name : "an item";
-                var notifOps = new NotificationDataOps(DbContext);
+                if (bidDto.Price <= item.CurrentPrice)
+                    return BadRequest($"Price must be higher than the current price ({item.CurrentPrice}).");
 
-                // Update the item's CurrentPrice to reflect the new highest bid
-                if (item != null && bid.price > item.CurrentPrice)
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+                if (userIdClaim == null)
+                    return Unauthorized("You must be logged in to place a bid.");
+                
+                int currentUserId = int.Parse(userIdClaim.Value);
+
+                var newBid = new Bid
                 {
-                    item.CurrentPrice = bid.price;
-                    itemOps.UpdateAuctionItem(item);
-                }
+                    BiddedItemId = bidDto.AuctionItemId,
+                    BidderId = currentUserId,
+                    Price = bidDto.Price,
+                    Date = DateTime.Now
+                };
 
-                //  notify the item owner that someone bid
-                if (item != null && item.OwnerId != bid.BidderId)
+                dataOps.AddBid(newBid);
+
+                item.CurrentPrice = bidDto.Price;
+                item.WinnerId = currentUserId;
+                item.Status = AuctionItem.StatusEnum.ActiveBid;
+
+                itemDataOps.SaveChanges();
+
+                return Ok(new BidDto
                 {
-                    notifOps.Create(
-                        item.OwnerId,
-                        $"Someone placed a bid of {bid.price} on your item \"{itemName}\""
-                    );
-                }
-
-                //  notify the previous top bidder that they got outbid
-                if (previousTopBid != null
-                    && previousTopBid.price < bid.price
-                    && previousTopBid.BidderId != bid.BidderId)
-                {
-                    notifOps.Create(
-                        previousTopBid.BidderId,
-                        $"You've been outbid on \"{itemName}\" — new bid is {bid.price}. Bid again to stay in the race!"
-                    );
-                }
-
-                return Ok(bid);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPut]
-        public ActionResult<Bid> UpdateBid(Bid bid)
-        {
-            try
-            {
-                dataOps.UpdateBid(bid);
-                return Ok(bid);
+                    Id = newBid.Id,
+                    AuctionItemId = newBid.BiddedItemId,
+                    UserId = newBid.BidderId,
+                    Price = newBid.Price,
+                    Date = newBid.Date
+                });
             }
             catch (Exception ex)
             {
@@ -128,17 +141,27 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToString());
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("item/{itemId}")]
-        public ActionResult<Bid[]> GetBidsByItem(int itemId)
+        public ActionResult<BidDto[]> GetBidsByItem(int itemId)
         {
             try
             {
                 var bids = dataOps.GetBidsByItemId(itemId);
-                return Ok(bids);
+                var bidDtos = bids.Select(b => new BidDto
+                {
+                    Id = b.Id,
+                    AuctionItemId = b.BiddedItemId,
+                    UserId = b.BidderId,
+                    UserName = b.Bidder != null ? b.Bidder.UserName : "Unknown",
+                    ItemName = b.BiddedItem != null ? b.BiddedItem.Name : "Unknown",
+                    Price = b.Price,
+                    Date = b.Date
+                }).ToArray();
+                return Ok(bidDtos);
             }
             catch (Exception ex)
             {

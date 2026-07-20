@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Service } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../app-logic/review';
+import { CategoryService } from '../../services/category-service';
+import { UserService } from '../../services/user-service';
 
 interface Item {
   id: number;
@@ -39,6 +41,7 @@ export class ProfilePage implements OnInit {
   // --- Edit mode ---
   isEditing = false;
   currentUserId: number = 3; // Default fallback
+  categories: any[] = [];
 
   // --- User data ---
   user: UserProfile = {
@@ -64,7 +67,6 @@ export class ProfilePage implements OnInit {
   passwordMessage = '';
   passwordError = false;
 
-
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
@@ -84,8 +86,10 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private UserService: UserService, 
     private itemService: ItemService,
     private reviewService: ReviewService,
+    private categoryService: CategoryService,
     private router: Router,
   ) {}
 
@@ -101,6 +105,14 @@ export class ProfilePage implements OnInit {
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
+
+    // ---- Aici adaugi citirea categoriilor ----
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+    });
   }
 
   // --- Theme actions ---
@@ -167,7 +179,7 @@ export class ProfilePage implements OnInit {
           .filter((r) => r.ReviewedUserId === this.currentUserId)
           .map((r) => ({
             id: r.Id,
-            author: r.Reviewer?.UserName || 'Anonymous',
+            author: r.ReviewerUserName || 'Anonymous',
             rating: r.Rating,
             comment: r.Comment,
             date: r.ReviewDate
@@ -182,7 +194,7 @@ export class ProfilePage implements OnInit {
           this.score = 4.5; // Default fallback score
         }
       },
-      error: (err) => console.error('Error loading reviews:', err),
+      error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
     });
   }
   // --- Persistence ---
@@ -220,15 +232,23 @@ export class ProfilePage implements OnInit {
   }
 
   saveEdit(): void {
-    this.user = { ...this.editDraft };
-    this.saveProfile();
-    this.isEditing = false;
-    this.showPasswordForm = false;
-    this.currentPassword = '';
-    this.newPassword = '';
-    this.confirmPassword = '';
-    this.passwordMessage = '';
-    this.passwordError = false;
+    this.UserService.updateUser(this.currentUserId, this.editDraft.username, this.editDraft.name).subscribe({
+      next: (updatedUser: any) => {
+        this.user = {
+          ...this.user,
+          username: updatedUser.userName,
+          name: updatedUser.name
+        };
+        this.saveProfile();
+        this.isEditing = false;
+        alert('Profilul a fost actualizat cu succes!');
+      },
+      error: (err: any) => {
+        const errorMsg = err.error || 'A apărut o eroare la actualizarea profilului.';
+        alert(errorMsg);
+         this.editDraft = { ...this.user };
+      }
+    });
   }
 
   // --- Avatar upload ---

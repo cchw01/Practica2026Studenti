@@ -105,6 +105,10 @@
             {{ 'NAV.HELP' | translate }}
           </span>
         </a>
+        <a *ngIf="isAdmin()" routerLink="/admin" (click)="closeMenu()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Admin</span>
+        </a>
       </div>
 
       <!-- Acțiunile din navbar -->

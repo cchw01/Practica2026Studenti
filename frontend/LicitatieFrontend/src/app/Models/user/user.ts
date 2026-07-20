@@ -1,6 +1,6 @@
 import { AuctionItem } from '../item-model';
 import { Review } from '../review/review.model';
-import { Bid } from '../bid/bid';
+import { BidDto } from '../bid/bid';
 
 export enum RoleEnum {
   ADMIN = 'ADMIN',
@@ -15,7 +15,7 @@ export class User {
   Email!: string;
   Role!: RoleEnum;
   AddedItemsList!: Array<AuctionItem>;
-  BidList!: Array<Bid>;
+  BidList!: Array<BidDto>;
   WonItemsList!: Array<AuctionItem>;
   WhishList!: Array<AuctionItem>;
   Rating?: number;

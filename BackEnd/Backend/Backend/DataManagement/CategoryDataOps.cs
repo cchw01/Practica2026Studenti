@@ -22,7 +22,7 @@ namespace Backend.DataManagement
             DbContext.SaveChanges();
         }
 
-        public void DeleteCategory(int id)
+        public bool DeleteCategory(int id)
         {
             var category = DbContext.Category.Where(x => x.id == id).FirstOrDefault();
 
@@ -30,13 +30,24 @@ namespace Backend.DataManagement
             {
                 DbContext.Category.Remove(category);
                 DbContext.SaveChanges();
+                return true;
             }
+
+            return false;
         }
 
-        public void UpdateCategory(CategoryItem category)
+        public bool UpdateCategory(CategoryItem category)
         {
-            DbContext?.Category.Update(category);
-            DbContext?.SaveChanges();
+            var categoryToUpdate = DbContext.Category.Where(x => x.id == category.id).FirstOrDefault();
+
+            if (categoryToUpdate != null)
+            {
+                categoryToUpdate.name = category.name;
+                DbContext.SaveChanges();
+                return true;
+            }
+            return false;
+
         }
 
         public CategoryItem? GetCategoryById(int id)
