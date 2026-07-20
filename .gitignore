@@ -28,3 +28,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /BackEnd/Backend/.vs/Backend.slnx
+
+# ASP.NET Core secrets (contains DB connection strings & passwords)
+**/appsettings.json
+**/appsettings.*.json

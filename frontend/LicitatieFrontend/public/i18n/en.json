@@ -267,4 +267,55 @@
     "BUTTON":"Go BACK HOME"
   }
 
-}
+  "COPYRIGHT": "All rights reserved."
+}, 
+"AUCTION_ITEM_PAGE": {
+  "HEADER_BADGE": "🏷️ Auction Detail",
+
+  "INFO": {
+    "CURRENT_PRICE": "Current Price",
+    "START_PRICE": "Starting Price",
+    "CATEGORY": "Category",
+    "LOCATION": "Location",
+    "STARTS_AT": "Starts At",
+    "OWNER": "Owner",
+    "ENDS": "Ends"
+  },
+
+  "BID": {
+    "TITLE": "Place Your Bid",
+    "PLACEHOLDER": "Enter bid amount",
+    "BUTTON": "🔨 Place Bid",
+    "MINIMUM": "Minimum bid:",
+    "LOGIN_TEXT": "Sign in to place a bid on this item.",
+    "LOGIN_BUTTON": "Login to Bid"
+  },
+
+  "WISHLIST": {
+    "ADD": "🤍 Add to Wishlist",
+    "ADDED": "❤️ In Wishlist"
+  },
+
+  "DESCRIPTION": {
+    "TITLE": "Product Description"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Active",
+    "ENDED": "Ended",
+    "PENDING": "Pending"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "Auction ended.",
+    "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
+    "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "d",
+    "HOURS": "h",
+    "MINUTES": "m",
+    "SECONDS": "s"
+  }
+}}
