@@ -1,26 +1,26 @@
 <div class="add-item-page-container">
   <div class="page-header">
-    <span class="header-badge">🔨 Sell on BidSphere</span>
-    <h1>Add New Auction Item</h1>
-    <p>Fill in the details below to publish your item for auction.</p>
+    <span class="header-badge">{{ 'ADD_ITEM_PAGE.BADGE' | translate }}</span>
+    <h1>{{ 'ADD_ITEM_PAGE.TITLE' | translate }}</h1>
+    <p>{{ 'ADD_ITEM_PAGE.DESCRIPTION' | translate }}</p>
   </div>
 
   <mat-card class="add-item-card">
     <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
       <!-- Name -->
       <div class="form-field">
-        <label for="name">Item name *</label>
-        <input id="name" type="text" formControlName="name" placeholder="e.g. Vintage bicycle" />
+        <label for="name">{{ 'ADD_ITEM_PAGE.FIELDS.NAME' | translate }}</label>
+        <input id="name" type="text" formControlName="name" placeholder="{{ 'ADD_ITEM_PAGE.FIELDS.NAME_PLACEHOLDER' | translate }}" />
         <div class="error" *ngIf="f['name'].touched && f['name'].errors">
-          <span *ngIf="f['name'].errors['required']">Name is required.</span>
-          <span *ngIf="f['name'].errors['minlength']">Name must be at least 3 characters.</span>
+          <span *ngIf="f['name'].errors['required']">{{ 'ADD_ITEM_PAGE.VALIDATION.NAME_REQUIRED' | translate }}</span>
+          <span *ngIf="f['name'].errors['minlength']">{{ 'ADD_ITEM_PAGE.VALIDATION.NAME_MIN' | translate }}</span>
         </div>
       </div>
 
       <!-- Price + Duration -->
       <div class="form-row">
         <div class="form-field">
-          <label for="startPrice">Starting price (RON) *</label>
+          <label for="startPrice">{{ 'ADD_ITEM_PAGE.FIELDS.START_PRICE' | translate }}</label>
           <input
             id="startPrice"
             type="number"
@@ -29,61 +29,61 @@
             step="0.01"
           />
           <div class="error" *ngIf="f['startPrice'].touched && f['startPrice'].errors">
-            <span *ngIf="f['startPrice'].errors['required']">Starting price is required.</span>
-            <span *ngIf="f['startPrice'].errors['min']">Price must be greater than 0.</span>
+            <span *ngIf="f['startPrice'].errors['required']">{{ 'ADD_ITEM_PAGE.VALIDATION.PRICE_REQUIRED' | translate }}</span>
+            <span *ngIf="f['startPrice'].errors['min']">{{ 'ADD_ITEM_PAGE.VALIDATION.PRICE_MIN' | translate }}</span>
           </div>
         </div>
 
         <div class="form-field">
-          <label for="durationDays">Auction duration (days) *</label>
+          <label for="durationDays">{{ 'ADD_ITEM_PAGE.FIELDS.DURATION' | translate }}</label>
           <input id="durationDays" type="number" formControlName="durationDays" min="1" max="30" />
           <div class="error" *ngIf="f['durationDays'].touched && f['durationDays'].errors">
-            <span>Duration must be between 1 and 30 days.</span>
+            <span>{{ 'ADD_ITEM_PAGE.VALIDATION.DURATION' | translate }}</span>
           </div>
         </div>
       </div>
 
       <!-- Category -->
       <div class="form-field">
-        <label for="categoryId">Category *</label>
+        <label for="categoryId">{{ 'ADD_ITEM_PAGE.FIELDS.CATEGORY' | translate }}</label>
         <select id="categoryId" formControlName="categoryId">
-          <option [ngValue]="null" disabled>Select a category</option>
+          <option [ngValue]="null" disabled>{{ 'ADD_ITEM_PAGE.FIELDS.CATEGORY_PLACEHOLDER' | translate }}</option>
           <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
         </select>
         <div class="error" *ngIf="f['categoryId'].touched && f['categoryId'].errors">
-          <span>Please select a category.</span>
+          <span>{{ 'ADD_ITEM_PAGE.VALIDATION.CATEGORY' | translate }}</span>
         </div>
       </div>
 
       <!-- Location -->
       <div class="form-field">
-        <label for="location">Location *</label>
-        <input id="location" type="text" formControlName="location" placeholder="e.g. Brașov" />
+        <label for="location">{{ 'ADD_ITEM_PAGE.FIELDS.LOCATION' | translate }}</label>
+        <input id="location" type="text" formControlName="location" placeholder="{{ 'ADD_ITEM_PAGE.FIELDS.LOCATION_PLACEHOLDER' | translate }}" />
         <div class="error" *ngIf="f['location'].touched && f['location'].errors">
-          <span>Location is required.</span>
+          <span>{{ 'ADD_ITEM_PAGE.VALIDATION.LOCATION' | translate }}</span>
         </div>
       </div>
 
       <!-- Description -->
       <div class="form-field">
-        <label for="description">Description</label>
+        <label for="description">{{ 'ADD_ITEM_PAGE.FIELDS.DESCRIPTION' | translate }}</label>
         <textarea
           id="description"
           formControlName="description"
           rows="4"
-          placeholder="Describe the item's condition, history, details..."
+          placeholder="{{ 'ADD_ITEM_PAGE.FIELDS.DESCRIPTION_PLACEHOLDER' | translate }}"
         ></textarea>
       </div>
 
       <!-- Image upload -->
       <div class="form-field">
-        <label>Item photo</label>
+        <label>{{ 'ADD_ITEM_PAGE.IMAGE.TITLE' | translate }}</label>
 
         <div class="image-upload" *ngIf="!imagePreview">
           <label for="imageInput" class="upload-box">
             <mat-icon>add_photo_alternate</mat-icon>
-            <span>Click to upload an image</span>
-            <small>JPG, PNG or WEBP, max 5 MB</small>
+            <span>{{ 'ADD_ITEM_PAGE.IMAGE.UPLOAD' | translate }}</span>
+            <small>{{ 'ADD_ITEM_PAGE.IMAGE.DETAILS' | translate }}</small>
           </label>
           <input
             id="imageInput"
@@ -97,7 +97,7 @@
         <div class="image-preview" *ngIf="imagePreview">
           <img [src]="imagePreview" alt="Item preview" />
           <button type="button" class="btn-remove" (click)="removeImage()">
-            <mat-icon>close</mat-icon> Remove
+            <mat-icon>close</mat-icon> {{ 'ADD_ITEM_PAGE.IMAGE.REMOVE' | translate }}
           </button>
         </div>
 
@@ -116,9 +116,9 @@
 
       <!-- Actions -->
       <div class="form-actions">
-        <button type="button" mat-stroked-button routerLink="/auctions">Cancel</button>
+        <button type="button" mat-stroked-button routerLink="/auctions">{{ 'ADD_ITEM_PAGE.BUTTONS.CANCEL' | translate }}</button>
         <button type="submit" mat-flat-button color="primary" [disabled]="isSubmitting">
-          {{ isSubmitting ? 'Publishing...' : 'Publish Item' }}
+          {{ isSubmitting ? ('ADD_ITEM_PAGE.BUTTONS.PUBLISHING' | translate) : ('ADD_ITEM_PAGE.BUTTONS.PUBLISH' | translate) }}
         </button>
       </div>
     </form>
