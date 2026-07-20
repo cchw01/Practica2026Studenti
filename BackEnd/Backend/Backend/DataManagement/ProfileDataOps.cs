@@ -35,7 +35,7 @@ namespace Backend.DataManagement
         public ProfileDto? GetProfileByUserName(string userName)
         {
             var user = _db.Users
-                .AsNoTracking()
+                .Include(u => u.WishList)
                 .FirstOrDefault(u => u.UserName == userName);
             if (user is null) return null;
             return BuildProfileDto(user);
@@ -77,7 +77,9 @@ namespace Backend.DataManagement
         {
             return _db.Reviews
                 .AsNoTracking()
+                .Include(r => r.Reviewer)
                 .Where(r => r.ReviewedUserId == userId)
+                .ToList()
                 .Select(r => MapReviewToDto(r))
                 .ToList();
         }
@@ -86,7 +88,9 @@ namespace Backend.DataManagement
         {
             return _db.Reviews
                 .AsNoTracking()
+                .Include(r => r.Reviewer)
                 .Where(r => r.ReviewerId == userId)
+                .ToList()
                 .Select(r => MapReviewToDto(r))
                 .ToList();
         }
@@ -129,16 +133,19 @@ namespace Backend.DataManagement
         {
             var reviewsReceived = _db.Reviews
                 .AsNoTracking()
+                .Include(r => r.Reviewer)
                 .Where(r => r.ReviewedUserId == user.ID)
                 .ToList();
 
             var addedItems = _db.AuctionItems
                 .AsNoTracking()
+                .Include(a => a.Category)
                 .Where(a => a.OwnerId == user.ID)
                 .ToList();
 
             var biddedItems = _db.AuctionItems
                 .AsNoTracking()
+                .Include(a => a.Category)
                 .Where(a => a.WinnerId == user.ID)
                 .ToList();
 
@@ -167,12 +174,11 @@ namespace Backend.DataManagement
 
         private ReviewDto MapReviewToDto(Review r)
         {
-            var reviewer = _db.Users.Find(r.ReviewerId);
             return new ReviewDto
             {
                 Id = r.Id.ToString(),
                 ReviewerId = r.ReviewerId.ToString(),
-                ReviewerName = reviewer?.Name ?? reviewer?.UserName ?? string.Empty,
+                ReviewerName = r.Reviewer?.Name ?? r.Reviewer?.UserName ?? string.Empty,
                 RevieweeId = r.ReviewedUserId.ToString(),
                 Score = r.Rating,
                 Comment = r.Comment,
