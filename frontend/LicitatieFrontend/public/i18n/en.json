@@ -134,5 +134,17 @@
         }
       }
     }
+  },
+
+  "HELP": {
+    "TITLE": "Help Center",
+    "INFORMATION": "Find quick answers, reach us by phone, or chat with our AI assistant.",
+    "FAQ":"❓ Frequently Asked Questions",
+    "SUPPORT":"📞 Quick Phone Support",
+    "PROGRAM":"Monday - Friday: 09:00 - 18:00",
+    "FORM":"📝 Open a Ticket",
+    "REQUEST":"Send Request",
+    "ASSISTANT":"Live Virtual Assistant"
   }
+
 }
