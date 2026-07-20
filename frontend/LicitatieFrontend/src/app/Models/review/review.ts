@@ -21,7 +21,7 @@ import { ReviewService } from '../../services/review-service'; // <-- ajusteaza 
     MatIconModule
   ],
   templateUrl: './review.html',
-  styleUrl: './review.css'
+  styleUrl: './review.scss'
 })
 export class ReviewComponent implements OnInit {
   reviews: Review[] = [];
