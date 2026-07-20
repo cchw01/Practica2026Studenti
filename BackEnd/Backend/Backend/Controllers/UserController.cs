@@ -25,12 +25,22 @@ namespace Backend.Controllers
             }
 
             [HttpGet]
-            public ActionResult<User> GetUsers()
-            {
+        public ActionResult<IEnumerable<UserReadDto>> GetUsers()
+        {
                 try
                 {
                     var users = dataOps.GetUsers();
-                    return Ok(users);
+                    var userDtos = users.Select(u => new UserReadDto
+                    {
+                        ID = u.ID,
+                        UserName = u.UserName,
+                        Name = u.Name,
+                        Email = u.Email,
+                        Role = u.Role,
+                        Rating = u.Rating,
+                        PhoneNumber = u.PhoneNumber
+                    }).ToArray();
+                    return Ok(userDtos);
                 }
                 catch (Exception ex)
                 {
@@ -39,7 +49,7 @@ namespace Backend.Controllers
             }
 
             [HttpGet("{id}")]
-            public ActionResult<User> GetUser(int id)
+            public ActionResult<UserReadDto> GetUser(int id)
             {
                 try
                 {
@@ -48,7 +58,18 @@ namespace Backend.Controllers
                     if (user == null)
                         return NotFound();
 
-                    return Ok(user);
+                    var userDto = new UserReadDto
+                    {
+                        ID = user.ID,
+                        UserName = user.UserName,
+                        Name = user.Name,
+                        Email = user.Email,
+                        Role = user.Role,
+                        Rating = user.Rating,
+                        PhoneNumber = user.PhoneNumber
+                    };
+
+                    return Ok(userDto);
                 }
                 catch (Exception ex)
                 {
@@ -172,13 +193,41 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        public ActionResult<User> UpdateUser(User user)
+        [HttpPut("{id}")]
+        public ActionResult<UserReadDto> UpdateUser(int id, [FromBody] UserUpdateDto request)
         {
             try
             {
+                var user = dataOps.GetUserById(id);
+                if (user == null)
+                    return NotFound("Utilizatorul nu a fost găsit.");
+
+                if (user.UserName != request.UserName)
+                {
+                    var userWithSameUsername = dataOps.GetUserByUsername(request.UserName);
+                    if (userWithSameUsername != null)
+                    {
+                        return BadRequest("Acest username este deja folosit de un alt utilizator.");
+                    }
+                    user.UserName = request.UserName;
+                }
+
+                user.Name = request.Name;
+
                 dataOps.UpdateUser(user);
-                return Ok(user);
+
+                var userRead = new UserReadDto
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Rating = user.Rating,
+                    PhoneNumber=user.PhoneNumber
+                };
+
+                return Ok(userRead);
             }
             catch (Exception ex)
             {

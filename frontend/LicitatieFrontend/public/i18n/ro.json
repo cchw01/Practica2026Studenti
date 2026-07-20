@@ -299,6 +299,11 @@
       "TITLE": "Nu există discuții disponibile",
       "MESSAGE": "În prezent, nu există discuții pe forum."
     }
-  }
+  },
+
+  "NOTIFICATIONS": {
+  "TRUE": "Notificări",
+  "FALSE": "Nu există notificări încă."
+}
 
 }

@@ -299,5 +299,10 @@
       "TITLE": "No hay discusiones disponibles",
       "MESSAGE": "Actualmente no hay discusiones en el foro."
     }
-  }
+  },
+
+  "NOTIFICATIONS": {
+  "TRUE": "Notificaciones",
+  "FALSE": "Aún no hay notificaciones."
+}
 }

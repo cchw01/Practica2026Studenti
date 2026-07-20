@@ -302,6 +302,11 @@
       "TITLE": "No discussions available",
       "MESSAGE": "There are currently no discussions in the forum."
     }
-  }
+  },
+
+    "NOTIFICATIONS":{
+      "TRUE": "Notifications",
+      "FALSE": "No notifications yet."
+    }
 
 }

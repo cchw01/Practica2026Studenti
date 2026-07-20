@@ -1,7 +1,7 @@
 import { StatusEnum } from './status-enum';
-import { Category } from './user/categoryItem';
+import { Category } from './categoryItem';
 import { User } from './user/user';
-import { Bid } from './bid/bid';
+import { BidDto } from './bid/bid';
 
 export interface AuctionItem {
   ID: number;
@@ -20,7 +20,7 @@ export interface AuctionItem {
   Status: StatusEnum;
   StartDate: Date;
   EndDate: Date;
-  BidList: Array<Bid>;
+  BidList: Array<BidDto>;
   PhotoList?: string[];
   ImageUrl?: string;
 }
