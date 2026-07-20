@@ -2,15 +2,15 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <h1>Centrul de Asistență</h1>
-        <p>Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.</p>
+        <h1>{{ 'HELP.TITLE' | translate }}</h1>
+        <p>{{ 'HELP.INFORMATION' | translate }}</p>
     </div>
 
     <div class="content-grid">
 
-        <!-- Secțiunea FAQ Interactivă -->
+        <!-- Interactive FAQ Section -->
         <div class="card faq-card">
-            <h2>❓ Întrebări Frecvente</h2>
+            <h2>{{ 'HELP.FAQ' | translate }}</h2>
             <div class="faq-list">
                 <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)"
                     [class.active]="faq.isOpen">
@@ -25,46 +25,46 @@
             </div>
         </div>
 
-        <!-- Coloana din dreapta: Telefon și Formular -->
+        <!-- Right column: Phone & Form -->
         <div class="right-column">
 
             <!-- Call Center Card -->
             <div class="card call-card">
-                <h2>📞 Suport Telefonic Rapid</h2>
+                <h2>{{ 'HELP.SUPPORT' | translate }}</h2>
                 <div class="phone-number">+40 123 456 789</div>
-                <p>Luni - Vineri: 09:00 - 18:00</p>
+                <p>{{ 'HELP.PROGRAM' | translate }}</p>
             </div>
 
-            <!-- Formular Contact -->
+            <!-- Contact Form -->
             <div class="card form-card">
-                <h2>📝 Deschide un Tichet</h2>
+                <h2>{{ 'HELP.PROGRAM' | translate }}</h2>
                 <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
                     <div class="input-group">
-                        <input type="text" formControlName="name" placeholder="Nume complet">
+                        <input type="text" formControlName="name" placeholder="Full name">
                     </div>
                     <div class="input-group">
-                        <input type="email" formControlName="email" placeholder="Adresa de email">
+                        <input type="email" formControlName="email" placeholder="Email address">
                     </div>
                     <div class="input-group">
                         <textarea formControlName="issue" rows="4"
-                            placeholder="Descrie detaliat problema întâmpinată..."></textarea>
+                            placeholder="Describe your issue in detail..."></textarea>
                     </div>
-                    <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">Trimite Solicitarea</button>
+                    <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">{{ 'HELP.REQUEST' | translate }}</button>
                 </form>
             </div>
 
         </div>
     </div>
 
-    <!-- AI Chat Widget Premium -->
+    <!-- AI Chat Widget -->
     <div class="chat-widget">
         <button class="chat-toggle" (click)="toggleChat()" [class.chat-open]="isChatOpen">
-            {{ isChatOpen ? '✖' : '💬 Asistent AI' }}
+            {{ isChatOpen ? '✖' : '💬 AI Assistant' }}
         </button>
 
         <div class="chat-box" *ngIf="isChatOpen">
             <div class="chat-header">
-                <span class="status-dot"></span> Asistent Virtual Live
+                <span class="status-dot"></span> {{ 'HELP.ASSISTANT' | translate }}
             </div>
 
             <div class="chat-messages">
@@ -77,7 +77,7 @@
             </div>
 
             <div class="chat-input-area">
-                <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" placeholder="Întreabă ceva...">
+                <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" placeholder="Ask something...">
                 <button (click)="sendMessage(chatInput)">➤</button>
             </div>
         </div>

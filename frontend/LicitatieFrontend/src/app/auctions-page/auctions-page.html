@@ -30,7 +30,10 @@
 
     <!-- Add Item button -->
     <a routerLink="/add-item">
-      <button class="add-item-btn">Add Item</button>
+      <button class="add-item-btn">
+        <span class="material-symbols-outlined">add</span>
+        Add Item
+      </button>
     </a>
   </div>
 
@@ -41,14 +44,16 @@
   <div class="active-auctions">
     <div class="cards-container" *ngIf="filteredItems.length > 0">
       <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
-        <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
-          [alt]="item.Name" />
-        <div class="card-content">
-          <h3>{{ item.Name }}</h3>
-          <p class="current-bid">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
+        <div class="card-image-wrap">
+          <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
+            [alt]="item.Name" />
           <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
             {{ getRemainingTime(item.EndDate) }}
           </span>
+        </div>
+        <div class="card-content">
+          <h3>{{ item.Name }}</h3>
+          <p class="current-bid">Current price: <strong>{{ item.CurrentPrice }} RON</strong></p>
         </div>
       </div>
     </div>

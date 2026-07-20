@@ -1,42 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-help-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './help-page.html',
   styleUrls: ['./help-page.css'],
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
 
-  // FAQ cu stare de deschis/închis
+  // FAQ with open/closed state
   faqs = [
     {
-      question: 'Cum pot plasa o sumă la o licitație?',
+      question: 'How do I place a bid on an auction?',
       answer:
-        'Navighează către pagina produsului dorit și introdu suma în câmpul "Bid now". Suma trebuie să fie mai mare decât prețul curent.',
+        'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
       isOpen: false,
     },
     {
-      question: 'Cum adaug un produs pentru a-l vinde?',
+      question: 'How do I list an item for sale?',
       answer:
-        'Mergi în secțiunea "Profilul meu" și apasă butonul "Adaugă Licitație". Completează detaliile și așteaptă validarea unui Admin.',
+        'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
       isOpen: false,
     },
     {
-      question: 'Cum știu dacă am câștigat?',
+      question: 'How do I know if I won an auction?',
       answer:
-        'Vei primi o notificare pe email și în aplicație atunci când licitația se încheie și tu ai avut cea mai mare ofertă.',
+        'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
       isOpen: false,
     },
   ];
 
   isChatOpen = false;
-  isTyping = false; // Efect de scriere pentru AI
+  isTyping = false; // AI typing effect
   chatMessages: { sender: string; text: string }[] = [
-    { sender: 'ai', text: 'Salut! Sunt asistentul tău virtual. Cu ce te pot ajuta astăzi?' },
+    { sender: 'ai', text: "Hi! I'm your virtual assistant. How can I help you today?" },
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -49,17 +49,17 @@ export class HelpPageComponent implements OnInit {
     });
   }
 
-  // Deschide/închide o întrebare FAQ
+  // Toggle a FAQ item open/closed
   toggleFaq(index: number) {
     this.faqs[index].isOpen = !this.faqs[index].isOpen;
   }
 
   onSubmitHelpForm() {
     if (this.helpForm.valid) {
-      alert('Tichetul tău a fost înregistrat cu succes! Te vom contacta în curând.');
+      alert('Your ticket has been submitted successfully! We will contact you soon.');
       this.helpForm.reset();
     } else {
-      alert('Te rugăm să completezi corect toate câmpurile.');
+      alert('Please fill in all fields correctly.');
     }
   }
 
@@ -74,15 +74,15 @@ export class HelpPageComponent implements OnInit {
       inputEl.value = '';
       this.isTyping = true;
 
-      // Simulare răspuns inteligent cu întârziere
+      // Simulate a delayed AI response
       setTimeout(() => {
         this.isTyping = false;
         this.chatMessages.push({
           sender: 'ai',
           text:
-            'Am înțeles că ai o întrebare despre: "' +
+            'I understand you have a question about: "' +
             text +
-            '". Te rog să consulți FAQ sau să folosești formularul pentru asistență umană!',
+            '". Please check the FAQ or use the form below for human assistance!',
         });
       }, 1500);
     }

@@ -2,10 +2,10 @@
   <section class="contact-card">
     <div class="contact-header">
 
-      <h1>Contact Us</h1>
+      <h1>{{ 'CONTACT.TITLE' | translate }}</h1>
 
       <p>
-        Do you have any questions? Our team is ready to help you.
+        {{ 'CONTACT.DESCRIPTION' | translate }}
       </p>
     </div>
 
@@ -17,7 +17,8 @@
         </div>
 
         <div class="detail-content">
-          <span class="detail-label">Email</span>
+          <span class="detail-label">
+            {{ 'CONTACT.EMAIL' | translate }}</span>
 
           <a [href]="'mailto:' + contactEmail">
             {{ contactEmail }}
@@ -32,7 +33,7 @@
         </div>
 
         <div class="detail-content">
-          <span class="detail-label">Phone number</span>
+          <span class="detail-label">{{ 'CONTACT.PHONE' | translate }}</span>
 
           <a [href]="'tel:' + phoneNumber">
             {{ phoneNumber }}
@@ -47,10 +48,11 @@
         </div>
 
         <div class="detail-content">
-          <span class="detail-label">Call Center Hours</span>
+          <span class="detail-label">
+            {{ 'CONTACT.CALL_CENTER_HOURS' | translate }}</span>
 
           <span class="detail-value">
-            {{ callCenterSchedule }}
+            {{ 'CONTACT.SCHEDULE' | translate }}
           </span>
         </div>
       </article>
@@ -58,10 +60,10 @@
 
     <div class="social-media-section">
       <div class="social-text">
-        <h2>Follow Us</h2>
+        <h2>{{ 'CONTACT.FOLLOW_US' | translate }}</h2>
 
         <p>
-          Stay connected with us on social media.
+          {{ 'CONTACT.SOCIAL_DESCRIPTION' | translate }}
         </p>
       </div>
 

@@ -41,6 +41,18 @@
   border-radius: v.$radius-lg;
 
   box-shadow: v.$shadow-md;
+  animation: fade-in-up 0.6s ease both;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .contact-header {
@@ -111,7 +123,13 @@
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease;
+
+  animation: fade-in-up 0.6s ease both;
 }
+
+.contact-details .detail-item:nth-child(1) { animation-delay: 0.08s; }
+.contact-details .detail-item:nth-child(2) { animation-delay: 0.14s; }
+.contact-details .detail-item:nth-child(3) { animation-delay: 0.2s; }
 
 .detail-item::before {
   content: '';
