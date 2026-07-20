@@ -49,6 +49,25 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpGet("active")]
+        public ActionResult<AuctionItemResponseDto[]> GetActiveAuctionItems()
+        {
+            try
+            {
+                var items = dataOps.GetActiveAuctionItems();
+
+                var response = items
+                    .Select(MapToResponseDto)
+                    .ToArray();
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public ActionResult<AuctionItemResponseDto> GetAuctionItemById(int id)
         {

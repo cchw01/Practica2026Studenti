@@ -82,6 +82,12 @@ export class ItemService {
       .pipe(map((items) => items.map((item) => this.mapResponse(item))));
   }
 
+  getActiveItems(): Observable<AuctionItem[]> {
+    return this.http
+      .get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`)
+      .pipe(map((items) => items.map((item) => this.mapResponse(item))));
+  }
+
   getItemById(id: number): Observable<AuctionItem> {
     return this.http
       .get<AuctionItemResponseDto>(`${this.apiUrl}/${id}`)

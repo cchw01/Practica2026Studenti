@@ -121,6 +121,17 @@ using (var scope = app.Services.CreateScope())
         admin.Role = Backend.Models.RoleEnum.Admin;
         dbContext.SaveChanges();
     }
+
+    // Seed Categories
+    var defaultCategories = new[] { "Vehicles", "Electronics", "Art", "Clothing", "Home & Garden", "Real Estate" };
+    foreach (var categoryName in defaultCategories)
+    {
+        if (!dbContext.Category.Any(c => c.name == categoryName))
+        {
+            dbContext.Category.Add(new Backend.Models.CategoryItem { name = categoryName });
+        }
+    }
+    dbContext.SaveChanges();
 }
 
 app.UseRouting();
