@@ -231,7 +231,8 @@ namespace Backend.Controllers
                 if (user is null)
                     return NotFound(new { message = $"User with ID '{id}' was not found." });
 
-                if (!Backend.Services.PasswordHasher.VerifyPassword(request.CurrentPassword, user.Password))
+                if (string.IsNullOrEmpty(user.Password) ||
+                    !Backend.Services.PasswordHasher.VerifyPassword(request.CurrentPassword, user.Password))
                     return BadRequest(new { message = "Current password is incorrect." });
 
                 user.Password = Backend.Services.PasswordHasher.HashPassword(request.NewPassword);
