@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Backend.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 namespace Backend.DataManagement
 {
     public class ReviewDataOps
@@ -20,6 +21,15 @@ namespace Backend.DataManagement
         {
             var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
             return review;
+        }
+
+        public Review[] GetReviewsByUserId(int userId)
+        {
+            return DbContext.Reviews
+                .Where(r => r.ReviewedUserId == userId)
+                .Include(r => r.Reviewer)
+                .OrderByDescending(r => r.ReviewDate)
+                .ToArray();
         }
 
         public void AddReview(Review review)

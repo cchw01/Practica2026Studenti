@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
-import { ReviewService } from '../../app-logic/review';
+//import { ReviewService } from '../../app-logic/review';
+import { ReviewService } from '../../services/review';
 
 interface Item {
   id: number;
@@ -87,7 +88,8 @@ export class ProfilePage implements OnInit {
     private itemService: ItemService,
     private reviewService: ReviewService,
     private router: Router,
-  ) {}
+    private cdr: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
@@ -160,30 +162,37 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load reviews
-    this.reviewService.getReviews().subscribe({
-      next: (reviews: any[]) => {
-        this.reviews = reviews
-          .filter((r) => r.ReviewedUserId === this.currentUserId)
-          .map((r) => ({
-            id: r.Id,
-            author: r.Reviewer?.UserName || 'Anonymous',
-            rating: r.Rating,
-            comment: r.Comment,
-            date: r.ReviewDate
-              ? new Date(r.ReviewDate).toLocaleDateString()
-              : new Date().toLocaleDateString(),
-          }));
+    console.log('Se încarcă review-urile pentru userId:', this.currentUserId);
 
-        if (this.reviews.length > 0) {
-          const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
-          this.score = parseFloat((sum / this.reviews.length).toFixed(1));
-        } else {
-          this.score = 4.5; // Default fallback score
-        }
-      },
-      error: (err) => console.error('Error loading reviews:', err),
-    });
+    // Load reviews
+    // Load reviews received by this user
+    this.reviewService.getReviewsForUser(this.currentUserId).subscribe({
+  next: (reviews: any[]) => {
+    console.log('REVIEWS PRIMITE:', reviews);
+    this.reviews = reviews.map((r) => ({
+      id: r.id,
+      author: r.reviewer?.userName || 'Anonymous',
+      rating: r.rating,
+      comment: r.comment,
+      date: r.reviewDate
+        ? new Date(r.reviewDate).toLocaleDateString()
+        : new Date().toLocaleDateString(),
+    }));
+
+    console.log('THIS.REVIEWS DUPA MAP:', this.reviews);  // <-- adaugă asta
+
+    if (this.reviews.length > 0) {
+      const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
+      this.score = parseFloat((sum / this.reviews.length).toFixed(1));
+    } else {
+      this.score = 0;
+    }
+    this.cdr.detectChanges();
+  },
+  error: (err) => {
+    console.error('EROARE COMPLETA:', err);
+  },
+});
   }
   // --- Persistence ---
   private loadProfile(): void {

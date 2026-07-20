@@ -30,6 +30,12 @@ namespace Backend.DataManagement
                 .HasForeignKey(r => r.ReviewerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Review>() 
+    .HasOne(r => r.ReviewedUser) 
+    .WithMany()
+    .HasForeignKey(r => r.ReviewedUserId)
+    .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<AuctionItem>() // Relatiee Item -> Categorie
                 .HasOne(i => i.Category)
                 .WithMany(c => c.items)
