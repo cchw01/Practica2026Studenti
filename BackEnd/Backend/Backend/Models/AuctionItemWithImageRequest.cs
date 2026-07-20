@@ -20,9 +20,6 @@ namespace Backend.Models
         public string Location { get; set; }
 
         [Required]
-        public int OwnerId { get; set; }
-
-        [Required]
         public int DurationDays { get; set; }
 
         public IFormFile? Image { get; set; }
