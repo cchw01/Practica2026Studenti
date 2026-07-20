@@ -62,11 +62,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
 
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        
 
         RoleClaimType = "role",
     };
@@ -141,13 +137,20 @@ using (var scope = app.Services.CreateScope())
     try
     {
         db.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT 1 FROM [Users] WHERE [ID] = 3)
-            BEGIN
-                SET IDENTITY_INSERT [Users] ON;
-                INSERT INTO [Users] (ID, UserName, Name, Email, Role, Rating, PhoneNumber) 
-                VALUES (3, 'test', 'Test', 'test@test.com', 0, 0, '123456');
-                SET IDENTITY_INSERT [Users] OFF;
-            END");
+    IF NOT EXISTS (SELECT 1 FROM [Users] WHERE [ID] = 3)
+    BEGIN
+        SET IDENTITY_INSERT [Users] ON;
+
+        INSERT INTO [Users]
+            ([ID], [UserName], [Name], [Email], [Role],
+             [Rating], [PhoneNumber], [IsBanned])
+        VALUES
+            (3, 'test', 'Test', 'test@test.com', 0,
+             0, '123456', 0);
+
+        SET IDENTITY_INSERT [Users] OFF;
+    END
+");
     }
     catch { }
 }
