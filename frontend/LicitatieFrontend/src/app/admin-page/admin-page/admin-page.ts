@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../Models/admin/admin-service';
 
-type Tab = 'stats' | 'users' | 'auctions';
+
+type Tab = 'stats' | 'users' | 'auctions' | 'forum';
 
 @Component({
   selector: 'app-admin-page',
@@ -15,6 +16,8 @@ export class AdminPage implements OnInit {
   stats: any = null;
   users: any[] = [];
   pendingAuctions: any[] = [];
+  forumPosts: any[] = [];
+  forumComments: any[] = [];
 
   constructor(private adminService: AdminService) {}
 
@@ -23,11 +26,12 @@ export class AdminPage implements OnInit {
   }
 
   setTab(tab: Tab): void {
-    this.activeTab = tab;
-    if (tab === 'stats') this.loadStats();
-    if (tab === 'users') this.loadUsers();
-    if (tab === 'auctions') this.loadPendingAuctions();
-  }
+  this.activeTab = tab;
+  if (tab === 'stats') this.loadStats();
+  if (tab === 'users') this.loadUsers();
+  if (tab === 'auctions') this.loadPendingAuctions();
+  if (tab === 'forum') this.loadForum();
+}
 
   loadStats(): void {
     this.adminService.getStats().subscribe((s) => (this.stats = s));
@@ -90,4 +94,26 @@ export class AdminPage implements OnInit {
     if (!confirm('Ești sigur? Se șterge definitiv licitația.')) return;
     this.adminService.deleteAuction(id).subscribe(() => this.loadPendingAuctions());
   }
+
+  loadForum(): void {
+  this.adminService.getForumPosts().subscribe({
+    next: (p) => (this.forumPosts = p),
+    error: (err) => console.error('Eroare la incarcarea postarilor:', err),
+  });
+  this.adminService.getForumComments().subscribe({
+    next: (c) => (this.forumComments = c),
+    error: (err) => console.error('Eroare la incarcarea comentariilor:', err),
+  });
+}
+
+removePost(id: number): void {
+  if (!confirm('Ești sigur? Se șterge definitiv postarea și toate comentariile ei.')) return;
+  this.forumPosts = this.forumPosts.filter((p) => p.id !== id);
+  this.adminService.deleteForumPost(id).subscribe({ error: () => this.loadForum() });
+}
+
+removeComment(id: number): void {
+  if (!confirm('Ești sigur? Se șterge definitiv comentariul.')) return;
+  this.forumComments = this.forumComments.filter((c) => c.id !== id);
+}
 }
