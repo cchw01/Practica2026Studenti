@@ -1,13 +1,16 @@
-import { AuctionItem } from "../item-model";
+import { AuctionItem } from './item-model';
 
 export class Category {
-  id!: number;
+  Id!: number;
   name!: string;
-  items!: Array<AuctionItem>;
 
   constructor(item?: Partial<Category>) {
     if (item) {
       Object.assign(this, item);
     }
   }
+}
+
+export interface CategoryCreate {
+  Name: string;
 }

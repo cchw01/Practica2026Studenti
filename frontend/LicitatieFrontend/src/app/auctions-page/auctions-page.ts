@@ -4,6 +4,7 @@ import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CategoryService } from '../services/category-service';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -22,28 +23,60 @@ export class AuctionsPage implements OnInit {
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
 
+  isLoading: boolean = true;
+  hasError: boolean = false;
+
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-  ) { }
+    private categoryService: CategoryService,
+  ) {}
 
   ngOnInit(): void {
-    const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
-    if (searchFromUrl) {
-      this.searchText = searchFromUrl;
-    }
+    this.route.queryParams.subscribe((params) => {
+      if (params['category']) {
+        this.selectedCategory = params['category'];
+        if (this.allItems.length > 0) {
+          this.applyFiltersAndSort();
+        }
+      }
+    });
 
-    this.itemService.getItems().subscribe({
+    this.loadActiveAuctions();
+
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories.map((c) => c.name);
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+    });
+  }
+
+  loadActiveAuctions(): void {
+    this.isLoading = true;
+    this.hasError = false;
+
+    this.itemService.getActiveItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
+        // build category list from returned active items
+        const fromItems = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
+        if (this.categories.length === 0) {
+          this.categories = fromItems;
+        }
         this.applyFiltersAndSort();
+        this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err),
+      error: (err) => {
+        console.error('Eroare la încărcarea licitațiilor active', err);
+        this.hasError = true;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
     });
   }
 
@@ -86,9 +119,11 @@ export class AuctionsPage implements OnInit {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const left = this.translate.instant('AUCTIONS_PAGE.TIME.LEFT');
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
     if (days > 0) return `${days}d ${hours}h left`;
-    return `${hours}h left`;
+    if (hours > 0) return `${hours}h ${mins}m left`;
+    return `${mins}m left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
@@ -104,3 +139,4 @@ export class AuctionsPage implements OnInit {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }
+
