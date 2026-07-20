@@ -1,7 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { AuctionItem } from '../Models/item-model';
+
+interface CreateAuctionItemDto {
+  name: string;
+  startPrice: number;
+  categoryId: number;
+  description?: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+}
+
+interface UpdateAuctionItemDto {
+  name: string;
+  startPrice: number;
+  categoryId: number;
+  description?: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+}
+
+interface AuctionItemResponseDto {
+  id: number;
+  name: string;
+  startPrice: number;
+  currentPrice: number;
+  categoryId: number;
+  categoryName: string;
+  description?: string;
+  location: string;
+  ownerId: number;
+  ownerUserName: string;
+  winnerId?: number;
+  winnerUserName?: string;
+  status: AuctionItem['Status'];
+  startDate: string;
+  endDate: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +49,35 @@ export class ItemService {
   private readonly mockUrl = 'assets/mock-items.json';
   private readonly storageKey = 'auctionItems';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  private mapResponse(item: any): AuctionItem {
+    return this.sanitizeItem({
+      ID: item.id || item.ID,
+      Name: item.name || item.Name,
+      StartPrice: item.startPrice ?? item.StartPrice,
+      CurrentPrice: item.currentPrice ?? item.CurrentPrice ?? item.startPrice ?? item.StartPrice,
+      Category: { id: item.categoryId || item.CategoryId, name: item.categoryName || (item.Category?.name) },
+      CategoryId: item.categoryId || item.CategoryId,
+      WishingUsers: item.wishingUsers || [],
+      Description: item.description || item.Description,
+      Location: item.location || item.Location,
+      Owner: item.owner || { id: item.ownerId || item.OwnerId, username: item.ownerUserName || item.OwnerUserName },
+      OwnerId: item.ownerId || item.OwnerId,
+      Winner: item.winner || (item.winnerId ? { id: item.winnerId, username: item.winnerUserName } : undefined),
+      WinnerId: item.winnerId || item.WinnerId,
+      Status: item.status || item.Status,
+      StartDate: new Date(item.startDate || item.StartDate),
+      EndDate: new Date(item.endDate || item.EndDate),
+      BidList: item.bidList || item.BidList || [],
+      PhotoList: item.photoList || item.PhotoList || [],
+      ImageUrl: item.imageUrl || item.ImageUrl
+        ? (item.imageUrl || item.ImageUrl).startsWith('http')
+          ? (item.imageUrl || item.ImageUrl)
+          : 'https://localhost:7137' + (item.imageUrl || item.ImageUrl)
+        : undefined
+    });
+  }
 
   private sanitizeItem(item: any): AuctionItem {
     if (!item) return item;
@@ -101,9 +167,12 @@ export class ItemService {
     return new Observable<AuctionItem[]>(observer => {
       this.http.get<AuctionItem[]>(this.apiUrl).subscribe({
         next: (backendItems) => {
-          const sanitizedBackend = (backendItems || []).map(i => this.sanitizeItem(i));
+          const sanitizedBackend = (backendItems || []).map(i => this.mapResponse(i));
           const localItems = this.getLocalItems();
-          observer.next([...localItems, ...sanitizedBackend]);
+          const map = new Map<number, AuctionItem>();
+          for (const s of sanitizedBackend) map.set(s.ID, s);
+          for (const l of localItems) map.set(l.ID, l);
+          observer.next(Array.from(map.values()));
           observer.complete();
         },
         error: () => {
@@ -112,12 +181,8 @@ export class ItemService {
               const sanitizedMock = (mockItems || []).map(i => this.sanitizeItem(i));
               const localItems = this.getLocalItems();
               const map = new Map<number, AuctionItem>();
-              for (const m of sanitizedMock) {
-                map.set(m.ID, m);
-              }
-              for (const l of localItems) {
-                map.set(l.ID, l);
-              }
+              for (const m of sanitizedMock) map.set(m.ID, m);
+              for (const l of localItems) map.set(l.ID, l);
               observer.next(Array.from(map.values()));
               observer.complete();
             },
@@ -141,11 +206,10 @@ export class ItemService {
     return new Observable<AuctionItem>(observer => {
       this.http.get<AuctionItem>(`${this.apiUrl}/${id}`).subscribe({
         next: (res) => {
-          observer.next(this.sanitizeItem(res));
+          observer.next(this.mapResponse(res));
           observer.complete();
         },
         error: (err) => {
-          // Fallback to mock item if network request fails
           this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
             next: (mockItems) => {
               const found = mockItems.find(i => i.ID === id) || mockItems[0];
@@ -160,10 +224,20 @@ export class ItemService {
   }
 
   createItem(item: AuctionItem): Observable<AuctionItem> {
+    const dto: CreateAuctionItemDto = {
+      name: item.Name,
+      startPrice: item.StartPrice,
+      categoryId: item.CategoryId,
+      description: item.Description,
+      location: item.Location,
+      startDate: new Date(item.StartDate).toISOString(),
+      endDate: new Date(item.EndDate).toISOString(),
+    };
+
     return new Observable<AuctionItem>(observer => {
-      this.http.post<AuctionItem>(this.apiUrl, item).subscribe({
+      this.http.post<AuctionItemResponseDto>(this.apiUrl, dto).subscribe({
         next: (res) => {
-          observer.next(this.sanitizeItem(res));
+          observer.next(this.mapResponse(res));
           observer.complete();
         },
         error: () => {
@@ -172,6 +246,7 @@ export class ItemService {
           const sanitized = this.sanitizeItem(item);
           items.push(sanitized);
           localStorage.setItem(this.storageKey, JSON.stringify(items));
+          localStorage.setItem('local_auctions', JSON.stringify(items));
           observer.next(sanitized);
           observer.complete();
         }
@@ -181,9 +256,9 @@ export class ItemService {
 
   createItemWithImage(formData: FormData): Observable<AuctionItem> {
     return new Observable<AuctionItem>(observer => {
-      this.http.post<AuctionItem>(`${this.apiUrl}/with-image`, formData).subscribe({
+      this.http.post<AuctionItemResponseDto>(`${this.apiUrl}/with-image`, formData).subscribe({
         next: (res) => {
-          observer.next(this.sanitizeItem(res));
+          observer.next(this.mapResponse(res));
           observer.complete();
         },
         error: () => {
@@ -226,14 +301,35 @@ export class ItemService {
   }
 
   updateItem(item: AuctionItem): Observable<AuctionItem> {
-    const items: AuctionItem[] = this.getLocalItems();
-    const index = items.findIndex(i => i.ID === item.ID);
-    if (index !== -1) {
-      items[index] = this.sanitizeItem(item);
-      localStorage.setItem(this.storageKey, JSON.stringify(items));
-      localStorage.setItem('local_auctions', JSON.stringify(items));
-    }
-    return of(this.sanitizeItem(item));
+    const dto: UpdateAuctionItemDto = {
+      name: item.Name,
+      startPrice: item.StartPrice,
+      categoryId: item.CategoryId,
+      description: item.Description,
+      location: item.Location,
+      startDate: new Date(item.StartDate).toISOString(),
+      endDate: new Date(item.EndDate).toISOString(),
+    };
+
+    return new Observable<AuctionItem>(observer => {
+      this.http.put<AuctionItemResponseDto>(`${this.apiUrl}/${item.ID}`, dto).subscribe({
+        next: (res) => {
+          observer.next(this.mapResponse(res));
+          observer.complete();
+        },
+        error: () => {
+          const items: AuctionItem[] = this.getLocalItems();
+          const index = items.findIndex(i => i.ID === item.ID);
+          if (index !== -1) {
+            items[index] = this.sanitizeItem(item);
+            localStorage.setItem(this.storageKey, JSON.stringify(items));
+            localStorage.setItem('local_auctions', JSON.stringify(items));
+          }
+          observer.next(this.sanitizeItem(item));
+          observer.complete();
+        }
+      });
+    });
   }
 
   deleteItem(id: number): Observable<void> {

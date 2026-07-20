@@ -4,10 +4,10 @@ import { AuthService } from '../services/auth';
 import { ItemService } from '../services/item-service';
 import { BidService } from '../services/bid-service';
 import { AuctionItem } from '../Models/item-model';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 
-const defaultCategory = new Category({ id: 1, name: 'Vehicles', items: [] });
+const defaultCategory = new Category({ Id: 1, name: 'Vehicles' });
 const defaultOwner = new User({
   ID: '3',
   UserName: 'test',
@@ -36,7 +36,21 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   showWishlistToast: boolean = false;
   toastMessage: string = '';
   toastAction: 'added' | 'removed' = 'added';
+  isToastHiding: boolean = false;
   private toastTimeout: any;
+  private toastHideTimeout: any;
+
+  // Report functionality
+  showReportModal: boolean = false;
+  reportReason: string = 'Inappropriate Content';
+  reportDetails: string = '';
+  isReported: boolean = false;
+  showReportToast: boolean = false;
+  reportToastMessage: string = '';
+  isReportToastHiding: boolean = false;
+  private reportToastTimeout: any;
+  private reportToastHideTimeout: any;
+
   errorMessage: string = '';
   countdownText: string = '';
   private timerInterval: any;
@@ -104,6 +118,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     this.isInWishlist = wishlist.includes(this.auctionItem.ID);
+
+    const reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
+    this.isReported = reportedList.includes(this.auctionItem.ID);
   }
 
   private setAuctionItemData(item: any): void {
@@ -121,7 +138,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     if (item.Category) {
       this.auctionItem.Category = typeof item.Category === 'string'
-        ? new Category({ id: item.CategoryId || 1, name: item.Category, items: [] })
+        ? new Category({ Id: item.CategoryId || 1, name: item.Category })
         : item.Category;
     }
 
@@ -274,10 +291,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.router.navigate(['/login-page']);
   }
 
-  isToastHiding: boolean = false;
-  private toastHideTimeout: any;
-
   toggleWishlist(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.redirectToLogin();
+      return;
+    }
+
     this.isInWishlist = !this.isInWishlist;
     let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
 
@@ -322,6 +341,64 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       try { this.cdr.markForCheck(); } catch {}
     }, 1200);
 
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  // Report Modal & Handling
+  openReportModal(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.redirectToLogin();
+      return;
+    }
+    this.showReportModal = true;
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  closeReportModal(): void {
+    this.showReportModal = false;
+    this.reportDetails = '';
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  submitReport(): void {
+    this.isReported = true;
+    this.showReportModal = false;
+
+    let reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
+    if (!reportedList.includes(this.auctionItem.ID)) {
+      reportedList.push(this.auctionItem.ID);
+    }
+    localStorage.setItem('reported_items', JSON.stringify(reportedList));
+
+    let reportLogs: any[] = JSON.parse(localStorage.getItem('reported_items_details') || '[]');
+    reportLogs.push({
+      itemId: this.auctionItem.ID,
+      itemName: this.auctionItem.Name,
+      reason: this.reportReason,
+      details: this.reportDetails,
+      date: new Date().toISOString()
+    });
+    localStorage.setItem('reported_items_details', JSON.stringify(reportLogs));
+
+    this.reportToastMessage = `Report submitted for review. Thank you!`;
+    this.showReportToast = true;
+    this.isReportToastHiding = false;
+
+    if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
+    if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
+
+    this.reportToastHideTimeout = setTimeout(() => {
+      this.isReportToastHiding = true;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 1500);
+
+    this.reportToastTimeout = setTimeout(() => {
+      this.showReportToast = false;
+      this.isReportToastHiding = false;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 2000);
+
+    this.reportDetails = '';
     try { this.cdr.markForCheck(); } catch {}
   }
 

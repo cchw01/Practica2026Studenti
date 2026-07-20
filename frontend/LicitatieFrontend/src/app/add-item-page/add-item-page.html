@@ -48,7 +48,7 @@
         <label for="categoryId">{{ 'ADD_ITEM_PAGE.FIELDS.CATEGORY' | translate }}</label>
         <select id="categoryId" formControlName="categoryId">
           <option [ngValue]="null" disabled>{{ 'ADD_ITEM_PAGE.FIELDS.CATEGORY_PLACEHOLDER' | translate }}</option>
-          <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+          <option *ngFor="let cat of categories" [ngValue]="cat.Id">{{ cat.name }}</option>
         </select>
         <div class="error" *ngIf="f['categoryId'].touched && f['categoryId'].errors">
           <span>{{ 'ADD_ITEM_PAGE.VALIDATION.CATEGORY' | translate }}</span>

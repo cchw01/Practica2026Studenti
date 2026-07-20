@@ -569,6 +569,195 @@
   100% { transform: scale(1.25); }
 }
 
+/* Report Action Styles */
+.actions-footer {
+  margin-top: 4px;
+}
+
+.btn-report {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1px dashed rgba(220, 53, 69, 0.4);
+  border-radius: 10px;
+  background: transparent;
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-report:hover {
+  background: rgba(220, 53, 69, 0.08);
+  border-color: #dc3545;
+}
+
+.btn-report.reported {
+  border: 1px solid #dc3545;
+  background: rgba(220, 53, 69, 0.12);
+  color: #c0392b;
+}
+
+/* Glassmorphism Report Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #1e293b;
+}
+
+.modal-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 16px;
+  line-height: 1.4;
+}
+
+.field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  margin: 12px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-select, .modal-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 13px;
+  color: #1e293b;
+  background: #f8fafc;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.modal-select:focus, .modal-textarea:focus {
+  border-color: #3f51b5;
+  background: white;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-cancel {
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-submit-report {
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #dc3545, #c0392b);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-submit-report:hover {
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+}
+
+/* Report Toast */
+.report-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.92);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 1001;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: slideUpFade 0.3s ease forwards;
+}
+
+.report-toast.toast-hiding {
+  animation: fadeOutUp 0.35s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 
 

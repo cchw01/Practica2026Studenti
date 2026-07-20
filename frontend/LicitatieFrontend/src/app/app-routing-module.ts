@@ -18,6 +18,8 @@ import { View } from './menu-item/view/view';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { NotFound } from './not-found/not-found';
+import { AdminGuard } from './services/admin-guard';
+import { AdminPage } from './admin-page/admin-page/admin-page';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -39,13 +41,12 @@ const routes: Routes = [
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
-
+  { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: '**', component: NotFound },
- // { path: '**', redirectTo: '/home-page' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

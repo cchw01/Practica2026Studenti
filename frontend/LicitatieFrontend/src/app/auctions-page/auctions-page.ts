@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
+import { CategoryService } from '../services/category-service';
 import { TranslateService } from '@ngx-translate/core';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
@@ -25,8 +26,9 @@ export class AuctionsPage implements OnInit {
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService,
     private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    private categoryService: CategoryService,
   ) {}
 
   getCategoryName(item: AuctionItem): string {
@@ -35,10 +37,15 @@ export class AuctionsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    const searchFromUrl = this.route.snapshot.queryParamMap.get('search');
-    if (searchFromUrl) {
-      this.searchText = searchFromUrl;
-    }
+    this.route.queryParams.subscribe((params) => {
+      if (params['category']) {
+        this.selectedCategory = params['category'];
+      }
+      if (params['search']) {
+        this.searchText = params['search'];
+      }
+      this.applyFiltersAndSort();
+    });
 
     this.itemService.getItems().subscribe({
       next: (items) => {
@@ -51,13 +58,14 @@ export class AuctionsPage implements OnInit {
       error: (err) => console.error('Eroare la încărcarea item-urilor', err),
     });
 
-    this.route.queryParamMap.subscribe((params) => {
-      const q = params.get('search');
-      if (q !== null && q !== this.searchText) {
-        this.searchText = q;
-        this.applyFiltersAndSort();
-        this.cdr.detectChanges();
-      }
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        if (categories && categories.length > 0) {
+          const fetchedCatNames = categories.map((c) => c.name);
+          this.categories = Array.from(new Set([...this.categories, ...fetchedCatNames]));
+        }
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
     });
   }
 

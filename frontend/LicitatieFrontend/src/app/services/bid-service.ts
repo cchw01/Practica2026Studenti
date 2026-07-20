@@ -1,7 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Bid } from '../Models/bid/bid';
+
+export interface BidDto {
+  id?: number;
+  bidderId: number;
+  biddedItemId: number;
+  price: number;
+  date?: string;
+}
+
+export interface CreateBidDto {
+  bidderId: number;
+  biddedItemId: number;
+  price: number;
+  date?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,21 +25,33 @@ export class BidService {
 
   constructor(private http: HttpClient) {}
 
-  getBids(): Observable<Bid[]> {
-    return this.http.get<Bid[]>(this.apiUrl);
+  getBids(): Observable<BidDto[]> {
+    return this.http.get<BidDto[]>(this.apiUrl);
   }
 
-  getBidsByItem(itemId: number): Observable<Bid[]> {
-    return this.http.get<Bid[]>(`${this.apiUrl}/item/${itemId}`);
+  getAllBids(): Observable<BidDto[]> {
+    return this.http.get<BidDto[]>(this.apiUrl);
   }
 
-  addBid(bid: { bidderId: number; biddedItemId: number; price: number }): Observable<Bid> {
+  getBidsByItem(itemId: number): Observable<BidDto[]> {
+    return this.http.get<BidDto[]>(`${this.apiUrl}/item/${itemId}`);
+  }
+
+  getBidById(id: number): Observable<BidDto> {
+    return this.http.get<BidDto>(`${this.apiUrl}/${id}`);
+  }
+
+  addBid(bidData: { bidderId: number; biddedItemId: number; price: number }): Observable<BidDto> {
     const payload = {
-      BidderId: bid.bidderId,
-      BiddedItemId: bid.biddedItemId,
-      price: bid.price,
+      BidderId: bidData.bidderId,
+      BiddedItemId: bidData.biddedItemId,
+      price: bidData.price,
       date: new Date().toISOString(),
     };
-    return this.http.post<Bid>(this.apiUrl, payload);
+    return this.http.post<BidDto>(this.apiUrl, payload);
+  }
+
+  deleteBid(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

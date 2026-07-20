@@ -128,8 +128,8 @@
         </ng-template>
       </div>
 
-
-      <div class="wishlist-container">
+      <!-- Wishlist container (only visible when logged in) -->
+      <div class="wishlist-container" *ngIf="authService.isLoggedIn()">
         <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()">
           <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
           <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
@@ -141,6 +141,13 @@
         </div>
       </div>
 
+      <!-- Report Button -->
+      <div class="actions-footer">
+        <button type="button" class="btn-report" [class.reported]="isReported" (click)="openReportModal()">
+          <span>{{ isReported ? '🚩 Item Reported' : '🚩 Report Item' }}</span>
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -150,6 +157,41 @@
     <div class="description-card">
       <p>{{ auctionItem.Description }}</p>
     </div>
+  </div>
+
+  <!-- Report Item Modal -->
+  <div class="modal-overlay" *ngIf="showReportModal" (click)="closeReportModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>🚩 Report Auction</h3>
+        <button type="button" class="close-btn" (click)="closeReportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">Help keep BidSphere safe. Please select a reason for reporting this auction:</p>
+
+        <label class="field-label">Reason</label>
+        <select [(ngModel)]="reportReason" class="modal-select">
+          <option value="Inappropriate Content">Inappropriate Content</option>
+          <option value="Misleading Description">Misleading Description</option>
+          <option value="Fake or Counterfeit Item">Fake or Counterfeit Item</option>
+          <option value="Suspicious Bidding Activity">Suspicious Bidding Activity</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label class="field-label">Additional Details (Optional)</label>
+        <textarea [(ngModel)]="reportDetails" rows="3" placeholder="Describe the issue..." class="modal-textarea"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeReportModal()">Cancel</button>
+        <button type="button" class="btn-submit-report" (click)="submitReport()">Submit Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Toast Notification -->
+  <div *ngIf="showReportToast" class="report-toast" [class.toast-hiding]="isReportToastHiding">
+    <span class="report-badge">🚩</span>
+    <span class="report-msg">{{ reportToastMessage }}</span>
   </div>
 
 </div>
