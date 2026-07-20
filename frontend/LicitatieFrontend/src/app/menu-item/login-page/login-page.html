@@ -5,6 +5,10 @@
     <div class="register-container">
       <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
 
+      <div *ngIf="errorMessage" class="login-error">
+        {{ errorMessage }}
+      </div>
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field appearance="outline">
@@ -49,14 +53,14 @@
         </button>
 
         <div class="login-link">
-  <span>{{ 'LOGIN.NO_ACCOUNT' | translate }} </span>
-  <button
-    type="button"
-    class="btn-register"
-    routerLink="/register-page">
-    {{ 'LOGIN.REGISTER_HERE' | translate }}
-  </button>
-</div>
+          <span>{{ 'LOGIN.NO_ACCOUNT' | translate }} </span>
+          <button
+            type="button"
+            class="btn-register"
+            routerLink="/register-page">
+            {{ 'LOGIN.REGISTER_HERE' | translate }}
+          </button>
+        </div>
       </form>
     </div>
   </div>

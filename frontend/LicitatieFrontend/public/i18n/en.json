@@ -239,21 +239,32 @@
     "SUCCESS": "Item successfully published for auction!",
     "SUCCESS_LOCAL": "Item successfully published for auction (saved locally - backend not ready)."
   }
-}, "FOOTER": {
-  "ABOUT_TITLE": "About us",
-  "ABOUT_TEXT_1": "BidSphere is a modern online auction platform designed to make buying and selling through bidding simple, secure, and exciting.",
-  "ABOUT_TEXT_2": "We connect thousands of buyers and sellers across a wide range of categories, offering a transparent and fair bidding process for everyone. Whether you're looking for a great deal or hoping to sell to the right buyer, BidSphere gives you the tools and trust you need to bid with confidence.",
+}, 
 
-  "LINKS": "Links",
-  "HOME": "Home",
-  "SERVICES": "Auctions",
-  "CONTACT": "Contact",
-  "HELP": "Help",
-  "FORUM": "Forum",
+  "FOOTER": {
+    "ABOUT_TITLE": "About us",
+    "ABOUT_TEXT_1": "BidSphere is a modern online auction platform designed to make buying and selling through bidding simple, secure, and exciting.",
+    "ABOUT_TEXT_2": "We connect thousands of buyers and sellers across a wide range of categories, offering a transparent and fair bidding process for everyone. Whether you're looking for a great deal or hoping to sell to the right buyer, BidSphere gives you the tools and trust you need to bid with confidence.",
 
-  "CONTACT_TITLE": "Contact",
+    "LINKS": "Links",
+    "HOME": "Home",
+    "SERVICES": "Auctions",
+    "CONTACT": "Contact",
+    "HELP": "Help",
+    "FORUM": "Forum",
 
-  "SOCIAL": "Social media",
+    "CONTACT_TITLE": "Contact",
 
-  "COPYRIGHT": "All rights reserved."
-}}
+    "SOCIAL": "Social media",
+
+    "COPYRIGHT": "All rights reserved."
+  }, 
+
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Oops! Page not found",
+    "MESSAGE": "The page you're looking for doesn't exist or has been moved.",
+    "BUTTON":"Go BACK HOME"
+  }
+
+}

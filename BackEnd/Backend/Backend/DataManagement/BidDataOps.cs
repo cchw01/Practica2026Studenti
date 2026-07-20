@@ -2,6 +2,7 @@
 using Backend.DataManagement;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataManagement
 {
@@ -16,13 +17,20 @@ namespace Backend.DataManagement
 
         public Bid[] GetBids()
         {
-            return DbContext.Bids.ToArray();
+            return DbContext.Bids
+                .AsNoTracking()
+                .Include(b => b.Bidder)
+                .Include(b => b.BiddedItem)
+                .ToArray();
         }
 
         public Bid? GetBidById(int id)
         {
             var bid = DbContext.Bids
-                .Where(x => x.id == id)
+                .AsNoTracking()
+                .Include(b => b.Bidder)
+                .Include(b => b.BiddedItem)
+                .Where(x => x.Id == id)
                 .FirstOrDefault();
 
             return bid;
@@ -34,16 +42,10 @@ namespace Backend.DataManagement
             DbContext.SaveChanges();
         }
 
-        public void UpdateBid(Bid bid)
-        {
-            DbContext.Bids.Update(bid);
-            DbContext.SaveChanges();
-        }
-
         public void DeleteBid(int id)
         {
             var bid = DbContext.Bids
-                .Where(x => x.id == id)
+                .Where(x => x.Id == id)
                 .FirstOrDefault();
 
             if (bid != null)
@@ -56,7 +58,11 @@ namespace Backend.DataManagement
         public Bid[] GetBidsByItemId(int itemId)
         {
             return DbContext.Bids
+                .AsNoTracking()
+                .Include(b => b.Bidder)
+                .Include(b => b.BiddedItem)
                 .Where(x => x.BiddedItemId == itemId)
+                .OrderByDescending(x => x.Date)
                 .ToArray();
         }
     }

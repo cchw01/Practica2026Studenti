@@ -256,4 +256,11 @@
   "SOCIAL": "Rețele sociale",
 
   "COPYRIGHT": "Toate drepturile rezervate."
+},
+
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "Oops! Pagina nu a fost găsită",
+  "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
+  "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
 }}
