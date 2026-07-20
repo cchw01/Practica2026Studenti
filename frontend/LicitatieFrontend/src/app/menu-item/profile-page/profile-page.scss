@@ -119,12 +119,18 @@
 .btn-edit {
   background: v.$color-primary;
   color: v.$color-white;
-  &:hover { background: darken(v.$color-primary, 10%); transform: translateY(-2px); }
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+    transform: translateY(-2px);
+  }
 }
 .btn-logout {
   background: v.$color-status-urgent-bg;
   color: v.$color-status-urgent-text;
-  &:hover { background: darken(v.$color-status-urgent-bg, 5%); transform: translateY(-2px); }
+  &:hover {
+    background: color-mix(in srgb, v.$color-status-urgent-bg 90%, black);
+    transform: translateY(-2px);
+  }
 }
 
 .sections {
@@ -233,11 +239,16 @@
   cursor: pointer;
   transition: v.$transition-fast;
   text-align: center;
-  &:hover { background: darken(v.$color-primary, 10%); transform: translateY(-1px); }
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+    transform: translateY(-1px);
+  }
 }
 .btn-sell {
   background: v.$color-status-safe-text;
-  &:hover { background: darken(v.$color-status-safe-text, 10%); }
+  &:hover {
+    background: color-mix(in srgb, v.$color-status-safe-text 90%, black);
+  }
 }
 .msg-box {
   margin: 0;
@@ -396,7 +407,9 @@
   cursor: pointer;
   font-weight: v.$font-weight-semibold;
   transition: background 0.2s;
-  &:hover { background: darken(v.$color-primary, 10%); }
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+  }
 }
 .sales-won-row {
   grid-column: 1 / -1;
@@ -438,7 +451,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  &:hover { background: v.$color-primary-tint; color: darken(v.$color-primary, 10%); }
+  &:hover { background: v.$color-primary-tint; color: color-mix(in srgb, v.$color-primary 80%, black); }
 }
 .password-fields-container {
   border: 1px dashed v.$color-border;
@@ -450,7 +463,7 @@
 .btn-change-password {
   margin-top: v.$space-sm;
   background: v.$color-primary;
-  &:hover { background: darken(v.$color-primary, 10%); }
+  &:hover { background: color-mix(in srgb, v.$color-primary 80%, black); }
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-8px); }
