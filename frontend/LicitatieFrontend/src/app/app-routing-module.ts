@@ -17,15 +17,12 @@ const routes: Routes = [
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionDetail }, 
+  { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'review-page', component: ReviewComponent},
+  { path: 'review-page', component: ReviewComponent },
   { path: 'help-page', component: HelpPageComponent },
-
-  { path: 'review-page', component: ReviewComponent }
 ];
 
 @NgModule({

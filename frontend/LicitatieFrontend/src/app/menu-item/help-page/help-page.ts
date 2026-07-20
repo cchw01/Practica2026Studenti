@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-help-page',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './help-page.html',
   styleUrls: ['./help-page.css'],

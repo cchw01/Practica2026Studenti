@@ -72,6 +72,7 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
 
     // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
+    HelpPageComponent,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
