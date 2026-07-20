@@ -255,4 +255,60 @@
   "SOCIAL": "Redes sociales",
 
   "COPYRIGHT": "Todos los derechos reservados."
+},
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "¡Ups! Página no encontrada",
+  "MESSAGE": "La página que buscas no existe o ha sido movida.",
+  "BUTTON": "Ir al INICIO"
+}, 
+"AUCTION_ITEM_PAGE": {
+  "HEADER_BADGE": "🏷️ Detalles de la subasta",
+
+  "INFO": {
+    "CURRENT_PRICE": "Precio actual",
+    "START_PRICE": "Precio inicial",
+    "CATEGORY": "Categoría",
+    "LOCATION": "Ubicación",
+    "STARTS_AT": "Fecha de inicio",
+    "OWNER": "Propietario",
+    "ENDS": "Finaliza"
+  },
+
+  "BID": {
+    "TITLE": "Haz tu oferta",
+    "PLACEHOLDER": "Introduce el importe de la oferta",
+    "BUTTON": "🔨 Ofertar",
+    "MINIMUM": "Oferta mínima:",
+    "LOGIN_TEXT": "Inicia sesión para pujar por este artículo.",
+    "LOGIN_BUTTON": "Iniciar sesión para ofertar"
+  },
+
+  "WISHLIST": {
+    "ADD": "🤍 Añadir a favoritos",
+    "ADDED": "❤️ En favoritos"
+  },
+
+  "DESCRIPTION": {
+    "TITLE": "Descripción del producto"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activa",
+    "ENDED": "Finalizada",
+    "PENDING": "Pendiente"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "La subasta ha finalizado.",
+    "BID_HIGHER_CURRENT": "La oferta debe ser superior al precio actual.",
+    "BID_HIGHER_MINIMUM": "La oferta debe ser superior al precio mínimo."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "d",
+    "HOURS": "h",
+    "MINUTES": "min",
+    "SECONDS": "s"
+  }
 }}

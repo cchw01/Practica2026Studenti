@@ -256,4 +256,60 @@
   "SOCIAL": "Rețele sociale",
 
   "COPYRIGHT": "Toate drepturile rezervate."
+},
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "Oops! Pagina nu a fost găsită",
+  "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
+  "BUTTON": "Mergi ACASĂ"
+}, 
+"AUCTION_ITEM_PAGE": {
+  "HEADER_BADGE": "🏷️ Detalii licitație",
+
+  "INFO": {
+    "CURRENT_PRICE": "Preț curent",
+    "START_PRICE": "Preț de pornire",
+    "CATEGORY": "Categorie",
+    "LOCATION": "Locație",
+    "STARTS_AT": "Data începerii",
+    "OWNER": "Proprietar",
+    "ENDS": "Se încheie"
+  },
+
+  "BID": {
+    "TITLE": "Plasează oferta ta",
+    "PLACEHOLDER": "Introdu suma licitată",
+    "BUTTON": "🔨 Licitează",
+    "MINIMUM": "Oferta minimă:",
+    "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
+    "LOGIN_BUTTON": "Autentificare pentru licitare"
+  },
+
+  "WISHLIST": {
+    "ADD": "🤍 Adaugă la favorite",
+    "ADDED": "❤️ În lista de favorite"
+  },
+
+  "DESCRIPTION": {
+    "TITLE": "Descriere produs"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activă",
+    "ENDED": "Încheiată",
+    "PENDING": "În așteptare"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "Licitația s-a încheiat.",
+    "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
+    "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "z",
+    "HOURS": "h",
+    "MINUTES": "m",
+    "SECONDS": "s"
+  }
 }}

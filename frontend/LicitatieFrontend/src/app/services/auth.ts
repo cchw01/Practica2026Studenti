@@ -20,7 +20,9 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
-      .pipe(tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })));
+      .pipe(
+        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
+      );
   }
 
   private setSession(authResult: any): void {

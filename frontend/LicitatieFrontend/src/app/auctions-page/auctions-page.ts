@@ -24,12 +24,17 @@ export class AuctionsPage implements OnInit {
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
 
+  isLoading: boolean = true;
+  hasError: boolean = false;
+
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private categoryService: CategoryService,
+  ) {}
     private categoryService: CategoryService,
   ) {}
 
@@ -99,9 +104,11 @@ export class AuctionsPage implements OnInit {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const left = this.translate.instant('AUCTIONS_PAGE.TIME.LEFT');
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
     if (days > 0) return `${days}d ${hours}h left`;
-    return `${hours}h left`;
+    if (hours > 0) return `${hours}h ${mins}m left`;
+    return `${mins}m left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
@@ -117,3 +124,4 @@ export class AuctionsPage implements OnInit {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }
+
