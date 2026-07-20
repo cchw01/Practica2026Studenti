@@ -255,4 +255,11 @@
   "SOCIAL": "Redes sociales",
 
   "COPYRIGHT": "Todos los derechos reservados."
+},
+
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "¡Ups! Página no encontrada",
+  "MESSAGE": "La página que estás buscando no existe o ha sido movida.",
+  "BUTTON": "VOLVER A LA PÁGINA PRINCIPAL"
 }}
