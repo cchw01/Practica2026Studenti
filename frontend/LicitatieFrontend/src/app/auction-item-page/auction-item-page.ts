@@ -41,7 +41,7 @@ const mockOwner = new User({
   selector: 'app-auction-item-page',
   standalone: false,
   templateUrl: './auction-item-page.html',
-  styleUrl: './auction-item-page.css',
+  styleUrl: './auction-item-page.scss',
   providers: [MockAuthService],
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
