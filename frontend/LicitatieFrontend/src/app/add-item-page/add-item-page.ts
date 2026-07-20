@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,6 +37,7 @@ export class AddItemPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.itemForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -86,7 +87,10 @@ export class AddItemPage implements OnInit {
 
     // Preview local prin FileReader
     const reader = new FileReader();
-    reader.onload = () => (this.imagePreview = reader.result as string);
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      this.cdr.detectChanges(); // FileReader runs outside Angular zone — force update
+    };
     reader.readAsDataURL(file);
   }
 
@@ -131,13 +135,10 @@ export class AddItemPage implements OnInit {
         setTimeout(() => this.router.navigate(['/auctions']), 1500);
       },
       error: (err) => {
-        this.isError = false;
-        this.message =
-          'Item successfully published for auction (saved locally - backend not ready)!';
-        this.itemForm.reset({ durationDays: 3 });
-        this.removeImage();
+        this.isError = true;
+        const errorMsg = err?.error?.message || err?.error || err?.message || 'A apărut o eroare la publicarea itemului.';
+        this.message = typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg);
         this.isSubmitting = false;
-        setTimeout(() => this.router.navigate(['/auctions']), 1500);
       },
     });
   }

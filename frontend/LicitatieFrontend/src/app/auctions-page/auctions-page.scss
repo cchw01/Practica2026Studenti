@@ -297,3 +297,83 @@
     transform: translateY(0);
   }
 }
+
+// ── Loading state ──
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-md;
+  padding: 80px 0;
+  color: v.$color-text-secondary;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid v.$color-border;
+  border-top-color: v.$color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Error state ──
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-sm;
+  padding: 80px 0;
+  text-align: center;
+  color: v.$color-text-secondary;
+
+  .material-symbols-outlined {
+    font-size: 48px;
+    color: v.$color-status-urgent-text;
+  }
+
+  h3 {
+    margin: 0;
+    color: v.$color-text-heading;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+.retry-btn {
+  margin-top: v.$space-sm;
+  padding: 10px 24px;
+  background: v.$color-primary;
+  color: white;
+  border: none;
+  border-radius: v.$radius-pill;
+  font-weight: 600;
+  cursor: pointer;
+  transition: v.$transition-fast;
+
+  &:hover {
+    filter: brightness(0.9);
+    transform: translateY(-2px);
+  }
+}
+
+// ── Category label on card ──
+.item-category {
+  font-size: 12px;
+  color: v.$color-primary;
+  font-weight: 600;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}

@@ -49,6 +49,25 @@ namespace Backend.Controllers
             }
         }
 
+        [HttpGet("active")]
+        public ActionResult<AuctionItemResponseDto[]> GetActiveAuctionItems()
+        {
+            try
+            {
+                var items = dataOps.GetActiveAuctionItems();
+
+                var response = items
+                    .Select(MapToResponseDto)
+                    .ToArray();
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public ActionResult<AuctionItemResponseDto> GetAuctionItemById(int id)
         {
@@ -183,37 +202,13 @@ namespace Backend.Controllers
 
                 string? imageUrl = null;
 
-                if (request.Image != null &&
-                    request.Image.Length > 0)
+                if (request.Image != null && request.Image.Length > 0)
                 {
-                    var webRootPath = env.WebRootPath
-                        ?? Path.Combine(
-                            Directory.GetCurrentDirectory(),
-                            "wwwroot");
-
-                    var uploadsFolder = Path.Combine(
-                        webRootPath,
-                        "images");
-
-                    Directory.CreateDirectory(uploadsFolder);
-
-                    var extension = Path.GetExtension(
-                        request.Image.FileName);
-
-                    var uniqueFileName =
-                        $"{Guid.NewGuid()}{extension}";
-
-                    var filePath = Path.Combine(
-                        uploadsFolder,
-                        uniqueFileName);
-
-                    await using var fileStream = new FileStream(
-                        filePath,
-                        FileMode.Create);
-
-                    await request.Image.CopyToAsync(fileStream);
-
-                    imageUrl = $"/images/{uniqueFileName}";
+                    using var memoryStream = new MemoryStream();
+                    await request.Image.CopyToAsync(memoryStream);
+                    var imageBytes = memoryStream.ToArray();
+                    var contentType = string.IsNullOrEmpty(request.Image.ContentType) ? "image/jpeg" : request.Image.ContentType;
+                    imageUrl = $"data:{contentType};base64,{Convert.ToBase64String(imageBytes)}";
                 }
 
                 var startDate = DateTime.UtcNow;
