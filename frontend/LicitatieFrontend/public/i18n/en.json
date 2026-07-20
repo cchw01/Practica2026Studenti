@@ -413,6 +413,31 @@
 
   "DELETE_COMMENT": "Delete",
   "NO_COMMENTS": "No comments yet"
+},
+
+"CREATE_POST": {
+  "BACK_TO_DISCUSSIONS": "Back to discussions",
+  "TITLE": "Start a discussion",
+  "SUBTITLE": "Create a new discussion and share it with other forum users.",
+
+  "TITLE_LABEL": "Title",
+  "TITLE_PLACEHOLDER": "Enter a clear discussion title",
+  "TITLE_REQUIRED": "A title is required.",
+  "TITLE_WHITESPACE": "The title cannot contain only spaces.",
+  "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
+  "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
+
+  "DESCRIPTION_LABEL": "Description",
+  "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
+  "DESCRIPTION_REQUIRED": "A description is required.",
+  "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
+  "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
+  "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
+
+  "CREATE_ERROR": "Unable to create discussion",
+  "CANCEL": "Cancel",
+  "CREATING": "Creating discussion...",
+  "SUBMIT": "Start discussion"
 }
 
 }

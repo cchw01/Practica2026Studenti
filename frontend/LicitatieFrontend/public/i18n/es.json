@@ -411,5 +411,30 @@
 
   "DELETE_COMMENT": "Eliminar",
   "NO_COMMENTS": "Todavía no hay comentarios"
+},
+
+"CREATE_POST": {
+  "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
+  "TITLE": "Iniciar una discusión",
+  "SUBTITLE": "Crea una nueva discusión y compártela con los demás usuarios del foro.",
+
+  "TITLE_LABEL": "Título",
+  "TITLE_PLACEHOLDER": "Introduce un título claro para la discusión",
+  "TITLE_REQUIRED": "El título es obligatorio.",
+  "TITLE_WHITESPACE": "El título no puede contener solo espacios.",
+  "TITLE_MIN_LENGTH": "El título debe contener al menos 3 caracteres.",
+  "TITLE_MAX_LENGTH": "El título no puede superar los 150 caracteres.",
+
+  "DESCRIPTION_LABEL": "Descripción",
+  "DESCRIPTION_PLACEHOLDER": "Describe el tema que deseas discutir...",
+  "DESCRIPTION_REQUIRED": "La descripción es obligatoria.",
+  "DESCRIPTION_WHITESPACE": "La descripción no puede contener solo espacios.",
+  "DESCRIPTION_MIN_LENGTH": "La descripción debe contener al menos 10 caracteres.",
+  "DESCRIPTION_MAX_LENGTH": "La descripción no puede superar los 5000 caracteres.",
+
+  "CREATE_ERROR": "No se pudo crear la discusión",
+  "CANCEL": "Cancelar",
+  "CREATING": "Creando la discusión...",
+  "SUBMIT": "Iniciar discusión"
 }
 }

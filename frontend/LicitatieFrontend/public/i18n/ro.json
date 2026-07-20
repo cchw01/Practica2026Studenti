@@ -411,5 +411,30 @@
 
   "DELETE_COMMENT": "Șterge",
   "NO_COMMENTS": "Nu există comentarii încă"
+},
+
+"CREATE_POST": {
+  "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
+  "TITLE": "Începe o discuție",
+  "SUBTITLE": "Creează o discuție nouă și distribuie-o celorlalți utilizatori ai forumului.",
+
+  "TITLE_LABEL": "Titlu",
+  "TITLE_PLACEHOLDER": "Introdu un titlu clar pentru discuție",
+  "TITLE_REQUIRED": "Titlul este obligatoriu.",
+  "TITLE_WHITESPACE": "Titlul nu poate conține doar spații.",
+  "TITLE_MIN_LENGTH": "Titlul trebuie să conțină cel puțin 3 caractere.",
+  "TITLE_MAX_LENGTH": "Titlul nu poate depăși 150 de caractere.",
+
+  "DESCRIPTION_LABEL": "Descriere",
+  "DESCRIPTION_PLACEHOLDER": "Descrie subiectul pe care dorești să îl discuți...",
+  "DESCRIPTION_REQUIRED": "Descrierea este obligatorie.",
+  "DESCRIPTION_WHITESPACE": "Descrierea nu poate conține doar spații.",
+  "DESCRIPTION_MIN_LENGTH": "Descrierea trebuie să conțină cel puțin 10 caractere.",
+  "DESCRIPTION_MAX_LENGTH": "Descrierea nu poate depăși 5000 de caractere.",
+
+  "CREATE_ERROR": "Discuția nu a putut fi creată",
+  "CANCEL": "Anulează",
+  "CREATING": "Se creează discuția...",
+  "SUBMIT": "Începe discuția"
 }
 }
