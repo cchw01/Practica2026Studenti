@@ -3,6 +3,11 @@ using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -356,8 +361,9 @@ namespace Backend.Controllers
                 return BadRequest(errorMessage);
             }
         }
-
-        private int? GetAuthenticatedUserId()
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public ActionResult DeleteAuctionItem(int id)
         {
             var userIdClaim = User.FindFirst("id")?.Value;
 

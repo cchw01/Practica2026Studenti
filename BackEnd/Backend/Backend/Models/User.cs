@@ -4,6 +4,7 @@ namespace Backend.Models
 {
     public class User
     {
+        public bool IsBanned { get; set; } = false;
         public int ID { get; set; }
 
         public string UserName { get; set; }

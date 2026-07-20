@@ -1,12 +1,9 @@
 using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Backend.Controllers
+
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -118,9 +115,9 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public ActionResult DeleteForumPost(int id)
+        public ActionResult<ForumPost> DeleteForumPost(int id)
         {
             try
             {
