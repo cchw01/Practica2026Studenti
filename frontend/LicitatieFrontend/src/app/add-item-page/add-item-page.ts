@@ -142,9 +142,9 @@ export class AddItemPage implements OnInit {
       PhotoList: this.imagePreview ? [this.imagePreview] : [],
     };
 
-    const localItems = JSON.parse(localStorage.getItem('local_auctions') || '[]');
+    const localItems = JSON.parse(localStorage.getItem('auctionItems') || '[]');
     localItems.push(localItem);
-    localStorage.setItem('local_auctions', JSON.stringify(localItems));
+    localStorage.setItem('auctionItems', JSON.stringify(localItems));
 
     this.isSubmitting = true;
     this.itemService.createItemWithImage(formData).subscribe({
