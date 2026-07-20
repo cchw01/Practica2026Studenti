@@ -8,7 +8,6 @@ import { AuctionItem } from '../Models/item-model';
 })
 export class ItemService {
   private readonly apiUrl = 'https://localhost:7137/api/AuctionItem';
-  private readonly mockUrl = 'assets/mock-items.json';
   private readonly storageKey = 'auctionItems';
 
   constructor(private http: HttpClient) { }
@@ -23,21 +22,11 @@ export class ItemService {
           observer.complete();
         },
         error: () => {
-          // Fallback la local storage + mock-items.json
-          this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
-            next: (mockItems) => {
-              const saved = localStorage.getItem(this.storageKey);
-              const localItems = saved ? JSON.parse(saved) : [];
-              observer.next([...localItems, ...mockItems]);
-              observer.complete();
-            },
-            error: () => {
-              const saved = localStorage.getItem(this.storageKey);
-              const localItems = saved ? JSON.parse(saved) : [];
-              observer.next(localItems);
-              observer.complete();
-            }
-          });
+          // Fallback doar la local storage
+          const saved = localStorage.getItem(this.storageKey);
+          const localItems = saved ? JSON.parse(saved) : [];
+          observer.next(localItems);
+          observer.complete();
         }
       });
     });

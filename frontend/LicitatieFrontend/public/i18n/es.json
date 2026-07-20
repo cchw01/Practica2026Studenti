@@ -145,4 +145,114 @@
   "REQUEST": "Enviar solicitud",
   "ASSISTANT": "Asistente Virtual en Vivo"
   }
+  ,
+"AUCTIONS_PAGE": {
+  "TITLE": "Subastas activas",
+  "DESCRIPTION": "Descubre artículos únicos y puja en tiempo real.",
+
+  "SEARCH_PLACEHOLDER": "Buscar por nombre...",
+
+  "ALL_CATEGORIES": "Todas las categorías",
+
+  "SORT": {
+    "ENDING_SOON": "Finalizan pronto",
+    "PRICE_LOW_HIGH": "Precio: de menor a mayor",
+    "PRICE_HIGH_LOW": "Precio: de mayor a menor",
+    "NEWEST": "Más recientes"
+  },
+
+  "ADD_ITEM": "Añadir artículo",
+
+  "RESULTS": {
+    "ONE": "subasta encontrada",
+    "MANY": "subastas encontradas"
+  },
+
+  "CURRENT_PRICE": "Precio actual:",
+
+  "TIME": {
+    "ENDED": "Subasta finalizada",
+    "LEFT": "restantes"
+  },
+
+  "EMPTY": {
+    "TITLE": "No se encontraron artículos",
+    "DESCRIPTION": "Actualmente no hay subastas activas que coincidan con tu búsqueda."
+  }
 }
+,
+"ADD_ITEM_PAGE": {
+  "BADGE": "🔨 Vende en BidSphere",
+  "TITLE": "Añadir un nuevo artículo a la subasta",
+  "DESCRIPTION": "Completa los siguientes datos para publicar tu artículo en la subasta.",
+
+  "FIELDS": {
+    "NAME": "Nombre del artículo *",
+    "NAME_PLACEHOLDER": "Ej.: Bicicleta vintage",
+
+    "START_PRICE": "Precio inicial (RON) *",
+
+    "DURATION": "Duración de la subasta (días) *",
+
+    "CATEGORY": "Categoría *",
+    "CATEGORY_PLACEHOLDER": "Selecciona una categoría",
+
+    "LOCATION": "Ubicación *",
+    "LOCATION_PLACEHOLDER": "Ej.: Brașov",
+
+    "DESCRIPTION": "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Describe el estado, el historial y los detalles del artículo..."
+  },
+
+  "IMAGE": {
+    "TITLE": "Fotografía del artículo",
+    "UPLOAD": "Haz clic para subir una imagen",
+    "DETAILS": "JPG, PNG o WEBP, máximo 5 MB",
+    "REMOVE": "Eliminar"
+  },
+
+  "BUTTONS": {
+    "CANCEL": "Cancelar",
+    "PUBLISH": "Publicar artículo",
+    "PUBLISHING": "Publicando..."
+  },
+
+  "VALIDATION": {
+    "NAME_REQUIRED": "El nombre es obligatorio.",
+    "NAME_MIN": "El nombre debe tener al menos 3 caracteres.",
+
+    "PRICE_REQUIRED": "El precio inicial es obligatorio.",
+    "PRICE_MIN": "El precio debe ser mayor que 0.",
+
+    "DURATION": "La duración debe estar entre 1 y 30 días.",
+
+    "CATEGORY": "Selecciona una categoría.",
+
+    "LOCATION": "La ubicación es obligatoria.",
+
+    "IMAGE_TYPE": "Solo se permiten imágenes JPG, PNG o WEBP.",
+    "IMAGE_SIZE": "La imagen debe ser inferior a 5 MB."
+  },
+
+  "MESSAGES": {
+    "SUCCESS": "¡El artículo se ha publicado correctamente en la subasta!",
+    "SUCCESS_LOCAL": "¡El artículo se ha publicado correctamente (guardado localmente; el backend aún no está listo)!"
+  }
+}, "FOOTER": {
+  "ABOUT_TITLE": "Sobre nosotros",
+  "ABOUT_TEXT_1": "BidSphere es una moderna plataforma de subastas en línea diseñada para hacer que comprar y vender mediante subastas sea sencillo, seguro y emocionante.",
+  "ABOUT_TEXT_2": "Conectamos a miles de compradores y vendedores de una amplia variedad de categorías, ofreciendo un proceso de subastas transparente y justo para todos. Tanto si buscas una gran oferta como si deseas vender al comprador adecuado, BidSphere te proporciona las herramientas y la confianza necesarias para pujar con seguridad.",
+
+  "LINKS": "Enlaces",
+  "HOME": "Inicio",
+  "SERVICES": "Subastas",
+  "CONTACT": "Contacto",
+  "HELP": "Ayuda",
+  "FORUM": "Foro",
+
+  "CONTACT_TITLE": "Contacto",
+
+  "SOCIAL": "Redes sociales",
+
+  "COPYRIGHT": "Todos los derechos reservados."
+}}

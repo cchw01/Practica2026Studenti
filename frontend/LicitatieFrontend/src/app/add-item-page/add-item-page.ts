@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ItemService } from '../services/item-service';
@@ -16,11 +17,9 @@ export class AddItemPage implements OnInit {
   itemForm: FormGroup;
   categories: Category[] = [];
 
-
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   imageError = '';
-
 
   isSubmitting = false;
   message = '';
@@ -37,6 +36,7 @@ export class AddItemPage implements OnInit {
     private categoryService: CategoryService,
     private authService: AuthService,
     private router: Router,
+    private translate: TranslateService,
   ) {
     this.itemForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -72,12 +72,12 @@ export class AddItemPage implements OnInit {
     if (!file) return;
 
     if (!this.allowedTypes.includes(file.type)) {
-      this.imageError = 'Only JPG, PNG or WEBP images are allowed.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
       input.value = '';
       return;
     }
     if (file.size > this.maxImageSize) {
-      this.imageError = 'Image must be smaller than 5 MB.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
       input.value = '';
       return;
     }
@@ -104,7 +104,6 @@ export class AddItemPage implements OnInit {
 
     const v = this.itemForm.value;
 
-
     const formData = new FormData();
     formData.append('Name', v.name);
     formData.append('StartPrice', String(v.startPrice));
@@ -124,7 +123,13 @@ export class AddItemPage implements OnInit {
       StartPrice: +v.startPrice,
       CurrentPrice: +v.startPrice,
       CategoryId: +v.categoryId,
-      Category: this.categories.find(c => c.id === +v.categoryId) || { id: +v.categoryId, name: 'Other', items: [] } as any,
+      Category:
+        this.categories.find((c) => c.id === +v.categoryId) ||
+        ({
+          id: +v.categoryId,
+          name: this.translate.instant('ADD_ITEM_PAGE.OTHER_CATEGORY'),
+          items: [],
+        } as any),
       WishingUsers: [],
       Description: v.description || '',
       Location: v.location,
@@ -134,27 +139,26 @@ export class AddItemPage implements OnInit {
       StartDate: new Date(),
       EndDate: new Date(Date.now() + v.durationDays * 86400000),
       BidList: [],
-      PhotoList: this.imagePreview ? [this.imagePreview] : []
+      PhotoList: this.imagePreview ? [this.imagePreview] : [],
     };
 
-    const localItems = JSON.parse(localStorage.getItem('local_auctions') || '[]');
+    const localItems = JSON.parse(localStorage.getItem('auctionItems') || '[]');
     localItems.push(localItem);
-    localStorage.setItem('local_auctions', JSON.stringify(localItems));
+    localStorage.setItem('auctionItems', JSON.stringify(localItems));
 
     this.isSubmitting = true;
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = 'Item successfully published for auction!';
+        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.removeImage();
         this.isSubmitting = false;
         setTimeout(() => this.router.navigate(['/auctions']), 1500);
       },
       error: (err) => {
-
         this.isError = false;
-        this.message = 'Item successfully published for auction (saved locally - backend not ready)!';
+        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS_LOCAL');
         this.itemForm.reset({ durationDays: 3 });
         this.removeImage();
         this.isSubmitting = false;
