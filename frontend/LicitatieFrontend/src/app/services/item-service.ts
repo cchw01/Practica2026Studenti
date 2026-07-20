@@ -70,7 +70,7 @@ export class ItemService {
       EndDate: new Date(item.endDate),
       BidList: item.bidList || [],
       PhotoList: item.photoList || [],
-      ImageUrl: item.imageUrl ? (item.imageUrl.startsWith('http') ? item.imageUrl : 'https://localhost:7137' + item.imageUrl) : undefined
+      ImageUrl: item.imageUrl ? (item.imageUrl.startsWith('http') || item.imageUrl.startsWith('data:') ? item.imageUrl : (item.imageUrl.startsWith('/') ? 'https://localhost:7137' + item.imageUrl : 'https://localhost:7137/' + item.imageUrl)) : undefined
     } as unknown as AuctionItem;
   }
 
