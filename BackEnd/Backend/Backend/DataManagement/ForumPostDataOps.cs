@@ -1,5 +1,6 @@
 using System;
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Backend.DataManagement
 {
     public class ForumPostDataOps
