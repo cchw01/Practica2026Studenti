@@ -2,15 +2,15 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
-        <h1>Help Center</h1>
-        <p>Find quick answers, reach us by phone, or chat with our AI assistant.</p>
+        <h1>{{ 'HELP.TITLE' | translate }}</h1>
+        <p>{{ 'HELP.INFORMATION' | translate }}</p>
     </div>
 
     <div class="content-grid">
 
         <!-- Interactive FAQ Section -->
         <div class="card faq-card">
-            <h2>❓ Frequently Asked Questions</h2>
+            <h2>{{ 'HELP.FAQ' | translate }}</h2>
             <div class="faq-list">
                 <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)"
                     [class.active]="faq.isOpen">
@@ -30,14 +30,14 @@
 
             <!-- Call Center Card -->
             <div class="card call-card">
-                <h2>📞 Quick Phone Support</h2>
+                <h2>{{ 'HELP.SUPPORT' | translate }}</h2>
                 <div class="phone-number">+40 123 456 789</div>
-                <p>Monday - Friday: 09:00 - 18:00</p>
+                <p>{{ 'HELP.PROGRAM' | translate }}</p>
             </div>
 
             <!-- Contact Form -->
             <div class="card form-card">
-                <h2>📝 Open a Ticket</h2>
+                <h2>{{ 'HELP.PROGRAM' | translate }}</h2>
                 <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
                     <div class="input-group">
                         <input type="text" formControlName="name" placeholder="Full name">
@@ -49,7 +49,7 @@
                         <textarea formControlName="issue" rows="4"
                             placeholder="Describe your issue in detail..."></textarea>
                     </div>
-                    <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">Send Request</button>
+                    <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">{{ 'HELP.REQUEST' | translate }}</button>
                 </form>
             </div>
 
@@ -64,7 +64,7 @@
 
         <div class="chat-box" *ngIf="isChatOpen">
             <div class="chat-header">
-                <span class="status-dot"></span> Live Virtual Assistant
+                <span class="status-dot"></span> {{ 'HELP.ASSISTANT' | translate }}
             </div>
 
             <div class="chat-messages">

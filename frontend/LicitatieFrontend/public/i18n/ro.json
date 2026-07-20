@@ -134,5 +134,126 @@
         }
       }
     }
+  },
+
+  "HELP": {
+  "TITLE": "Centrul de Ajutor",
+  "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
+  "FAQ": "❓ Întrebări Frecvente",
+  "SUPPORT": "📞 Asistență Telefonică Rapidă",
+  "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
+  "FORM": "📝 Deschide un Tichet",
+  "REQUEST":"Trimite solicitarea",
+  "ASSISTANT": "Asistent Virtual Live"
   }
-}
+,
+"AUCTIONS_PAGE": {
+  "TITLE": "Licitații active",
+  "DESCRIPTION": "Descoperă produse unice și licitează în timp real",
+
+  "SEARCH_PLACEHOLDER": "Caută după nume...",
+
+  "ALL_CATEGORIES": "Toate categoriile",
+
+  "SORT": {
+    "ENDING_SOON": "Se termină curând",
+    "PRICE_LOW_HIGH": "Preț: crescător",
+    "PRICE_HIGH_LOW": "Preț: descrescător",
+    "NEWEST": "Cele mai noi"
+  },
+
+  "ADD_ITEM": "Adaugă produs",
+
+  "RESULT": {
+    "ONE": "licitație găsită",
+    "MANY": "licitații găsite"
+  },
+
+  "CURRENT_PRICE": "Preț curent",
+
+  "EMPTY": {
+    "TITLE": "Nu au fost găsite produse",
+    "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
+  },
+
+  "TIME": {
+    "ENDED": "Licitația s-a încheiat",
+    "LEFT": "rămase"
+  }
+},
+"ADD_ITEM_PAGE": {
+  "BADGE": "🔨 Vinde pe BidSphere",
+  "TITLE": "Adaugă un articol nou la licitație",
+  "DESCRIPTION": "Completează detaliile de mai jos pentru a publica articolul tău la licitație.",
+
+  "FIELDS": {
+    "NAME": "Nume articol *",
+    "NAME_PLACEHOLDER": "ex.: Bicicletă vintage",
+
+    "START_PRICE": "Preț de pornire (RON) *",
+
+    "DURATION": "Durata licitației (zile) *",
+
+    "CATEGORY": "Categorie *",
+    "CATEGORY_PLACEHOLDER": "Selectează o categorie",
+
+    "LOCATION": "Locație *",
+    "LOCATION_PLACEHOLDER": "ex.: Brașov",
+
+    "DESCRIPTION": "Descriere",
+    "DESCRIPTION_PLACEHOLDER": "Descrie starea articolului, istoricul și alte detalii..."
+  },
+
+  "IMAGE": {
+    "TITLE": "Fotografie articol",
+    "UPLOAD": "Apasă pentru a încărca o imagine",
+    "DETAILS": "JPG, PNG sau WEBP, maxim 5 MB",
+    "REMOVE": "Elimină"
+  },
+
+  "BUTTONS": {
+    "CANCEL": "Anulează",
+    "PUBLISH": "Publică articolul",
+    "PUBLISHING": "Se publică..."
+  },
+
+  "VALIDATION": {
+    "NAME_REQUIRED": "Numele este obligatoriu.",
+    "NAME_MIN": "Numele trebuie să conțină cel puțin 3 caractere.",
+
+    "PRICE_REQUIRED": "Prețul de pornire este obligatoriu.",
+    "PRICE_MIN": "Prețul trebuie să fie mai mare decât 0.",
+
+    "DURATION": "Durata trebuie să fie între 1 și 30 de zile.",
+
+    "CATEGORY": "Selectează o categorie.",
+
+    "LOCATION": "Locația este obligatorie.",
+
+    "IMAGE_TYPE": "Sunt permise doar imaginile JPG, PNG sau WEBP.",
+    "IMAGE_SIZE": "Imaginea trebuie să fie mai mică de 5 MB."
+  },
+
+  "MESSAGES": {
+    "SUCCESS": "Articolul a fost publicat cu succes!",
+    "SUCCESS_LOCAL": "Articolul a fost publicat cu succes (salvat local - backend-ul nu este încă pregătit)."
+  }
+} ,
+"FOOTER": {
+  "ABOUT_TITLE": "Despre noi",
+  "ABOUT_TEXT_1": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă.",
+  "ABOUT_TEXT_2": "Conectăm mii de cumpărători și vânzători din numeroase categorii, oferind un proces de licitație transparent și corect pentru toți. Indiferent dacă dorești să găsești o ofertă excelentă sau să vinzi către cumpărătorul potrivit, BidSphere îți oferă instrumentele și încrederea necesare pentru a licita cu succes.",
+
+  "LINKS": "Link-uri",
+  "HOME": "Acasă",
+  "SERVICES": "Licitații",
+  "CONTACT": "Contact",
+  "HELP": "Ajutor",
+  "FORUM": "Forum",
+
+  "CONTACT_TITLE": "Contact",
+
+  "SOCIAL": "Rețele sociale",
+
+  "COPYRIGHT": "Toate drepturile rezervate."
+}}
