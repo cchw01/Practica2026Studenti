@@ -307,8 +307,8 @@
     "NOTIFICATIONS":{
       "TRUE": "Notifications",
       "FALSE": "No notifications yet."
-    }
-  }, 
+    }, 
+    
   "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Auction Detail",
 
