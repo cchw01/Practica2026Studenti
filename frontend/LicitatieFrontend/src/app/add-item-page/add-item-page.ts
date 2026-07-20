@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ItemService } from '../services/item-service';
@@ -35,6 +36,7 @@ export class AddItemPage implements OnInit {
     private categoryService: CategoryService,
     private authService: AuthService,
     private router: Router,
+    private translate: TranslateService,
   ) {
     this.itemForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -70,12 +72,12 @@ export class AddItemPage implements OnInit {
     if (!file) return;
 
     if (!this.allowedTypes.includes(file.type)) {
-      this.imageError = 'Only JPG, PNG or WEBP images are allowed.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
       input.value = '';
       return;
     }
     if (file.size > this.maxImageSize) {
-      this.imageError = 'Image must be smaller than 5 MB.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
       input.value = '';
       return;
     }
@@ -122,7 +124,7 @@ export class AddItemPage implements OnInit {
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = 'Item successfully published for auction!';
+        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.removeImage();
         this.isSubmitting = false;

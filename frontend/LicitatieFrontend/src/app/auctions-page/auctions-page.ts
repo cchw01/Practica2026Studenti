@@ -5,6 +5,7 @@ import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { CategoryService } from '../services/category-service';
 import { Category } from '../Models/categoryItem';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -29,7 +30,7 @@ export class AuctionsPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
-   
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -92,11 +93,11 @@ export class AuctionsPage implements OnInit {
 
   getRemainingTime(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return 'Auction ended';
+    if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
+    const left = this.translate.instant('AUCTIONS_PAGE.TIME.LEFT');
     if (days > 0) return `${days}d ${hours}h left`;
     return `${hours}h left`;
   }
