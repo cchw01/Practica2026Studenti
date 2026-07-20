@@ -1,5 +1,18 @@
-import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Category {
   name: string;
@@ -38,10 +51,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   protected readonly displayedTitle = signal('');
 
+  private readonly destroyRef = inject(DestroyRef);
+
   private ctx!: CanvasRenderingContext2D;
   private particles: Particle[] = [];
   private mouse = { x: -9999, y: -9999 };
   private animationFrameId = 0;
+  private titleTypingTimeoutId?: ReturnType<typeof setTimeout>;
   private revealObserver?: IntersectionObserver;
 
   private readonly onMouseMove = (e: MouseEvent) => {
@@ -57,13 +73,34 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   private readonly onResize = () => this.initParticles();
 
-  constructor(private zone: NgZone, private hostRef: ElementRef<HTMLElement>, private router: Router) {}
+  constructor(
+    private zone: NgZone,
+    private hostRef: ElementRef<HTMLElement>,
+    private router: Router,
+    private readonly translate: TranslateService,
+  ) {}
 
   categories: Category[] = [
-    { name: 'Technology', icon: 'memory', description: 'Cutting-edge gadgets and the latest electronics.' },
-    { name: 'Auto & Motors', icon: 'directions_car', description: 'Cars, motorcycles, and rare parts.' },
-    { name: 'Art & Collectibles', icon: 'palette', description: 'Exclusive art pieces and collections.' },
-    { name: 'Real Estate', icon: 'home_work', description: 'Exceptional properties and land.' },
+    {
+      name: 'Technology',
+      icon: 'memory',
+      description: 'Cutting-edge gadgets and the latest electronics.',
+    },
+    {
+      name: 'Auto & Motors',
+      icon: 'directions_car',
+      description: 'Cars, motorcycles, and rare parts.',
+    },
+    {
+      name: 'Art & Collectibles',
+      icon: 'palette',
+      description: 'Exclusive art pieces and collections.',
+    },
+    {
+      name: 'Real Estate',
+      icon: 'home_work',
+      description: 'Exceptional properties and land.',
+    },
   ];
 
   auctions: Auction[] = [
@@ -136,43 +173,79 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/action-item-page'], { state: { auction } });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.translate
+      .stream('HOME.HERO.TITLE')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((title) => {
+        if (typeof title === 'string') {
+          const heroTitle =
+            title === 'HOME.HERO.TITLE'
+              ? HERO_TITLE
+              : title;
+
+          this.typeHeroTitle(heroTitle);
+        }
+      });
+  }
 
   ngAfterViewInit(): void {
     this.initParticles();
+
     const hero = this.heroRef.nativeElement;
+
     hero.addEventListener('mousemove', this.onMouseMove);
     hero.addEventListener('mouseleave', this.onMouseLeave);
     window.addEventListener('resize', this.onResize);
+
     this.zone.runOutsideAngular(() => this.animate());
 
     this.setupScrollReveal();
-    this.typeHeroTitle();
   }
 
   ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrameId);
+
+    if (this.titleTypingTimeoutId !== undefined) {
+      clearTimeout(this.titleTypingTimeoutId);
+    }
+
     const hero = this.heroRef.nativeElement;
+
     hero.removeEventListener('mousemove', this.onMouseMove);
     hero.removeEventListener('mouseleave', this.onMouseLeave);
     window.removeEventListener('resize', this.onResize);
+
     this.revealObserver?.disconnect();
   }
 
-  private typeHeroTitle(): void {
+  private typeHeroTitle(title: string): void {
+    if (this.titleTypingTimeoutId !== undefined) {
+      clearTimeout(this.titleTypingTimeoutId);
+    }
+
     let i = 0;
+    this.displayedTitle.set('');
+
     const step = () => {
       i++;
-      this.displayedTitle.set(HERO_TITLE.slice(0, i));
-      if (i < HERO_TITLE.length) {
-        setTimeout(step, 45 + Math.random() * 35);
+
+      this.displayedTitle.set(title.slice(0, i));
+
+      if (i < title.length) {
+        this.titleTypingTimeoutId = setTimeout(
+          step,
+          45 + Math.random() * 35,
+        );
       }
     };
+
     step();
   }
 
   private setupScrollReveal(): void {
     const targets = this.hostRef.nativeElement.querySelectorAll('.reveal-on-scroll');
+
     this.revealObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -181,6 +254,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       },
       { threshold: 0.15 },
     );
+
     targets.forEach((el) => this.revealObserver!.observe(el));
   }
 
@@ -200,16 +274,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const count = Math.min(260, Math.round((width * height) / 5500));
+
     this.particles = Array.from({ length: count }, () => {
       const ox = Math.random() * width;
       const oy = Math.random() * height;
       const accent = Math.random() < 0.18;
+
       return {
         ox,
         oy,
         x: ox,
         y: oy,
-        radius: accent ? 2.2 + Math.random() * 1.6 : 1.1 + Math.random() * 1.2,
+        radius: accent
+          ? 2.2 + Math.random() * 1.6
+          : 1.1 + Math.random() * 1.2,
         accent,
       };
     });
@@ -218,9 +296,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private readonly animate = (): void => {
     const width = this.heroRef.nativeElement.clientWidth;
     const height = this.heroRef.nativeElement.clientHeight;
+
     this.ctx.clearRect(0, 0, width, height);
 
     const repelRadius = 170;
+
     for (const p of this.particles) {
       const dx = p.ox - this.mouse.x;
       const dy = p.oy - this.mouse.y;
@@ -232,7 +312,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       if (dist < repelRadius) {
         nearBoost = (repelRadius - dist) / repelRadius;
+
         const angle = Math.atan2(dy, dx);
+
         targetX = p.ox + Math.cos(angle) * nearBoost * 60;
         targetY = p.oy + Math.sin(angle) * nearBoost * 60;
       }
@@ -241,10 +323,18 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       p.y += (targetY - p.y) * 0.16;
 
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius + nearBoost * 2, 0, Math.PI * 2);
+      this.ctx.arc(
+        p.x,
+        p.y,
+        p.radius + nearBoost * 2,
+        0,
+        Math.PI * 2,
+      );
+
       this.ctx.fillStyle = p.accent
         ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
         : `rgba(20, 20, 30, ${0.12 + nearBoost * 0.35})`;
+
       this.ctx.fill();
     }
 
