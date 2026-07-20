@@ -2,36 +2,30 @@
   <div class="footer-container">
 
     <div class="footer-col">
-      <h3>About us</h3>
-      <p>BidSphere is a modern online auction platform designed to make buying and 
-        selling through bidding simple, secure, and exciting.
-        </p> 
-        <p>We connect thousands 
-        of buyers and sellers across a wide range of categories, offering a 
-        transparent and fair bidding process for everyone. Whether you're looking 
-        for a great deal or hoping to sell to the right buyer, BidSphere gives you 
-        the tools and trust you need to bid with confidence.</p>
+      <h3>{{ 'FOOTER.ABOUT_TITLE' | translate }}</h3>
+        <p>{{ 'FOOTER.ABOUT_TEXT_1' | translate }}</p>
+      <p>{{ 'FOOTER.ABOUT_TEXT_2' | translate }}</p>
     </div>
 
     <div class="footer-col">
-      <h3>Links</h3>
+      <h3>{{ 'FOOTER.LINKS' | translate }}</h3>
       <ul>
-        <li><a routerLink="/home-page">Home</a></li>
-        <li><a routerLink="/auctions">Services</a></li>
-        <li><a routerLink="/contact-page">Contact</a></li>
-        <li><a routerLink = "/help-page">Help</a></li>
-        <li><a routerLink = "/forum-page">Forum</a></li>
+        <li><a routerLink="/home-page">{{ 'FOOTER.HOME' | translate }}</a></li>
+        <li><a routerLink="/auctions">{{ 'FOOTER.SERVICES' | translate }}</a></li>
+        <li><a routerLink="/contact-page">{{ 'FOOTER.CONTACT' | translate }}</a></li>
+        <li><a routerLink="/help-page">{{ 'FOOTER.HELP' | translate }}</a></li>
+        <li><a routerLink="/forum-page">{{ 'FOOTER.FORUM' | translate }}</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
-      <h3>Contact</h3>
+      <h3>{{ 'FOOTER.CONTACT_TITLE' | translate }}</h3>
       <p>Email: BidSphere@site.ro</p>
       <p>Phone: 0700 000 000</p>
     </div>
 
     <div class="footer-col">
-      <h3>Social media</h3>
+      <h3>{{ 'FOOTER.SOCIAL' | translate }}</h3>
       <div class="social-icons">
 
         <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
@@ -58,6 +52,9 @@
   </div>
 
   <div class="footer-bottom">
-    <p>&copy; {{ currentYear }} BidSphere. All rights reserved.</p>
+   <p>
+  &copy; {{ currentYear }} BidSphere.
+  {{ 'FOOTER.COPYRIGHT' | translate }}
+</p>
   </div>
 </footer>
