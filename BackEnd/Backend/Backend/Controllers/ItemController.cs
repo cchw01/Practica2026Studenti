@@ -361,9 +361,7 @@ namespace Backend.Controllers
                 return BadRequest(errorMessage);
             }
         }
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public ActionResult DeleteAuctionItem(int id)
+        private int? GetAuthenticatedUserId()
         {
             var userIdClaim = User.FindFirst("id")?.Value;
 
@@ -372,7 +370,6 @@ namespace Backend.Controllers
 
             return userId;
         }
-
         private static AuctionItemResponseDto MapToResponseDto(
             AuctionItem item)
         {
