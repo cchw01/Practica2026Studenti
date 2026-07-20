@@ -79,19 +79,21 @@
       <div class="form-field">
         <label>{{ 'ADD_ITEM_PAGE.IMAGE.TITLE' | translate }}</label>
 
+        <!-- File input always present in DOM so FileReader isn't interrupted -->
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+
         <div class="image-upload" *ngIf="!imagePreview">
           <label for="imageInput" class="upload-box">
             <mat-icon>add_photo_alternate</mat-icon>
             <span>{{ 'ADD_ITEM_PAGE.IMAGE.UPLOAD' | translate }}</span>
             <small>{{ 'ADD_ITEM_PAGE.IMAGE.DETAILS' | translate }}</small>
           </label>
-          <input
-            id="imageInput"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            (change)="onFileSelected($event)"
-            hidden
-          />
         </div>
 
         <div class="image-preview" *ngIf="imagePreview">

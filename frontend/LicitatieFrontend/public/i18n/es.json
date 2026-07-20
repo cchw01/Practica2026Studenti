@@ -255,7 +255,14 @@
   "SOCIAL": "Redes sociales",
 
   "COPYRIGHT": "Todos los derechos reservados."
-}, "AUCTION_ITEM_PAGE": {
+},
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "¡Ups! Página no encontrada",
+  "MESSAGE": "La página que buscas no existe o ha sido movida.",
+  "BUTTON": "Ir al INICIO"
+}, 
+"AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Detalles de la subasta",
 
   "INFO": {

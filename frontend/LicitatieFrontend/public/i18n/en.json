@@ -265,11 +265,8 @@
     "TITLE": "Oops! Page not found",
     "MESSAGE": "The page you're looking for doesn't exist or has been moved.",
     "BUTTON":"Go BACK HOME"
-  }
-
-  "COPYRIGHT": "All rights reserved."
-}, 
-"AUCTION_ITEM_PAGE": {
+  }, 
+  "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Auction Detail",
 
   "INFO": {
