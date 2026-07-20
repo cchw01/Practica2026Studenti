@@ -40,4 +40,16 @@ export class UserService {
   removeFromWishlist(userId: number, itemId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`);
   }
+
+    reportUser(userId: number, reason: string): Observable<void> {
+    // Când vei face tabela în backend, poți de-comenta linia de mai jos:
+    // return this.http.post<void>(`${this.apiUrl}/${userId}/report`, { reason });
+    
+    // Momentan simulăm succesul local:
+    return new Observable<void>(observer => {
+      console.log(`Utilizatorul ${userId} a fost raportat. Motiv: ${reason}`);
+      observer.next();
+      observer.complete();
+    });
+  }
 }

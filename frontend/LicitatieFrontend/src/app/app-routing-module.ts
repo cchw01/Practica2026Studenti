@@ -20,6 +20,7 @@ import { CreateForumPost } from './forum-page/create-forum-post/create-forum-pos
 import { NotFound } from './not-found/not-found';
 import { AdminGuard } from './services/admin-guard';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { UserPage } from './user-page/user-page';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
+  { path: 'user-page/:id', component: UserPage},
   { path: '**', component: NotFound },
 ];
 

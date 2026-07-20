@@ -45,6 +45,7 @@ import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { UserPage } from './user-page/user-page';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AdminPage } from './admin-page/admin-page/admin-page';
     ProfileMenu,
     NotificationBell,
     AdminPage,
+    UserPage,
   ],
   imports: [
     BrowserModule,

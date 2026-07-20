@@ -71,6 +71,15 @@
             <h3>{{ item.Name }}</h3>
             <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
             <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+            <div class="card-footer" *ngIf="item.Owner" (click)="$event.stopPropagation()">
+              <!-- Traducerea textului „Adăugat de:” -->
+              <span>{{ 'AUCTIONS_PAGE.POSTED_BY' | translate }}: </span>
+              
+              <!-- Navigare către pagina de profil public -->
+              <a [routerLink]="['../user-page', item.Owner.ID]" class="owner-link">
+                {{ item.Owner.UserName }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -88,4 +97,4 @@
       </div>
     </div>
   </ng-container>
-</div>
+</div>

@@ -376,4 +376,33 @@
   margin: 0 0 4px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-}
+}
+
+.card-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f5;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #888;
+}
+
+.owner-prefix {
+  font-weight: 400;
+  color: #9598a6;
+}
+
+.owner-link {
+  color: v.$color-primary;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.owner-link:hover {
+  color: #6c4bd6;
+  text-decoration: underline;
+}
