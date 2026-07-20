@@ -2,14 +2,13 @@
 {
     public class Bid
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public User? Bidder { get; set; }
-
         public int BidderId { get; set; }
         public AuctionItem? BiddedItem { get; set; }
         public int BiddedItemId { get; set; }
-        public decimal price { get; set; }
-        public DateTime date { get; set; }
+        public decimal Price { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }
