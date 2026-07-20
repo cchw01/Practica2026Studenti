@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +69,13 @@ namespace Backend.Controllers
                 var itemName = item != null ? item.Name : "an item";
                 var notifOps = new NotificationDataOps(DbContext);
 
+                // Update the item's CurrentPrice to reflect the new highest bid
+                if (item != null && bid.price > item.CurrentPrice)
+                {
+                    item.CurrentPrice = bid.price;
+                    itemOps.UpdateAuctionItem(item);
+                }
+
                 //  notify the item owner that someone bid
                 if (item != null && item.OwnerId != bid.BidderId)
                 {
@@ -93,7 +100,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 

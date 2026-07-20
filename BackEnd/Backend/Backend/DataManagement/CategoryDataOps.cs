@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
 
 namespace Backend.DataManagement
@@ -35,15 +35,8 @@ namespace Backend.DataManagement
 
         public void UpdateCategory(CategoryItem category)
         {
-            try
-            {
-                DbContext?.Category.Update(category);
-                DbContext?.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            DbContext?.Category.Update(category);
+            DbContext?.SaveChanges();
         }
 
         public CategoryItem? GetCategoryById(int id)

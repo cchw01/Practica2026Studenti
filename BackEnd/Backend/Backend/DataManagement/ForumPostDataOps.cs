@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Backend.Models;
 namespace Backend.DataManagement
 {
@@ -14,12 +14,19 @@ namespace Backend.DataManagement
 
         public ForumPost[]? GetForumPosts()
         {
-            return DbContext?.ForumPosts.ToArray();
+            return DbContext?.ForumPosts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .ToArray();
         }
 
         public ForumPost? GetForumPostById(int id)
         {
-            return DbContext?.ForumPosts.Where(x => x.Id == id).FirstOrDefault();
+            return DbContext?.ForumPosts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Where(x => x.Id == id)
+                .FirstOrDefault();
         }
 
         public void AddForumPost(ForumPost forumPost)

@@ -45,6 +45,7 @@ $font-weight-extra-bold: 800;
 
 // Main brand colors from home-page.css
 $color-primary: var(--mat-sys-primary, #3f51b5);
+$color-primary-dark: #2c3e9e;   // darken(#3f51b5, 10%) — used where darken() cannot resolve var()
 $color-accent: #e91e63;
 
 

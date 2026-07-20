@@ -151,12 +151,12 @@ using Azure.Core;
                     var newRefreshToken = refreshTokenDataOps.CreateRefreshToken(user);
                     var refreshTokenCookie = new CookieOptions
                     {
-                        Expires = refreshToken.ExpiresAt,
+                        Expires = newRefreshToken?.ExpiresAt ?? DateTime.UtcNow.AddDays(30),
                         HttpOnly = true,
                         Secure = true,
                     };
-                    Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-                    var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
+                    Response.Cookies.Append("refreshToken", newRefreshToken?.Token ?? string.Empty, refreshTokenCookie);
+                    var tokenInfo = new { accessToken, expiresIn = EXPIRES_IN };
                     return Ok(tokenInfo);
                 }
                 else
@@ -198,15 +198,21 @@ using Azure.Core;
         }
 
         [HttpPost("logout")]
-
         public ActionResult LogoutUser()
         {
             try
             {
                 var refreshTokenFromRequest = Request.Cookies["refreshToken"];
-                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
-                var userToken = dataOps.GetUserById(token.UserId);
-                refreshTokenDataOps.DeleteRefreshToken(userToken);
+                if (!string.IsNullOrEmpty(refreshTokenFromRequest))
+                {
+                    var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                    if (token != null)
+                    {
+                        var userToken = dataOps.GetUserById(token.UserId);
+                        if (userToken != null)
+                            refreshTokenDataOps.DeleteRefreshToken(userToken);
+                    }
+                }
                 Response.Cookies.Delete("refreshToken");
                 return Ok();
             }

@@ -17,7 +17,11 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetAuctionItems()
         {
-            return dbContext.AuctionItems.Include(x => x.Category).ToArray();
+            return dbContext.AuctionItems
+                .Include(x => x.Category)
+                .Include(x => x.Owner)
+                .Include(x => x.BidList)
+                .ToArray();
         }
 
         public void AddAuctionItem(AuctionItem item)
@@ -28,39 +32,29 @@ namespace Backend.DataManagement
 
         public void UpdateAuctionItem(AuctionItem item)
         {
-            try
-            {
-                dbContext?.AuctionItems.Update(item);
-                dbContext?.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
-            }
+            dbContext?.AuctionItems.Update(item);
+            dbContext?.SaveChanges();
         }
 
         public void DeleteAuctionItem(int id)
         {
-            try
+            var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
+            
+            if (item != null)
             {
-                var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
-                
-                if (item != null)
-                {
-                    dbContext.AuctionItems.Remove(item);
-                    dbContext.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
+                dbContext.AuctionItems.Remove(item);
+                dbContext.SaveChanges();
             }
         }
 
         public AuctionItem? GetAuctionItemById(int id)
         {
-            var item = dbContext.AuctionItems.Include(x => x.Category).Where(x => x.ID == id).FirstOrDefault();
-            return item;
+            return dbContext.AuctionItems
+                .Include(x => x.Category)
+                .Include(x => x.Owner)
+                .Include(x => x.BidList)
+                .Where(x => x.ID == id)
+                .FirstOrDefault();
         }
 
         

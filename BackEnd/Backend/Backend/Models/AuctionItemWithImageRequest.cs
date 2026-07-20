@@ -6,7 +6,7 @@ namespace Backend.Models
     public class AuctionItemWithImageRequest
     {
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
         public decimal StartPrice { get; set; }
@@ -17,7 +17,7 @@ namespace Backend.Models
         public string? Description { get; set; }
 
         [Required]
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
 
         [Required]
         public int OwnerId { get; set; }
