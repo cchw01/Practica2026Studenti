@@ -1,3 +1,5 @@
+@use '../../styles/variables' as v;
+
 .not-found-container {
   display: flex;
   justify-content: center;
@@ -9,7 +11,7 @@
 
 .not-found-content {
   max-width: 500px;
-  padding: 40px;
+  padding: v.$space-2xl;
   animation: fade-in-up 0.6s ease both;
 }
 
@@ -19,15 +21,15 @@
   justify-content: center;
   width: 72px;
   height: 72px;
-  margin: 0 auto 12px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #3f51b5, #6c4bd6);
+  margin: 0 auto v.$space-sm;
+  border-radius: v.$radius-lg;
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
   box-shadow: 0 10px 24px rgba(63, 81, 181, 0.35);
   animation: float 3s ease-in-out infinite;
 }
 
 .not-found-icon mat-icon {
-  color: white;
+  color: v.$color-white;
   font-size: 34px;
   width: 34px;
   height: 34px;
@@ -36,33 +38,33 @@
 
 .not-found-code {
   font-size: 120px;
-  font-weight: 800;
+  font-weight: v.$font-weight-extra-bold;
   margin: 0;
   line-height: 1;
-  background: linear-gradient(90deg, #3f51b5, #e91e63);
+  background: linear-gradient(90deg, v.$color-primary, v.$color-accent);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .not-found-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1e1e2e;
-  margin: 20px 0 10px;
+  font-size: v.$font-size-heading-lg;
+  font-weight: v.$font-weight-bold;
+  color: v.$color-text-heading;
+  margin: v.$space-lg 0 v.$space-sm;
 }
 
 .not-found-message {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 30px;
+  font-size: v.$font-size-body;
+  color: v.$color-text-body;
+  margin-bottom: v.$space-xl;
   line-height: 1.6;
 }
 
 .btn-home {
-  border-radius: 999px !important;
-  padding: 0 28px !important;
-  font-weight: 600;
+  border-radius: v.$radius-pill !important;
+  padding: 0 v.$space-xl !important;
+  font-weight: v.$font-weight-semibold;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
