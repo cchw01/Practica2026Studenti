@@ -1,5 +1,71 @@
-Proiectul BidSphere a fost creat în anul 2026.
-Licitațiile principale se desfășoară în fiecare zi de joi, începând cu ora 10:00.
-Prețul minim de pornire pentru orice licitație standard este de 500 de lei.
-Pentru suport tehnic, utilizatorii pot trimite un email la adresa contact@bidsphere.ro.
-Regulamentul strict interzice anularea unei oferte odată ce aceasta a fost plasată pe platformă.
+=== DOCUMENTAȚIE OFICIALĂ PLATFORMĂ BIDSPHERE (2026) ===
+
+1. INFORMAȚII GENERALE ȘI REGULAMENT PLATFORMĂ
+- Numele platformei: BidSphere.
+- Anul lansării: 2026.
+- Scopul aplicatiei: BidSphere este o platformă sigură de licitații online, concepută pentru a expune și satisface toate nevoile utilizatorilor. Permite cumpărarea rapidă de produse unice la prețuri avantajoase și punerea în vânzare simplă a propriilor obiecte.
+- Program licitații speciale: Licitațiile principale și evenimentele majore se desfășoară în fiecare zi de joi, începând cu ora 10:00.
+- Preț minim de pornire: Prețul minim standard de pornire pentru o licitație este de 500 RON (sau cel setat explicit de vânzător).
+- Regulament plasare oferte: Regulamentul strict interzice anularea unei oferte odată ce aceasta a fost plasată pe platformă. Ofertele sunt ferme.
+- Notificare câștigător: Încheierea licitației trimite automat o notificare pe e-mail și în aplicație utilizatorului cu cea mai mare ofertă.
+- Suport tehnic general: E-mail de contact: contact@bidsphere.ro sau BidSphere@site.ro. Numar de telefon: 0700 000 000.
+
+2. HEADER ȘI BARA DE NAVIGARE (TOP BAR)
+- Meniu de navigare: În partea de sus se găsesc butoanele principale de acces rapid: Home, Auctions, Forum, Contact, Help.
+- Traducere / Schimbare limba: Butonul de Translate permite comutarea interfeței în română, engleză și spaniolă pentru utilizatorii internaționali.
+- Adăugare produs nou: Butonul cu simbolul "+" permite deschiderea rapidă a formularului de adăugare a unui obiect sau produs nou pus la licitație.
+- Autentificare și Cont: În colțul din dreapta sus se află cele două butoane principale: Login (Autentificare) și Register (Înregistrare cont nou).
+
+3. PAGINA PRINCIPALĂ (HOME PAGE - http://localhost:4200/home-page)
+- Slogan și secțiune Hero: Sloganul principal este "BID. WIN. REPEAT. Live auctions every day".
+- Buton "HOME.HERO.EXPLORE_AUCTIONS" / "Explore Auctions": Duce utilizatorul direct la pagina cu licitații active și obiecte puse la licitație.
+- Buton "HOME.HERO.START_SELLING" / "Start Selling": Are ca scop deschiderea formularului pentru adăugarea unui nou obiect pe piață.
+- Căutare rapidă (Search Bar): Pozitat sub secțiunea Hero, permite căutarea de categorii sau produse specifice de interes (ex: BMW, cercei din aur).
+- Categorii Populare (Popular Categories): Include categorii principale precum Tehnologie ("Technology"), Auto & Moto ("Auto & Motors"), Artă & Colecții ("Art & Collectibles") și Imobiliare ("Real Estate").
+- Licitații Active / Expira în curând: Derularea (scroll) pe pagină afișează produsele aflate în desfășurare, ordonate după timpul rămas până la expirare. Fiecare card de produs afișează titlul, prețul curent și butonul "Place Bid".
+- Secțiunea "About Us" și Footer: În subsolul paginii sunt prezente informațiile deschise cu Footer.About_Title (împărțit în Footer.About_Text_1 și Footer.About_Text_2), adresa de email "BidSphere@site.ro", numărul de telefon "0700 000 000", link-uri de navigație (Home: http://localhost:4200/home-page, Services/Auctions: http://localhost:4200/auctions, Contact: http://localhost:4200/contact-page, Help: http://localhost:4200/help-page, Forum: http://localhost:4200/forum-page) și link-uri către rețele sociale (Instagram, Facebook, LinkedIn).
+
+4. PAGINA DE LICITAȚII (AUCTIONS PAGE - http://localhost:4200/auctions)
+- Căutare avansată: Pagina de licitații conține un search bar special pentru căutarea rapidă a produselor după nume.
+- Filtrare după categorii ("auctions_page.all_categories"): Meniu derulant pentru selectarea tuturor categoriilor disponibile.
+- Sortare produse: Butonul/meniul de sortare permite aranjarea licitațiilor după:
+  * "auctions_page.sort.endings_soon" (Încheiere în curând)
+  * "auctions_page.sort.endings_low_high" (Preț crescător: de la mic la mare)
+  * "auctions_page.sort.endings_high_low" (Preț descrescător: de la mare la mic)
+  * "auctions_page.sort.endings_newest" (Cele mai noi adăugate)
+- Adăugare item ("auctions_page.add_item"): Buton direct care deschide formularul de adăugare a unui produs nou.
+- Afișare produse și istoric: Sub bara de căutare și filtre se afișează produsele deja căutate, istoricul de căutare și cardurile de licitații active cu preț curent în RON și timp rămas.
+- Pagina de detalii licitație (http://localhost:4200/auctions/:id): Pagina dedicată unui produs specific unde se pot vedea pozele, istoricul ofertelor și unde se pot plasa licitații în timp real.
+
+5. PAGINA FORUM (FORUM PAGE - http://localhost:4200/forum-page)
+- Scopul forumului: Spațiu de discuții pentru comunitatea BidSphere unde utilizatorii pot purta conversații, pune întrebări și cere păreri.
+- Opțiuni de sortare a discuțiilor: Discuțiile pot fi sortate după "Latest first" (cele mai recente), "Oldest first" (cele mai vechi) și "Most commented" (cele mai comentate).
+- Carduri de discuție: Fiecare fir de discuție arată autorul (cu inițiale), titlul, data publicării, descrierea scurtă și numărul total de comentarii.
+
+6. CENTRUL DE ASISTENȚĂ ȘI HELP (HELP PAGE - http://localhost:4200/help-page)
+- Întrebări Frecvente (FAQ):
+  1. Cum plasăm o ofertă? Navighezi pe pagina produsului și introduci suma dorită în câmpul "Bid now". Suma trebuie să depășească prețul curent.
+  2. Cum adăugăm un produs spre vânzare? Din secțiunea "Profilul meu", se apasă pe "Adaugă Licitație", se completează datele și se așteaptă aprobarea administratorului.
+  3. Cum aflu dacă am câștigat o licitație? Se trimite o notificare pe email și în aplicație imediat ce licitația se încheie și ai cea mai mare ofertă.
+- Suport Telefonic (Call Center Rapid): Număr de telefon dedicat +40 123 456 789 (disponibil de Luni până Vineri între orele 09:00 - 18:00).
+- Deschidere Tichet de Suport: Formular special pentru semnalarea problemelor ce necesită Nume complet, Adresă de email și Descrierea detaliată a problemei.
+- Asistent AI Virtual (Widget Live Chat): Asistent virtual integrat în pagină pentru ajutor și răspunsuri rapide la întrebări în timp real.
+
+7. PAGINA DE CONTACT (CONTACT PAGE - http://localhost:4200/contact-page)
+- Detalii de contact direct: Email oficial contact@bidsphere.ro / BidSphere@site.ro, Număr de telefon 0700 000 000.
+- Program Call Center: Luni - Vineri, 09:00 - 18:00.
+- Rețele Sociale: Conexiuni oficiale cu paginile de Facebook, Instagram și LinkedIn.
+
+8. PROFILUL UTILIZATORULUI ȘI ADAUGARE PRODUSE (PROFILE PAGE - http://localhost:4200/profile-page)
+- Gestiune cont: Permite vizualizarea și modificarea numelui de utilizator, numelui complet, adresei de email și pozei de profil (avatar).
+- Rating și recenzii: Afișează scorul mediu în stele primit de la alți utilizatori și lista recenziilor primite.
+- Personalizare temă vizuală: Opțiuni pentru comutarea temei în modul Light (Luminos), Dark (Întunecat) sau Neon.
+- Schimbare parolă: Formular securizat de schimbare a parolei curente cu o parolă nouă.
+- Formular adăugare produs / vânzare ("Sell a New Item"):
+  * Nume produs (Item Name)
+  * Preț de pornire în RON (Starting Price)
+  * Categorie: Electronice, Fashion, Casă, Artă, Vehicule
+  * Locație (Location)
+  * Durată licitație: 1 Zi, 3 Zile, 5 Zile sau 7 Zile
+  * Descriere starea produsului
+- Istoric vânzări și cumpărături: Secțiuni dedicate pentru "My Active Sales" (licitațiile mele active) și "Items Won" (produsele câștigate la licitații).
