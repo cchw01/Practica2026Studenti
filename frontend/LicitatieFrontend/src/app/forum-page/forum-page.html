@@ -1,41 +1,43 @@
 <div class="forum-page">
     <main class="forum-container">
         <header class="forum-introduction">
-            <h1>Forum discussions</h1>
-            <p> Browse current discussions and participate in conversations with other users. </p>
+            <h1>{{ 'FORUM.TITLE' | translate }}</h1>
+            <p> {{ 'FORUM.DESCRIPTION' | translate }}</p>
         </header>
 
         <section class="discussion-section">
             <div class="discussion-toolbar">
                 @if (currentUserId !== null) {
-<a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
+<a class="create-discussion-button" routerLink="/forum/new">  {{ 'FORUM.START_DISCUSSION' | translate }} </a>
 } @else {
-<a class="create-discussion-button" routerLink="/login-page"> Log in to start a discussion </a>
+<a class="create-discussion-button" routerLink="/login-page"> {{ 'FORUM.LOGIN_TO_START' | translate }} </a>
 }
 
                 <div class="sort-control">
                     <select [(ngModel)]="sortOption" aria-label="Sort discussions">
-                        <option value="latest">Latest first</option>
-                        <option value="oldest">Oldest first</option>
-                        <option value="comments">Most commented</option>
+                        <option value="latest">{{ 'FORUM.SORT.LATEST' | translate }}</option>
+                        <option value="oldest">{{ 'FORUM.SORT.OLDEST' | translate }}</option>
+                        <option value="comments">{{ 'FORUM.SORT.MOST_COMMENTED' | translate }}</option>
                     </select>
                 </div>
 
                 <p class="discussion-total">
                     {{ visiblePosts.length }}
-                    {{ visiblePosts.length === 1 ? 'discussion' : 'discussions' }}
+                    {{ visiblePosts.length === 1 
+                    ? ('FORUM.DISCUSSION' | translate)
+                    : ('FORUM.DISCUSSIONS' | translate) }}
                 </p>
             </div>
 
             @if (isLoading) {
             <div class="empty-state" aria-live="polite">
-                <h2>Loading discussions</h2>
+                <h2>{{ 'FORUM.LOADING.TITLE' | translate }}</h2>
             </div>
             } @else if (errorMessage) {
             <div class="empty-state" role="alert">
-                <h2>Unable to load discussions</h2>
+                <h2>{{ 'FORUM.ERROR.TITLE' | translate }}</h2>
                 <p>{{ errorMessage }}</p>
-                <button type="button" class="retry-button" (click)="retryLoading()"> Try again </button>
+                <button type="button" class="retry-button" (click)="retryLoading()">{{ 'FORUM.ERROR.RETRY' | translate }}</button>
             </div>
             } @else {
             <div class="discussion-list">
@@ -53,7 +55,7 @@
                         </div>
 
                         <p class="discussion-author">
-                            Posted by
+                            {{ 'FORUM.POSTED_BY' | translate }}
                             <strong> {{ getUserLabel(post.userId) }} </strong>
                         </p>
 
@@ -64,14 +66,16 @@
                         <div class="comment-icon" aria-hidden="true"></div>
 
                         <p class="comment-count">
-                            {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
+                            {{ post.commentsCount }} {{ post.commentsCount === 1 
+                            ? ('FORUM.COMMENT' | translate)
+                            : ('FORUM.COMMENTS' | translate) }}
                         </p>
                     </div>
                 </a>
                 } @empty {
                 <div class="empty-state">
-                    <h2>No discussions available</h2>
-                    <p> There are currently no discussions in the forum. </p>
+                    <h2>{{ 'FORUM.EMPTY.TITLE' | translate }}</h2>
+                    <p> {{ 'FORUM.EMPTY.MESSAGE' | translate }}</p>
                 </div>
                 }
             </div>

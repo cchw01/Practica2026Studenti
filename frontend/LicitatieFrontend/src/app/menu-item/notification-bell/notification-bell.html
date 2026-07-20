@@ -2,8 +2,9 @@
   <mat-icon
     [matBadge]="unreadCount() > 0 ? unreadCount() : null"
     matBadgeColor="warn"
-    matBadgeSize="small">
-    notifications
+    matBadgeSize="small"
+    [matBadgeHidden]="!hasUnread()">
+    {{'NOTIFICATIONS.TRUE' | translate}}
   </mat-icon>
 </button>
 <mat-menu #menu="matMenu">
@@ -13,5 +14,5 @@
       <span class="notif-time">{{ n.createdAt | date:'dd MMM, HH:mm' }}</span>
     </div>
   </button>
-  <div *ngIf="notifications().length === 0" class="empty">No notifications yet</div>
+  <div *ngIf="notifications().length === 0" class="empty">{{'NOTIFICATIONS.FALSE' | translate}}</div>
 </mat-menu>
