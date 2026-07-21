@@ -32,7 +32,12 @@ export class AdminPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) {
+    const saved = localStorage.getItem('verifiedForumPostIds');
+  if (saved) {
+    this.verifiedPostIds = new Set(JSON.parse(saved));
+  }
+}
 
   adminName = '';
   adminInitials = '';
@@ -68,6 +73,7 @@ export class AdminPage implements OnInit {
   }
    markAsVerified(id: number): void {
     this.verifiedPostIds.add(id);
+    localStorage.setItem('verifiedForumPostIds', JSON.stringify([...this.verifiedPostIds]));
   }
 
   setTab(tab: Tab): void {
