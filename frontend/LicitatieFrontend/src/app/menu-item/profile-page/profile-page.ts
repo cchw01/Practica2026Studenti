@@ -1,4 +1,4 @@
-import { Component, OnInit, Service } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
@@ -7,11 +7,13 @@ import { ReviewService } from '../../app-logic/review';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
+
 interface Item {
   id: number;
   title: string;
   price: number;
   status: string;
+  image?: string;
 }
 
 interface Review {
@@ -91,9 +93,10 @@ export class ProfilePage implements OnInit {
     private UserService: UserService,
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private categoryService: CategoryService,
     private router: Router,
-    private translate: TranslateService,
+    private categoryService: CategoryService,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +113,7 @@ export class ProfilePage implements OnInit {
     this.loadWishlistFromStorage();
     this.loadItemsAndReviews();
 
-    // ---- Aici adaugi citirea categoriilor ----
+    // Fetch category list
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
@@ -132,7 +135,7 @@ export class ProfilePage implements OnInit {
     this.setTheme(savedTheme);
   }
 
-  // --- Load wishlist directly from localStorage (immediate, no network needed) ---
+  // --- Load wishlist directly from localStorage ---
   private loadWishlistFromStorage(): void {
     const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     const localWishRaw: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
@@ -146,6 +149,7 @@ export class ProfilePage implements OnInit {
       title: item.Name || item.name || 'Unknown Item',
       price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
       status: (item.Status || item.status || 'Active').toString(),
+      image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
     }));
   }
 
@@ -170,56 +174,43 @@ export class ProfilePage implements OnInit {
             status: item.Status || item.status
               ? (item.Status || item.status).toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png',
           }));
 
         // Filter won items
         this.bidItems = items
-          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0) // Mock bid items or won
+          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0)
           .map((item: any) => ({
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice,
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png',
           }));
 
-        // Filter wish list items (items where current user is in WishingUsers)
-        const backendWishItems = items
-          .filter(
-            (item: any) =>
-              Array.isArray(item.wishingUsers) &&
-              item.wishingUsers.some(
-                (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
-              ),
-          )
-          .map((item: any) => ({
-            id: item.id || item.ID || 0,
-            title: item.name || item.Name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-          }));
+        // Fetch wishlist items specifically from backend
+        this.UserService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            const backendWishItems: Item[] = wishlistItems.map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || 'Item',
+              price: item.currentPrice || item.startPrice || 0,
+              image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+            }));
 
-        // Also load wishlist items stored locally via the wishlist toggle
-        const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
-        const localWishRaw: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
-        const localWishItems = localWishRaw
-          .filter((item: any) => localWishIds.includes(item.ID || item.id))
-          .map((item: any) => ({
-            id: item.ID || item.id || 0,
-            title: item.Name || item.name || '',
-            price: item.CurrentPrice || item.currentPrice || item.StartPrice || item.startPrice || 0,
-            status: item.Status || item.status
-              ? (item.Status || item.status).toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-          }));
-
-        // Merge: prefer backend entries, fill in any that are only local
-        const mergedIds = new Set(backendWishItems.map((i) => i.id));
-        const extraLocal = localWishItems.filter((i) => !mergedIds.has(i.id));
-        this.wishItems = [...backendWishItems, ...extraLocal];
+            // Merge with items loaded from localStorage as fallback
+            const mergedIds = new Set(backendWishItems.map((i) => i.id));
+            const extraLocal = this.wishItems.filter((i) => !mergedIds.has(i.id));
+            this.wishItems = [...backendWishItems, ...extraLocal];
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Error loading wishlist:', err),
+        });
       },
-      error: (err) => console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_ITEMS'), err),
+      error: (err) => console.error('Error loading items:', err),
     });
 
     // Load reviews
@@ -241,13 +232,39 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5; // Default fallback score
+          this.score = 4.5;
         }
       },
-      error: (err) =>
-        console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_REVIEWS'), err),
+      error: (err) => console.error('Error loading reviews:', err.message || err),
     });
   }
+
+  removeFromWishlist(itemId: number, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
+      next: () => {
+        this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
+        
+        // Also update local storage cache if present
+        const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const updatedIds = localWishIds.filter((id) => id !== itemId);
+        localStorage.setItem('wishlist', JSON.stringify(updatedIds));
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error removing from wishlist', err),
+    });
+  }
+
+  // --- Navigate to Item Details ---
+  goToItem(id: number): void {
+    if (id) {
+      this.router.navigate(['/auctions', id]);
+    }
+  }
+
   // --- Persistence ---
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -335,7 +352,7 @@ export class ProfilePage implements OnInit {
     this.authService
       .changePassword(this.currentUserId, this.currentPassword, this.newPassword)
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.passwordError = false;
           this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.SUCCESS');
           this.currentPassword = '';
@@ -343,7 +360,6 @@ export class ProfilePage implements OnInit {
           this.confirmPassword = '';
           setTimeout(() => (this.passwordMessage = ''), 3000);
         },
-
         error: (err) => {
           this.passwordError = true;
           this.passwordMessage =
@@ -366,7 +382,7 @@ export class ProfilePage implements OnInit {
   // --- Logout ---
   onLogout(): void {
     this.authService.logout();
-    this.setTheme('light'); // Reset theme classes
+    this.setTheme('light');
     document.body.className = '';
     this.router.navigate(['/login-page']);
   }

@@ -14,13 +14,16 @@
       <div class="profile-info">
         <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
         <p class="profile-username empty-field" *ngIf="!user.username">
-  @{{ 'PROFILE_PAGE.PROFILE.USERNAME_NOT_SET' | translate }}</p>
+          @{{ 'PROFILE_PAGE.PROFILE.USERNAME_NOT_SET' | translate }}
+        </p>
         <h1 class="profile-name" *ngIf="user.name">{{ user.name }}</h1>
         <h1 class="profile-name empty-field" *ngIf="!user.name">
-  {{ 'PROFILE_PAGE.PROFILE.NAME_NOT_SET' | translate }}</h1>
+          {{ 'PROFILE_PAGE.PROFILE.NAME_NOT_SET' | translate }}
+        </h1>
         <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
         <p class="profile-email empty-field" *ngIf="!user.email">
-  {{ 'PROFILE_PAGE.PROFILE.EMAIL_NOT_SET' | translate }}</p>
+          {{ 'PROFILE_PAGE.PROFILE.EMAIL_NOT_SET' | translate }}
+        </p>
       </div>
 
       <!-- Rating box -->
@@ -34,8 +37,8 @@
 
       <!-- Header actions -->
       <div class="header-actions">
-        <button class="btn-edit" (click)="startEdit()">  {{ 'PROFILE_PAGE.BUTTONS.EDIT_PROFILE' | translate }}</button>
-        <button class="btn-logout" (click)="onLogout()">  {{ 'PROFILE_PAGE.BUTTONS.LOG_OUT' | translate }}</button>
+        <button class="btn-edit" (click)="startEdit()">{{ 'PROFILE_PAGE.BUTTONS.EDIT_PROFILE' | translate }}</button>
+        <button class="btn-logout" (click)="onLogout()">{{ 'PROFILE_PAGE.BUTTONS.LOG_OUT' | translate }}</button>
       </div>
     </div>
 
@@ -66,7 +69,8 @@
         <div class="profile-section add-item-card">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SELL.TITLE' | translate }}</h2>
           <p class="add-item-desc">{{ 'PROFILE_PAGE.SELL.DESCRIPTION' | translate }}</p>
-          <button class="btn-submit btn-sell" (click)="goToAddItem()">{{ 'PROFILE_PAGE.BUTTONS.ADD_ITEM' | translate }}</button>
+          <button class="btn-submit btn-sell" (click)="goToAddItem()">{{ 'PROFILE_PAGE.BUTTONS.ADD_ITEM' | translate
+            }}</button>
         </div>
       </div>
 
@@ -74,17 +78,16 @@
       <div class="sales-won-row full-width">
         <!-- Listed Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' | translate }}</h2>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' |
+            translate }}</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
-            <div class="item-card item-card--clickable" *ngFor="let item of addedItems" (click)="goToAuction(item.id)" role="link" tabindex="0" (keydown.enter)="goToAuction(item.id)">
+            <div class="item-card" *ngFor="let item of addedItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+              <img [src]="item.image" alt="Item image" class="item-card-image" />
               <div class="item-info">
                 <span class="item-title">{{ item.title }}</span>
                 <span class="item-price">{{ item.price }} RON</span>
               </div>
-              <div class="item-card-right">
-                <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
-                <span class="item-arrow">→</span>
-              </div>
+              <span class="item-badge badge-added">{{ item.status }}</span>
             </div>
           </div>
           <p class="empty-state" *ngIf="addedItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.ACTIVE_SALES' | translate }}</p>
@@ -92,9 +95,11 @@
 
         <!-- Won Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WON_ITEMS' | translate }}</h2>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WON_ITEMS' | translate
+            }}</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
-            <div class="item-card" *ngFor="let item of bidItems">
+            <div class="item-card" *ngFor="let item of bidItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+              <img [src]="item.image" alt="Item image" class="item-card-image" />
               <div class="item-info">
                 <span class="item-title">{{ item.title }}</span>
                 <span class="item-price">{{ item.price }} RON</span>
@@ -108,15 +113,20 @@
 
       <!-- Wish List (Full Width) -->
       <div class="profile-section full-width wishlist-section">
-        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WISHLIST' | translate }}</h2>
+        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WISHLIST' | translate }}
+        </h2>
         <div class="items-list" *ngIf="wishItems.length > 0">
-          <div class="item-card item-card--clickable" *ngFor="let item of wishItems" (click)="goToAuction(item.id)" role="link" tabindex="0" (keydown.enter)="goToAuction(item.id)">
+          <div class="item-card item-card--clickable" *ngFor="let item of wishItems" (click)="goToAuction(item.id)"
+            role="link" tabindex="0" (keydown.enter)="goToAuction(item.id)">
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
             <div class="item-card-right">
               <span class="item-badge badge-wish">{{ item.status }}</span>
+              <button class="btn-remove-wish" (click)="removeFromWishlist(item.id, $event)"
+                title="Remove from Wishlist">✕</button>
               <span class="item-arrow">→</span>
             </div>
           </div>
@@ -126,7 +136,8 @@
 
       <!-- REVIEWS (Full Width) -->
       <div class="profile-section full-width reviews-section">
-        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.REVIEWS' | translate }}</h2>
+        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.REVIEWS' | translate }}
+        </h2>
         <div class="reviews-list" *ngIf="reviews.length > 0">
           <div class="review-card" *ngFor="let review of reviews">
             <div class="review-header">
@@ -163,15 +174,18 @@
     <div class="edit-form">
       <div class="form-group">
         <label for="editUsername">{{ 'PROFILE_PAGE.EDIT.USERNAME' | translate }}</label>
-        <input id="editUsername" type="text" [(ngModel)]="editDraft.username" placeholder="{{ 'PROFILE_PAGE.EDIT.USERNAME_PLACEHOLDER' | translate }}" />
+        <input id="editUsername" type="text" [(ngModel)]="editDraft.username"
+          placeholder="{{ 'PROFILE_PAGE.EDIT.USERNAME_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
         <label for="editName">{{ 'PROFILE_PAGE.EDIT.FULL_NAME' | translate }}</label>
-        <input id="editName" type="text" [(ngModel)]="editDraft.name" placeholder="{{ 'PROFILE_PAGE.EDIT.FULL_NAME_PLACEHOLDER' | translate }}" />
+        <input id="editName" type="text" [(ngModel)]="editDraft.name"
+          placeholder="{{ 'PROFILE_PAGE.EDIT.FULL_NAME_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
         <label for="editEmail">{{ 'PROFILE_PAGE.EDIT.EMAIL' | translate }}</label>
-        <input id="editEmail" type="email" [(ngModel)]="editDraft.email" placeholder="{{ 'PROFILE_PAGE.EDIT.EMAIL_PLACEHOLDER' | translate }}" />
+        <input id="editEmail" type="email" [(ngModel)]="editDraft.email"
+          placeholder="{{ 'PROFILE_PAGE.EDIT.EMAIL_PLACEHOLDER' | translate }}" />
       </div>
     </div>
 
@@ -182,8 +196,8 @@
     <div class="toggle-password-section">
       <button type="button" class="btn-toggle-password" (click)="showPasswordForm = !showPasswordForm">
         {{ showPasswordForm
-    ? ('PROFILE_PAGE.BUTTONS.HIDE_PASSWORD' | translate)
-    : ('PROFILE_PAGE.BUTTONS.CHANGE_PASSWORD' | translate) }}
+        ? ('PROFILE_PAGE.BUTTONS.HIDE_PASSWORD' | translate)
+        : ('PROFILE_PAGE.BUTTONS.CHANGE_PASSWORD' | translate) }}
       </button>
     </div>
 
@@ -196,11 +210,13 @@
       </div>
       <div class="form-group">
         <label for="newPassword">{{ 'PROFILE_PAGE.PASSWORD.NEW' | translate }}</label>
-        <input id="newPassword" type="password" [(ngModel)]="newPassword" placeholder="{{ 'PROFILE_PAGE.PASSWORD.NEW_PLACEHOLDER' | translate }}" />
+        <input id="newPassword" type="password" [(ngModel)]="newPassword"
+          placeholder="{{ 'PROFILE_PAGE.PASSWORD.NEW_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
         <label for="confirmPassword">{{ 'PROFILE_PAGE.PASSWORD.CONFIRM' | translate }}</label>
-        <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="{{ 'PROFILE_PAGE.PASSWORD.CONFIRM_PLACEHOLDER' | translate }}" />
+        <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword"
+          placeholder="{{ 'PROFILE_PAGE.PASSWORD.CONFIRM_PLACEHOLDER' | translate }}" />
       </div>
 
       <button type="button" class="btn-submit btn-change-password" (click)="onChangePassword()">
