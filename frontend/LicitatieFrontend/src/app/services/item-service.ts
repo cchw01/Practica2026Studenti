@@ -85,7 +85,7 @@ export class ItemService {
       WishingUsers: item.wishingUsers || [],
       Description: item.description || item.Description,
       Location: item.location || item.Location,
-      Owner: item.owner || { id: item.ownerId || item.OwnerId, username: item.ownerUserName || item.OwnerUserName },
+      Owner: item.owner || { ID: String(item.ownerId || item.OwnerId || ''), UserName: item.ownerUserName || item.OwnerUserName || '', Name: item.ownerUserName || item.OwnerUserName || '' },
       OwnerId: item.ownerId || item.OwnerId,
       Winner: item.winner || (item.winnerId ? { id: item.winnerId, username: item.winnerUserName } : undefined),
       WinnerId: item.winnerId || item.WinnerId,

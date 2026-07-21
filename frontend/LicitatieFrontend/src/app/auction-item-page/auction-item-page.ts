@@ -151,7 +151,20 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     }
 
     if (item.Owner || item.owner) {
-      this.auctionItem.Owner = item.Owner || item.owner;
+      const ownerRaw = item.Owner || item.owner;
+      // Ensure Name is set — fallback to UserName if Name is missing
+      this.auctionItem.Owner = {
+        ...ownerRaw,
+        Name: ownerRaw.Name || ownerRaw.UserName || ownerRaw.username || '',
+        UserName: ownerRaw.UserName || ownerRaw.username || ''
+      } as any;
+    } else if (item.OwnerUserName || item.ownerUserName) {
+      const ownerName = item.OwnerUserName || item.ownerUserName;
+      this.auctionItem.Owner = {
+        ...this.auctionItem.Owner,
+        Name: ownerName,
+        UserName: ownerName
+      } as any;
     }
 
     if (item.StartDate || item.startDate) {
