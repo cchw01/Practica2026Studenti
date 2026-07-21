@@ -94,16 +94,25 @@ namespace Backend.Controllers
             }
         }
 
+
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult UpdateForumPost(int id, [FromBody] ForumPostUpdateDto updateDto)
         {
             try
             {
                 var forumPost = dataOps.GetForumPostById(id);
-                if (forumPost == null)
-                {
-                    return NotFound();
-                }
+                if (forumPost == null) return NotFound();
+
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == "role");
+                if (userIdClaim == null) return Unauthorized();
+
+                int currentUserId = int.Parse(userIdClaim.Value);
+                bool isAdmin = roleClaim?.Value == "Admin";
+                bool isAuthor = forumPost.UserId == currentUserId;
+
+                if (!isAuthor && !isAdmin) return Forbid();
 
                 forumPost.Title = updateDto.Title;
                 forumPost.Description = updateDto.Description;
@@ -116,12 +125,27 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpDelete("{id}")]
-        public ActionResult<ForumPost> DeleteForumPost(int id)
+        public ActionResult DeleteForumPost(int id)
         {
             try
             {
+                var post = dataOps.GetForumPostById(id);
+                if (post == null) return NotFound();
+
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == "role");
+
+                if (userIdClaim == null) return Unauthorized();
+
+                int currentUserId = int.Parse(userIdClaim.Value);
+                bool isAdmin = roleClaim?.Value == "Admin";
+                bool isAuthor = post.UserId == currentUserId;
+
+                if (!isAuthor && !isAdmin)
+                    return Forbid();
+
                 dataOps.DeleteForumPost(id);
                 return Ok();
             }

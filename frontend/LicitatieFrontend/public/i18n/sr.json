@@ -1,0 +1,365 @@
+{
+  "NAV": {
+    "HOME": "Početna",
+    "AUCTIONS": "Aukcije",
+    "FORUM": "Forum",
+    "CONTACT": "Kontakt",
+    "LOGIN": "Prijava",
+    "REGISTER": "Registracija",
+    "TOGGLE_MENU": "Prikaži ili sakrij navigaciju",
+    "SELECT_LANGUAGE": "Izaberi jezik",
+    "HELP": "Pomoć",
+    "ADD_AUCTION": "Dodaj aukciju"
+  },
+  "CONTACT": {
+    "TITLE": "Kontaktirajte nas",
+    "DESCRIPTION": "Imate pitanja? Naš tim je spreman da vam pomogne.",
+    "EMAIL": "E-adresa",
+    "PHONE": "Broj telefona",
+    "CALL_CENTER_HOURS": "Radno vreme pozivnog centra",
+    "SCHEDULE": "Ponedeljak–petak, 09:00–17:00",
+    "FOLLOW_US": "Pratite nas",
+    "SOCIAL_DESCRIPTION": "Ostanite povezani sa nama na društvenim mrežama."
+  },
+  "LOGIN": {
+    "TITLE": "Prijava",
+    "EMAIL_LABEL": "E-adresa",
+    "EMAIL_PLACEHOLDER": "Adresa e-pošte",
+    "EMAIL_REQUIRED": "E-adresa je obavezna",
+    "EMAIL_INVALID": "Nevažeći format e-adrese",
+    "PASSWORD_LABEL": "Lozinka",
+    "PASSWORD_PLACEHOLDER": "Unesite lozinku",
+    "PASSWORD_REQUIRED": "Lozinka je obavezna",
+    "PASSWORD_MIN_LENGTH": "Lozinka mora imati najmanje 6 znakova",
+    "SUBMIT": "Prijavi se",
+    "NO_ACCOUNT": "Nemate nalog?",
+    "REGISTER_HERE": "Registrujte se ovde"
+  },
+  "REGISTER": {
+    "TITLE": "Kreirajte nalog",
+    "USERNAME_LABEL": "Korisničko ime",
+    "USERNAME_PLACEHOLDER": "Korisničko ime",
+    "USERNAME_REQUIRED": "Korisničko ime je obavezno.",
+    "FULL_NAME_LABEL": "Ime i prezime",
+    "FULL_NAME_PLACEHOLDER": "Ime i prezime",
+    "FULL_NAME_REQUIRED": "Ime i prezime su obavezni.",
+    "EMAIL_LABEL": "E-adresa",
+    "EMAIL_PLACEHOLDER": "E-adresa",
+    "EMAIL_REQUIRED": "E-adresa je obavezna.",
+    "EMAIL_INVALID": "Unesite važeću e-adresu.",
+    "PASSWORD_LABEL": "Lozinka",
+    "PASSWORD_PLACEHOLDER": "Lozinka",
+    "PASSWORD_REQUIRED": "Lozinka je obavezna.",
+    "PASSWORD_MIN_LENGTH": "Lozinka mora imati najmanje 6 znakova.",
+    "CONFIRM_PASSWORD_LABEL": "Potvrdite lozinku",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Potvrdite lozinku",
+    "CONFIRM_PASSWORD_REQUIRED": "Potvrdite svoju lozinku.",
+    "PASSWORDS_MISMATCH": "Lozinke se ne podudaraju.",
+    "PHONE_LABEL": "Broj telefona",
+    "PHONE_PLACEHOLDER": "Broj telefona (+40...)",
+    "PHONE_REQUIRED": "Broj telefona je obavezan.",
+    "PHONE_INVALID": "Unesite važeći broj telefona.",
+    "SUBMIT": "Kreiraj nalog",
+    "ALREADY_HAVE_ACCOUNT": "Već imate nalog?",
+    "SIGN_IN": "Prijavi se"
+  },
+  "HOME": {
+    "HERO": {
+      "TITLE": "LICITIRAJ. POBEDI. PONOVI.",
+      "TAG": "🔥 Aukcije uživo svakog dana",
+      "DESCRIPTION": "Najbezbednija onlajn aukcijska platforma. Prodajte brzo ili pronađite jedinstvene ponude.",
+      "EXPLORE_AUCTIONS": "Istraži aukcije",
+      "START_SELLING": "Počni da prodaješ",
+      "SEARCH_LABEL": "Pretraži proizvode i aukcije...",
+      "SEARCH_PLACEHOLDER": "Primer: BMW, zlatne minđuše"
+    },
+    "CATEGORIES": {
+      "EYEBROW": "Kategorije",
+      "TITLE_START": "Istražite",
+      "TITLE_END": "kategorije",
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tehnologija",
+          "DESCRIPTION": "Najsavremeniji uređaji i najnovija elektronika."
+        },
+        "AUTO_MOTORS": {
+          "NAME": "Automobili i motocikli",
+          "DESCRIPTION": "Automobili, motocikli i retki delovi."
+        },
+        "ART_COLLECTIBLES": {
+          "NAME": "Umetnost i kolekcionarstvo",
+          "DESCRIPTION": "Ekskluzivna umetnička dela i kolekcije."
+        },
+        "REAL_ESTATE": {
+          "NAME": "Nekretnine",
+          "DESCRIPTION": "Izuzetne nekretnine i zemljišta."
+        }
+      }
+    },
+    "AUCTIONS": {
+      "EYEBROW": "Tržište",
+      "TITLE_START": "Aktivne",
+      "TITLE_END": "aukcije",
+      "PLACE_BID": "Licitiraj",
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW serije 7, 2022, besprekorno stanje, jedan vlasnik."
+        },
+        "GOLD_EARRINGS": {
+          "TITLE": "Zlatne minđuše",
+          "DESCRIPTION": "Minđuše od 18-karatnog zlata sa sertifikovanim dijamantima."
+        },
+        "PATEK_PHILIPPE": {
+          "TITLE": "Sat Patek Philippe",
+          "DESCRIPTION": "Kolekcionarski sat ograničene serije sa kutijom i sertifikatom."
+        },
+        "VILLA": {
+          "TITLE": "Vila",
+          "DESCRIPTION": "Luksuzna vila sa bazenom, pet spavaćih soba i panoramskim pogledom."
+        }
+      }
+    }
+  },
+  "HELP": {
+    "TITLE": "Centar za pomoć",
+    "INFORMATION": "Pronađite brze odgovore, pozovite nas ili razgovarajte sa našim AI asistentom.",
+    "FAQ": "❓ Često postavljana pitanja",
+    "SUPPORT": "📞 Brza telefonska podrška",
+    "PROGRAM": "Ponedeljak - petak: 09:00 - 18:00",
+    "FORM": "📝 Otvori zahtev",
+    "REQUEST": "Pošalji zahtev",
+    "ASSISTANT": "Virtuelni asistent uživo"
+  },
+  "AUCTIONS_PAGE": {
+    "TITLE": "Aktivne aukcije",
+    "DESCRIPTION": "Otkrijte jedinstvene predmete i licitirajte u realnom vremenu",
+    "SEARCH_PLACEHOLDER": "Pretraži po nazivu...",
+    "ALL_CATEGORIES": "Sve kategorije",
+    "SORT": {
+      "ENDING_SOON": "Uskoro se završavaju",
+      "PRICE_LOW_HIGH": "Cena: od niže ka višoj",
+      "PRICE_HIGH_LOW": "Cena: od više ka nižoj",
+      "NEWEST": "Najnovije"
+    },
+    "ADD_ITEM": "Dodaj predmet",
+    "RESULT": {
+      "ONE": "pronađena aukcija",
+      "MANY": "pronađene aukcije"
+    },
+    "CURRENT_PRICE": "Trenutna cena",
+    "EMPTY": {
+      "TITLE": "Nema pronađenih predmeta",
+      "DESCRIPTION": "Trenutno nema aktivnih aukcija koje odgovaraju vašoj pretrazi."
+    },
+    "TIME": {
+      "ENDED": "Aukcija je završena",
+      "LEFT": "preostalo"
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Prodajte na BidSphere-u",
+    "TITLE": "Dodaj novi predmet za aukciju",
+    "DESCRIPTION": "Popunite podatke u nastavku da biste objavili predmet na aukciji.",
+    "FIELDS": {
+      "NAME": "Naziv predmeta *",
+      "NAME_PLACEHOLDER": "npr. starinski bicikl",
+      "START_PRICE": "Početna cena (RON) *",
+      "DURATION": "Trajanje aukcije (dani) *",
+      "CATEGORY": "Kategorija *",
+      "CATEGORY_PLACEHOLDER": "Izaberite kategoriju",
+      "LOCATION": "Lokacija *",
+      "LOCATION_PLACEHOLDER": "npr. Brașov",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_PLACEHOLDER": "Opišite stanje, istoriju i detalje predmeta..."
+    },
+    "IMAGE": {
+      "TITLE": "Fotografija predmeta",
+      "UPLOAD": "Kliknite da otpremite sliku",
+      "DETAILS": "JPG, PNG ili WEBP, najviše 5 MB",
+      "REMOVE": "Ukloni"
+    },
+    "BUTTONS": {
+      "CANCEL": "Otkaži",
+      "PUBLISH": "Objavi predmet",
+      "PUBLISHING": "Objavljivanje..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "Naziv je obavezan.",
+      "NAME_MIN": "Naziv mora imati najmanje 3 znaka.",
+      "PRICE_REQUIRED": "Početna cena je obavezna.",
+      "PRICE_MIN": "Cena mora biti veća od 0.",
+      "DURATION": "Trajanje mora biti između 1 i 30 dana.",
+      "CATEGORY": "Izaberite kategoriju.",
+      "LOCATION": "Lokacija je obavezna.",
+      "IMAGE_TYPE": "Dozvoljene su samo JPG, PNG ili WEBP slike.",
+      "IMAGE_SIZE": "Slika mora biti manja od 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "Predmet je uspešno objavljen na aukciji!",
+      "SUCCESS_LOCAL": "Predmet je uspešno objavljen na aukciji (sačuvan lokalno — backend još nije spreman)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "O nama",
+    "ABOUT_TEXT_1": "BidSphere je moderna onlajn aukcijska platforma osmišljena da kupovinu i prodaju putem licitiranja učini jednostavnom, bezbednom i uzbudljivom.",
+    "ABOUT_TEXT_2": "Povezujemo hiljade kupaca i prodavaca u širokom rasponu kategorija i svima nudimo transparentan i pravedan proces licitiranja. Bilo da tražite dobru ponudu ili želite da prodate pravom kupcu, BidSphere vam pruža alate i poverenje potrebne za sigurno licitiranje.",
+    "LINKS": "Linkovi",
+    "HOME": "Početna",
+    "SERVICES": "Aukcije",
+    "CONTACT": "Kontakt",
+    "HELP": "Pomoć",
+    "FORUM": "Forum",
+    "CONTACT_TITLE": "Kontakt",
+    "SOCIAL": "Društvene mreže",
+    "COPYRIGHT": "Sva prava zadržana."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Ups! Stranica nije pronađena",
+    "MESSAGE": "Stranica koju tražite ne postoji ili je premeštena.",
+    "BUTTON": "NAZAD NA POČETNU"
+  },
+  "FORUM": {
+    "TITLE": "Diskusije na forumu",
+    "DESCRIPTION": "Pregledajte aktuelne diskusije i učestvujte u razgovorima sa drugim korisnicima.",
+    "START_DISCUSSION": "Pokreni diskusiju",
+    "LOGIN_TO_START": "Prijavite se da biste pokrenuli diskusiju",
+    "SORT": {
+      "ARIA_LABEL": "Sortiraj diskusije",
+      "LATEST": "Najnovije prvo",
+      "OLDEST": "Najstarije prvo",
+      "MOST_COMMENTED": "Najviše komentarisane"
+    },
+    "DISCUSSION": "diskusija",
+    "DISCUSSIONS": "diskusije",
+    "LOADING": {
+      "TITLE": "Učitavanje diskusija"
+    },
+    "ERROR": {
+      "TITLE": "Diskusije nije moguće učitati",
+      "RETRY": "Pokušaj ponovo"
+    },
+    "POSTED_BY": "Objavio",
+    "COMMENT": "komentar",
+    "COMMENTS": "komentari",
+    "EMPTY": {
+      "TITLE": "Nema dostupnih diskusija",
+      "MESSAGE": "Trenutno nema diskusija na forumu."
+    }
+  },
+  "NOTIFICATIONS": {
+    "TRUE": "Obaveštenja",
+    "FALSE": "Još nema obaveštenja."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Detalji aukcije",
+    "INFO": {
+      "CURRENT_PRICE": "Trenutna cena",
+      "START_PRICE": "Početna cena",
+      "CATEGORY": "Kategorija",
+      "LOCATION": "Lokacija",
+      "STARTS_AT": "Počinje",
+      "OWNER": "Vlasnik",
+      "ENDS": "Završava se"
+    },
+    "BID": {
+      "TITLE": "Postavite ponudu",
+      "PLACEHOLDER": "Unesite iznos ponude",
+      "BUTTON": "🔨 Licitiraj",
+      "MINIMUM": "Minimalna ponuda:",
+      "LOGIN_TEXT": "Prijavite se da biste licitirali za ovaj predmet.",
+      "LOGIN_BUTTON": "Prijavi se za licitiranje"
+    },
+    "WISHLIST": {
+      "ADD": "🤍 Dodaj na listu želja",
+      "ADDED": "❤️ Na listi želja"
+    },
+    "DESCRIPTION": {
+      "TITLE": "Opis proizvoda"
+    },
+    "STATUS": {
+      "ACTIVE": "Aktivna",
+      "ENDED": "Završena",
+      "PENDING": "Na čekanju"
+    },
+    "MESSAGES": {
+      "AUCTION_ENDED": "Aukcija je završena.",
+      "BID_HIGHER_CURRENT": "Ponuda mora biti veća od trenutne cene.",
+      "BID_HIGHER_MINIMUM": "Ponuda mora biti veća od minimalne cene."
+    },
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "min",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Recenzije",
+    "REVIEWER_ID": "ID autora recenzije",
+    "REVIEWED_USER_ID": "ID ocenjenog korisnika",
+    "RATING": "Ocena (0–5)",
+    "RATING_ERROR": "Ocena mora biti između 0 i 5.",
+    "COMMENT": "Komentar",
+    "ADD": "Dodaj",
+    "UPDATE": "Ažuriraj",
+    "CANCEL": "Otkaži",
+    "EDIT": "Izmeni recenziju",
+    "DELETE": "Obriši recenziju"
+  },
+  "SHARE": {
+    "BUTTON": "Podeli",
+    "COPIED": "Kopirano!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profil",
+    "LOGOUT": "Odjavi se"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Nazad na diskusije",
+    "LOADING_DISCUSSION_TITLE": "Učitavanje diskusije",
+    "LOADING_DISCUSSION_MESSAGE": "Diskusija se učitava.",
+    "LOAD_DISCUSSION_ERROR": "Diskusiju nije moguće učitati",
+    "TRY_AGAIN": "Pokušaj ponovo",
+    "DELETE_POST": "Obriši",
+    "POSTED_BY": "Objavio",
+    "DISCUSSION": "Diskusija",
+    "COMMENT": "komentar",
+    "COMMENTS": "komentari",
+    "ADD_COMMENT": "Dodaj komentar",
+    "COMMENT_PLACEHOLDER": "Napišite komentar ovde...",
+    "COMMENT_REQUIRED": "Komentar je obavezan.",
+    "COMMENT_MIN_LENGTH": "Komentar mora imati najmanje 2 znaka.",
+    "COMMENT_MAX_LENGTH": "Komentar ne može imati više od 1000 znakova.",
+    "PUBLISHING": "Objavljivanje...",
+    "PUBLISH_COMMENT": "Objavi komentar",
+    "LOGIN_REQUIRED": "Morate biti prijavljeni da biste objavili komentar.",
+    "LOGIN": "Prijavi se",
+    "LOADING_COMMENTS": "Učitavanje komentara",
+    "LOAD_COMMENTS_ERROR": "Komentare nije moguće učitati",
+    "DELETE_COMMENT": "Obriši",
+    "NO_COMMENTS": "Još nema komentara"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Nazad na diskusije",
+    "TITLE": "Pokreni diskusiju",
+    "SUBTITLE": "Kreirajte novu diskusiju i podelite je sa drugim korisnicima foruma.",
+    "TITLE_LABEL": "Naslov",
+    "TITLE_PLACEHOLDER": "Unesite jasan naslov diskusije",
+    "TITLE_REQUIRED": "Naslov je obavezan.",
+    "TITLE_WHITESPACE": "Naslov ne može sadržati samo razmake.",
+    "TITLE_MIN_LENGTH": "Naslov mora imati najmanje 3 znaka.",
+    "TITLE_MAX_LENGTH": "Naslov ne može imati više od 150 znakova.",
+    "DESCRIPTION_LABEL": "Opis",
+    "DESCRIPTION_PLACEHOLDER": "Opišite temu o kojoj želite da razgovarate...",
+    "DESCRIPTION_REQUIRED": "Opis je obavezan.",
+    "DESCRIPTION_WHITESPACE": "Opis ne može sadržati samo razmake.",
+    "DESCRIPTION_MIN_LENGTH": "Opis mora imati najmanje 10 znakova.",
+    "DESCRIPTION_MAX_LENGTH": "Opis ne može imati više od 5000 znakova.",
+    "CREATE_ERROR": "Diskusiju nije moguće kreirati",
+    "CANCEL": "Otkaži",
+    "CREATING": "Kreiranje diskusije...",
+    "SUBMIT": "Pokreni diskusiju"
+  }
+}

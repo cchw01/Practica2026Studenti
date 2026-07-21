@@ -49,21 +49,18 @@ builder.Services.AddAuthentication(options =>
 //nu schimba fara sa verifici se strica admin+notificari fara 
 .AddJwtBearer(options =>
 {
-    options.MapInboundClaims = false;   
+    options.MapInboundClaims = false;
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"])),
-        
+
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
-
-        
-
         RoleClaimType = "role",
     };
 });
@@ -75,6 +72,27 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    try
+    {
+        dbContext.Database.ExecuteSqlRaw(@"
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'PhoneNumber'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [PhoneNumber] nvarchar(max) NULL;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'IsBanned'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
+            END");
+    }
+    catch { }
 
     const string adminEmail = "admin@bidsphere.com";
     const string adminPassword = "admin123!";
@@ -100,6 +118,17 @@ using (var scope = app.Services.CreateScope())
         admin.Role = Backend.Models.RoleEnum.Admin;
         dbContext.SaveChanges();
     }
+
+    // Seed Categories
+    var defaultCategories = new[] { "Vehicles", "Electronics", "Art", "Clothing", "Home & Garden", "Real Estate" };
+    foreach (var categoryName in defaultCategories)
+    {
+        if (!dbContext.Category.Any(c => c.name == categoryName))
+        {
+            dbContext.Category.Add(new Backend.Models.CategoryItem { name = categoryName });
+        }
+    }
+    dbContext.SaveChanges();
 }
 
 app.UseRouting();
@@ -130,6 +159,14 @@ using (var scope = app.Services.CreateScope())
             )
             BEGIN
                 ALTER TABLE [Users] ADD [PhoneNumber] nvarchar(max) NULL;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'IsBanned'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
             END");
     }
     catch { }
@@ -151,6 +188,12 @@ using (var scope = app.Services.CreateScope())
         SET IDENTITY_INSERT [Users] OFF;
     END
 ");
+    }
+    catch { }
+
+    try
+    {
+        DbInitializer.Seed(db);
     }
     catch { }
 }

@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-help-page',
   imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './help-page.html',
-  styleUrls: ['./help-page.css'],
+  styleUrls: ['./help-page.scss'],
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;

@@ -1,12 +1,12 @@
 
-<button mat-icon-button [matMenuTriggerFor]="menu">
+<button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="'USER_MENU.PROFILE' | translate">
   <mat-icon>account_circle</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="goToProfile()">
-    <mat-icon>person</mat-icon><span>Profile</span>
+    <mat-icon>person</mat-icon><span>{{ 'USER_MENU.PROFILE' | translate }}</span>
   </button>
   <button mat-menu-item (click)="onLogout()">
-    <mat-icon>logout</mat-icon><span>Log out</span>
+    <mat-icon>logout</mat-icon><span>{{ 'USER_MENU.LOGOUT' | translate }}</span>
   </button>
 </mat-menu>
