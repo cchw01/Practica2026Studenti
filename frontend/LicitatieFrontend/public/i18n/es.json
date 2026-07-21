@@ -78,6 +78,28 @@
       "SEARCH_PLACEHOLDER": "Ejemplo: BMW, pendientes de oro"
     },
 
+    "ABOUT": {
+      "EYEBROW": "Sobre nosotros",
+      "TITLE_START": "Quiénes",
+      "TITLE_END": "somos",
+      "DESCRIPTION": "BidSphere es una moderna plataforma de subastas en línea creada para hacer que comprar y vender mediante subastas sea simple, seguro y emocionante. Conectamos a miles de compradores y vendedores en una amplia variedad de categorías con un proceso transparente y justo para todos.",
+
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Seguro y confiable",
+          "DESCRIPTION": "Cada transacción está protegida, para que puedas pujar con confianza."
+        },
+        "REALTIME": {
+          "TITLE": "Subastas en tiempo real",
+          "DESCRIPTION": "Observa los precios actualizarse en vivo y no te pierdas ningún momento ganador."
+        },
+        "COMMUNITY": {
+          "TITLE": "Comunidad en crecimiento",
+          "DESCRIPTION": "Miles de compradores y vendedores activos en cada categoría."
+        }
+      }
+    },
+
     "CATEGORIES": {
       "EYEBROW": "Categorías",
       "TITLE_START": "Explora las",
@@ -111,28 +133,7 @@
       "TITLE_START": "Subastas",
       "TITLE_END": "activas",
       "PLACE_BID": "Hacer una puja",
-
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW Serie 7 de 2022, en estado impecable y con un único propietario."
-        },
-
-        "GOLD_EARRINGS": {
-          "TITLE": "Pendientes de oro",
-          "DESCRIPTION": "Pendientes de oro de 18 quilates con diamantes certificados."
-        },
-
-        "PATEK_PHILIPPE": {
-          "TITLE": "Reloj Patek Philippe",
-          "DESCRIPTION": "Reloj de colección de edición limitada con caja y certificado incluidos."
-        },
-
-        "VILLA": {
-          "TITLE": "Villa",
-          "DESCRIPTION": "Villa de lujo con piscina, cinco dormitorios y vistas panorámicas."
-        }
-      }
+      "EMPTY": "No hay subastas que finalicen pronto — vuelve a consultar en breve."
     }
   },
   "HELP": {
@@ -181,6 +182,34 @@
   }
 }
 ,
+"SEARCH_PAGE": {
+  "TITLE": "Resultados de búsqueda",
+  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
+  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
+  "LOADING": "Cargando resultados...",
+
+  "TABS": {
+    "AUCTIONS": "Subastas",
+    "USERS": "Usuarios",
+    "FORUM": "Foro"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "No se encontraron subastas",
+    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "No se encontraron usuarios",
+    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "No se encontraron publicaciones",
+    "DESCRIPTION": "No hay debates que coincidan con tu búsqueda."
+  }
+},
 "ADD_ITEM_PAGE": {
   "BADGE": "🔨 Vende en BidSphere",
   "TITLE": "Añadir un nuevo artículo a la subasta",
