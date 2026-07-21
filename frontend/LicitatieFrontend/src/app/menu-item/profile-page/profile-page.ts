@@ -160,23 +160,40 @@ export class ProfilePage implements OnInit {
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
           }));
 
-        // Filter wish list items (items where current user is in WishingUsers)
+        // Filter wish list items (items where current user is in WishingUsers or in local storage wishlist)
+        const wishlistIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const userWishlistObjects: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+
         this.wishItems = items
           .filter(
             (item: any) =>
-              Array.isArray(item.wishingUsers) &&
-              item.wishingUsers.some(
-                (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
-              ),
+              (Array.isArray(item.wishingUsers) &&
+                item.wishingUsers.some(
+                  (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
+                )) ||
+              wishlistIds.includes(item.id || item.ID) ||
+              userWishlistObjects.some((u: any) => (u.ID || u.id) === (item.id || item.ID))
           )
           .map((item: any) => ({
             id: item.id || item.ID || 0,
             title: item.name || item.Name,
-            price: item.currentPrice || item.startPrice,
+            price: item.currentPrice || item.startPrice || item.CurrentPrice || item.StartPrice,
             status: item.status
               ? item.status.toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
           }));
+
+        for (const w of userWishlistObjects) {
+          const wId = w.ID || w.id;
+          if (wId && !this.wishItems.some(existing => existing.id === wId)) {
+            this.wishItems.push({
+              id: wId,
+              title: w.Name || w.title || 'Wishlist Item',
+              price: w.CurrentPrice || w.currentPrice || w.StartPrice || w.startPrice || 0,
+              status: this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE')
+            });
+          }
+        }
       },
       error: (err) => console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_ITEMS'), err),
     });

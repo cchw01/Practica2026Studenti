@@ -175,6 +175,24 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.updateLocalStoragePrice(itemId, newPrice);
   }
 
+  private checkWishlistStatus(): void {
+    if (!this.auctionItem || !this.auctionItem.ID) return;
+
+    const itemId = Number(this.auctionItem.ID);
+    const wishlist: number[] = (JSON.parse(localStorage.getItem('wishlist') || '[]')).map((id: any) => Number(id));
+    const userWishlist: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+
+    const inList1 = wishlist.includes(itemId);
+    const inList2 = userWishlist.some((i: any) => Number(i.ID || i.id) === itemId);
+
+    this.isInWishlist = inList1 || inList2;
+
+    const reportedList: number[] = (JSON.parse(localStorage.getItem('reported_items') || '[]')).map((id: any) => Number(id));
+    this.isReported = reportedList.includes(itemId);
+
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
   private setAuctionItemData(item: any): void {
     if (!item) return;
 
@@ -257,6 +275,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         this.auctionItem.PhotoList = defaultGallery;
       }
     }
+
+    this.checkWishlistStatus();
 
     try {
       this.cdr.markForCheck();
@@ -353,29 +373,26 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
   private updateLocalStoragePrice(itemId: number, newPrice: number): void {
     const keys = ['auctionItems', 'local_auctions', 'auction_items_cache'];
-    let updated = false;
-
     for (const key of keys) {
       const saved = localStorage.getItem(key);
       if (saved) {
         try {
           const items = JSON.parse(saved);
-          if (Array.isArray(items)) {
-            const found = items.find((i: any) => (i.ID || i.id) === itemId);
-            if (found) {
-              found.CurrentPrice = newPrice;
-              found.currentPrice = newPrice;
+          if (Array.isArray(items) && items.length > 0) {
+            let updated = false;
+            for (const item of items) {
+              if (Number(item.ID || item.id) === Number(itemId)) {
+                item.CurrentPrice = newPrice;
+                item.currentPrice = newPrice;
+                updated = true;
+              }
+            }
+            if (updated) {
               localStorage.setItem(key, JSON.stringify(items));
-              updated = true;
             }
           }
         } catch {}
       }
-    }
-
-    if (!updated) {
-      const defaultItem = { ID: itemId, CurrentPrice: newPrice, currentPrice: newPrice };
-      localStorage.setItem('auctionItems', JSON.stringify([defaultItem]));
     }
   }
 
@@ -464,31 +481,43 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
 
-    this.isInWishlist = !this.isInWishlist;
-    let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const itemId = Number(this.auctionItem.ID);
+    let wishlist: number[] = (JSON.parse(localStorage.getItem('wishlist') || '[]')).map((id: any) => Number(id));
+    let userWishlist: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
 
-    if (this.isInWishlist) {
-      if (!wishlist.includes(this.auctionItem.ID)) {
-        wishlist.push(this.auctionItem.ID);
-      }
-      this.toastAction = 'added';
-      this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
-    } else {
-      wishlist = wishlist.filter(id => id !== this.auctionItem.ID);
+    const currentlyIn = wishlist.includes(itemId) || userWishlist.some((i: any) => Number(i.ID || i.id) === itemId);
+
+    if (currentlyIn) {
+      // REMOVE from wishlist
+      wishlist = wishlist.filter(id => id !== itemId);
+      userWishlist = userWishlist.filter((i: any) => Number(i.ID || i.id) !== itemId);
+      this.isInWishlist = false;
       this.toastAction = 'removed';
-      this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
+      this.toastMessage = `${this.auctionItem.Name || 'Item'} removed from Wishlist.`;
+    } else {
+      // ADD to wishlist
+      if (!wishlist.includes(itemId)) {
+        wishlist.push(itemId);
+      }
+      if (!userWishlist.some((i: any) => Number(i.ID || i.id) === itemId)) {
+        userWishlist.push({
+          ID: itemId,
+          id: itemId,
+          Name: this.auctionItem.Name,
+          title: this.auctionItem.Name,
+          CurrentPrice: this.auctionItem.CurrentPrice,
+          currentPrice: this.auctionItem.CurrentPrice,
+          StartPrice: this.auctionItem.StartPrice,
+          PhotoList: this.auctionItem.PhotoList,
+          ImageUrl: this.auctionItem.ImageUrl
+        });
+      }
+      this.isInWishlist = true;
+      this.toastAction = 'added';
+      this.toastMessage = `${this.auctionItem.Name || 'Item'} added to Wishlist!`;
     }
 
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
-
-    let userWishlist: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
-    if (this.isInWishlist) {
-      if (!userWishlist.some((i: any) => i.ID === this.auctionItem.ID)) {
-        userWishlist.push(this.auctionItem);
-      }
-    } else {
-      userWishlist = userWishlist.filter((i: any) => i.ID !== this.auctionItem.ID);
-    }
     localStorage.setItem('user_wishlist_items', JSON.stringify(userWishlist));
 
     this.showWishlistToast = true;
