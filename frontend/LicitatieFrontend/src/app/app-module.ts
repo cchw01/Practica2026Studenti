@@ -45,6 +45,7 @@ import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { SearchPage } from './search-page/search-page';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AdminPage } from './admin-page/admin-page/admin-page';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    SearchPage,
     AddItemPage,
     AuctionItemPage,
     Add,

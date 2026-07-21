@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -13,6 +14,8 @@ import {
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
+import { ItemService } from '../services/item-service';
+import { AuctionItem } from '../Models/item-model';
 
 export interface Category {
   name: string;
@@ -20,13 +23,13 @@ export interface Category {
   description: string;
 }
 
-export interface Auction {
-  title: string;
-  currentBid: number;
-  image: string;
-  description: string;
-  PhotoList?: string[];
+export interface AboutFeature {
+  icon: string;
+  titleKey: string;
+  descriptionKey: string;
 }
+
+const MIN_REMAINING_MS = 10 * 60 * 1000;
 
 interface Particle {
   ox: number;
@@ -59,6 +62,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private animationFrameId = 0;
   private titleTypingTimeoutId?: ReturnType<typeof setTimeout>;
   private revealObserver?: IntersectionObserver;
+  private auctionsTimerId?: ReturnType<typeof setInterval>;
+  private allAuctions: AuctionItem[] = [];
 
   private readonly onMouseMove = (e: MouseEvent) => {
     const rect = this.heroRef.nativeElement.getBoundingClientRect();
@@ -78,6 +83,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private hostRef: ElementRef<HTMLElement>,
     private router: Router,
     private readonly translate: TranslateService,
+    private readonly itemService: ItemService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   categories: Category[] = [
@@ -103,50 +110,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  auctions: Auction[] = [
+  displayedAuctions: AuctionItem[] = [];
+
+  aboutFeatures: AboutFeature[] = [
     {
-      title: 'BMW',
-      currentBid: 100,
-      image: 'assets/images/car.png',
-      description: 'BMW 7 Series, 2022, pristine condition, single owner.',
-      PhotoList: [
-        'assets/images/car.png',
-        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
-      ]
+      icon: 'verified_user',
+      titleKey: 'HOME.ABOUT.FEATURES.SECURE.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.SECURE.DESCRIPTION',
     },
     {
-      title: 'Gold Earrings',
-      currentBid: 200,
-      image: 'assets/images/cercei.jpeg',
-      description: '18k gold earrings with certified diamonds.',
-      PhotoList: [
-        'assets/images/cercei.jpeg',
-        'https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop'
-      ]
+      icon: 'bolt',
+      titleKey: 'HOME.ABOUT.FEATURES.REALTIME.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.REALTIME.DESCRIPTION',
     },
     {
-      title: 'Watch Patek Philippe',
-      currentBid: 300,
-      image: 'assets/images/ceas.jpeg',
-      description: 'Limited edition collector watch, box and certificate included.',
-      PhotoList: [
-        'assets/images/ceas.jpeg',
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&auto=format&fit=crop'
-      ]
-    },
-    {
-      title: 'Villa',
-      currentBid: 400,
-      image: 'assets/images/vila.jpeg',
-      description: 'Luxury villa with pool, 5 bedrooms, panoramic view.',
-      PhotoList: [
-        'assets/images/vila.jpeg',
-        'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&auto=format&fit=crop'
-      ]
+      icon: 'groups',
+      titleKey: 'HOME.ABOUT.FEATURES.COMMUNITY.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.COMMUNITY.DESCRIPTION',
     },
   ];
 
@@ -162,15 +142,50 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   runSearch() {
     const query = this.searchQuery().trim();
-    this.router.navigate(['/auctions'], query ? { queryParams: { search: query } } : {});
+    this.router.navigate(['/search-page'], query ? { queryParams: { q: query } } : {});
   }
 
-  placeBid(auction: Auction) {
+  placeBid(auction: AuctionItem) {
     this.router.navigate(['/action-item-page'], { state: { auction } });
   }
 
-  goToAuction(auction: Auction) {
+  goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page'], { state: { auction } });
+  }
+
+  getRemainingLabel(endDate: Date): string {
+    const diffMs = new Date(endDate).getTime() - Date.now();
+    if (diffMs <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (days > 0) return `${days}d ${hours}h left`;
+    if (hours > 0) return `${hours}h ${minutes}m left`;
+    return `${minutes}m ${seconds}s left`;
+  }
+
+  getTimeUrgencyClass(endDate: Date): string {
+    const minutesLeft = (new Date(endDate).getTime() - Date.now()) / (1000 * 60);
+
+    if (minutesLeft <= 30) return 'time-urgent';
+    if (minutesLeft <= 180) return 'time-medium';
+    return 'time-safe';
+  }
+
+  private refreshDisplayedAuctions(): void {
+    const now = Date.now();
+
+    this.displayedAuctions = this.allAuctions
+      .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
+      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
+      .sort((a, b) => a.remainingMs - b.remainingMs)
+      .map((entry) => entry.item);
+
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {
@@ -187,6 +202,16 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.typeHeroTitle(heroTitle);
         }
       });
+
+    this.itemService.getItems().subscribe({
+      next: (items) => {
+        this.allAuctions = items;
+        this.refreshDisplayedAuctions();
+      },
+      error: (err) => console.error('Eroare la încărcarea licitațiilor', err),
+    });
+
+    this.auctionsTimerId = setInterval(() => this.refreshDisplayedAuctions(), 1000);
   }
 
   ngAfterViewInit(): void {
@@ -208,6 +233,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.titleTypingTimeoutId !== undefined) {
       clearTimeout(this.titleTypingTimeoutId);
+    }
+
+    if (this.auctionsTimerId !== undefined) {
+      clearInterval(this.auctionsTimerId);
     }
 
     const hero = this.heroRef.nativeElement;

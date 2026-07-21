@@ -37,9 +37,12 @@ export class AuctionsPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params['category']) {
         this.selectedCategory = params['category'];
-        if (this.allItems.length > 0) {
-          this.applyFiltersAndSort();
-        }
+      }
+      if (params['search']) {
+        this.searchText = params['search'];
+      }
+      if (this.allItems.length > 0) {
+        this.applyFiltersAndSort();
       }
     });
 
