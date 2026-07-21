@@ -70,12 +70,40 @@
   "HOME": {
     "HERO": {
       "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
-      "TAG": "🔥 Licitații live în fiecare zi",
+      "TAG": "Licitații live în fiecare zi",
       "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
       "EXPLORE_AUCTIONS": "Explorează licitațiile",
       "START_SELLING": "Începe să vinzi",
       "SEARCH_LABEL": "Caută produse și licitații...",
       "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
+    },
+
+    "TRUST": {
+      "EYEBROW": "De ce BidSphere",
+      "TITLE_START": "Construit pe",
+      "TITLE_END": "încredere",
+
+      "ITEMS": {
+        "BUYER_PROTECTION": {
+          "TITLE": "Protecția cumpărătorului",
+          "DESCRIPTION": "Plata este reținută până când produsul ajunge așa cum a fost descris."
+        },
+
+        "VERIFIED_SELLERS": {
+          "TITLE": "Vânzători verificați",
+          "DESCRIPTION": "Fiecare vânzător trece verificări de identitate înainte de a publica un anunț."
+        },
+
+        "REAL_TIME_BIDDING": {
+          "TITLE": "Licitare în timp real",
+          "DESCRIPTION": "Actualizări live chiar în momentul în care cineva te supralicitează."
+        },
+
+        "NO_LISTING_FEES": {
+          "TITLE": "Fără taxe de listare",
+          "DESCRIPTION": "Listează gratuit cât timp platforma este la început."
+        }
+      }
     },
 
     "CATEGORIES": {

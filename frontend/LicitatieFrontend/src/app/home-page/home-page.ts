@@ -28,6 +28,12 @@ export interface Auction {
   PhotoList?: string[];
 }
 
+export interface TrustFeature {
+  icon: string;
+  titleKey: string;
+  descriptionKey: string;
+}
+
 interface Particle {
   ox: number;
   oy: number;
@@ -79,6 +85,29 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private readonly translate: TranslateService,
   ) {}
+
+  trustFeatures: TrustFeature[] = [
+    {
+      icon: 'verified_user',
+      titleKey: 'HOME.TRUST.ITEMS.BUYER_PROTECTION.TITLE',
+      descriptionKey: 'HOME.TRUST.ITEMS.BUYER_PROTECTION.DESCRIPTION',
+    },
+    {
+      icon: 'how_to_reg',
+      titleKey: 'HOME.TRUST.ITEMS.VERIFIED_SELLERS.TITLE',
+      descriptionKey: 'HOME.TRUST.ITEMS.VERIFIED_SELLERS.DESCRIPTION',
+    },
+    {
+      icon: 'bolt',
+      titleKey: 'HOME.TRUST.ITEMS.REAL_TIME_BIDDING.TITLE',
+      descriptionKey: 'HOME.TRUST.ITEMS.REAL_TIME_BIDDING.DESCRIPTION',
+    },
+    {
+      icon: 'sell',
+      titleKey: 'HOME.TRUST.ITEMS.NO_LISTING_FEES.TITLE',
+      descriptionKey: 'HOME.TRUST.ITEMS.NO_LISTING_FEES.DESCRIPTION',
+    },
+  ];
 
   categories: Category[] = [
     {
@@ -332,8 +361,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       );
 
       this.ctx.fillStyle = p.accent
-        ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
-        : `rgba(20, 20, 30, ${0.12 + nearBoost * 0.35})`;
+        ? `rgba(233, 30, 99, ${0.4 + nearBoost * 0.6})`
+        : `rgba(255, 255, 255, ${0.18 + nearBoost * 0.35})`;
 
       this.ctx.fill();
     }

@@ -14,10 +14,11 @@
 
     <div class="hero-buttons">
       <button
-        mat-flat-button
+        mat-stroked-button
         color="primary"
         class="btn-explore"
         (click)="exploreAuctions()">
+        <mat-icon>search</mat-icon>
         {{ 'HOME.HERO.EXPLORE_AUCTIONS' | translate }}
       </button>
 
@@ -26,6 +27,7 @@
         color="primary"
         class="btn-sell"
         (click)="startSelling()">
+        <mat-icon>add</mat-icon>
         {{ 'HOME.HERO.START_SELLING' | translate }}
       </button>
     </div>
@@ -53,9 +55,24 @@
       </mat-form-field>
     </div>
   </div>
+</div>
 
-  <div class="hero-scroll-cue">
-    <mat-icon>keyboard_arrow_down</mat-icon>
+<div class="content-section trust-section">
+  <div class="section-inner">
+    <span class="section-eyebrow">{{ 'HOME.TRUST.EYEBROW' | translate }}</span>
+    <h2 class="section-title">{{ 'HOME.TRUST.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.TRUST.TITLE_END' | translate }}</span></h2>
+
+    <div class="trust-grid reveal-on-scroll">
+      @for (feature of trustFeatures; track feature.titleKey) {
+        <div class="trust-card">
+          <div class="trust-icon">
+            <mat-icon>{{ feature.icon }}</mat-icon>
+          </div>
+          <h3>{{ feature.titleKey | translate }}</h3>
+          <p>{{ feature.descriptionKey | translate }}</p>
+        </div>
+      }
+    </div>
   </div>
 </div>
 
