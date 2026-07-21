@@ -84,11 +84,12 @@
           id="imageInput"
           type="file"
           accept="image/jpeg,image/png,image/webp"
+          multiple
           (change)="onFileSelected($event)"
           hidden
         />
 
-        <div class="image-upload" *ngIf="!imagePreview">
+        <div class="image-upload">
           <label for="imageInput" class="upload-box">
             <mat-icon>add_photo_alternate</mat-icon>
             <span>{{ 'ADD_ITEM_PAGE.IMAGE.UPLOAD' | translate }}</span>
@@ -96,11 +97,13 @@
           </label>
         </div>
 
-        <div class="image-preview" *ngIf="imagePreview">
-          <img [src]="imagePreview" alt="Item preview" />
-          <button type="button" class="btn-remove" (click)="removeImage()">
-            <mat-icon>close</mat-icon> {{ 'ADD_ITEM_PAGE.IMAGE.REMOVE' | translate }}
-          </button>
+        <div class="images-preview-grid" *ngIf="imagePreviews.length > 0">
+          <div class="preview-thumb-card" *ngFor="let preview of imagePreviews; let i = index">
+            <img [src]="preview" alt="Item preview" />
+            <button type="button" class="btn-remove-thumb" (click)="removeImage(i)" title="Remove image">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         </div>
 
         <div class="error" *ngIf="imageError">{{ imageError }}</div>

@@ -43,20 +43,42 @@ export class AdminPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) {
+    const saved = localStorage.getItem('verifiedForumPostIds');
+    if (saved) {
+      this.verifiedPostIds = new Set(JSON.parse(saved));
+    }
+  }
+
+  adminName = '';
+  adminInitials = '';
+  usersView: 'all' | 'reported' = 'all';
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    const role = currentUser?.role;
-
+    const user = this.authService.getCurrentUser();
+    const role = user?.role;
     if (!this.authService.isLoggedIn() || role !== 'Admin') {
       this.router.navigate(['/login-page']);
       return;
     }
+    this.adminName = user?.name || 'Admin';
+    this.adminInitials = this.adminName
+      .split(' ')
+      .map((w: string) => w[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
 
     this.loadStats();
     this.loadAuctions();
     this.loadForum();
+  }
+  get visibleForumPosts(): any[] {
+    return this.forumPosts.filter(post => !this.verifiedPostIds.has(post.id));
+  }
+  markAsVerified(id: number): void {
+    this.verifiedPostIds.add(id);
+    localStorage.setItem('verifiedForumPostIds', JSON.stringify([...this.verifiedPostIds]));
   }
 
   setTab(tab: Tab): void {
@@ -89,20 +111,17 @@ export class AdminPage implements OnInit {
 
         this.cdr.detectChanges();
       },
-      error: (error) => { console.error('Eroare la încărcarea statisticilor:', error);
+      error: (error) => {
+        console.error('Eroare la încărcarea statisticilor:', error);
       },
     });
   }
 
   loadUsers(): void {
-    this.adminService.getUsers().subscribe({
-      next: (data) => {
-        this.users = data || [];
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Eroare la încărcarea utilizatorilor:', error);
-      },
+    this.adminService.getUsers().subscribe((data) => {
+      this.users = data || [];
+      this.applyUserFilters();
+      this.cdr.detectChanges();
     });
   }
 
@@ -158,7 +177,7 @@ export class AdminPage implements OnInit {
         this.categories = [];
         this.categoryLoading = false;
         this.categoryErrorMessage =
-        this.getCategoryErrorMessage(error, 'Categoriile nu au putut fi încărcate.');
+          this.getCategoryErrorMessage(error, 'Categoriile nu au putut fi încărcate.');
         this.cdr.detectChanges();
       },
     });
@@ -258,7 +277,7 @@ export class AdminPage implements OnInit {
 
         this.categorySubmitting = false;
         this.categoryErrorMessage =
-        this.getCategoryErrorMessage(error, 'Categoria nu a putut fi creată.');
+          this.getCategoryErrorMessage(error, 'Categoria nu a putut fi creată.');
         this.cdr.detectChanges();
       },
     });
@@ -311,14 +330,14 @@ export class AdminPage implements OnInit {
 
         this.categorySubmitting = false;
         this.categoryErrorMessage =
-        this.getCategoryErrorMessage(error, 'Categoria nu a putut fi actualizată.');
+          this.getCategoryErrorMessage(error, 'Categoria nu a putut fi actualizată.');
         this.cdr.detectChanges();
       },
     });
   }
 
   removeCategory(category: Category): void {
-    const confirmed = confirm( `Sigur vrei să ștergi categoria „${category.name}”?`);
+    const confirmed = confirm(`Sigur vrei să ștergi categoria „${category.name}”?`);
 
     if (!confirmed) { return; }
 
@@ -337,7 +356,7 @@ export class AdminPage implements OnInit {
           console.error('Eroare la ștergerea categoriei:', error);
 
           this.categoryErrorMessage =
-          this.getCategoryErrorMessage(error, 'Categoria nu a putut fi ștearsă.');
+            this.getCategoryErrorMessage(error, 'Categoria nu a putut fi ștearsă.');
           this.cdr.detectChanges();
         },
       });
@@ -347,7 +366,7 @@ export class AdminPage implements OnInit {
     error: HttpErrorResponse,
     fallbackMessage: string,
   ): string {
-    if ( typeof error.error === 'string' && error.error.trim()) {
+    if (typeof error.error === 'string' && error.error.trim()) {
       return error.error;
     }
 

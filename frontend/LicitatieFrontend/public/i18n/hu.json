@@ -1,0 +1,365 @@
+{
+  "NAV": {
+    "HOME": "Kezdőlap",
+    "AUCTIONS": "Aukciók",
+    "FORUM": "Fórum",
+    "CONTACT": "Kapcsolat",
+    "LOGIN": "Bejelentkezés",
+    "REGISTER": "Regisztráció",
+    "TOGGLE_MENU": "Navigáció megnyitása vagy bezárása",
+    "SELECT_LANGUAGE": "Nyelv kiválasztása",
+    "HELP": "Súgó",
+    "ADD_AUCTION": "Aukció hozzáadása"
+  },
+  "CONTACT": {
+    "TITLE": "Kapcsolatfelvétel",
+    "DESCRIPTION": "Kérdésed van? Csapatunk készen áll, hogy segítsen.",
+    "EMAIL": "E-mail",
+    "PHONE": "Telefonszám",
+    "CALL_CENTER_HOURS": "Ügyfélszolgálati nyitvatartás",
+    "SCHEDULE": "Hétfő–péntek, 09:00–17:00",
+    "FOLLOW_US": "Kövess minket",
+    "SOCIAL_DESCRIPTION": "Maradj kapcsolatban velünk a közösségi médiában."
+  },
+  "LOGIN": {
+    "TITLE": "Bejelentkezés",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mail-cím",
+    "EMAIL_REQUIRED": "Az e-mail-cím megadása kötelező",
+    "EMAIL_INVALID": "Érvénytelen e-mail-formátum",
+    "PASSWORD_LABEL": "Jelszó",
+    "PASSWORD_PLACEHOLDER": "Add meg a jelszavad",
+    "PASSWORD_REQUIRED": "A jelszó megadása kötelező",
+    "PASSWORD_MIN_LENGTH": "A jelszónak legalább 6 karakterből kell állnia",
+    "SUBMIT": "Bejelentkezés",
+    "NO_ACCOUNT": "Még nincs fiókod?",
+    "REGISTER_HERE": "Regisztrálj itt"
+  },
+  "REGISTER": {
+    "TITLE": "Fiók létrehozása",
+    "USERNAME_LABEL": "Felhasználónév",
+    "USERNAME_PLACEHOLDER": "Felhasználónév",
+    "USERNAME_REQUIRED": "A felhasználónév megadása kötelező.",
+    "FULL_NAME_LABEL": "Teljes név",
+    "FULL_NAME_PLACEHOLDER": "Teljes név",
+    "FULL_NAME_REQUIRED": "A teljes név megadása kötelező.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mail",
+    "EMAIL_REQUIRED": "Az e-mail-cím megadása kötelező.",
+    "EMAIL_INVALID": "Adj meg egy érvényes e-mail-címet.",
+    "PASSWORD_LABEL": "Jelszó",
+    "PASSWORD_PLACEHOLDER": "Jelszó",
+    "PASSWORD_REQUIRED": "A jelszó megadása kötelező.",
+    "PASSWORD_MIN_LENGTH": "A jelszónak legalább 6 karakterből kell állnia.",
+    "CONFIRM_PASSWORD_LABEL": "Jelszó megerősítése",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Erősítsd meg a jelszót",
+    "CONFIRM_PASSWORD_REQUIRED": "Erősítsd meg a jelszavad.",
+    "PASSWORDS_MISMATCH": "A jelszavak nem egyeznek.",
+    "PHONE_LABEL": "Telefonszám",
+    "PHONE_PLACEHOLDER": "Telefonszám (+40...)",
+    "PHONE_REQUIRED": "A telefonszám megadása kötelező.",
+    "PHONE_INVALID": "Adj meg egy érvényes telefonszámot.",
+    "SUBMIT": "Fiók létrehozása",
+    "ALREADY_HAVE_ACCOUNT": "Már van fiókod?",
+    "SIGN_IN": "Bejelentkezés"
+  },
+  "HOME": {
+    "HERO": {
+      "TITLE": "LICITÁLJ. NYERJ. ISMÉTELD.",
+      "TAG": "🔥 Élő aukciók minden nap",
+      "DESCRIPTION": "A legbiztonságosabb online aukciós platform. Adj el gyorsan, vagy csapj le egyedi ajánlatokra.",
+      "EXPLORE_AUCTIONS": "Aukciók felfedezése",
+      "START_SELLING": "Eladás indítása",
+      "SEARCH_LABEL": "Termékek és aukciók keresése...",
+      "SEARCH_PLACEHOLDER": "Például: BMW, arany fülbevaló"
+    },
+    "CATEGORIES": {
+      "EYEBROW": "Kategóriák",
+      "TITLE_START": "Fedezd fel a",
+      "TITLE_END": "kategóriákat",
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Technológia",
+          "DESCRIPTION": "Csúcstechnológiás eszközök és a legújabb elektronikai termékek."
+        },
+        "AUTO_MOTORS": {
+          "NAME": "Autók és motorok",
+          "DESCRIPTION": "Autók, motorkerékpárok és ritka alkatrészek."
+        },
+        "ART_COLLECTIBLES": {
+          "NAME": "Művészet és gyűjtemények",
+          "DESCRIPTION": "Exkluzív műalkotások és gyűjtemények."
+        },
+        "REAL_ESTATE": {
+          "NAME": "Ingatlan",
+          "DESCRIPTION": "Kivételes ingatlanok és telkek."
+        }
+      }
+    },
+    "AUCTIONS": {
+      "EYEBROW": "Piactér",
+      "TITLE_START": "Aktív",
+      "TITLE_END": "aukciók",
+      "PLACE_BID": "Licitálás",
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW 7-es sorozat, 2022, kifogástalan állapot, egy tulajdonostól."
+        },
+        "GOLD_EARRINGS": {
+          "TITLE": "Arany fülbevaló",
+          "DESCRIPTION": "18 karátos arany fülbevaló hitelesített gyémántokkal."
+        },
+        "PATEK_PHILIPPE": {
+          "TITLE": "Patek Philippe karóra",
+          "DESCRIPTION": "Limitált kiadású gyűjtői karóra, dobozzal és tanúsítvánnyal."
+        },
+        "VILLA": {
+          "TITLE": "Villa",
+          "DESCRIPTION": "Luxusvilla medencével, öt hálószobával és panorámás kilátással."
+        }
+      }
+    }
+  },
+  "HELP": {
+    "TITLE": "Súgóközpont",
+    "INFORMATION": "Találj gyors válaszokat, érj el minket telefonon, vagy beszélgess MI-asszisztensünkkel.",
+    "FAQ": "❓ Gyakran ismételt kérdések",
+    "SUPPORT": "📞 Gyors telefonos segítség",
+    "PROGRAM": "Hétfő–péntek: 09:00–18:00",
+    "FORM": "📝 Hibajegy nyitása",
+    "REQUEST": "Kérelem küldése",
+    "ASSISTANT": "Élő virtuális asszisztens"
+  },
+  "AUCTIONS_PAGE": {
+    "TITLE": "Aktív aukciók",
+    "DESCRIPTION": "Fedezz fel egyedi termékeket, és licitálj valós időben",
+    "SEARCH_PLACEHOLDER": "Keresés név alapján...",
+    "ALL_CATEGORIES": "Összes kategória",
+    "SORT": {
+      "ENDING_SOON": "Hamarosan lejár",
+      "PRICE_LOW_HIGH": "Ár: növekvő",
+      "PRICE_HIGH_LOW": "Ár: csökkenő",
+      "NEWEST": "Legújabb"
+    },
+    "ADD_ITEM": "Termék hozzáadása",
+    "RESULT": {
+      "ONE": "aukció található",
+      "MANY": "aukció található"
+    },
+    "CURRENT_PRICE": "Jelenlegi ár",
+    "EMPTY": {
+      "TITLE": "Nem található termék",
+      "DESCRIPTION": "Jelenleg nincs a keresésednek megfelelő aktív aukció."
+    },
+    "TIME": {
+      "ENDED": "Az aukció véget ért",
+      "LEFT": "hátralévő idő"
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Adj el a BidSphere-en",
+    "TITLE": "Új aukciós termék hozzáadása",
+    "DESCRIPTION": "Töltsd ki az alábbi adatokat, hogy közzétedd a terméket aukcióra.",
+    "FIELDS": {
+      "NAME": "Termék neve *",
+      "NAME_PLACEHOLDER": "pl. veterán kerékpár",
+      "START_PRICE": "Kezdőár (RON) *",
+      "DURATION": "Az aukció időtartama (nap) *",
+      "CATEGORY": "Kategória *",
+      "CATEGORY_PLACEHOLDER": "Válassz kategóriát",
+      "LOCATION": "Helyszín *",
+      "LOCATION_PLACEHOLDER": "pl. Brassó",
+      "DESCRIPTION": "Leírás",
+      "DESCRIPTION_PLACEHOLDER": "Írd le a termék állapotát, előéletét és részleteit..."
+    },
+    "IMAGE": {
+      "TITLE": "Termékfotó",
+      "UPLOAD": "Kattints egy kép feltöltéséhez",
+      "DETAILS": "JPG, PNG vagy WEBP, legfeljebb 5 MB",
+      "REMOVE": "Eltávolítás"
+    },
+    "BUTTONS": {
+      "CANCEL": "Mégse",
+      "PUBLISH": "Termék közzététele",
+      "PUBLISHING": "Közzététel..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "A név megadása kötelező.",
+      "NAME_MIN": "A névnek legalább 3 karakterből kell állnia.",
+      "PRICE_REQUIRED": "A kezdőár megadása kötelező.",
+      "PRICE_MIN": "Az árnak nagyobbnak kell lennie 0-nál.",
+      "DURATION": "Az időtartamnak 1 és 30 nap között kell lennie.",
+      "CATEGORY": "Válassz kategóriát.",
+      "LOCATION": "A helyszín megadása kötelező.",
+      "IMAGE_TYPE": "Csak JPG, PNG vagy WEBP formátumú képek engedélyezettek.",
+      "IMAGE_SIZE": "A kép mérete nem haladhatja meg az 5 MB-ot."
+    },
+    "MESSAGES": {
+      "SUCCESS": "A terméket sikeresen közzétetted aukcióra!",
+      "SUCCESS_LOCAL": "A terméket sikeresen közzétetted aukcióra (helyileg mentve – a backend még nem áll készen)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "Rólunk",
+    "ABOUT_TEXT_1": "A BidSphere egy modern online aukciós platform, amely egyszerűvé, biztonságossá és izgalmassá teszi a licitálással történő vásárlást és eladást.",
+    "ABOUT_TEXT_2": "Vásárlók és eladók ezreit kapcsoljuk össze számos kategóriában, miközben átlátható és tisztességes licitálási folyamatot biztosítunk mindenki számára. Akár jó ajánlatot keresel, akár a megfelelő vevőnek szeretnél eladni, a BidSphere megadja a biztonságos licitáláshoz szükséges eszközöket és bizalmat.",
+    "LINKS": "Hivatkozások",
+    "HOME": "Kezdőlap",
+    "SERVICES": "Aukciók",
+    "CONTACT": "Kapcsolat",
+    "HELP": "Súgó",
+    "FORUM": "Fórum",
+    "CONTACT_TITLE": "Kapcsolat",
+    "SOCIAL": "Közösségi média",
+    "COPYRIGHT": "Minden jog fenntartva."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Hoppá! Az oldal nem található",
+    "MESSAGE": "A keresett oldal nem létezik, vagy áthelyezték.",
+    "BUTTON": "VISSZA A KEZDŐLAPRA"
+  },
+  "FORUM": {
+    "TITLE": "Fórumbeszélgetések",
+    "DESCRIPTION": "Böngészd az aktuális beszélgetéseket, és kapcsolódj be más felhasználók eszmecseréibe.",
+    "START_DISCUSSION": "Beszélgetés indítása",
+    "LOGIN_TO_START": "Jelentkezz be beszélgetés indításához",
+    "SORT": {
+      "ARIA_LABEL": "Beszélgetések rendezése",
+      "LATEST": "Legújabb elöl",
+      "OLDEST": "Legrégebbi elöl",
+      "MOST_COMMENTED": "Legtöbb hozzászólás"
+    },
+    "DISCUSSION": "beszélgetés",
+    "DISCUSSIONS": "beszélgetés",
+    "LOADING": {
+      "TITLE": "Beszélgetések betöltése"
+    },
+    "ERROR": {
+      "TITLE": "A beszélgetések nem tölthetők be",
+      "RETRY": "Próbáld újra"
+    },
+    "POSTED_BY": "Közzétette",
+    "COMMENT": "hozzászólás",
+    "COMMENTS": "hozzászólás",
+    "EMPTY": {
+      "TITLE": "Nincsenek elérhető beszélgetések",
+      "MESSAGE": "Jelenleg nincs beszélgetés a fórumon."
+    }
+  },
+  "NOTIFICATIONS": {
+    "TRUE": "Értesítések",
+    "FALSE": "Még nincs értesítés."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Aukció részletei",
+    "INFO": {
+      "CURRENT_PRICE": "Jelenlegi ár",
+      "START_PRICE": "Kezdőár",
+      "CATEGORY": "Kategória",
+      "LOCATION": "Helyszín",
+      "STARTS_AT": "Kezdés",
+      "OWNER": "Tulajdonos",
+      "ENDS": "Befejezés"
+    },
+    "BID": {
+      "TITLE": "Licitálás",
+      "PLACEHOLDER": "Add meg a licit összegét",
+      "BUTTON": "🔨 Licitálás",
+      "MINIMUM": "Minimális licit:",
+      "LOGIN_TEXT": "Jelentkezz be, hogy licitálhass erre a termékre.",
+      "LOGIN_BUTTON": "Bejelentkezés licitáláshoz"
+    },
+    "WISHLIST": {
+      "ADD": "🤍 Hozzáadás a kívánságlistához",
+      "ADDED": "❤️ A kívánságlistán"
+    },
+    "DESCRIPTION": {
+      "TITLE": "Termékleírás"
+    },
+    "STATUS": {
+      "ACTIVE": "Aktív",
+      "ENDED": "Lezárult",
+      "PENDING": "Függőben"
+    },
+    "MESSAGES": {
+      "AUCTION_ENDED": "Az aukció véget ért.",
+      "BID_HIGHER_CURRENT": "A licitnek magasabbnak kell lennie a jelenlegi árnál.",
+      "BID_HIGHER_MINIMUM": "A licitnek magasabbnak kell lennie a minimális árnál."
+    },
+    "COUNTDOWN": {
+      "DAYS": "n",
+      "HOURS": "ó",
+      "MINUTES": "p",
+      "SECONDS": "mp"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Értékelések",
+    "REVIEWER_ID": "Értékelő azonosítója",
+    "REVIEWED_USER_ID": "Értékelt felhasználó azonosítója",
+    "RATING": "Értékelés (0–5)",
+    "RATING_ERROR": "Az értékelésnek 0 és 5 között kell lennie.",
+    "COMMENT": "Megjegyzés",
+    "ADD": "Hozzáadás",
+    "UPDATE": "Frissítés",
+    "CANCEL": "Mégse",
+    "EDIT": "Értékelés szerkesztése",
+    "DELETE": "Értékelés törlése"
+  },
+  "SHARE": {
+    "BUTTON": "Megosztás",
+    "COPIED": "Másolva!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profil",
+    "LOGOUT": "Kijelentkezés"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Vissza a beszélgetésekhez",
+    "LOADING_DISCUSSION_TITLE": "Beszélgetés betöltése",
+    "LOADING_DISCUSSION_MESSAGE": "A beszélgetés betöltése folyamatban van.",
+    "LOAD_DISCUSSION_ERROR": "A beszélgetés nem tölthető be",
+    "TRY_AGAIN": "Próbáld újra",
+    "DELETE_POST": "Törlés",
+    "POSTED_BY": "Közzétette",
+    "DISCUSSION": "Beszélgetés",
+    "COMMENT": "hozzászólás",
+    "COMMENTS": "hozzászólás",
+    "ADD_COMMENT": "Hozzászólás hozzáadása",
+    "COMMENT_PLACEHOLDER": "Írd ide a hozzászólásodat...",
+    "COMMENT_REQUIRED": "A hozzászólás megadása kötelező.",
+    "COMMENT_MIN_LENGTH": "A hozzászólásnak legalább 2 karakterből kell állnia.",
+    "COMMENT_MAX_LENGTH": "A hozzászólás legfeljebb 1000 karakter hosszú lehet.",
+    "PUBLISHING": "Közzététel...",
+    "PUBLISH_COMMENT": "Hozzászólás közzététele",
+    "LOGIN_REQUIRED": "Hozzászólás közzétételéhez be kell jelentkezned.",
+    "LOGIN": "Bejelentkezés",
+    "LOADING_COMMENTS": "Hozzászólások betöltése",
+    "LOAD_COMMENTS_ERROR": "A hozzászólások nem tölthetők be",
+    "DELETE_COMMENT": "Törlés",
+    "NO_COMMENTS": "Még nincs hozzászólás"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Vissza a beszélgetésekhez",
+    "TITLE": "Beszélgetés indítása",
+    "SUBTITLE": "Hozz létre egy új beszélgetést, és oszd meg a fórum többi felhasználójával.",
+    "TITLE_LABEL": "Cím",
+    "TITLE_PLACEHOLDER": "Adj meg egy egyértelmű beszélgetéscímet",
+    "TITLE_REQUIRED": "A cím megadása kötelező.",
+    "TITLE_WHITESPACE": "A cím nem állhat csak szóközökből.",
+    "TITLE_MIN_LENGTH": "A címnek legalább 3 karakterből kell állnia.",
+    "TITLE_MAX_LENGTH": "A cím legfeljebb 150 karakter hosszú lehet.",
+    "DESCRIPTION_LABEL": "Leírás",
+    "DESCRIPTION_PLACEHOLDER": "Írd le a témát, amelyről beszélgetni szeretnél...",
+    "DESCRIPTION_REQUIRED": "A leírás megadása kötelező.",
+    "DESCRIPTION_WHITESPACE": "A leírás nem állhat csak szóközökből.",
+    "DESCRIPTION_MIN_LENGTH": "A leírásnak legalább 10 karakterből kell állnia.",
+    "DESCRIPTION_MAX_LENGTH": "A leírás legfeljebb 5000 karakter hosszú lehet.",
+    "CREATE_ERROR": "A beszélgetés nem hozható létre",
+    "CANCEL": "Mégse",
+    "CREATING": "Beszélgetés létrehozása...",
+    "SUBMIT": "Beszélgetés indítása"
+  }
+}

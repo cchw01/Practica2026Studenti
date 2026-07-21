@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { Review, ReviewCreate } from './review.model';
 import { ReviewService } from '../../services/review-service'; // <-- ajusteaza dupa calea reala la tine
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review',
@@ -18,7 +19,8 @@ import { ReviewService } from '../../services/review-service'; // <-- ajusteaza 
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    TranslatePipe
   ],
   templateUrl: './review.html',
   styleUrl: './review.scss'

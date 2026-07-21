@@ -119,5 +119,11 @@ namespace Backend.DataManagement
 
             return true;
         }
+
+        // Backend: UserDataOps.cs
+        public bool EmailExists(string email)
+        {
+            return DbContext.Users.Any(u => u.Email == email);
+        }
     }
 }

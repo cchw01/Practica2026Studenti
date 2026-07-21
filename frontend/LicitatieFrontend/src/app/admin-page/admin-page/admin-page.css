@@ -287,3 +287,62 @@
   padding: 1px 7px;
   border-radius: 10px;
 }
+.stack-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.vuexy-text-success-btn {
+  background: none;
+  border: none;
+  color: #28c76f;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vuexy-text-success-btn:hover {
+  text-decoration: underline;
+}
+.users-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.users-search-input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.users-toolbar select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+.users-view-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.users-view-toggle button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+}
+.users-view-toggle button.active {
+  background: #7367f0;
+  color: white;
+  border-color: #7367f0;
+}
+@media (max-width: 1100px) {
+  .users-two-columns {
+    grid-template-columns: 1fr;
+  }
+}
