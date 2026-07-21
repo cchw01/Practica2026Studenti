@@ -18,16 +18,7 @@ export class ContactPage implements OnInit {
     { name: 'LinkedIn', url: 'https://linkedin.com' },
   ];
 
-  // Dropdown options for "Type of Issue". Each entry's translationKey
-  // resolves against the CONTACT namespace in the i18n JSON files.
-  issueTypes = [
-    { value: 'general', translationKey: 'CONTACT.FORM_ISSUE_OPTION_GENERAL' },
-    { value: 'technical', translationKey: 'CONTACT.FORM_ISSUE_OPTION_TECHNICAL' },
-    { value: 'billing', translationKey: 'CONTACT.FORM_ISSUE_OPTION_BILLING' },
-    { value: 'listing', translationKey: 'CONTACT.FORM_ISSUE_OPTION_LISTING' },
-    { value: 'account', translationKey: 'CONTACT.FORM_ISSUE_OPTION_ACCOUNT' },
-    { value: 'other', translationKey: 'CONTACT.FORM_ISSUE_OPTION_OTHER' },
-  ];
+  // issueTypes array has been removed – no longer needed
 
   contactForm!: FormGroup;
   submitted = false;
@@ -38,7 +29,7 @@ export class ContactPage implements OnInit {
     this.contactForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      issueType: ['', [Validators.required]],
+      // issueType removed from form group
       message: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
@@ -56,9 +47,7 @@ export class ContactPage implements OnInit {
 
     const formData = this.contactForm.value;
 
-    // Frontend-only for now — no backend endpoint wired up yet.
-    // When one exists, replace this block with an HTTP call, e.g.:
-    //   this.contactService.submit(formData).subscribe(...)
+    // Frontend-only — logs data to console
     console.log('Contact form submitted:', formData);
 
     this.submitted = true;
