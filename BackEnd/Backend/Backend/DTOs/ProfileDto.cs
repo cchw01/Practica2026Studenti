@@ -10,6 +10,7 @@ namespace Backend.DTOs
         public string Role { get; set; } = string.Empty;
         public double? AverageRating { get; set; }
         public int TotalReviewsReceived { get; set; }
+        public string? PictureName { get; set; }
         public List<ReviewDto> ReviewsReceived { get; set; } = new();
         public List<AuctionItemSummaryDto> AddedItems { get; set; } = new();
         public List<AuctionItemSummaryDto> BiddedItems { get; set; } = new();

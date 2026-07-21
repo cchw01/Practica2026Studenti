@@ -20,8 +20,7 @@ namespace Backend.DataManagement
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Notification> Notifications => Set<Notification>();
-
-        
+        public DbSet<ProfilePicture> ProfilePictures => Set<ProfilePicture>(); 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Review>() // Relatie Review -> Reviewer
