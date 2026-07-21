@@ -127,4 +127,14 @@ export class App implements OnInit, OnDestroy {
     this.isAdmin.set(false);
     this.router.navigate(['/home-page']);
   }
+
+  goToAddItem(): void {
+    this.closeMenu();
+
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/add-item']);
+    } else {
+      this.router.navigate(['/login-page']);
+    }
+  }
 }
