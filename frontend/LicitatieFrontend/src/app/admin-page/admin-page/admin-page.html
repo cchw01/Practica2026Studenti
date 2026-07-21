@@ -1,11 +1,11 @@
 <div class="vuexy-admin-container">
-  
+
   <!-- MENIUL LATERAL (SIDEBAR) -->
   <aside class="vuexy-sidebar">
     <div class="sidebar-header">
       <div class="vuexy-logo-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 22h9v-8h2v8h9L12 2z"/>
+          <path d="M12 2L2 22h9v-8h2v8h9L12 2z" />
         </svg>
       </div>
       <span class="vuexy-brand-name">BidSphere</span>
@@ -18,16 +18,16 @@
         <span class="menu-icon"></span> Dashboard & Grafice
       </button>
       <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">
-  <span class="menu-icon"></span>  Validare Licitații
-  <span *ngIf="pendingAuctions.length > 0" class="sidebar-badge">{{ pendingAuctions.length }}</span>
-</button>
+        <span class="menu-icon"></span> Validare Licitații
+        <span *ngIf="pendingAuctions.length > 0" class="sidebar-badge">{{ pendingAuctions.length }}</span>
+      </button>
       <button (click)="setTab('users')" [class.active]="activeTab === 'users'">
         <span class="menu-icon"></span> Evidență Conturi / Ban
       </button>
       <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
-  <span class="menu-icon"></span>  Moderare Forum
-  <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
-</button>
+        <span class="menu-icon"></span> Moderare Forum
+        <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
+      </button>
       <button (click)="setTab('tickets')" [class.active]="activeTab === 'tickets'">
         <span class="menu-icon"></span> Tichete Contact & Help
       </button>
@@ -45,7 +45,7 @@
           <span class="profile-display-role">Administrator</span>
         </div>
       </div>
-      
+
       <!-- BUTONUL DE LOGOUT ACCESIBIL RECONECTAT -->
       <button class="vuexy-logout-sidebar-btn" (click)="logout()">
         Deconectare Cont ↗
@@ -56,7 +56,7 @@
   <!-- SPAȚIUL CENTRAL (CONȚINUTUL INTERFEȚEI) -->
   <div class="vuexy-main-content">
     <main class="vuexy-page-body">
-      
+
       <!-- TAB 2: PAGINA DE STATISTICI CU GRAFICE -->
       <div *ngIf="activeTab === 'stats' && stats" class="vuexy-dashboard-view">
         <div class="welcome-banner-card">
@@ -68,15 +68,24 @@
         <div class="vuexy-stats-row">
           <div class="vuexy-card stat-item-box">
             <div class="stat-icon-wrapper blue-bg">👥</div>
-            <div><h3>{{ stats.totalUsers || 0 }}</h3><p>Total Utilizatori</p></div>
+            <div>
+              <h3>{{ stats.totalUsers || 0 }}</h3>
+              <p>Total Utilizatori</p>
+            </div>
           </div>
           <div class="vuexy-card stat-item-box">
             <div class="stat-icon-wrapper red-bg">🚫</div>
-            <div><h3>{{ stats.bannedUsers || 0 }}</h3><p>Utilizatori Banați</p></div>
+            <div>
+              <h3>{{ stats.bannedUsers || 0 }}</h3>
+              <p>Utilizatori Banați</p>
+            </div>
           </div>
           <div class="vuexy-card stat-item-box">
             <div class="stat-icon-wrapper green-bg">📦</div>
-            <div><h3>{{ stats.totalAuctions || 0 }}</h3><p>Total Licitații</p></div>
+            <div>
+              <h3>{{ stats.totalAuctions || 0 }}</h3>
+              <p>Total Licitații</p>
+            </div>
           </div>
         </div>
 
@@ -85,14 +94,17 @@
             <h4>Evoluție Licitații Săptămânale</h4>
             <div class="chart-container-svg">
               <svg viewBox="0 0 400 150" class="line-chart-svg">
-                <path d="M 0,130 L 80,90 L 160,110 L 240,40 L 320,60 L 400,10" fill="none" stroke="#7367f0" stroke-width="4"></path>
+                <path d="M 0,130 L 80,90 L 160,110 L 240,40 L 320,60 L 400,10" fill="none" stroke="#7367f0"
+                  stroke-width="4"></path>
                 <circle cx="80" cy="90" r="4" fill="#7367f0"></circle>
                 <circle cx="160" cy="110" r="4" fill="#7367f0"></circle>
                 <circle cx="240" cy="40" r="4" fill="#7367f0"></circle>
                 <circle cx="320" cy="60" r="4" fill="#7367f0"></circle>
               </svg>
             </div>
-            <div class="chart-labels"><small>Lun</small><small>Mar</small><small>Mie</small><small>Joi</small><small>Vin</small><small>Sâm</small></div>
+            <div class="chart-labels">
+              <small>Lun</small><small>Mar</small><small>Mie</small><small>Joi</small><small>Vin</small><small>Sâm</small>
+            </div>
           </div>
 
           <div class="vuexy-card chart-card-box">
@@ -105,7 +117,9 @@
                 <rect x="140" y="50" width="25" height="80" fill="#ff9f43" rx="4"></rect>
               </svg>
             </div>
-            <div class="chart-labels"><small>Ban</small><small>Rapoarte</small><small>Validări</small><small>Tichete</small></div>
+            <div class="chart-labels">
+              <small>Ban</small><small>Rapoarte</small><small>Validări</small><small>Tichete</small>
+            </div>
           </div>
         </div>
       </div>
@@ -115,19 +129,24 @@
         <div class="card-header-title">Licitații transmise spre control și aprobare</div>
         <table class="vuexy-table">
           <thead>
-            <tr><th>Titlu Produs</th><th>Vânzător</th><th>Preț Pornire</th><th class="text-right">Decizie Vizibilitate</th></tr>
+            <tr>
+              <th>Titlu Produs</th>
+              <th>Vânzător</th>
+              <th>Preț Pornire</th>
+              <th class="text-right">Decizie Vizibilitate</th>
+            </tr>
           </thead>
           <tbody>
-                <tr *ngFor="let item of pendingAuctions">
-                 <td><strong>{{ item.name }}</strong></td>
-                 <td>{{ item.owner?.userName || 'Utilizator platformă' }}</td>
-                 <td class="bold-price-cell">{{ item.startPrice }} RON</td>
-                 <td class="text-right">
-                   <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Aprobă postarea</button>
-                   <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Respinge</button>
-                   <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Șterge definitiv</button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of pendingAuctions">
+              <td><strong>{{ item.name }}</strong></td>
+              <td>{{ item.owner?.userName || 'Utilizator platformă' }}</td>
+              <td class="bold-price-cell">{{ item.startPrice }} RON</td>
+              <td class="text-right">
+                <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Aprobă postarea</button>
+                <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Respinge</button>
+                <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Șterge definitiv</button>
+              </td>
+            </tr>
             <tr *ngIf="pendingAuctions.length === 0">
               <td colspan="4" class="vuexy-empty-row">Nicio licitație în coada de moderare preliminară.</td>
             </tr>
@@ -140,34 +159,43 @@
         <div class="card-header-title">Evidența conturilor (Închidere automată la 3 Rapoarte)</div>
         <table class="vuexy-table">
           <thead>
-                          <tr><th>Nume Utilizator</th><th>Email</th><th>Rol</th><th>Status</th><th class="text-right">Acțiuni Drepturi</th></tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of users">
-  <td><strong>{{ user.userName }}</strong></td>
-  <td>{{ user.email }}</td>
-  <td>
-    <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
-      {{ user.reports || 0 }} / 3 Rapoarte primite
-    </span>
-  </td>
-  <td>
-    <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
-  </td>
- <td class="text-right">
-  <div class="user-actions-cell">
-    <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
-      <option value="User">User</option>
-      <option value="Guest">Guest</option>
-      <option value="Admin">Admin</option>
-    </select>
-    <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează</button>
-    <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează restricția</button>
-    <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Șterge</button>
-  </div>
-</td>
-</tr>
-              </tbody>
+            <tr>
+              <th>Nume Utilizator</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Status</th>
+              <th class="text-right">Acțiuni Drepturi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td><strong>{{ user.userName }}</strong></td>
+              <td>{{ user.email }}</td>
+              <td>
+                <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
+                  {{ user.reports || 0 }} / 3 Rapoarte primite
+                </span>
+              </td>
+              <td>
+                <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ'
+                  }}</span>
+              </td>
+              <td class="text-right">
+                <div class="user-actions-cell">
+                  <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
+                    <option value="User">User</option>
+                    <option value="Guest">Guest</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                  <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger"
+                    (click)="banUser(user.id)">Banează</button>
+                  <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează
+                    restricția</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Șterge</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -176,14 +204,15 @@
         <div class="card-header-title">Controlul postărilor și comentariilor active pe forum</div>
         <div class="vuexy-list-stack">
           <div *ngFor="let post of forumPosts" class="vuexy-stack-item">
-  <div class="stack-left">
-    <span class="vuexy-author-headline">Postat de: @{{ post.userName || 'Membru' }}</span>
-    <h4>{{ post.title }}</h4>
-    <p class="forum-body-text">"{{ post.description }}"</p>
-  </div>
-  <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge postarea</button>
-</div>
-          <div *ngIf="forumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj licențios.</div>
+            <div class="stack-left">
+              <span class="vuexy-author-headline">Postat de: @{{ post.userName || 'Membru' }}</span>
+              <h4>{{ post.title }}</h4>
+              <p class="forum-body-text">"{{ post.description }}"</p>
+            </div>
+            <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge postarea</button>
+          </div>
+          <div *ngIf="forumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj
+            licențios.</div>
         </div>
       </div>
 
@@ -192,13 +221,20 @@
         <div class="card-header-title">Mesaje primite prin Formularul de Contact / Pagina Help</div>
         <table class="vuexy-table">
           <thead>
-            <tr><th>Expeditor</th><th>Subiect Problemă</th><th>Mesaj Utilizator</th><th class="text-right">Remediere</th></tr>
+            <tr>
+              <th>Expeditor</th>
+              <th>Subiect Problemă</th>
+              <th>Mesaj Utilizator</th>
+              <th class="text-right">Remediere</th>
+            </tr>
           </thead>
           <tbody>
             <tr *ngFor="let ticket of forumComments">
               <td><strong>{{ ticket.name }}</strong><br><small>{{ ticket.email }}</small></td>
               <td><span class="subject-emphasis">{{ ticket.subject || 'Ticket Help' }}</span></td>
-              <td><p class="vuexy-truncate-cell">{{ ticket.message || ticket.content }}</p></td>
+              <td>
+                <p class="vuexy-truncate-cell">{{ ticket.message || ticket.content }}</p>
+              </td>
               <td class="text-right">
                 <button class="vuexy-btn btn-vuexy-success" (click)="resolveTicket(ticket.id)">Rezolvă tichet</button>
               </td>
@@ -207,25 +243,73 @@
         </table>
       </div>
 
-      <!-- TAB 6: ADAUGARE CATEGORII -->
+      <!-- TAB 6: GESTIONARE CATEGORII -->
       <div class="vuexy-categories-split" *ngIf="activeTab === 'categories'">
         <div class="vuexy-card">
-          <div class="card-header-title">6. Creează categorie nouă</div>
+          <div class="card-header-title">Creează categorie nouă </div>
+
           <div class="vuexy-form-group">
-            <input #newCatName type="text" placeholder="Nume categorie (ex: Artă & Antichități)">
-            <textarea #newCatDesc rows="3" placeholder="Scurtă descriere a specificului categoriei..."></textarea>
-            <button class="vuexy-btn-block" (click)="addCategory(newCatName.value, newCatDesc.value); newCatName.value=''; newCatDesc.value=''">Adaugă în Meniu</button>
+            <input #newCatName type="text" maxlength="100" placeholder="Nume categorie (ex: Artă & Antichități)">
+            <textarea #newCatDesc rows="3" maxlength="500"
+              placeholder="Scurtă descriere a specificului categoriei..."></textarea>
+
+            <button type="button" class="vuexy-btn-block" [disabled]="categorySubmitting || !newCatName.value.trim()"
+              (click)="addCategory(newCatName, newCatDesc)"> {{categorySubmitting? 'Se salvează...' : 'Adaugă în
+              Meniu'}}
+            </button>
           </div>
+
+          <div *ngIf="categoryErrorMessage" class="category-error-message"> {{ categoryErrorMessage }} </div>
         </div>
 
         <div class="vuexy-card table-responsive-wrapper">
           <div class="card-header-title">Nomenclator categorii active</div>
-          <table class="vuexy-table">
-            <thead><tr><th>Nume nomenclator</th><th>Descriere extinsă</th></tr></thead>
+
+          <div *ngIf="categoryLoading" class="vuexy-empty-row">Se încarcă categoriile...</div>
+
+          <table *ngIf="!categoryLoading" class="vuexy-table category-table">
+            <thead>
+              <tr>
+                <th>Nume nomenclator</th>
+                <th>Descriere extinsă</th>
+                <th class="text-right">Acțiuni</th>
+              </tr>
+            </thead>
+
             <tbody>
               <tr *ngFor="let cat of categories">
-                <td><strong>{{ cat.name }}</strong></td>
-                <td><small>{{ cat.description }}</small></td>
+                <td>
+                  <strong *ngIf="editingCategoryId !== cat.Id"> {{ cat.name }}</strong>
+                  <input *ngIf="editingCategoryId === cat.Id" class="category-edit-input" type="text" maxlength="100"
+                    [(ngModel)]="editingCategoryName">
+                </td>
+
+                <td>
+                  <small *ngIf="editingCategoryId !== cat.Id">{{cat.description ||'Fără descriere'}}</small>
+                  <textarea *ngIf="editingCategoryId === cat.Id" class="category-edit-textarea" rows="2" maxlength="500"
+                    [(ngModel)]="editingCategoryDescription"></textarea>
+                </td>
+
+                <td class="text-right">
+                  <div *ngIf="editingCategoryId !== cat.Id" class="category-actions">
+                    <button type="button" class="vuexy-btn" (click)="startCategoryEdit(cat)">Editează</button>
+
+                    <button type="button" class="vuexy-btn btn-vuexy-danger"
+                      (click)="removeCategory(cat)">Șterge</button>
+                  </div>
+
+                  <div *ngIf="editingCategoryId === cat.Id" class="category-actions">
+                    <button type="button" class="vuexy-btn btn-vuexy-success"
+                      [disabled]="categorySubmitting ||!editingCategoryName.trim()"
+                      (click)="saveCategoryEdit()">Salvează</button>
+                    <button type="button" class="vuexy-btn" [disabled]="categorySubmitting"
+                      (click)="cancelCategoryEdit()"> Anulează</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr *ngIf="categories.length === 0">
+                <td colspan="3" class="vuexy-empty-row">Nu există categorii înregistrate.</td>
               </tr>
             </tbody>
           </table>

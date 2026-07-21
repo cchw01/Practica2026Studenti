@@ -82,14 +82,4 @@ export class AdminService {
     return of({ success: true });
   }
 
-  getCategories(): Observable<any[]> {
-    return of([
-      { id: 1, name: 'Electronice', description: 'Telefoane, laptopuri', itemsCount: 24 },
-      { id: 2, name: 'Auto & Moto', description: 'Vehicule, piese', itemsCount: 12 }
-    ]);
-  }
-
-  addCategory(name: string, desc: string): Observable<any> {
-    return of({ id: Date.now(), name, description: desc, itemsCount: 0 });
-  }
 }
