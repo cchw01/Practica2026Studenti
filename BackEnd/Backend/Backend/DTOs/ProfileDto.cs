@@ -40,6 +40,7 @@ namespace Backend.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string OwnerName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class UpdateProfileDto
