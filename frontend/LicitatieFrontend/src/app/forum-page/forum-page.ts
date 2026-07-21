@@ -8,9 +8,11 @@ import { AuthService } from  '../services/auth';
 
 type SortOption = 'latest' | 'oldest' | 'comments';
 
+
 interface ForumPostPreview {
   id: number;
   userId: number;
+  userName?: string;
   date: string;
   title: string;
   description: string;
@@ -25,6 +27,9 @@ interface ForumPostPreview {
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
+   searchQuery = '';
+   currentPage = 1;
+  readonly pageSize = 5;
 
   posts: ForumPostPreview[] = [];
 
@@ -90,7 +95,18 @@ export class ForumPage implements OnInit {
   }
 
   get visiblePosts(): ForumPostPreview[] {
-    return [...this.posts].sort((firstPost, secondPost) => {
+    let filtered = this.posts;
+
+    if (this.searchQuery.trim().length > 0) {
+      const query = this.searchQuery.trim().toLowerCase();
+      filtered = filtered.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.description.toLowerCase().includes(query),
+      );
+    }
+
+    return [...filtered].sort((firstPost, secondPost) => {
       if (this.sortOption === 'comments') {
         return (
           secondPost.commentsCount -
@@ -108,14 +124,38 @@ export class ForumPage implements OnInit {
       return secondDate - firstDate;
     });
   }
-
-  getUserLabel(userId: number): string {
-    return `User #${userId}`;
+  get pagedPosts(): ForumPostPreview[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.visiblePosts.slice(start, start + this.pageSize);
   }
 
-  getInitials(userId: number): string {
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.visiblePosts.length / this.pageSize));
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+  }
+
+  resetPage(): void {
+    this.currentPage = 1;
+  }
+  
+  getUserLabel(userId: number, userName?: string): string {
+    return userName ? userName : `User #${userId}`;
+  }
+
+  getInitials(userName?: string, userId?: number): string {
+    if (userName && userName.length > 0) {
+      return userName.charAt(0).toUpperCase();
+    }
     return `U${userId}`;
-  }
+  } 
 
   retryLoading(): void {
     this.loadForumPosts();
@@ -152,6 +192,7 @@ export class ForumPage implements OnInit {
     return {
       id: forumPost.id,
       userId: forumPost.userId,
+      userName: forumPost.userName,
       date: forumPost.date,
       title: forumPost.title,
       description: forumPost.description,

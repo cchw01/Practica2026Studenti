@@ -4,5 +4,7 @@
   [class.copied]="copied()"
   (click)="copyLink()"
 >
-  {{ copied() ? 'Copiat!' : 'Distribuie' }}
+  {{
+    (copied() ? 'SHARE.COPIED' : 'SHARE.BUTTON') | translate
+  }}
 </button>
