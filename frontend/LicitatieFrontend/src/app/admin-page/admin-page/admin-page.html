@@ -1,0 +1,60 @@
+<div class="admin-page">
+  <h1>Admin panel</h1>
+
+  <div class="tabs">
+    <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">Statistici</button>
+    <button (click)="setTab('users')" [class.active]="activeTab === 'users'">Useri</button>
+    <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">Licitații de validat</button>
+  </div>
+
+  <div *ngIf="activeTab === 'stats' && stats" class="stats-grid">
+    <div class="stat-card"><h3>{{ stats.totalUsers }}</h3><p>Total useri</p></div>
+    <div class="stat-card"><h3>{{ stats.bannedUsers }}</h3><p>Useri banați</p></div>
+    <div class="stat-card"><h3>{{ stats.totalAuctions }}</h3><p>Total licitații</p></div>
+    <div class="stat-card"><h3>{{ stats.pendingValidation }}</h3><p>De validat</p></div>
+    <div class="stat-card"><h3>{{ stats.activeAuctions }}</h3><p>Active</p></div>
+    <div class="stat-card"><h3>{{ stats.totalForumPosts }}</h3><p>Postări forum</p></div>
+    <div class="stat-card"><h3>{{ stats.totalBids }}</h3><p>Total licitări</p></div>
+  </div>
+
+  <table *ngIf="activeTab === 'users'" class="admin-table">
+    <thead>
+      <tr>
+        <th>Nume</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Status</th>
+        <th>Acțiuni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">
+            <option value="User">User</option>
+            <option value="Guest">Guest</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </td>
+        <td>{{ u.isBanned ? 'Banat' : 'Activ' }}</td>
+        <td>
+          <button (click)="toggleBan(u)">{{ u.isBanned ? 'Unban' : 'Ban' }}</button>
+          <button (click)="removeUser(u.id)" class="danger">Șterge</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="activeTab === 'auctions'" class="pending-list">
+    <div *ngFor="let item of pendingAuctions" class="pending-card">
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.description }}</p>
+      <button (click)="validate(item.id)">Validează</button>
+      <button (click)="reject(item.id)" class="danger">Respinge</button>
+      <button (click)="removeAuction(item.id)" class="danger">Șterge definitiv</button>
+    </div>
+    <p *ngIf="pendingAuctions.length === 0">Nimic de validat momentan.</p>
+  </div>
+</div>

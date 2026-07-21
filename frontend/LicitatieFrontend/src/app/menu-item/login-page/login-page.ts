@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login-page',
   standalone: false,
   templateUrl: './login-page.html',
-  styleUrl: './login-page.css',
+  styleUrl: './login-page.scss',
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -40,15 +39,16 @@ export class LoginPage implements OnInit {
     const formData = this.loginForm.value;
     console.log('Trimitem datele:', formData);
 
-this.authService.login(formData.email,formData.password ).subscribe({  next: (response: any) => {
-    console.log('Login cu succes!', response);
-    this.router.navigate(['/profile']);
-  },
-  error: (err) => {
-    console.error('Eroare de la server:', err);
-    this.errorMessage = 'Email sau parolă incorecte.';
-  },
-});
+    this.authService.login(formData.email, formData.password).subscribe({
+      next: (response: any) => {
+        console.log('Login cu succes!', response);
+        this.router.navigate(['/profile-page']);
+      },
+      error: (err) => {
+        console.error('Eroare de la server:', err);
+        this.errorMessage = err.error || 'Email sau parolă incorecte.';
+      },
+    });
   }
 
   goToRegister(): void {

@@ -1,35 +1,113 @@
-<nav class="navbar">
+<nav
+  class="navbar"
+  [class.nav-hidden]="navHidden()"
+>
   <div class="navbar-inner">
-    <a routerLink="/home-page" class="brand" (click)="closeMenu()">
+    <!-- Logo -->
+    <a
+      routerLink="/home-page"
+      class="brand"
+      (click)="closeMenu()"
+    >
       <span class="brand-icon-wrap">
-        <mat-icon class="brand-icon">gavel</mat-icon>
+        <mat-icon class="brand-icon">
+          gavel
+        </mat-icon>
       </span>
-      <span class="brand-name"><span class="brand-name-primary">Bid</span><span
-          class="brand-name-accent">Sphere</span></span>
+
+      <span class="brand-name">
+        <span class="brand-name-primary">
+          Bid
+        </span>
+
+        <span class="brand-name-accent">
+          Sphere
+        </span>
+      </span>
     </a>
 
-    <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-label="Toggle navigation"
-      (click)="toggleMenu()">
-      <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
+    <!-- Buton meniu mobil -->
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="'NAV.TOGGLE_MENU' | translate"
+      (click)="toggleMenu()"
+    >
+      <mat-icon>
+        {{ menuOpen() ? 'close' : 'menu' }}
+      </mat-icon>
     </button>
 
-    <div class="nav-links" [class.open]="menuOpen()">
+    <div
+      class="nav-links"
+      [class.open]="menuOpen()"
+    >
+      <!-- Linkurile principale -->
       <div class="nav-links-main">
-        <a routerLink="/home-page" routerLinkActive="active" (click)="closeMenu()">
+        <a
+          routerLink="/home-page"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
           <mat-icon>home</mat-icon>
-          <span>Home</span>
+
+          <span>
+            {{ 'NAV.HOME' | translate }}
+          </span>
         </a>
-        <a routerLink="/auctions" routerLinkActive="active" (click)="closeMenu()">
+
+        <a
+          routerLink="/auctions"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
           <mat-icon>gavel</mat-icon>
-          <span>Auctions</span>
+
+          <span>
+            {{ 'NAV.AUCTIONS' | translate }}
+          </span>
         </a>
-        <a routerLink="/forum-page" routerLinkActive="active" (click)="closeMenu()">
+
+        <a
+          routerLink="/forum-page"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
           <mat-icon>forum</mat-icon>
-          <span>Forum</span>
+
+          <span>
+            {{ 'NAV.FORUM' | translate }}
+          </span>
         </a>
-        <a routerLink="/contact-page" routerLinkActive="active" (click)="closeMenu()">
+
+        <a
+          routerLink="/contact-page"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
           <mat-icon>mail</mat-icon>
-          <span>Contact</span>
+
+          <span>
+            {{ 'NAV.CONTACT' | translate }}
+          </span>
+        </a>
+
+        <a
+          routerLink="/help-page"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
+          <mat-icon>help</mat-icon>
+
+          <span>
+            {{ 'NAV.HELP' | translate }}
+          </span>
+        </a>
+        <a *ngIf="isAdmin()" routerLink="/admin" (click)="closeMenu()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Admin</span>
         </a>
         <a routerLink="/help-page" routerLinkActive="active" (click)="closeMenu()">
           <mat-icon>help</mat-icon>
@@ -93,16 +171,280 @@
 
       </div>
 
+      <!-- Acțiunile din navbar -->
       <div class="nav-links-actions">
-        <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-login">
-          <mat-icon>login</mat-icon>
-          <span>Login</span>
-        </a>
-        <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()" class="nav-link-register">
-          <span>Register</span>
-        </a>
+        <!-- Selector de limbă -->
+        <div class="language-switcher">
+          <button
+            type="button"
+            mat-button
+            class="language-dropdown-trigger"
+            [matMenuTriggerFor]="languageMenu"
+            [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate"
+          >
+            <mat-icon>language</mat-icon>
+
+            <span>
+              {{ currentLanguageLabel() }}
+            </span>
+
+            <mat-icon class="dropdown-arrow">
+              expand_more
+            </mat-icon>
+          </button>
+
+          <mat-menu #languageMenu="matMenu">
+            <!-- Engleză -->
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('en')"
+            >
+              <span class="language-code">
+                EN
+              </span>
+
+              <span>
+                English
+              </span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('en')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Română -->
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('ro')"
+            >
+              <span class="language-code">
+                RO
+              </span>
+
+              <span>
+                Română
+              </span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('ro')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Spaniolă -->
+            <button
+              mat-menu-item
+              type="button"
+              (click)="changeLanguage('es')"
+            >
+              <span class="language-code">
+                ES
+              </span>
+
+              <span>
+                Español
+              </span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('es')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- French -->
+            <button mat-menu-item type="button" (click)="changeLanguage('fr')">
+              <span class="language-code"> FR </span>
+              <span> 
+                French
+              </span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('fr')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- German -->
+            <button mat-menu-item type="button" (click)="changeLanguage('de')">
+              <span class="language-code"> DE </span>
+              <span>German</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('de')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Hungarian -->
+            <button mat-menu-item type="button" (click)="changeLanguage('hu')">
+              <span class="language-code"> HU </span>
+              <span>Hungarian</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('hu')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Italian -->
+            <button mat-menu-item type="button" (click)="changeLanguage('it')">
+              <span class="language-code"> IT </span>
+              <span>Italian</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('it')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Polish -->
+            <button mat-menu-item type="button" (click)="changeLanguage('pl')">
+              <span class="language-code"> PL </span>
+              <span>Polish</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('pl')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Greek -->
+            <button mat-menu-item type="button" (click)="changeLanguage('el')">
+              <span class="language-code"> EL </span>
+              <span>Greek</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('el')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Turkish -->
+            <button mat-menu-item type="button" (click)="changeLanguage('tr')">
+              <span class="language-code"> TR </span>
+              <span>Turkish</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('tr')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Slovak -->
+            <button mat-menu-item type="button" (click)="changeLanguage('sk')">
+              <span class="language-code"> SK </span>
+              <span>Slovak</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('sk')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Ukrainian -->
+            <button mat-menu-item type="button" (click)="changeLanguage('uk')">
+              <span class="language-code"> UK </span>
+              <span>Ukrainian</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('uk')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+            <!-- Serbian -->
+            <button mat-menu-item type="button" (click)="changeLanguage('sr')">
+              <span class="language-code"> SR </span>
+              <span>Serbian</span>
+
+              <mat-icon
+                *ngIf="isCurrentLanguage('sr')"
+                class="selected-language-icon"
+              >
+                check
+              </mat-icon>
+            </button>
+
+          </mat-menu>
+        </div>
+
+        <!-- Adaugă licitație -->
+        <a
+  class="btn-add-auction"
+  [attr.aria-label]="'NAV.ADD_AUCTION' | translate"
+  [attr.title]="'NAV.ADD_AUCTION' | translate"
+  (click)="goToAddItem()"
+>
+  <mat-icon>add</mat-icon>
+</a>
+
+        <!-- Login și register -->
+        <ng-container *ngIf="!isLoggedIn()">
+          <div class="auth-pill">
+            <a
+              routerLink="/login-page"
+              routerLinkActive="active"
+              class="auth-pill-link"
+              (click)="closeMenu()"
+            >
+              {{ 'NAV.LOGIN' | translate }}
+            </a>
+
+            <span class="auth-pill-divider"></span>
+
+            <a
+              routerLink="/register-page"
+              routerLinkActive="active"
+              class="auth-pill-link"
+              (click)="closeMenu()"
+            >
+              {{ 'NAV.REGISTER' | translate }}
+            </a>
+          </div>
+        </ng-container>
+
+        <!-- Notificări și profil -->
+        <ng-container *ngIf="isLoggedIn()">
+          <app-notification-bell>
+          </app-notification-bell>
+
+          <app-profile-menu
+            (loggedOut)="logout()"
+          >
+          </app-profile-menu>
+        </ng-container>
       </div>
     </div>
   </div>
 </nav>
+
 <router-outlet />
+
+<app-footer></app-footer>

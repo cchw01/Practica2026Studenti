@@ -22,6 +22,21 @@ namespace Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AuctionItemUser", b =>
+                {
+                    b.Property<int>("WishListID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WishingUsersID")
+                        .HasColumnType("int");
+
+                    b.HasKey("WishListID", "WishingUsersID");
+
+                    b.HasIndex("WishingUsersID");
+
+                    b.ToTable("AuctionItemUser");
+                });
+
             modelBuilder.Entity("Backend.Models.AuctionItem", b =>
                 {
                     b.Property<int>("ID")
@@ -30,11 +45,11 @@ namespace Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("CurrentPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -42,6 +57,9 @@ namespace Backend.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -51,40 +69,61 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Owner")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("StartPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int?>("WinnerId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("UserID1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserID2")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Winner")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserID1");
+                    b.HasIndex("OwnerId");
 
-                    b.HasIndex("UserID2");
+                    b.HasIndex("WinnerId");
 
                     b.ToTable("AuctionItems");
+                });
+
+            modelBuilder.Entity("Backend.Models.Bid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BiddedItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BidderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BiddedItemId");
+
+                    b.HasIndex("BidderId");
+
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("Backend.Models.CategoryItem", b =>
@@ -94,10 +133,6 @@ namespace Backend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<string>("items")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -131,6 +166,10 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ForumPostId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("ForumComments");
                 });
 
@@ -158,7 +197,63 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ForumPosts");
+                });
+
+            modelBuilder.Entity("Backend.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Backend.Models.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Backend.Models.Review", b =>
@@ -207,11 +302,17 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Rating")
@@ -229,19 +330,105 @@ namespace Backend.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("AuctionItemUser", b =>
+                {
+                    b.HasOne("Backend.Models.AuctionItem", null)
+                        .WithMany()
+                        .HasForeignKey("WishListID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("WishingUsersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Backend.Models.AuctionItem", b =>
                 {
-                    b.HasOne("Backend.Models.User", null)
+                    b.HasOne("Backend.Models.CategoryItem", "Category")
+                        .WithMany("items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", "Owner")
                         .WithMany("AddedItemsList")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("Backend.Models.User", null)
-                        .WithMany("BiddedItemsList")
-                        .HasForeignKey("UserID1");
+                    b.HasOne("Backend.Models.User", "Winner")
+                        .WithMany("WonItemsList")
+                        .HasForeignKey("WinnerId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Backend.Models.User", null)
-                        .WithMany("WhishList")
-                        .HasForeignKey("UserID2");
+                    b.Navigation("Category");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Winner");
+                });
+
+            modelBuilder.Entity("Backend.Models.Bid", b =>
+                {
+                    b.HasOne("Backend.Models.AuctionItem", "BiddedItem")
+                        .WithMany("BidList")
+                        .HasForeignKey("BiddedItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", "Bidder")
+                        .WithMany("BidList")
+                        .HasForeignKey("BidderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("BiddedItem");
+
+                    b.Navigation("Bidder");
+                });
+
+            modelBuilder.Entity("Backend.Models.ForumComment", b =>
+                {
+                    b.HasOne("Backend.Models.ForumPost", "ForumPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("ForumPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.User", "User")
+                        .WithMany("ForumComments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ForumPost");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Backend.Models.ForumPost", b =>
+                {
+                    b.HasOne("Backend.Models.User", "User")
+                        .WithMany("ForumPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Backend.Models.Notification", b =>
+                {
+                    b.HasOne("Backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Backend.Models.Review", b =>
@@ -263,15 +450,34 @@ namespace Backend.Migrations
                     b.Navigation("Reviewer");
                 });
 
+            modelBuilder.Entity("Backend.Models.AuctionItem", b =>
+                {
+                    b.Navigation("BidList");
+                });
+
+            modelBuilder.Entity("Backend.Models.CategoryItem", b =>
+                {
+                    b.Navigation("items");
+                });
+
+            modelBuilder.Entity("Backend.Models.ForumPost", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("Backend.Models.User", b =>
                 {
                     b.Navigation("AddedItemsList");
 
-                    b.Navigation("BiddedItemsList");
+                    b.Navigation("BidList");
+
+                    b.Navigation("ForumComments");
+
+                    b.Navigation("ForumPosts");
 
                     b.Navigation("ReviewList");
 
-                    b.Navigation("WhishList");
+                    b.Navigation("WonItemsList");
                 });
 #pragma warning restore 612, 618
         }

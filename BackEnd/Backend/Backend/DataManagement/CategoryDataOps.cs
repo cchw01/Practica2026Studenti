@@ -1,4 +1,4 @@
-﻿using Backend.DataManagement;
+using Backend.DataManagement;
 using Backend.Models;
 
 namespace Backend.DataManagement
@@ -22,7 +22,7 @@ namespace Backend.DataManagement
             DbContext.SaveChanges();
         }
 
-        public void DeleteCategory(int id)
+        public bool DeleteCategory(int id)
         {
             var category = DbContext.Category.Where(x => x.id == id).FirstOrDefault();
 
@@ -30,20 +30,24 @@ namespace Backend.DataManagement
             {
                 DbContext.Category.Remove(category);
                 DbContext.SaveChanges();
+                return true;
             }
+
+            return false;
         }
 
-        public void UpdateCategory(CategoryItem category)
+        public bool UpdateCategory(CategoryItem category)
         {
-            try
+            var categoryToUpdate = DbContext.Category.Where(x => x.id == category.id).FirstOrDefault();
+
+            if (categoryToUpdate != null)
             {
-                DbContext?.Category.Update(category);
-                DbContext?.SaveChanges();
+                categoryToUpdate.name = category.name;
+                DbContext.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return false;
+
         }
 
         public CategoryItem? GetCategoryById(int id)

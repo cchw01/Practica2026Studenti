@@ -1,6 +1,5 @@
-using Backend.DataManagement;
-
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.DataManagement
 {
@@ -65,6 +64,66 @@ namespace Backend.DataManagement
                 .Where(x => x.Email == email)
                 .FirstOrDefault(); 
             return user;
+        }
+
+        public bool AddToWishlist(int userId, int itemId)
+        {
+            var user = DbContext.Users
+                .Include(u => u.WishList)
+                .FirstOrDefault(u => u.ID == userId);
+
+            var item = DbContext.AuctionItems
+                .FirstOrDefault(i => i.ID == itemId);
+
+            if (user == null || item == null)
+                return false;
+
+            if (user.WishList.Any(i => i.ID == itemId))
+                return false;
+
+            user.WishList.Add(item);
+            DbContext.SaveChanges();
+
+            return true;
+        }
+
+        public AuctionItem[]? GetWishlist(int userId)
+        {
+            var user = DbContext.Users
+                .Include(u => u.WishList)
+                .FirstOrDefault(u => u.ID == userId);
+
+            if (user == null)
+                return null;
+
+            return user.WishList.ToArray();
+        }
+
+        public bool RemoveFromWishlist(int userId, int itemId)
+        {
+            var user = DbContext.Users
+                .Include(u => u.WishList)
+                .FirstOrDefault(u => u.ID == userId);
+
+            if (user == null)
+                return false;
+
+            var item = user.WishList
+                .FirstOrDefault(i => i.ID == itemId);
+
+            if (item == null)
+                return false;
+
+            user.WishList.Remove(item);
+            DbContext.SaveChanges();
+
+            return true;
+        }
+
+        // Backend: UserDataOps.cs
+        public bool EmailExists(string email)
+        {
+            return DbContext.Users.Any(u => u.Email == email);
         }
     }
 }

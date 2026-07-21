@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../app-logic/review';
-
+import { CategoryService } from '../../services/category-service';
+import { UserService } from '../../services/user-service';
+import { TranslateService } from '@ngx-translate/core';
 interface Item {
   id: number;
   title: string;
   price: number;
   status: string;
+  image?: string;
 }
 
 interface Review {
@@ -33,13 +36,13 @@ const STORAGE_KEY = 'profile_user';
   selector: 'app-profile-page',
   standalone: false,
   templateUrl: './profile-page.html',
-  styleUrl: './profile-page.css',
+  styleUrl: './profile-page.scss',
 })
 export class ProfilePage implements OnInit {
-
   // --- Edit mode ---
   isEditing = false;
   currentUserId: number = 3; // Default fallback
+  categories: any[] = [];
 
   // --- User data ---
   user: UserProfile = {
@@ -65,20 +68,10 @@ export class ProfilePage implements OnInit {
   passwordMessage = '';
   passwordError = false;
 
-  // --- Add Item Form ---
-  showAddItemForm = false;
-  newItemName = '';
-  newItemPrice = 0;
-  newItemCategory = '1'; // Default Category ID
-  newItemDescription = '';
-  newItemLocation = '';
-  newItemDuration = 3; // Days
-  itemMessage = '';
-  itemError = false;
-
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
+  wishItems: Item[] = [];
   reviews: Review[] = [];
 
   // --- Stars helper ---
@@ -88,23 +81,28 @@ export class ProfilePage implements OnInit {
 
   get displayAvatar(): string {
     if (this.user.avatarUrl) return this.user.avatarUrl;
-    const name = encodeURIComponent(this.user.name || 'User');
+    const name = encodeURIComponent(
+      this.user.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER'),
+    );
     return `https://ui-avatars.com/api/?name=${name}&background=6c63ff&color=fff&size=120`;
   }
 
   constructor(
     private authService: AuthService,
+    private UserService: UserService,
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private categoryService: CategoryService,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit(): void {
-
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email;
-      this.user.name = currentUser.name || 'User';
+      this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
       this.user.email = currentUser.email;
       this.currentUserId = +currentUser.id || 3;
     }
@@ -112,6 +110,15 @@ export class ProfilePage implements OnInit {
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
+
+    // ---- Aici adaugi citirea categoriilor ----
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) =>
+        console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_CATEGORIES'), err),
+    });
   }
 
   // --- Theme actions ---
@@ -133,12 +140,17 @@ export class ProfilePage implements OnInit {
       next: (items) => {
         // Filter items where OwnerId matches current user ID
         this.addedItems = items
-          .filter((item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username)
+          .filter(
+            (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
+          )
           .map((item: any) => ({
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice || item.startPrice,
-            status: item.status ? item.status.toString() : 'Added',
+            status: item.status
+              ? item.status.toString()
+              : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
           }));
 
         // Filter won items
@@ -148,23 +160,42 @@ export class ProfilePage implements OnInit {
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice,
-            status: 'Won',
+            status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
           }));
+
+        // Fetch wishlist items specifically from backend
+        this.UserService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            this.wishItems = wishlistItems.map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || 'Item',
+              price: item.currentPrice || item.startPrice || 0,
+              image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+            }));
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Error loading wishlist:', err)
+        });
       },
       error: (err) => console.error('Error loading items:', err),
     });
 
     // Load reviews
     this.reviewService.getReviews().subscribe({
-      next: (reviews) => {
+      next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.reviewedUserId === this.currentUserId)
+          .filter((r) => r.ReviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.id,
-            author: r.reviewer || 'Anonymous',
-            rating: r.rating,
-            comment: r.comment,
-            date: r.reviewDate ? new Date(r.reviewDate).toLocaleDateString() : new Date().toLocaleDateString(),
+            id: r.Id,
+            author: r.ReviewerUserName || 'Anonymous',
+            rating: r.Rating,
+            comment: r.Comment,
+            date: r.ReviewDate
+              ? new Date(r.ReviewDate).toLocaleDateString()
+              : new Date().toLocaleDateString(),
           }));
 
         if (this.reviews.length > 0) {
@@ -174,8 +205,28 @@ export class ProfilePage implements OnInit {
           this.score = 4.5; // Default fallback score
         }
       },
-      error: (err) => console.error('Error loading reviews:', err),
+      error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
     });
+  }
+
+  removeFromWishlist(itemId: number, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
+      next: () => {
+        this.wishItems = this.wishItems.filter(i => i.id !== itemId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error removing from wishlist', err)
+    });
+  }
+
+  // --- Navigate to Item Details ---
+  goToItem(id: number): void {
+    if (id) {
+      this.router.navigate(['/auctions', id]);
+    }
   }
 
   // --- Persistence ---
@@ -194,16 +245,46 @@ export class ProfilePage implements OnInit {
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   cancelEdit(): void {
     this.isEditing = false;
+    this.showPasswordForm = false;
+    this.currentPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.passwordMessage = '';
+    this.passwordError = false;
   }
 
   saveEdit(): void {
-    this.user = { ...this.editDraft };
-    this.saveProfile();
-    this.isEditing = false;
+    this.UserService.updateUser(
+      this.currentUserId,
+      this.editDraft.username,
+      this.editDraft.name,
+    ).subscribe({
+      next: (updatedUser: any) => {
+        this.user = {
+          ...this.user,
+          username: updatedUser.userName,
+          name: updatedUser.name,
+        };
+        this.saveProfile();
+        this.isEditing = false;
+        alert(this.translate.instant('PROFILE_PAGE.MESSAGES.PROFILE_UPDATED'));
+      },
+      error: (err: any) => {
+        const errorMsg = err.error || 'A apărut o eroare la actualizarea profilului.';
+        alert(errorMsg);
+        this.editDraft = { ...this.user };
+      },
+    });
   }
 
   // --- Avatar upload ---
@@ -222,73 +303,39 @@ export class ProfilePage implements OnInit {
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
-      this.passwordMessage = 'All fields are required.';
+      this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.REQUIRED');
       return;
     }
 
     if (this.newPassword !== this.confirmPassword) {
       this.passwordError = true;
-      this.passwordMessage = 'The new password and its confirmation do not match.';
+      this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.NOT_MATCH');
       return;
     }
 
-    this.authService.changePassword(this.currentUserId, this.currentPassword, this.newPassword).subscribe({
-      next: (res) => {
-        this.passwordError = false;
-        this.passwordMessage = 'Password updated successfully!';
-        this.currentPassword = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
-        setTimeout(() => (this.passwordMessage = ''), 3000);
-      },
-      error: (err) => {
-        this.passwordError = true;
-        this.passwordMessage = err.error?.message || 'Error updating password. Please check your current password.';
-      },
-    });
+    this.authService
+      .changePassword(this.currentUserId, this.currentPassword, this.newPassword)
+      .subscribe({
+        next: (res) => {
+          this.passwordError = false;
+          this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.SUCCESS');
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.confirmPassword = '';
+          setTimeout(() => (this.passwordMessage = ''), 3000);
+        },
+
+        error: (err) => {
+          this.passwordError = true;
+          this.passwordMessage =
+            err.error?.message || this.translate.instant('PROFILE_PAGE.PASSWORD.ERROR');
+        },
+      });
   }
 
-  // --- Add Item ---
-  onAddItem(): void {
-    if (!this.newItemName || this.newItemPrice <= 0 || !this.newItemLocation) {
-      this.itemError = true;
-      this.itemMessage = 'Name, starting price, and location are required.';
-      return;
-    }
-
-    const startDate = new Date();
-    const endDate = new Date(startDate.getTime() + this.newItemDuration * 24 * 60 * 60 * 1000);
-
-    const newItem: any = {
-      name: this.newItemName,
-      startPrice: this.newItemPrice,
-      currentPrice: this.newItemPrice,
-      categoryId: +this.newItemCategory,
-      description: this.newItemDescription,
-      location: this.newItemLocation,
-      ownerId: this.currentUserId,
-      status: 'Added',
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-    };
-
-    this.itemService.createItem(newItem).subscribe({
-      next: () => {
-        this.itemError = false;
-        this.itemMessage = 'Item successfully published for auction!';
-        this.newItemName = '';
-        this.newItemPrice = 0;
-        this.newItemDescription = '';
-        this.newItemLocation = '';
-        this.loadItemsAndReviews(); // Reload list
-        setTimeout(() => (this.itemMessage = ''), 3000);
-      },
-      error: (err) => {
-        this.itemError = true;
-        this.itemMessage = 'Error publishing the item.';
-        console.error(err);
-      },
-    });
+  // --- Navigate to Add Item ---
+  goToAddItem(): void {
+    this.router.navigate(['/add-item']);
   }
 
   // --- Logout ---

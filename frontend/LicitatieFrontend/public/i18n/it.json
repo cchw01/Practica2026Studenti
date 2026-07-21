@@ -1,0 +1,365 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "AUCTIONS": "Aste",
+    "FORUM": "Forum",
+    "CONTACT": "Contatti",
+    "LOGIN": "Accedi",
+    "REGISTER": "Registrati",
+    "TOGGLE_MENU": "Apri o chiudi la navigazione",
+    "SELECT_LANGUAGE": "Seleziona la lingua",
+    "HELP": "Aiuto",
+    "ADD_AUCTION": "Aggiungi asta"
+  },
+  "CONTACT": {
+    "TITLE": "Contattaci",
+    "DESCRIPTION": "Hai domande? Il nostro team è pronto ad aiutarti.",
+    "EMAIL": "E-mail",
+    "PHONE": "Numero di telefono",
+    "CALL_CENTER_HOURS": "Orari del call center",
+    "SCHEDULE": "Lunedì–venerdì, 09:00–17:00",
+    "FOLLOW_US": "Seguici",
+    "SOCIAL_DESCRIPTION": "Resta in contatto con noi sui social media."
+  },
+  "LOGIN": {
+    "TITLE": "Accedi",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Indirizzo e-mail",
+    "EMAIL_REQUIRED": "L’e-mail è obbligatoria",
+    "EMAIL_INVALID": "Formato e-mail non valido",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Inserisci la password",
+    "PASSWORD_REQUIRED": "La password è obbligatoria",
+    "PASSWORD_MIN_LENGTH": "La password deve contenere almeno 6 caratteri",
+    "SUBMIT": "Accedi",
+    "NO_ACCOUNT": "Non hai un account?",
+    "REGISTER_HERE": "Registrati qui"
+  },
+  "REGISTER": {
+    "TITLE": "Crea un account",
+    "USERNAME_LABEL": "Nome utente",
+    "USERNAME_PLACEHOLDER": "Nome utente",
+    "USERNAME_REQUIRED": "Il nome utente è obbligatorio.",
+    "FULL_NAME_LABEL": "Nome completo",
+    "FULL_NAME_PLACEHOLDER": "Nome completo",
+    "FULL_NAME_REQUIRED": "Il nome completo è obbligatorio.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mail",
+    "EMAIL_REQUIRED": "L’e-mail è obbligatoria.",
+    "EMAIL_INVALID": "Inserisci un indirizzo e-mail valido.",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "PASSWORD_REQUIRED": "La password è obbligatoria.",
+    "PASSWORD_MIN_LENGTH": "La password deve contenere almeno 6 caratteri.",
+    "CONFIRM_PASSWORD_LABEL": "Conferma password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Conferma la password",
+    "CONFIRM_PASSWORD_REQUIRED": "Conferma la password.",
+    "PASSWORDS_MISMATCH": "Le password non corrispondono.",
+    "PHONE_LABEL": "Numero di telefono",
+    "PHONE_PLACEHOLDER": "Numero di telefono (+40...)",
+    "PHONE_REQUIRED": "Il numero di telefono è obbligatorio.",
+    "PHONE_INVALID": "Inserisci un numero di telefono valido.",
+    "SUBMIT": "Crea account",
+    "ALREADY_HAVE_ACCOUNT": "Hai già un account?",
+    "SIGN_IN": "Accedi"
+  },
+  "HOME": {
+    "HERO": {
+      "TITLE": "OFFRI. VINCI. RIPETI.",
+      "TAG": "🔥 Aste dal vivo ogni giorno",
+      "DESCRIPTION": "La piattaforma di aste online più sicura. Vendi rapidamente o trova offerte uniche.",
+      "EXPLORE_AUCTIONS": "Esplora le aste",
+      "START_SELLING": "Inizia a vendere",
+      "SEARCH_LABEL": "Cerca prodotti e aste...",
+      "SEARCH_PLACEHOLDER": "Esempio: BMW, orecchini d’oro"
+    },
+    "CATEGORIES": {
+      "EYEBROW": "Categorie",
+      "TITLE_START": "Esplora le",
+      "TITLE_END": "categorie",
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Tecnologia",
+          "DESCRIPTION": "Dispositivi all’avanguardia e i prodotti elettronici più recenti."
+        },
+        "AUTO_MOTORS": {
+          "NAME": "Auto e moto",
+          "DESCRIPTION": "Auto, motociclette e ricambi rari."
+        },
+        "ART_COLLECTIBLES": {
+          "NAME": "Arte e collezionismo",
+          "DESCRIPTION": "Opere d’arte esclusive e collezioni."
+        },
+        "REAL_ESTATE": {
+          "NAME": "Immobili",
+          "DESCRIPTION": "Proprietà e terreni eccezionali."
+        }
+      }
+    },
+    "AUCTIONS": {
+      "EYEBROW": "Marketplace",
+      "TITLE_START": "Aste",
+      "TITLE_END": "attive",
+      "PLACE_BID": "Fai un’offerta",
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW Serie 7, 2022, condizioni impeccabili, unico proprietario."
+        },
+        "GOLD_EARRINGS": {
+          "TITLE": "Orecchini d’oro",
+          "DESCRIPTION": "Orecchini in oro 18 carati con diamanti certificati."
+        },
+        "PATEK_PHILIPPE": {
+          "TITLE": "Orologio Patek Philippe",
+          "DESCRIPTION": "Orologio da collezione in edizione limitata, con scatola e certificato inclusi."
+        },
+        "VILLA": {
+          "TITLE": "Villa",
+          "DESCRIPTION": "Villa di lusso con piscina, cinque camere da letto e vista panoramica."
+        }
+      }
+    }
+  },
+  "HELP": {
+    "TITLE": "Centro assistenza",
+    "INFORMATION": "Trova risposte rapide, contattaci telefonicamente o chatta con il nostro assistente IA.",
+    "FAQ": "❓ Domande frequenti",
+    "SUPPORT": "📞 Assistenza telefonica rapida",
+    "PROGRAM": "Lunedì - venerdì: 09:00 - 18:00",
+    "FORM": "📝 Apri un ticket",
+    "REQUEST": "Invia richiesta",
+    "ASSISTANT": "Assistente virtuale in tempo reale"
+  },
+  "AUCTIONS_PAGE": {
+    "TITLE": "Aste attive",
+    "DESCRIPTION": "Scopri oggetti unici e fai offerte in tempo reale",
+    "SEARCH_PLACEHOLDER": "Cerca per nome...",
+    "ALL_CATEGORIES": "Tutte le categorie",
+    "SORT": {
+      "ENDING_SOON": "In scadenza",
+      "PRICE_LOW_HIGH": "Prezzo: dal più basso",
+      "PRICE_HIGH_LOW": "Prezzo: dal più alto",
+      "NEWEST": "Più recenti"
+    },
+    "ADD_ITEM": "Aggiungi oggetto",
+    "RESULT": {
+      "ONE": "asta trovata",
+      "MANY": "aste trovate"
+    },
+    "CURRENT_PRICE": "Prezzo attuale",
+    "EMPTY": {
+      "TITLE": "Nessun oggetto trovato",
+      "DESCRIPTION": "Al momento non ci sono aste attive corrispondenti alla tua ricerca."
+    },
+    "TIME": {
+      "ENDED": "Asta terminata",
+      "LEFT": "rimanente"
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Vendi su BidSphere",
+    "TITLE": "Aggiungi un nuovo oggetto all’asta",
+    "DESCRIPTION": "Compila i dati qui sotto per pubblicare il tuo oggetto all’asta.",
+    "FIELDS": {
+      "NAME": "Nome dell’oggetto *",
+      "NAME_PLACEHOLDER": "es. bicicletta d’epoca",
+      "START_PRICE": "Prezzo iniziale (RON) *",
+      "DURATION": "Durata dell’asta (giorni) *",
+      "CATEGORY": "Categoria *",
+      "CATEGORY_PLACEHOLDER": "Seleziona una categoria",
+      "LOCATION": "Località *",
+      "LOCATION_PLACEHOLDER": "es. Brașov",
+      "DESCRIPTION": "Descrizione",
+      "DESCRIPTION_PLACEHOLDER": "Descrivi le condizioni, la storia e i dettagli dell’oggetto..."
+    },
+    "IMAGE": {
+      "TITLE": "Foto dell’oggetto",
+      "UPLOAD": "Fai clic per caricare un’immagine",
+      "DETAILS": "JPG, PNG o WEBP, massimo 5 MB",
+      "REMOVE": "Rimuovi"
+    },
+    "BUTTONS": {
+      "CANCEL": "Annulla",
+      "PUBLISH": "Pubblica oggetto",
+      "PUBLISHING": "Pubblicazione..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "Il nome è obbligatorio.",
+      "NAME_MIN": "Il nome deve contenere almeno 3 caratteri.",
+      "PRICE_REQUIRED": "Il prezzo iniziale è obbligatorio.",
+      "PRICE_MIN": "Il prezzo deve essere maggiore di 0.",
+      "DURATION": "La durata deve essere compresa tra 1 e 30 giorni.",
+      "CATEGORY": "Seleziona una categoria.",
+      "LOCATION": "La località è obbligatoria.",
+      "IMAGE_TYPE": "Sono consentite solo immagini JPG, PNG o WEBP.",
+      "IMAGE_SIZE": "L’immagine deve essere inferiore a 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "L’oggetto è stato pubblicato con successo all’asta!",
+      "SUCCESS_LOCAL": "L’oggetto è stato pubblicato con successo all’asta (salvato localmente — il backend non è ancora pronto)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "Chi siamo",
+    "ABOUT_TEXT_1": "BidSphere è una moderna piattaforma di aste online progettata per rendere semplice, sicuro ed entusiasmante acquistare e vendere tramite offerte.",
+    "ABOUT_TEXT_2": "Mettiamo in contatto migliaia di acquirenti e venditori in un’ampia gamma di categorie, offrendo a tutti un processo di offerta trasparente ed equo. Che tu stia cercando un affare o voglia vendere all’acquirente giusto, BidSphere ti offre gli strumenti e la fiducia necessari per fare offerte in tutta sicurezza.",
+    "LINKS": "Link",
+    "HOME": "Home",
+    "SERVICES": "Aste",
+    "CONTACT": "Contatti",
+    "HELP": "Aiuto",
+    "FORUM": "Forum",
+    "CONTACT_TITLE": "Contatti",
+    "SOCIAL": "Social media",
+    "COPYRIGHT": "Tutti i diritti riservati."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Ops! Pagina non trovata",
+    "MESSAGE": "La pagina che stai cercando non esiste oppure è stata spostata.",
+    "BUTTON": "TORNA ALLA HOME"
+  },
+  "FORUM": {
+    "TITLE": "Discussioni del forum",
+    "DESCRIPTION": "Sfoglia le discussioni attuali e partecipa alle conversazioni con gli altri utenti.",
+    "START_DISCUSSION": "Avvia una discussione",
+    "LOGIN_TO_START": "Accedi per avviare una discussione",
+    "SORT": {
+      "ARIA_LABEL": "Ordina discussioni",
+      "LATEST": "Più recenti",
+      "OLDEST": "Più vecchie",
+      "MOST_COMMENTED": "Più commentate"
+    },
+    "DISCUSSION": "discussione",
+    "DISCUSSIONS": "discussioni",
+    "LOADING": {
+      "TITLE": "Caricamento delle discussioni"
+    },
+    "ERROR": {
+      "TITLE": "Impossibile caricare le discussioni",
+      "RETRY": "Riprova"
+    },
+    "POSTED_BY": "Pubblicato da",
+    "COMMENT": "commento",
+    "COMMENTS": "commenti",
+    "EMPTY": {
+      "TITLE": "Nessuna discussione disponibile",
+      "MESSAGE": "Al momento non ci sono discussioni nel forum."
+    }
+  },
+  "NOTIFICATIONS": {
+    "TRUE": "Notifiche",
+    "FALSE": "Nessuna notifica al momento."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Dettagli dell’asta",
+    "INFO": {
+      "CURRENT_PRICE": "Prezzo attuale",
+      "START_PRICE": "Prezzo iniziale",
+      "CATEGORY": "Categoria",
+      "LOCATION": "Località",
+      "STARTS_AT": "Inizia il",
+      "OWNER": "Proprietario",
+      "ENDS": "Termina il"
+    },
+    "BID": {
+      "TITLE": "Fai la tua offerta",
+      "PLACEHOLDER": "Inserisci l’importo dell’offerta",
+      "BUTTON": "🔨 Fai un’offerta",
+      "MINIMUM": "Offerta minima:",
+      "LOGIN_TEXT": "Accedi per fare un’offerta su questo oggetto.",
+      "LOGIN_BUTTON": "Accedi per offrire"
+    },
+    "WISHLIST": {
+      "ADD": "🤍 Aggiungi alla lista desideri",
+      "ADDED": "❤️ Nella lista desideri"
+    },
+    "DESCRIPTION": {
+      "TITLE": "Descrizione del prodotto"
+    },
+    "STATUS": {
+      "ACTIVE": "Attiva",
+      "ENDED": "Terminata",
+      "PENDING": "In attesa"
+    },
+    "MESSAGES": {
+      "AUCTION_ENDED": "L’asta è terminata.",
+      "BID_HIGHER_CURRENT": "L’offerta deve essere superiore al prezzo attuale.",
+      "BID_HIGHER_MINIMUM": "L’offerta deve essere superiore al prezzo minimo."
+    },
+    "COUNTDOWN": {
+      "DAYS": "g",
+      "HOURS": "h",
+      "MINUTES": "min",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Recensioni",
+    "REVIEWER_ID": "ID del recensore",
+    "REVIEWED_USER_ID": "ID dell’utente recensito",
+    "RATING": "Valutazione (0–5)",
+    "RATING_ERROR": "La valutazione deve essere compresa tra 0 e 5.",
+    "COMMENT": "Commento",
+    "ADD": "Aggiungi",
+    "UPDATE": "Aggiorna",
+    "CANCEL": "Annulla",
+    "EDIT": "Modifica recensione",
+    "DELETE": "Elimina recensione"
+  },
+  "SHARE": {
+    "BUTTON": "Condividi",
+    "COPIED": "Copiato!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profilo",
+    "LOGOUT": "Esci"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Torna alle discussioni",
+    "LOADING_DISCUSSION_TITLE": "Caricamento della discussione",
+    "LOADING_DISCUSSION_MESSAGE": "La discussione è in fase di caricamento.",
+    "LOAD_DISCUSSION_ERROR": "Impossibile caricare la discussione",
+    "TRY_AGAIN": "Riprova",
+    "DELETE_POST": "Elimina",
+    "POSTED_BY": "Pubblicato da",
+    "DISCUSSION": "Discussione",
+    "COMMENT": "commento",
+    "COMMENTS": "commenti",
+    "ADD_COMMENT": "Aggiungi un commento",
+    "COMMENT_PLACEHOLDER": "Scrivi qui il tuo commento...",
+    "COMMENT_REQUIRED": "Il commento è obbligatorio.",
+    "COMMENT_MIN_LENGTH": "Il commento deve contenere almeno 2 caratteri.",
+    "COMMENT_MAX_LENGTH": "Il commento non può superare i 1000 caratteri.",
+    "PUBLISHING": "Pubblicazione...",
+    "PUBLISH_COMMENT": "Pubblica commento",
+    "LOGIN_REQUIRED": "Devi aver effettuato l’accesso per pubblicare un commento.",
+    "LOGIN": "Accedi",
+    "LOADING_COMMENTS": "Caricamento dei commenti",
+    "LOAD_COMMENTS_ERROR": "Impossibile caricare i commenti",
+    "DELETE_COMMENT": "Elimina",
+    "NO_COMMENTS": "Nessun commento al momento"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Torna alle discussioni",
+    "TITLE": "Avvia una discussione",
+    "SUBTITLE": "Crea una nuova discussione e condividila con gli altri utenti del forum.",
+    "TITLE_LABEL": "Titolo",
+    "TITLE_PLACEHOLDER": "Inserisci un titolo chiaro per la discussione",
+    "TITLE_REQUIRED": "Il titolo è obbligatorio.",
+    "TITLE_WHITESPACE": "Il titolo non può contenere solo spazi.",
+    "TITLE_MIN_LENGTH": "Il titolo deve contenere almeno 3 caratteri.",
+    "TITLE_MAX_LENGTH": "Il titolo non può superare i 150 caratteri.",
+    "DESCRIPTION_LABEL": "Descrizione",
+    "DESCRIPTION_PLACEHOLDER": "Descrivi l’argomento che vorresti discutere...",
+    "DESCRIPTION_REQUIRED": "La descrizione è obbligatoria.",
+    "DESCRIPTION_WHITESPACE": "La descrizione non può contenere solo spazi.",
+    "DESCRIPTION_MIN_LENGTH": "La descrizione deve contenere almeno 10 caratteri.",
+    "DESCRIPTION_MAX_LENGTH": "La descrizione non può superare i 5000 caratteri.",
+    "CREATE_ERROR": "Impossibile creare la discussione",
+    "CANCEL": "Annulla",
+    "CREATING": "Creazione della discussione...",
+    "SUBMIT": "Avvia discussione"
+  }
+}

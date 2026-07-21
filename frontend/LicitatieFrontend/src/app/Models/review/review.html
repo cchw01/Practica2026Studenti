@@ -1,45 +1,35 @@
 <div class="review-container">
-  <h2>Reviews</h2>
+  <h2>{{ 'REVIEWS.TITLE' | translate }}</h2>
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 
   <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
     <mat-form-field appearance="outline">
-      <mat-label>Reviewer ID</mat-label>
+      <mat-label>{{ 'REVIEWS.REVIEWER_ID' | translate }}</mat-label>
       <input matInput type="number" formControlName="reviewerId" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Reviewer</mat-label>
-      <input matInput formControlName="reviewer" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Reviewed User ID</mat-label>
+      <mat-label>{{ 'REVIEWS.REVIEWED_USER_ID' | translate }}</mat-label>
       <input matInput type="number" formControlName="reviewedUserId" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Reviewed User</mat-label>
-      <input matInput formControlName="reviewedUser" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Rating (0-5)</mat-label>
+      <mat-label>{{ 'REVIEWS.RATING' | translate }}</mat-label>
       <input matInput type="number" formControlName="rating" min="0" max="5" />
       <mat-error *ngIf="reviewForm.get('rating')?.hasError('min') || reviewForm.get('rating')?.hasError('max')">
-        Rating-ul trebuie să fie între 0 și 5.
+        {{ 'REVIEWS.RATING_ERROR' | translate }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Comment</mat-label>
+      <mat-label>{{ 'REVIEWS.COMMENT' | translate }}</mat-label>
       <textarea matInput formControlName="comment" maxlength="1000"></textarea>
     </mat-form-field>
 
     <div class="form-actions">
       <button mat-raised-button color="primary" type="submit" [disabled]="reviewForm.invalid">
-        {{ editingReviewId !== null ? 'Actualizează' : 'Adaugă' }}
+        {{ (editingReviewId !== null ? 'REVIEWS.UPDATE' : 'REVIEWS.ADD') | translate }}
       </button>
       <button mat-button type="button" *ngIf="editingReviewId !== null" (click)="cancelEdit()">
         Anulează
@@ -48,19 +38,19 @@
   </form>
 
   <div class="review-list">
-    <div *ngFor="let review of reviews" class="review-item">
+    <div *ngFor="let review of reviews; trackBy: trackByReviewId" class="review-item">
       <div class="review-header">
-        <strong>{{ review.reviewer }}</strong> → <strong>{{ review.reviewedUser }}</strong>
-        <span class="rating">⭐ {{ review.rating }}/5</span>
+        <strong>{{ review.ReviewerUserName }}</strong> → <strong>{{ review.ReviewedUserUserName }}</strong>
+        <span class="rating">⭐ {{ review.Rating }}/5</span>
       </div>
-      <p class="comment">{{ review.comment }}</p>
-      <small>{{ review.reviewDate | date: 'medium' }}</small>
+      <p class="comment">{{ review.Comment }}</p>
+      <small>{{ review.ReviewDate | date: 'medium' }}</small>
 
       <div class="review-actions">
         <button mat-icon-button (click)="editReview(review)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteReview(review.id)">
+        <button mat-icon-button color="warn" (click)="deleteReview(review.Id)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

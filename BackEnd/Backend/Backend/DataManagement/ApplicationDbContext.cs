@@ -13,10 +13,15 @@ namespace Backend.DataManagement
         public DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Bid> Bids => Set<Bid>();
         public DbSet<CategoryItem> Category => Set<CategoryItem>();
         public DbSet<ForumPost> ForumPosts => Set<ForumPost>();
-        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<Notification> Notifications => Set<Notification>();
+
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Review>() // Relatie Review -> Reviewer
@@ -42,8 +47,58 @@ namespace Backend.DataManagement
                 .WithMany(w => w.WonItemsList)
                 .HasForeignKey(i => i.WinnerId)
                 .OnDelete(DeleteBehavior.NoAction);
-           
 
+            modelBuilder.Entity<AuctionItem>() // Relatie Item -> (wishlist) -> user
+                .HasMany(i => i.WishingUsers)
+                .WithMany(u => u.WishList);
+
+            modelBuilder.Entity<Bid>() // Bid -> User
+                .HasOne(b => b.Bidder)
+                .WithMany(u => u.BidList)
+                .HasForeignKey(b => b.BidderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Bid>() // Bid -> Item
+                .HasOne(b => b.BiddedItem)
+                .WithMany(i => i.BidList)
+                .HasForeignKey(b => b.BiddedItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ForumPost>() // ForumPost -> ForumComment
+                .HasMany(p => p.Comments)
+                .WithOne(i => i.ForumPost)
+                .HasForeignKey(b => b.ForumPostId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ForumPost>() // ForumPost -> User
+              .HasOne(p => p.User)
+              .WithMany(i => i.ForumPosts)
+              .HasForeignKey(b => b.UserId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ForumComment>() // ForumComment -> User
+              .HasOne(p => p.User)
+              .WithMany(i => i.ForumComments)
+              .HasForeignKey(b => b.UserId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Notification>() //Notification ->User
+            .HasOne(n => n.User)
+            .WithMany()
+            .HasForeignKey(n => n.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AuctionItem>()
+                .Property(a => a.StartPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<AuctionItem>()
+                .Property(a => a.CurrentPrice)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Bid>()
+                .Property(b => b.Price)
+                .HasPrecision(18, 2);
         }
     }
 }

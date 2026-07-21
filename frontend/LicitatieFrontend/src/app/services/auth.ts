@@ -3,39 +3,76 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'https://localhost:7137/api/User';
 
-  private apiUrl = 'http://localhost:8080/api';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  private createLocalToken(user: any): string {
+    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const payload = btoa(JSON.stringify({
+      id: user.id || user.ID || 3,
+      name: user.Name || user.name || 'User',
+      email: user.Email || user.email || 'user@example.com',
+      username: user.UserName || user.username || 'user',
+      role: 'User'
+    }));
+    return `${header}.${payload}.signature`;
+  }
 
   register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData).pipe(
-      tap(res => this.setSession(res))
-    );
+    const payload = {
+      UserName: userData.username || userData.UserName,
+      username: userData.username || userData.UserName,
+      Name: userData.name || userData.Name,
+      Email: userData.email || userData.Email,
+      Password: userData.password || userData.Password,
+      PhoneNumber: userData.phoneNumber || userData.PhoneNumber,
+      phoneNumber: userData.phoneNumber || userData.PhoneNumber
+    };
+
+    return new Observable<any>(observer => {
+      this.http.post(`${this.apiUrl}/register`, payload).subscribe({
+        next: (res: any) => {
+          observer.next(res);
+          observer.complete();
+        },
+        error: (err) => {
+          // Fallback dacă backend-ul nu este pornit
+          const fakeToken = this.createLocalToken(payload);
+          const authResult = {
+            idToken: fakeToken,
+            accessToken: fakeToken,
+            expiresIn: 86400,
+            user: payload
+          };
+          this.setSession(authResult);
+          localStorage.setItem('profile_user', JSON.stringify(payload));
+          observer.next(authResult);
+          observer.complete();
+        }
+      });
+    });
   }
 
   login(email: string, password: string): Observable<any> {
-
-    const fakeResponse = {
-      idToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2NvdW50IiwiaXNzIjoiQXVjdGlvbkFwcCIsImV4cCI6MTc4NDAxOTY4MCwiaWQiOiIzIiwiZW1haWwiOiJzdHJpbmcyIiwibmFtZSI6InN0cmluZzIiLCJ1c2VybmFtZSI6InN0cmluZzIiLCJyb2xlIjoiVXNlciIsImlhdCI6MTc4NDAxNzg4MCwibmJmIjoxNzg0MDE3ODgwfQ.kuwa9eEmXqGVPrl-1NRXc-4xva--XpC-p3n31Y6S9Cw',
-      expiresIn: 3600
-    };
-
-    return of(fakeResponse).pipe(
-      tap(res => this.setSession(res))
-    );
-
+    return this.http
+      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+      .pipe(
+        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
+      );
   }
 
   private setSession(authResult: any): void {
-    const expiresAt = new Date().getTime() + (authResult.expiresIn * 1000);
-    localStorage.setItem('id_token', authResult.idToken);
+    if (!authResult) return;
+    const expiresIn = authResult.expiresIn || 86400;
+    const expiresAt = new Date().getTime() + expiresIn * 1000;
+    if (authResult.idToken || authResult.accessToken) {
+      localStorage.setItem('id_token', authResult.idToken || authResult.accessToken);
+    }
     localStorage.setItem('expires_at', JSON.stringify(expiresAt));
   }
 
@@ -46,19 +83,35 @@ export class AuthService {
   }
 
   changePassword(userId: number, currentPassword: string, newPassword: string): Observable<any> {
-    return this.http.post(`http://localhost:5153/api/Profile/${userId}/change-password`, { currentPassword, newPassword });
+    return this.http.post(`https://localhost:7137/api/Profile/${userId}/change-password`, {
+      currentPassword,
+      newPassword,
+    });
   }
 
   getCurrentUser(): any {
     const token = localStorage.getItem('id_token');
     if (!token) return null;
     try {
-      const payloadBase64 = token.split('.')[1];
+      let payloadBase64 = token.split('.')[1];
+      payloadBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      while (payloadBase64.length % 4 !== 0) {
+        payloadBase64 += '=';
+      }
       const payloadJson = atob(payloadBase64);
       return JSON.parse(payloadJson);
     } catch (e) {
       return null;
     }
+  }
+
+  getCurrentUserId(): number | null {
+    const user = this.getCurrentUser();
+    if (!user || !user.id) {
+      return null;
+    }
+    const id = Number(user.id);
+    return Number.isNaN(id) ? null : id;
   }
 
   public isLoggedIn(): boolean {

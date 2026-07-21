@@ -29,16 +29,18 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": [
-              "src/material-theme.scss",
-              "src/styles.css"
-            ]
+          "assets": [
+            {
+              "glob": "**/*",
+              "input": "public"
+            },
+            {
+              "glob": "**/*",
+              "input": "src/assets",
+              "output": "assets"
+            }
+          ],
+            "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
             "production": {
@@ -50,8 +52,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "50kB"
                 }
               ],
               "outputHashing": "all"

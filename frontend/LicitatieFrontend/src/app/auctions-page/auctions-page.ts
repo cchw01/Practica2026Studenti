@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
+import { CategoryService } from '../services/category-service';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../services/user-service';
+import { AuthService } from '../services/auth';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -8,7 +13,7 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   selector: 'app-auctions-page',
   standalone: false,
   templateUrl: './auctions-page.html',
-  styleUrls: ['./auctions-page.css'],
+  styleUrls: ['./auctions-page.scss'],
 })
 export class AuctionsPage implements OnInit {
   allItems: AuctionItem[] = [];
@@ -19,16 +24,99 @@ export class AuctionsPage implements OnInit {
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
 
-  constructor(private itemService: ItemService) {}
+  isLoading: boolean = true;
+  hasError: boolean = false;
+  currentUserId: number = 3;
+
+  constructor(
+    private itemService: ItemService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    private categoryService: CategoryService,
+    public authService: AuthService,
+    private userService: UserService
+  ) {}
+
+  getCategoryName(item: AuctionItem): string {
+    if (!item || !item.Category) return '';
+    return typeof item.Category === 'string' ? item.Category : item.Category.name || '';
+  }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe({
+    this.route.queryParams.subscribe((params) => {
+      if (params['category']) {
+        this.selectedCategory = params['category'];
+      }
+      if (params['search']) {
+        this.searchText = params['search'];
+      }
+      this.applyFiltersAndSort();
+    });
+
+    const authUserId = this.authService.getCurrentUserId();
+    if (authUserId !== null) {
+      this.currentUserId = authUserId;
+    }
+
+    this.loadActiveAuctions();
+
+    this.categoryService.getCategories().subscribe({
+      next: (categories) => {
+        if (categories && categories.length > 0) {
+          const fetchedCatNames = categories.map((c) => c.name);
+          this.categories = Array.from(new Set([...this.categories, ...fetchedCatNames]));
+        }
+      },
+      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+    });
+  }
+
+  loadActiveAuctions(): void {
+    this.isLoading = true;
+    this.hasError = false;
+
+    this.itemService.getActiveItems().subscribe({
       next: (items) => {
         this.allItems = items;
-        this.categories = [...new Set(items.map((i) => i.category))];
+        // build category list from returned active items
+        const fromItems = [
+          ...new Set(items.filter((i) => i.Category?.name).map((i) => i.Category.name)),
+        ];
+        if (this.categories.length === 0) {
+          this.categories = fromItems;
+        }
         this.applyFiltersAndSort();
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        // Fetch wishlist only if logged in
+        if (this.authService.isLoggedIn()) {
+          this.userService.getWishlist(this.currentUserId).subscribe({
+            next: (wishlistItems: any[]) => {
+              const wishlistIds = wishlistItems.map((w) => w.id || w.ID);
+              console.log('AUCTIONS PAGE WISHLIST:', wishlistItems, 'IDS:', wishlistIds);
+              this.allItems.forEach((item) => {
+                item.isFavorite = wishlistIds.includes(item.ID);
+                if (item.isFavorite) console.log('Marked as favorite:', item.Name);
+              });
+              this.applyFiltersAndSort();
+              this.cdr.detectChanges();
+            },
+            error: (err) => console.error('Error loading wishlist in auctions page', err),
+          });
+        } else {
+          this.allItems.forEach((item) => (item.isFavorite = false));
+          this.applyFiltersAndSort();
+          this.cdr.detectChanges();
+        }
       },
-      error: (err) => console.error('Error loading items', err)
+      error: (err) => {
+        console.error('Eroare la încărcarea licitațiilor active', err);
+        this.hasError = true;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
     });
   }
 
@@ -36,25 +124,25 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter((i) => i.category === this.selectedCategory);
+      result = result.filter((i) => this.getCategoryName(i) === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter((i) => i.name.toLowerCase().includes(search));
+      result = result.filter((i) => i.Name && i.Name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
       switch (this.sortBy) {
         case 'priceLowHigh':
-          return a.currentPrice - b.currentPrice;
+          return a.CurrentPrice - b.CurrentPrice;
         case 'priceHighLow':
-          return b.currentPrice - a.currentPrice;
+          return b.CurrentPrice - a.CurrentPrice;
         case 'newest':
-          return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+          return new Date(b.StartDate).getTime() - new Date(a.StartDate).getTime();
         case 'endingSoon':
         default:
-          return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+          return new Date(a.EndDate).getTime() - new Date(b.EndDate).getTime();
       }
     });
 
@@ -65,15 +153,54 @@ export class AuctionsPage implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  getRemainingTime(endDate: Date): string {
+  toggleFavorite(item: any, event: Event): void {
+    event.stopPropagation();
+
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
+
+    // Update instantly (optimistic update)
+    const originalState = item.isFavorite;
+    item.isFavorite = !originalState;
+    this.cdr.detectChanges();
+
+    if (originalState) {
+      this.userService.removeFromWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => {
+          /* Server confirmed */
+        },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error removing from wishlist', err);
+        },
+      });
+    } else {
+      this.userService.addToWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => {
+          /* Server confirmed */
+        },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error adding to wishlist', err);
+        },
+      });
+    }
+  }
+
+  getRemainingTime(endDate: string | Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return 'Auction ended';
+    if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     if (days > 0) return `${days}d ${hours}h left`;
-    return `${hours}h left`;
+    if (hours > 0) return `${hours}h ${mins}m left`;
+    return `${mins}m left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
@@ -83,5 +210,9 @@ export class AuctionsPage implements OnInit {
     if (hoursLeft <= 24) return 'time-urgent';
     if (hoursLeft <= 72) return 'time-medium';
     return 'time-safe';
+  }
+
+  goToAuctionDetail(item: AuctionItem): void {
+    this.router.navigate(['/action-item-page', item.ID], { state: { auction: item } });
   }
 }

@@ -1,0 +1,196 @@
+<div class="forum-details-page">
+    <main class="forum-details-container">
+        <button type="button" class="back-button" (click)="goBackToForum()"> ← Back to discussions
+        </button>
+
+        @if (isLoadingPost) {
+        <section class="status-card" aria-live="polite">
+            <h1>Loading discussion</h1>
+
+            <p> Discussions are loading. </p>
+        </section>
+        } @else if (postErrorMessage) {
+        <section class="status-card" role="alert">
+            <h1>Unable to load discussion</h1>
+
+            <p>{{ postErrorMessage }}</p>
+
+            @if (postId > 0) {
+            <button type="button" class="primary-button" (click)="loadForumPost()"> Try again </button>
+            }
+        </section>
+        } @else if (post) {
+        <article class="post-card">
+            <header class="post-header">
+                <div class="author-avatar"> {{ getInitials(post.userName, post.userId) }} </div>
+                <div class="post-heading">
+                    <div class="post-title-row">
+    @if (!isEditingPost) {
+        <h1>{{ post.title }}</h1>
+        @if (currentUserId !== null && post.userId === currentUserId) {
+        <div class="post-actions">
+            <button type="button" class="secondary-button" (click)="startEditPost()">Edit</button>
+            <button type="button" class="delete-button" (click)="deletePost()">Delete</button>
+        </div>
+        }
+    }
+</div>
+
+@if (!isEditingPost) {
+<p class="post-metadata"> Posted by
+    <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
+    <time [attr.datetime]="post.date"> {{ post.date | date: 'medium' }} </time>
+</p>
+}
+</div>
+</header>
+
+@if (isEditingPost) {
+<form [formGroup]="editPostForm" (ngSubmit)="saveEditPost()" class="edit-post-form">
+    <div class="form-field">
+        <label for="editTitle">Title</label>
+        <input id="editTitle" type="text" formControlName="title" maxlength="150" />
+        @if (editTitleControl?.touched && editTitleControl?.invalid) {
+        <p class="validation-message">Title must be between 3 and 150 characters.</p>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="editDescription">Description</label>
+        <textarea id="editDescription" formControlName="description" rows="6" maxlength="5000"></textarea>
+        @if (editDescriptionControl?.touched && editDescriptionControl?.invalid) {
+        <p class="validation-message">Description must be between 10 and 5000 characters.</p>
+        }
+    </div>
+
+    <div class="form-actions">
+        <button type="button" class="secondary-button" (click)="cancelEditPost()">Cancel</button>
+        <button type="submit" class="primary-button" [disabled]="editPostForm.invalid">Save</button>
+    </div>
+</form>
+} @else {
+<p class="post-description"> {{ post.description }} </p>
+}
+</article>
+
+        <section class="comments-section">
+            <header class="comments-header">
+                <div>
+                    <h2>Discussion</h2>
+
+                    <p> {{ comments.length }} {{ comments.length === 1 ? 'comment' : 'comments' }} </p>
+                </div>
+            </header>
+
+            @if (currentUserId !== null) {
+<form class="comment-form" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <label for="commentText"> Add a comment </label>
+
+    <textarea id="commentText" formControlName="commentText" rows="5" maxlength="1000"
+        placeholder="Write your comment here..."></textarea>
+
+    <div class="form-information">
+        <div class="validation-message">
+            @if (
+            commentTextControl?.touched &&
+            commentTextControl?.hasError('required')
+            ) {
+            <p>A comment is required.</p>
+            } @else if (
+            commentTextControl?.touched && commentTextControl?.hasError('minlength')
+            ) {
+            <p> The comment must contain at least 2 characters. </p>
+            } @else if (
+            commentTextControl?.touched && commentTextControl?.hasError('maxlength')
+            ) {
+            <p>
+                The comment cannot exceed 1000 characters.
+            </p>
+            }
+
+            @if (submitErrorMessage) {
+            <p>{{ submitErrorMessage }}</p>
+            }
+        </div>
+
+        <p class="character-count">
+            {{ commentTextControl?.value?.length ?? 0 }}/1000
+        </p>
+    </div>
+
+    <button type="submit" class="primary-button" [disabled]=" commentForm.invalid || isSubmittingComment ">
+        {{ isSubmittingComment ? 'Publishing...' : 'Publish comment' }}
+    </button>
+</form>
+} @else {
+<div class="comment-form login-required">
+    <p>You need to be logged in to post a comment.
+        <a routerLink="/login-page">Log in</a>
+    </p>
+</div>
+}
+            @if (isLoadingComments) {
+            <div class="status-card comments-status" aria-live="polite">
+                <h3>Loading comments</h3>
+            </div>
+            } @else if (commentsErrorMessage) {
+            <div class="status-card comments-status" role="alert">
+                <h3>Unable to load comments</h3>
+                <p>{{ commentsErrorMessage }}</p>
+
+                <button type="button" class="secondary-button" (click)="loadForumComments()"> Try again </button>
+            </div>
+            } @else {
+            <div class="comments-list">
+                @for ( comment of comments; track comment.id ) {
+                <article class="comment-card">
+                    <div class="comment-avatar"> {{ getInitials(comment.userName, comment.userId) }} </div>
+
+                    <div class="comment-content">
+                        <header class="comment-header">
+                            <strong>
+                                {{ getUserLabel(
+                                 comment.userId,
+                                 comment.userName
+                                 )
+                                 }}
+                                </strong>
+
+                            <time [attr.datetime]="comment.date"> {{ comment.date | date: 'medium' }}
+                            </time>
+                        </header>
+                        @if (editingCommentId === comment.id) {
+<div class="edit-comment-form">
+    <textarea [(ngModel)]="editCommentText" rows="3" maxlength="1000"></textarea>
+    <div class="edit-comment-actions">
+        <button type="button" class="secondary-button" (click)="cancelEditComment()">Cancel</button>
+        <button type="button" class="primary-button" (click)="saveEditComment(comment.id)">Save</button>
+    </div>
+</div>
+} @else {
+<p>{{ comment.commentText }}</p>
+
+@if (currentUserId !== null && comment.userId === currentUserId) {
+<div class="comment-actions">
+    <button type="button" class="delete-comment-button" (click)="startEditComment(comment)">Edit</button>
+    <button type="button" class="delete-comment-button" (click)="deleteComment(comment.id)">Delete</button>
+</div>
+}
+}
+
+                        
+
+                  
+                    </div>
+                </article>
+                } @empty {
+                <div class="empty-comments">
+                    <h3>No comments yet</h3>
+                </div>
+                }
+            </div>
+            }
+        </section>
+        }
+    </main>
+</div>

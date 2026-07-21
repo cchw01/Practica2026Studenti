@@ -4,6 +4,7 @@ namespace Backend.Models
 {
     public class User
     {
+        public bool IsBanned { get; set; } = false;
         public int ID { get; set; }
 
         public string UserName { get; set; }
@@ -17,37 +18,40 @@ namespace Backend.Models
         [JsonIgnore]
         public string? Password { get; set; }
 
+        public string? PhoneNumber { get; set; }
+
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
-        public int AddedItemsListId { get; set; }
-
-        public List<AuctionItem> BiddedItemsList { get; set; } = new();
+        public List<Bid> BidList { get; set; } = new();
 
         public List<AuctionItem> WonItemsList { get; set; } = new();
 
-        public List<AuctionItem> WhishList { get; set; } = new();
+        public List<AuctionItem> WishList { get; set; } = new();
 
         public float Rating { get; private set; }
 
         public List<Review> ReviewList { get; set; } = new();
+        public List<ForumPost> ForumPosts { get; set; } = new();
+        public List<ForumComment> ForumComments { get; set; } = new();
 
-        public User()
-        {
-        }
+
+        public User() { }
 
         public User(
             int id,
             string userName,
             string name,
             string email,
-            RoleEnum role)
+            RoleEnum role,
+            string phoneNumber)
         {
             ID = id;
             UserName = userName;
             Name = name;
             Email = email;
             Role = role;
+            PhoneNumber = phoneNumber;
         }
     }
 }

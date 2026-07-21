@@ -1,68 +1,96 @@
 <div class="auctions-page-container">
   <div class="page-header">
-    <h1>Active Auctions</h1>
-    <p>Discover unique items and bid in real time</p>
+    <h1>{{ 'AUCTIONS_PAGE.TITLE' | translate }}</h1>
+    <p>{{ 'AUCTIONS_PAGE.DESCRIPTION' | translate }}</p>
   </div>
 
   <div class="search-section">
     <div class="search-field">
-      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="11" cy="11" r="7"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input
-        type="text"
-        placeholder="Search by name..."
-        [(ngModel)]="searchText"
-        (ngModelChange)="onFilterChange()"
-      />
+      <input type="text" placeholder="{{ 'AUCTIONS_PAGE.SEARCH_PLACEHOLDER' | translate }}" [(ngModel)]="searchText" (ngModelChange)="onFilterChange()" />
     </div>
   </div>
 
   <div class="filters-row">
     <select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()">
-      <option value="">All categories</option>
+      <option value="">{{ 'AUCTIONS_PAGE.ALL_CATEGORIES' | translate }}</option>
       <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
     </select>
 
     <select [(ngModel)]="sortBy" (ngModelChange)="onFilterChange()">
-      <option value="endingSoon">Ending soon</option>
-      <option value="priceLowHigh">Price: low to high</option>
-      <option value="priceHighLow">Price: high to low</option>
-      <option value="newest">Newest</option>
+      <option value="endingSoon">{{ 'AUCTIONS_PAGE.SORT.ENDING_SOON' | translate }}</option>
+      <option value="priceLowHigh">{{ 'AUCTIONS_PAGE.SORT.PRICE_LOW_HIGH' | translate }}</option>
+      <option value="priceHighLow">{{ 'AUCTIONS_PAGE.SORT.PRICE_HIGH_LOW' | translate }}</option>
+      <option value="newest">{{ 'AUCTIONS_PAGE.SORT.NEWEST' | translate }}</option>
     </select>
+
+    <a routerLink="/add-item">
+      <button class="add-item-btn">
+        <span class="material-symbols-outlined">add</span>
+        <span>{{ 'AUCTIONS_PAGE.ADD_ITEM' | translate }}</span>
+      </button>
+    </a>
   </div>
 
-  <p class="results-count" *ngIf="filteredItems.length > 0">
-    {{ filteredItems.length }} {{ filteredItems.length === 1 ? 'auction found' : 'auctions found' }}
-  </p>
-
-  <div class="active-auctions">
-    <div class="cards-container" *ngIf="filteredItems.length > 0">
-      <div class="card-auction" *ngFor="let item of filteredItems" [routerLink]="['/auctions', item.id]">        <img [src]="'assets/images/placeholder.png'" [alt]="item.name" />
-        <div class="card-content">
-          <h3>{{ item.name }}</h3>
-          <p class="current-bid">Current price: {{ item.currentPrice }} RON</p>
-          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.endDate)">
-            {{ getRemainingTime(item.endDate) }}
-          </span>
-        </div>
-        <div class="card-content">
-          <h3>{{ item.name }}</h3>
-          <p class="current-bid">Current price: <strong>{{ item.currentPrice }} RON</strong></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="empty-state" *ngIf="filteredItems.length === 0">
-      <div class="empty-icon">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </div>
-      <h3>No items found</h3>
-      <p>There are currently no active auctions matching your search.</p>
-    </div>
+  <!-- Loading state -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading active auctions...</p>
   </div>
+
+  <!-- Error state -->
+  <div class="error-state" *ngIf="hasError && !isLoading">
+    <span class="material-symbols-outlined">wifi_off</span>
+    <h3>Could not load auctions</h3>
+    <p>Make sure the backend is running and try again.</p>
+    <button class="retry-btn" (click)="loadActiveAuctions()">Retry</button>
+  </div>
+
+  <!-- Results -->
+  <ng-container *ngIf="!isLoading && !hasError">
+    <p class="results-count" *ngIf="filteredItems.length > 0">
+      {{ filteredItems.length }}
+      {{ filteredItems.length === 1 ? ('AUCTIONS_PAGE.RESULT.ONE' | translate) : ('AUCTIONS_PAGE.RESULT.MANY' | translate) }}
+    </p>
+
+    <div class="active-auctions">
+      <div class="cards-container" *ngIf="filteredItems.length > 0">
+        <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
+          <div class="card-image-wrap">
+            <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
+              alt="Item image" />
+            <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
+              {{ getRemainingTime(item.EndDate) }}
+            </span>
+          </div>
+          <div class="card-content">
+            <h3>{{ item.Name }}</h3>
+            <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
+            <div class="current-bid-wrapper">
+              <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+              <div class="favorite-badge" [class.active]="item.isFavorite" (click)="toggleFavorite(item, $event)" [title]="item.isFavorite ? 'Remove from wishlist' : 'Add to wishlist'">
+                <span class="material-symbols-outlined">{{ item.isFavorite ? 'favorite' : 'favorite_border' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="filteredItems.length === 0">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <h3>{{ 'AUCTIONS_PAGE.EMPTY.TITLE' | translate }}</h3>
+        <p>{{ 'AUCTIONS_PAGE.EMPTY.DESCRIPTION' | translate }}</p>
+      </div>
+    </div>
+  </ng-container>
 </div>

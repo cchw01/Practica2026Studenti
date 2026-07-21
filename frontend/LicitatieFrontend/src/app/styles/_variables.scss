@@ -1,0 +1,151 @@
+
+
+// ============================================================
+// Shared design tokens
+// ============================================================
+//
+// Centralized styling variables used across the application.
+//
+// The Home Page is the reference design for colors, spacing,
+// typography and component styling. New components should use
+// these tokens instead of introducing new values.
+//
+// Usage:
+//
+// @use '../../styles/variables' as v;
+//
+// .button {
+//   color: v.$color-primary;
+//   border-radius: v.$radius-pill;
+// }
+//
+
+
+// ============================================================
+// Typography
+// ============================================================
+
+$font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+
+$font-size-heading-xl: 40px;
+$font-size-heading-lg: 30px;
+$font-size-body: 15px;
+$font-size-button: 16px;
+$font-size-label: 12px;
+
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+
+// ============================================================
+// Colors
+// ============================================================
+
+// Main brand colors from home-page.css
+$color-primary: var(--mat-sys-primary, #3f51b5);
+$color-primary-dark: #2c3e9e;   // darken(#3f51b5, 10%) — used where darken() cannot resolve var()
+$color-accent: #e91e63;
+
+
+// Background tints
+$color-primary-tint: rgba(63, 81, 181, 0.08);
+$color-accent-tint: rgba(233, 30, 99, 0.06);
+
+
+// Surfaces
+$color-white: #ffffff;
+$color-surface: #ffffff;
+$color-surface-translucent: rgba(255, 255, 255, 0.75);
+
+$color-background: #f8f9fa;
+
+
+// Text colors
+$color-text-heading: #1a1a1a;
+$color-text-body: #666666;
+$color-text-secondary: #555555;
+$color-text-label: #333333;
+
+
+// Borders / neutral colors
+$color-border: #e0e0e0;
+
+
+// Icon colors
+$color-icon-background: #f5f5f5;
+$color-icon-hover: #e0f2f1;
+$color-icon: #555555;
+
+
+// ============================================================
+// Status colors
+// Used by auction cards / time remaining badges
+// ============================================================
+
+$color-status-urgent-bg: #fdecea;
+$color-status-urgent-text: #c0392b;
+
+$color-status-medium-bg: #fef6e0;
+$color-status-medium-text: #b8860b;
+
+$color-status-safe-bg: #e8f6ec;
+$color-status-safe-text: #2e7d32;
+
+
+// ============================================================
+// Spacing
+// Based on the 8px rhythm used throughout home-page.css
+// ============================================================
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 16px;
+$space-lg: 24px;
+$space-xl: 32px;
+$space-2xl: 48px;
+$space-3xl: 64px;
+
+
+// ============================================================
+// Border radius
+// ============================================================
+
+$radius-sm: 6px;
+$radius-md: 16px;
+$radius-lg: 28px;
+$radius-pill: 30px;
+
+
+// ============================================================
+// Shadows
+// ============================================================
+
+$shadow-color: rgba(30, 42, 90, 0.08);
+$shadow-color-hover: rgba(30, 42, 90, 0.12);
+
+$shadow-sm: 0 8px 20px $shadow-color;
+$shadow-md: 0 20px 40px $shadow-color;
+$shadow-hover: 0 12px 24px $shadow-color-hover;
+
+
+// ============================================================
+// Transitions
+// ============================================================
+
+$transition-base: all 0.25s ease;
+$transition-fast: all 0.2s ease-in-out;
+
+
+// ============================================================
+// Gradients
+// ============================================================
+
+@mixin accent-gradient($direction: 90deg) {
+  background: linear-gradient(
+    $direction,
+    $color-primary,
+    $color-accent
+  );
+}
