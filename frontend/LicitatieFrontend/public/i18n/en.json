@@ -465,9 +465,8 @@
     "CANCEL": "Cancel",
     "CREATING": "Creating discussion...",
     "SUBMIT": "Start discussion"
-  }
-, 
-"PROFILE_PAGE": {
+  },
+  "PROFILE_PAGE": {
   "PROFILE": {
     "USERNAME_NOT_SET": "@username not set",
     "NAME_NOT_SET": "Name not set",
