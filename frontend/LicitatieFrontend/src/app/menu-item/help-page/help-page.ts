@@ -11,24 +11,54 @@ import { CommonModule } from '@angular/common';
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
 
-  // FAQ cu stare de deschis/închis
+  // FAQ bazat pe probleme reale și frecvente la call center
   faqs = [
     {
-      question: 'Cum pot plasa o sumă la o licitație?',
+      question: 'Am tastat o sumă greșită (un zero în plus). Cum anulez?',
       answer:
-        'Navighează către pagina produsului dorit și introdu suma în câmpul "Bid now". Suma trebuie să fie mai mare decât prețul curent.',
+        'Ofertele sunt angajamente ferme. Totuși, în cazul unor erori evidente de tastare ("fat-finger"), sunați de urgență la call center înainte de încheierea licitației pentru o posibilă anulare manuală.',
       isOpen: false,
     },
     {
-      question: 'Cum adaug un produs pentru a-l vinde?',
+      question: 'Am fost supralicitat în ultima secundă. Este sistemul trucat?',
       answer:
-        'Mergi în secțiunea "Profilul meu" și apasă butonul "Adaugă Licitație". Completează detaliile și așteaptă validarea unui Admin.',
+        'Nu. Aceasta este o tactică frecventă numită "sniping". Pentru a combate acest fenomen și a vă oferi timp de reacție, orice ofertă plasată pe final prelungește automat cronometrul cu câteva minute.',
       isOpen: false,
     },
     {
-      question: 'Cum știu dacă am câștigat?',
+      question: 'De ce suma finală de plată este mai mare decât am licitat?',
       answer:
-        'Vei primi o notificare pe email și în aplicație atunci când licitația se încheie și tu ai avut cea mai mare ofertă.',
+        "La prețul câștigător (hammer price) se pot adăuga taxe specifice: comisionul platformei (buyer's premium), TVA-ul aplicabil și costurile de ambalare/livrare. Acestea sunt detaliate pe pagina fiecărui produs.",
+      isOpen: false,
+    },
+    {
+      question: 'Nu am câștigat licitația, dar am bani blocați pe card. De ce?',
+      answer:
+        'Pentru a asigura validitatea ofertelor, reținem temporar o sumă drept garanție la prima dumneavoastră licitare. Această reținere se anulează automat în câteva zile lucrătoare după pierderea licitației.',
+      isOpen: false,
+    },
+    {
+      question: 'Cât mă va costa transportul pentru obiectul câștigat?',
+      answer:
+        'Costurile variază foarte mult în funcție de volumul produsului și de curier. Vă recomandăm ferm să cereți o estimare de transport pe Forum sau direct vânzătorului ÎNAINTE de a plasa o ofertă.',
+      isOpen: false,
+    },
+    {
+      question: 'Ce se întâmplă dacă am câștigat, dar nu mai vreau să plătesc?',
+      answer:
+        'Refuzul onorării plății este o încălcare a regulamentului. Acesta atrage penalizări stricte: pierderea garanției reținute pe card și suspendarea definitivă a contului dumneavoastră de utilizator.',
+      isOpen: false,
+    },
+    {
+      question: 'Produsul primit nu arată ca în poze sau are defecte ascunse. Ce fac?',
+      answer:
+        'Aveți la dispoziție un termen limitat de dispută de la recepție. Folosiți formularul de pe această pagină ("Deschide un Tichet"), atașați dovezi, iar un agent va media rezolvarea problemei (retur sau compensare).',
+      isOpen: false,
+    },
+    {
+      question: 'Licitația se termină imediat, iar mie mi-a expirat sesiunea și am uitat parola!',
+      answer:
+        'Acționați rapid folosind funcția "Mi-am uitat parola" de la Login pentru un link instant pe email. Dacă întâmpinați dificultăți de accesare a emailului, sunați imediat la call center pentru asistență de urgență.',
       isOpen: false,
     },
   ];
