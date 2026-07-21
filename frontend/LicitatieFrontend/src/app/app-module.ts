@@ -42,6 +42,7 @@ import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { SearchPage } from './search-page/search-page';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -57,6 +58,7 @@ import { MatButtonModule } from '@angular/material/button';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    SearchPage,
     AddItemPage,
     AuctionItemPage,
     Add,
