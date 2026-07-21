@@ -29,6 +29,8 @@ export class AdminPage implements OnInit {
   forumComments: any[] = [];
   categories: Category[] = [];
 
+  verifiedPostIds: Set<number> = new Set<number>();
+
   categoryLoading = false;
   categorySubmitting = false;
   categoryErrorMessage = '';
