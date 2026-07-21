@@ -175,15 +175,20 @@
       <div *ngIf="activeTab === 'forum'" class="vuexy-card">
         <div class="card-header-title">Controlul postărilor și comentariilor active pe forum</div>
         <div class="vuexy-list-stack">
-          <div *ngFor="let post of forumPosts" class="vuexy-stack-item">
+          <div *ngFor="let post of visibleForumPosts" class="vuexy-stack-item">
   <div class="stack-left">
     <span class="vuexy-author-headline">Postat de: @{{ post.userName || 'Membru' }}</span>
     <h4>{{ post.title }}</h4>
     <p class="forum-body-text">"{{ post.description }}"</p>
   </div>
-  <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge postarea</button>
+   
+  <div class="stack-actions">
+    <button class="vuexy-text-success-btn" (click)="markAsVerified(post.id)">Verificat</button>
+    <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Șterge postarea</button>
+  </div>
 </div>
-          <div *ngIf="forumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj licențios.</div>
+          <!-- MODIFICAT: forumPosts.length -> visibleForumPosts.length -->
+          <div *ngIf="visibleForumPosts.length === 0" class="vuexy-empty-row">Nu au fost detectate elemente de limbaj licențios.</div>
         </div>
       </div>
 
