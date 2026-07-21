@@ -41,11 +41,11 @@ namespace Backend.Models
         public int? ReportedUserId { get; set; }
         public User? ReportedUser { get; set; }
 
-        public int? AuctionItemId { get; set; }
-        public AuctionItem? AuctionItem { get; set; }
+        public int? ReportedAuctionItemId { get; set; }
+        public AuctionItem? ReportedAuctionItem { get; set; }
 
-        public int? ForumPostId { get; set; }
-        public ForumPost? ForumPost { get; set; }
+        public int? ReportedForumPostId { get; set; }
+        public ForumPost? ReportedForumPost { get; set; }
 
         public ReportReason Reason { get; set; }
         public string? Description { get; set; }
