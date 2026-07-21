@@ -49,7 +49,7 @@ export class ItemService {
   private readonly mockUrl = 'assets/mock-items.json';
   private readonly storageKey = 'auctionItems';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private mapResponse(item: any): AuctionItem {
     return this.sanitizeItem({
