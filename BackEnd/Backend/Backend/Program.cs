@@ -61,9 +61,6 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
-
-        
-
         RoleClaimType = "role",
     };
 });
@@ -191,6 +188,12 @@ using (var scope = app.Services.CreateScope())
         SET IDENTITY_INSERT [Users] OFF;
     END
 ");
+    }
+    catch { }
+
+    try
+    {
+        DbInitializer.Seed(db);
     }
     catch { }
 }

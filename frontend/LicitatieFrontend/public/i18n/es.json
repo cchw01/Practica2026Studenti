@@ -301,56 +301,225 @@
   },
 
   "NOTIFICATIONS": {
-  "TRUE": "Notificaciones",
-  "FALSE": "Aún no hay notificaciones."
-},
-"AUCTION_ITEM_PAGE": {
-  "HEADER_BADGE": "🏷️ Detalles de la subasta",
+    "TRUE": "Notificaciones",
+    "FALSE": "Aún no hay notificaciones."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Detalles de la subasta",
 
-  "INFO": {
-    "CURRENT_PRICE": "Precio actual",
-    "START_PRICE": "Precio inicial",
-    "CATEGORY": "Categoría",
-    "LOCATION": "Ubicación",
-    "STARTS_AT": "Fecha de inicio",
-    "OWNER": "Propietario",
-    "ENDS": "Finaliza"
+    "INFO": {
+      "CURRENT_PRICE": "Precio actual",
+      "START_PRICE": "Precio inicial",
+      "CATEGORY": "Categoría",
+      "LOCATION": "Ubicación",
+      "STARTS_AT": "Fecha de inicio",
+      "OWNER": "Propietario",
+      "ENDS": "Finaliza"
+    },
+
+    "BID": {
+      "TITLE": "Haz tu oferta",
+      "PLACEHOLDER": "Introduce el importe de la oferta",
+      "BUTTON": "🔨 Ofertar",
+      "MINIMUM": "Oferta mínima:",
+      "LOGIN_TEXT": "Inicia sesión para pujar por este artículo.",
+      "LOGIN_BUTTON": "Iniciar sesión para ofertar"
+    },
+
+    "WISHLIST": {
+      "ADD": "🤍 Añadir a favoritos",
+      "ADDED": "❤️ En favoritos"
+    },
+
+    "DESCRIPTION": {
+      "TITLE": "Descripción del producto"
+    },
+
+    "STATUS": {
+      "ACTIVE": "Activa",
+      "ENDED": "Finalizada",
+      "PENDING": "Pendiente"
+    },
+
+    "MESSAGES": {
+      "AUCTION_ENDED": "La subasta ha finalizado.",
+      "BID_HIGHER_CURRENT": "La oferta debe ser superior al precio actual.",
+      "BID_HIGHER_MINIMUM": "La oferta debe ser superior al precio mínimo."
+    },
+
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "min",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Reseñas",
+    "REVIEWER_ID": "ID del autor de la reseña",
+    "REVIEWED_USER_ID": "ID del usuario evaluado",
+    "RATING": "Valoración (0–5)",
+    "RATING_ERROR": "La valoración debe estar entre 0 y 5.",
+    "COMMENT": "Comentario",
+    "ADD": "Añadir",
+    "UPDATE": "Actualizar",
+    "CANCEL": "Cancelar",
+    "EDIT": "Editar reseña",
+    "DELETE": "Eliminar reseña"
+  },
+  "SHARE": {
+    "BUTTON": "Compartir",
+    "COPIED": "¡Copiado!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Perfil",
+    "LOGOUT": "Cerrar sesión"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
+
+    "LOADING_DISCUSSION_TITLE": "Cargando la discusión",
+    "LOADING_DISCUSSION_MESSAGE": "La discusión se está cargando.",
+    "LOAD_DISCUSSION_ERROR": "No se pudo cargar la discusión",
+    "TRY_AGAIN": "Intentar de nuevo",
+
+    "DELETE_POST": "Eliminar",
+    "POSTED_BY": "Publicado por",
+
+    "DISCUSSION": "Discusión",
+    "COMMENT": "comentario",
+    "COMMENTS": "comentarios",
+
+    "ADD_COMMENT": "Añadir un comentario",
+    "COMMENT_PLACEHOLDER": "Escribe tu comentario aquí...",
+    "COMMENT_REQUIRED": "El comentario es obligatorio.",
+    "COMMENT_MIN_LENGTH": "El comentario debe contener al menos 2 caracteres.",
+    "COMMENT_MAX_LENGTH": "El comentario no puede superar los 1000 caracteres.",
+
+    "PUBLISHING": "Publicando...",
+    "PUBLISH_COMMENT": "Publicar comentario",
+
+    "LOGIN_REQUIRED": "Debes iniciar sesión para publicar un comentario.",
+    "LOGIN": "Iniciar sesión",
+
+    "LOADING_COMMENTS": "Cargando comentarios",
+    "LOAD_COMMENTS_ERROR": "No se pudieron cargar los comentarios",
+
+    "DELETE_COMMENT": "Eliminar",
+    "NO_COMMENTS": "Todavía no hay comentarios"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
+    "TITLE": "Iniciar una discusión",
+    "SUBTITLE": "Crea una nueva discusión y compártela con los demás usuarios del foro.",
+
+    "TITLE_LABEL": "Título",
+    "TITLE_PLACEHOLDER": "Introduce un título claro para la discusión",
+    "TITLE_REQUIRED": "El título es obligatorio.",
+    "TITLE_WHITESPACE": "El título no puede contener solo espacios.",
+    "TITLE_MIN_LENGTH": "El título debe contener al menos 3 caracteres.",
+    "TITLE_MAX_LENGTH": "El título no puede superar los 150 caracteres.",
+
+    "DESCRIPTION_LABEL": "Descripción",
+    "DESCRIPTION_PLACEHOLDER": "Describe el tema que deseas discutir...",
+    "DESCRIPTION_REQUIRED": "La descripción es obligatoria.",
+    "DESCRIPTION_WHITESPACE": "La descripción no puede contener solo espacios.",
+    "DESCRIPTION_MIN_LENGTH": "La descripción debe contener al menos 10 caracteres.",
+    "DESCRIPTION_MAX_LENGTH": "La descripción no puede superar los 5000 caracteres.",
+
+    "CREATE_ERROR": "No se pudo crear la discusión",
+    "CANCEL": "Cancelar",
+    "CREATING": "Creando la discusión...",
+    "SUBMIT": "Iniciar discusión"
+  }
+}, 
+"PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@nombre de usuario no establecido",
+    "NAME_NOT_SET": "Nombre no establecido",
+    "EMAIL_NOT_SET": "Correo electrónico no establecido",
+    "AVERAGE_SCORE": "Puntuación media"
   },
 
-  "BID": {
-    "TITLE": "Haz tu oferta",
-    "PLACEHOLDER": "Introduce el importe de la oferta",
-    "BUTTON": "🔨 Ofertar",
-    "MINIMUM": "Oferta mínima:",
-    "LOGIN_TEXT": "Inicia sesión para pujar por este artículo.",
-    "LOGIN_BUTTON": "Iniciar sesión para ofertar"
+  "BUTTONS": {
+    "EDIT_PROFILE": "Editar perfil",
+    "LOG_OUT": "Cerrar sesión",
+    "ADD_ITEM": "Añadir artículo",
+    "CHANGE_PHOTO": "Cambiar foto",
+    "HIDE_PASSWORD": "Ocultar configuración de contraseña",
+    "CHANGE_PASSWORD": "Cambiar contraseña",
+    "UPDATE_PASSWORD": "Actualizar contraseña",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar cambios"
   },
 
-  "WISHLIST": {
-    "ADD": "🤍 Añadir a favoritos",
-    "ADDED": "❤️ En favoritos"
+  "THEME": {
+    "TITLE": "Personalizar tema",
+    "DESCRIPTION": "Elige un estilo visual que se adapte a tu estado de ánimo.",
+    "LIGHT": "Claro",
+    "SUNSET": "Atardecer",
+    "OCEAN": "Océano"
   },
 
-  "DESCRIPTION": {
-    "TITLE": "Descripción del producto"
+  "SELL": {
+    "TITLE": "Vender un artículo nuevo",
+    "DESCRIPTION": "¿Listo para publicar un artículo?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Mis ventas activas",
+    "WON_ITEMS": "Artículos ganados",
+    "WISHLIST": "Mi lista de deseos",
+    "REVIEWS": "Reseñas recibidas"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Todavía no has publicado artículos.",
+    "WON_ITEMS": "Todavía no has ganado ningún artículo.",
+    "WISHLIST": "Tu lista de deseos está vacía.",
+    "REVIEWS": "Todavía no has recibido reseñas."
+  },
+
+  "EDIT": {
+    "TITLE": "Editar perfil",
+    "USERNAME": "Nombre de usuario",
+    "FULL_NAME": "Nombre completo",
+    "EMAIL": "Correo electrónico",
+
+    "USERNAME_PLACEHOLDER": "ej. john_doe",
+    "FULL_NAME_PLACEHOLDER": "ej. Juan Pérez",
+    "EMAIL_PLACEHOLDER": "ej. juan@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Contraseña actual",
+    "NEW": "Nueva contraseña",
+    "CONFIRM": "Confirmar contraseña",
+
+    "CURRENT_PLACEHOLDER": "Introduce la contraseña actual",
+    "NEW_PLACEHOLDER": "Introduce la nueva contraseña",
+    "CONFIRM_PLACEHOLDER": "Confirma la nueva contraseña",
+
+    "REQUIRED": "Todos los campos son obligatorios.",
+    "NOT_MATCH": "La nueva contraseña y la confirmación no coinciden.",
+    "SUCCESS": "¡Contraseña actualizada correctamente!",
+    "ERROR": "Error al actualizar la contraseña. Comprueba tu contraseña actual."
   },
 
   "STATUS": {
-    "ACTIVE": "Activa",
-    "ENDED": "Finalizada",
-    "PENDING": "Pendiente"
-  },
-
-  "MESSAGES": {
-    "AUCTION_ENDED": "La subasta ha finalizado.",
-    "BID_HIGHER_CURRENT": "La oferta debe ser superior al precio actual.",
-    "BID_HIGHER_MINIMUM": "La oferta debe ser superior al precio mínimo."
-  },
-
-  "COUNTDOWN": {
-    "DAYS": "d",
-    "HOURS": "h",
-    "MINUTES": "min",
-    "SECONDS": "s"
-  }
+    "ACTIVE": "Activo",
+    "ADDED": "Añadido",
+    "WON": "Ganado"
+  }, 
+  "DEFAULTS": {
+  "USER": "Usuario"
+}, 
+"ERRORS": {
+  "LOAD_CATEGORIES": "Error al cargar las categorías.",
+  "LOAD_ITEMS": "Error al cargar los artículos.",
+  "LOAD_REVIEWS": "Error al cargar las reseñas."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Perfil actualizado con éxito."
+}
 }}
