@@ -97,6 +97,7 @@ export class HelpPageComponent implements OnInit {
     this.helpForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      issueType: ['', Validators.required],   // ← new field
       issue: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
