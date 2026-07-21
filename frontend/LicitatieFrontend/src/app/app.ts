@@ -1,21 +1,12 @@
-import {
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  signal,
-} from '@angular/core';
-import {
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { Component, NgZone, OnDestroy, OnInit, signal } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 import { MatIconRegistry } from '@angular/material/icon';
 
 import { AuthService } from './services/auth';
 
-type SupportedLanguage = 'en' | 'ro' | 'es';
+type SupportedLanguage = 'en' | 'ro' | 'es' | 'it' | 'de' | 'fr' | 'pl' | 'sk' | 'sr' | 'tr' | 'uk' | 'el' | 'hu' ;
 
 @Component({
   selector: 'app-root',
@@ -28,6 +19,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly menuOpen = signal(false);
   protected readonly navHidden = signal(false);
   protected readonly isLoggedIn = signal(false);
+  protected readonly isAdmin = signal(false);
 
   currentLanguage = signal<SupportedLanguage>('en');
 
@@ -37,14 +29,10 @@ export class App implements OnInit, OnDestroy {
     if (this.menuOpen()) return;
 
     const currentY = window.scrollY;
-    const shouldHide =
-      currentY > this.lastScrollY &&
-      currentY > 120;
+    const shouldHide = currentY > this.lastScrollY && currentY > 120;
 
     if (shouldHide !== this.navHidden()) {
-      this.zone.run(() =>
-        this.navHidden.set(shouldHide),
-      );
+      this.zone.run(() => this.navHidden.set(shouldHide));
     }
 
     this.lastScrollY = currentY;
@@ -57,116 +45,75 @@ export class App implements OnInit, OnDestroy {
     private authService: AuthService,
     private translate: TranslateService,
   ) {
-    iconRegistry.setDefaultFontSetClass(
-      'material-symbols-outlined',
-    );
+    iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
 
     // Apply saved theme on every page load
-    const validThemes = [
-      'light',
-      'sunset',
-      'ocean',
-    ];
+    const validThemes = ['light', 'sunset', 'ocean'];
 
-    let savedTheme =
-      localStorage.getItem('app_theme') ||
-      'light';
+    let savedTheme = localStorage.getItem('app_theme') || 'light';
 
     if (!validThemes.includes(savedTheme)) {
       savedTheme = 'light';
-      localStorage.setItem(
-        'app_theme',
-        'light',
-      );
+      localStorage.setItem('app_theme', 'light');
     }
 
-    document.body.className =
-      `theme-${savedTheme}`;
+    document.body.className = `theme-${savedTheme}`;
   }
 
   ngOnInit(): void {
     this.initializeLanguage();
 
     this.zone.runOutsideAngular(() => {
-      this.isLoggedIn.set(
-        this.authService.isLoggedIn(),
-      );
+      this.isLoggedIn.set(this.authService.isLoggedIn());
+      // NOU: calculeaza rolul de admin la incarcare
+      this.isAdmin.set(this.authService.getCurrentUser()?.role === 'Admin');
 
-      this.router.events
-        .pipe(
-          filter(
-            (e) =>
-              e instanceof NavigationEnd,
-          ),
-        )
-        .subscribe(() =>
-          this.isLoggedIn.set(
-            this.authService.isLoggedIn(),
-          ),
-        );
+      this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
+        this.isLoggedIn.set(this.authService.isLoggedIn());
 
-      window.addEventListener(
-        'scroll',
-        this.onScroll,
-        {
-          passive: true,
-        },
-      );
+        this.isAdmin.set(this.authService.getCurrentUser()?.role === 'Admin');
+      });
+
+      window.addEventListener('scroll', this.onScroll, {
+        passive: true,
+      });
     });
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener(
-      'scroll',
-      this.onScroll,
-    );
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   toggleMenu() {
-    this.menuOpen.update(
-      (open) => !open,
-    );
+    this.menuOpen.update((open) => !open);
   }
 
   closeMenu() {
     this.menuOpen.set(false);
   }
 
-  changeLanguage(
-    language: SupportedLanguage,
-  ): void {
+  changeLanguage(language: SupportedLanguage): void {
     this.currentLanguage.set(language);
 
-    localStorage.setItem(
-      'language',
-      language,
-    );
+    localStorage.setItem('language', language);
 
     this.translate.use(language);
     this.closeMenu();
   }
 
   currentLanguageLabel(): string {
-    return this.currentLanguage()
-      .toUpperCase();
+    return this.currentLanguage().toUpperCase();
   }
 
-  isCurrentLanguage(
-    language: SupportedLanguage,
-  ): boolean {
-    return (
-      this.currentLanguage() === language
-    );
+  isCurrentLanguage(language: SupportedLanguage): boolean {
+    return this.currentLanguage() === language;
   }
 
   private initializeLanguage(): void {
-    const savedLanguage =
-      localStorage.getItem('language');
+    const savedLanguage = localStorage.getItem('language');
 
     const language: SupportedLanguage =
-      savedLanguage === 'ro' ||
-      savedLanguage === 'es' ||
-      savedLanguage === 'en'
+      savedLanguage === 'ro' || savedLanguage === 'es' || savedLanguage === 'en'
         ? savedLanguage
         : 'en';
 
@@ -177,6 +124,7 @@ export class App implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
     this.isLoggedIn.set(false);
+    this.isAdmin.set(false);
     this.router.navigate(['/home-page']);
   }
 }

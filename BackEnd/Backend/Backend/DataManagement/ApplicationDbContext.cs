@@ -97,7 +97,7 @@ namespace Backend.DataManagement
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<Bid>()
-                .Property(b => b.price)
+                .Property(b => b.Price)
                 .HasPrecision(18, 2);
         }
     }

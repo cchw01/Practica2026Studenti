@@ -3,7 +3,7 @@
 
   <div class="form-section">
     <div class="register-container">
-      <h2>Create an account</h2>
+      <h2>{{'REGISTER.TITLE' | translate}}</h2>
 
       <div
         *ngIf="errorMessage"
@@ -30,100 +30,87 @@
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" formControlName="username" placeholder="Username" />
+          <label for="username">{{'REGISTER.USERNAME_LABEL' | translate }}</label>
+          <input id="username" type="text" formControlName="username" placeholder="{{'REGISTER.USERNAME_PLACEHOLDER' | translate}}" />
           @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
-            <div class="error">Username is required.</div>
+            <div class="error">{{'REGISTER.USERNAME_REQUIRED' | translate}}</div>
           }
         </div>
 
         <div class="form-group">
-          <label for="name">Full Name</label>
-          <input id="name" type="text" formControlName="name" placeholder="Full name" />
+          <label for="name">{{'REGISTER.FULL_NAME_LABEL' | translate}}</label>
+          <input id="name" type="text" formControlName="name" placeholder="{{'REGISTER.FULL_NAME_PLACEHOLDER' | translate}}" />
           @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
-            <div class="error">Full name is required.</div>
+            <div class="error">{{'REGISTER.FULL_NAME_REQUIRED' | translate}}</div>
           }
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" type="email" formControlName="email" placeholder="Email" />
+          <label for="email">{{'REGISTER.EMAIL_LABEL' | translate}}</label>
+          <input id="email" type="email" formControlName="email" placeholder="{{'REGISTER.EMAIL_PLACEHOLDER' | translate}}" />
           @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
             <div class="error">
               @if (registerForm.get('email')?.errors?.['required']) {
-                <span>Email is required.</span>
+                <span>{{'REGISTER.EMAIL_REQUIRED' | translate}}</span>
               }
               @if (registerForm.get('email')?.errors?.['email']) {
-                <span>Please enter a valid email.</span>
+                <span>{{'REGISTER.EMAIL_INVALID' | translate}}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" type="password" formControlName="password" placeholder="Password" />
+          <label for="password">{{'REGISTER.PASSWORD_LABEL' | translate}}</label>
+          <input id="password" type="password" formControlName="password" placeholder="{{'REGISTER.PASSWORD_PLACEHOLDER' | translate}}" />
           @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
             <div class="error">
               @if (registerForm.get('password')?.errors?.['required']) {
-                <span>Password is required.</span>
+                <span>{{'REGISTER.PASSWORD_REQUIRED' | translate}}</span>
               }
               @if (registerForm.get('password')?.errors?.['minlength']) {
-                <span>Password must be at least 6 characters.</span>
+                <span>{{'REGISTER.PASSWORD_MIN_LENGTH' | translate}}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            formControlName="confirmPassword"
-            placeholder="Confirm password"
-          />
-          @if (
-            registerForm.get('confirmPassword')?.invalid &&
-            registerForm.get('confirmPassword')?.touched
-          ) {
+          <label for="confirmPassword">{{'REGISTER.CONFIRM_PASSWORD_LABEL' | translate}}</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="{{'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER' | translate}}" />
+          @if (registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
             <div class="error">
               @if (registerForm.get('confirmPassword')?.errors?.['required']) {
-                <span>Please confirm your password.</span>
+                <span>{{'REGISTER.CONFIRM_PASSWORD_REQUIRED' | translate}}</span>
               }
               @if (registerForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
-                <span>Passwords do not match.</span>
+                <span>{{'REGISTER.PASSWORDS_MISMATCH' | translate}}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="phoneNumber">Phone Number</label>
-          <input
-            id="phoneNumber"
-            type="tel"
-            formControlName="phoneNumber"
-            placeholder="Phone Number (+40...)"
-          />
-          @if (
-            registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched
-          ) {
+          <label for="phoneNumber">{{'REGISTER.PHONE_LABEL' | translate}}</label>
+          <input id="phoneNumber" type="tel" formControlName="phoneNumber" placeholder="{{'REGISTER.PHONE_PLACEHOLDER' | translate}}" />
+          @if (registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched) {
             <div class="error">
               @if (registerForm.get('phoneNumber')?.errors?.['required']) {
-                <span>Phone number is required.</span>
+                <span>{{'REGISTER.PHONE_REQUIRED' | translate}}</span>
               }
               @if (registerForm.get('phoneNumber')?.errors?.['pattern']) {
-                <span>Please enter a valid phone number.</span>
+                <span>{{'REGISTER.PHONE_INVALID' | translate}}</span>
               }
             </div>
           }
         </div>
 
-        <button type="submit" [disabled]="registerForm.invalid">Create account</button>
+        <button type="submit" [disabled]="registerForm.invalid">{{'REGISTER.SUBMIT' | translate}}</button>
       </form>
-
-      <div class="login-link">Already have an account? <a routerLink="/login-page">Sign in</a></div>
+      
+      <div class="login-link">
+        {{'REGISTER.ALREADY_HAVE_ACCOUNT' | translate}}<a routerLink="/login-page">{{'REGISTER.SIGN_IN' | translate}}</a>
+      </div>
     </div>
   </div>
 </div>

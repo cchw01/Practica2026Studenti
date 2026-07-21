@@ -5,8 +5,9 @@ using Azure.Core;
     using Backend.Services;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
-    namespace Backend.Controllers
+namespace Backend.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
@@ -24,12 +25,22 @@ using Azure.Core;
             }
 
             [HttpGet]
-            public ActionResult<User> GetUsers()
-            {
+        public ActionResult<IEnumerable<UserReadDto>> GetUsers()
+        {
                 try
                 {
                     var users = dataOps.GetUsers();
-                    return Ok(users);
+                    var userDtos = users.Select(u => new UserReadDto
+                    {
+                        ID = u.ID,
+                        UserName = u.UserName,
+                        Name = u.Name,
+                        Email = u.Email,
+                        Role = u.Role,
+                        Rating = u.Rating,
+                        PhoneNumber = u.PhoneNumber
+                    }).ToArray();
+                    return Ok(userDtos);
                 }
                 catch (Exception ex)
                 {
@@ -38,7 +49,7 @@ using Azure.Core;
             }
 
             [HttpGet("{id}")]
-            public ActionResult<User> GetUser(int id)
+            public ActionResult<UserReadDto> GetUser(int id)
             {
                 try
                 {
@@ -47,7 +58,18 @@ using Azure.Core;
                     if (user == null)
                         return NotFound();
 
-                    return Ok(user);
+                    var userDto = new UserReadDto
+                    {
+                        ID = user.ID,
+                        UserName = user.UserName,
+                        Name = user.Name,
+                        Email = user.Email,
+                        Role = user.Role,
+                        Rating = user.Rating,
+                        PhoneNumber = user.PhoneNumber
+                    };
+
+                    return Ok(userDto);
                 }
                 catch (Exception ex)
                 {
@@ -95,6 +117,8 @@ using Azure.Core;
 
                 if (user == null)
                     return Unauthorized("Email sau parolă incorectă.");
+                if (user.IsBanned)
+                    return Unauthorized("Contul tău a fost suspendat.");
 
                 bool parolaCorecta = PasswordHasher.VerifyPassword(request.Password, user.Password);
 
@@ -154,12 +178,12 @@ using Azure.Core;
                     var newRefreshToken = refreshTokenDataOps.CreateRefreshToken(user);
                     var refreshTokenCookie = new CookieOptions
                     {
-                        Expires = refreshToken.ExpiresAt,
+                        Expires = newRefreshToken?.ExpiresAt ?? DateTime.UtcNow.AddDays(30),
                         HttpOnly = true,
                         Secure = true,
                     };
-                    Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
-                    var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
+                    Response.Cookies.Append("refreshToken", newRefreshToken?.Token ?? string.Empty, refreshTokenCookie);
+                    var tokenInfo = new { accessToken, expiresIn = EXPIRES_IN };
                     return Ok(tokenInfo);
                 }
                 else
@@ -172,20 +196,48 @@ using Azure.Core;
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        public ActionResult<User> UpdateUser(User user)
+        [HttpPut("{id}")]
+        public ActionResult<UserReadDto> UpdateUser(int id, [FromBody] UserUpdateDto request)
         {
             try
             {
+                var user = dataOps.GetUserById(id);
+                if (user == null)
+                    return NotFound("Utilizatorul nu a fost găsit.");
+
+                if (user.UserName != request.UserName)
+                {
+                    var userWithSameUsername = dataOps.GetUserByUsername(request.UserName);
+                    if (userWithSameUsername != null)
+                    {
+                        return BadRequest("Acest username este deja folosit de un alt utilizator.");
+                    }
+                    user.UserName = request.UserName;
+                }
+
+                user.Name = request.Name;
+
                 dataOps.UpdateUser(user);
-                return Ok(user);
+
+                var userRead = new UserReadDto
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Rating = user.Rating,
+                    PhoneNumber=user.PhoneNumber
+                };
+
+                return Ok(userRead);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
@@ -201,15 +253,21 @@ using Azure.Core;
         }
 
         [HttpPost("logout")]
-
         public ActionResult LogoutUser()
         {
             try
             {
                 var refreshTokenFromRequest = Request.Cookies["refreshToken"];
-                var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
-                var userToken = dataOps.GetUserById(token.UserId);
-                refreshTokenDataOps.DeleteRefreshToken(userToken);
+                if (!string.IsNullOrEmpty(refreshTokenFromRequest))
+                {
+                    var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
+                    if (token != null)
+                    {
+                        var userToken = dataOps.GetUserById(token.UserId);
+                        if (userToken != null)
+                            refreshTokenDataOps.DeleteRefreshToken(userToken);
+                    }
+                }
                 Response.Cookies.Delete("refreshToken");
                 return Ok();
             }

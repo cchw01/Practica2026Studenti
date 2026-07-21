@@ -6,15 +6,26 @@
         </header>
 
         <section class="discussion-section">
-            <div class="discussion-toolbar">
-                @if (currentUserId !== null) {
+            
+            <div class="search-bar">
+    <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="resetPage()"
+        placeholder="Search discussions..."
+        aria-label="Search discussions"
+    />
+</div>
+
+<div class="discussion-toolbar">
+    @if (currentUserId !== null) {
 <a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
 } @else {
 <a class="create-discussion-button" routerLink="/login-page"> Log in to start a discussion </a>
 }
 
                 <div class="sort-control">
-                    <select [(ngModel)]="sortOption" aria-label="Sort discussions">
+                    <select [(ngModel)]="sortOption" (ngModelChange)="resetPage()" aria-label="Sort discussions">
                         <option value="latest">Latest first</option>
                         <option value="oldest">Oldest first</option>
                         <option value="comments">Most commented</option>
@@ -39,10 +50,10 @@
             </div>
             } @else {
             <div class="discussion-list">
-                @for (post of visiblePosts; track post.id) {
+              @for (post of pagedPosts; track post.id) {
                 <a class="discussion-card" [routerLink]="['/forum', post.id]">
                     <div class="author-avatar">
-                        {{ getInitials(post.userId) }}
+                        {{ getInitials(post.userName, post.userId) }}
                     </div>
                     <div class="discussion-main">
                         <div class="discussion-heading">
@@ -53,8 +64,8 @@
                         </div>
 
                         <p class="discussion-author">
-                            Posted by
-                            <strong> {{ getUserLabel(post.userId) }} </strong>
+                            Posted bys
+                            <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
                         </p>
 
                         <p class="discussion-description"> {{ post.description }} </p>
@@ -76,6 +87,20 @@
                 }
             </div>
             }
+            @if (totalPages > 1) {
+<nav class="pagination" aria-label="Pagination">
+    <button type="button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+    @for (page of pageNumbers; track page) {
+    <button type="button" class="page-button" [class.active]="page === currentPage" (click)="goToPage(page)">
+        {{ page }}
+    </button>
+    }
+
+    <button type="button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</nav>
+}
+
         </section>
     </main>
 </div>

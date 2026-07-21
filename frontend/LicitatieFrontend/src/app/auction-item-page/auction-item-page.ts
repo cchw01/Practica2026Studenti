@@ -1,30 +1,18 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-// AJUSTARE: Modifică calea string ('../Services/auth.service') și numele clasei (AuthService) conform folderului creat de colegi
-//import { AuthService } from '../Services/auth.service'; 
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth';
+import { ItemService } from '../services/item-service';
+import { BidService } from '../services/bid-service';
 import { AuctionItem } from '../Models/item-model';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 
-interface TestAuctionItem extends AuctionItem {
-}
-
-class MockAuthService {
-  isLoggedIn(): boolean {
-    return true;
-  }
-  getCurrentUser(): string {
-    return 'Alex Popescu';
-  }
-}
-
-const mockCategory = new Category({ id: 1, name: 'Electronics', items: [] });
-
-const mockOwner = new User({
-  ID: '1',
-  UserName: 'alex.popescu',
-  Name: 'Alex Popescu',
-  Email: 'alex@example.com',
+const defaultCategory = new Category({ Id: 1, name: 'Vehicles' });
+const defaultOwner = new User({
+  ID: '3',
+  UserName: 'test',
+  Name: 'Test Owner',
+  Email: 'test@example.com',
   Role: RoleEnum.USER,
   AddedItemsList: [],
   BidList: [],
@@ -37,8 +25,7 @@ const mockOwner = new User({
   selector: 'app-auction-item-page',
   standalone: false,
   templateUrl: './auction-item-page.html',
-  styleUrl: './auction-item-page.css',
-  providers: [MockAuthService]
+  styleUrl: './auction-item-page.css'
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
 
@@ -46,96 +33,182 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   selectedImageIndex = 0;
   peekOffset = 0;
   isInWishlist: boolean = false;
+  showWishlistToast: boolean = false;
+  toastMessage: string = '';
+  toastAction: 'added' | 'removed' = 'added';
+  isToastHiding: boolean = false;
+  private toastTimeout: any;
+  private toastHideTimeout: any;
+
+  // Report functionality
+  showReportModal: boolean = false;
+  reportReason: string = 'Inappropriate Content';
+  reportDetails: string = '';
+  isReported: boolean = false;
+  showReportToast: boolean = false;
+  reportToastMessage: string = '';
+  isReportToastHiding: boolean = false;
+  private reportToastTimeout: any;
+  private reportToastHideTimeout: any;
+
   errorMessage: string = '';
   countdownText: string = '';
   private timerInterval: any;
 
+  auctionItem: AuctionItem = {
+    ID: 1,
+    Name: 'Loading Item...',
+    StartPrice: 100,
+    CurrentPrice: 100,
+    Category: defaultCategory,
+    CategoryId: 1,
+    WishingUsers: [],
+    Description: 'Detailed description loading...',
+    Location: 'Location',
+    Owner: defaultOwner,
+    OwnerId: 3,
+    Status: 'Active' as any,
+    StartDate: new Date(),
+    EndDate: new Date(Date.now() + 7 * 86400000),
+    BidList: [],
+    PhotoList: []
+  };
+
+  bidAmount = this.auctionItem.CurrentPrice + 10;
+
   constructor(
-    public authService: MockAuthService,
+    public authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
+    private itemService: ItemService,
+    private bidService: BidService,
     private cdr: ChangeDetectorRef
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
   }
 
-  auctionItem: TestAuctionItem = {
-    ID: 1,
-    Name: 'BMW Series 3',
-    StartPrice: 100,
-    CurrentPrice: 180,
-    Category: mockCategory,
-    CategoryId: 1,
-    WishingUsers: [],
-    Description: 'A premium item with excellent condition, full service history, fast shipping, and exceptional luxury features.',
-    Location: 'Bucharest',
-    Owner: mockOwner,
-    OwnerId: 1,
-    Status: 'Active',
-    StartDate: new Date('2026-07-01'),
-    EndDate: new Date('2026-07-20'),
-    BidList: [],
-    PhotoList: [
-      'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
-    ]
-  };
-
-  bidAmount = this.auctionItem.CurrentPrice + 10;
-
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-
-
     this.selectedImageIndex = 0;
 
+    const auctionFromState = this.navState?.auction;
+    if (auctionFromState) {
+      this.setAuctionItemData(auctionFromState);
+    }
 
-    const auction = this.navState?.auction;
-    if (auction) {
-      if (auction.title || auction.Name) this.auctionItem.Name = auction.title || auction.Name;
-
-      if (auction.currentBid || auction.CurrentPrice) {
-        const price = auction.currentBid || auction.CurrentPrice;
-        this.auctionItem.CurrentPrice = price;
-        this.auctionItem.StartPrice = price;
-        this.bidAmount = price + 10;
-      }
-
-      const photos = auction.PhotoList || auction.photoList;
-      if (photos && photos.length > 0) {
-        this.auctionItem.PhotoList = photos;
-      } else if (auction.image) {
-        this.auctionItem.PhotoList = [auction.image];
-      }
-
-      const desc = auction.description || auction.Description;
-      if (desc) {
-        this.auctionItem.Description = desc;
-      }
-
-      const loc = auction.Location || auction.location;
-      if (loc) {
-        this.auctionItem.Location = loc;
-      }
-
-      const start = auction.StartDate || auction.startDate;
-      if (start) {
-        this.auctionItem.StartDate = new Date(start);
-      }
-
-      const end = auction.EndDate || auction.endDate;
-      if (end) {
-        this.auctionItem.EndDate = new Date(end);
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      const itemId = Number(idParam);
+      if (!isNaN(itemId) && itemId > 0) {
+        this.itemService.getItemById(itemId).subscribe({
+          next: (liveItem) => {
+            if (liveItem) {
+              this.setAuctionItemData(liveItem);
+            }
+          },
+          error: (err) => {
+            console.error('Could not fetch live item by ID:', err);
+          }
+        });
       }
     }
 
-
     this.startCountdown();
-
 
     const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     this.isInWishlist = wishlist.includes(this.auctionItem.ID);
+
+    const reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
+    this.isReported = reportedList.includes(this.auctionItem.ID);
+  }
+
+  private setAuctionItemData(item: any): void {
+    if (!item) return;
+
+    if (item.ID) this.auctionItem.ID = item.ID;
+    if (item.Name || item.title) this.auctionItem.Name = item.Name || item.title;
+
+    const currentP = item.CurrentPrice ?? item.currentBid ?? item.StartPrice;
+    if (currentP !== undefined) {
+      this.auctionItem.CurrentPrice = currentP;
+      this.auctionItem.StartPrice = item.StartPrice ?? currentP;
+      this.bidAmount = currentP + 10;
+    }
+
+    if (item.Category) {
+      this.auctionItem.Category = typeof item.Category === 'string'
+        ? new Category({ Id: item.CategoryId || 1, name: item.Category })
+        : item.Category;
+    }
+
+    if (item.Description || item.description) {
+      this.auctionItem.Description = item.Description || item.description;
+    }
+
+    if (item.Location || item.location) {
+      this.auctionItem.Location = item.Location || item.location;
+    }
+
+    if (item.Owner || item.owner) {
+      this.auctionItem.Owner = item.Owner || item.owner;
+    }
+
+    if (item.StartDate || item.startDate) {
+      this.auctionItem.StartDate = new Date(item.StartDate || item.startDate);
+    }
+
+    if (item.EndDate || item.endDate) {
+      this.auctionItem.EndDate = new Date(item.EndDate || item.endDate);
+    }
+
+    const galleryMap: { [key: string]: string[] } = {
+      'Vehicles': [
+        'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
+      ],
+      'Art': [
+        'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop'
+      ],
+      'Clothing': [
+        'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop'
+      ],
+      'Electronics': [
+        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop'
+      ],
+      'Real Estate': [
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop'
+      ]
+    };
+
+    const catName = this.auctionItem.Category?.name || 'Vehicles';
+    const defaultGallery = galleryMap[catName] || galleryMap['Vehicles'];
+
+    if (item.ID === 2 || (this.auctionItem.Name && this.auctionItem.Name.toLowerCase().includes('watch'))) {
+      this.auctionItem.PhotoList = galleryMap['Art'];
+    } else {
+      const photos = item.PhotoList || item.photoList;
+      if (Array.isArray(photos) && photos.length >= 2) {
+        this.auctionItem.PhotoList = photos;
+      } else if (Array.isArray(photos) && photos.length === 1) {
+        this.auctionItem.PhotoList = [photos[0], ...defaultGallery.slice(1)];
+      } else if (item.ImageUrl || item.image) {
+        const img = item.ImageUrl || item.image;
+        const formattedImg = img.startsWith('http') ? img : `https://localhost:7137${img}`;
+        this.auctionItem.PhotoList = [formattedImg, ...defaultGallery.slice(1)];
+      } else {
+        this.auctionItem.PhotoList = defaultGallery;
+      }
+    }
+
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   ngOnDestroy(): void {
@@ -156,7 +229,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
       if (diff <= 0) {
         this.countdownText = 'Auction ended';
-        this.cdr.detectChanges();
+        try { this.cdr.markForCheck(); } catch {}
         clearInterval(this.timerInterval);
         return;
       }
@@ -172,7 +245,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const sStr = seconds.toString().padStart(2, '0') + 's';
 
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
-      this.cdr.detectChanges();
+      try { this.cdr.markForCheck(); } catch {}
     };
 
     updateTimer();
@@ -192,33 +265,148 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
 
-    this.auctionItem.CurrentPrice = this.bidAmount;
-    this.bidAmount = this.auctionItem.CurrentPrice + 10;
+    const currentUser = this.authService.getCurrentUser();
+    const bidderId = currentUser ? (+currentUser.id || 3) : 3;
+
+    this.bidService.addBid({
+      bidderId: bidderId,
+      biddedItemId: this.auctionItem.ID,
+      price: this.bidAmount
+    }).subscribe({
+      next: (res) => {
+        this.auctionItem.CurrentPrice = this.bidAmount;
+        this.bidAmount = this.auctionItem.CurrentPrice + 10;
+        try { this.cdr.markForCheck(); } catch {}
+      },
+      error: (err) => {
+        // Fallback local state if offline
+        this.auctionItem.CurrentPrice = this.bidAmount;
+        this.bidAmount = this.auctionItem.CurrentPrice + 10;
+        try { this.cdr.markForCheck(); } catch {}
+      }
+    });
   }
 
   redirectToLogin(): void {
-    // AJUSTARE: Modifică ruta '/login' în cazul în care colegii din echipa de rutare au definit altă cale (ex: '/auth/login')
     this.router.navigate(['/login-page']);
   }
 
   toggleWishlist(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.redirectToLogin();
+      return;
+    }
+
     this.isInWishlist = !this.isInWishlist;
     let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+
     if (this.isInWishlist) {
       if (!wishlist.includes(this.auctionItem.ID)) {
         wishlist.push(this.auctionItem.ID);
       }
+      this.toastAction = 'added';
+      this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
     } else {
       wishlist = wishlist.filter(id => id !== this.auctionItem.ID);
+      this.toastAction = 'removed';
+      this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
     }
+
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+    let userWishlist: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+    if (this.isInWishlist) {
+      if (!userWishlist.some((i: any) => i.ID === this.auctionItem.ID)) {
+        userWishlist.push(this.auctionItem);
+      }
+    } else {
+      userWishlist = userWishlist.filter((i: any) => i.ID !== this.auctionItem.ID);
+    }
+    localStorage.setItem('user_wishlist_items', JSON.stringify(userWishlist));
+
+    this.showWishlistToast = true;
+    this.isToastHiding = false;
+
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
+    if (this.toastHideTimeout) clearTimeout(this.toastHideTimeout);
+
+    this.toastHideTimeout = setTimeout(() => {
+      this.isToastHiding = true;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 800);
+
+    this.toastTimeout = setTimeout(() => {
+      this.showWishlistToast = false;
+      this.isToastHiding = false;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 1200);
+
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  // Report Modal & Handling
+  openReportModal(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.redirectToLogin();
+      return;
+    }
+    this.showReportModal = true;
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  closeReportModal(): void {
+    this.showReportModal = false;
+    this.reportDetails = '';
+    try { this.cdr.markForCheck(); } catch {}
+  }
+
+  submitReport(): void {
+    this.isReported = true;
+    this.showReportModal = false;
+
+    let reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
+    if (!reportedList.includes(this.auctionItem.ID)) {
+      reportedList.push(this.auctionItem.ID);
+    }
+    localStorage.setItem('reported_items', JSON.stringify(reportedList));
+
+    let reportLogs: any[] = JSON.parse(localStorage.getItem('reported_items_details') || '[]');
+    reportLogs.push({
+      itemId: this.auctionItem.ID,
+      itemName: this.auctionItem.Name,
+      reason: this.reportReason,
+      details: this.reportDetails,
+      date: new Date().toISOString()
+    });
+    localStorage.setItem('reported_items_details', JSON.stringify(reportLogs));
+
+    this.reportToastMessage = `Report submitted for review. Thank you!`;
+    this.showReportToast = true;
+    this.isReportToastHiding = false;
+
+    if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
+    if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
+
+    this.reportToastHideTimeout = setTimeout(() => {
+      this.isReportToastHiding = true;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 1500);
+
+    this.reportToastTimeout = setTimeout(() => {
+      this.showReportToast = false;
+      this.isReportToastHiding = false;
+      try { this.cdr.markForCheck(); } catch {}
+    }, 2000);
+
+    this.reportDetails = '';
+    try { this.cdr.markForCheck(); } catch {}
   }
 
   prevImage(event: Event): void {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
       this.selectedImageIndex = (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) % this.auctionItem.PhotoList.length;
-      this.cdr.detectChanges();
+      try { this.cdr.markForCheck(); } catch {}
     }
   }
 
@@ -226,13 +414,13 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
       this.selectedImageIndex = (this.selectedImageIndex + 1) % this.auctionItem.PhotoList.length;
-      this.cdr.detectChanges();
+      try { this.cdr.markForCheck(); } catch {}
     }
   }
 
   goToImage(idx: number): void {
     this.selectedImageIndex = idx;
-    this.cdr.detectChanges();
+    try { this.cdr.markForCheck(); } catch {}
   }
 
   setPeek(offset: number): void {
@@ -247,6 +435,6 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.peekOffset = offset;
     }
-    this.cdr.detectChanges();
+    try { this.cdr.markForCheck(); } catch {}
   }
 }

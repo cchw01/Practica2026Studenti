@@ -3,7 +3,11 @@
 
   <div class="form-section">
     <div class="register-container">
-      <h2>Login</h2>
+      <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+
+      <div *ngIf="errorMessage" class="login-error">
+        {{ errorMessage }}
+      </div>
 
       @if (errorMessage) {
         <div
@@ -23,50 +27,53 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <p>
           <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label>{{ 'LOGIN.EMAIL_LABEL' | translate }}</mat-label>
             <input
               matInput
-              placeholder="Email address"
+              placeholder="{{ 'LOGIN.EMAIL_PLACEHOLDER' | translate }}"
               type="email"
               formControlName="email"
               required
             />
             @if (hasError('email', 'required')) {
-              <mat-error>Email is required</mat-error>
+              <mat-error>{{ 'LOGIN.EMAIL_REQUIRED' | translate }}</mat-error>
             }
             @if (hasError('email', 'email')) {
-              <mat-error>Invalid email format</mat-error>
+              <mat-error>{{ 'LOGIN.EMAIL_IVALID' | translate }}</mat-error>
             }
           </mat-form-field>
         </p>
 
         <p>
           <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label>{{ 'LOGIN.PASSWORD_LABEL' | translate }}</mat-label>
             <input
               matInput
-              placeholder="Enter password"
+              placeholder="{{ 'LOGIN.PASSWORD_PLACEHOLDER' | translate }}"
               type="password"
               formControlName="password"
               required
             />
             @if (hasError('password', 'required')) {
-              <mat-error>Password is required</mat-error>
+              <mat-error>{{ 'LOGIN.PASSWORD_REQUIRED' | translate }}</mat-error>
             }
             @if (hasError('password', 'minlength')) {
-              <mat-error>Password must be at least 6 characters</mat-error>
+              <mat-error>{{ 'LOGIN.PASSWORD_MIN_LENGTH' | translate }}</mat-error>
             }
           </mat-form-field>
         </p>
 
         <button mat-raised-button type="submit" [disabled]="loginForm.invalid" class="submit-btn">
-          Log In
+          {{ 'LOGIN.SUBMIT' | translate }}
         </button>
 
         <div class="login-link">
-          <span>Don't have an account?</span>
-          <button type="button" class="btn-register" routerLink="/register-page">
-            Register here
+          <span>{{ 'LOGIN.NO_ACCOUNT' | translate }} </span>
+          <button
+            type="button"
+            class="btn-register"
+            routerLink="/register-page">
+            {{ 'LOGIN.REGISTER_HERE' | translate }}
           </button>
         </div>
       </form>

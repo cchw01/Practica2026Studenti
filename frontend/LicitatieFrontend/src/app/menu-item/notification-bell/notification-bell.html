@@ -4,12 +4,12 @@
     matBadgeColor="warn"
     matBadgeSize="small"
     [matBadgeHidden]="!hasUnread()">
-    notifications
+    {{'NOTIFICATIONS.TRUE' | translate}}
   </mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item *ngFor="let n of notifications()" (click)="read(n)" [class.unread]="!n.isRead">
     {{ n.message }}
   </button>
-  <div *ngIf="notifications().length === 0" class="empty">No notifications yet</div>
+  <div *ngIf="notifications().length === 0" class="empty">{{'NOTIFICATIONS.FALSE' | translate}}</div>
 </mat-menu>

@@ -66,32 +66,21 @@ export class RegisterPage implements OnInit {
 
     this.authService.register(userData).subscribe({
       next: (response: any) => {
-        console.log('Inregistrare reusita!', response);
-
         this.authService.login(userData.email, userData.password).subscribe({
-          next: (loginResponse: any) => {
-            console.log('Logare automata cu succes!');
-
-            if (loginResponse && loginResponse.accessToken) {
-              localStorage.setItem('id_token', loginResponse.accessToken);
-            }
-
+          next: () => {
             this.router.navigate(['/home-page']);
           },
-          error: (loginErr: any) => {
-            console.error('Auto-Login Error:', loginErr);
-            this.router.navigate(['/login-page']);
+          error: () => {
+            this.router.navigate(['/home-page']);
           },
         });
       },
       error: (err: any) => {
-        console.error('Error on register:', err);
-
-        if (err.error && err.error.message) {
-          this.errorMessage = err.error.message;
-        } else {
-          this.errorMessage = 'Your register failed, check your data.';
-        }
+        console.error('Eroare la inregistrare:', err);
+        this.authService.login(userData.email, userData.password).subscribe({
+          next: () => this.router.navigate(['/home-page']),
+          error: () => this.router.navigate(['/home-page'])
+        });
       },
     });
   }

@@ -38,15 +38,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
 import { MatBadgeModule } from '@angular/material/badge';
-import {
-  provideTranslateService,
-  TranslateDirective,
-  TranslatePipe
-} from '@ngx-translate/core';
+import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
-import {
-  provideTranslateHttpLoader
-} from '@ngx-translate/http-loader';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AdminPage } from './admin-page/admin-page/admin-page';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -77,6 +72,7 @@ import { MatButtonModule } from '@angular/material/button';
     NotFound,
     ProfileMenu,
     NotificationBell,
+    AdminPage,
   ],
   imports: [
     BrowserModule,
@@ -110,12 +106,12 @@ import { MatButtonModule } from '@angular/material/button';
       loader: provideTranslateHttpLoader({
         prefix: './i18n/',
         suffix: '.json',
-        failOnError: true
+        failOnError: true,
       }),
 
       fallbackLang: 'en',
-      lang: 'en'
-    })
+      lang: 'en',
+    }),
   ],
   bootstrap: [App],
 })
