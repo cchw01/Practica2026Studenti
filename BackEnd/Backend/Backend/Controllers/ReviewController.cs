@@ -20,7 +20,7 @@ namespace Backend.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<ReviewDTO>> GetReviews()
+        public ActionResult<IEnumerable<ReviewDto>> GetReviews()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ReviewDTO> GetReview(int id)
+        public ActionResult<ReviewDto> GetReview(int id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ReviewDTO> AddReview(ReviewCreateDTO dto)
+        public ActionResult<ReviewDto> AddReview(ReviewCreateDto dto)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<ReviewDTO> UpdateReview(int id, ReviewCreateDTO dto)
+        public ActionResult<ReviewDto> UpdateReview(int id, ReviewCreateDto dto)
         {
             try
             {
@@ -122,9 +122,9 @@ namespace Backend.Controllers
             }
         }
 
-        private static ReviewDTO MapToDTO(Review review)
+        private static ReviewResponseDto MapToDTO(Review review)
         {
-            return new ReviewDTO
+            return new ReviewResponseDto
             {
                 Id = review.Id,
                 ReviewerId = review.ReviewerId,

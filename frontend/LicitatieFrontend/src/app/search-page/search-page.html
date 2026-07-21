@@ -1,0 +1,153 @@
+<div class="search-page-container">
+  <div class="page-header">
+    <h1>{{ 'SEARCH_PAGE.TITLE' | translate }}</h1>
+    <p *ngIf="query">{{ 'SEARCH_PAGE.DESCRIPTION_WITH_QUERY' | translate: { query: query } }}</p>
+    <p *ngIf="!query">{{ 'SEARCH_PAGE.DESCRIPTION_EMPTY' | translate }}</p>
+  </div>
+
+  <div class="search-section">
+    <div class="search-field">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="text"
+        [(ngModel)]="query"
+        (ngModelChange)="onSearchChange()"
+        placeholder="{{ 'SEARCH_PAGE.SEARCH_PLACEHOLDER' | translate }}"
+      />
+    </div>
+  </div>
+
+  <div class="tabs-row">
+    <button type="button" class="tab-btn" [class.active]="activeTab === 'auctions'" (click)="setTab('auctions')">
+      <mat-icon>gavel</mat-icon>
+      <span>{{ 'SEARCH_PAGE.TABS.AUCTIONS' | translate }}</span>
+      <span class="tab-count">{{ filteredItems.length }}</span>
+    </button>
+
+    <button type="button" class="tab-btn" [class.active]="activeTab === 'users'" (click)="setTab('users')">
+      <mat-icon>person</mat-icon>
+      <span>{{ 'SEARCH_PAGE.TABS.USERS' | translate }}</span>
+      <span class="tab-count">{{ filteredUsers.length }}</span>
+    </button>
+
+    <button type="button" class="tab-btn" [class.active]="activeTab === 'forum'" (click)="setTab('forum')">
+      <mat-icon>forum</mat-icon>
+      <span>{{ 'SEARCH_PAGE.TABS.FORUM' | translate }}</span>
+      <span class="tab-count">{{ filteredPosts.length }}</span>
+    </button>
+  </div>
+
+  <!-- Auctions tab -->
+  <div class="tab-content" *ngIf="activeTab === 'auctions'">
+    <div class="loading-state" *ngIf="!itemsLoaded">
+      <span class="spinner"></span>
+      <p>{{ 'SEARCH_PAGE.LOADING' | translate }}</p>
+    </div>
+
+    <div class="cards-container" *ngIf="itemsLoaded && filteredItems.length > 0">
+      <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
+        <div class="card-image-wrap">
+          <img
+            [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
+            [alt]="item.Name"
+          />
+          <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
+            {{ getRemainingTime(item.EndDate) }}
+          </span>
+        </div>
+        <div class="card-content">
+          <h3>{{ item.Name }}</h3>
+          <p class="current-bid">
+            {{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="itemsLoaded && filteredItems.length === 0">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>{{ 'SEARCH_PAGE.AUCTIONS_EMPTY.TITLE' | translate }}</h3>
+      <p>{{ 'SEARCH_PAGE.AUCTIONS_EMPTY.DESCRIPTION' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Users tab -->
+  <div class="tab-content" *ngIf="activeTab === 'users'">
+    <div class="loading-state" *ngIf="!usersLoaded">
+      <span class="spinner"></span>
+      <p>{{ 'SEARCH_PAGE.LOADING' | translate }}</p>
+    </div>
+
+    <div class="users-grid" *ngIf="usersLoaded && filteredUsers.length > 0">
+      <div class="user-card" *ngFor="let u of filteredUsers">
+        <div class="user-avatar">{{ getInitial(u) }}</div>
+        <div class="user-info">
+          <h3>{{ u.Name || u.UserName }}</h3>
+          <span class="user-username">&#64;{{ u.UserName }}</span>
+          <div class="user-rating">
+            <span class="star" *ngFor="let s of getStars(u.Rating)" [class.filled]="s">★</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="usersLoaded && filteredUsers.length === 0">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>{{ 'SEARCH_PAGE.USERS_EMPTY.TITLE' | translate }}</h3>
+      <p>{{ 'SEARCH_PAGE.USERS_EMPTY.DESCRIPTION' | translate }}</p>
+    </div>
+  </div>
+
+  <!-- Forum tab -->
+  <div class="tab-content" *ngIf="activeTab === 'forum'">
+    <div class="loading-state" *ngIf="!postsLoaded">
+      <span class="spinner"></span>
+      <p>{{ 'SEARCH_PAGE.LOADING' | translate }}</p>
+    </div>
+
+    <div class="posts-list" *ngIf="postsLoaded && filteredPosts.length > 0">
+      <div class="post-card" *ngFor="let post of filteredPosts" (click)="goToForumDetail(post)">
+        <div class="post-header">
+          <h3>{{ post.title }}</h3>
+          <span class="post-comments">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            {{ post.commentsCount || 0 }}
+          </span>
+        </div>
+        <p class="post-description">{{ post.description }}</p>
+        <div class="post-meta">
+          <span class="post-author">&#64;{{ post.userName || 'unknown' }}</span>
+          <span class="post-date">{{ post.date | date:'mediumDate' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="postsLoaded && filteredPosts.length === 0">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>{{ 'SEARCH_PAGE.FORUM_EMPTY.TITLE' | translate }}</h3>
+      <p>{{ 'SEARCH_PAGE.FORUM_EMPTY.DESCRIPTION' | translate }}</p>
+    </div>
+  </div>
+</div>
