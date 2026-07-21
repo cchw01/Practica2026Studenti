@@ -12,7 +12,6 @@ namespace Backend.DTOs
             ErrorMessage = "TargetId trebuie să fie mai mare decât 0.")]
         public int TargetId { get; set; }
         
-        public int ReporterId { get; set; }
 
         [Required]
         public ReportReason? Reason { get; set; }

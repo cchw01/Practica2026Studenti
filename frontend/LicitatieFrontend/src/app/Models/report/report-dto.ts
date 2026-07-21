@@ -5,7 +5,6 @@ import { ReportStatus } from './report-status-enum';
 export interface CreateReportDto {
   targetType: ReportTargetType;
   targetId: number;
-  reporterId: number; 
   reason: ReportReason;
   description?: string; 
 }

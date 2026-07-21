@@ -12,23 +12,27 @@ namespace Backend.DataManagement
             DbContext = context;
         }
 
-        public Report[] GetReports()
+
+        private IQueryable<Report> GetReportsWithDetails()
         {
             return DbContext.Reports
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
                 .Include(r => r.ReportedAuctionItem)
+                    .ThenInclude(item => item.Owner)
                 .Include(r => r.ReportedForumPost)
+                    .ThenInclude(post => post.User);
+        }
+
+        public Report[] GetReports()
+        {
+            return GetReportsWithDetails()
                 .ToArray();
         }
 
         public Report? GetReportById(int id)
         {
-            return DbContext.Reports
-                .Include(r => r.Reporter)
-                .Include(r => r.ReportedUser)
-                .Include(r => r.ReportedAuctionItem)
-                .Include(r => r.ReportedForumPost)
+            return GetReportsWithDetails()
                 .FirstOrDefault(r => r.Id == id);
         }
 
@@ -82,12 +86,7 @@ namespace Backend.DataManagement
         
         public Report[] GetReportsByStatus(ReportStatus status)
         {
-            return DbContext.Reports
-                .Include(r => r.Reporter)
-                .Include(r => r.ReportedUser)
-                .Include(r => r.ReportedAuctionItem)
-                .Include(r => r.ReportedForumPost)
-                .Where(r => r.Status == status)
+            return GetReportsWithDetails()
                 .ToArray();
         }
     }
