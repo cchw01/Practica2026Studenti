@@ -337,14 +337,13 @@
 
         <!-- Adaugă licitație -->
         <a
-          routerLink="/add-item"
-          class="btn-add-auction"
-          [attr.aria-label]="'NAV.ADD_AUCTION' | translate"
-          [attr.title]="'NAV.ADD_AUCTION' | translate"
-          (click)="closeMenu()"
-        >
-          <mat-icon>add</mat-icon>
-        </a>
+  class="btn-add-auction"
+  [attr.aria-label]="'NAV.ADD_AUCTION' | translate"
+  [attr.title]="'NAV.ADD_AUCTION' | translate"
+  (click)="goToAddItem()"
+>
+  <mat-icon>add</mat-icon>
+</a>
 
         <!-- Login și register -->
         <ng-container *ngIf="!isLoggedIn()">
