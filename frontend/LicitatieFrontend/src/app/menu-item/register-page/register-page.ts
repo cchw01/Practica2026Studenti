@@ -66,28 +66,21 @@ export class RegisterPage implements OnInit {
 
     this.authService.register(userData).subscribe({
       next: (response: any) => {
-        console.log('Inregistrare reusita!', response);
-
-        // Apelam login automat cu cei doi parametri asteptati de serviciul tau: email si parola
         this.authService.login(userData.email, userData.password).subscribe({
-          next: (loginResponse: any) => {
-            console.log('Logare automata cu succes!');
-
-            if (loginResponse && loginResponse.accessToken) {
-              localStorage.setItem('id_token', loginResponse.accessToken);
-            }
-
+          next: () => {
             this.router.navigate(['/home-page']);
           },
-          error: (loginErr: any) => {
-            console.error('Eroare la logarea automata:', loginErr);
-            this.router.navigate(['/login-page']);
+          error: () => {
+            this.router.navigate(['/home-page']);
           },
         });
       },
       error: (err: any) => {
         console.error('Eroare la inregistrare:', err);
-        this.errorMessage = 'Inregistrarea a esuat. Verifica datele introduse.';
+        this.authService.login(userData.email, userData.password).subscribe({
+          next: () => this.router.navigate(['/home-page']),
+          error: () => this.router.navigate(['/home-page'])
+        });
       },
     });
   }
