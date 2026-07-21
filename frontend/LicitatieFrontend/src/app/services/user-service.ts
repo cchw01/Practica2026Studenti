@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { UserReadDto } from '../Models/user/userDto';
 import { AuctionItem } from '../Models/item-model';
+import { AuctionItemSummaryDto } from '../Models/profile/profile-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +13,31 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  private mapUser(u: any): UserReadDto {
+    return {
+      ID: u.id,
+      UserName: u.userName,
+      Name: u.name,
+      Email: u.email,
+      Role: u.role,
+      Rating: u.rating,
+    };
+  }
+
   getUsers(): Observable<UserReadDto[]> {
-    return this.http.get<UserReadDto[]>(this.apiUrl);
+    return this.http
+      .get<any[]>(this.apiUrl)
+      .pipe(map((users) => users.map((u) => this.mapUser(u))));
   }
 
   getUser(id: number): Observable<UserReadDto> {
-    return this.http.get<UserReadDto>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(map((u) => this.mapUser(u)));
   }
 
   updateUser(id: number, userName: string, name: string): Observable<UserReadDto> {
-    return this.http.put<UserReadDto>(`${this.apiUrl}/${id}`, { userName, name });
+    return this.http
+      .put<any>(`${this.apiUrl}/${id}`, { userName, name })
+      .pipe(map((u) => this.mapUser(u)));
   }
 
   deleteUser(id: number): Observable<void> {
@@ -33,8 +49,8 @@ export class UserService {
     return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
   }
 
-  getWishlist(userId: number): Observable<AuctionItem[]> {
-    return this.http.get<AuctionItem[]>(`${this.apiUrl}/${userId}/wishlist`);
+  getWishlist(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`${this.apiUrl}/${userId}/wishlist`);
   }
 
   removeFromWishlist(userId: number, itemId: number): Observable<void> {

@@ -5,9 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -46,6 +43,12 @@ import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { UserPage } from './user-page/user-page';
+import { SearchPage } from './search-page/search-page';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,7 @@ import { UserPage } from './user-page/user-page';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    SearchPage,
     AddItemPage,
     AuctionItemPage,
     Add,
@@ -87,6 +91,7 @@ import { UserPage } from './user-page/user-page';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     ReviewComponent,
     HelpPageComponent,
     DatePipe,

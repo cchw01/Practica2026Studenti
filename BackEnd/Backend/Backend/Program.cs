@@ -49,21 +49,18 @@ builder.Services.AddAuthentication(options =>
 //nu schimba fara sa verifici se strica admin+notificari fara 
 .AddJwtBearer(options =>
 {
-    options.MapInboundClaims = false;   
+    options.MapInboundClaims = false;
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"])),
-        
+
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidateAudience = true,
         ValidAudience = builder.Configuration["Jwt:Audience"],
-
-        
-
         RoleClaimType = "role",
     };
 });
@@ -191,6 +188,12 @@ using (var scope = app.Services.CreateScope())
         SET IDENTITY_INSERT [Users] OFF;
     END
 ");
+    }
+    catch { }
+
+    try
+    {
+        DbInitializer.Seed(db);
     }
     catch { }
 }

@@ -1,0 +1,98 @@
+[
+  {
+    "ID": 1,
+    "Name": "Vintage Leather Jacket",
+    "StartPrice": 150.0,
+    "CurrentPrice": 180.0,
+    "Category": { "id": 4, "name": "Clothing", "items": [] },
+    "CategoryId": 4,
+    "Description": "An authentic vintage leather jacket in excellent condition with genuine brass zips and warm lining.",
+    "Location": "Cluj-Napoca",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-01T10:00:00Z",
+    "EndDate": "2026-08-30T10:00:00Z",
+    "ImageUrl": "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop",
+    "PhotoList": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "ID": 2,
+    "Name": "Antique Pocket Watch 1920s",
+    "StartPrice": 500.0,
+    "CurrentPrice": 550.0,
+    "Category": { "id": 3, "name": "Art", "items": [] },
+    "CategoryId": 3,
+    "Description": "A handcrafted antique pocket watch from the 1920s in working condition.",
+    "Location": "București",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-10T10:00:00Z",
+    "EndDate": "2026-08-25T10:00:00Z",
+    "ImageUrl": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop",
+    "PhotoList": [
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "ID": 3,
+    "Name": "BMW 3 Series 2021 M-Sport",
+    "StartPrice": 15000.0,
+    "CurrentPrice": 16200.0,
+    "Category": { "id": 1, "name": "Vehicles", "items": [] },
+    "CategoryId": 1,
+    "Description": "Full service history, accident-free, luxury interior package, heated seats, ambient lighting, and panoramic roof.",
+    "Location": "Bucharest",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-01T10:00:00Z",
+    "EndDate": "2026-08-20T10:00:00Z",
+    "ImageUrl": "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop",
+    "PhotoList": [
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "ID": 4,
+    "Name": "Apple iPhone 15 Pro Max",
+    "StartPrice": 900.0,
+    "CurrentPrice": 950.0,
+    "Category": { "id": 2, "name": "Electronics", "items": [] },
+    "CategoryId": 2,
+    "Description": "Brand new sealed box in Natural Titanium.",
+    "Location": "Timișoara",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-15T10:00:00Z",
+    "EndDate": "2026-08-30T10:00:00Z",
+    "ImageUrl": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop",
+    "PhotoList": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop"
+    ]
+  },
+  {
+    "ID": 5,
+    "Name": "Modern Penthouse Apartment",
+    "StartPrice": 250000.0,
+    "CurrentPrice": 255000.0,
+    "Category": { "id": 6, "name": "Real Estate", "items": [] },
+    "CategoryId": 6,
+    "Description": "Stunning 3-bedroom luxury penthouse with panoramic city view.",
+    "Location": "Cluj-Napoca",
+    "OwnerId": 3,
+    "Status": 0,
+    "StartDate": "2026-07-01T10:00:00Z",
+    "EndDate": "2026-08-30T10:00:00Z",
+    "ImageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop",
+    "PhotoList": [
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop"
+    ]
+  }
+]

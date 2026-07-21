@@ -6,7 +6,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 
 import { AuthService } from './services/auth';
 
-type SupportedLanguage = 'en' | 'ro' | 'es';
+type SupportedLanguage = 'en' | 'ro' | 'es' | 'it' | 'de' | 'fr' | 'pl' | 'sk' | 'sr' | 'tr' | 'uk' | 'el' | 'hu' ;
 
 @Component({
   selector: 'app-root',
@@ -126,5 +126,15 @@ export class App implements OnInit, OnDestroy {
     this.isLoggedIn.set(false);
     this.isAdmin.set(false);
     this.router.navigate(['/home-page']);
+  }
+
+  goToAddItem(): void {
+    this.closeMenu();
+
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/add-item']);
+    } else {
+      this.router.navigate(['/login-page']);
+    }
   }
 }

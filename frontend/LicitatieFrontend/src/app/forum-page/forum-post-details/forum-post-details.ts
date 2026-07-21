@@ -28,6 +28,9 @@ export class ForumPostDetails implements OnInit {
   commentsErrorMessage = '';
   submitErrorMessage = '';
 
+  isEditingPost = false;
+  editPostForm: FormGroup;
+
   public postId = 0; //Temporar are nevoie de user logat.
   //public readonly currentUserId = 1;
   public  currentUserId: number | null = null;
@@ -50,6 +53,10 @@ export class ForumPostDetails implements OnInit {
           Validators.maxLength(1000),
         ],
       ],
+    });
+    this.editPostForm = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]],
     });
   }
 
@@ -172,6 +179,7 @@ export class ForumPostDetails implements OnInit {
   if (!this.post) {
     return;
   }
+  
 
   const confirmed = confirm('Are you sure you want to delete this discussion? This action cannot be undone.');
   if (!confirmed) {
@@ -180,7 +188,7 @@ export class ForumPostDetails implements OnInit {
 
   this.forumPostService.deleteForumPost(this.post.id).subscribe({
     next: () => {
-      this.router.navigate(['/forum']);
+      this.router.navigate(['/forum-page']);
     },
     error: (error) => {
       console.error('Error deleting forum post:', error);
@@ -189,6 +197,45 @@ export class ForumPostDetails implements OnInit {
     },
   });
 }
+
+startEditPost(): void {
+    if (!this.post) return;
+    this.editPostForm.patchValue({
+      title: this.post.title,
+      description: this.post.description,
+    });
+    this.isEditingPost = true;
+  }
+
+  cancelEditPost(): void {
+    this.isEditingPost = false;
+  }
+
+  saveEditPost(): void {
+    if (this.editPostForm.invalid || !this.post) return;
+
+    const { title, description } = this.editPostForm.value;
+
+    this.forumPostService.updateForumPost(this.post.id, { title, description } as any).subscribe({
+      next: () => {
+        this.isEditingPost = false;
+        this.loadForumPost();
+      },
+      error: (error) => {
+        console.error('Error updating forum post:', error);
+        this.postErrorMessage = 'The discussion could not be updated.';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  get editTitleControl() {
+    return this.editPostForm.get('title');
+  }
+
+  get editDescriptionControl() {
+    return this.editPostForm.get('description');
+  }
 
 deleteComment(commentId: number): void {
   const confirmed = confirm('Are you sure you want to delete this comment?');
@@ -207,12 +254,46 @@ deleteComment(commentId: number): void {
     },
   });
 }
+editingCommentId: number | null = null;
+  editCommentText = '';
 
-  getUserLabel(userId: number): string {
-    return `User #${userId}`;
+  startEditComment(comment: ForumComment): void {
+    this.editingCommentId = comment.id;
+    this.editCommentText = comment.commentText;
   }
 
-  getInitials(userId: number): string {
+  cancelEditComment(): void {
+    this.editingCommentId = null;
+    this.editCommentText = '';
+  }
+
+  saveEditComment(commentId: number): void {
+    const trimmed = this.editCommentText.trim();
+    if (trimmed.length < 2) return;
+
+    this.forumCommentService.updateForumComment(commentId, { commentText: trimmed }).subscribe({
+      next: () => {
+        this.editingCommentId = null;
+        this.editCommentText = '';
+        this.loadForumComments();
+      },
+      error: (error) => {
+        console.error('Error updating comment:', error);
+        this.commentsErrorMessage = 'The comment could not be updated.';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+
+  getUserLabel(userId: number, userName?: string): string {
+    return userName ? userName : `User #${userId}`;
+  }
+
+  getInitials(userName?: string, userId?: number): string {
+    if (userName && userName.length > 0) {
+      return userName.charAt(0).toUpperCase();
+    }
     return `U${userId}`;
   }
 

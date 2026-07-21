@@ -20,6 +20,7 @@ import { CreateForumPost } from './forum-page/create-forum-post/create-forum-pos
 import { NotFound } from './not-found/not-found';
 import { AdminGuard } from './services/admin-guard';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { SearchPage } from './search-page/search-page';
 import { UserPage } from './user-page/user-page';
 
 const routes: Routes = [
@@ -27,8 +28,9 @@ const routes: Routes = [
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
+  { path: 'search-page', component: SearchPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionDetail },
+  { path: 'auctions/:id', component: AuctionItemPage },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
@@ -40,6 +42,7 @@ const routes: Routes = [
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
+  { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: 'user-page/:id', component: UserPage},
