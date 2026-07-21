@@ -29,7 +29,7 @@ export interface AboutFeature {
   descriptionKey: string;
 }
 
-const MIN_REMAINING_MS = 10 * 60 * 1000;
+
 
 interface Particle {
   ox: number;
@@ -181,9 +181,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.displayedAuctions = this.allAuctions
       .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
-      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
+      .filter((entry) => entry.remainingMs > 0)
       .sort((a, b) => a.remainingMs - b.remainingMs)
-      .map((entry) => entry.item);
+      .map((entry) => entry.item)
+      .slice(0, 4);
 
     this.cdr.detectChanges();
   }
@@ -203,7 +204,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-    this.itemService.getItems().subscribe({
+    this.itemService.getActiveItems().subscribe({
       next: (items) => {
         this.allAuctions = items;
         this.refreshDisplayedAuctions();
@@ -238,6 +239,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (this.auctionsTimerId !== undefined) {
       clearInterval(this.auctionsTimerId);
     }
+
 
     const hero = this.heroRef.nativeElement;
 

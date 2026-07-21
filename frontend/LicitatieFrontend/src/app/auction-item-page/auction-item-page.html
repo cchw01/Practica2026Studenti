@@ -58,11 +58,11 @@
       <div class="info-grid">
         <div class="info-card highlighted">
           <span class="info-label">Current Price</span>
-          <strong class="info-value price">${{ auctionItem.CurrentPrice }}</strong>
+          <strong class="info-value price">{{ auctionItem.CurrentPrice }} RON</strong>
         </div>
         <div class="info-card">
           <span class="info-label">Starting Price</span>
-          <strong class="info-value">${{ auctionItem.StartPrice }}</strong>
+          <strong class="info-value">{{ auctionItem.StartPrice }} RON</strong>
         </div>
         <div class="info-card">
           <span class="info-label">Category</span>
@@ -106,7 +106,7 @@
           <h3 class="bid-title">Place Your Bid</h3>
           <div class="bid-input-row">
             <div class="bid-input-wrap">
-              <span class="bid-currency">$</span>
+              <span class="bid-currency">RON</span>
               <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="Enter bid amount"
                 [min]="auctionItem.CurrentPrice + 1" />
             </div>
@@ -115,7 +115,7 @@
             </button>
           </div>
           <p *ngIf="errorMessage" class="error-msg">⚠️ {{ errorMessage }}</p>
-          <p class="bid-hint">Minimum bid: <strong>${{ auctionItem.CurrentPrice + 1 }}</strong></p>
+          <p class="bid-hint">Minimum bid: <strong>{{ auctionItem.CurrentPrice + 1 }} RON</strong></p>
         </ng-container>
 
         <ng-template #loginPrompt>

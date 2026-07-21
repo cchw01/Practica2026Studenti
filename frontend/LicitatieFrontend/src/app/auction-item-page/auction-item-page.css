@@ -347,16 +347,17 @@
 
 .bid-currency {
   position: absolute;
-  left: 12px;
-  font-size: 14px;
-  font-weight: 600;
+  left: 10px;
+  font-size: 12px;
+  font-weight: 700;
   color: #3f51b5;
   pointer-events: none;
+  letter-spacing: 0.5px;
 }
 
 .bid-input {
   width: 100%;
-  padding: 10px 14px 10px 28px;
+  padding: 10px 14px 10px 44px;
   border-radius: 10px;
   border: 1.5px solid rgba(63, 81, 181, 0.2);
   background: rgba(255, 255, 255, 0.8);
