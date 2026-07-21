@@ -118,11 +118,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       description: 'Trendy apparel, footwear, and accessories.',
     },
     {
-      name: 'Electronics',
-      icon: 'devices',
-      description: 'Smartphones, laptops, and audio gear.',
-    },
-    {
       name: 'Home & Garden',
       icon: 'yard',
       description: 'Furniture, décor, and outdoor essentials.',
