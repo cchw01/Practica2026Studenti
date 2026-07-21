@@ -78,6 +78,28 @@
       "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
     },
 
+    "ABOUT": {
+      "EYEBROW": "Despre noi",
+      "TITLE_START": "Cine",
+      "TITLE_END": "suntem",
+      "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă. Conectăm mii de cumpărători și vânzători din numeroase categorii, printr-un proces transparent și corect pentru toți.",
+
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Sigur și de încredere",
+          "DESCRIPTION": "Fiecare tranzacție este protejată, așa că poți licita cu încredere."
+        },
+        "REALTIME": {
+          "TITLE": "Licitații în timp real",
+          "DESCRIPTION": "Urmărește prețurile actualizate live și nu rata niciun moment câștigător."
+        },
+        "COMMUNITY": {
+          "TITLE": "Comunitate în creștere",
+          "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
+        }
+      }
+    },
+
     "CATEGORIES": {
       "EYEBROW": "Categorii",
       "TITLE_START": "Explorează",
@@ -111,28 +133,7 @@
       "TITLE_START": "Licitații",
       "TITLE_END": "active",
       "PLACE_BID": "Licitează",
-
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW Seria 7, anul 2022, în stare impecabilă, cu un singur proprietar."
-        },
-
-        "GOLD_EARRINGS": {
-          "TITLE": "Cercei din aur",
-          "DESCRIPTION": "Cercei din aur de 18 karate cu diamante certificate."
-        },
-
-        "PATEK_PHILIPPE": {
-          "TITLE": "Ceas Patek Philippe",
-          "DESCRIPTION": "Ceas de colecție în ediție limitată, cu cutie și certificat incluse."
-        },
-
-        "VILLA": {
-          "TITLE": "Vilă",
-          "DESCRIPTION": "Vilă de lux cu piscină, cinci dormitoare și vedere panoramică."
-        }
-      }
+      "EMPTY": "Momentan nu există licitații care se termină în curând — revino mai târziu."
     }
   },
 
@@ -179,6 +180,34 @@
   "TIME": {
     "ENDED": "Licitația s-a încheiat",
     "LEFT": "rămase"
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Rezultate căutare",
+  "DESCRIPTION_WITH_QUERY": "Rezultate pentru \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Caută licitații, useri sau postări de forum pe BidSphere",
+  "SEARCH_PLACEHOLDER": "Caută licitații, useri sau postări de forum...",
+  "LOADING": "Se încarcă rezultatele...",
+
+  "TABS": {
+    "AUCTIONS": "Licitații",
+    "USERS": "Useri",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nicio licitație găsită",
+    "DESCRIPTION": "Nu există licitații care să corespundă căutării tale."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Niciun utilizator găsit",
+    "DESCRIPTION": "Nu există utilizatori care să corespundă căutării tale."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nicio postare găsită",
+    "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
   }
 },
 "ADD_ITEM_PAGE": {
