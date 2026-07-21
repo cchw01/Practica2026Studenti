@@ -11,7 +11,9 @@ namespace Backend.DTOs
         [Range(1, int.MaxValue,
             ErrorMessage = "TargetId trebuie să fie mai mare decât 0.")]
         public int TargetId { get; set; }
-        
+
+        [Range(1, int.MaxValue,
+            ErrorMessage = "ReporterId trebuie să fie mai mare decât 0.")]
         public int ReporterId { get; set; }
 
         [Required]
