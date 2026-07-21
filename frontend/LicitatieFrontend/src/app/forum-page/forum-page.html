@@ -1,50 +1,59 @@
 <div class="forum-page">
     <main class="forum-container">
         <header class="forum-introduction">
-            <h1>{{ 'FORUM.TITLE' | translate }}</h1>
-            <p> {{ 'FORUM.DESCRIPTION' | translate }}</p>
+            <h1>Forum discussions</h1>
+            <p> Browse current discussions and participate in conversations with other users. </p>
         </header>
 
         <section class="discussion-section">
-            <div class="discussion-toolbar">
-                @if (currentUserId !== null) {
-<a class="create-discussion-button" routerLink="/forum/new">  {{ 'FORUM.START_DISCUSSION' | translate }} </a>
+            
+            <div class="search-bar">
+    <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="resetPage()"
+        placeholder="Search discussions..."
+        aria-label="Search discussions"
+    />
+</div>
+
+<div class="discussion-toolbar">
+    @if (currentUserId !== null) {
+<a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
 } @else {
-<a class="create-discussion-button" routerLink="/login-page"> {{ 'FORUM.LOGIN_TO_START' | translate }} </a>
+<a class="create-discussion-button" routerLink="/login-page"> Log in to start a discussion </a>
 }
 
                 <div class="sort-control">
-                    <select [(ngModel)]="sortOption" aria-label="Sort discussions">
-                        <option value="latest">{{ 'FORUM.SORT.LATEST' | translate }}</option>
-                        <option value="oldest">{{ 'FORUM.SORT.OLDEST' | translate }}</option>
-                        <option value="comments">{{ 'FORUM.SORT.MOST_COMMENTED' | translate }}</option>
+                    <select [(ngModel)]="sortOption" (ngModelChange)="resetPage()" aria-label="Sort discussions">
+                        <option value="latest">Latest first</option>
+                        <option value="oldest">Oldest first</option>
+                        <option value="comments">Most commented</option>
                     </select>
                 </div>
 
                 <p class="discussion-total">
                     {{ visiblePosts.length }}
-                    {{ visiblePosts.length === 1 
-                    ? ('FORUM.DISCUSSION' | translate)
-                    : ('FORUM.DISCUSSIONS' | translate) }}
+                    {{ visiblePosts.length === 1 ? 'discussion' : 'discussions' }}
                 </p>
             </div>
 
             @if (isLoading) {
             <div class="empty-state" aria-live="polite">
-                <h2>{{ 'FORUM.LOADING.TITLE' | translate }}</h2>
+                <h2>Loading discussions</h2>
             </div>
             } @else if (errorMessage) {
             <div class="empty-state" role="alert">
-                <h2>{{ 'FORUM.ERROR.TITLE' | translate }}</h2>
+                <h2>Unable to load discussions</h2>
                 <p>{{ errorMessage }}</p>
-                <button type="button" class="retry-button" (click)="retryLoading()">{{ 'FORUM.ERROR.RETRY' | translate }}</button>
+                <button type="button" class="retry-button" (click)="retryLoading()"> Try again </button>
             </div>
             } @else {
             <div class="discussion-list">
-                @for (post of visiblePosts; track post.id) {
+              @for (post of pagedPosts; track post.id) {
                 <a class="discussion-card" [routerLink]="['/forum', post.id]">
                     <div class="author-avatar">
-                        {{ getInitials(post.userId) }}
+                        {{ getInitials(post.userName, post.userId) }}
                     </div>
                     <div class="discussion-main">
                         <div class="discussion-heading">
@@ -55,8 +64,8 @@
                         </div>
 
                         <p class="discussion-author">
-                            {{ 'FORUM.POSTED_BY' | translate }}
-                            <strong> {{ getUserLabel(post.userId) }} </strong>
+                            Posted bys
+                            <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
                         </p>
 
                         <p class="discussion-description"> {{ post.description }} </p>
@@ -66,20 +75,32 @@
                         <div class="comment-icon" aria-hidden="true"></div>
 
                         <p class="comment-count">
-                            {{ post.commentsCount }} {{ post.commentsCount === 1 
-                            ? ('FORUM.COMMENT' | translate)
-                            : ('FORUM.COMMENTS' | translate) }}
+                            {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
                         </p>
                     </div>
                 </a>
                 } @empty {
                 <div class="empty-state">
-                    <h2>{{ 'FORUM.EMPTY.TITLE' | translate }}</h2>
-                    <p> {{ 'FORUM.EMPTY.MESSAGE' | translate }}</p>
+                    <h2>No discussions available</h2>
+                    <p> There are currently no discussions in the forum. </p>
                 </div>
                 }
             </div>
             }
+            @if (totalPages > 1) {
+<nav class="pagination" aria-label="Pagination">
+    <button type="button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+
+    @for (page of pageNumbers; track page) {
+    <button type="button" class="page-button" [class.active]="page === currentPage" (click)="goToPage(page)">
+        {{ page }}
+    </button>
+    }
+
+    <button type="button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</nav>
+}
+
         </section>
     </main>
 </div>
