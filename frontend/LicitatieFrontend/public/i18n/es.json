@@ -460,9 +460,8 @@
     "CANCEL": "Cancelar",
     "CREATING": "Creando la discusión...",
     "SUBMIT": "Iniciar discusión"
-  }
-}, 
-"PROFILE_PAGE": {
+  },
+  "PROFILE_PAGE": {
   "PROFILE": {
     "USERNAME_NOT_SET": "@nombre de usuario no establecido",
     "NAME_NOT_SET": "Nombre no establecido",

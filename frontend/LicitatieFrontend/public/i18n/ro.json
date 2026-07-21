@@ -461,9 +461,8 @@
     "CANCEL": "Anulează",
     "CREATING": "Se creează discuția...",
     "SUBMIT": "Începe discuția"
-  }
-}, 
-"PROFILE_PAGE": {
+  },
+  "PROFILE_PAGE": {
   "PROFILE": {
     "USERNAME_NOT_SET": "@username necompletat",
     "NAME_NOT_SET": "Nume necompletat",
