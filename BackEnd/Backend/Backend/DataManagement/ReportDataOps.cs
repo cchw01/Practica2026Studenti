@@ -17,8 +17,8 @@ namespace Backend.DataManagement
             return DbContext.Reports
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
-                .Include(r => r.AuctionItem)
-                .Include(r => r.ForumPost)
+                .Include(r => r.ReportedAuctionItem)
+                .Include(r => r.ReportedForumPost)
                 .ToArray();
         }
 
@@ -27,8 +27,8 @@ namespace Backend.DataManagement
             return DbContext.Reports
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
-                .Include(r => r.AuctionItem)
-                .Include(r => r.ForumPost)
+                .Include(r => r.ReportedAuctionItem)
+                .Include(r => r.ReportedForumPost)
                 .FirstOrDefault(r => r.Id == id);
         }
 
@@ -38,8 +38,8 @@ namespace Backend.DataManagement
                 r.ReporterId == report.ReporterId && 
                 r.TargetType == report.TargetType &&
                 ((report.TargetType == ReportTargetType.User && r.ReportedUserId == report.ReportedUserId) ||
-                 (report.TargetType == ReportTargetType.AuctionItem && r.AuctionItemId == report.AuctionItemId) ||
-                 (report.TargetType == ReportTargetType.ForumPost && r.ForumPostId == report.ForumPostId))
+                 (report.TargetType == ReportTargetType.AuctionItem && r.ReportedAuctionItemId == report.ReportedAuctionItemId) ||
+                 (report.TargetType == ReportTargetType.ForumPost && r.ReportedForumPostId == report.ReportedForumPostId))
             );
 
             if (exists)
@@ -85,7 +85,8 @@ namespace Backend.DataManagement
             return DbContext.Reports
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
-                .Include(r => r.AuctionItem)
+                .Include(r => r.ReportedAuctionItem)
+                .Include(r => r.ReportedForumPost)
                 .Where(r => r.Status == status)
                 .ToArray();
         }
