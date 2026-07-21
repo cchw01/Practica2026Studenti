@@ -59,35 +59,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return new Observable<any>(observer => {
-      this.http.post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true }).subscribe({
-        next: (res: any) => {
-          this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn || 86400 });
-          observer.next(res);
-          observer.complete();
-        },
-        error: () => {
-          // Fallback login local dacă serverul nu răspunde
-          const fakeUser = {
-            id: 3,
-            name: email.split('@')[0],
-            email: email,
-            username: email.split('@')[0],
-            role: 'User'
-          };
-          const fakeToken = this.createLocalToken(fakeUser);
-          const authResult = {
-            idToken: fakeToken,
-            accessToken: fakeToken,
-            expiresIn: 86400
-          };
-          this.setSession(authResult);
-          localStorage.setItem('profile_user', JSON.stringify(fakeUser));
-          observer.next(authResult);
-          observer.complete();
-        }
-      });
-    });
+    return this.http
+      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+      .pipe(
+        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
+      );
   }
 
   private setSession(authResult: any): void {

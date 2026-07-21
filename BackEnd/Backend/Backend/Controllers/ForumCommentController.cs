@@ -127,6 +127,7 @@ namespace Backend.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult UpdateForumComment(int id, UpdateForumCommentDto updateDto)
         {
@@ -135,8 +136,18 @@ namespace Backend.Controllers
                 var existingComment = dataOps.GetForumCommentById(id);
                 if (existingComment == null) return NotFound("Comment not found.");
 
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == "role");
+                if (userIdClaim == null) return Unauthorized();
+
+                int currentUserId = int.Parse(userIdClaim.Value);
+                bool isAdmin = roleClaim?.Value == "Admin";
+                bool isAuthor = existingComment.UserId == currentUserId;
+
+                if (!isAuthor && !isAdmin) return Forbid();
+
                 existingComment.CommentText = updateDto.CommentText;
-                
+
                 dataOps.UpdateForumComment(existingComment);
                 return Ok();
             }
@@ -145,12 +156,29 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Admin")]
+
+
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteForumComment(int id)
         {
             try
             {
+                var comment = dataOps.GetForumCommentById(id);
+                if (comment == null) return NotFound();
+
+                var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+                var roleClaim = User.Claims.FirstOrDefault(c => c.Type == "role");
+
+                if (userIdClaim == null) return Unauthorized();
+
+                int currentUserId = int.Parse(userIdClaim.Value);
+                bool isAdmin = roleClaim?.Value == "Admin";
+                bool isAuthor = comment.UserId == currentUserId;
+
+                if (!isAuthor && !isAdmin)
+                    return Forbid();
+
                 dataOps.DeleteForumComment(id);
                 return Ok();
             }
