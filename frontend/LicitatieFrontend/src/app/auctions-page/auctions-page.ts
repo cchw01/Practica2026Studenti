@@ -32,7 +32,7 @@ export class AuctionsPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private categoryService: CategoryService,
-  ) {}
+  ) { }
 
   getCategoryName(item: AuctionItem): string {
     if (!item || !item.Category) return '';
