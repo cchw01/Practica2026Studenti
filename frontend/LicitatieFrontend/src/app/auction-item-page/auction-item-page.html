@@ -2,7 +2,7 @@
 
 
   <div class="page-header">
-    <div class="header-badge"> {{ 'AUCTION_ITEM_PAGE.HEADER_BADGE' | translate }}</div>
+    <div class="header-badge">🏷️ Auction Detail</div>
     <h1 class="page-title">{{ auctionItem.Name }}</h1>
   </div>
 
@@ -57,23 +57,23 @@
 
       <div class="info-grid">
         <div class="info-card highlighted">
-          <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.CURRENT_PRICE' | translate }}</span>
+          <span class="info-label">Current Price</span>
           <strong class="info-value price">${{ auctionItem.CurrentPrice }}</strong>
         </div>
         <div class="info-card">
-          <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.START_PRICE' | translate }}</span>
+          <span class="info-label">Starting Price</span>
           <strong class="info-value">${{ auctionItem.StartPrice }}</strong>
         </div>
         <div class="info-card">
-          <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.CATEGORY' | translate }}</span>
+          <span class="info-label">Category</span>
           <strong class="info-value">{{ auctionItem.Category?.name }}</strong>
         </div>
         <div class="info-card">
-          <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.LOCATION' | translate }}</span>
+          <span class="info-label">Location</span>
           <strong class="info-value">📍 {{ auctionItem.Location }}</strong>
         </div>
         <div class="info-card">
-          <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.STARTS_AT' | translate }}</span>
+          <span class="info-label">Starts At</span>
           <strong class="info-value">📅 {{ auctionItem.StartDate | date:'mediumDate' }}</strong>
         </div>
       </div>
@@ -83,14 +83,14 @@
         <div class="meta-item">
           <span class="meta-icon">👤</span>
           <div>
-            <span class="meta-label">{{ 'AUCTION_ITEM_PAGE.INFO.OWNER' | translate }}</span>
+            <span class="meta-label">Owner</span>
             <span class="meta-val">{{ auctionItem.Owner?.Name }}</span>
           </div>
         </div>
         <div class="meta-item">
           <span class="meta-icon">⏳</span>
           <div>
-            <span class="meta-label">{{ 'AUCTION_ITEM_PAGE.INFO.ENDS' | translate }}</span>
+            <span class="meta-label">Ends</span>
             <span class="meta-val">{{ auctionItem.EndDate | date:'mediumDate' }}</span>
             <small class="countdown-timer">{{ countdownText }}</small>
           </div>
@@ -103,46 +103,95 @@
 
       <div class="bid-section">
         <ng-container *ngIf="authService.isLoggedIn(); else loginPrompt">
-          <h3 class="bid-title">{{ 'AUCTION_ITEM_PAGE.BID.TITLE' | translate }}</h3>
+          <h3 class="bid-title">Place Your Bid</h3>
           <div class="bid-input-row">
             <div class="bid-input-wrap">
               <span class="bid-currency">$</span>
-              <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="{{ 'AUCTION_ITEM_PAGE.BID.PLACEHOLDER' | translate }}"
+              <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="Enter bid amount"
                 [min]="auctionItem.CurrentPrice + 1" />
             </div>
             <button type="button" class="btn-bid" (click)="placeBid()">
-               {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
+              🔨 Place Bid
             </button>
           </div>
           <p *ngIf="errorMessage" class="error-msg">⚠️ {{ errorMessage }}</p>
-          <p class="bid-hint">{{ 'AUCTION_ITEM_PAGE.BID.MINIMUM' | translate }}  <strong>${{ auctionItem.CurrentPrice + 1 }}</strong></p>
+          <p class="bid-hint">Minimum bid: <strong>${{ auctionItem.CurrentPrice + 1 }}</strong></p>
         </ng-container>
 
         <ng-template #loginPrompt>
           <div class="login-prompt">
-            <p class="login-text">{{ 'AUCTION_ITEM_PAGE.LOGIN_PROMPT' | translate }}</p>
+            <p class="login-text">Sign in to place a bid on this item.</p>
             <button type="button" class="btn-login" (click)="redirectToLogin()">
-              {{ 'AUCTION_ITEM_PAGE.BID.LOGIN_BUTTON' | translate }}
+              Login to Bid
             </button>
           </div>
         </ng-template>
       </div>
 
+      <!-- Wishlist container (only visible when logged in) -->
+      <div class="wishlist-container" *ngIf="authService.isLoggedIn()">
+        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()">
+          <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
+          <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
+        </button>
 
-      <button *ngIf="authService.isLoggedIn()" type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist"
-        (click)="toggleWishlist()">
-        {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
-      </button>
+        <div *ngIf="showWishlistToast" class="wishlist-toast" [class.toast-added]="toastAction === 'added'" [class.toast-removed]="toastAction === 'removed'" [class.toast-hiding]="isToastHiding">
+          <span class="toast-badge">{{ toastAction === 'added' ? '💖' : '💔' }}</span>
+          <span class="toast-msg">{{ toastMessage }}</span>
+        </div>
+      </div>
+
+      <!-- Report Button -->
+      <div class="actions-footer">
+        <button type="button" class="btn-report" [class.reported]="isReported" (click)="openReportModal()">
+          <span>{{ isReported ? '🚩 Item Reported' : '🚩 Report Item' }}</span>
+        </button>
+      </div>
 
     </div>
   </div>
 
 
   <div class="description-section">
-    <h3 class="section-title">{{ 'AUCTION_ITEM_PAGE.DESCRIPTION.TITLE' | translate }}</h3>
+    <h3 class="section-title">Product Description</h3>
     <div class="description-card">
       <p>{{ auctionItem.Description }}</p>
     </div>
+  </div>
+
+  <!-- Report Item Modal -->
+  <div class="modal-overlay" *ngIf="showReportModal" (click)="closeReportModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>🚩 Report Auction</h3>
+        <button type="button" class="close-btn" (click)="closeReportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">Help keep BidSphere safe. Please select a reason for reporting this auction:</p>
+
+        <label class="field-label">Reason</label>
+        <select [(ngModel)]="reportReason" class="modal-select">
+          <option value="Inappropriate Content">Inappropriate Content</option>
+          <option value="Misleading Description">Misleading Description</option>
+          <option value="Fake or Counterfeit Item">Fake or Counterfeit Item</option>
+          <option value="Suspicious Bidding Activity">Suspicious Bidding Activity</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label class="field-label">Additional Details (Optional)</label>
+        <textarea [(ngModel)]="reportDetails" rows="3" placeholder="Describe the issue..." class="modal-textarea"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeReportModal()">Cancel</button>
+        <button type="button" class="btn-submit-report" (click)="submitReport()">Submit Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Toast Notification -->
+  <div *ngIf="showReportToast" class="report-toast" [class.toast-hiding]="isReportToastHiding">
+    <span class="report-badge">🚩</span>
+    <span class="report-msg">{{ reportToastMessage }}</span>
   </div>
 
 </div>

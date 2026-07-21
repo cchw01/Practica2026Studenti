@@ -304,140 +304,137 @@
     }
   },
 
-    "NOTIFICATIONS":{
-      "TRUE": "Notifications",
-      "FALSE": "No notifications yet."
-    }, 
-    
+  "NOTIFICATIONS":{
+    "TRUE": "Notifications",
+    "FALSE": "No notifications yet."
+  },
+
   "AUCTION_ITEM_PAGE": {
-  "HEADER_BADGE": "🏷️ Auction Detail",
+    "HEADER_BADGE": "🏷️ Auction Detail",
 
-  "INFO": {
-    "CURRENT_PRICE": "Current Price",
-    "START_PRICE": "Starting Price",
-    "CATEGORY": "Category",
-    "LOCATION": "Location",
-    "STARTS_AT": "Starts At",
-    "OWNER": "Owner",
-    "ENDS": "Ends"
+    "INFO": {
+      "CURRENT_PRICE": "Current Price",
+      "START_PRICE": "Starting Price",
+      "CATEGORY": "Category",
+      "LOCATION": "Location",
+      "STARTS_AT": "Starts At",
+      "OWNER": "Owner",
+      "ENDS": "Ends"
+    },
+
+    "BID": {
+      "TITLE": "Place Your Bid",
+      "PLACEHOLDER": "Enter bid amount",
+      "BUTTON": "🔨 Place Bid",
+      "MINIMUM": "Minimum bid:",
+      "LOGIN_TEXT": "Sign in to place a bid on this item.",
+      "LOGIN_BUTTON": "Login to Bid"
+    },
+
+    "WISHLIST": {
+      "ADD": "🤍 Add to Wishlist",
+      "ADDED": "❤️ In Wishlist"
+    },
+
+    "DESCRIPTION": {
+      "TITLE": "Product Description"
+    },
+
+    "STATUS": {
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PENDING": "Pending"
+    },
+
+    "MESSAGES": {
+      "AUCTION_ENDED": "Auction ended.",
+      "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
+      "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
+    },
+
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "m",
+      "SECONDS": "s"
+    }
   },
-
-  "BID": {
-    "TITLE": "Place Your Bid",
-    "PLACEHOLDER": "Enter bid amount",
-    "BUTTON": "🔨 Place Bid",
-    "MINIMUM": "Minimum bid:",
-    "LOGIN_TEXT": "Sign in to place a bid on this item.",
-    "LOGIN_BUTTON": "Login to Bid"
+  "REVIEWS": {
+    "TITLE": "Reviews",
+    "REVIEWER_ID": "Reviewer ID",
+    "REVIEWED_USER_ID": "Reviewed User ID",
+    "RATING": "Rating (0–5)",
+    "RATING_ERROR": "The rating must be between 0 and 5.",
+    "COMMENT": "Comment",
+    "ADD": "Add",
+    "UPDATE": "Update",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit review",
+    "DELETE": "Delete review"
   },
-
-  "WISHLIST": {
-    "ADD": "🤍 Add to Wishlist",
-    "ADDED": "❤️ In Wishlist"
+  "SHARE": {
+    "BUTTON": "Share",
+    "COPIED": "Copied!"
   },
-
-  "DESCRIPTION": {
-    "TITLE": "Product Description"
+  "USER_MENU": {
+    "PROFILE": "Profile",
+    "LOGOUT": "Log out"
   },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
 
-  "STATUS": {
-    "ACTIVE": "Active",
-    "ENDED": "Ended",
-    "PENDING": "Pending"
+    "LOADING_DISCUSSION_TITLE": "Loading discussion",
+    "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
+    "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
+    "TRY_AGAIN": "Try again",
+
+    "DELETE_POST": "Delete",
+    "POSTED_BY": "Posted by",
+
+    "DISCUSSION": "Discussion",
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+
+    "ADD_COMMENT": "Add a comment",
+    "COMMENT_PLACEHOLDER": "Write your comment here...",
+    "COMMENT_REQUIRED": "A comment is required.",
+    "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
+    "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
+
+    "PUBLISHING": "Publishing...",
+    "PUBLISH_COMMENT": "Publish comment",
+
+    "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
+    "LOGIN": "Log in",
+
+    "LOADING_COMMENTS": "Loading comments",
+    "LOAD_COMMENTS_ERROR": "Unable to load comments",
+
+    "DELETE_COMMENT": "Delete",
+    "NO_COMMENTS": "No comments yet"
   },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
+    "TITLE": "Start a discussion",
+    "SUBTITLE": "Create a new discussion and share it with other forum users.",
 
-  "MESSAGES": {
-    "AUCTION_ENDED": "Auction ended.",
-    "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
-    "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
-  },
+    "TITLE_LABEL": "Title",
+    "TITLE_PLACEHOLDER": "Enter a clear discussion title",
+    "TITLE_REQUIRED": "A title is required.",
+    "TITLE_WHITESPACE": "The title cannot contain only spaces.",
+    "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
+    "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
 
-  "COUNTDOWN": {
-    "DAYS": "d",
-    "HOURS": "h",
-    "MINUTES": "m",
-    "SECONDS": "s"
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
+    "DESCRIPTION_REQUIRED": "A description is required.",
+    "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
+    "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
+    "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
+
+    "CREATE_ERROR": "Unable to create discussion",
+    "CANCEL": "Cancel",
+    "CREATING": "Creating discussion...",
+    "SUBMIT": "Start discussion"
   }
-},
-"REVIEWS": {
-  "TITLE": "Reviews",
-  "REVIEWER_ID": "Reviewer ID",
-  "REVIEWED_USER_ID": "Reviewed User ID",
-  "RATING": "Rating (0–5)",
-  "RATING_ERROR": "The rating must be between 0 and 5.",
-  "COMMENT": "Comment",
-  "ADD": "Add",
-  "UPDATE": "Update",
-  "CANCEL": "Cancel",
-  "EDIT": "Edit review",
-  "DELETE": "Delete review"
-},
- "SHARE": {
-  "BUTTON": "Share",
-  "COPIED": "Copied!"
-},
- "USER_MENU": {
-  "PROFILE": "Profile",
-  "LOGOUT": "Log out"
-},
-
-"FORUM_DETAILS": {
-  "BACK_TO_DISCUSSIONS": "Back to discussions",
-
-  "LOADING_DISCUSSION_TITLE": "Loading discussion",
-  "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
-  "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
-  "TRY_AGAIN": "Try again",
-
-  "DELETE_POST": "Delete",
-  "POSTED_BY": "Posted by",
-
-  "DISCUSSION": "Discussion",
-  "COMMENT": "comment",
-  "COMMENTS": "comments",
-
-  "ADD_COMMENT": "Add a comment",
-  "COMMENT_PLACEHOLDER": "Write your comment here...",
-  "COMMENT_REQUIRED": "A comment is required.",
-  "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
-  "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
-
-  "PUBLISHING": "Publishing...",
-  "PUBLISH_COMMENT": "Publish comment",
-
-  "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
-  "LOGIN": "Log in",
-
-  "LOADING_COMMENTS": "Loading comments",
-  "LOAD_COMMENTS_ERROR": "Unable to load comments",
-
-  "DELETE_COMMENT": "Delete",
-  "NO_COMMENTS": "No comments yet"
-},
-
-"CREATE_POST": {
-  "BACK_TO_DISCUSSIONS": "Back to discussions",
-  "TITLE": "Start a discussion",
-  "SUBTITLE": "Create a new discussion and share it with other forum users.",
-
-  "TITLE_LABEL": "Title",
-  "TITLE_PLACEHOLDER": "Enter a clear discussion title",
-  "TITLE_REQUIRED": "A title is required.",
-  "TITLE_WHITESPACE": "The title cannot contain only spaces.",
-  "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
-  "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
-
-  "DESCRIPTION_LABEL": "Description",
-  "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
-  "DESCRIPTION_REQUIRED": "A description is required.",
-  "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
-  "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
-  "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
-
-  "CREATE_ERROR": "Unable to create discussion",
-  "CANCEL": "Cancel",
-  "CREATING": "Creating discussion...",
-  "SUBMIT": "Start discussion"
-}
-
 }

@@ -39,6 +39,7 @@ const routes: Routes = [
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
+  { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: '**', component: NotFound },
