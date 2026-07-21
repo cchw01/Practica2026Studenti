@@ -8,18 +8,31 @@
 
     <div class="content-grid">
 
-        <!-- Secțiunea FAQ Interactivă -->
+        <!-- Secțiunea FAQ Interactivă cu Categorii -->
         <div class="card faq-card">
             <h2>❓ Întrebări Frecvente</h2>
-            <div class="faq-list">
-                <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)"
-                    [class.active]="faq.isOpen">
-                    <div class="faq-question">
-                        <span>{{ faq.question }}</span>
-                        <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
-                    </div>
-                    <div class="faq-answer" *ngIf="faq.isOpen">
-                        {{ faq.answer }}
+
+            <!-- Bara de butoane / categorii rapide -->
+            <div class="category-filter-chips">
+                <button *ngFor="let cat of faqCategories; let i = index" (click)="scrollToCategory(i)" class="chip-btn">
+                    {{ cat.title }}
+                </button>
+            </div>
+
+            <!-- Listele de categorii -->
+            <div class="faq-category" *ngFor="let category of faqCategories; let cIndex = index" [id]="'cat-' + cIndex">
+                <h3 class="category-title">{{ category.title }}</h3>
+
+                <div class="faq-list">
+                    <div class="faq-item" *ngFor="let faq of category.faqs; let fIndex = index"
+                        (click)="toggleFaq(cIndex, fIndex)" [class.active]="faq.isOpen">
+                        <div class="faq-question">
+                            <span>{{ faq.question }}</span>
+                            <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
+                        </div>
+                        <div class="faq-answer" *ngIf="faq.isOpen">
+                            {{ faq.answer }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,6 +58,21 @@
                     <div class="input-group">
                         <input type="email" formControlName="email" placeholder="Adresa de email">
                     </div>
+
+                    <!-- Dropdown Tipul de Problemă -->
+                    <!-- Dropdown Tipul de Problemă -->
+                    <div class="input-group">
+                        <select formControlName="issueType" class="form-select">
+                            <option value="" disabled selected>Selectează tipul problemei</option>
+                            <option value="general">Problemă Generală</option>
+                            <option value="technical">Problemă Tehnică</option>
+                            <option value="billing">Plăți și Facturare</option>
+                            <option value="listing">Licitări și Produse</option>
+                            <option value="account">Contul Meu</option>
+                            <option value="other">Altele</option>
+                        </select>
+                    </div>
+
                     <div class="input-group">
                         <textarea formControlName="issue" rows="4"
                             placeholder="Descrie detaliat problema întâmpinată..."></textarea>

@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing-module';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
@@ -16,11 +17,9 @@ import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
-//import { Add } from './menu-item/add/add';
 import { AuctionsPage } from './auctions-page/auctions-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 
-//am scos Add din declarations
 @NgModule({
   declarations: [
     App,
@@ -33,17 +32,18 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     AuctionsPage,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    HttpClientModule,
-    HelpPageComponent,
+  BrowserModule,
+  AppRoutingModule,
+  FormsModule,
+  CommonModule,
+  ReactiveFormsModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  HttpClientModule,
+  HelpPageComponent, // <--- Pune-o aici în schimb!
   ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
