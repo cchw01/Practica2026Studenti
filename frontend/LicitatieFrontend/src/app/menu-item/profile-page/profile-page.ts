@@ -7,6 +7,7 @@ import { ReviewService } from '../../app-logic/review';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
+
 interface Item {
   id: number;
   title: string;
@@ -109,9 +110,10 @@ export class ProfilePage implements OnInit {
 
     this.loadProfile();
     this.loadTheme();
+    this.loadWishlistFromStorage();
     this.loadItemsAndReviews();
 
-    // ---- Aici adaugi citirea categoriilor ----
+    // Fetch category list
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
@@ -133,6 +135,24 @@ export class ProfilePage implements OnInit {
     this.setTheme(savedTheme);
   }
 
+  // --- Load wishlist directly from localStorage ---
+  private loadWishlistFromStorage(): void {
+    const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const localWishRaw: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+
+    const validItems = localWishRaw.filter((item: any) =>
+      localWishIds.includes(item.ID || item.id)
+    );
+
+    this.wishItems = validItems.map((item: any) => ({
+      id: item.ID || item.id || 0,
+      title: item.Name || item.name || 'Unknown Item',
+      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+      status: (item.Status || item.status || 'Active').toString(),
+      image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
+    }));
+  }
+
   // --- Load API data ---
   loadItemsAndReviews(): void {
     // Load Items listed by user
@@ -141,32 +161,37 @@ export class ProfilePage implements OnInit {
         // Filter items where OwnerId matches current user ID
         this.addedItems = items
           .filter(
-            (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
+            (item: any) =>
+              item.OwnerId === this.currentUserId ||
+              item.ownerId === this.currentUserId ||
+              item.Owner?.UserName === this.user.username ||
+              item.owner?.username === this.user.username,
           )
           .map((item: any) => ({
-            id: item.id || 0,
-            title: item.name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
+            id: item.ID || item.id || 0,
+            title: item.Name || item.name || '',
+            price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+            status: item.Status || item.status
+              ? (item.Status || item.status).toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
-            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png',
           }));
 
         // Filter won items
         this.bidItems = items
-          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0) // Mock bid items or won
+          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0)
           .map((item: any) => ({
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice,
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png',
           }));
 
         // Fetch wishlist items specifically from backend
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
-            this.wishItems = wishlistItems.map((item: any) => ({
+            const backendWishItems: Item[] = wishlistItems.map((item: any) => ({
               id: item.id || item.ID || 0,
               title: item.name || item.Name || 'Item',
               price: item.currentPrice || item.startPrice || 0,
@@ -175,9 +200,14 @@ export class ProfilePage implements OnInit {
                 ? item.status.toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
             }));
+
+            // Merge with items loaded from localStorage as fallback
+            const mergedIds = new Set(backendWishItems.map((i) => i.id));
+            const extraLocal = this.wishItems.filter((i) => !mergedIds.has(i.id));
+            this.wishItems = [...backendWishItems, ...extraLocal];
             this.cdr.detectChanges();
           },
-          error: (err) => console.error('Error loading wishlist:', err)
+          error: (err) => console.error('Error loading wishlist:', err),
         });
       },
       error: (err) => console.error('Error loading items:', err),
@@ -202,10 +232,10 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5; // Default fallback score
+          this.score = 4.5;
         }
       },
-      error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
+      error: (err) => console.error('Error loading reviews:', err.message || err),
     });
   }
 
@@ -215,10 +245,16 @@ export class ProfilePage implements OnInit {
     }
     this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
       next: () => {
-        this.wishItems = this.wishItems.filter(i => i.id !== itemId);
+        this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
+        
+        // Also update local storage cache if present
+        const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const updatedIds = localWishIds.filter((id) => id !== itemId);
+        localStorage.setItem('wishlist', JSON.stringify(updatedIds));
+
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error removing from wishlist', err)
+      error: (err) => console.error('Error removing from wishlist', err),
     });
   }
 
@@ -316,7 +352,7 @@ export class ProfilePage implements OnInit {
     this.authService
       .changePassword(this.currentUserId, this.currentPassword, this.newPassword)
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.passwordError = false;
           this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.SUCCESS');
           this.currentPassword = '';
@@ -324,7 +360,6 @@ export class ProfilePage implements OnInit {
           this.confirmPassword = '';
           setTimeout(() => (this.passwordMessage = ''), 3000);
         },
-
         error: (err) => {
           this.passwordError = true;
           this.passwordMessage =
@@ -338,10 +373,16 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['/add-item']);
   }
 
+  // --- Navigate to Auction Item page ---
+  goToAuction(itemId: number): void {
+    if (!itemId) return;
+    this.router.navigate(['/action-item-page', itemId]);
+  }
+
   // --- Logout ---
   onLogout(): void {
     this.authService.logout();
-    this.setTheme('light'); // Reset theme classes
+    this.setTheme('light');
     document.body.className = '';
     this.router.navigate(['/login-page']);
   }

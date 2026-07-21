@@ -71,7 +71,6 @@ import { MatSelectModule } from '@angular/material/select';
     AddItem,
     ForumPostDetails,
     CreateForumPost,
-    AuctionDetail,
     Footer,
     NotFound,
     ProfileMenu,
