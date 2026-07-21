@@ -20,6 +20,7 @@ namespace Backend.DataManagement
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Notification> Notifications => Set<Notification>();
+        public DbSet<Report> Reports => Set<Report>();
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
