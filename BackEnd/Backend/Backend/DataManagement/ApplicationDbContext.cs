@@ -108,6 +108,12 @@ namespace Backend.DataManagement
                .HasForeignKey(r => r.ReportedForumPostId)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Report>() //USERII CARE-SI IAU REPORT
+                .HasOne(r => r.Reporter)
+                .WithMany()
+                .HasForeignKey(r => r.ReporterId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<AuctionItem>()
                 .Property(a => a.StartPrice)

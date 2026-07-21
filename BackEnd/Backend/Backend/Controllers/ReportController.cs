@@ -67,15 +67,22 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [Authorize]
         [HttpPost]
         public ActionResult<ReportResponseDto> AddReport(CreateReportDto dto)
         {
             try
             {
+                var userIdClaim = User.FindFirst("id")?.Value;
+
+                if (!int.TryParse(userIdClaim, out var reporterId))
+                {
+                    return Unauthorized();
+                }
+
                 var report = new Report
                 {
-                    ReporterId = dto.ReporterId,
+                    ReporterId = reporterId,
                     TargetType = dto.TargetType ?? ReportTargetType.User,
                     Reason = dto.Reason ?? ReportReason.Other,
                     Description = dto.Description,
