@@ -35,6 +35,10 @@ namespace Backend.Controllers
             {
                 return Unauthorized("The user doesn't exist.");
             }
+            if(user.ProfilePictureId!= null)
+            {         
+                dataOps.DeletePicture(user.ProfilePictureId.Value);
+            }
             var AllowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
             var picture = profilePicture.Picture;
