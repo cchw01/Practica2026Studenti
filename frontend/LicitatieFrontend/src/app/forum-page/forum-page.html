@@ -52,31 +52,37 @@
             <div class="discussion-list">
               @for (post of pagedPosts; track post.id) {
                 <a class="discussion-card" [routerLink]="['/forum', post.id]">
-                    <div class="author-avatar">
-                        {{ getInitials(post.userName, post.userId) }}
-                    </div>
-                    <div class="discussion-main">
-                        <div class="discussion-heading">
-                            <h2>{{ post.title }}</h2>
-                            <time [attr.datetime]="post.date">
-                                {{ post.date | date: 'mediumDate' }}
-                            </time>
+                    <div class="discussion-row">
+                        <div class="author-avatar">
+                            {{ getInitials(post.userName, post.userId) }}
                         </div>
 
-                        <p class="discussion-author">
-                            Posted bys
-                            <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
-                        </p>
+                        <div class="discussion-heading-block">
+                            <h2>{{ post.title }}</h2>
+                            <p class="discussion-author">
+                                Posted bys
+                                <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
+                            </p>
+                        </div>
 
                         <p class="discussion-description"> {{ post.description }} </p>
+
+                        <time class="discussion-date" [attr.datetime]="post.date">
+                            {{ post.date | date: 'mediumDate' }}
+                        </time>
                     </div>
 
-                    <div class="discussion-comments">
-                        <div class="comment-icon" aria-hidden="true"></div>
+                    <div class="discussion-footer">
+                        <button type="button" class="report-button" (click)="openReportModal(post.id, $event)">
+                            Report
+                        </button>
 
-                        <p class="comment-count">
-                            {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
-                        </p>
+                        <div class="discussion-comments">
+                            <div class="comment-icon" aria-hidden="true"></div>
+                            <p class="comment-count">
+                                {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
+                            </p>
+                        </div>
                     </div>
                 </a>
                 } @empty {
@@ -103,4 +109,40 @@
 
         </section>
     </main>
+    @if (reportingPostId !== null) {
+    <div class="report-modal-backdrop" (click)="closeReportModal()">
+      <div class="report-modal" (click)="$event.stopPropagation()">
+        <h3>Raportează postarea</h3>
+        <p>Selectează motivul pentru care raportezi această discuție:</p>
+
+        <div class="report-reasons-list">
+          @for (reason of reportReasons; track reason) {
+          <label class="report-reason-option">
+            <input type="radio" name="reportReason" [value]="reason" [(ngModel)]="selectedReportReason" />
+            {{ reason }}
+          </label>
+          }
+        </div>
+
+        @if (reportErrorMessage) {
+        <p class="report-error">{{ reportErrorMessage }}</p>
+        }
+        @if (reportSuccessMessage) {
+        <p class="report-success">{{ reportSuccessMessage }}</p>
+        }
+
+        <div class="report-modal-actions">
+          <button type="button" class="secondary-button" (click)="closeReportModal()">Anulează</button>
+          <button
+            type="button"
+            class="primary-button"
+            [disabled]="!selectedReportReason || isSubmittingReport"
+            (click)="submitReport()"
+          >
+            {{ isSubmittingReport ? 'Se trimite...' : 'Trimite raportarea' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    }
 </div>
