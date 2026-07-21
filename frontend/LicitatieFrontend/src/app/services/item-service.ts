@@ -51,7 +51,30 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
+  public formatImageUrl(url: string | undefined): string {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    return `https://localhost:7137${url.startsWith('/') ? '' : '/'}${url}`;
+  }
+
   private mapResponse(item: any): AuctionItem {
+    const rawUrl = item.imageUrl || item.ImageUrl || '';
+    let parsedPhotoList: string[] = [];
+    if (rawUrl.includes('|||')) {
+      parsedPhotoList = rawUrl.split('|||').map((u: string) => u.trim()).filter(Boolean);
+    } else if (item.photoList && Array.isArray(item.photoList) && item.photoList.length > 0) {
+      parsedPhotoList = item.photoList;
+    } else if (item.PhotoList && Array.isArray(item.PhotoList) && item.PhotoList.length > 0) {
+      parsedPhotoList = item.PhotoList;
+    } else if (rawUrl) {
+      parsedPhotoList = [rawUrl];
+    }
+
+    parsedPhotoList = parsedPhotoList.map(u => this.formatImageUrl(u));
+    const mainImageUrl = parsedPhotoList.length > 0 ? parsedPhotoList[0] : undefined;
+
     return this.sanitizeItem({
       ID: item.id || item.ID,
       Name: item.name || item.Name,
@@ -70,12 +93,8 @@ export class ItemService {
       StartDate: new Date(item.startDate || item.StartDate),
       EndDate: new Date(item.endDate || item.EndDate),
       BidList: item.bidList || item.BidList || [],
-      PhotoList: item.photoList || item.PhotoList || [],
-      ImageUrl: item.imageUrl || item.ImageUrl
-        ? (item.imageUrl || item.ImageUrl).startsWith('http')
-          ? (item.imageUrl || item.ImageUrl)
-          : 'https://localhost:7137' + (item.imageUrl || item.ImageUrl)
-        : undefined
+      PhotoList: parsedPhotoList,
+      ImageUrl: mainImageUrl
     });
   }
 
@@ -123,7 +142,7 @@ export class ItemService {
       ]
     };
 
-    if (item.ID === 2 || (item.Name && item.Name.toLowerCase().includes('watch'))) {
+    if (item.Name && item.Name.toLowerCase().includes('watch')) {
       item.ImageUrl = 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
       item.PhotoList = galleryMap['Art'];
     }
@@ -132,16 +151,12 @@ export class ItemService {
 
     if (!item.PhotoList || !Array.isArray(item.PhotoList) || item.PhotoList.length === 0) {
       if (item.ImageUrl) {
-        const mainImg = item.ImageUrl.startsWith('http') ? item.ImageUrl : `https://localhost:7137${item.ImageUrl}`;
-        item.PhotoList = [mainImg, ...defaultGallery.slice(1)];
-      } else {
-        item.PhotoList = [...defaultGallery];
+        const mainImg = (item.ImageUrl.startsWith('http') || item.ImageUrl.startsWith('data:')) ? item.ImageUrl : `https://localhost:7137${item.ImageUrl}`;
+        item.PhotoList = [mainImg];
       }
-    } else if (item.PhotoList.length === 1 && defaultGallery.length > 1) {
-      item.PhotoList.push(defaultGallery[1]);
     }
 
-    if (!item.ImageUrl && item.PhotoList.length > 0) {
+    if (!item.ImageUrl && item.PhotoList && item.PhotoList.length > 0) {
       item.ImageUrl = item.PhotoList[0];
     }
 
@@ -170,8 +185,8 @@ export class ItemService {
           const sanitizedBackend = (backendItems || []).map(i => this.mapResponse(i));
           const localItems = this.getLocalItems();
           const map = new Map<number, AuctionItem>();
-          for (const s of sanitizedBackend) map.set(s.ID, s);
           for (const l of localItems) map.set(l.ID, l);
+          for (const s of sanitizedBackend) map.set(s.ID, s);
           observer.next(Array.from(map.values()));
           observer.complete();
         },
@@ -204,11 +219,6 @@ export class ItemService {
   }
 
   getItemById(id: number): Observable<AuctionItem> {
-    const localItems = this.getLocalItems();
-    const localItem = localItems.find((item: any) => item.ID === id);
-    if (localItem) {
-      return of(this.sanitizeItem(localItem));
-    }
     return new Observable<AuctionItem>(observer => {
       this.http.get<AuctionItem>(`${this.apiUrl}/${id}`).subscribe({
         next: (res) => {
@@ -216,14 +226,21 @@ export class ItemService {
           observer.complete();
         },
         error: (err) => {
-          this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
-            next: (mockItems) => {
-              const found = mockItems.find(i => i.ID === id) || mockItems[0];
-              observer.next(this.sanitizeItem(found));
-              observer.complete();
-            },
-            error: () => observer.error(err)
-          });
+          const localItems = this.getLocalItems();
+          const localItem = localItems.find((item: any) => item.ID === id);
+          if (localItem) {
+            observer.next(this.sanitizeItem(localItem));
+            observer.complete();
+          } else {
+            this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
+              next: (mockItems) => {
+                const found = mockItems.find(i => i.ID === id) || mockItems[0];
+                observer.next(this.sanitizeItem(found));
+                observer.complete();
+              },
+              error: () => observer.error(err)
+            });
+          }
         }
       });
     });
