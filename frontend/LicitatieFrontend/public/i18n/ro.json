@@ -433,4 +433,94 @@
     "CREATING": "Se creează discuția...",
     "SUBMIT": "Începe discuția"
   }
+}, 
+"PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username necompletat",
+    "NAME_NOT_SET": "Nume necompletat",
+    "EMAIL_NOT_SET": "Email necompletat",
+    "AVERAGE_SCORE": "Scor mediu"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Editează profilul",
+    "LOG_OUT": "Deconectare",
+    "ADD_ITEM": "Adaugă articol",
+    "CHANGE_PHOTO": "Schimbă fotografia",
+    "HIDE_PASSWORD": "Ascunde setările parolei",
+    "CHANGE_PASSWORD": "Schimbă parola",
+    "UPDATE_PASSWORD": "Actualizează parola",
+    "CANCEL": "Anulează",
+    "SAVE": "Salvează modificările"
+  },
+
+  "THEME": {
+    "TITLE": "Personalizează tema",
+    "DESCRIPTION": "Alege un stil vizual care ți se potrivește.",
+    "LIGHT": "Luminoasă",
+    "SUNSET": "Apus",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Vinde un articol nou",
+    "DESCRIPTION": "Ești gata să publici un articol?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Licitațiile mele active",
+    "WON_ITEMS": "Articole câștigate",
+    "WISHLIST": "Lista mea de dorințe",
+    "REVIEWS": "Recenzii primite"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Nu ai articole listate.",
+    "WON_ITEMS": "Nu ai câștigat niciun articol.",
+    "WISHLIST": "Lista ta de dorințe este goală.",
+    "REVIEWS": "Nu ai primit încă recenzii."
+  },
+
+  "EDIT": {
+    "TITLE": "Editează profilul",
+    "USERNAME": "Nume utilizator",
+    "FULL_NAME": "Nume complet",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "ex. john_doe",
+    "FULL_NAME_PLACEHOLDER": "ex. Ion Popescu",
+    "EMAIL_PLACEHOLDER": "ex. ion@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Parola curentă",
+    "NEW": "Parolă nouă",
+    "CONFIRM": "Confirmă parola",
+
+    "CURRENT_PLACEHOLDER": "Introdu parola curentă",
+    "NEW_PLACEHOLDER": "Introdu parola nouă",
+    "CONFIRM_PLACEHOLDER": "Confirmă parola nouă",
+
+    "REQUIRED": "Toate câmpurile sunt obligatorii.",
+    "NOT_MATCH": "Parola nouă și confirmarea nu coincid.",
+    "SUCCESS": "Parola a fost actualizată cu succes!",
+    "ERROR": "Eroare la actualizarea parolei. Verifică parola curentă."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activ",
+    "ADDED": "Adăugat",
+    "WON": "Câștigat"
+  }, 
+  "DEFAULTS": {
+  "USER": "Utilizator"
+}, 
+"ERRORS": {
+  "LOAD_CATEGORIES": "Eroare la încărcarea categoriilor.",
+  "LOAD_ITEMS": "Eroare la încărcarea articolelor.",
+  "LOAD_REVIEWS": "Eroare la încărcarea recenziilor."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Profilul a fost actualizat cu succes."
 }
+}}
