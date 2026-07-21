@@ -84,10 +84,13 @@ namespace Backend.DataManagement
             return false;
         }
         
+      
         public Report[] GetReportsByStatus(ReportStatus status)
         {
             return GetReportsWithDetails()
+                .Where(report => report.Status == status)
                 .ToArray();
         }
+    }
     }
 }
