@@ -356,15 +356,7 @@ namespace Backend.Controllers
                 return BadRequest(errorMessage);
             }
         }
-        private int? GetAuthenticatedUserId()
-        {
-            var userIdClaim = User.FindFirst("id")?.Value;
 
-            if (!int.TryParse(userIdClaim, out var userId))
-                return null;
-
-            return userId;
-        }
         private static AuctionItemResponseDto MapToResponseDto(
             AuctionItem item)
         {
@@ -389,6 +381,17 @@ namespace Backend.Controllers
                 EndDate = item.EndDate,
                 ImageUrl = item.ImageUrl
             };
+        }
+
+        private int? GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.FindFirst("id")?.Value
+                ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(userIdClaim, out var userId))
+                return userId;
+
+            return null;
         }
     }
 }
