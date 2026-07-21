@@ -32,10 +32,24 @@ namespace Backend.DataManagement
                 .FirstOrDefault(r => r.Id == id);
         }
 
-        public void AddReport(Report report)
+        public bool AddReport(Report report)
         {
+            bool exists = DbContext.Reports.Any(r => 
+                r.ReporterId == report.ReporterId && 
+                r.TargetType == report.TargetType &&
+                ((report.TargetType == ReportTargetType.User && r.ReportedUserId == report.ReportedUserId) ||
+                 (report.TargetType == ReportTargetType.AuctionItem && r.AuctionItemId == report.AuctionItemId) ||
+                 (report.TargetType == ReportTargetType.ForumPost && r.ForumPostId == report.ForumPostId))
+            );
+
+            if (exists)
+            {
+                return false;
+            }
+
             DbContext.Reports.Add(report);
             DbContext.SaveChanges();
+            return true;
         }
 
         public bool UpdateReport(Report report)
