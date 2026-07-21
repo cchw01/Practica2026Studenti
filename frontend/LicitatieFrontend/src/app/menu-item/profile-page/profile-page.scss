@@ -383,6 +383,41 @@
   &:hover {
     transform: translateX(4px);
   }
+
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateX(6px);
+      border-color: v.$color-primary;
+      background: v.$color-primary-tint;
+
+      .item-arrow {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$color-primary;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.item-card-right {
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+}
+
+.item-arrow {
+  font-size: 1.1rem;
+  color: v.$color-primary;
+  font-weight: v.$font-weight-bold;
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .item-info {

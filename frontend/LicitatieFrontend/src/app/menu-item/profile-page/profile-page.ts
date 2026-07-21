@@ -107,6 +107,7 @@ export class ProfilePage implements OnInit {
 
     this.loadProfile();
     this.loadTheme();
+    this.loadWishlistFromStorage();
     this.loadItemsAndReviews();
 
     // ---- Aici adaugi citirea categoriilor ----
@@ -129,6 +130,23 @@ export class ProfilePage implements OnInit {
   private loadTheme(): void {
     const savedTheme = localStorage.getItem('app_theme') || 'light';
     this.setTheme(savedTheme);
+  }
+
+  // --- Load wishlist directly from localStorage (immediate, no network needed) ---
+  private loadWishlistFromStorage(): void {
+    const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const localWishRaw: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+
+    const validItems = localWishRaw.filter((item: any) =>
+      localWishIds.includes(item.ID || item.id)
+    );
+
+    this.wishItems = validItems.map((item: any) => ({
+      id: item.ID || item.id || 0,
+      title: item.Name || item.name || 'Unknown Item',
+      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+      status: (item.Status || item.status || 'Active').toString(),
+    }));
   }
 
   // --- Load API data ---
@@ -161,7 +179,7 @@ export class ProfilePage implements OnInit {
           }));
 
         // Filter wish list items (items where current user is in WishingUsers)
-        this.wishItems = items
+        const backendWishItems = items
           .filter(
             (item: any) =>
               Array.isArray(item.wishingUsers) &&
@@ -177,6 +195,25 @@ export class ProfilePage implements OnInit {
               ? item.status.toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
           }));
+
+        // Also load wishlist items stored locally via the wishlist toggle
+        const localWishIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const localWishRaw: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
+        const localWishItems = localWishRaw
+          .filter((item: any) => localWishIds.includes(item.ID || item.id))
+          .map((item: any) => ({
+            id: item.ID || item.id || 0,
+            title: item.Name || item.name || '',
+            price: item.CurrentPrice || item.currentPrice || item.StartPrice || item.startPrice || 0,
+            status: item.Status || item.status
+              ? (item.Status || item.status).toString()
+              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+          }));
+
+        // Merge: prefer backend entries, fill in any that are only local
+        const mergedIds = new Set(backendWishItems.map((i) => i.id));
+        const extraLocal = localWishItems.filter((i) => !mergedIds.has(i.id));
+        this.wishItems = [...backendWishItems, ...extraLocal];
       },
       error: (err) => console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_ITEMS'), err),
     });
@@ -314,6 +351,12 @@ export class ProfilePage implements OnInit {
   // --- Navigate to Add Item ---
   goToAddItem(): void {
     this.router.navigate(['/add-item']);
+  }
+
+  // --- Navigate to Auction Item page ---
+  goToAuction(itemId: number): void {
+    if (!itemId) return;
+    this.router.navigate(['/action-item-page', itemId]);
   }
 
   // --- Logout ---
