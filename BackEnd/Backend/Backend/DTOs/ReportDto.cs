@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Backend.Models;
 
 namespace Backend.DTOs
@@ -11,6 +11,8 @@ namespace Backend.DTOs
         [Range(1, int.MaxValue,
             ErrorMessage = "TargetId trebuie să fie mai mare decât 0.")]
         public int TargetId { get; set; }
+        
+        public int ReporterId { get; set; }
 
         [Required]
         public ReportReason? Reason { get; set; }
