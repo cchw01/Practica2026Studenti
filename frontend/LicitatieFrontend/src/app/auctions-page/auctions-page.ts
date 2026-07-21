@@ -26,7 +26,7 @@ export class AuctionsPage implements OnInit {
 
   isLoading: boolean = true;
   hasError: boolean = false;
-  currentUserId: number = 3;
+  currentUserId: number = 0;
 
   constructor(
     private itemService: ItemService,
@@ -37,7 +37,7 @@ export class AuctionsPage implements OnInit {
     private categoryService: CategoryService,
     public authService: AuthService,
     private userService: UserService
-  ) {}
+  ) { }
 
   getCategoryName(item: AuctionItem): string {
     if (!item || !item.Category) return '';
@@ -56,9 +56,7 @@ export class AuctionsPage implements OnInit {
     });
 
     const authUserId = this.authService.getCurrentUserId();
-    if (authUserId !== null) {
-      this.currentUserId = authUserId;
-    }
+    this.currentUserId = authUserId !== null ? authUserId : 0;
 
     this.loadActiveAuctions();
 
@@ -222,4 +220,3 @@ export class AuctionsPage implements OnInit {
     return +ownerId === currentUserId;
   }
 }
-
