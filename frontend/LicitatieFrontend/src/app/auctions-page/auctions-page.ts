@@ -236,4 +236,11 @@ export class AuctionsPage implements OnInit {
   goToAuctionDetail(item: AuctionItem): void {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
+  isOwner(item: AuctionItem): boolean {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = item.OwnerId || (item.Owner as any)?.ID || (item.Owner as any)?.id;
+    return +ownerId === currentUserId;
+  }
 }
+

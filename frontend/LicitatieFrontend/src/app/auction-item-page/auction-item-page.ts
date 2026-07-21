@@ -27,7 +27,7 @@ const defaultOwner = new User({
   selector: 'app-auction-item-page',
   standalone: false,
   templateUrl: './auction-item-page.html',
-  styleUrl: './auction-item-page.css',
+  styleUrl: './auction-item-page.scss',
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
   private navState: any;
@@ -167,6 +167,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     if (item.Owner || item.owner) {
       this.auctionItem.Owner = item.Owner || item.owner;
+      const ownerObj = item.Owner || item.owner;
+      this.auctionItem.OwnerId = Number(ownerObj.id || ownerObj.ID || item.OwnerId || item.ownerId);
+    } else if (item.OwnerId || item.ownerId) {
+      this.auctionItem.OwnerId = Number(item.OwnerId || item.ownerId);
     }
 
     if (item.StartDate || item.startDate) {
@@ -517,5 +521,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     try {
       this.cdr.markForCheck();
     } catch {}
+  }
+
+  isOwner(): boolean {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
+    return +ownerId === currentUserId;
   }
 }

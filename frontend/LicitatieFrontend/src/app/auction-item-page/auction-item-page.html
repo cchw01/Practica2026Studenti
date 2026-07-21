@@ -29,7 +29,7 @@
             <span class="placeholder-icon">📦</span>
           </div>
         </ng-template>
-        <span class="status-badge"  [ngClass]="'status-' + (auctionItem.Status?.toString() ?? 'unknown').toLowerCase()">
+        <span class="status-badge" [ngClass]="'status-' + (auctionItem.Status | lowercase)">
           {{ auctionItem.Status }}
         </span>
 
@@ -83,8 +83,11 @@
         <div class="meta-item">
           <span class="meta-icon">👤</span>
           <div>
-            <span class="meta-label">Owner</span>
-            <span class="meta-val">{{ auctionItem.Owner?.Name }}</span>
+            <span class="meta-label">{{ 'AUCTION_ITEM_PAGE.INFO.OWNER' | translate }}</span>
+            <a [routerLink]="isOwner() ? ['/profile-page'] : ['/user-page', auctionItem.Owner.ID || $any(auctionItem.Owner).id || $any(auctionItem.Owner).ID]" class="owner-link">
+              <!-- Traducem dinamic cuvântul 'Tu' -->
+              {{ isOwner() ? ('AUCTIONS_PAGE.YOU' | translate) : (auctionItem.Owner.UserName || $any(auctionItem.Owner).username) }}
+            </a>
           </div>
         </div>
         <div class="meta-item">
@@ -107,11 +110,13 @@
           <div class="bid-input-row">
             <div class="bid-input-wrap">
               <span class="bid-currency">$</span>
-              <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="Enter bid amount"
-                [min]="auctionItem.CurrentPrice + 1" />
+              <!-- [disabled] adăugat la input -->
+              <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="{{ 'AUCTION_ITEM_PAGE.BID.PLACEHOLDER' | translate }}"
+                [min]="auctionItem.CurrentPrice + 1" [disabled]="isOwner()" />
             </div>
-            <button type="button" class="btn-bid" (click)="placeBid()">
-              🔨 Place Bid
+            <!-- [disabled] adăugat la buton -->
+            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner()">
+               {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
             </button>
           </div>
           <p *ngIf="errorMessage" class="error-msg">⚠️ {{ errorMessage }}</p>
@@ -130,7 +135,7 @@
 
       <!-- Wishlist container (only visible when logged in) -->
       <div class="wishlist-container" *ngIf="authService.isLoggedIn()">
-        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()">
+        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()" [disabled]="isOwner()">
           <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
           <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
         </button>

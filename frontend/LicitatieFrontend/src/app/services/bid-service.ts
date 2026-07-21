@@ -42,12 +42,10 @@ export class BidService {
   }
 
   addBid(bidData: { bidderId: number; biddedItemId: number; price: number }): Observable<BidDto> {
-    const payload = {
-      BidderId: bidData.bidderId,
-      BiddedItemId: bidData.biddedItemId,
-      price: bidData.price,
-      date: new Date().toISOString(),
-    };
+   const payload = {
+    AuctionItemId: bidData.biddedItemId,
+    Price: bidData.price
+  };
     return this.http.post<BidDto>(this.apiUrl, payload);
   }
 
