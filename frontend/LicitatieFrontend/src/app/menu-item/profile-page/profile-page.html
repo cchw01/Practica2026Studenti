@@ -76,12 +76,15 @@
         <div class="profile-section">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' | translate }}</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
-            <div class="item-card" *ngFor="let item of addedItems">
+            <div class="item-card item-card--clickable" *ngFor="let item of addedItems" (click)="goToAuction(item.id)" role="link" tabindex="0" (keydown.enter)="goToAuction(item.id)">
               <div class="item-info">
                 <span class="item-title">{{ item.title }}</span>
                 <span class="item-price">{{ item.price }} RON</span>
               </div>
-              <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+              <div class="item-card-right">
+                <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+                <span class="item-arrow">→</span>
+              </div>
             </div>
           </div>
           <p class="empty-state" *ngIf="addedItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.ACTIVE_SALES' | translate }}</p>

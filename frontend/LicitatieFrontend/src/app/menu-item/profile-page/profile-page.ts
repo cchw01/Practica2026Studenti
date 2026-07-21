@@ -157,14 +157,18 @@ export class ProfilePage implements OnInit {
         // Filter items where OwnerId matches current user ID
         this.addedItems = items
           .filter(
-            (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
+            (item: any) =>
+              item.OwnerId === this.currentUserId ||
+              item.ownerId === this.currentUserId ||
+              item.Owner?.UserName === this.user.username ||
+              item.owner?.username === this.user.username,
           )
           .map((item: any) => ({
-            id: item.id || 0,
-            title: item.name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
+            id: item.ID || item.id || 0,
+            title: item.Name || item.name || '',
+            price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+            status: item.Status || item.status
+              ? (item.Status || item.status).toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
           }));
 
