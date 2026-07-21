@@ -69,15 +69,21 @@
           </div>
           <div class="card-content">
             <h3>{{ item.Name }}</h3>
-            <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
-            <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+            <div class="current-bid-wrapper">
+              <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+              
+              <!-- Aici am adăugat clasa dinamică și funcția de click -->
+              <div class="favorite-badge" [class.active]="item.isFavorite" (click)="toggleFavorite(item, $event)">
+                <span>{{ item.isFavorite ? '❤️' : '🤍' }}</span>
+              </div>
+            </div>
+            </div>
             <div class="card-footer" *ngIf="item.Owner" (click)="$event.stopPropagation()">
               <span>{{ 'AUCTIONS_PAGE.POSTED_BY' | translate }}: </span>
               <a [routerLink]="isOwner(item) ? ['/profile-page'] : ['/user-page', item.Owner.ID || $any(item.Owner).id || $any(item.Owner).ID]" class="owner-link">
                 <!-- Suport complet pentru orice variantă de scriere a username-ului -->
                 {{ isOwner(item) ? ('AUCTIONS_PAGE.YOU' | translate) : (item.Owner.UserName || $any(item.Owner).userName || $any(item.Owner).username) }}
               </a>
-            </div>
           </div>
         </div>
       </div>
