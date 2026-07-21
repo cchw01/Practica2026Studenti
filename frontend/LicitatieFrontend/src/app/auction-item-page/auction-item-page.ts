@@ -88,6 +88,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.navState = nav?.extras?.state;
   }
 
+  private pollInterval: any;
+  private storageEventListener: any;
+  private broadcastChannel: BroadcastChannel | null = null;
+
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     this.selectedImageIndex = 0;
@@ -115,12 +119,60 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     }
 
     this.startCountdown();
+    this.initBroadcastChannel();
+    this.startPricePolling();
 
     const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     this.isInWishlist = wishlist.includes(this.auctionItem.ID);
 
     const reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
     this.isReported = reportedList.includes(this.auctionItem.ID);
+  }
+
+  private initBroadcastChannel(): void {
+    try {
+      if ('BroadcastChannel' in window) {
+        this.broadcastChannel = new BroadcastChannel('auction_bids_channel');
+        this.broadcastChannel.onmessage = (event: MessageEvent) => {
+          if (event.data && event.data.type === 'BID_PLACED') {
+            const { itemId, price } = event.data;
+            if (itemId === this.auctionItem.ID && price > this.auctionItem.CurrentPrice) {
+              this.auctionItem.CurrentPrice = price;
+              if (this.bidAmount <= price) {
+                this.bidAmount = price + 10;
+              }
+              try { this.cdr.markForCheck(); } catch {}
+              try { this.cdr.detectChanges(); } catch {}
+            }
+          }
+        };
+      }
+    } catch {}
+  }
+
+  private notifyNewBid(itemId: number, newPrice: number): void {
+    // 1. Post to BroadcastChannel for instant cross-tab sync
+    if (this.broadcastChannel) {
+      try {
+        this.broadcastChannel.postMessage({
+          type: 'BID_PLACED',
+          itemId: itemId,
+          price: newPrice
+        });
+      } catch {}
+    }
+
+    // 2. Trigger localStorage event for other windows/tabs
+    try {
+      localStorage.setItem('latest_bid_update', JSON.stringify({
+        itemId: itemId,
+        price: newPrice,
+        timestamp: Date.now()
+      }));
+    } catch {}
+
+    // 3. Update localStorage items cache
+    this.updateLocalStoragePrice(itemId, newPrice);
   }
 
   private setAuctionItemData(item: any): void {
@@ -208,12 +260,122 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     try {
       this.cdr.markForCheck();
+      this.cdr.detectChanges();
     } catch {}
   }
 
   ngOnDestroy(): void {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
+    }
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval);
+    }
+    if (this.storageEventListener) {
+      window.removeEventListener('storage', this.storageEventListener);
+    }
+    if (this.broadcastChannel) {
+      try { this.broadcastChannel.close(); } catch {}
+    }
+  }
+
+  private startPricePolling(): void {
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval);
+    }
+
+    const checkLivePrice = () => {
+      if (!this.auctionItem || !this.auctionItem.ID) return;
+
+      // 1. Check live item from backend
+      this.itemService.getItemById(this.auctionItem.ID).subscribe({
+        next: (liveItem) => {
+          if (liveItem && liveItem.CurrentPrice !== undefined) {
+            if (liveItem.CurrentPrice > this.auctionItem.CurrentPrice) {
+              this.auctionItem.CurrentPrice = liveItem.CurrentPrice;
+              if (this.bidAmount <= this.auctionItem.CurrentPrice) {
+                this.bidAmount = this.auctionItem.CurrentPrice + 10;
+              }
+              try { this.cdr.markForCheck(); } catch {}
+              try { this.cdr.detectChanges(); } catch {}
+            }
+          }
+        }
+      });
+
+      // 2. Check live bids from backend if available
+      this.bidService.getBidsByItem(this.auctionItem.ID).subscribe({
+        next: (bids) => {
+          if (Array.isArray(bids) && bids.length > 0) {
+            const maxBidPrice = Math.max(...bids.map(b => b.price || 0));
+            if (maxBidPrice > this.auctionItem.CurrentPrice) {
+              this.auctionItem.CurrentPrice = maxBidPrice;
+              if (this.bidAmount <= maxBidPrice) {
+                this.bidAmount = maxBidPrice + 10;
+              }
+              try { this.cdr.markForCheck(); } catch {}
+              try { this.cdr.detectChanges(); } catch {}
+            }
+          }
+        }
+      });
+    };
+
+    // Poll every 2 seconds for live backend price updates
+    this.pollInterval = setInterval(checkLivePrice, 2000);
+
+    // Listen for local storage changes across tabs & windows
+    this.storageEventListener = (event: StorageEvent) => {
+      if (
+        event.key === 'latest_bid_update' ||
+        event.key === 'auctionItems' ||
+        event.key === 'local_auctions' ||
+        event.key === 'auction_items_cache'
+      ) {
+        if (event.key === 'latest_bid_update' && event.newValue) {
+          try {
+            const data = JSON.parse(event.newValue);
+            if (data.itemId === this.auctionItem.ID && data.price > this.auctionItem.CurrentPrice) {
+              this.auctionItem.CurrentPrice = data.price;
+              if (this.bidAmount <= data.price) {
+                this.bidAmount = data.price + 10;
+              }
+              try { this.cdr.markForCheck(); } catch {}
+              try { this.cdr.detectChanges(); } catch {}
+            }
+          } catch {}
+        }
+        checkLivePrice();
+      }
+    };
+    window.addEventListener('storage', this.storageEventListener);
+  }
+
+  private updateLocalStoragePrice(itemId: number, newPrice: number): void {
+    const keys = ['auctionItems', 'local_auctions', 'auction_items_cache'];
+    let updated = false;
+
+    for (const key of keys) {
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        try {
+          const items = JSON.parse(saved);
+          if (Array.isArray(items)) {
+            const found = items.find((i: any) => (i.ID || i.id) === itemId);
+            if (found) {
+              found.CurrentPrice = newPrice;
+              found.currentPrice = newPrice;
+              localStorage.setItem(key, JSON.stringify(items));
+              updated = true;
+            }
+          }
+        } catch {}
+      }
+    }
+
+    if (!updated) {
+      const defaultItem = { ID: itemId, CurrentPrice: newPrice, currentPrice: newPrice };
+      localStorage.setItem('auctionItems', JSON.stringify([defaultItem]));
     }
   }
 
@@ -230,6 +392,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       if (diff <= 0) {
         this.countdownText = 'Auction ended';
         try { this.cdr.markForCheck(); } catch {}
+        try { this.cdr.detectChanges(); } catch {}
         clearInterval(this.timerInterval);
         return;
       }
@@ -276,13 +439,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       next: (res) => {
         this.auctionItem.CurrentPrice = this.bidAmount;
         this.bidAmount = this.auctionItem.CurrentPrice + 10;
+        this.notifyNewBid(this.auctionItem.ID, this.auctionItem.CurrentPrice);
         try { this.cdr.markForCheck(); } catch {}
+        try { this.cdr.detectChanges(); } catch {}
       },
       error: (err) => {
-        // Fallback local state if offline
+        // Fallback local state if offline or unauthorized
         this.auctionItem.CurrentPrice = this.bidAmount;
         this.bidAmount = this.auctionItem.CurrentPrice + 10;
+        this.notifyNewBid(this.auctionItem.ID, this.auctionItem.CurrentPrice);
         try { this.cdr.markForCheck(); } catch {}
+        try { this.cdr.detectChanges(); } catch {}
       }
     });
   }

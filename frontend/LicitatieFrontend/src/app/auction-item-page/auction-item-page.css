@@ -571,35 +571,56 @@
 
 /* Report Action Styles */
 .actions-footer {
-  margin-top: 4px;
+  position: relative;
+  width: 100%;
+  margin-top: 8px;
 }
 
 .btn-report {
   width: 100%;
-  padding: 9px 14px;
-  border: 1px dashed rgba(220, 53, 69, 0.4);
-  border-radius: 10px;
-  background: transparent;
+  padding: 12px 18px;
+  border: 1.5px solid rgba(220, 53, 69, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
   color: #dc3545;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(220, 53, 69, 0.12);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-report:hover {
-  background: rgba(220, 53, 69, 0.08);
+  background: rgba(220, 53, 69, 0.12);
   border-color: #dc3545;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(220, 53, 69, 0.22);
+}
+
+.btn-report:active {
+  transform: scale(0.98);
 }
 
 .btn-report.reported {
-  border: 1px solid #dc3545;
-  background: rgba(220, 53, 69, 0.12);
-  color: #c0392b;
+  background: linear-gradient(135deg, #dc3545, #c0392b);
+  color: white;
+  border-color: #c0392b;
+  box-shadow: 0 6px 18px rgba(220, 53, 69, 0.35);
+}
+
+.report-icon {
+  font-size: 16px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.btn-report:hover .report-icon {
+  transform: scale(1.25);
 }
 
 /* Glassmorphism Report Modal */

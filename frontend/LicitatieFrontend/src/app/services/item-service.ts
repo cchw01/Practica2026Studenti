@@ -198,31 +198,61 @@ export class ItemService {
   }
 
   getActiveItems(): Observable<AuctionItem[]> {
-    return this.http
-      .get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`)
-      .pipe(map((items) => items.map((item) => this.mapResponse(item))));
+    return new Observable<AuctionItem[]>(observer => {
+      this.http.get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`).subscribe({
+        next: (res) => {
+          const items = (res || []).map((item) => this.mapResponse(item));
+          const localItems = this.getLocalItems();
+          const map = new Map<number, AuctionItem>();
+          for (const s of items) map.set(s.ID, s);
+          for (const l of localItems) map.set(l.ID, l);
+          observer.next(Array.from(map.values()));
+          observer.complete();
+        },
+        error: () => {
+          this.getItems().subscribe({
+            next: (items) => {
+              observer.next(items);
+              observer.complete();
+            },
+            error: () => {
+              observer.next(this.getLocalItems());
+              observer.complete();
+            }
+          });
+        }
+      });
+    });
   }
 
   getItemById(id: number): Observable<AuctionItem> {
-    const localItems = this.getLocalItems();
-    const localItem = localItems.find((item: any) => item.ID === id);
-    if (localItem) {
-      return of(this.sanitizeItem(localItem));
-    }
     return new Observable<AuctionItem>(observer => {
       this.http.get<AuctionItem>(`${this.apiUrl}/${id}`).subscribe({
         next: (res) => {
-          observer.next(this.mapResponse(res));
+          const item = this.mapResponse(res);
+          const localItems = this.getLocalItems();
+          const localItem = localItems.find((i: any) => i.ID === id);
+          if (localItem && localItem.CurrentPrice > item.CurrentPrice) {
+            item.CurrentPrice = localItem.CurrentPrice;
+          }
+          observer.next(item);
           observer.complete();
         },
-        error: (err) => {
+        error: () => {
+          const localItems = this.getLocalItems();
+          const localItem = localItems.find((item: any) => item.ID === id);
+          if (localItem) {
+            observer.next(this.sanitizeItem(localItem));
+            observer.complete();
+            return;
+          }
           this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
             next: (mockItems) => {
               const found = mockItems.find(i => i.ID === id) || mockItems[0];
               observer.next(this.sanitizeItem(found));
               observer.complete();
             },
-            error: () => observer.error(err)
+            error: (err) => observer.error(err)
           });
         }
       });
