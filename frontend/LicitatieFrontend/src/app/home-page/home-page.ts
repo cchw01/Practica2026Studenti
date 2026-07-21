@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
+import { AuctionItem } from '../Models/item-model';
 
 export interface Category {
   name: string;
@@ -21,18 +23,13 @@ export interface Category {
   description: string;
 }
 
-export interface Auction {
-  id?: number;
-  title: string;
-  currentBid: number;
-  image: string;
-  description: string;
-  PhotoList?: string[];
-  Category?: any;
-  Location?: string;
-  StartDate?: any;
-  EndDate?: any;
+export interface AboutFeature {
+  icon: string;
+  titleKey: string;
+  descriptionKey: string;
 }
+
+const MIN_REMAINING_MS = 10 * 60 * 1000;
 
 interface Particle {
   ox: number;
@@ -65,6 +62,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private animationFrameId = 0;
   private titleTypingTimeoutId?: ReturnType<typeof setTimeout>;
   private revealObserver?: IntersectionObserver;
+  private auctionsTimerId?: ReturnType<typeof setInterval>;
+  private allAuctions: AuctionItem[] = [];
 
   private readonly onMouseMove = (e: MouseEvent) => {
     const rect = this.heroRef.nativeElement.getBoundingClientRect();
@@ -84,7 +83,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private hostRef: ElementRef<HTMLElement>,
     private router: Router,
     private readonly translate: TranslateService,
-    private itemService: ItemService,
+    private readonly itemService: ItemService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   categories: Category[] = [
@@ -110,51 +110,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  auctions: Auction[] = [
+  displayedAuctions: AuctionItem[] = [];
+
+  aboutFeatures: AboutFeature[] = [
     {
-      id: 1,
-      title: 'Vintage Leather Jacket',
-      currentBid: 180,
-      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
-      description: 'An authentic vintage leather jacket in excellent condition.',
-      PhotoList: [
-        'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop'
-      ]
+      icon: 'verified_user',
+      titleKey: 'HOME.ABOUT.FEATURES.SECURE.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.SECURE.DESCRIPTION',
     },
     {
-      id: 2,
-      title: 'Antique Pocket Watch 1920s',
-      currentBid: 550,
-      image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
-      description: 'A handcrafted antique pocket watch from the 1920s in working condition.',
-      PhotoList: [
-        'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop'
-      ]
+      icon: 'bolt',
+      titleKey: 'HOME.ABOUT.FEATURES.REALTIME.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.REALTIME.DESCRIPTION',
     },
     {
-      id: 3,
-      title: 'BMW 3 Series 2021 M-Sport',
-      currentBid: 16200,
-      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
-      description: 'Full service history, accident-free, luxury interior package.',
-      PhotoList: [
-        'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
-      ]
-    },
-    {
-      id: 4,
-      title: 'Apple iPhone 15 Pro Max',
-      currentBid: 950,
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
-      description: 'Brand new sealed box in Natural Titanium.',
-      PhotoList: [
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop'
-      ]
+      icon: 'groups',
+      titleKey: 'HOME.ABOUT.FEATURES.COMMUNITY.TITLE',
+      descriptionKey: 'HOME.ABOUT.FEATURES.COMMUNITY.DESCRIPTION',
     },
   ];
 
@@ -170,48 +142,53 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   runSearch() {
     const query = this.searchQuery().trim();
-    this.router.navigate(['/auctions'], query ? { queryParams: { search: query } } : {});
+    this.router.navigate(['/search-page'], query ? { queryParams: { q: query } } : {});
   }
 
-  placeBid(auction: Auction) {
-    if (auction.id) {
-      this.router.navigate(['/action-item-page', auction.id], { state: { auction } });
-    } else {
-      this.router.navigate(['/action-item-page'], { state: { auction } });
-    }
+  placeBid(auction: AuctionItem) {
+    this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
   }
 
-  goToAuction(auction: Auction) {
-    if (auction.id) {
-      this.router.navigate(['/action-item-page', auction.id], { state: { auction } });
-    } else {
-      this.router.navigate(['/action-item-page'], { state: { auction } });
-    }
+  goToAuction(auction: AuctionItem) {
+    this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
+  }
+
+  getRemainingLabel(endDate: Date): string {
+    const diffMs = new Date(endDate).getTime() - Date.now();
+    if (diffMs <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (days > 0) return `${days}d ${hours}h left`;
+    if (hours > 0) return `${hours}h ${minutes}m left`;
+    return `${minutes}m ${seconds}s left`;
+  }
+
+  getTimeUrgencyClass(endDate: Date): string {
+    const minutesLeft = (new Date(endDate).getTime() - Date.now()) / (1000 * 60);
+
+    if (minutesLeft <= 30) return 'time-urgent';
+    if (minutesLeft <= 180) return 'time-medium';
+    return 'time-safe';
+  }
+
+  private refreshDisplayedAuctions(): void {
+    const now = Date.now();
+
+    this.displayedAuctions = this.allAuctions
+      .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
+      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
+      .sort((a, b) => a.remainingMs - b.remainingMs)
+      .map((entry) => entry.item);
+
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe({
-      next: (items: any[]) => {
-        if (items && items.length > 0) {
-          this.auctions = items.slice(0, 4).map((item: any) => ({
-            id: item.ID,
-            title: item.Name,
-            currentBid: item.CurrentPrice,
-            image: item.ImageUrl
-              ? (item.ImageUrl.startsWith('http') ? item.ImageUrl : `https://localhost:7137${item.ImageUrl}`)
-              : (item.PhotoList && item.PhotoList[0] ? item.PhotoList[0] : 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'),
-            description: item.Description || '',
-            PhotoList: item.PhotoList || (item.ImageUrl ? [item.ImageUrl] : []),
-            Category: item.Category,
-            Location: item.Location,
-            StartDate: item.StartDate,
-            EndDate: item.EndDate,
-          }));
-        }
-      },
-      error: (err: any) => console.error('Could not load live homepage items', err),
-    });
-
     this.translate
       .stream('HOME.HERO.TITLE')
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -225,6 +202,16 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.typeHeroTitle(heroTitle);
         }
       });
+
+    this.itemService.getItems().subscribe({
+      next: (items) => {
+        this.allAuctions = items;
+        this.refreshDisplayedAuctions();
+      },
+      error: (err) => console.error('Eroare la încărcarea licitațiilor', err),
+    });
+
+    this.auctionsTimerId = setInterval(() => this.refreshDisplayedAuctions(), 1000);
   }
 
   ngAfterViewInit(): void {
@@ -246,6 +233,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.titleTypingTimeoutId !== undefined) {
       clearTimeout(this.titleTypingTimeoutId);
+    }
+
+    if (this.auctionsTimerId !== undefined) {
+      clearInterval(this.auctionsTimerId);
     }
 
     const hero = this.heroRef.nativeElement;
