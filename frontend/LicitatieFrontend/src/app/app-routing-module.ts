@@ -21,6 +21,7 @@ import { NotFound } from './not-found/not-found';
 import { AdminGuard } from './services/admin-guard';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { SearchPage } from './search-page/search-page';
+import { UserPage } from './user-page/user-page';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
+  { path: 'user-page/:id', component: UserPage},
   { path: '**', component: NotFound },
 ];
 

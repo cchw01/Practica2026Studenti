@@ -62,7 +62,7 @@
         <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
           <div class="card-image-wrap">
             <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
-              alt="Item image" />
+              [alt]="item.Name" />
             <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
               {{ getRemainingTime(item.EndDate) }}
             </span>
@@ -70,11 +70,13 @@
           <div class="card-content">
             <h3>{{ item.Name }}</h3>
             <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
-            <div class="current-bid-wrapper">
-              <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
-              <div class="favorite-badge" [class.active]="item.isFavorite" (click)="toggleFavorite(item, $event)" [title]="item.isFavorite ? 'Remove from wishlist' : 'Add to wishlist'">
-                <span class="material-symbols-outlined">{{ item.isFavorite ? 'favorite' : 'favorite_border' }}</span>
-              </div>
+            <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+            <div class="card-footer" *ngIf="item.Owner" (click)="$event.stopPropagation()">
+              <span>{{ 'AUCTIONS_PAGE.POSTED_BY' | translate }}: </span>
+              <a [routerLink]="isOwner(item) ? ['/profile-page'] : ['/user-page', item.Owner.ID || $any(item.Owner).id || $any(item.Owner).ID]" class="owner-link">
+                <!-- Suport complet pentru orice variantă de scriere a username-ului -->
+                {{ isOwner(item) ? ('AUCTIONS_PAGE.YOU' | translate) : (item.Owner.UserName || $any(item.Owner).userName || $any(item.Owner).username) }}
+              </a>
             </div>
           </div>
         </div>
@@ -94,3 +96,4 @@
     </div>
   </ng-container>
 </div>
+
