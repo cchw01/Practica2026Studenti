@@ -199,7 +199,16 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     if (item.ID) this.auctionItem.ID = item.ID;
     if (item.Name || item.title) this.auctionItem.Name = item.Name || item.title;
 
-    const currentP = item.CurrentPrice ?? item.currentBid ?? item.StartPrice;
+    let currentP = item.CurrentPrice ?? item.currentBid ?? item.currentPrice ?? item.StartPrice;
+    const numId = Number(this.auctionItem.ID);
+
+    try {
+      const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+      if (priceMap[numId] && priceMap[numId] > (currentP || 0)) {
+        currentP = priceMap[numId];
+      }
+    } catch {}
+
     if (currentP !== undefined) {
       this.auctionItem.CurrentPrice = currentP;
       this.auctionItem.StartPrice = item.StartPrice ?? currentP;
@@ -347,6 +356,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     // Listen for local storage changes across tabs & windows
     this.storageEventListener = (event: StorageEvent) => {
       if (
+        event.key === 'item_prices_map' ||
         event.key === 'latest_bid_update' ||
         event.key === 'auctionItems' ||
         event.key === 'local_auctions' ||
@@ -372,6 +382,14 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   private updateLocalStoragePrice(itemId: number, newPrice: number): void {
+    const numId = Number(itemId);
+
+    try {
+      const priceMap: { [key: number]: number } = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+      priceMap[numId] = newPrice;
+      localStorage.setItem('item_prices_map', JSON.stringify(priceMap));
+    } catch {}
+
     const keys = ['auctionItems', 'local_auctions', 'auction_items_cache'];
     for (const key of keys) {
       const saved = localStorage.getItem(key);
@@ -381,7 +399,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           if (Array.isArray(items) && items.length > 0) {
             let updated = false;
             for (const item of items) {
-              if (Number(item.ID || item.id) === Number(itemId)) {
+              if (Number(item.ID || item.id) === numId) {
                 item.CurrentPrice = newPrice;
                 item.currentPrice = newPrice;
                 updated = true;

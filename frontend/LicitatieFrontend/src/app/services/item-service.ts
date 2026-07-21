@@ -82,6 +82,15 @@ export class ItemService {
   private sanitizeItem(item: any): AuctionItem {
     if (!item) return item;
 
+    try {
+      const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+      const numId = Number(item.ID || item.id);
+      if (priceMap[numId] && priceMap[numId] > (item.CurrentPrice || 0)) {
+        item.CurrentPrice = priceMap[numId];
+        item.currentPrice = priceMap[numId];
+      }
+    } catch {}
+
     const categoryMap: { [key: number]: string } = {
       1: 'Vehicles',
       2: 'Electronics',
@@ -235,6 +244,12 @@ export class ItemService {
           if (localItem && localItem.CurrentPrice > item.CurrentPrice) {
             item.CurrentPrice = localItem.CurrentPrice;
           }
+          try {
+            const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+            if (priceMap[id] && priceMap[id] > item.CurrentPrice) {
+              item.CurrentPrice = priceMap[id];
+            }
+          } catch {}
           observer.next(item);
           observer.complete();
         },
@@ -242,14 +257,28 @@ export class ItemService {
           const localItems = this.getLocalItems();
           const localItem = localItems.find((item: any) => item.ID === id);
           if (localItem) {
-            observer.next(this.sanitizeItem(localItem));
+            const sanitized = this.sanitizeItem(localItem);
+            try {
+              const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+              if (priceMap[id] && priceMap[id] > sanitized.CurrentPrice) {
+                sanitized.CurrentPrice = priceMap[id];
+              }
+            } catch {}
+            observer.next(sanitized);
             observer.complete();
             return;
           }
           this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
             next: (mockItems) => {
               const found = mockItems.find(i => i.ID === id) || mockItems[0];
-              observer.next(this.sanitizeItem(found));
+              const sanitized = this.sanitizeItem(found);
+              try {
+                const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+                if (priceMap[id] && priceMap[id] > sanitized.CurrentPrice) {
+                  sanitized.CurrentPrice = priceMap[id];
+                }
+              } catch {}
+              observer.next(sanitized);
               observer.complete();
             },
             error: (err) => observer.error(err)
