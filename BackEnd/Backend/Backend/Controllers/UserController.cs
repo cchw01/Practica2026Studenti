@@ -82,9 +82,12 @@ namespace Backend.Controllers
         {
             try
             {
+                if (dataOps.EmailExists(request.Email))
+                    return BadRequest(new { message = "This mail is already registered" });
+
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
-                    return BadRequest("Acest username este deja folosit.");
+                    return BadRequest("This username is already in use");
 
                 var user = new User
                 {

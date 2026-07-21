@@ -17,8 +17,8 @@ export class AddItemPage implements OnInit {
   itemForm: FormGroup;
   categories: Category[] = [];
 
-  selectedFile: File | null = null;
-  imagePreview: string | null = null;
+  selectedFiles: File[] = [];
+  imagePreviews: string[] = [];
   imageError = '';
 
   isSubmitting = false;
@@ -69,34 +69,44 @@ export class AddItemPage implements OnInit {
   onFileSelected(event: Event): void {
     this.imageError = '';
     const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (!file) return;
+    const files = input.files;
+    if (!files || files.length === 0) return;
 
-    if (!this.allowedTypes.includes(file.type)) {
-      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
-      input.value = '';
-      return;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      if (!this.allowedTypes.includes(file.type)) {
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
+        continue;
+      }
+      if (file.size > this.maxImageSize) {
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
+        continue;
+      }
+
+      this.selectedFiles.push(file);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          this.imagePreviews.push(reader.result as string);
+          this.cdr.detectChanges();
+        }
+      };
+      reader.readAsDataURL(file);
     }
-    if (file.size > this.maxImageSize) {
-      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
-      input.value = '';
-      return;
-    }
 
-    this.selectedFile = file;
-
-    // Preview local prin FileReader
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-      this.cdr.detectChanges(); // FileReader runs outside Angular zone — force update
-    };
-    reader.readAsDataURL(file);
+    input.value = '';
   }
 
-  removeImage(): void {
-    this.selectedFile = null;
-    this.imagePreview = null;
+  removeImage(index: number): void {
+    this.selectedFiles.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+  }
+
+  clearAllImages(): void {
+    this.selectedFiles = [];
+    this.imagePreviews = [];
     this.imageError = '';
   }
 
@@ -116,13 +126,11 @@ export class AddItemPage implements OnInit {
     formData.append('Location', v.location);
     formData.append('OwnerId', String(this.currentUserId));
     formData.append('DurationDays', String(v.durationDays));
-    if (this.selectedFile) {
-      formData.append('Image', this.selectedFile, this.selectedFile.name);
-    }
 
-    // Am șters partea de salvare locală în localStorage, deoarece
-    // acum avem backend și baza de date, iar salvarea pozelor
-    // mari în localStorage bloca aplicația.
+    for (const file of this.selectedFiles) {
+      formData.append('Images', file, file.name);
+      formData.append('Image', file, file.name);
+    }
 
     this.isSubmitting = true;
     this.itemService.createItemWithImage(formData).subscribe({
@@ -130,7 +138,7 @@ export class AddItemPage implements OnInit {
         this.isError = false;
         this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
-        this.removeImage();
+        this.clearAllImages();
         this.isSubmitting = false;
         setTimeout(() => this.router.navigate(['/auctions']), 1500);
       },

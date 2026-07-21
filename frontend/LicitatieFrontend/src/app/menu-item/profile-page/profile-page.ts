@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../app-logic/review';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
-
+import { TranslateService } from '@ngx-translate/core';
 interface Item {
   id: number;
   title: string;
@@ -81,25 +81,29 @@ export class ProfilePage implements OnInit {
 
   get displayAvatar(): string {
     if (this.user.avatarUrl) return this.user.avatarUrl;
-    const name = encodeURIComponent(this.user.name || 'User');
+    const name = encodeURIComponent(
+      this.user.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER'),
+    );
     return `https://ui-avatars.com/api/?name=${name}&background=6c63ff&color=fff&size=120`;
   }
 
   constructor(
     private authService: AuthService,
+    private UserService: UserService,
     private itemService: ItemService,
     private reviewService: ReviewService,
     private router: Router,
     private UserService: UserService,
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email;
-      this.user.name = currentUser.name || 'User';
+      this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
       this.user.email = currentUser.email;
       this.currentUserId = +currentUser.id || 3;
     }
@@ -113,7 +117,8 @@ export class ProfilePage implements OnInit {
       next: (categories) => {
         this.categories = categories;
       },
-      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+      error: (err) =>
+        console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_CATEGORIES'), err),
     });
   }
 
@@ -143,7 +148,9 @@ export class ProfilePage implements OnInit {
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice || item.startPrice,
-            status: item.status ? item.status.toString() : 'Added',
+            status: item.status
+              ? item.status.toString()
+              : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
             image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
           }));
 
@@ -154,28 +161,30 @@ export class ProfilePage implements OnInit {
             id: item.id || 0,
             title: item.name,
             price: item.currentPrice,
-            status: 'Won',
-            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
+            status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
+          }));
+
+        // Filter wish list items (items where current user is in WishingUsers)
+        this.wishItems = items
+          .filter(
+            (item: any) =>
+              Array.isArray(item.wishingUsers) &&
+              item.wishingUsers.some(
+                (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
+              ),
+          )
+          .map((item: any) => ({
+            id: item.id || item.ID || 0,
+            title: item.name || item.Name,
+            price: item.currentPrice || item.startPrice,
+            status: item.status
+              ? item.status.toString()
+              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
           }));
       },
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load wish list items
-    this.UserService.getWishlist(this.currentUserId).subscribe({
-      next: (wishlistItems: any[]) => {
-        console.log('WISHLIST ITEMS FROM BACKEND:', wishlistItems);
-        this.wishItems = wishlistItems.map((item: any) => ({
-          id: item.id || item.ID || 0,
-          title: item.name || item.Name || item.title,
-          price: item.currentPrice || item.startPrice || item.price,
-          status: item.status ? item.status.toString() : 'Active',
-          image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
-        }));
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Error loading wishlist:', err),
-    });
     // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
@@ -257,22 +266,26 @@ export class ProfilePage implements OnInit {
   }
 
   saveEdit(): void {
-    this.UserService.updateUser(this.currentUserId, this.editDraft.username, this.editDraft.name).subscribe({
+    this.UserService.updateUser(
+      this.currentUserId,
+      this.editDraft.username,
+      this.editDraft.name,
+    ).subscribe({
       next: (updatedUser: any) => {
         this.user = {
           ...this.user,
           username: updatedUser.userName,
-          name: updatedUser.name
+          name: updatedUser.name,
         };
         this.saveProfile();
         this.isEditing = false;
-        alert('Profilul a fost actualizat cu succes!');
+        alert(this.translate.instant('PROFILE_PAGE.MESSAGES.PROFILE_UPDATED'));
       },
       error: (err: any) => {
         const errorMsg = err.error || 'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
-         this.editDraft = { ...this.user };
-      }
+        this.editDraft = { ...this.user };
+      },
     });
   }
 
@@ -292,13 +305,13 @@ export class ProfilePage implements OnInit {
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
-      this.passwordMessage = 'All fields are required.';
+      this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.REQUIRED');
       return;
     }
 
     if (this.newPassword !== this.confirmPassword) {
       this.passwordError = true;
-      this.passwordMessage = 'The new password and its confirmation do not match.';
+      this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.NOT_MATCH');
       return;
     }
 
@@ -307,16 +320,17 @@ export class ProfilePage implements OnInit {
       .subscribe({
         next: (res) => {
           this.passwordError = false;
-          this.passwordMessage = 'Password updated successfully!';
+          this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.SUCCESS');
           this.currentPassword = '';
           this.newPassword = '';
           this.confirmPassword = '';
           setTimeout(() => (this.passwordMessage = ''), 3000);
         },
+
         error: (err) => {
           this.passwordError = true;
           this.passwordMessage =
-            err.error?.message || 'Error updating password. Please check your current password.';
+            err.error?.message || this.translate.instant('PROFILE_PAGE.PASSWORD.ERROR');
         },
       });
   }
