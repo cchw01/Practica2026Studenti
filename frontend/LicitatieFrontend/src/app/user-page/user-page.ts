@@ -75,14 +75,18 @@ export class UserPage implements OnInit {
   }
 
   loadUserActiveCategories(): void {
-    this.itemService.getActiveItems().subscribe({
+    this.itemService.getItems().subscribe({
       next: (items) => {
+        const username = this.user?.UserName || (this.user as any)?.userName || (this.user as any)?.username;
         this.userActiveItems = items.filter(item => {
           const ownerId = item.OwnerId || (item as any).ownerId;
           const ownerObj = item.Owner || (item as any).owner;
-          const ownerObjId = ownerObj ? (ownerObj.ID || ownerObj.ID) : null;
+          const ownerObjId = ownerObj ? (ownerObj.ID || (ownerObj as any).id) : null;
+          const ownerUsername = ownerObj?.UserName || (ownerObj as any)?.username || (item as any).ownerUserName;
           
-          return +ownerId === this.userId || (ownerObjId !== null && +ownerObjId === this.userId);
+          const matchId = +ownerId === this.userId || (ownerObjId !== null && +ownerObjId === this.userId);
+          const matchUsername = username && ownerUsername && ownerUsername.toLowerCase() === username.toLowerCase();
+          return matchId || matchUsername;
         });
 
         const categoryNames = this.userActiveItems
@@ -97,6 +101,21 @@ export class UserPage implements OnInit {
         console.error('DEBUG: Eroare la determinarea categoriilor active:', err);
       }
     });
+  }
+
+  getItemImage(item: any): string {
+    const rawUrl = item.ImageUrl || item.imageUrl || (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : null) || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null);
+    if (rawUrl) {
+      return this.itemService.formatImageUrl(rawUrl);
+    }
+    const title = (item.Name || item.name || '').toLowerCase();
+    if (title.includes('watch')) {
+      return 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
+    }
+    if (title.includes('bmw') || title.includes('car') || title.includes('leather')) {
+      return 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop';
+    }
+    return 'assets/images/placeholder.png';
   }
 
   onCategoryChange(): void {

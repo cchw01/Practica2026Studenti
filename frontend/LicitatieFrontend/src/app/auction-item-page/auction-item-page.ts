@@ -119,8 +119,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.startCountdown();
 
-    const currentUser = this.authService.getCurrentUser();
-    const currentUserId = currentUser ? (+currentUser.id || 3) : null;
+    const currentUserId = this.authService.getCurrentUserId();
     
     if (currentUserId) {
       this.userService.getWishlist(currentUserId).subscribe({
@@ -285,8 +284,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
 
-    const currentUser = this.authService.getCurrentUser();
-    const bidderId = currentUser ? +currentUser.id || 3 : 3;
+    const bidderId = this.authService.getCurrentUserId() || 0;
 
     this.bidService
       .addBid({
@@ -322,8 +320,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   toggleWishlist(): void {
-    const currentUser = this.authService.getCurrentUser();
-    const currentUserId = currentUser ? +currentUser.id || 3 : null;
+    const currentUserId = this.authService.getCurrentUserId();
 
     if (!currentUserId || !this.authService.isLoggedIn()) {
       this.redirectToLogin();

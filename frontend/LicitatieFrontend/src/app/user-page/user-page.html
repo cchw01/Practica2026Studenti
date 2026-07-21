@@ -107,8 +107,7 @@
     <div class="items-grid" *ngIf="filteredUserItems.length > 0; else noItems">
       <div class="item-card" *ngFor="let item of filteredUserItems" (click)="goToItemDetail(item)">
         <div class="item-image-wrap">
-          <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')" 
-               [alt]="item.Name" />
+          <img [src]="getItemImage(item)" [alt]="item.Name" />
         </div>
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
