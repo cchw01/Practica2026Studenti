@@ -25,6 +25,8 @@ export class AdminPage implements OnInit {
   filteredUsers: any[] = [];
   reportedUsers: any[] = [];
 
+  verifiedPostIds = new Set<number>(); 
+
   constructor(
     private adminService: AdminService,
     private authService: AuthService,
@@ -60,6 +62,12 @@ export class AdminPage implements OnInit {
       this.forumPosts = data || [];
       this.cdr.detectChanges();
     });
+  }
+   get visibleForumPosts(): any[] {
+    return this.forumPosts.filter(post => !this.verifiedPostIds.has(post.id));
+  }
+   markAsVerified(id: number): void {
+    this.verifiedPostIds.add(id);
   }
 
   setTab(tab: Tab): void {

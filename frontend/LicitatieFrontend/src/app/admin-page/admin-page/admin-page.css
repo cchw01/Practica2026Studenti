@@ -287,6 +287,23 @@
   padding: 1px 7px;
   border-radius: 10px;
 }
+.stack-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.vuexy-text-success-btn {
+  background: none;
+  border: none;
+  color: #28c76f;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vuexy-text-success-btn:hover {
+  text-decoration: underline;
+}
 .users-toolbar {
   display: flex;
   gap: 12px;
