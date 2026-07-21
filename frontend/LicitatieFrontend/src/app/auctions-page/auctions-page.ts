@@ -26,6 +26,7 @@ export class AuctionsPage implements OnInit {
 
   isLoading: boolean = true;
   hasError: boolean = false;
+  currentUserId: number = 3;
 
   constructor(
     private itemService: ItemService,
@@ -34,6 +35,8 @@ export class AuctionsPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private categoryService: CategoryService,
+    public authService: AuthService,
+    private userService: UserService
   ) {}
 
   getCategoryName(item: AuctionItem): string {

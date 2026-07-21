@@ -1,4 +1,4 @@
-import { Component, OnInit, Service, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
@@ -93,10 +93,9 @@ export class ProfilePage implements OnInit {
     private itemService: ItemService,
     private reviewService: ReviewService,
     private router: Router,
-    private UserService: UserService,
     private categoryService: CategoryService,
-    private cdr: ChangeDetectorRef
-    private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -164,23 +163,22 @@ export class ProfilePage implements OnInit {
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
           }));
 
-        // Filter wish list items (items where current user is in WishingUsers)
-        this.wishItems = items
-          .filter(
-            (item: any) =>
-              Array.isArray(item.wishingUsers) &&
-              item.wishingUsers.some(
-                (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
-              ),
-          )
-          .map((item: any) => ({
-            id: item.id || item.ID || 0,
-            title: item.name || item.Name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-          }));
+        // Fetch wishlist items specifically from backend
+        this.UserService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            this.wishItems = wishlistItems.map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || 'Item',
+              price: item.currentPrice || item.startPrice || 0,
+              image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+            }));
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Error loading wishlist:', err)
+        });
       },
       error: (err) => console.error('Error loading items:', err),
     });
