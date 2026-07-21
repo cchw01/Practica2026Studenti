@@ -1,0 +1,365 @@
+{
+  "NAV": {
+    "HOME": "Domov",
+    "AUCTIONS": "Aukcie",
+    "FORUM": "Fórum",
+    "CONTACT": "Kontakt",
+    "LOGIN": "Prihlásenie",
+    "REGISTER": "Registrácia",
+    "TOGGLE_MENU": "Zobraziť alebo skryť navigáciu",
+    "SELECT_LANGUAGE": "Vybrať jazyk",
+    "HELP": "Pomoc",
+    "ADD_AUCTION": "Pridať aukciu"
+  },
+  "CONTACT": {
+    "TITLE": "Kontaktujte nás",
+    "DESCRIPTION": "Máte otázky? Náš tím je pripravený vám pomôcť.",
+    "EMAIL": "E-mail",
+    "PHONE": "Telefónne číslo",
+    "CALL_CENTER_HOURS": "Otváracie hodiny zákazníckej linky",
+    "SCHEDULE": "Pondelok–piatok, 09:00–17:00",
+    "FOLLOW_US": "Sledujte nás",
+    "SOCIAL_DESCRIPTION": "Zostaňte s nami v kontakte na sociálnych sieťach."
+  },
+  "LOGIN": {
+    "TITLE": "Prihlásenie",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mailová adresa",
+    "EMAIL_REQUIRED": "E-mail je povinný",
+    "EMAIL_INVALID": "Neplatný formát e-mailu",
+    "PASSWORD_LABEL": "Heslo",
+    "PASSWORD_PLACEHOLDER": "Zadajte heslo",
+    "PASSWORD_REQUIRED": "Heslo je povinné",
+    "PASSWORD_MIN_LENGTH": "Heslo musí mať aspoň 6 znakov",
+    "SUBMIT": "Prihlásiť sa",
+    "NO_ACCOUNT": "Nemáte účet?",
+    "REGISTER_HERE": "Zaregistrujte sa tu"
+  },
+  "REGISTER": {
+    "TITLE": "Vytvoriť účet",
+    "USERNAME_LABEL": "Používateľské meno",
+    "USERNAME_PLACEHOLDER": "Používateľské meno",
+    "USERNAME_REQUIRED": "Používateľské meno je povinné.",
+    "FULL_NAME_LABEL": "Celé meno",
+    "FULL_NAME_PLACEHOLDER": "Celé meno",
+    "FULL_NAME_REQUIRED": "Celé meno je povinné.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mail",
+    "EMAIL_REQUIRED": "E-mail je povinný.",
+    "EMAIL_INVALID": "Zadajte platnú e-mailovú adresu.",
+    "PASSWORD_LABEL": "Heslo",
+    "PASSWORD_PLACEHOLDER": "Heslo",
+    "PASSWORD_REQUIRED": "Heslo je povinné.",
+    "PASSWORD_MIN_LENGTH": "Heslo musí mať aspoň 6 znakov.",
+    "CONFIRM_PASSWORD_LABEL": "Potvrdiť heslo",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Potvrďte heslo",
+    "CONFIRM_PASSWORD_REQUIRED": "Potvrďte svoje heslo.",
+    "PASSWORDS_MISMATCH": "Heslá sa nezhodujú.",
+    "PHONE_LABEL": "Telefónne číslo",
+    "PHONE_PLACEHOLDER": "Telefónne číslo (+40...)",
+    "PHONE_REQUIRED": "Telefónne číslo je povinné.",
+    "PHONE_INVALID": "Zadajte platné telefónne číslo.",
+    "SUBMIT": "Vytvoriť účet",
+    "ALREADY_HAVE_ACCOUNT": "Už máte účet?",
+    "SIGN_IN": "Prihlásiť sa"
+  },
+  "HOME": {
+    "HERO": {
+      "TITLE": "PRIHADZUJTE. VYHRAJTE. ZOPAKUJTE.",
+      "TAG": "🔥 Živé aukcie každý deň",
+      "DESCRIPTION": "Najbezpečnejšia online aukčná platforma. Predávajte rýchlo alebo získajte jedinečné ponuky.",
+      "EXPLORE_AUCTIONS": "Preskúmať aukcie",
+      "START_SELLING": "Začať predávať",
+      "SEARCH_LABEL": "Hľadať produkty a aukcie...",
+      "SEARCH_PLACEHOLDER": "Príklad: BMW, zlaté náušnice"
+    },
+    "CATEGORIES": {
+      "EYEBROW": "Kategórie",
+      "TITLE_START": "Preskúmajte",
+      "TITLE_END": "kategórie",
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Technológie",
+          "DESCRIPTION": "Špičkové zariadenia a najnovšia elektronika."
+        },
+        "AUTO_MOTORS": {
+          "NAME": "Autá a motorky",
+          "DESCRIPTION": "Autá, motocykle a vzácne diely."
+        },
+        "ART_COLLECTIBLES": {
+          "NAME": "Umenie a zberateľstvo",
+          "DESCRIPTION": "Exkluzívne umelecké diela a zbierky."
+        },
+        "REAL_ESTATE": {
+          "NAME": "Nehnuteľnosti",
+          "DESCRIPTION": "Výnimočné nehnuteľnosti a pozemky."
+        }
+      }
+    },
+    "AUCTIONS": {
+      "EYEBROW": "Trhovisko",
+      "TITLE_START": "Aktívne",
+      "TITLE_END": "aukcie",
+      "PLACE_BID": "Prihodiť",
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW radu 7, rok 2022, bezchybný stav, jeden majiteľ."
+        },
+        "GOLD_EARRINGS": {
+          "TITLE": "Zlaté náušnice",
+          "DESCRIPTION": "Náušnice z 18-karátového zlata s certifikovanými diamantmi."
+        },
+        "PATEK_PHILIPPE": {
+          "TITLE": "Hodinky Patek Philippe",
+          "DESCRIPTION": "Limitované zberateľské hodinky s krabičkou a certifikátom."
+        },
+        "VILLA": {
+          "TITLE": "Vila",
+          "DESCRIPTION": "Luxusná vila s bazénom, piatimi spálňami a panoramatickým výhľadom."
+        }
+      }
+    }
+  },
+  "HELP": {
+    "TITLE": "Centrum pomoci",
+    "INFORMATION": "Nájdite rýchle odpovede, kontaktujte nás telefonicky alebo sa porozprávajte s naším asistentom umelej inteligencie.",
+    "FAQ": "❓ Často kladené otázky",
+    "SUPPORT": "📞 Rýchla telefonická podpora",
+    "PROGRAM": "Pondelok - piatok: 09:00 - 18:00",
+    "FORM": "📝 Otvoriť požiadavku",
+    "REQUEST": "Odoslať požiadavku",
+    "ASSISTANT": "Virtuálny asistent naživo"
+  },
+  "AUCTIONS_PAGE": {
+    "TITLE": "Aktívne aukcie",
+    "DESCRIPTION": "Objavte jedinečné predmety a prihadzujte v reálnom čase",
+    "SEARCH_PLACEHOLDER": "Hľadať podľa názvu...",
+    "ALL_CATEGORIES": "Všetky kategórie",
+    "SORT": {
+      "ENDING_SOON": "Čoskoro končiace",
+      "PRICE_LOW_HIGH": "Cena: od najnižšej",
+      "PRICE_HIGH_LOW": "Cena: od najvyššej",
+      "NEWEST": "Najnovšie"
+    },
+    "ADD_ITEM": "Pridať predmet",
+    "RESULT": {
+      "ONE": "nájdená aukcia",
+      "MANY": "nájdené aukcie"
+    },
+    "CURRENT_PRICE": "Aktuálna cena",
+    "EMPTY": {
+      "TITLE": "Nenašli sa žiadne predmety",
+      "DESCRIPTION": "Momentálne neexistujú aktívne aukcie zodpovedajúce vášmu vyhľadávaniu."
+    },
+    "TIME": {
+      "ENDED": "Aukcia sa skončila",
+      "LEFT": "zostáva"
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Predávajte na BidSphere",
+    "TITLE": "Pridať nový predmet do aukcie",
+    "DESCRIPTION": "Vyplňte údaje nižšie a zverejnite svoj predmet v aukcii.",
+    "FIELDS": {
+      "NAME": "Názov predmetu *",
+      "NAME_PLACEHOLDER": "napr. historický bicykel",
+      "START_PRICE": "Vyvolávacia cena (RON) *",
+      "DURATION": "Trvanie aukcie (dni) *",
+      "CATEGORY": "Kategória *",
+      "CATEGORY_PLACEHOLDER": "Vyberte kategóriu",
+      "LOCATION": "Lokalita *",
+      "LOCATION_PLACEHOLDER": "napr. Brașov",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_PLACEHOLDER": "Opíšte stav, históriu a podrobnosti predmetu..."
+    },
+    "IMAGE": {
+      "TITLE": "Fotografia predmetu",
+      "UPLOAD": "Kliknutím nahrajte obrázok",
+      "DETAILS": "JPG, PNG alebo WEBP, maximálne 5 MB",
+      "REMOVE": "Odstrániť"
+    },
+    "BUTTONS": {
+      "CANCEL": "Zrušiť",
+      "PUBLISH": "Zverejniť predmet",
+      "PUBLISHING": "Zverejňuje sa..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "Názov je povinný.",
+      "NAME_MIN": "Názov musí mať aspoň 3 znaky.",
+      "PRICE_REQUIRED": "Vyvolávacia cena je povinná.",
+      "PRICE_MIN": "Cena musí byť vyššia ako 0.",
+      "DURATION": "Trvanie musí byť od 1 do 30 dní.",
+      "CATEGORY": "Vyberte kategóriu.",
+      "LOCATION": "Lokalita je povinná.",
+      "IMAGE_TYPE": "Povolené sú iba obrázky JPG, PNG alebo WEBP.",
+      "IMAGE_SIZE": "Obrázok musí byť menší ako 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "Predmet bol úspešne zverejnený v aukcii!",
+      "SUCCESS_LOCAL": "Predmet bol úspešne zverejnený v aukcii (uložený lokálne — backend ešte nie je pripravený)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "O nás",
+    "ABOUT_TEXT_1": "BidSphere je moderná online aukčná platforma vytvorená tak, aby bolo nakupovanie a predávanie prostredníctvom prihadzovania jednoduché, bezpečné a vzrušujúce.",
+    "ABOUT_TEXT_2": "Spájame tisíce kupujúcich a predávajúcich v širokej škále kategórií a každému ponúkame transparentný a spravodlivý proces prihadzovania. Či už hľadáte výhodnú ponuku, alebo chcete predať správnemu kupujúcemu, BidSphere vám poskytne nástroje a dôveru potrebné na bezpečné prihadzovanie.",
+    "LINKS": "Odkazy",
+    "HOME": "Domov",
+    "SERVICES": "Aukcie",
+    "CONTACT": "Kontakt",
+    "HELP": "Pomoc",
+    "FORUM": "Fórum",
+    "CONTACT_TITLE": "Kontakt",
+    "SOCIAL": "Sociálne siete",
+    "COPYRIGHT": "Všetky práva vyhradené."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Ups! Stránka sa nenašla",
+    "MESSAGE": "Stránka, ktorú hľadáte, neexistuje alebo bola presunutá.",
+    "BUTTON": "SPÄŤ NA DOMOVSKÚ STRÁNKU"
+  },
+  "FORUM": {
+    "TITLE": "Diskusie na fóre",
+    "DESCRIPTION": "Prezerajte si aktuálne diskusie a zapojte sa do rozhovorov s ostatnými používateľmi.",
+    "START_DISCUSSION": "Začať diskusiu",
+    "LOGIN_TO_START": "Prihláste sa a začnite diskusiu",
+    "SORT": {
+      "ARIA_LABEL": "Zoradiť diskusie",
+      "LATEST": "Najnovšie najskôr",
+      "OLDEST": "Najstaršie najskôr",
+      "MOST_COMMENTED": "Najviac komentované"
+    },
+    "DISCUSSION": "diskusia",
+    "DISCUSSIONS": "diskusie",
+    "LOADING": {
+      "TITLE": "Načítavajú sa diskusie"
+    },
+    "ERROR": {
+      "TITLE": "Diskusie sa nepodarilo načítať",
+      "RETRY": "Skúsiť znova"
+    },
+    "POSTED_BY": "Zverejnil",
+    "COMMENT": "komentár",
+    "COMMENTS": "komentáre",
+    "EMPTY": {
+      "TITLE": "Nie sú dostupné žiadne diskusie",
+      "MESSAGE": "Momentálne na fóre nie sú žiadne diskusie."
+    }
+  },
+  "NOTIFICATIONS": {
+    "TRUE": "Upozornenia",
+    "FALSE": "Zatiaľ žiadne upozornenia."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Podrobnosti aukcie",
+    "INFO": {
+      "CURRENT_PRICE": "Aktuálna cena",
+      "START_PRICE": "Vyvolávacia cena",
+      "CATEGORY": "Kategória",
+      "LOCATION": "Lokalita",
+      "STARTS_AT": "Začína",
+      "OWNER": "Vlastník",
+      "ENDS": "Končí"
+    },
+    "BID": {
+      "TITLE": "Prihoďte",
+      "PLACEHOLDER": "Zadajte sumu ponuky",
+      "BUTTON": "🔨 Prihodiť",
+      "MINIMUM": "Minimálna ponuka:",
+      "LOGIN_TEXT": "Prihláste sa, aby ste mohli prihodiť na tento predmet.",
+      "LOGIN_BUTTON": "Prihlásiť sa a prihodiť"
+    },
+    "WISHLIST": {
+      "ADD": "🤍 Pridať do zoznamu želaní",
+      "ADDED": "❤️ V zozname želaní"
+    },
+    "DESCRIPTION": {
+      "TITLE": "Opis produktu"
+    },
+    "STATUS": {
+      "ACTIVE": "Aktívna",
+      "ENDED": "Ukončená",
+      "PENDING": "Čakajúca"
+    },
+    "MESSAGES": {
+      "AUCTION_ENDED": "Aukcia sa skončila.",
+      "BID_HIGHER_CURRENT": "Ponuka musí byť vyššia ako aktuálna cena.",
+      "BID_HIGHER_MINIMUM": "Ponuka musí byť vyššia ako minimálna cena."
+    },
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "min",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Recenzie",
+    "REVIEWER_ID": "ID autora recenzie",
+    "REVIEWED_USER_ID": "ID hodnoteného používateľa",
+    "RATING": "Hodnotenie (0–5)",
+    "RATING_ERROR": "Hodnotenie musí byť od 0 do 5.",
+    "COMMENT": "Komentár",
+    "ADD": "Pridať",
+    "UPDATE": "Aktualizovať",
+    "CANCEL": "Zrušiť",
+    "EDIT": "Upraviť recenziu",
+    "DELETE": "Odstrániť recenziu"
+  },
+  "SHARE": {
+    "BUTTON": "Zdieľať",
+    "COPIED": "Skopírované!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profil",
+    "LOGOUT": "Odhlásiť sa"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Späť na diskusie",
+    "LOADING_DISCUSSION_TITLE": "Načítava sa diskusia",
+    "LOADING_DISCUSSION_MESSAGE": "Diskusia sa načítava.",
+    "LOAD_DISCUSSION_ERROR": "Diskusiu sa nepodarilo načítať",
+    "TRY_AGAIN": "Skúsiť znova",
+    "DELETE_POST": "Odstrániť",
+    "POSTED_BY": "Zverejnil",
+    "DISCUSSION": "Diskusia",
+    "COMMENT": "komentár",
+    "COMMENTS": "komentáre",
+    "ADD_COMMENT": "Pridať komentár",
+    "COMMENT_PLACEHOLDER": "Napíšte svoj komentár sem...",
+    "COMMENT_REQUIRED": "Komentár je povinný.",
+    "COMMENT_MIN_LENGTH": "Komentár musí mať aspoň 2 znaky.",
+    "COMMENT_MAX_LENGTH": "Komentár nesmie presiahnuť 1000 znakov.",
+    "PUBLISHING": "Zverejňuje sa...",
+    "PUBLISH_COMMENT": "Zverejniť komentár",
+    "LOGIN_REQUIRED": "Ak chcete pridať komentár, musíte byť prihlásení.",
+    "LOGIN": "Prihlásiť sa",
+    "LOADING_COMMENTS": "Načítavajú sa komentáre",
+    "LOAD_COMMENTS_ERROR": "Komentáre sa nepodarilo načítať",
+    "DELETE_COMMENT": "Odstrániť",
+    "NO_COMMENTS": "Zatiaľ žiadne komentáre"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Späť na diskusie",
+    "TITLE": "Začať diskusiu",
+    "SUBTITLE": "Vytvorte novú diskusiu a zdieľajte ju s ostatnými používateľmi fóra.",
+    "TITLE_LABEL": "Názov",
+    "TITLE_PLACEHOLDER": "Zadajte jasný názov diskusie",
+    "TITLE_REQUIRED": "Názov je povinný.",
+    "TITLE_WHITESPACE": "Názov nesmie obsahovať iba medzery.",
+    "TITLE_MIN_LENGTH": "Názov musí mať aspoň 3 znaky.",
+    "TITLE_MAX_LENGTH": "Názov nesmie presiahnuť 150 znakov.",
+    "DESCRIPTION_LABEL": "Opis",
+    "DESCRIPTION_PLACEHOLDER": "Opíšte tému, o ktorej chcete diskutovať...",
+    "DESCRIPTION_REQUIRED": "Opis je povinný.",
+    "DESCRIPTION_WHITESPACE": "Opis nesmie obsahovať iba medzery.",
+    "DESCRIPTION_MIN_LENGTH": "Opis musí mať aspoň 10 znakov.",
+    "DESCRIPTION_MAX_LENGTH": "Opis nesmie presiahnuť 5000 znakov.",
+    "CREATE_ERROR": "Diskusiu sa nepodarilo vytvoriť",
+    "CANCEL": "Zrušiť",
+    "CREATING": "Vytvára sa diskusia...",
+    "SUBMIT": "Začať diskusiu"
+  }
+}
