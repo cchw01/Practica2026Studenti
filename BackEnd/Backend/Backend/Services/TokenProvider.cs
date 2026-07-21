@@ -1,4 +1,4 @@
-﻿using Backend.Models;
+using Backend.Models;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -9,7 +9,8 @@ namespace Backend.Services
     {
         public string GenerateAccesToken(User user)
         {
-            string secretKey = configuration["Jwt:Secret"];
+            string secretKey = configuration["Jwt:Secret"]
+                ?? throw new InvalidOperationException("Jwt:Secret is not configured.");
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
             var tokenDescriptor = new SecurityTokenDescriptor

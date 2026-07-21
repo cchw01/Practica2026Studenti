@@ -1,13 +1,15 @@
+@use '../../styles/variables' as v;
+
 .review-container {
   max-width: 700px;
   margin: 0 auto;
-  padding: calc(16px + var(--navbar-space, 96px)) 16px 16px;
+  padding: calc(v.$space-md + var(--navbar-space, 96px)) v.$space-md v.$space-md;
 }
 
 .review-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: v.$space-sm;
 
   mat-form-field {
     flex: 1 1 45%;
@@ -20,15 +22,15 @@
 
 .form-actions {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  gap: v.$space-sm;
+  margin-top: v.$space-sm;
 }
 
 .review-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 12px;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  padding: v.$space-sm;
+  margin-top: v.$space-sm;
   position: relative;
 }
 
@@ -38,16 +40,16 @@
 }
 
 .rating {
-  color: #f5a623;
+  color: #f5a623; // gold – keep as-is (consistent with profile page)
 }
 
 .review-actions {
   display: flex;
   justify-content: flex-end;
   gap: 4px;
-  margin-top: 8px;
+  margin-top: v.$space-sm;
 }
 
 .error {
-  color: red;
+  color: v.$color-status-urgent-text;
 }

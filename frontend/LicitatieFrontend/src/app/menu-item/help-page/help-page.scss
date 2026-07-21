@@ -1,0 +1,325 @@
+@use '../../styles/variables' as v;
+
+/* Layout General */
+.help-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: calc(20px + var(--navbar-space, 96px)) v.$space-lg 60px;
+  font-family: v.$font-family;
+  color: v.$color-text-body;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  background: linear-gradient(135deg, v.$color-primary-tint, v.$color-accent-tint);
+  color: v.$color-text-heading;
+  padding: v.$space-2xl v.$space-lg 48px;
+  border-radius: v.$radius-lg;
+  margin-bottom: v.$space-2xl;
+  box-shadow: v.$shadow-md;
+  animation: fade-in-up 0.6s ease both;
+}
+
+.hero-section h1 {
+  margin: 0;
+  font-size: v.$font-size-heading-xl;
+  font-weight: v.$font-weight-extra-bold;
+  letter-spacing: -0.01em;
+  color: v.$color-text-heading;
+}
+
+.hero-section p {
+  margin-top: v.$space-sm;
+  font-size: 1.1rem; /* slightly larger than default body */
+  color: v.$color-text-body;
+}
+
+/* Grid și Carduri */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$space-xl;
+}
+
+.card {
+  background: v.$color-surface;
+  border-radius: v.$radius-md; /* 16px – close to original 20px */
+  padding: v.$space-xl;
+  box-shadow: v.$shadow-sm;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(v.$color-primary, 0.1);
+  animation: fade-in-up 0.6s ease both;
+}
+
+.faq-card { animation-delay: 0.08s; }
+.call-card { animation-delay: 0.14s; }
+.form-card { animation-delay: 0.2s; }
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(63, 81, 181, 0.14);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: v.$color-text-heading;
+  font-size: 1.4rem;
+  font-weight: v.$font-weight-bold;
+  border-bottom: 2px solid rgba(v.$color-primary, 0.1);
+  padding-bottom: 14px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-xl;
+}
+
+/* FAQ Acordeon */
+.faq-item {
+  border-bottom: 1px solid v.$color-border;
+  padding: v.$space-md 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.faq-item:hover {
+  background-color: rgba(v.$color-primary, 0.04);
+}
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  font-weight: v.$font-weight-semibold;
+  color: v.$color-text-heading;
+  font-size: 1.05rem;
+}
+.toggle-icon {
+  color: v.$color-primary;
+  font-weight: v.$font-weight-bold;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+.faq-item.active .toggle-icon {
+  transform: rotate(180deg);
+}
+.faq-answer {
+  margin-top: v.$space-sm;
+  color: v.$color-text-body;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Call Center */
+.call-card {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(v.$color-primary, 0.06), rgba(v.$color-accent, 0.04));
+  border-color: rgba(v.$color-primary, 0.15);
+}
+.phone-number {
+  font-size: 2.4rem;
+  font-weight: v.$font-weight-extra-bold;
+  margin: v.$space-md 0;
+  color: v.$color-primary;
+}
+
+/* Formular */
+.input-group {
+  margin-bottom: v.$space-lg;
+}
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: v.$space-sm 15px;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  font-size: v.$font-size-body;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: v.$color-primary;
+  outline: none;
+  box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
+  color: v.$color-white;
+  border: none;
+  padding: 14px;
+  border-radius: v.$radius-pill;
+  font-size: 1.05rem;
+  font-weight: v.$font-weight-bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 16px rgba(63, 81, 181, 0.3);
+}
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(63, 81, 181, 0.4);
+}
+.submit-btn:disabled {
+  background: v.$color-border;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Chat AI Widget */
+.chat-widget {
+  position: fixed;
+  bottom: v.$space-xl;
+  right: v.$space-xl;
+  z-index: 9999;
+}
+.chat-toggle {
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
+  color: v.$color-white;
+  border: none;
+  padding: v.$space-md v.$space-lg;
+  border-radius: v.$radius-pill;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: v.$font-weight-bold;
+  box-shadow: 0 10px 24px rgba(63, 81, 181, 0.35);
+  transition: all 0.25s ease;
+}
+.chat-toggle:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+.chat-toggle.chat-open {
+  border-radius: 50%;
+  padding: v.$space-md 20px;
+  background: linear-gradient(135deg, v.$color-accent, darken(v.$color-accent, 10%));
+}
+
+.chat-box {
+  position: absolute;
+  bottom: 74px;
+  right: 0;
+  width: 350px;
+  background: v.$color-surface;
+  border-radius: v.$radius-lg;
+  box-shadow: 0 20px 45px rgba(30, 42, 90, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s;
+  border: 1px solid rgba(v.$color-primary, 0.1);
+}
+.chat-header {
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
+  color: v.$color-white;
+  padding: v.$space-md;
+  font-weight: v.$font-weight-bold;
+  display: flex;
+  align-items: center;
+  gap: v.$space-sm;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+}
+
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  padding: v.$space-md;
+  background: v.$color-background;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+}
+.message {
+  padding: v.$space-sm v.$space-md;
+  border-radius: 15px;
+  max-width: 80%;
+  font-size: v.$font-size-body;
+  line-height: 1.4;
+}
+.message.ai {
+  background: v.$color-primary-tint;
+  color: v.$color-text-heading;
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+.message.user {
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
+  color: v.$color-white;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.chat-input-area {
+  display: flex;
+  border-top: 1px solid v.$color-border;
+  padding: v.$space-sm;
+  background: v.$color-surface;
+}
+.chat-input-area input {
+  flex: 1;
+  border: none;
+  padding: v.$space-sm;
+  outline: none;
+  font-size: v.$font-size-body;
+  font-family: inherit;
+}
+.chat-input-area button {
+  background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
+  color: v.$color-white;
+  border: none;
+  border-radius: v.$radius-sm;
+  padding: 0 v.$space-lg;
+  cursor: pointer;
+  font-weight: v.$font-weight-bold;
+  transition: transform 0.2s ease;
+}
+.chat-input-area button:hover {
+  transform: scale(1.06);
+}
+
+/* Animații */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Indicator de scriere (typing dots) */
+.typing .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: v.$color-text-secondary;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+.typing .dot:nth-child(1) { animation-delay: -0.32s; }
+.typing .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* Responsivitate Mobile */
+@media(max-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .chat-box {
+    width: 300px;
+    right: -10px;
+  }
+}

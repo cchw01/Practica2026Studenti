@@ -8,7 +8,7 @@ namespace Backend.Models
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public decimal StartPrice { get; set; }
         public decimal CurrentPrice { get; set; }
         public CategoryItem? Category { get; set; }
@@ -29,7 +29,7 @@ namespace Backend.Models
         public List<User>? WishingUsers { get; set; }
         public string? Description { get; set; }
 
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
 
         public User? Owner { get; set; }
 
