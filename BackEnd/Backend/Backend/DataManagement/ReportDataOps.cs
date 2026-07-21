@@ -19,7 +19,6 @@ namespace Backend.DataManagement
                 .Include(r => r.ReportedUser)
                 .Include(r => r.AuctionItem)
                 .Include(r => r.ForumPost)
-                .Include(r => r.ReviewedByAdmin)
                 .ToArray();
         }
 
@@ -30,7 +29,6 @@ namespace Backend.DataManagement
                 .Include(r => r.ReportedUser)
                 .Include(r => r.AuctionItem)
                 .Include(r => r.ForumPost)
-                .Include(r => r.ReviewedByAdmin)
                 .FirstOrDefault(r => r.Id == id);
         }
 
@@ -46,9 +44,7 @@ namespace Backend.DataManagement
             if (reportToUpdate != null)
             {
                 reportToUpdate.Status = report.Status;
-                reportToUpdate.ReviewedByAdminId = report.ReviewedByAdminId;
                 reportToUpdate.ReviewedAt = report.ReviewedAt;
-                reportToUpdate.AdminComment = report.AdminComment;
 
                 DbContext.SaveChanges();
                 return true;
@@ -76,8 +72,6 @@ namespace Backend.DataManagement
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
                 .Include(r => r.AuctionItem)
-                .Include(r => r.ForumPost)
-                .Include(r => r.ReviewedByAdmin)
                 .Where(r => r.Status == status)
                 .ToArray();
         }
