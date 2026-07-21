@@ -1,23 +1,22 @@
 <div class="create-post-page">
     <main class="create-post-container">
         <button type="button" class="back-button" routerLink="/forum-page">
-            ← Back to discussions
+            ← {{ 'CREATE_POST.BACK_TO_DISCUSSIONS' | translate }}
         </button>
 
         <section class="create-post-card">
             <header class="create-post-header">
-                <h1>Start a discussion</h1>
+                <h1>{{ 'CREATE_POST.TITLE' | translate }}</h1>
 
                 <p>
-                    Create a new discussion and share it with
-                    other forum users.
+                    {{ 'CREATE_POST.SUBTITLE' | translate }}
                 </p>
             </header>
 
             <form class="create-post-form" [formGroup]="createPostForm" (ngSubmit)="submitPost()">
                 <div class="form-field">
                     <label for="title">
-                        Title
+                        {{ 'CREATE_POST.TITLE_LABEL' | translate }}
                     </label>
 
                     <input id="title" type="text" formControlName="title" maxlength="150"
@@ -29,30 +28,27 @@
                             titleControl.touched &&
                             titleControl.hasError('required')
                             ) {
-                            <p>A title is required.</p>
+                            <p>{{ 'CREATE_POST.TITLE_REQUIRED' | translate }}</p>
                             } @else if (
                             titleControl.touched &&
                             titleControl.hasError('whitespace')
                             ) {
                             <p>
-                                The title cannot contain only
-                                spaces.
+                                {{ 'CREATE_POST.TITLE_WHITESPACE' | translate }}
                             </p>
                             } @else if (
                             titleControl.touched &&
                             titleControl.hasError('minlength')
                             ) {
                             <p>
-                                The title must contain at least
-                                3 characters.
+                                {{ 'CREATE_POST.TITLE_MIN_LENGTH' | translate }}
                             </p>
                             } @else if (
                             titleControl.touched &&
                             titleControl.hasError('maxlength')
                             ) {
                             <p>
-                                The title cannot exceed
-                                150 characters.
+                                {{ 'CREATE_POST.TITLE_MAX_LENGTH' | translate }}
                             </p>
                             }
                         </div>
@@ -65,11 +61,11 @@
 
                 <div class="form-field">
                     <label for="description">
-                        Description
+                        {{ 'CREATE_POST.DESCRIPTION_LABEL' | translate }}
                     </label>
 
                     <textarea id="description" formControlName="description" rows="10" maxlength="5000"
-                        placeholder="Describe the topic you would like to discuss..."></textarea>
+                        placeholder=" 'CREATE_POST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
 
                     <div class="field-information">
                         <div class="validation-message">
@@ -77,30 +73,27 @@
                             descriptionControl.touched &&
                             descriptionControl.hasError('required')
                             ) {
-                            <p>A description is required.</p>
+                            <p>{{ 'CREATE_POST.DESCRIPTION_REQUIRED' | translate }}</p>
                             } @else if (
                             descriptionControl.touched &&
                             descriptionControl.hasError('whitespace')
                             ) {
                             <p>
-                                The description cannot contain
-                                only spaces.
+                                {{ 'CREATE_POST.DESCRIPTION_WHITESPACE' | translate }}
                             </p>
                             } @else if (
                             descriptionControl.touched &&
                             descriptionControl.hasError('minlength')
                             ) {
                             <p>
-                                The description must contain at
-                                least 10 characters.
+                                {{ 'CREATE_POST.DESCRIPTION_MIN_LENGTH' | translate }}
                             </p>
                             } @else if (
                             descriptionControl.touched &&
                             descriptionControl.hasError('maxlength')
                             ) {
                             <p>
-                                The description cannot exceed
-                                5000 characters.
+                                {{ 'CREATE_POST.DESCRIPTION_MAX_LENGTH' | translate }}
                             </p>
                             }
                         </div>
@@ -115,7 +108,7 @@
 
                 @if (submitErrorMessage) {
                 <div class="submit-error" role="alert">
-                    <h2>Unable to create discussion</h2>
+                    <h2>{{ 'CREATE_POST.CREATE_ERROR' | translate }}</h2>
 
                     <p>{{ submitErrorMessage }}</p>
                 </div>
@@ -123,18 +116,14 @@
 
                 <div class="form-actions">
                     <button type="button" class="secondary-button" [disabled]="isSubmitting" (click)="cancel()">
-                        Cancel
+                        {{ 'CREATE_POST.CANCEL' | translate }}
                     </button>
 
                     <button type="submit" class="primary-button" [disabled]="
                             createPostForm.invalid ||
                             isSubmitting
                         ">
-                        {{
-                        isSubmitting
-                        ? 'Creating discussion...'
-                        : 'Start discussion'
-                        }}
+                         {{(isSubmitting ? 'CREATE_POST.CREATING' : 'CREATE_POST.SUBMIT' ) | translate }}
                     </button>
                 </div>
             </form>
