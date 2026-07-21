@@ -202,7 +202,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  removeFromWishlist(itemId: number): void {
+  removeFromWishlist(itemId: number, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
       next: () => {
         this.wishItems = this.wishItems.filter(i => i.id !== itemId);
@@ -210,6 +213,13 @@ export class ProfilePage implements OnInit {
       },
       error: (err) => console.error('Error removing from wishlist', err)
     });
+  }
+
+  // --- Navigate to Item Details ---
+  goToItem(id: number): void {
+    if (id) {
+      this.router.navigate(['/auctions', id]);
+    }
   }
 
   // --- Persistence ---

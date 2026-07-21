@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth';
 import { UserService } from '../services/user-service';
 import { AuctionItem } from '../Models/item-model';
@@ -8,6 +8,7 @@ import { User, RoleEnum } from '../Models/user/user';
 import { TranslateService } from '@ngx-translate/core';
 import { BidService } from '../services/bid-service';
 import { CreateBidDto } from '../Models/bid/bid';
+import { ItemService } from '../services/item-service';
 
 interface TestAuctionItem extends AuctionItem {}
 
@@ -49,6 +50,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private bidService: BidService,
+    private route: ActivatedRoute,
+    private itemService: ItemService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -86,7 +89,44 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.selectedImageIndex = 0;
 
     const auction = this.navState?.auction;
+    const idParam = this.route.snapshot.paramMap.get('id');
+
     if (auction) {
+      this.populateFromData(auction);
+    } else if (idParam) {
+      const id = Number(idParam);
+      if (!Number.isNaN(id)) {
+        this.itemService.getItemById(id).subscribe({
+          next: (item: any) => {
+            this.populateFromData(item);
+            this.startCountdown();
+            this.checkWishlist();
+          },
+          error: (err: any) => console.error('Eroare la incarcarea itemului:', err)
+        });
+        return; // Will initialize countdown and wishlist in subscription
+      }
+    }
+
+
+    this.startCountdown();
+
+    this.checkWishlist();
+  }
+
+  private checkWishlist(): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.currentUserId = +currentUser.id || 3;
+      this.userService.getWishlist(this.currentUserId).subscribe((wishlist) => {
+        const itemId = (this.auctionItem as any).id || this.auctionItem.ID;
+        this.isInWishlist = wishlist.some((i: any) => i.id === itemId || i.ID === itemId);
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  private populateFromData(auction: any): void {
       if (auction.ID || auction.id) this.auctionItem.ID = auction.ID || auction.id;
       if (auction.title || auction.Name) this.auctionItem.Name = auction.title || auction.Name;
 
@@ -117,6 +157,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       if (loc) {
         this.auctionItem.Location = loc;
       }
+      
+      if (auction.Category || auction.category) {
+        this.auctionItem.Category = auction.Category || auction.category;
+      }
 
       const start = auction.StartDate || auction.startDate;
       if (start) {
@@ -143,18 +187,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           UserName: auction.ownerUserName || auction.OwnerUserName,
         });
       }
-    }
-
-    this.startCountdown();
-
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser) {
-      this.currentUserId = +currentUser.id || 3;
-      this.userService.getWishlist(this.currentUserId).subscribe((wishlist) => {
-        const itemId = (this.auctionItem as any).id || this.auctionItem.ID;
-        this.isInWishlist = wishlist.some((i) => i.id === itemId);
-      });
-    }
+      this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {

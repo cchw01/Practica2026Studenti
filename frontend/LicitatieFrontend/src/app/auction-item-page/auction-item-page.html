@@ -66,7 +66,7 @@
         </div>
         <div class="info-card">
           <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.CATEGORY' | translate }}</span>
-          <strong class="info-value">{{ auctionItem.Category?.name }}</strong>
+          <strong class="info-value">{{ auctionItem.Category?.name || auctionItem.Category?.Name || 'Nespecificată' }}</strong>
         </div>
         <div class="info-card">
           <span class="info-label">{{ 'AUCTION_ITEM_PAGE.INFO.LOCATION' | translate }}</span>
@@ -120,7 +120,7 @@
 
         <ng-template #loginPrompt>
           <div class="login-prompt">
-            <p class="login-text">{{ 'AUCTION_ITEM_PAGE.LOGIN_PROMPT' | translate }}</p>
+            <p class="login-text">{{ 'AUCTION_ITEM_PAGE.BID.LOGIN_TEXT' | translate }}</p>
             <button type="button" class="btn-login" (click)="redirectToLogin()">
               {{ 'AUCTION_ITEM_PAGE.BID.LOGIN_BUTTON' | translate }}
             </button>

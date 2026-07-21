@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionDetail },
+  { path: 'auctions/:id', component: AuctionItemPage },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },

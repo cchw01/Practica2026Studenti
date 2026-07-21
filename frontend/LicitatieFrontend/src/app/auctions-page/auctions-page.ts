@@ -81,21 +81,26 @@ export class AuctionsPage implements OnInit {
         this.applyFiltersAndSort();
         this.isLoading = false;
         this.cdr.detectChanges();
-        
-        // Fetch wishlist
-        this.userService.getWishlist(this.currentUserId).subscribe({
-          next: (wishlistItems: any[]) => {
-            const wishlistIds = wishlistItems.map(w => w.id || w.ID);
-            console.log("AUCTIONS PAGE WISHLIST:", wishlistItems, "IDS:", wishlistIds);
-            this.allItems.forEach(item => {
-              item.isFavorite = wishlistIds.includes(item.ID);
-              if (item.isFavorite) console.log("Marked as favorite:", item.Name);
-            });
-            this.applyFiltersAndSort();
-            this.cdr.detectChanges();
-          },
-          error: (err) => console.error('Error loading wishlist in auctions page', err)
-        });
+        // Fetch wishlist only if logged in
+        if (this.authService.isLoggedIn()) {
+          this.userService.getWishlist(this.currentUserId).subscribe({
+            next: (wishlistItems: any[]) => {
+              const wishlistIds = wishlistItems.map(w => w.id || w.ID);
+              console.log("AUCTIONS PAGE WISHLIST:", wishlistItems, "IDS:", wishlistIds);
+              this.allItems.forEach(item => {
+                item.isFavorite = wishlistIds.includes(item.ID);
+                if (item.isFavorite) console.log("Marked as favorite:", item.Name);
+              });
+              this.applyFiltersAndSort();
+              this.cdr.detectChanges();
+            },
+            error: (err) => console.error('Error loading wishlist in auctions page', err)
+          });
+        } else {
+          this.allItems.forEach(item => item.isFavorite = false);
+          this.applyFiltersAndSort();
+          this.cdr.detectChanges();
+        }
       },
       error: (err) => {
         console.error('Eroare la încărcarea licitațiilor active', err);
@@ -141,6 +146,11 @@ export class AuctionsPage implements OnInit {
 
   toggleFavorite(item: any, event: Event): void {
     event.stopPropagation();
+    
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
     
     // Update instantly (optimistic update)
     const originalState = item.isFavorite;
