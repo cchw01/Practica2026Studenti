@@ -155,9 +155,14 @@
 .btn-edit {
   background: v.$color-primary;
   color: v.$color-white;
+<<<<<<< HEAD
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+=======
 
   &:hover {
     filter: brightness(0.9);
+>>>>>>> origin/main
     transform: translateY(-2px);
   }
 }
@@ -165,9 +170,14 @@
 .btn-logout {
   background: v.$color-status-urgent-bg;
   color: v.$color-status-urgent-text;
+<<<<<<< HEAD
+  &:hover {
+    background: color-mix(in srgb, v.$color-status-urgent-bg 90%, black);
+=======
 
   &:hover {
     filter: brightness(0.95);
+>>>>>>> origin/main
     transform: translateY(-2px);
   }
 }
@@ -337,18 +347,28 @@
   cursor: pointer;
   transition: v.$transition-fast;
   text-align: center;
+<<<<<<< HEAD
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+=======
 
   &:hover {
     filter: brightness(0.9);
+>>>>>>> origin/main
     transform: translateY(-1px);
   }
 }
 
 .btn-sell {
   background: v.$color-status-safe-text;
+<<<<<<< HEAD
+  &:hover {
+    background: color-mix(in srgb, v.$color-status-safe-text 90%, black);
+=======
 
   &:hover {
     filter: brightness(0.9);
+>>>>>>> origin/main
   }
 }
 
@@ -587,9 +607,14 @@
   cursor: pointer;
   font-weight: v.$font-weight-semibold;
   transition: background 0.2s;
+<<<<<<< HEAD
+  &:hover {
+    background: color-mix(in srgb, v.$color-primary 80%, black);
+=======
 
   &:hover {
     filter: brightness(0.9);
+>>>>>>> origin/main
   }
 }
 
@@ -663,11 +688,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
+<<<<<<< HEAD
+  &:hover { background: v.$color-primary-tint; color: color-mix(in srgb, v.$color-primary 80%, black); }
+=======
 
   &:hover {
     background: v.$color-primary-tint;
     filter: brightness(0.9);
   }
+>>>>>>> origin/main
 }
 
 .password-fields-container {
@@ -681,10 +710,14 @@
 .btn-change-password {
   margin-top: v.$space-sm;
   background: v.$color-primary;
+<<<<<<< HEAD
+  &:hover { background: color-mix(in srgb, v.$color-primary 80%, black); }
+=======
 
   &:hover {
     filter: brightness(0.9);
   }
+>>>>>>> origin/main
 }
 
 @keyframes fadeIn {
