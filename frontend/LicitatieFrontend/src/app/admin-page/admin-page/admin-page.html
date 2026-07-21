@@ -26,7 +26,7 @@
       </button>
       <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
   <span class="menu-icon"></span>  Moderare Forum
-  <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
+  <span *ngIf="visibleForumPosts.length > 0" class="sidebar-badge">{{ visibleForumPosts.length }}</span>
 </button>
       <button (click)="setTab('tickets')" [class.active]="activeTab === 'tickets'">
         <span class="menu-icon"></span> Tichete Contact & Help

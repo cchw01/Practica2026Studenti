@@ -28,7 +28,12 @@ export class AdminPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) {
+    const saved = localStorage.getItem('verifiedForumPostIds');
+  if (saved) {
+    this.verifiedPostIds = new Set(JSON.parse(saved));
+  }
+}
 
   ngOnInit(): void {
     const role = this.authService.getCurrentUser()?.role;
@@ -52,6 +57,7 @@ export class AdminPage implements OnInit {
   }
    markAsVerified(id: number): void {
     this.verifiedPostIds.add(id);
+    localStorage.setItem('verifiedForumPostIds', JSON.stringify([...this.verifiedPostIds]));
   }
 
   setTab(tab: Tab): void {
