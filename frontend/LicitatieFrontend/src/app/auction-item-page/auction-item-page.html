@@ -29,7 +29,7 @@
             <span class="placeholder-icon">📦</span>
           </div>
         </ng-template>
-        <span class="status-badge" [ngClass]="'status-' + auctionItem.Status?.toString().toLowerCase()">
+        <span class="status-badge"  [ngClass]="'status-' + (auctionItem.Status?.toString() ?? 'unknown').toLowerCase()">
           {{ auctionItem.Status }}
         </span>
 
