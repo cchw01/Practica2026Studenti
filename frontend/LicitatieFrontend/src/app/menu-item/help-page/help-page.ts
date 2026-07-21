@@ -31,6 +31,58 @@ export class HelpPageComponent implements OnInit {
         'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
       isOpen: false,
     },
+    {
+      question: 'Can I cancel a bid after placing it?',
+    answer:
+      'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
+    isOpen: false,
+    },
+    {
+    question: 'How do I create an account?',
+    answer:
+      'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
+    isOpen: false,
+    },
+    {
+    question: 'I forgot my password. What should I do?',
+    answer:
+      'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
+    isOpen: false,
+    },
+    {
+    question: 'How is the item delivered after I win?',
+    answer:
+      'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
+    isOpen: false,
+    },
+    {
+    question: 'What happens if the seller does not deliver the item?',
+    answer:
+      'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
+    isOpen: false,
+    },
+    {
+    question: 'Can I edit or remove an auction after posting it?',
+    answer:
+      'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
+    isOpen: false,
+    },
+    {
+    question: 'What if my item does not sell?',
+    answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
+    isOpen: false, 
+    },
+    {
+    question: 'When do I get paid?',
+    answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
+    isOpen: false, 
+    },
+    {
+    question: 'Who pays for shipping?',
+    answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
+    isOpen: false, 
+    },
+
   ];
 
   isChatOpen = false;
