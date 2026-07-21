@@ -20,6 +20,10 @@ export class AdminPage implements OnInit {
   forumPosts: any[] = [];
   forumComments: any[] = [];
   categories: any[] = [];
+  userSearchTerm = '';
+  userSortBy: 'name' | 'email' | 'reports' = 'name';
+  filteredUsers: any[] = [];
+  reportedUsers: any[] = [];
 
   constructor(
     private adminService: AdminService,
@@ -30,6 +34,7 @@ export class AdminPage implements OnInit {
 
   adminName = '';
   adminInitials = '';
+  usersView: 'all' | 'reported' = 'all';
 
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
@@ -84,6 +89,7 @@ export class AdminPage implements OnInit {
   loadUsers(): void {
     this.adminService.getUsers().subscribe((data) => {
       this.users = data || [];
+      this.applyUserFilters();
       this.cdr.detectChanges();
     });
   }
@@ -157,5 +163,48 @@ export class AdminPage implements OnInit {
     this.adminService.addCategory(name, desc).subscribe(() => {
       this.loadCategories();
     });
+  }
+
+  applyUserFilters(): void {
+    const term = this.userSearchTerm.trim().toLowerCase();
+
+    let result = this.users.filter(
+      (u) =>
+        !term ||
+        u.userName?.toLowerCase().includes(term) ||
+        u.name?.toLowerCase().includes(term) ||
+        u.email?.toLowerCase().includes(term),
+    );
+
+    result = this.sortUsers(result);
+
+    this.filteredUsers = result;
+    this.reportedUsers = result.filter((u) => (u.reports || 0) > 0);
+  }
+
+  private sortUsers(list: any[]): any[] {
+    return [...list].sort((a, b) => {
+      if (this.userSortBy === 'reports') {
+        return (b.reports || 0) - (a.reports || 0);
+      }
+      const valA = (a[this.userSortBy] || '').toLowerCase();
+      const valB = (b[this.userSortBy] || '').toLowerCase();
+      return valA.localeCompare(valB);
+    });
+  }
+
+  onUserSearchChange(): void {
+    this.applyUserFilters();
+  }
+
+  onUserSortChange(): void {
+    this.applyUserFilters();
+  }
+  get displayedUsers(): any[] {
+    return this.usersView === 'all' ? this.filteredUsers : this.reportedUsers;
+  }
+
+  setUsersView(view: 'all' | 'reported'): void {
+    this.usersView = view;
   }
 }

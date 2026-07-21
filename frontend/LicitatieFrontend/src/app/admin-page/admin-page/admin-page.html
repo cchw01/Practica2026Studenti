@@ -60,7 +60,7 @@
       <!-- TAB 2: PAGINA DE STATISTICI CU GRAFICE -->
       <div *ngIf="activeTab === 'stats' && stats" class="vuexy-dashboard-view">
         <div class="welcome-banner-card">
-          <h2>Salut, John! 👋</h2>
+          <h2>Salut, ADMIN! 👋</h2>
           <p>Sistemul de monitorizare BidSphere este activ.</p>
           <div class="banner-highlight-value">{{ pendingAuctions.length }} Licitații de verificat azi</div>
         </div>
@@ -136,40 +136,72 @@
       </div>
 
       <!-- TAB 1: EVIDENȚĂ CONTURI / STRIKE SYSTEM -->
-      <div *ngIf="activeTab === 'users'" class="vuexy-card table-responsive-wrapper">
-        <div class="card-header-title">Evidența conturilor (Închidere automată la 3 Rapoarte)</div>
-        <table class="vuexy-table">
-          <thead>
-                          <tr><th>Nume Utilizator</th><th>Email</th><th>Rol</th><th>Status</th><th class="text-right">Acțiuni Drepturi</th></tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of users">
-  <td><strong>{{ user.userName }}</strong></td>
-  <td>{{ user.email }}</td>
-  <td>
-    <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
-      {{ user.reports || 0 }} / 3 Rapoarte primite
-    </span>
-  </td>
-  <td>
-    <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
-  </td>
- <td class="text-right">
-  <div class="user-actions-cell">
-    <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
-      <option value="User">User</option>
-      <option value="Guest">Guest</option>
-      <option value="Admin">Admin</option>
+<div *ngIf="activeTab === 'users'" class="users-tab-wrapper">
+
+  <div class="users-toolbar">
+    <input
+      type="text"
+      class="users-search-input"
+      placeholder="Caută după nume sau email..."
+      [(ngModel)]="userSearchTerm"
+      (ngModelChange)="onUserSearchChange()"
+    />
+    <select [(ngModel)]="userSortBy" (ngModelChange)="onUserSortChange()">
+      <option value="name">Sortează după nume</option>
+      <option value="email">Sortează după email</option>
+      <option value="reports">Sortează după rapoarte</option>
     </select>
-    <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează</button>
-    <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează restricția</button>
-    <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Șterge</button>
   </div>
-</td>
-</tr>
-              </tbody>
-        </table>
-      </div>
+
+  <div class="users-view-toggle">
+    <button [class.active]="usersView === 'all'" (click)="setUsersView('all')">
+      Toți utilizatorii ({{ filteredUsers.length }})
+    </button>
+    <button [class.active]="usersView === 'reported'" (click)="setUsersView('reported')">
+      Raportați ({{ reportedUsers.length }})
+    </button>
+  </div>
+
+  <div class="vuexy-card table-responsive-wrapper">
+    <table class="vuexy-table">
+      <thead>
+        <tr><th>Nume Utilizator</th><th>Email</th><th>Rapoarte</th><th>Status</th><th class="text-right">Acțiuni</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of displayedUsers">
+          <td><strong>{{ user.userName }}</strong></td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
+              {{ user.reports || 0 }} / 3
+            </span>
+          </td>
+          <td>
+            <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Cont Închis' : 'Activ' }}</span>
+          </td>
+          <td class="text-right">
+            <div class="user-actions-cell">
+              <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
+                <option value="User">User</option>
+                <option value="Guest">Guest</option>
+                <option value="Admin">Admin</option>
+              </select>
+              <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger" (click)="banUser(user.id)">Banează</button>
+              <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Anulează</button>
+              <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Șterge</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="displayedUsers.length === 0">
+          <td colspan="5" class="vuexy-empty-row">
+            {{ usersView === 'all' ? 'Niciun utilizator găsit.' : 'Niciun utilizator raportat momentan.' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
 
       <!-- TAB 4: MODERARE FORUM -->
       <div *ngIf="activeTab === 'forum'" class="vuexy-card">
