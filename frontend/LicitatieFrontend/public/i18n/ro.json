@@ -256,7 +256,55 @@
   "SOCIAL": "Rețele sociale",
 
   "COPYRIGHT": "Toate drepturile rezervate."
+},
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "Oops! Pagina nu a fost găsită",
+  "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
+  "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
+},
+ "FORUM": {
+    "TITLE": "Discuții pe forum",
+    "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu alți utilizatori.",
+
+    "START_DISCUSSION": "Începe o discuție",
+    "LOGIN_TO_START": "Autentifică-te pentru a începe o discuție",
+
+    "SORT": {
+      "ARIA_LABEL": "Sortează discuțiile",
+      "LATEST": "Cele mai recente",
+      "OLDEST": "Cele mai vechi",
+      "MOST_COMMENTED": "Cele mai comentate"
+    },
+
+    "DISCUSSION": "discuție",
+    "DISCUSSIONS": "discuții",
+
+    "LOADING": {
+      "TITLE": "Se încarcă discuțiile"
+    },
+
+    "ERROR": {
+      "TITLE": "Discuțiile nu au putut fi încărcate",
+      "RETRY": "Încearcă din nou"
+    },
+
+    "POSTED_BY": "Publicat de",
+
+    "COMMENT": "comentariu",
+    "COMMENTS": "comentarii",
+
+    "EMPTY": {
+      "TITLE": "Nu există discuții disponibile",
+      "MESSAGE": "În prezent, nu există discuții pe forum."
+    }
+  },
+
+  "NOTIFICATIONS": {
+  "TRUE": "Notificări",
+  "FALSE": "Nu există notificări încă."
 }, 
+ 
 "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Detalii licitație",
 

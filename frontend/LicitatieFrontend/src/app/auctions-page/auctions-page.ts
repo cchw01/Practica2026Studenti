@@ -5,7 +5,6 @@ import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
-import { Category } from '../Models/categoryItem';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -23,6 +22,9 @@ export class AuctionsPage implements OnInit {
   selectedCategory: string = '';
   searchText: string = '';
   sortBy: SortOption = 'endingSoon';
+
+  isLoading: boolean = true;
+  hasError: boolean = false;
 
   constructor(
     private itemService: ItemService,
@@ -43,15 +45,7 @@ export class AuctionsPage implements OnInit {
       }
     });
 
-    this.itemService.getItems().subscribe({
-      next: (items) => {
-        this.allItems = items;
-        this.categories = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
-        this.applyFiltersAndSort();
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Eroare la încărcarea item-urilor', err),
-    });
+    this.loadActiveAuctions();
 
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
@@ -60,6 +54,32 @@ export class AuctionsPage implements OnInit {
       error: (err) => console.error('Eroare la încărcarea categoriilor', err),
     });
   }
+
+  loadActiveAuctions(): void {
+    this.isLoading = true;
+    this.hasError = false;
+
+    this.itemService.getActiveItems().subscribe({
+      next: (items) => {
+        this.allItems = items;
+        // build category list from returned active items
+        const fromItems = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
+        if (this.categories.length === 0) {
+          this.categories = fromItems;
+        }
+        this.applyFiltersAndSort();
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Eroare la încărcarea licitațiilor active', err);
+        this.hasError = true;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   applyFiltersAndSort(): void {
     let result = [...this.allItems];
 
@@ -99,9 +119,11 @@ export class AuctionsPage implements OnInit {
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const left = this.translate.instant('AUCTIONS_PAGE.TIME.LEFT');
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
     if (days > 0) return `${days}d ${hours}h left`;
-    return `${hours}h left`;
+    if (hours > 0) return `${hours}h ${mins}m left`;
+    return `${mins}m left`;
   }
 
   getTimeUrgencyClass(endDate: Date): string {
@@ -117,3 +139,4 @@ export class AuctionsPage implements OnInit {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 }
+

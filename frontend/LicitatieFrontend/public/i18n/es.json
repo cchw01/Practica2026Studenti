@@ -255,7 +255,56 @@
   "SOCIAL": "Redes sociales",
 
   "COPYRIGHT": "Todos los derechos reservados."
-}, "AUCTION_ITEM_PAGE": {
+},
+"NOT_FOUND": {
+  "CODE": "404",
+  "TITLE": "¡Ups! Página no encontrada",
+  "MESSAGE": "La página que estás buscando no existe o ha sido movida.",
+  "BUTTON": "VOLVER A LA PÁGINA PRINCIPAL"
+},
+
+  "FORUM": {
+    "TITLE": "Discusiones del foro",
+    "DESCRIPTION": "Explora las discusiones actuales y participa en conversaciones con otros usuarios.",
+
+    "START_DISCUSSION": "Iniciar una discusión",
+    "LOGIN_TO_START": "Inicia sesión para comenzar una discusión",
+
+    "SORT": {
+      "ARIA_LABEL": "Ordenar discusiones",
+      "LATEST": "Más recientes primero",
+      "OLDEST": "Más antiguas primero",
+      "MOST_COMMENTED": "Más comentadas"
+    },
+
+    "DISCUSSION": "discusión",
+    "DISCUSSIONS": "discusiones",
+
+    "LOADING": {
+      "TITLE": "Cargando discusiones"
+    },
+
+    "ERROR": {
+      "TITLE": "No se pudieron cargar las discusiones",
+      "RETRY": "Intentar de nuevo"
+    },
+
+    "POSTED_BY": "Publicado por",
+
+    "COMMENT": "comentario",
+    "COMMENTS": "comentarios",
+
+    "EMPTY": {
+      "TITLE": "No hay discusiones disponibles",
+      "MESSAGE": "Actualmente no hay discusiones en el foro."
+    }
+  },
+
+  "NOTIFICATIONS": {
+  "TRUE": "Notificaciones",
+  "FALSE": "Aún no hay notificaciones."
+},
+"AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Detalles de la subasta",
 
   "INFO": {
