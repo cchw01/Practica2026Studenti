@@ -39,12 +39,12 @@
     <!-- ZONA DE JOS: PROFIL + BUTON DECONECTARE -->
     <div class="sidebar-footer-box">
       <div class="admin-profile-info">
-        <div class="profile-image-avatar">JD</div>
-        <div class="profile-text-details">
-          <span class="profile-display-name">John Doe</span>
-          <span class="profile-display-role">Administrator</span>
-        </div>
-      </div>
+  <div class="profile-image-avatar">{{ adminInitials }}</div>
+  <div class="profile-text-details">
+    <span class="profile-display-name">{{ adminName }}</span>
+    <span class="profile-display-role">Administrator</span>
+  </div>
+</div>
       
       <!-- BUTONUL DE LOGOUT ACCESIBIL RECONECTAT -->
       <button class="vuexy-logout-sidebar-btn" (click)="logout()">

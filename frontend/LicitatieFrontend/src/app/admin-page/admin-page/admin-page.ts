@@ -28,12 +28,23 @@ export class AdminPage implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {}
 
+  adminName = '';
+  adminInitials = '';
+
   ngOnInit(): void {
-    const role = this.authService.getCurrentUser()?.role;
+    const user = this.authService.getCurrentUser();
+    const role = user?.role;
     if (!this.authService.isLoggedIn() || role !== 'Admin') {
       this.router.navigate(['/login-page']);
       return;
     }
+    this.adminName = user?.name || 'Admin';
+    this.adminInitials = this.adminName
+      .split(' ')
+      .map((w: string) => w[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
 
     this.loadStats();
     this.adminService.getPendingAuctions().subscribe((data) => {
