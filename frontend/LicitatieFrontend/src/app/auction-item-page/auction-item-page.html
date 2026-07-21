@@ -107,7 +107,7 @@
       <div class="bid-section">
         <ng-container *ngIf="authService.isLoggedIn(); else loginPrompt">
           <h3 class="bid-title">{{ 'AUCTION_ITEM_PAGE.BID.TITLE' | translate }}</h3>
-                    <div class="bid-input-row">
+          <div class="bid-input-row">
             <div class="bid-input-wrap">
               <span class="bid-currency">$</span>
               <!-- [disabled] adăugat la input -->
@@ -135,7 +135,7 @@
 
 
       <button *ngIf="authService.isLoggedIn()" type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist"
-        (click)="toggleWishlist()">
+        (click)="toggleWishlist()" [disabled]="isOwner()">
         {{ isInWishlist ? '❤️ In Wishlist' : '🤍 Add to Wishlist' }}
       </button>
 
