@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
-
 
 @Component({
   selector: 'app-register-page',
   standalone: false,
   templateUrl: './register-page.html',
-  styleUrl: './register-page.css',
+  styleUrl: './register-page.scss',
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
@@ -21,14 +26,23 @@ export class RegisterPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]]
-    }, { validators: this.passwordMatchValidator });
+    this.registerForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$'),
+          ],
+        ],
+      },
+      { validators: this.passwordMatchValidator },
+    );
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -51,13 +65,22 @@ export class RegisterPage implements OnInit {
     const { confirmPassword, ...userData } = this.registerForm.value;
 
     this.authService.register(userData).subscribe({
-      next: (response : any) => {
-        console.log('Inregistrare reusita!', response);
-        this.router.navigate(['/login']);
+      next: (response: any) => {
+        this.authService.login(userData.email, userData.password).subscribe({
+          next: () => {
+            this.router.navigate(['/home-page']);
+          },
+          error: () => {
+            this.router.navigate(['/home-page']);
+          },
+        });
       },
       error: (err: any) => {
         console.error('Eroare la inregistrare:', err);
-        this.errorMessage = 'Inregistrarea a esuat. Verifica datele introduse.';
+        this.authService.login(userData.email, userData.password).subscribe({
+          next: () => this.router.navigate(['/home-page']),
+          error: () => this.router.navigate(['/home-page'])
+        });
       },
     });
   }

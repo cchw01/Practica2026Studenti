@@ -10,13 +10,16 @@ import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ReviewComponent } from './Models/review/review';
-import { AddItemPage } from './add-item-page/add-item-page';
 import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { AddItemPage } from './add-item-page/add-item-page';
 import { Add } from './menu-item/add/add';
 import { Edit } from './menu-item/edit/edit';
 import { View } from './menu-item/view/view';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
+import { NotFound } from './not-found/not-found';
+import { AdminGuard } from './services/admin-guard';
+import { AdminPage } from './admin-page/admin-page/admin-page';
 
 const routes: Routes = [
   { path: '', redirectTo: '/register-page', pathMatch: 'full' },
@@ -36,12 +39,14 @@ const routes: Routes = [
   { path: 'edit', component: Edit },
   { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
+  { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'review-page', component: ReviewComponent },
-  { path: '**', redirectTo: '/home-page' },
+  { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
+  { path: '**', component: NotFound },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

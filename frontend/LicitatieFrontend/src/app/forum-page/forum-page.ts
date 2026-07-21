@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { ForumPost } from '../Models/forum-post/forum-post';
 import { ForumPostService } from '../Models/forum-post/forum-post-service';
 import { ForumComment } from '../Models/forum-comment/forum-comment';
 import { ForumCommentService } from '../Models/forum-comment/forum-comment-service';
+import { AuthService } from  '../services/auth';
 
 type SortOption = 'latest' | 'oldest' | 'comments';
+
 
 interface ForumPostPreview {
   id: number;
   userId: number;
+  userName?: string;
   date: string;
   title: string;
   description: string;
@@ -20,24 +23,32 @@ interface ForumPostPreview {
   selector: 'app-forum-page',
   standalone: false,
   templateUrl: './forum-page.html',
-  styleUrl: './forum-page.css',
+  styleUrl: './forum-page.scss',
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
+   searchQuery = '';
+   currentPage = 1;
+  readonly pageSize = 5;
 
   posts: ForumPostPreview[] = [];
 
   isLoading = false;
   errorMessage = '';
+  public  currentUserId: number | null = null;
 
   private commentCounts = new Map<number, number>();
 
   constructor(
     private forumPostService: ForumPostService,
     private forumCommentService: ForumCommentService,
+    private cdr: ChangeDetectorRef,
+     private authService: AuthService, 
+    
   ) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getCurrentUserId();
     this.loadForumPosts();
     this.loadForumComments();
   }
@@ -53,6 +64,7 @@ export class ForumPage implements OnInit {
         );
 
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
 
       error: (error) => {
@@ -62,6 +74,7 @@ export class ForumPage implements OnInit {
           'The forum discussions could not be loaded.';
 
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
     });
   }
@@ -71,19 +84,29 @@ export class ForumPage implements OnInit {
       next: (forumComments: ForumComment[]) => {
         this.calculateCommentCounts(forumComments);
         this.updatePostCommentCounts();
+        this.cdr.detectChanges();
       },
 
       error: (error) => {
-        console.error(
-          'Error loading forum comments:',
-          error,
-        );
+        console.error('Error loading forum comments:', error);
+        this.cdr.detectChanges();
       },
     });
   }
 
   get visiblePosts(): ForumPostPreview[] {
-    return [...this.posts].sort((firstPost, secondPost) => {
+    let filtered = this.posts;
+
+    if (this.searchQuery.trim().length > 0) {
+      const query = this.searchQuery.trim().toLowerCase();
+      filtered = filtered.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) ||
+          post.description.toLowerCase().includes(query),
+      );
+    }
+
+    return [...filtered].sort((firstPost, secondPost) => {
       if (this.sortOption === 'comments') {
         return (
           secondPost.commentsCount -
@@ -101,18 +124,42 @@ export class ForumPage implements OnInit {
       return secondDate - firstDate;
     });
   }
-
-  getUserLabel(userId: number): string {
-    return `User #${userId}`;
+  get pagedPosts(): ForumPostPreview[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.visiblePosts.slice(start, start + this.pageSize);
   }
 
-  getInitials(userId: number): string {
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.visiblePosts.length / this.pageSize));
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+  }
+
+  resetPage(): void {
+    this.currentPage = 1;
+  }
+  
+  getUserLabel(userId: number, userName?: string): string {
+    return userName ? userName : `User #${userId}`;
+  }
+
+  getInitials(userName?: string, userId?: number): string {
+    if (userName && userName.length > 0) {
+      return userName.charAt(0).toUpperCase();
+    }
     return `U${userId}`;
-  }
+  } 
 
   retryLoading(): void {
-  this.loadForumPosts();
-  this.loadForumComments();
+    this.loadForumPosts();
+    this.loadForumComments();
   }
 
   private calculateCommentCounts(
@@ -145,6 +192,7 @@ export class ForumPage implements OnInit {
     return {
       id: forumPost.id,
       userId: forumPost.userId,
+      userName: forumPost.userName,
       date: forumPost.date,
       title: forumPost.title,
       description: forumPost.description,

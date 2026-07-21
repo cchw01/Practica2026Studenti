@@ -1,34 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ItemService } from '../services/item-service';
 import { CategoryService } from '../services/category-service';
 import { AuthService } from '../services/auth';
-import { Category } from '../Models/user/categoryItem';
+import { Category } from '../Models/categoryItem';
 
 @Component({
   selector: 'app-add-item-page',
   standalone: false,
   templateUrl: './add-item-page.html',
-  styleUrl: './add-item-page.css',
+  styleUrl: './add-item-page.scss',
 })
 export class AddItemPage implements OnInit {
   itemForm: FormGroup;
   categories: Category[] = [];
 
-  // Imagine
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   imageError = '';
 
-  // Stare UI
   isSubmitting = false;
   message = '';
   isError = false;
 
-  private currentUserId = 3; // fallback, suprascris in ngOnInit
+  private currentUserId = 3;
 
-  private readonly maxImageSize = 5 * 1024 * 1024; // 5 MB
+  private readonly maxImageSize = 5 * 1024 * 1024;
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
   constructor(
@@ -37,6 +36,8 @@ export class AddItemPage implements OnInit {
     private categoryService: CategoryService,
     private authService: AuthService,
     private router: Router,
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.itemForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -60,7 +61,7 @@ export class AddItemPage implements OnInit {
     });
   }
 
-  // Getter folosit in template pentru mesajele de validare
+  // Getter folosit pentru mesajele de validare
   get f() {
     return this.itemForm.controls;
   }
@@ -72,21 +73,24 @@ export class AddItemPage implements OnInit {
     if (!file) return;
 
     if (!this.allowedTypes.includes(file.type)) {
-      this.imageError = 'Only JPG, PNG or WEBP images are allowed.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
       input.value = '';
       return;
     }
     if (file.size > this.maxImageSize) {
-      this.imageError = 'Image must be smaller than 5 MB.';
+      this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
       input.value = '';
       return;
     }
 
     this.selectedFile = file;
 
-    // Preview local prin FileReader, fara sa trimitem nimic la server inca
+    // Preview local prin FileReader
     const reader = new FileReader();
-    reader.onload = () => (this.imagePreview = reader.result as string);
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      this.cdr.detectChanges(); // FileReader runs outside Angular zone — force update
+    };
     reader.readAsDataURL(file);
   }
 
@@ -104,8 +108,6 @@ export class AddItemPage implements OnInit {
 
     const v = this.itemForm.value;
 
-    // FormData pentru ca trimitem fisier => multipart/form-data.
-    // Cheile corespund DTO-ului pe care il va face echipa de backend.
     const formData = new FormData();
     formData.append('Name', v.name);
     formData.append('StartPrice', String(v.startPrice));
@@ -118,22 +120,25 @@ export class AddItemPage implements OnInit {
       formData.append('Image', this.selectedFile, this.selectedFile.name);
     }
 
+    // Am șters partea de salvare locală în localStorage, deoarece
+    // acum avem backend și baza de date, iar salvarea pozelor
+    // mari în localStorage bloca aplicația.
+
     this.isSubmitting = true;
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = 'Item successfully published for auction!';
+        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.removeImage();
         this.isSubmitting = false;
-        // Pauza scurta ca userul sa vada confirmarea, apoi redirect
         setTimeout(() => this.router.navigate(['/auctions']), 1500);
       },
       error: (err) => {
         this.isError = true;
-        this.message = typeof err.error === 'string' ? err.error : 'Error publishing the item.';
+        const errorMsg = err?.error?.message || err?.error || err?.message || 'A apărut o eroare la publicarea itemului.';
+        this.message = typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg);
         this.isSubmitting = false;
-        console.error(err);
       },
     });
   }

@@ -1,0 +1,391 @@
+@use '../styles/variables' as v;
+
+:host {
+    display: block;
+    min-height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.forum-page {
+    min-height: 100vh;
+    padding-top: var(--navbar-space, 96px);
+    color: v.$color-text-label;
+}
+
+.forum-container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: v.$space-2xl v.$space-md 64px;
+}
+
+.forum-introduction {
+    margin-bottom: 40px;
+    text-align: center;
+
+    padding: v.$space-xl v.$space-md 40px;
+    border-radius: 28px;
+    background: linear-gradient(
+        135deg,
+        v.$color-primary-tint,
+        v.$color-accent-tint
+    );
+    box-shadow: v.$shadow-md;
+    animation: fade-in-up 0.6s ease both;
+}
+
+.discussion-toolbar {
+    animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.discussion-card {
+    animation: fade-in-up 0.5s ease both;
+}
+
+.discussion-list .discussion-card:nth-child(1) { animation-delay: 0.05s; }
+.discussion-list .discussion-card:nth-child(2) { animation-delay: 0.1s; }
+.discussion-list .discussion-card:nth-child(3) { animation-delay: 0.15s; }
+.discussion-list .discussion-card:nth-child(4) { animation-delay: 0.2s; }
+.discussion-list .discussion-card:nth-child(n + 5) { animation-delay: 0.25s; }
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.forum-introduction h1 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.forum-introduction p {
+    max-width: 550px;
+    margin: 0 auto;
+    color: v.$color-text-body;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.discussion-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: v.$space-md;
+    margin-bottom: v.$space-lg;
+}
+
+.create-discussion-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 11px 24px;
+    border: none;
+    border-radius: v.$radius-pill;
+    background: linear-gradient(90deg, v.$color-primary, #e91e63);
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(63, 81, 181, 0.25);
+    transition: v.$transition-fast;
+}
+
+.create-discussion-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(63, 81, 181, 0.35);
+}
+
+.create-discussion-button:active {
+    transform: scale(0.97);
+}
+
+
+.sort-control select {
+    min-height: 40px;
+    padding: 0 38px 0 v.$space-md;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    color: v.$color-text-secondary;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: v.$transition-fast;
+}
+
+.sort-control select:focus {
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+
+.discussion-total {
+    margin: 0;
+    color: #777777;
+    font-size: 14px;
+}
+
+.discussion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discussion-card {
+    width: 100%;
+    min-height: 145px;
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+
+    padding: v.$space-lg;
+
+    border: 1px solid #eeeeee;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
+    color: inherit;
+    text-decoration: none;
+
+    box-shadow: v.$shadow-sm;
+
+    transition:
+        transform 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
+}
+
+.discussion-card:hover {
+    transform: translateY(-5px);
+    border-color: #d7eeee;
+    box-shadow: v.$shadow-md;
+}
+
+.discussion-card:focus-visible {
+    outline: 3px solid v.$color-primary-tint;
+    outline-offset: 2px;
+}
+
+.author-avatar {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    background-color: #f5f5f5;
+
+    color: v.$color-text-secondary;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: v.$transition-fast;
+}
+
+.discussion-card:hover .author-avatar {
+    background-color: #e0f2f1;
+}
+
+.discussion-main {
+    min-width: 0;
+}
+
+.discussion-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.discussion-heading h2 {
+    margin: 0;
+
+    color: v.$color-text-label;
+
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.discussion-heading time {
+    flex-shrink: 0;
+    color: #888888;
+    font-size: 12px;
+}
+
+.discussion-author {
+    margin: 7px 0 0;
+    color: #777777;
+    font-size: 12px;
+}
+
+.discussion-author strong {
+    color: v.$color-text-secondary;
+    font-weight: 600;
+}
+
+.discussion-description {
+    margin: 14px 0 0;
+
+    display: -webkit-box;
+    overflow: hidden;
+
+    color: v.$color-text-body;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    -webkit-box-orient: vertical;
+}
+
+.discussion-comments {
+    min-width: 105px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: v.$space-sm;
+
+    color: v.$color-text-secondary;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.comment-count {
+    margin: 0;
+    text-align: center;
+}
+
+.comment-icon {
+    width: 24px;
+    height: 19px;
+
+    position: relative;
+
+    border: 2px solid #666666;
+    border-radius: 8px;
+}
+
+.comment-icon::after {
+    content: '';
+
+    width: 7px;
+    height: 7px;
+
+    position: absolute;
+
+    left: 2px;
+    bottom: -5px;
+
+    background-color: v.$color-surface;
+
+    border-left: 2px solid #666666;
+
+    transform: skew(-25deg);
+}
+
+.empty-state {
+    padding: 60px 24px;
+
+    border: 1px solid #eeeeee;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
+
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin: 0 0 10px;
+
+    color: v.$color-text-label;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.empty-state p {
+    margin: 0;
+
+    color: v.$color-text-body;
+
+    font-size: 14px;
+}
+.search-bar {
+    margin-bottom: v.$space-md;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    font: inherit;
+    font-size: 14px;
+    transition: v.$transition-fast;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.pagination button {
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    color: v.$color-text-secondary;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: v.$transition-fast;
+}
+
+.pagination button:hover:not(:disabled) {
+    border-color: v.$color-primary;
+    color: v.$color-primary;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination button.active {
+    background: linear-gradient(90deg, v.$color-primary, #e91e63);
+    border-color: transparent;
+    color: #ffffff;
+    font-weight: 700;
+}
