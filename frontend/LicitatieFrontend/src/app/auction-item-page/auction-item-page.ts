@@ -268,21 +268,15 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     const catName = this.auctionItem.Category?.name || 'Vehicles';
     const defaultGallery = galleryMap[catName] || galleryMap['Vehicles'];
 
-    if (item.ID === 2 || (this.auctionItem.Name && this.auctionItem.Name.toLowerCase().includes('watch'))) {
-      this.auctionItem.PhotoList = galleryMap['Art'];
+    const photos = item.PhotoList || item.photoList;
+    if (Array.isArray(photos) && photos.length > 0) {
+      this.auctionItem.PhotoList = photos.map((img: string) => (img.startsWith('http') || img.startsWith('data:')) ? img : `https://localhost:7137${img}`);
+    } else if (item.ImageUrl || item.image) {
+      const img = item.ImageUrl || item.image;
+      const formattedImg = (img.startsWith('http') || img.startsWith('data:')) ? img : `https://localhost:7137${img}`;
+      this.auctionItem.PhotoList = [formattedImg];
     } else {
-      const photos = item.PhotoList || item.photoList;
-      if (Array.isArray(photos) && photos.length >= 2) {
-        this.auctionItem.PhotoList = photos;
-      } else if (Array.isArray(photos) && photos.length === 1) {
-        this.auctionItem.PhotoList = [photos[0], ...defaultGallery.slice(1)];
-      } else if (item.ImageUrl || item.image) {
-        const img = item.ImageUrl || item.image;
-        const formattedImg = img.startsWith('http') ? img : `https://localhost:7137${img}`;
-        this.auctionItem.PhotoList = [formattedImg, ...defaultGallery.slice(1)];
-      } else {
-        this.auctionItem.PhotoList = defaultGallery;
-      }
+      this.auctionItem.PhotoList = [];
     }
 
     this.checkWishlistStatus();

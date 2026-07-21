@@ -200,16 +200,31 @@ namespace Backend.Controllers
                         "Durata licitației trebuie să fie mai mare decât 0.");
                 }
 
-                string? imageUrl = null;
+                var imageList = new List<string>();
+                var filesToProcess = new List<IFormFile>();
 
-                if (request.Image != null && request.Image.Length > 0)
+                if (request.Images != null && request.Images.Count > 0)
                 {
-                    using var memoryStream = new MemoryStream();
-                    await request.Image.CopyToAsync(memoryStream);
-                    var imageBytes = memoryStream.ToArray();
-                    var contentType = string.IsNullOrEmpty(request.Image.ContentType) ? "image/jpeg" : request.Image.ContentType;
-                    imageUrl = $"data:{contentType};base64,{Convert.ToBase64String(imageBytes)}";
+                    filesToProcess.AddRange(request.Images);
                 }
+                if (request.Image != null && request.Image.Length > 0 && !filesToProcess.Contains(request.Image))
+                {
+                    filesToProcess.Add(request.Image);
+                }
+
+                foreach (var file in filesToProcess)
+                {
+                    if (file.Length > 0)
+                    {
+                        using var memoryStream = new MemoryStream();
+                        await file.CopyToAsync(memoryStream);
+                        var imageBytes = memoryStream.ToArray();
+                        var contentType = string.IsNullOrEmpty(file.ContentType) ? "image/jpeg" : file.ContentType;
+                        imageList.Add($"data:{contentType};base64,{Convert.ToBase64String(imageBytes)}");
+                    }
+                }
+
+                string? imageUrl = imageList.Count > 0 ? string.Join("|||", imageList) : null;
 
                 var startDate = DateTime.UtcNow;
 
