@@ -24,6 +24,11 @@ export class AdminPage implements OnInit {
   };
 
   users: any[] = [];
+  userSearchTerm = '';
+  userSortBy: 'name' | 'email' | 'reports' = 'name';
+  filteredUsers: any[] = [];
+  reportedUsers: any[] = [];
+
   pendingAuctions: any[] = [];
   forumPosts: any[] = [];
   forumComments: any[] = [];
@@ -362,6 +367,56 @@ export class AdminPage implements OnInit {
           this.cdr.detectChanges();
         },
       });
+  }
+
+  applyUserFilters(): void {
+    const term = this.userSearchTerm.trim().toLowerCase();
+
+    let result = this.users.filter(
+      (user) =>
+        !term ||
+        user.userName?.toLowerCase().includes(term) ||
+        user.name?.toLowerCase().includes(term) ||
+        user.email?.toLowerCase().includes(term),
+    );
+
+    result = this.sortUsers(result);
+
+    this.filteredUsers = result;
+    this.reportedUsers = result.filter(
+      (user) => (user.reports || 0) > 0,
+    );
+  }
+
+  private sortUsers(list: any[]): any[] {
+    return [...list].sort((a, b) => {
+      if (this.userSortBy === 'reports') {
+        return (b.reports || 0) - (a.reports || 0);
+      }
+
+      const valueA = String(a[this.userSortBy] || '').toLowerCase();
+      const valueB = String(b[this.userSortBy] || '').toLowerCase();
+
+      return valueA.localeCompare(valueB);
+    });
+  }
+
+  onUserSearchChange(): void {
+    this.applyUserFilters();
+  }
+
+  onUserSortChange(): void {
+    this.applyUserFilters();
+  }
+
+  get displayedUsers(): any[] {
+    return this.usersView === 'all'
+      ? this.filteredUsers
+      : this.reportedUsers;
+  }
+
+  setUsersView(view: 'all' | 'reported'): void {
+    this.usersView = view;
   }
 
   private getCategoryErrorMessage(
