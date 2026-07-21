@@ -13,13 +13,15 @@ export class AuthService {
 
   private createLocalToken(user: any): string {
     const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-    const payload = btoa(JSON.stringify({
-      id: user.id || user.ID || 3,
-      name: user.Name || user.name || 'User',
-      email: user.Email || user.email || 'user@example.com',
-      username: user.UserName || user.username || 'user',
-      role: 'User'
-    }));
+    const payload = btoa(
+      JSON.stringify({
+        id: user.id || user.ID || 3,
+        name: user.Name || user.name || 'User',
+        email: user.Email || user.email || 'user@example.com',
+        username: user.UserName || user.username || 'user',
+        role: 'User',
+      }),
+    );
     return `${header}.${payload}.signature`;
   }
 
@@ -31,10 +33,10 @@ export class AuthService {
       Email: userData.email || userData.Email,
       Password: userData.password || userData.Password,
       PhoneNumber: userData.phoneNumber || userData.PhoneNumber,
-      phoneNumber: userData.phoneNumber || userData.PhoneNumber
+      phoneNumber: userData.phoneNumber || userData.PhoneNumber,
     };
 
-    return new Observable<any>(observer => {
+    return new Observable<any>((observer) => {
       this.http.post(`${this.apiUrl}/register`, payload).subscribe({
         next: (res: any) => {
           observer.next(res);
@@ -47,13 +49,13 @@ export class AuthService {
             idToken: fakeToken,
             accessToken: fakeToken,
             expiresIn: 86400,
-            user: payload
+            user: payload,
           };
           this.setSession(authResult);
           localStorage.setItem('profile_user', JSON.stringify(payload));
           observer.next(authResult);
           observer.complete();
-        }
+        },
       });
     });
   }
@@ -64,6 +66,10 @@ export class AuthService {
       .pipe(
         tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
       );
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.apiUrl}/User/forgot-password`, { email: email });
   }
 
   private setSession(authResult: any): void {

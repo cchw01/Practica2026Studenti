@@ -17,11 +17,14 @@ namespace Backend.Controllers
             private readonly RefreshTokenDataOps refreshTokenDataOps;
             private readonly TokenProvider tokenProvider;
             private const int EXPIRES_IN = 900;
-            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
+            private readonly EmailService emailService;
+
+            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps, EmailService emailService)
             {
                 dataOps = new UserDataOps(DbContext);
                 this.tokenProvider = tokenProvider;
                 this.refreshTokenDataOps = refreshTokenDataOps;
+                this.emailService = emailService;
             }
 
             [HttpGet]
@@ -274,6 +277,36 @@ namespace Backend.Controllers
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto request)
+        {
+            try
+            {
+                var user = dataOps.GetUserByEmail(request.Email);
+
+                if (user == null)
+                {
+                    // Securitate: Returnăm mereu OK pentru a preveni "Email Enumeration"
+                    // Astfel, un hacker nu poate afla ce emailuri sunt valide pe platforma ta
+                    return Ok(new { message = "Dacă emailul există în sistem, vei primi un link de resetare." });
+                }
+
+                // Generăm un Token unic de resetare. 
+                // În viitor, acest token trebuie salvat în baza de date cu o dată de expirare (ex: valabil 1 oră)
+                var resetToken = Guid.NewGuid().ToString();
+
+                var frontendUrl = "http://localhost:4200/reset-password";
+                var resetLink = $"{frontendUrl}?token={resetToken}&email={user.Email}";
+                await emailService.SendPasswordResetEmailAsync(user.Email, resetLink);
+
+                return Ok(new { message = "Dacă emailul există în sistem, vei primi un link de resetare." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }

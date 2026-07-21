@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog'; // 1. Importul pentru ferestrele de tip pop-up
+import { ForgotPasswordDialogComponent } from '../../forgot-password-dialog/forgot-password-dialog'; // 2. Importul componentei tale de pop-up
 
 @Component({
   selector: 'app-login-page',
@@ -12,10 +14,12 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string = '';
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private dialog: MatDialog, // 3. Am injectat MatDialog aici
   ) {}
 
   ngOnInit(): void {
@@ -53,5 +57,14 @@ export class LoginPage implements OnInit {
 
   goToRegister(): void {
     this.router.navigate(['/register-page']);
+  }
+
+  // 4. Metoda care se activează la click pe butonul de "Reset here" din HTML
+  openForgotPasswordDialog(): void {
+    this.dialog.open(ForgotPasswordDialogComponent, {
+      width: '450px',
+      disableClose: false,
+      autoFocus: true,
+    });
   }
 }
