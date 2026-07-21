@@ -1,3 +1,8 @@
+Here is the cleaned-up SCSS file with the Git conflict markers resolved.
+
+The styling integrates both the clickable card/arrow mechanics from `profile-wishlist` and the item thumbnail image + remove button layout from `main`.
+
+```scss
 @use '../../styles/variables' as v;
 @use 'sass:color';
 
@@ -374,14 +379,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: v.$space-sm v.$space-md;
-  background: v.$color-background;
-  border-radius: v.$radius-sm;
-  border: 1px solid v.$color-border;
-  transition: v.$transition-fast;
+  padding: 12px 16px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+  position: relative; /* For the remove button */
 
   &:hover {
-    transform: translateX(4px);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
   }
 
   &--clickable {
@@ -405,6 +412,15 @@
   }
 }
 
+.item-card-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-right: 15px;
+  background-color: var(--color-surface);
+}
+
 .item-card-right {
   display: flex;
   align-items: center;
@@ -423,7 +439,24 @@
 .item-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  flex: 1; /* Take remaining space */
+}
+
+.btn-remove-wish {
+  background: none;
+  border: none;
+  color: #ff4d4f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 77, 79, 0.1);
+  }
 }
 
 .item-title {
@@ -740,3 +773,5 @@
   grid-template-columns: 1fr 1fr;
   gap: v.$space-lg;
 }
+
+```
