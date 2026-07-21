@@ -17,10 +17,18 @@
       </div>
     </div>
 
-    <!-- Buton Raportează -->
-    <button class="btn-report" (click)="openReportForm()">
-      ⚠️ Raportează Utilizatorul
-    </button>
+    <!-- Container Acțiuni Utilizator -->
+    <div class="profile-actions">
+      <!-- Buton Adaugă Review -->
+      <button class="btn-action btn-add-review" (click)="openReviewForm()">
+        ⭐ Adaugă Review
+      </button>
+
+      <!-- Buton Raportează -->
+      <button class="btn-action btn-report" (click)="openReportForm()">
+        ⚠️ Raportează Utilizatorul
+      </button>
+    </div>
   </div>
 
   <!-- Formularul de Raport (Afișat sub formă de pop-up modal) -->
@@ -42,7 +50,36 @@
     </div>
   </div>
 
-  <!-- Banner de succes după trimiterea raportului -->
+  <!-- Formularul de Review (Afișat sub formă de pop-up modal) -->
+  <div class="report-overlay animate-fade-in" *ngIf="showReviewForm">
+    <div class="report-modal">
+      <h3>Adaugă un review pentru @{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h3>
+      <p>Părerea ta contează! Oferă o notă și un scurt comentariu despre experiența ta cu acest utilizator.</p>
+      
+      <!-- Selectare Rating cu Stele Interactive -->
+      <div class="rating-selector">
+        <span *ngFor="let star of [1,2,3,4,5]" 
+              class="star-btn" 
+              [class.filled]="star <= reviewRating" 
+              (click)="reviewRating = star">
+          ★
+        </span>
+      </div>
+
+      <textarea 
+        [(ngModel)]="reviewComment" 
+        placeholder="Scrie aici părerea ta..."
+        rows="4">
+      </textarea>
+      
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeReviewForm()">Anulează</button>
+        <button class="btn-submit btn-review-submit" [disabled]="!reviewComment.trim()" (click)="submitReview()">Trimite Review</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner de succes după acțiuni -->
   <div class="success-banner animate-fade-in" *ngIf="reportSuccessMessage">
     <div class="success-content">
       <span>✅</span>
@@ -75,8 +112,8 @@
         </div>
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
-          <!--  LINIA CORECTĂ: -->
-            <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name }}</span>
+          <!-- Corectat folosind $any(item.Category) -->
+          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name }}</span>
           <p class="price-row">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
         </div>
       </div>

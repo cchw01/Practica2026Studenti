@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 // AJUSTARE: Modifică calea string ('../Services/auth.service') și numele clasei (AuthService) conform folderului creat de colegi
-//import { AuthService } from '../Services/auth.service';
+import { AuthService } from '../services/auth';
 import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
@@ -59,7 +59,8 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private bidService: BidService
+    private bidService: BidService,
+    private realAuthService: AuthService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -292,5 +293,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.peekOffset = offset;
     }
     this.cdr.detectChanges();
+  }
+
+    isOwner(): boolean {
+    const currentUserId = this.realAuthService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
+    return +ownerId === currentUserId;
   }
 }

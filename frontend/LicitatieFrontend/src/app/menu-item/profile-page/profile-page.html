@@ -1,16 +1,19 @@
 <div class="profile-wrapper">
 
-  <!-- Cover -->
-  <div class="profile-cover"></div>
 
   <!-- ===== VIEW MODE ===== -->
   <ng-container *ngIf="!isEditing">
 
     <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
     <div class="profile-header">
+      <!-- Doar Avatarul în stânga -->
       <div class="avatar-container">
         <img class="avatar" [src]="displayAvatar" alt="Profile picture" />
       </div>
+      
+      <!-- Detalii utilizator + Edit Profile sub email -->
       <div class="profile-info">
         <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
         <p class="profile-username empty-field" *ngIf="!user.username">&#64;username not set</p>
@@ -18,21 +21,20 @@
         <h1 class="profile-name empty-field" *ngIf="!user.name">Name not set</h1>
         <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
         <p class="profile-email empty-field" *ngIf="!user.email">Email not set</p>
+        
+        <!-- Mutat sub e-mail -->
+        <div class="header-actions">
+          <a href="javascript:void(0)" class="link-edit" (click)="startEdit()">Edit Profile</a>
+        </div>
       </div>
 
-      <!-- Rating box -->
+      <!-- Rating box mai mic -->
       <div class="score-box">
         <span class="score-value">{{ score || '—' }}</span>
         <div class="score-stars">
           <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
         </div>
         <span class="score-label">Average Score</span>
-      </div>
-
-      <!-- Header actions -->
-      <div class="header-actions">
-        <button class="btn-edit" (click)="startEdit()">Edit Profile</button>
-        <button class="btn-logout" (click)="onLogout()">Log Out</button>
       </div>
     </div>
 

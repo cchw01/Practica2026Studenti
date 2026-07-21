@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
 import { Router } from '@angular/router';
+import { AuthService }  from '../services/auth';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
 
@@ -33,6 +34,7 @@ export class AuctionsPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private categoryService: CategoryService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +139,13 @@ export class AuctionsPage implements OnInit {
 
   goToAuctionDetail(item: AuctionItem): void {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
+  }
+
+    isOwner(item: AuctionItem): boolean {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = item.OwnerId || (item.Owner as any)?.ID || (item.Owner as any)?.id;
+    return +ownerId === currentUserId;
   }
 }
 

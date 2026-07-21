@@ -3,13 +3,15 @@ import { UserReadDto } from '../Models/user/userDto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user-service';
 import { ItemService } from '../services/item-service';
+import { AuthService } from '../services/auth';
+import { ReviewService } from '../services/review-service';
 import { AuctionItem } from '../Models/item-model';
 
 @Component({
   selector: 'app-user-page',
   standalone: false,
   templateUrl: './user-page.html',
-  styleUrl: './user-page.css',
+  styleUrl: './user-page.scss',
 })
 export class UserPage implements OnInit {
   userId!: number;
@@ -21,8 +23,15 @@ export class UserPage implements OnInit {
   userCategories: string[] = [];
   selectedCategory: string = '';
 
+  // Rapoarte
   showReportForm = false;
   reportReason = '';
+  
+  // Review-uri
+  showReviewForm = false;
+  reviewRating = 5;
+  reviewComment = '';
+
   reportSuccessMessage = '';
 
   constructor(
@@ -30,7 +39,9 @@ export class UserPage implements OnInit {
     private router: Router,
     private userService: UserService,
     private itemService: ItemService,
-    private cdr: ChangeDetectorRef // Injectăm ChangeDetectorRef pentru a forța redarea la F5
+    private authService: AuthService,
+    private reviewService: ReviewService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +64,6 @@ export class UserPage implements OnInit {
         console.log('DEBUG: Date utilizator primite de la backend:', userData);
         this.user = userData;
         this.loadUserActiveCategories();
-        
-        // Forțăm Angular să verifice schimbările și să afișeze cardul de profil
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -68,30 +77,20 @@ export class UserPage implements OnInit {
   loadUserActiveCategories(): void {
     this.itemService.getActiveItems().subscribe({
       next: (items) => {
-        console.log('DEBUG: Toate licitațiile active preluate:', items);
-        
-        // Filtrare licitații active ale acestui utilizator
         this.userActiveItems = items.filter(item => {
           const ownerId = item.OwnerId || (item as any).ownerId;
           const ownerObj = item.Owner || (item as any).owner;
-          const ownerObjId = ownerObj ? (ownerObj.ID) : null;
+          const ownerObjId = ownerObj ? (ownerObj.ID || ownerObj.ID) : null;
           
           return +ownerId === this.userId || (ownerObjId !== null && +ownerObjId === this.userId);
         });
 
-        console.log('DEBUG: Licitațiile filtrate pentru acest utilizator:', this.userActiveItems);
-
-        // Extragem denumirile unice ale categoriilor
         const categoryNames = this.userActiveItems
           .map(item => item.Category?.name || (item.Category as any)?.Name)
           .filter((name): name is string => !!name);
           
         this.userCategories = [...new Set(categoryNames)];
-        
-        // La început, afișăm toate produsele utilizatorului
         this.applyCategoryFilter();
-
-        // Forțăm Angular să redeseneze lista de produse
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -120,7 +119,7 @@ export class UserPage implements OnInit {
     this.router.navigate(['/action-item-page'], { state: { auction: item } });
   }
 
-  // Metode raportare
+  // Metode Raportare
   openReportForm(): void {
     this.showReportForm = true;
     this.reportReason = '';
@@ -141,6 +140,56 @@ export class UserPage implements OnInit {
       },
       error: (err) => {
         alert('A apărut o eroare la trimiterea raportului.');
+      }
+    });
+  }
+
+  // Metode Review-uri
+  openReviewForm(): void {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      alert('Trebuie să fii autentificat pentru a lăsa un review.');
+      return;
+    }
+    if (currentUserId === this.userId) {
+      alert('Nu îți poți adăuga review propriei persoane.');
+      return;
+    }
+    this.showReviewForm = true;
+    this.reviewRating = 5;
+    this.reviewComment = '';
+    this.cdr.detectChanges();
+  }
+  closeReviewForm(): void {
+    this.showReviewForm = false;
+    this.cdr.detectChanges();
+  }
+  submitReview(): void {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      alert('Trebuie să fii autentificat pentru a lăsa un review.');
+      return;
+    }
+    if (!this.reviewComment.trim()) return;
+
+    const reviewData = {
+      ReviewerId: currentUserId,
+      ReviewedUserId: this.userId,
+      Rating: this.reviewRating,
+      Comment: this.reviewComment
+    };
+
+    this.reviewService.addReview(reviewData).subscribe({
+      next: () => {
+        this.showReviewForm = false;
+        this.reportSuccessMessage = `Review-ul tău de ${this.reviewRating} stele a fost trimis cu succes!`;
+        this.reviewComment = '';
+        // Reîncărcăm profilul pentru a vedea noul rating mediu calculat pe backend
+        this.loadUserProfile();
+      },
+      error: (err) => {
+        console.error('DEBUG: Eroare la trimiterea review-ului:', err);
+        alert('A apărut o eroare la salvarea review-ului pe backend.');
       }
     });
   }

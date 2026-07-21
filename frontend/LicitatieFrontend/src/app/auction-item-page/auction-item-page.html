@@ -82,9 +82,12 @@
       <div class="meta-row">
         <div class="meta-item">
           <span class="meta-icon">👤</span>
-          <div>
+                    <div>
             <span class="meta-label">{{ 'AUCTION_ITEM_PAGE.INFO.OWNER' | translate }}</span>
-            <span class="meta-val">{{ auctionItem.Owner?.Name }}</span>
+            <a [routerLink]="isOwner() ? ['/profile-page'] : ['/user-page', auctionItem.Owner.ID || $any(auctionItem.Owner).id || $any(auctionItem.Owner).ID]" class="owner-link">
+              <!-- Traducem dinamic cuvântul 'Tu' -->
+              {{ isOwner() ? ('AUCTIONS_PAGE.YOU' | translate) : (auctionItem.Owner.UserName || $any(auctionItem.Owner).userName) }}
+            </a>
           </div>
         </div>
         <div class="meta-item">
@@ -104,13 +107,15 @@
       <div class="bid-section">
         <ng-container *ngIf="authService.isLoggedIn(); else loginPrompt">
           <h3 class="bid-title">{{ 'AUCTION_ITEM_PAGE.BID.TITLE' | translate }}</h3>
-          <div class="bid-input-row">
+                    <div class="bid-input-row">
             <div class="bid-input-wrap">
               <span class="bid-currency">$</span>
+              <!-- [disabled] adăugat la input -->
               <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="{{ 'AUCTION_ITEM_PAGE.BID.PLACEHOLDER' | translate }}"
-                [min]="auctionItem.CurrentPrice + 1" />
+                [min]="auctionItem.CurrentPrice + 1" [disabled]="isOwner()" />
             </div>
-            <button type="button" class="btn-bid" (click)="placeBid()">
+            <!-- [disabled] adăugat la buton -->
+            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner()">
                {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
             </button>
           </div>
