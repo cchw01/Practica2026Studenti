@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 110px 24px 48px;
+  padding: 88px 24px 48px;
   margin: 0;
   border-radius: 0;
   background: transparent;
@@ -23,45 +23,6 @@
   position: relative;
   z-index: 1;
   max-width: 900px;
-}
-
-.hero-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 20px;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.hero-logo-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, #22254a, var(--mat-sys-primary, #3f51b5));
-  box-shadow: 0 4px 10px rgba(20, 22, 50, 0.25);
-}
-
-.hero-logo-icon mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  color: white;
-  transform: rotate(-20deg);
-}
-
-.hero-logo-text {
-  color: #1e2140;
-}
-
-.hero-logo-accent {
-  background: linear-gradient(90deg, var(--mat-sys-primary, #3f51b5), #e91e63);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 .hero-tag {
@@ -193,7 +154,7 @@
 
 .section-eyebrow {
   display: inline-block;
-  margin-bottom: 14px;
+  margin-bottom: 22px;
   padding: 6px 16px;
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.7);
@@ -290,14 +251,58 @@
   color: #777;
 }
 
+/* ============ CAROUSEL (shared by categories & auctions) ============ */
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.carousel-track {
+  display: flex;
+  flex: 1;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 24px;
+  padding: 4px 4px 12px;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(63, 81, 181, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--mat-sys-primary, #3f51b5);
+  box-shadow: 0 8px 20px rgba(30, 42, 90, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(63, 81, 181, 0.18);
+}
+
 /* ============ CATEGORIES ============ */
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  scroll-padding-left: 4px;
 }
 
 .category-card {
+  flex: 0 0 240px;
+  width: 240px;
+  scroll-snap-align: start;
   position: relative;
   padding: 36px 24px;
   border-radius: 20px;
@@ -352,12 +357,12 @@
 
 /* ============ ACTIVE AUCTIONS ============ */
 .auctions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  scroll-padding-left: 4px;
 }
 
 .auction-card {
+  flex: 0 0 250px;
+  scroll-snap-align: start;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
