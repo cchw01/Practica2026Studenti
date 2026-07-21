@@ -1,4 +1,4 @@
-import { Component, OnInit, Service } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
@@ -12,6 +12,7 @@ interface Item {
   title: string;
   price: number;
   status: string;
+  image?: string;
 }
 
 interface Review {
@@ -91,14 +92,15 @@ export class ProfilePage implements OnInit {
     private UserService: UserService,
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private categoryService: CategoryService,
     private router: Router,
+    private categoryService: CategoryService,
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
-    
+
     // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
     if (currentUser) {
       // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
@@ -158,6 +160,7 @@ export class ProfilePage implements OnInit {
             status: item.status
               ? item.status.toString()
               : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png',
           }));
 
         this.bidItems = items
@@ -169,24 +172,28 @@ export class ProfilePage implements OnInit {
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
           }));
 
-        this.wishItems = items
-          .filter(
-            (item: any) =>
-              Array.isArray(item.wishingUsers) &&
-              item.wishingUsers.some(
-                (u: any) => u.id === this.currentUserId || u.ID === this.currentUserId,
-              ),
-          )
-          .map((item: any) => ({
-            id: item.id || item.ID || 0,
-            title: item.name || item.Name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-          }));
+        // Fetch wishlist items specifically from backend
+        this.UserService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            this.wishItems = wishlistItems.map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || 'Item',
+              price: item.currentPrice || item.startPrice || 0,
+              image:
+                item.imageUrl ||
+                item.ImageUrl ||
+                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+                'assets/images/placeholder.png',
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+            }));
+            this.cdr.detectChanges();
+          },
+          error: (err) => console.error('Error loading wishlist:', err),
+        });
       },
-      error: (err) => console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_ITEMS'), err),
+      error: (err) => console.error('Error loading items:', err),
     });
 
     this.reviewService.getReviews().subscribe({
@@ -211,10 +218,31 @@ export class ProfilePage implements OnInit {
         }
       },
       error: (err) =>
-        console.error(this.translate.instant('PROFILE_PAGE.ERRORS.LOAD_REVIEWS'), err),
+        console.error('Error loading reviews (detalii complete):', err.message || err),
     });
   }
 
+  removeFromWishlist(itemId: number, event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
+      next: () => {
+        this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error removing from wishlist', err),
+    });
+  }
+
+  // --- Navigate to Item Details ---
+  goToItem(id: number): void {
+    if (id) {
+      this.router.navigate(['/auctions', id]);
+    }
+  }
+
+  // --- Persistence ---
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {

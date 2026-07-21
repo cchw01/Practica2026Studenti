@@ -1,7 +1,7 @@
-
 export class Category {
   Id!: number;
   name!: string;
+  Name?: string;
   description: string = '';
 
   constructor(category?: Partial<Category>) {
