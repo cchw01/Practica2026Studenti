@@ -112,6 +112,21 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       icon: 'home_work',
       description: 'Exceptional properties and land.',
     },
+    {
+      name: 'Clothing',
+      icon: 'checkroom',
+      description: 'Trendy apparel, footwear, and accessories.',
+    },
+    {
+      name: 'Electronics',
+      icon: 'devices',
+      description: 'Smartphones, laptops, and audio gear.',
+    },
+    {
+      name: 'Home & Garden',
+      icon: 'yard',
+      description: 'Furniture, décor, and outdoor essentials.',
+    },
   ];
 
   displayedAuctions: AuctionItem[] = [];
