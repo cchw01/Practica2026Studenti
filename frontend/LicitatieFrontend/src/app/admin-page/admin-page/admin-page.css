@@ -167,6 +167,8 @@
 .vuexy-main-content {
   flex-grow: 1;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
