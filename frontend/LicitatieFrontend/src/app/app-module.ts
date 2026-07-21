@@ -47,6 +47,7 @@ import { SearchPage } from './search-page/search-page';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     ReviewComponent,
     HelpPageComponent,
     DatePipe,

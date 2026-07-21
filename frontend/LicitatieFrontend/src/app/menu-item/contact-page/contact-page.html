@@ -80,4 +80,95 @@
       </ul>
     </div>
   </section>
+
+  <!-- Contact form -->
+  <section class="contact-form-card">
+    <div class="contact-form-header">
+      <h2>{{ 'CONTACT.FORM_TITLE' | translate }}</h2>
+    </div>
+
+    @if (!submitted) {
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>{{ 'CONTACT.FORM_FULL_NAME_LABEL' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'CONTACT.FORM_FULL_NAME_PLACEHOLDER' | translate }}"
+            type="text"
+            formControlName="fullName"
+            required
+          />
+          @if (hasError('fullName', 'required')) {
+            <mat-error>{{ 'CONTACT.FORM_FULL_NAME_REQUIRED' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>{{ 'CONTACT.FORM_EMAIL_LABEL' | translate }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ 'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate }}"
+            type="email"
+            formControlName="email"
+            required
+          />
+          @if (hasError('email', 'required')) {
+            <mat-error>{{ 'CONTACT.FORM_EMAIL_REQUIRED' | translate }}</mat-error>
+          }
+          @if (hasError('email', 'email')) {
+            <mat-error>{{ 'CONTACT.FORM_EMAIL_INVALID' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>{{ 'CONTACT.FORM_ISSUE_TYPE_LABEL' | translate }}</mat-label>
+          <mat-select formControlName="issueType" required>
+            @for (issue of issueTypes; track issue.value) {
+              <mat-option [value]="issue.value">
+                {{ issue.translationKey | translate }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (hasError('issueType', 'required')) {
+            <mat-error>{{ 'CONTACT.FORM_ISSUE_TYPE_REQUIRED' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>{{ 'CONTACT.FORM_MESSAGE_LABEL' | translate }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{ 'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate }}"
+            formControlName="message"
+            rows="5"
+            required
+          ></textarea>
+          @if (hasError('message', 'required')) {
+            <mat-error>{{ 'CONTACT.FORM_MESSAGE_REQUIRED' | translate }}</mat-error>
+          }
+          @if (hasError('message', 'minlength')) {
+            <mat-error>{{ 'CONTACT.FORM_MESSAGE_MIN_LENGTH' | translate }}</mat-error>
+          }
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="contactForm.invalid"
+          class="submit-btn"
+        >
+          {{ 'CONTACT.FORM_SUBMIT' | translate }}
+        </button>
+      </form>
+    } @else {
+      <div class="form-success">
+        <div class="success-icon">✓</div>
+        <h3>{{ 'CONTACT.FORM_SUCCESS_TITLE' | translate }}</h3>
+        <p>{{ 'CONTACT.FORM_SUCCESS_MESSAGE' | translate }}</p>
+        <button type="button" class="btn-send-another" (click)="sendAnother()">
+          {{ 'CONTACT.FORM_SEND_ANOTHER' | translate }}
+        </button>
+      </div>
+    }
+  </section>
 </div>
