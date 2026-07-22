@@ -49,73 +49,74 @@ export class ReviewComponent implements OnInit {
   }
 
   loadReviews(): void {
-  this.reviewService.getReviews().subscribe({
-    next: (data) => {
-      this.reviews = data.sort((a, b) => 
-        new Date(b.ReviewDate).getTime() - new Date(a.ReviewDate).getTime()
-      );
-    },
-    error: () => (this.errorMessage = 'Nu am putut încărca review-urile.')
-  });
-}
-
- onSubmit(): void {
-  if (this.reviewForm.invalid) {
-    return;
+    this.reviewService.getReviews().subscribe({
+      next: (data) => {
+        this.reviews = data.sort((a, b) =>
+          new Date(b.reviewDate).getTime() - new Date(a.reviewDate).getTime()
+        );
+      },
+      error: () => (this.errorMessage = 'Nu am putut încărca review-urile.')
+    });
   }
 
-  const formValue: ReviewCreate = this.reviewForm.value;
+  onSubmit(): void {
+    if (this.reviewForm.invalid) {
+      return;
+    }
 
-  if (this.editingReviewId !== null) {
-    this.reviewService.updateReview(this.editingReviewId, formValue).subscribe({
-      next: (updated) => {
-        const index = this.reviews.findIndex(r => r.Id === this.editingReviewId);
-        if (index !== -1) {
-          this.reviews[index] = updated;
+    const formValue: ReviewCreate = this.reviewForm.value;
+
+    if (this.editingReviewId !== null) {
+      this.reviewService.updateReview(this.editingReviewId, formValue).subscribe({
+        next: (updated) => {
+          const index = this.reviews.findIndex(r => r.id === this.editingReviewId);
+          if (index !== -1) {
+            this.reviews[index] = updated;
+          }
+          this.cdr.detectChanges();
+          this.resetForm();
+        },
+        error: () => (this.errorMessage = 'Eroare la actualizarea review-ului.')
+      });
+    } else {
+      this.reviewService.addReview(formValue).subscribe({
+        next: (created) => {
+          this.reviews.unshift(created);
+          this.cdr.detectChanges();
+          this.resetForm();
+        },
+        error: (err) => {
+          this.errorMessage = err.error ?? 'Eroare la adăugarea review-ului.';
+          console.error(err);
         }
-        this.cdr.detectChanges();
-        this.resetForm();
-      },
-      error: () => (this.errorMessage = 'Eroare la actualizarea review-ului.')
-    });
-  } else {
-    this.reviewService.addReview(formValue).subscribe({
-      next: (created) => {
-        this.reviews.unshift(created);
-        this.cdr.detectChanges();
-        this.resetForm();
-      },
-      error: (err) => {
-        this.errorMessage = err.error ?? 'Eroare la adăugarea review-ului.';
-        console.error(err);
-      }
-    });
+      });
+    }
   }
-}
 
   editReview(review: Review): void {
-  this.editingReviewId = review.Id;
-  this.reviewForm.patchValue({
-    reviewerId: review.ReviewerId,
-    reviewedUserId: review.ReviewedUserId,
-    rating: review.Rating,
-    comment: review.Comment
-  });
-}
+    this.editingReviewId = review.id;
+    this.reviewForm.patchValue({
+      reviewerId: review.reviewerId,
+      reviewedUserId: review.reviewedUserId,
+      rating: review.rating,
+      comment: review.comment
+    });
+  }
 
- deleteReview(id: number): void {
-  this.reviewService.deleteReview(id).subscribe({
-    next: () => {
-      this.reviews = this.reviews.filter(r => r.Id !== id);
-      this.cdr.detectChanges();
-    },
-    error: () => (this.errorMessage = 'Eroare la ștergerea review-ului.')
-  });
-}
+  deleteReview(id: number): void {
+    this.reviewService.deleteReview(id).subscribe({
+      next: () => {
+        this.reviews = this.reviews.filter(r => r.id !== id);
+        this.cdr.detectChanges();
+      },
+      error: () => (this.errorMessage = 'Eroare la ștergerea review-ului.')
+    });
+  }
 
-trackByReviewId(index: number, review: Review): number {
-  return review.Id;
-}
+  trackByReviewId(index: number, review: Review): number {
+    return review.id;
+  }
+
   cancelEdit(): void {
     this.resetForm();
   }
