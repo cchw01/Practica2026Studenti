@@ -60,6 +60,20 @@ export class UserPage implements OnInit {
   }
 }
 
+  itemsLimit = 3;
+  get displayedItems(): AuctionItem[] {
+    return this.filteredUserItems.slice(0, this.itemsLimit);
+  }
+
+  showMoreItems(): void {
+  if (this.itemsLimit >= this.filteredUserItems.length) {
+    this.itemsLimit = 3;
+  } else {
+    // Altfel, continuăm să încărcăm încă 6 produse
+    this.itemsLimit += 6;
+  }
+}
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
