@@ -36,8 +36,8 @@ export class AuctionsPage implements OnInit {
     private translate: TranslateService,
     private categoryService: CategoryService,
     public authService: AuthService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+  ) {}
 
   getCategoryName(item: AuctionItem): string {
     if (!item || !item.Category) return '';

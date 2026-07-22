@@ -50,19 +50,6 @@ export class AddItemPage implements OnInit {
   }
 
   ngOnInit(): void {
-    //verificam daca esti logat
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login-page']);
-      return;
-    }
-
-    const currentUser = this.authService.getCurrentUser();
-
-    if (!currentUser || currentUser.role !== 'User') {
-      alert('Doar utilizatorii obișnuiți pot adăuga licitații.');
-      this.router.navigate(['/profile-page']);
-      return;
-    }
     const userId = this.authService.getCurrentUserId();
     if (userId) {
       this.currentUserId = userId;
@@ -141,7 +128,6 @@ export class AddItemPage implements OnInit {
 
     for (const file of this.selectedFiles) {
       formData.append('Images', file, file.name);
-      formData.append('Image', file, file.name);
     }
 
     this.isSubmitting = true;
@@ -156,11 +142,7 @@ export class AddItemPage implements OnInit {
       },
       error: (err) => {
         this.isError = true;
-        const errorMsg =
-          err?.error?.message ||
-          err?.error ||
-          err?.message ||
-          'A apărut o eroare la publicarea itemului.';
+        const errorMsg = err?.error?.message || err?.error || err?.message || 'A apărut o eroare la publicarea itemului.';
         this.message = typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg);
         this.isSubmitting = false;
       },

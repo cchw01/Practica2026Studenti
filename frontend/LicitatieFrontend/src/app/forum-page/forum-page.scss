@@ -143,12 +143,10 @@
 
 .discussion-card {
     width: 100%;
-    min-height: 145px;
 
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 
     padding: v.$space-lg;
 
@@ -179,8 +177,8 @@
 }
 
 .author-avatar {
-    width: 58px;
-    height: 58px;
+    width: 52px;
+    height: 52px;
 
     display: flex;
     align-items: center;
@@ -194,7 +192,8 @@
     color: v.$color-text-secondary;
 
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 
     transition: v.$transition-fast;
 }
@@ -203,36 +202,36 @@
     background-color: #e0f2f1;
 }
 
-.discussion-main {
-    min-width: 0;
-}
-
-.discussion-heading {
+.discussion-row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 20px;
 }
 
-.discussion-heading h2 {
+.discussion-heading-block {
+    flex: 0 0 200px;
+    min-width: 0;
+}
+
+.discussion-heading-block h2 {
     margin: 0;
 
     color: v.$color-text-label;
 
-    font-size: 19px;
+    font-size: 15px;
     font-weight: 600;
-    line-height: 1.4;
-}
+    line-height: 1.35;
 
-.discussion-heading time {
-    flex-shrink: 0;
-    color: #888888;
-    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .discussion-author {
-    margin: 7px 0 0;
-    color: #777777;
+    margin: 6px 0 0;
+    color: #9ca3af;
     font-size: 12px;
 }
 
@@ -242,63 +241,81 @@
 }
 
 .discussion-description {
-    margin: 14px 0 0;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding-left: 20px;
+    border-left: 2px solid #eef0f4;
 
     display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 
-    color: v.$color-text-body;
+    color: #6b7280;
 
+    font-family: inherit;
     font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
     line-height: 1.6;
-
-    -webkit-box-orient: vertical;
+    letter-spacing: 0.1px;
+}
+.discussion-date {
+    flex-shrink: 0;
+    color: #b0b0b0;
+    font-size: 11.5px;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
-.discussion-comments {
-    min-width: 105px;
-
+.discussion-footer {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
-
-    gap: v.$space-sm;
+    padding-top: 10px;
+    border-top: 1px solid #f2f2f2;
+}
+.discussion-comments {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
     color: v.$color-text-secondary;
 
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .comment-count {
     margin: 0;
-    text-align: center;
 }
 
 .comment-icon {
-    width: 24px;
-    height: 19px;
+    width: 20px;
+    height: 16px;
 
     position: relative;
+    flex-shrink: 0;
 
-    border: 2px solid #666666;
-    border-radius: 8px;
+    border: 2px solid #9ca3af;
+    border-radius: 6px;
 }
 
 .comment-icon::after {
     content: '';
 
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
 
     position: absolute;
 
-    left: 2px;
-    bottom: -5px;
+    left: 1px;
+    bottom: -4px;
 
     background-color: v.$color-surface;
 
-    border-left: 2px solid #666666;
+    border-left: 2px solid #9ca3af;
 
     transform: skew(-25deg);
 }
@@ -387,4 +404,137 @@
     border-color: transparent;
     color: #ffffff;
     font-weight: 700;
+}
+
+.report-button {
+  background: none;
+  border: 1px solid #ea5455;
+  color: #ea5455;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #ea5455;
+    color: white;
+  }
+}
+
+.report-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.report-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  p {
+    margin: 0 0 16px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+
+.report-reasons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.report-reason-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #7367f0;
+    background: #f5f4ff;
+  }
+
+  input[type='radio'] {
+    accent-color: #7367f0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+.report-error {
+  color: #ea5455;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.report-success {
+  color: #28c76f;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.report-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+
+  button {
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+  }
+
+  .secondary-button {
+    background: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+
+  .primary-button {
+    background: linear-gradient(135deg, #7367f0, #ea1e88);
+    color: white;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.9;
+    }
+  }
 }

@@ -19,7 +19,31 @@
     "CALL_CENTER_HOURS": "Години роботи контакт-центру",
     "SCHEDULE": "Понеділок–п’ятниця, 09:00–17:00",
     "FOLLOW_US": "Стежте за нами",
-    "SOCIAL_DESCRIPTION": "Залишайтеся з нами на зв’язку в соціальних мережах."
+    "SOCIAL_DESCRIPTION": "Залишайтеся з нами на зв’язку в соціальних мережах.", 
+     "FORM_TITLE": "Надішліть нам повідомлення",
+  "FORM_FULL_NAME_LABEL": "Повне ім'я",
+  "FORM_FULL_NAME_PLACEHOLDER": "напр. Іван Петренко",
+  "FORM_FULL_NAME_REQUIRED": "Повне ім'я є обов'язковим.",
+  "FORM_EMAIL_LABEL": "Електронна адреса",
+  "FORM_EMAIL_PLACEHOLDER": "напр. you@example.com",
+  "FORM_EMAIL_REQUIRED": "Електронна адреса є обов'язковою.",
+  "FORM_EMAIL_INVALID": "Будь ласка, введіть дійсну електронну адресу.",
+  "FORM_ISSUE_TYPE_LABEL": "Тип проблеми",
+  "FORM_ISSUE_TYPE_REQUIRED": "Будь ласка, виберіть тип проблеми.",
+  "FORM_ISSUE_OPTION_GENERAL": "Загальний запит",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Технічна підтримка",
+  "FORM_ISSUE_OPTION_BILLING": "Оплата / Платіж",
+  "FORM_ISSUE_OPTION_LISTING": "Проблема з оголошенням / аукціоном",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Керування обліковим записом",
+  "FORM_ISSUE_OPTION_OTHER": "Інше",
+  "FORM_MESSAGE_LABEL": "Опишіть вашу проблему",
+  "FORM_MESSAGE_PLACEHOLDER": "Будь ласка, надайте деталі...",
+  "FORM_MESSAGE_REQUIRED": "Повідомлення є обов'язковим.",
+  "FORM_MESSAGE_MIN_LENGTH": "Повідомлення має містити щонайменше 10 символів.",
+  "FORM_SUBMIT": "Надіслати повідомлення",
+  "FORM_SUCCESS_TITLE": "Повідомлення надіслано!",
+  "FORM_SUCCESS_MESSAGE": "Дякуємо, що звернулися до нас. Ми відповімо вам якомога швидше.",
+  "FORM_SEND_ANOTHER": "Надіслати інше повідомлення"
   },
   "LOGIN": {
     "TITLE": "Вхід",
@@ -361,5 +385,33 @@
     "CANCEL": "Скасувати",
     "CREATING": "Створення обговорення...",
     "SUBMIT": "Розпочати обговорення"
+  },
+  "SEARCH_PAGE": {
+  "TITLE": "Результати пошуку",
+  "DESCRIPTION_WITH_QUERY": "Показано результати для \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Шукайте аукціони, користувачів або дописи форуму на BidSphere",
+  "SEARCH_PLACEHOLDER": "Пошук аукціонів, користувачів або дописів форуму...",
+  "LOADING": "Завантаження результатів...",
+
+  "TABS": {
+    "AUCTIONS": "Аукціони",
+    "USERS": "Користувачі",
+    "FORUM": "Форум"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Аукціонів не знайдено",
+    "DESCRIPTION": "Немає аукціонів, які відповідають вашому пошуку."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Користувачів не знайдено",
+    "DESCRIPTION": "Немає користувачів, які відповідають вашому пошуку."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Дописів форуму не знайдено",
+    "DESCRIPTION": "Немає обговорень, які відповідають вашому пошуку."
   }
+}
 }
