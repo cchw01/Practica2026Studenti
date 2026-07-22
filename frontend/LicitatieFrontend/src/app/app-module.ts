@@ -39,6 +39,7 @@ import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
 import { MatBadgeModule } from '@angular/material/badge';
 import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
@@ -71,7 +72,6 @@ import { MatSelectModule } from '@angular/material/select';
     AddItem,
     ForumPostDetails,
     CreateForumPost,
-    AuctionDetail,
     Footer,
     NotFound,
     ProfileMenu,
@@ -92,6 +92,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    MatSlideToggleModule,
     ReviewComponent,
     HelpPageComponent,
     DatePipe,
@@ -121,4 +122,4 @@ import { MatSelectModule } from '@angular/material/select';
   ],
   bootstrap: [App],
 })
-export class AppModule {}
+export class AppModule { }

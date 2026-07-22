@@ -45,7 +45,7 @@ const routes: Routes = [
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
-  { path: 'user-page/:id', component: UserPage},
+  { path: 'user-page/:id', component: UserPage },
   { path: '**', component: NotFound },
 ];
 
@@ -53,4 +53,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
