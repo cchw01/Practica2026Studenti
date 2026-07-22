@@ -31,8 +31,6 @@ export interface AboutFeature {
   descriptionKey: string;
 }
 
-const MIN_REMAINING_MS = 10 * 60 * 1000;
-
 interface Particle {
   ox: number;
   oy: number;
@@ -53,8 +51,6 @@ const HERO_TITLE = 'BID. WIN. REPEAT.';
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
-  @ViewChild('auctionsTrack') auctionsTrackRef?: ElementRef<HTMLDivElement>;
-  @ViewChild('categoriesTrack') categoriesTrackRef?: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
@@ -91,7 +87,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly categoryService: CategoryService,
     private readonly cdr: ChangeDetectorRef,
     private readonly authService: AuthService,
-  ) { }
+  ) {}
 
   categories: HomeCategory[] = [];
   categoriesLoading = true;
@@ -124,10 +120,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login-page']);
-      return;
-    }
     this.router.navigate(['/add-item']);
   }
 
@@ -142,21 +134,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
-  }
-
-  scrollAuctions(direction: number): void {
-    this.scrollTrack(this.auctionsTrackRef, direction);
-  }
-
-  scrollCategories(direction: number): void {
-    this.scrollTrack(this.categoriesTrackRef, direction);
-  }
-
-  private scrollTrack(trackRef: ElementRef<HTMLDivElement> | undefined, direction: number): void {
-    const track = trackRef?.nativeElement;
-    if (!track) return;
-
-    track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
   getRemainingLabel(endDate: Date): string {
@@ -187,9 +164,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.displayedAuctions = this.allAuctions
       .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
-      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
+      .filter((entry) => entry.remainingMs > 0)
       .sort((a, b) => a.remainingMs - b.remainingMs)
-      .map((entry) => entry.item);
+      .map((entry) => entry.item)
+      .slice(0, 4);
 
     this.cdr.detectChanges();
   }
@@ -200,16 +178,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((title) => {
         if (typeof title === 'string') {
-          const heroTitle =
-            title === 'HOME.HERO.TITLE'
-              ? HERO_TITLE
-              : title;
+          const heroTitle = title === 'HOME.HERO.TITLE' ? HERO_TITLE : title;
 
           this.typeHeroTitle(heroTitle);
         }
       });
 
-    this.itemService.getItems().subscribe({
+    this.itemService.getActiveItems().subscribe({
       next: (items) => {
         this.allAuctions = items;
         this.refreshDisplayedAuctions();
@@ -268,10 +243,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.displayedTitle.set(title.slice(0, i));
 
       if (i < title.length) {
-        this.titleTypingTimeoutId = setTimeout(
-          step,
-          45 + Math.random() * 35,
-        );
+        this.titleTypingTimeoutId = setTimeout(step, 45 + Math.random() * 35);
       }
     };
 
@@ -320,9 +292,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         oy,
         x: ox,
         y: oy,
-        radius: accent
-          ? 2.2 + Math.random() * 1.6
-          : 1.1 + Math.random() * 1.2,
+        radius: accent ? 2.2 + Math.random() * 1.6 : 1.1 + Math.random() * 1.2,
         accent,
       };
     });
@@ -358,13 +328,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       p.y += (targetY - p.y) * 0.16;
 
       this.ctx.beginPath();
-      this.ctx.arc(
-        p.x,
-        p.y,
-        p.radius + nearBoost * 2,
-        0,
-        Math.PI * 2,
-      );
+      this.ctx.arc(p.x, p.y, p.radius + nearBoost * 2, 0, Math.PI * 2);
 
       this.ctx.fillStyle = p.accent
         ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
@@ -397,28 +361,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.categoriesLoading = true;
     this.categoriesError = false;
 
-    this.categoryService.getCategories().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (categories) => {
-        this.categories = (categories || []).map((category) => {
-          const name = String(category.name ?? (category as any).Name ?? '').trim();
-          const description = String(category.description ?? (category as any).Description ?? '').trim();
+    this.categoryService
+      .getCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (categories) => {
+          this.categories = (categories || [])
+            .map((category) => {
+              const name = String(category.name ?? (category as any).Name ?? '').trim();
+              const description = String(
+                category.description ?? (category as any).Description ?? '',
+              ).trim();
 
-          return { name, icon: this.getCategoryIcon(name), description: description || 'No description available.' };
-        })
-          .filter((category) => category.name.length > 0)
-          .sort((a, b) => a.name.localeCompare(b.name));
+              return {
+                name,
+                icon: this.getCategoryIcon(name),
+                description: description || 'No description available.',
+              };
+            })
+            .filter((category) => category.name.length > 0)
+            .sort((a, b) => a.name.localeCompare(b.name));
 
-        this.categoriesLoading = false;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Eroare la încărcarea categoriilor', error);
+          this.categoriesLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Eroare la încărcarea categoriilor', error);
 
-        this.categories = [];
-        this.categoriesLoading = false;
-        this.categoriesError = true;
-        this.cdr.detectChanges();
-      },
-    });
+          this.categories = [];
+          this.categoriesLoading = false;
+          this.categoriesError = true;
+          this.cdr.detectChanges();
+        },
+      });
   }
 }
