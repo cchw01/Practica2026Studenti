@@ -478,5 +478,33 @@
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil erfolgreich aktualisiert."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Suchergebnisse",
+  "DESCRIPTION_WITH_QUERY": "Ergebnisse für \"{{query}}\" werden angezeigt",
+  "DESCRIPTION_EMPTY": "Durchsuchen Sie BidSphere nach Auktionen, Nutzern oder Forenbeiträgen",
+  "SEARCH_PLACEHOLDER": "Nach Auktionen, Nutzern oder Forenbeiträgen suchen...",
+  "LOADING": "Ergebnisse werden geladen...",
+
+  "TABS": {
+    "AUCTIONS": "Auktionen",
+    "USERS": "Nutzer",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Keine Auktionen gefunden",
+    "DESCRIPTION": "Es gibt keine Auktionen, die Ihrer Suche entsprechen."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Keine Nutzer gefunden",
+    "DESCRIPTION": "Es gibt keine Nutzer, die Ihrer Suche entsprechen."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Keine Forenbeiträge gefunden",
+    "DESCRIPTION": "Es gibt keine Diskussionen, die Ihrer Suche entsprechen."
+  }
 }
 }

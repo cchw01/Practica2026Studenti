@@ -226,7 +226,7 @@ namespace Backend.Controllers
 
                 string? imageUrl = imageList.Count > 0 ? string.Join("|||", imageList) : null;
 
-                var startDate = DateTime.UtcNow;
+                var startDate = DateTime.Now;
 
                 var item = new AuctionItem
                 {

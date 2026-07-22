@@ -121,6 +121,19 @@ export class ProfilePage implements OnInit {
     }
     this.currentUserId = authUserId !== null ? authUserId : 0;
 
+    // Fetch up-to-date user data from backend to avoid stale token data
+    if (this.currentUserId > 0) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (apiUser: any) => {
+          this.user.username = apiUser.UserName || apiUser.userName || this.user.username;
+          this.user.name = apiUser.Name || apiUser.name || this.user.name;
+          this.user.email = apiUser.Email || apiUser.email || this.user.email;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Failed to fetch latest user data', err)
+      });
+    }
+
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
@@ -192,7 +205,7 @@ export class ProfilePage implements OnInit {
       return;
     }
     const localWishIds: number[] = JSON.parse(
-      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
+      localStorage.getItem(`wishlist_${this.currentUserId}`) || localStorage.getItem('wishlist') || '[]',
     );
     const localWishRaw: any[] = JSON.parse(
       localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]',
@@ -202,13 +215,32 @@ export class ProfilePage implements OnInit {
       localWishIds.includes(item.ID || item.id),
     );
 
-    this.wishItems = validItems.map((item: any) => ({
-      id: item.ID || item.id || 0,
-      title: item.Name || item.name || 'Unknown Item',
-      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
-      status: (item.Status || item.status || 'Active').toString(),
-      image: this.getItemImage(item),
-    }));
+    if (validItems.length > 0) {
+      this.wishItems = validItems.map((item: any) => ({
+        id: item.ID || item.id || 0,
+        title: item.Name || item.name || 'Unknown Item',
+        price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+        status: (item.Status || item.status || 'Active').toString(),
+        image: this.getItemImage(item),
+      }));
+    } else if (localWishIds.length > 0) {
+      this.itemService.getItems().subscribe({
+        next: (allItems) => {
+          this.wishItems = allItems
+            .filter((item: any) => localWishIds.includes(item.ID || item.id))
+            .map((item: any) => ({
+              id: item.ID || item.id || 0,
+              title: item.Name || item.name || 'Item',
+              price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+              status: (item.Status || item.status || 'Active').toString(),
+              image: this.getItemImage(item, allItems),
+            }));
+          this.cdr.detectChanges();
+        },
+      });
+    } else {
+      this.wishItems = [];
+    }
   }
 
   // --- Load API data ---
@@ -272,20 +304,27 @@ export class ProfilePage implements OnInit {
         // Fetch wishlist items specifically from backend for current user
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
-            this.wishItems = (wishlistItems || []).map((item: any) => ({
-              id: item.id || item.ID || 0,
-              title: item.name || item.Name || 'Item',
-              price:
-                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image:
-                item.imageUrl ||
-                item.ImageUrl ||
-                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
-                this.getItemImage(item, items),
-              status: item.status
-                ? item.status.toString()
-                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-            }));
+            this.wishItems = (wishlistItems || [])
+              .map((item: any) => {
+                const itemId = item.id || item.ID || 0;
+                const matchedItem = items.find((i: any) => (i.ID || i.id) === itemId);
+                const sourceItem = matchedItem || item;
+                return {
+                  id: itemId,
+                  title: sourceItem.Name || sourceItem.name || sourceItem.title || 'Item',
+                  price:
+                    sourceItem.CurrentPrice ?? sourceItem.currentPrice ?? sourceItem.StartPrice ?? sourceItem.startPrice ?? 0,
+                  image:
+                    sourceItem.imageUrl ||
+                    sourceItem.ImageUrl ||
+                    (sourceItem.photoList && sourceItem.photoList.length > 0 ? sourceItem.photoList[0] : null) ||
+                    this.getItemImage(sourceItem, items),
+                  status: sourceItem.status || sourceItem.Status
+                    ? (sourceItem.status || sourceItem.Status).toString()
+                    : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+                };
+              })
+              .filter((item) => item.id > 0);
             this.cdr.detectChanges();
           },
           error: (err) => {
@@ -338,6 +377,13 @@ export class ProfilePage implements OnInit {
         );
         const updatedIds = localWishIds.filter((id) => id !== itemId);
         localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
+
+        // Also update general wishlist storage
+        const generalWishIds: number[] = JSON.parse(
+          localStorage.getItem('wishlist') || '[]',
+        );
+        const updatedGeneral = generalWishIds.filter((id) => id !== itemId);
+        localStorage.setItem('wishlist', JSON.stringify(updatedGeneral));
 
         this.cdr.detectChanges();
       },
@@ -415,7 +461,6 @@ export class ProfilePage implements OnInit {
           (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
           'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
-        this.editDraft = { ...this.user };
       },
     });
   }
@@ -468,9 +513,9 @@ export class ProfilePage implements OnInit {
   }
 
   // --- Navigate to Auction Item page ---
-  goToAuction(itemId: number): void {
+  goToAuction(itemId: number, item?: any): void {
     if (!itemId) return;
-    this.router.navigate(['/action-item-page', itemId]);
+    this.router.navigate(['/action-item-page', itemId], item ? { state: { auction: item } } : {});
   }
 
   onLogout(): void {

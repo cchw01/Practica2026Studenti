@@ -198,6 +198,24 @@
   color: v.$color-primary;
 }
 
+.card-owner-link {
+  display: inline-block;
+  margin-top: v.$space-xs;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: v.$color-text-secondary;
+  cursor: pointer;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+}
+
+.card-owner-link:hover {
+  color: v.$color-primary;
+  text-decoration-color: v.$color-primary;
+}
+
 .time-left {
   position: absolute;
   top: 12px;
@@ -242,6 +260,7 @@
   border-radius: v.$radius-md;
   background: v.$color-surface;
   box-shadow: v.$shadow-sm;
+  cursor: pointer;
   transition: v.$transition-fast;
   animation: fade-in-up 0.5s ease both;
 }
@@ -380,6 +399,19 @@
   font-weight: 600;
 }
 
+.post-author-link {
+  cursor: pointer;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+}
+
+.post-author-link:hover {
+  color: v.$color-accent;
+  text-decoration-color: v.$color-accent;
+}
+
 .post-date {
   color: v.$color-text-secondary;
 }
@@ -454,6 +486,7 @@
     opacity: 0;
     transform: translateY(18px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

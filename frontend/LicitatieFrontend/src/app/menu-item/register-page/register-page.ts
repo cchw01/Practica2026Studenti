@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +23,7 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -86,8 +87,10 @@ export class RegisterPage implements OnInit {
           const firstKey = Object.keys(err.error.errors)[0];
           this.errorMessage = err.error.errors[firstKey][0] || 'Eroare la înregistrare';
         } else {
-          this.errorMessage = 'Eroare la înregistrare. Verificați datele introduse sau conexiunea la server.';
+          this.errorMessage =
+            'Eroare la înregistrare. Verificați datele introduse sau conexiunea la server.';
         }
+        this.cdr.detectChanges();
       },
     });
   }
