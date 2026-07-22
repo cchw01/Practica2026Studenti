@@ -30,7 +30,10 @@ namespace Backend.DataManagement
         }
 
         public List<AuctionItem> GetAuctionsPendingValidation() =>
-            DbContext.AuctionItems.Where(a => a.Status == AuctionItem.StatusEnum.Added).ToList();
+    DbContext.AuctionItems
+        .Include(a => a.Owner)
+        .Where(a => a.Status == AuctionItem.StatusEnum.Added)
+        .ToList();
 
         public void SetAuctionStatus(int itemId, AuctionItem.StatusEnum status)
         {

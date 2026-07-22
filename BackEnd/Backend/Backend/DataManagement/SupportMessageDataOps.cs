@@ -13,11 +13,20 @@ namespace Backend.DataManagement
             DbContext.SaveChanges();
         }
 
-        public List<SupportMessage> GetBySource(string source) =>
-            DbContext.SupportMessages
+        public List<SupportMessage> GetBySource(string source)
+        {
+            var list = DbContext.SupportMessages
                 .Where(m => m.Source == source)
                 .OrderByDescending(m => m.CreatedAt)
                 .ToList();
+
+            foreach (var m in list)
+            {
+                m.CreatedAt = DateTime.SpecifyKind(m.CreatedAt, DateTimeKind.Utc);
+            }
+
+            return list;
+        }
 
         public void ResolveWithReply(int id, string? replyMessage)
         {
@@ -30,7 +39,14 @@ namespace Backend.DataManagement
             if (!string.IsNullOrWhiteSpace(replyMessage) && msg.UserId.HasValue)
             {
                 var notifOps = new NotificationDataOps(DbContext);
-                notifOps.Create(msg.UserId.Value, $"Răspuns la mesajul tău: {replyMessage}");
+
+                var dateText = msg.CreatedAt.ToString("dd MMM yyyy");
+                var issueText = !string.IsNullOrWhiteSpace(msg.IssueType) ? $" legat de „{msg.IssueType}”" : "";
+
+                var notificationText =
+                    $"Un administrator ți-a răspuns la mesajul din data de {dateText}{issueText}: {replyMessage}";
+
+                notifOps.Create(msg.UserId.Value, notificationText);
             }
         }
     }

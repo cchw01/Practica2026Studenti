@@ -87,6 +87,7 @@ export class AdminPage implements OnInit {
     this.loadStats();
     this.loadAuctions();
     this.loadForum();
+    this.loadMessages(); // <- NOU, ca badge-ul de Mesaje sa fie corect de la inceput
   }
 
   get visibleForumPosts(): any[] {
@@ -437,6 +438,11 @@ export class AdminPage implements OnInit {
     return this.usersView === 'all'
       ? this.filteredUsers
       : this.reportedUsers;
+  }
+  get unresolvedMessagesCount(): number {
+    const unresolvedContact = this.contactMessages.filter((m) => !m.isResolved).length;
+    const unresolvedHelp = this.helpMessages.filter((m) => !m.isResolved).length;
+    return unresolvedContact + unresolvedHelp;
   }
 
   setUsersView(view: 'all' | 'reported'): void {
