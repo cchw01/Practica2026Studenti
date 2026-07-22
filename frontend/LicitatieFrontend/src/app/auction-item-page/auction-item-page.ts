@@ -124,8 +124,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     if (currentUserId) {
       this.userService.getWishlist(currentUserId).subscribe({
         next: (wishlistItems: any[]) => {
-          const wishlistIds = wishlistItems.map((w) => w.id || w.ID);
-          this.isInWishlist = wishlistIds.includes(this.auctionItem.ID);
+          const targetId = (this.auctionItem as any)?.id || this.auctionItem?.ID || 0;
+          const wishlistIds = (wishlistItems || []).map((w) => w.id || w.ID);
+          this.isInWishlist = wishlistIds.includes(targetId);
           try { this.cdr.markForCheck(); } catch { }
         },
         error: (err) => console.error('Error fetching wishlist for item page', err)
@@ -370,7 +371,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   private showWishlistToastMessage(): void {
-    let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const currentUserId = this.authService.getCurrentUserId();
+    const storageKey = currentUserId ? `wishlist_${currentUserId}` : 'wishlist';
+    let wishlist: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
     if (this.isInWishlist) {
       if (!wishlist.includes(this.auctionItem.ID)) {
         wishlist.push(this.auctionItem.ID);
@@ -378,7 +381,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       wishlist = wishlist.filter((id) => id !== this.auctionItem.ID);
     }
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    localStorage.setItem(storageKey, JSON.stringify(wishlist));
 
     this.showWishlistToast = true;
     this.isToastHiding = false;

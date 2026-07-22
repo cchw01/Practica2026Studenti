@@ -14,12 +14,25 @@ body {
   font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background:
     radial-gradient(circle at 8% 8%, rgba(63, 81, 181, 0.14), transparent 40%),
     radial-gradient(circle at 92% 12%, rgba(233, 30, 99, 0.1), transparent 35%),
     radial-gradient(circle at 50% 105%, rgba(38, 166, 154, 0.12), transparent 45%),
     #f5f6fb;
   background-attachment: fixed;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+/* Sticky footer: componenta randată de router-outlet crește să umple spațiul */
+router-outlet + * {
+  flex: 1 0 auto;
 }
 
 h1, h2, h3, h4, h5, h6 {

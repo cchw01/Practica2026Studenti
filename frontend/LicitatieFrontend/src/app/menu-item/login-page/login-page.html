@@ -9,20 +9,6 @@
         {{ errorMessage }}
       </div>
 
-      @if (errorMessage) {
-        <div
-          style="
-            color: red;
-            text-align: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #ffeeee;
-            border-radius: 5px;
-          "
-        >
-          {{ errorMessage }}
-        </div>
-      }
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <p>
@@ -39,7 +25,7 @@
               <mat-error>{{ 'LOGIN.EMAIL_REQUIRED' | translate }}</mat-error>
             }
             @if (hasError('email', 'email')) {
-              <mat-error>{{ 'LOGIN.EMAIL_IVALID' | translate }}</mat-error>
+              <mat-error>{{ 'LOGIN.EMAIL_INVALID' | translate }}</mat-error>
             }
           </mat-form-field>
         </p>

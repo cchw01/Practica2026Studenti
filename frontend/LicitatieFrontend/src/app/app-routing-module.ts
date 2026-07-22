@@ -9,43 +9,36 @@ import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
-import { ReviewComponent } from './Models/review/review';
-import { AuctionItemPage } from './auction-item-page/auction-item-page';
-import { AddItemPage } from './add-item-page/add-item-page';
-import { Add } from './menu-item/add/add';
-import { Edit } from './menu-item/edit/edit';
-import { View } from './menu-item/view/view';
-import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
-import { NotFound } from './not-found/not-found';
-import { AdminGuard } from './services/admin-guard';
-import { AdminPage } from './admin-page/admin-page/admin-page';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { ReviewComponent } from './Models/review/review';
 import { SearchPage } from './search-page/search-page';
+import { AddItemPage } from './add-item-page/add-item-page';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { UserPage } from './user-page/user-page';
+import { AdminPage } from './admin-page/admin-page/admin-page';
+import { NotFound } from './not-found/not-found';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
-  { path: 'search-page', component: SearchPage },
+  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionItemPage },
+  { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },
   { path: 'forum/:id', component: ForumPostDetails },
   { path: 'profile-page', component: ProfilePage },
-  { path: 'help-page', component: HelpPageComponent },
   { path: 'review-page', component: ReviewComponent },
+  { path: 'help-page', component: HelpPageComponent },
+  { path: 'search-page', component: SearchPage },
   { path: 'add-item', component: AddItemPage },
-  { path: 'add', component: Add },
-  { path: 'edit', component: Edit },
-  { path: 'view', component: View },
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'action-item-page/:id', component: AuctionItemPage },
-  { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
-  { path: 'user-page/:id', component: UserPage},
+  { path: 'user-page/:id', component: UserPage },
+  { path: 'admin', component: AdminPage },
   { path: '**', component: NotFound },
 ];
 

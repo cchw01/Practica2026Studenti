@@ -417,11 +417,11 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  flex: 1; /* Take remaining space */
+  flex: 1; 
 }
 
 .btn-remove-wish {
-  background: none;
+ background: none;
   border: none;
   color: #ff4d4f;
   font-size: 1.2rem;
@@ -430,16 +430,10 @@
   margin-left: 10px;
   border-radius: 4px;
   transition: background-color 0.2s;
-}
 
-.btn-remove-wish:hover {
-  background-color: rgba(255, 77, 79, 0.1);
-}
-
-.item-title {
-  font-size: v.$font-size-body;
-  font-weight: v.$font-weight-semibold;
-  color: v.$color-text-heading;
+  &:hover {
+    background-color: rgba(255, 77, 79, 0.1);
+  }
 }
 
 .item-price {

@@ -8,19 +8,11 @@
     <p>{{ 'HOME.HERO.DESCRIPTION' | translate }}</p>
 
     <div class="hero-buttons">
-      <button
-        mat-flat-button
-        color="primary"
-        class="btn-explore"
-        (click)="exploreAuctions()">
+      <button mat-flat-button color="primary" class="btn-explore" (click)="exploreAuctions()">
         {{ 'HOME.HERO.EXPLORE_AUCTIONS' | translate }}
       </button>
 
-      <button
-        mat-stroked-button
-        color="primary"
-        class="btn-sell"
-        (click)="startSelling()">
+      <button mat-stroked-button color="primary" class="btn-sell" (click)="startSelling()">
         {{ 'HOME.HERO.START_SELLING' | translate }}
       </button>
     </div>
@@ -29,20 +21,9 @@
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>{{ 'HOME.HERO.SEARCH_LABEL' | translate }}</mat-label>
         <mat-icon matPrefix>search</mat-icon>
-        <input
-          matInput
-          placeholder="Ex: BMW, Gold Earrings"
-          [ngModel]="searchQuery()"
-          (ngModelChange)="searchQuery.set($event)"
-          (keyup.enter)="runSearch()"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          class="search-go"
-          aria-label="Search"
-          (click)="runSearch()">
+        <input matInput placeholder="Ex: BMW, Gold Earrings" [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)" (keyup.enter)="runSearch()" />
+        <button mat-icon-button matSuffix type="button" class="search-go" aria-label="Search" (click)="runSearch()">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </mat-form-field>
@@ -50,7 +31,8 @@
 
     <div class="hero-auctions-heading">
       <span class="section-eyebrow">{{ 'HOME.AUCTIONS.EYEBROW' | translate }}</span>
-      <h2 class="section-title">{{ 'HOME.AUCTIONS.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.AUCTIONS.TITLE_END' | translate }}</span></h2>
+      <h2 class="section-title">{{ 'HOME.AUCTIONS.TITLE_START' | translate }} <span class="gradient-text">{{
+          'HOME.AUCTIONS.TITLE_END' | translate }}</span></h2>
     </div>
   </div>
 </div>
@@ -59,42 +41,47 @@
   <div class="section-inner">
     <div class="reveal-on-scroll">
       @if (displayedAuctions.length === 0) {
-        <p class="auctions-empty">{{ 'HOME.AUCTIONS.EMPTY' | translate }}</p>
+      <p class="auctions-empty">{{ 'HOME.AUCTIONS.EMPTY' | translate }}</p>
       } @else {
-        <div class="carousel">
-          <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left" (click)="scrollAuctions(-1)">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
+      <div class="carousel">
+        <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left"
+          (click)="scrollAuctions(-1)">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
 
-          <div class="carousel-track auctions-grid" #auctionsTrack>
-            @for (auction of displayedAuctions; track auction.ID) {
-              <div class="auction-card" (click)="goToAuction(auction)">
-                <div class="auction-image-wrap">
-                  <img
-                    [src]="(auction.PhotoList && auction.PhotoList.length > 0) ? auction.PhotoList[0] : (auction.ImageUrl ? auction.ImageUrl : 'assets/images/placeholder.png')"
-                    [alt]="auction.Name"
-                  />
-                  <span class="auction-timer" [ngClass]="getTimeUrgencyClass(auction.EndDate)">
-                    {{ getRemainingLabel(auction.EndDate) }}
-                  </span>
-                </div>
-                <div class="auction-body">
-                  <h3>{{ auction.Name }}</h3>
-                  <span class="auction-price">{{ auction.CurrentPrice }} RON</span>
-                </div>
-                <div class="auction-details-overlay">
-                  <p>{{ auction.Description }}</p>
-                  <button mat-flat-button color="primary" (click)="placeBid(auction); $event.stopPropagation()">
+        <div class="carousel-track auctions-grid" #auctionsTrack>
+          @for (auction of displayedAuctions; track auction.ID) {
+          <div class="auction-card" (click)="goToAuction(auction)">
+            <div class="auction-image-wrap">
+              <img
+                [src]="(auction.PhotoList && auction.PhotoList.length > 0) ? auction.PhotoList[0] : (auction.ImageUrl ? auction.ImageUrl : 'assets/images/placeholder.png')"
+                [alt]="auction.Name" />
+              <span class="auction-timer" [ngClass]="getTimeUrgencyClass(auction.EndDate)">
+                {{ getRemainingLabel(auction.EndDate) }}
+              </span>
+              <div class="auction-details-overlay">
+                <p>{{ auction.Description }}</p>
+                <button mat-flat-button color="primary" (click)="placeBid(auction); $event.stopPropagation()">
                   {{ 'HOME.AUCTIONS.PLACE_BID' | translate }}</button>
-                </div>
               </div>
-            }
+            </div>
+            <div class="auction-body">
+              <div class="auction-body-top">
+                <h3>{{ auction.Name }}</h3>
+                <span class="auction-price">{{ auction.CurrentPrice }} RON</span>
+              </div>
+              <span *ngIf="getOwnerDisplayName(auction)" class="auction-owner-link"
+                (click)="goToOwner($event, auction)">&#64;{{ getOwnerDisplayName(auction) }}</span>
+            </div>
           </div>
-
-          <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right" (click)="scrollAuctions(1)">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
+          }
         </div>
+
+        <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right"
+          (click)="scrollAuctions(1)">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
       }
     </div>
   </div>
@@ -103,26 +90,30 @@
 <div class="content-section categories-section">
   <div class="section-inner">
     <span class="section-eyebrow">{{ 'HOME.CATEGORIES.EYEBROW' | translate }}</span>
-    <h2 class="section-title">{{ 'HOME.CATEGORIES.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.CATEGORIES.TITLE_END' | translate }}</span></h2>
+    <h2 class="section-title">{{ 'HOME.CATEGORIES.TITLE_START' | translate }} <span class="gradient-text">{{
+        'HOME.CATEGORIES.TITLE_END' | translate }}</span></h2>
 
     <div class="carousel reveal-on-scroll">
-      <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left" (click)="scrollCategories(-1)">
+      <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left"
+        (click)="scrollCategories(-1)">
         <mat-icon>chevron_left</mat-icon>
       </button>
 
       <div class="carousel-track categories-grid" #categoriesTrack>
         @for (category of categories; track category.name) {
-          <div class="category-card" [routerLink]="['/auctions']" [queryParams]="{ category: category.name }" style="cursor: pointer;">
-            <div class="category-icon">
-              <mat-icon>{{ category.icon }}</mat-icon>
-            </div>
-            <h3>{{ category.name | translate }}</h3>
-            <p>{{ category.description | translate }}</p>
+        <div class="category-card" [routerLink]="['/auctions']" [queryParams]="{ category: category.name }"
+          style="cursor: pointer;">
+          <div class="category-icon">
+            <mat-icon>{{ category.icon }}</mat-icon>
           </div>
+          <h3>{{ category.name | translate }}</h3>
+          <p>{{ category.description | translate }}</p>
+        </div>
         }
       </div>
 
-      <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right" (click)="scrollCategories(1)">
+      <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right"
+        (click)="scrollCategories(1)">
         <mat-icon>chevron_right</mat-icon>
       </button>
     </div>
@@ -132,20 +123,21 @@
 <div class="content-section about-section">
   <div class="section-inner">
     <span class="section-eyebrow">{{ 'HOME.ABOUT.EYEBROW' | translate }}</span>
-    <h2 class="section-title">{{ 'HOME.ABOUT.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.ABOUT.TITLE_END' | translate }}</span></h2>
+    <h2 class="section-title">{{ 'HOME.ABOUT.TITLE_START' | translate }} <span class="gradient-text">{{
+        'HOME.ABOUT.TITLE_END' | translate }}</span></h2>
     <p class="about-text reveal-on-scroll">{{ 'HOME.ABOUT.DESCRIPTION' | translate }}</p>
 
     <div class="about-features reveal-on-scroll">
       @for (feature of aboutFeatures; track feature.titleKey) {
-        <div class="about-feature-card">
-          <div class="about-feature-icon">
-            <mat-icon>{{ feature.icon }}</mat-icon>
-          </div>
-          <div class="about-feature-text">
-            <h3>{{ feature.titleKey | translate }}</h3>
-            <p>{{ feature.descriptionKey | translate }}</p>
-          </div>
+      <div class="about-feature-card">
+        <div class="about-feature-icon">
+          <mat-icon>{{ feature.icon }}</mat-icon>
         </div>
+        <div class="about-feature-text">
+          <h3>{{ feature.titleKey | translate }}</h3>
+          <p>{{ feature.descriptionKey | translate }}</p>
+        </div>
+      </div>
       }
     </div>
   </div>
