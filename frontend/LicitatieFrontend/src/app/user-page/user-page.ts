@@ -176,7 +176,7 @@ export class UserPage implements OnInit {
   }
 
   goToItemDetail(item: AuctionItem): void {
-    this.router.navigate(['/action-item-page'], { state: { auction: item } });
+    this.router.navigate(['/action-item-page', item.ID], { state: { auction: item } });
   }
 
   // Metode Raportare

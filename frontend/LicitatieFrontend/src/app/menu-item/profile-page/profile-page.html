@@ -117,8 +117,8 @@
             <img [src]="item.image" alt="Item image" class="item-card-image" />
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
-              <span class="item-price">{{ item.price }} RON</span>
             </div>
+            <span class="item-price-badge">{{ item.price }} RON</span>
             <span class="item-badge" [ngClass]="getBadgeClass(item.status)">{{ item.status }}</span>
             <button class="btn-remove-wish" (click)="removeFromWishlist(item.id, $event)" title="Remove from Wishlist">✕</button>
           </div>

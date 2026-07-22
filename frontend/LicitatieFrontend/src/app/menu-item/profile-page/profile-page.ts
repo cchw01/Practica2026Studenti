@@ -400,7 +400,7 @@ export class ProfilePage implements OnInit {
   // --- Navigate to Item Details ---
   goToItem(id: number): void {
     if (id) {
-      this.router.navigate(['/auctions', id]);
+      this.router.navigate(['/action-item-page', id]);
     }
   }
 
