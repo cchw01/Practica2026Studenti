@@ -196,11 +196,7 @@ export class ItemService {
       this.http.get<AuctionItem[]>(this.apiUrl).subscribe({
         next: (backendItems) => {
           const sanitizedBackend = (backendItems || []).map(i => this.mapResponse(i));
-          const localItems = this.getLocalItems();
-          const map = new Map<number, AuctionItem>();
-          for (const l of localItems) map.set(l.ID, l);
-          for (const s of sanitizedBackend) map.set(s.ID, s);
-          observer.next(Array.from(map.values()));
+          observer.next(sanitizedBackend);
           observer.complete();
         },
         error: () => {
@@ -230,11 +226,7 @@ export class ItemService {
       this.http.get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`).subscribe({
         next: (res) => {
           const items = (res || []).map((item) => this.mapResponse(item));
-          const localItems = this.getLocalItems();
-          const map = new Map<number, AuctionItem>();
-          for (const s of items) map.set(s.ID, s);
-          for (const l of localItems) map.set(l.ID, l);
-          observer.next(Array.from(map.values()));
+          observer.next(items);
           observer.complete();
         },
         error: () => {

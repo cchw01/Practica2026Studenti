@@ -264,13 +264,15 @@
   <div class="vuexy-card">
     <div class="vuexy-list-stack">
       <div *ngFor="let msg of displayedMessages" class="vuexy-stack-item message-item">
-        <div class="stack-left">
-          <span class="vuexy-author-headline">{{ msg.name }} — {{ msg.email }}</span>
-          <span *ngIf="msg.issueType" class="subject-emphasis">{{ msg.issueType }}</span>
-          <p class="forum-body-text">"{{ msg.message }}"</p>
-          <small>{{ msg.createdAt | date:'dd MMM, HH:mm' }} — {{ msg.userId ? 'Logged-in user, can receive notifications' : 'Guest user, cannot receive notifications' }}</small>
-          <span class="vuexy-pill" [class.pill-banned]="!msg.isResolved">{{ msg.isResolved ? 'Resolved' : 'Unresolved' }}</span>
-        </div>
+  <div class="stack-left">
+    <div class="message-header-row">
+      <span class="vuexy-author-headline">{{ msg.name }} — {{ msg.email }}</span>
+      <span *ngIf="msg.issueType" class="issue-type-badge">{{ msg.issueType }}</span>
+    </div>
+    <p class="forum-body-text">"{{ msg.message }}"</p>
+    <small>{{ msg.createdAt | date:'dd MMM, HH:mm' }}</small>
+    <span class="vuexy-pill" [class.pill-banned]="!msg.isResolved">{{ msg.isResolved ? 'Rezolvat' : 'Nerezolvat' }}</span>
+  </div>
         <div class="stack-actions" *ngIf="!msg.isResolved">
           <input
             type="text"

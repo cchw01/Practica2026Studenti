@@ -70,12 +70,10 @@ export class AdminPage implements OnInit {
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
     const role = user?.role;
-
     if (!this.authService.isLoggedIn() || role !== 'Admin') {
       this.router.navigate(['/login-page']);
       return;
     }
-
     this.adminName = user?.name || 'Admin';
     this.adminInitials = this.adminName
       .split(' ')
@@ -91,18 +89,13 @@ export class AdminPage implements OnInit {
   }
 
   get visibleForumPosts(): any[] {
-    return this.forumPosts.filter(
-      (post) => !this.verifiedPostIds.has(post.id),
-    );
+    return this.forumPosts.filter((post) => !this.verifiedPostIds.has(post.id));
   }
 
   markAsVerified(id: number): void {
     this.verifiedPostIds.add(id);
 
-    localStorage.setItem(
-      'verifiedForumPostIds',
-      JSON.stringify([...this.verifiedPostIds]),
-    );
+    localStorage.setItem('verifiedForumPostIds', JSON.stringify([...this.verifiedPostIds]));
   }
 
   setTab(tab: Tab): void {
@@ -215,21 +208,15 @@ export class AdminPage implements OnInit {
   }
 
   approveAuction(id: number): void {
-    this.adminService
-      .validateAuction(id)
-      .subscribe(() => this.loadAuctions());
+    this.adminService.validateAuction(id).subscribe(() => this.loadAuctions());
   }
 
   rejectAuction(id: number): void {
-    this.adminService
-      .rejectAuction(id)
-      .subscribe(() => this.loadAuctions());
+    this.adminService.rejectAuction(id).subscribe(() => this.loadAuctions());
   }
 
   removeAuction(id: number): void {
-    this.adminService
-      .deleteAuction(id)
-      .subscribe(() => this.loadAuctions());
+    this.adminService.deleteAuction(id).subscribe(() => this.loadAuctions());
   }
 
   banUser(id: number): void {
@@ -241,35 +228,24 @@ export class AdminPage implements OnInit {
   }
 
   changeRole(userId: number, role: string): void {
-    this.adminService
-      .setRole(userId, role)
-      .subscribe(() => this.loadUsers());
+    this.adminService.setRole(userId, role).subscribe(() => this.loadUsers());
   }
 
   removeUser(userId: number): void {
-    const confirmed = confirm(
-      'Are you sure? The user will be permanently deleted.',
-    );
+    const confirmed = confirm('Are you sure? The user will be permanently deleted.');
 
     if (!confirmed) {
       return;
     }
 
-    this.adminService
-      .deleteUser(userId)
-      .subscribe(() => this.loadUsers());
+    this.adminService.deleteUser(userId).subscribe(() => this.loadUsers());
   }
 
   deletePost(id: number): void {
-    this.adminService
-      .deleteForumPost(id)
-      .subscribe(() => this.loadForum());
+    this.adminService.deleteForumPost(id).subscribe(() => this.loadForum());
   }
 
-  addCategory(
-    nameInput: HTMLInputElement,
-    descriptionInput: HTMLTextAreaElement,
-  ): void {
+  addCategory(nameInput: HTMLInputElement, descriptionInput: HTMLTextAreaElement): void {
     const name = nameInput.value.trim();
     const description = descriptionInput.value.trim();
 
@@ -364,9 +340,7 @@ export class AdminPage implements OnInit {
   }
 
   removeCategory(category: Category): void {
-    const confirmed = confirm(
-      `Are you sure you want to delete the "${category.name}" category?`,
-    );
+    const confirmed = confirm(`Are you sure you want to delete the "${category.name}" category?`);
 
     if (!confirmed) {
       return;
@@ -408,9 +382,7 @@ export class AdminPage implements OnInit {
     result = this.sortUsers(result);
 
     this.filteredUsers = result;
-    this.reportedUsers = result.filter(
-      (user) => (user.reports || 0) > 0,
-    );
+    this.reportedUsers = result.filter((user) => (user.reports || 0) > 0);
   }
 
   private sortUsers(list: any[]): any[] {
@@ -435,9 +407,7 @@ export class AdminPage implements OnInit {
   }
 
   get displayedUsers(): any[] {
-    return this.usersView === 'all'
-      ? this.filteredUsers
-      : this.reportedUsers;
+    return this.usersView === 'all' ? this.filteredUsers : this.reportedUsers;
   }
   get unresolvedMessagesCount(): number {
     const unresolvedContact = this.contactMessages.filter((m) => !m.isResolved).length;
@@ -449,18 +419,12 @@ export class AdminPage implements OnInit {
     this.usersView = view;
   }
 
-  private getCategoryErrorMessage(
-    error: HttpErrorResponse,
-    fallbackMessage: string,
-  ): string {
+  private getCategoryErrorMessage(error: HttpErrorResponse, fallbackMessage: string): string {
     if (typeof error.error === 'string' && error.error.trim()) {
       return error.error;
     }
 
-    if (
-      typeof error.error?.message === 'string' &&
-      error.error.message.trim()
-    ) {
+    if (typeof error.error?.message === 'string' && error.error.message.trim()) {
       return error.error.message;
     }
 
@@ -480,9 +444,7 @@ export class AdminPage implements OnInit {
   }
 
   get displayedMessages(): any[] {
-    return this.messagesView === 'contact'
-      ? this.contactMessages
-      : this.helpMessages;
+    return this.messagesView === 'contact' ? this.contactMessages : this.helpMessages;
   }
 
   loadMessages(): void {
@@ -499,10 +461,12 @@ export class AdminPage implements OnInit {
 
   resolveMessage(msg: any): void {
     const reply = this.replyDrafts[msg.id] || '';
-
-    this.adminService.resolveMessage(msg.id, reply).subscribe(() => {
-      delete this.replyDrafts[msg.id];
-      this.loadMessages();
+    this.adminService.resolveMessage(msg.id, reply).subscribe({
+      next: () => {
+        delete this.replyDrafts[msg.id];
+        this.loadMessages();
+      },
+      error: (err) => console.error('Eroare la rezolvarea mesajului:', err),
     });
   }
 }
