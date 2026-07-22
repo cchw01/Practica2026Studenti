@@ -1,0 +1,132 @@
+<div class="create-post-page">
+    <main class="create-post-container">
+        <button type="button" class="back-button" routerLink="/forum-page">
+            ← {{ 'CREATE_POST.BACK_TO_DISCUSSIONS' | translate }}
+        </button>
+
+        <section class="create-post-card">
+            <header class="create-post-header">
+                <h1>{{ 'CREATE_POST.TITLE' | translate }}</h1>
+
+                <p>
+                    {{ 'CREATE_POST.SUBTITLE' | translate }}
+                </p>
+            </header>
+
+            <form class="create-post-form" [formGroup]="createPostForm" (ngSubmit)="submitPost()">
+                <div class="form-field">
+                    <label for="title">
+                        {{ 'CREATE_POST.TITLE_LABEL' | translate }}
+                    </label>
+
+                    <input id="title" type="text" formControlName="title" maxlength="150"
+                        placeholder="Enter a clear discussion title" autocomplete="off">
+
+                    <div class="field-information">
+                        <div class="validation-message">
+                            @if (
+                            titleControl.touched &&
+                            titleControl.hasError('required')
+                            ) {
+                            <p>{{ 'CREATE_POST.TITLE_REQUIRED' | translate }}</p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('whitespace')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.TITLE_WHITESPACE' | translate }}
+                            </p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('minlength')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.TITLE_MIN_LENGTH' | translate }}
+                            </p>
+                            } @else if (
+                            titleControl.touched &&
+                            titleControl.hasError('maxlength')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.TITLE_MAX_LENGTH' | translate }}
+                            </p>
+                            }
+                        </div>
+
+                        <p class="character-count">
+                            {{ titleControl.value.length }}/150
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="description">
+                        {{ 'CREATE_POST.DESCRIPTION_LABEL' | translate }}
+                    </label>
+
+                    <textarea id="description" formControlName="description" rows="10" maxlength="5000"
+                        placeholder=" 'CREATE_POST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+
+                    <div class="field-information">
+                        <div class="validation-message">
+                            @if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('required')
+                            ) {
+                            <p>{{ 'CREATE_POST.DESCRIPTION_REQUIRED' | translate }}</p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('whitespace')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.DESCRIPTION_WHITESPACE' | translate }}
+                            </p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('minlength')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.DESCRIPTION_MIN_LENGTH' | translate }}
+                            </p>
+                            } @else if (
+                            descriptionControl.touched &&
+                            descriptionControl.hasError('maxlength')
+                            ) {
+                            <p>
+                                {{ 'CREATE_POST.DESCRIPTION_MAX_LENGTH' | translate }}
+                            </p>
+                            }
+                        </div>
+
+                        <p class="character-count">
+                            {{
+                            descriptionControl.value.length
+                            }}/5000
+                        </p>
+                    </div>
+                </div>
+
+                @if (submitErrorMessage) {
+                <div class="submit-error" role="alert">
+                    <h2>{{ 'CREATE_POST.CREATE_ERROR' | translate }}</h2>
+
+                    <p>{{ submitErrorMessage }}</p>
+                </div>
+                }
+
+                <div class="form-actions">
+                    <button type="button" class="secondary-button" [disabled]="isSubmitting" (click)="cancel()">
+                        {{ 'CREATE_POST.CANCEL' | translate }}
+                    </button>
+
+                    <button type="submit" class="primary-button" [disabled]="
+                            createPostForm.invalid ||
+                            isSubmitting
+                        ">
+                         {{(isSubmitting ? 'CREATE_POST.CREATING' : 'CREATE_POST.SUBMIT' ) | translate }}
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>

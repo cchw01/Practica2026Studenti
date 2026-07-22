@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "Vehicles", "items": [] },
+  { "id": 2, "name": "Electronics", "items": [] },
+  { "id": 3, "name": "Art", "items": [] },
+  { "id": 4, "name": "Clothing", "items": [] },
+  { "id": 5, "name": "Home & Garden", "items": [] },
+  { "id": 6, "name": "Real Estate", "items": [] }
+]

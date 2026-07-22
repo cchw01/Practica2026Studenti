@@ -12,19 +12,19 @@ namespace Backend.Models
         public int ReviewerId { get; set; }
 
         [ForeignKey(nameof(ReviewerId))]
-        public User Reviewer { get; set; }
+        public User? Reviewer { get; set; }
 
         [Required]
         public int ReviewedUserId { get; set; }
 
         [ForeignKey(nameof(ReviewedUserId))]
-        public User ReviewedUser { get; set; }
+        public User? ReviewedUser { get; set; }
 
         [Range(0, 5)]
         public float Rating { get; set; }
 
         [MaxLength(1000)]
-        public string Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
     }

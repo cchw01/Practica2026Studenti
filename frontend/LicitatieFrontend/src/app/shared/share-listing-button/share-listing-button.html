@@ -1,0 +1,10 @@
+<button
+  type="button"
+  class="share-button"
+  [class.copied]="copied()"
+  (click)="copyLink()"
+>
+  {{
+    (copied() ? 'SHARE.COPIED' : 'SHARE.BUTTON') | translate
+  }}
+</button>

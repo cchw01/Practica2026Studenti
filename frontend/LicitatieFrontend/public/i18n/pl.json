@@ -1,0 +1,482 @@
+{
+  "NAV": {
+    "HOME": "Strona główna",
+    "AUCTIONS": "Aukcje",
+    "FORUM": "Forum",
+    "CONTACT": "Kontakt",
+    "LOGIN": "Zaloguj się",
+    "REGISTER": "Zarejestruj się",
+    "TOGGLE_MENU": "Pokaż lub ukryj nawigację",
+    "SELECT_LANGUAGE": "Wybierz język",
+    "HELP": "Pomoc",
+    "ADD_AUCTION": "Dodaj aukcję"
+  },
+  "CONTACT": {
+    "TITLE": "Skontaktuj się z nami",
+    "DESCRIPTION": "Masz pytania? Nasz zespół chętnie Ci pomoże.",
+    "EMAIL": "E-mail",
+    "PHONE": "Numer telefonu",
+    "CALL_CENTER_HOURS": "Godziny pracy infolinii",
+    "SCHEDULE": "Poniedziałek–piątek, 09:00–17:00",
+    "FOLLOW_US": "Obserwuj nas",
+    "SOCIAL_DESCRIPTION": "Pozostań z nami w kontakcie w mediach społecznościowych.", 
+     "FORM_TITLE": "Wyślij nam wiadomość",
+  "FORM_FULL_NAME_LABEL": "Imię i nazwisko",
+  "FORM_FULL_NAME_PLACEHOLDER": "np. Jan Kowalski",
+  "FORM_FULL_NAME_REQUIRED": "Imię i nazwisko jest wymagane.",
+  "FORM_EMAIL_LABEL": "Adres e-mail",
+  "FORM_EMAIL_PLACEHOLDER": "np. ty@przyklad.com",
+  "FORM_EMAIL_REQUIRED": "Adres e-mail jest wymagany.",
+  "FORM_EMAIL_INVALID": "Wprowadź poprawny adres e-mail.",
+  "FORM_ISSUE_TYPE_LABEL": "Rodzaj problemu",
+  "FORM_ISSUE_TYPE_REQUIRED": "Wybierz rodzaj problemu.",
+  "FORM_ISSUE_OPTION_GENERAL": "Ogólne zapytanie",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Wsparcie techniczne",
+  "FORM_ISSUE_OPTION_BILLING": "Rozliczenia / Płatność",
+  "FORM_ISSUE_OPTION_LISTING": "Problem z ogłoszeniem / aukcją",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Zarządzanie kontem",
+  "FORM_ISSUE_OPTION_OTHER": "Inne",
+  "FORM_MESSAGE_LABEL": "Opisz swój problem",
+  "FORM_MESSAGE_PLACEHOLDER": "Podaj więcej szczegółów...",
+  "FORM_MESSAGE_REQUIRED": "Wiadomość jest wymagana.",
+  "FORM_MESSAGE_MIN_LENGTH": "Wiadomość musi zawierać co najmniej 10 znaków.",
+  "FORM_SUBMIT": "Wyślij wiadomość",
+  "FORM_SUCCESS_TITLE": "Wiadomość wysłana!",
+  "FORM_SUCCESS_MESSAGE": "Dziękujemy za kontakt. Odpowiemy tak szybko, jak to możliwe.",
+  "FORM_SEND_ANOTHER": "Wyślij kolejną wiadomość"
+  },
+  "LOGIN": {
+    "TITLE": "Logowanie",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "Adres e-mail",
+    "EMAIL_REQUIRED": "Adres e-mail jest wymagany",
+    "EMAIL_INVALID": "Nieprawidłowy format adresu e-mail",
+    "PASSWORD_LABEL": "Hasło",
+    "PASSWORD_PLACEHOLDER": "Wpisz hasło",
+    "PASSWORD_REQUIRED": "Hasło jest wymagane",
+    "PASSWORD_MIN_LENGTH": "Hasło musi mieć co najmniej 6 znaków",
+    "SUBMIT": "Zaloguj się",
+    "NO_ACCOUNT": "Nie masz konta?",
+    "REGISTER_HERE": "Zarejestruj się tutaj"
+  },
+  "REGISTER": {
+    "TITLE": "Utwórz konto",
+    "USERNAME_LABEL": "Nazwa użytkownika",
+    "USERNAME_PLACEHOLDER": "Nazwa użytkownika",
+    "USERNAME_REQUIRED": "Nazwa użytkownika jest wymagana.",
+    "FULL_NAME_LABEL": "Imię i nazwisko",
+    "FULL_NAME_PLACEHOLDER": "Imię i nazwisko",
+    "FULL_NAME_REQUIRED": "Imię i nazwisko są wymagane.",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "E-mail",
+    "EMAIL_REQUIRED": "Adres e-mail jest wymagany.",
+    "EMAIL_INVALID": "Wprowadź prawidłowy adres e-mail.",
+    "PASSWORD_LABEL": "Hasło",
+    "PASSWORD_PLACEHOLDER": "Hasło",
+    "PASSWORD_REQUIRED": "Hasło jest wymagane.",
+    "PASSWORD_MIN_LENGTH": "Hasło musi mieć co najmniej 6 znaków.",
+    "CONFIRM_PASSWORD_LABEL": "Potwierdź hasło",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Potwierdź hasło",
+    "CONFIRM_PASSWORD_REQUIRED": "Potwierdź hasło.",
+    "PASSWORDS_MISMATCH": "Hasła nie są zgodne.",
+    "PHONE_LABEL": "Numer telefonu",
+    "PHONE_PLACEHOLDER": "Numer telefonu (+40...)",
+    "PHONE_REQUIRED": "Numer telefonu jest wymagany.",
+    "PHONE_INVALID": "Wprowadź prawidłowy numer telefonu.",
+    "SUBMIT": "Utwórz konto",
+    "ALREADY_HAVE_ACCOUNT": "Masz już konto?",
+    "SIGN_IN": "Zaloguj się"
+  },
+  "HOME": {
+    "HERO": {
+      "TITLE": "LICYTUJ. WYGRYWAJ. POWTARZAJ.",
+      "TAG": "🔥 Aukcje na żywo każdego dnia",
+      "DESCRIPTION": "Najbezpieczniejsza internetowa platforma aukcyjna. Sprzedawaj szybko lub zdobywaj wyjątkowe okazje.",
+      "EXPLORE_AUCTIONS": "Przeglądaj aukcje",
+      "START_SELLING": "Zacznij sprzedawać",
+      "SEARCH_LABEL": "Szukaj produktów i aukcji...",
+      "SEARCH_PLACEHOLDER": "Przykład: BMW, złote kolczyki"
+    },
+    "CATEGORIES": {
+      "EYEBROW": "Kategorie",
+      "TITLE_START": "Odkryj",
+      "TITLE_END": "kategorie",
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Technologia",
+          "DESCRIPTION": "Najnowocześniejsze gadżety i najnowsza elektronika."
+        },
+        "AUTO_MOTORS": {
+          "NAME": "Motoryzacja",
+          "DESCRIPTION": "Samochody, motocykle i rzadkie części."
+        },
+        "ART_COLLECTIBLES": {
+          "NAME": "Sztuka i kolekcje",
+          "DESCRIPTION": "Ekskluzywne dzieła sztuki i kolekcje."
+        },
+        "REAL_ESTATE": {
+          "NAME": "Nieruchomości",
+          "DESCRIPTION": "Wyjątkowe nieruchomości i grunty."
+        }
+      }
+    },
+    "AUCTIONS": {
+      "EYEBROW": "Rynek",
+      "TITLE_START": "Aktywne",
+      "TITLE_END": "aukcje",
+      "PLACE_BID": "Złóż ofertę",
+      "ITEMS": {
+        "BMW": {
+          "TITLE": "BMW",
+          "DESCRIPTION": "BMW serii 7, 2022, idealny stan, jeden właściciel."
+        },
+        "GOLD_EARRINGS": {
+          "TITLE": "Złote kolczyki",
+          "DESCRIPTION": "Kolczyki z 18-karatowego złota z certyfikowanymi diamentami."
+        },
+        "PATEK_PHILIPPE": {
+          "TITLE": "Zegarek Patek Philippe",
+          "DESCRIPTION": "Limitowany zegarek kolekcjonerski z pudełkiem i certyfikatem."
+        },
+        "VILLA": {
+          "TITLE": "Willa",
+          "DESCRIPTION": "Luksusowa willa z basenem, pięcioma sypialniami i panoramicznym widokiem."
+        }
+      }
+    }
+  },
+  "HELP": {
+    "TITLE": "Centrum pomocy",
+    "INFORMATION": "Znajdź szybkie odpowiedzi, skontaktuj się z nami telefonicznie lub porozmawiaj z naszym asystentem AI.",
+    "FAQ": "❓ Najczęściej zadawane pytania",
+    "SUPPORT": "📞 Szybka pomoc telefoniczna",
+    "PROGRAM": "Poniedziałek - piątek: 09:00 - 18:00",
+    "FORM": "📝 Otwórz zgłoszenie",
+    "REQUEST": "Wyślij zgłoszenie",
+    "ASSISTANT": "Wirtualny asystent na żywo"
+  },
+  "AUCTIONS_PAGE": {
+    "TITLE": "Aktywne aukcje",
+    "DESCRIPTION": "Odkrywaj wyjątkowe przedmioty i licytuj w czasie rzeczywistym",
+    "SEARCH_PLACEHOLDER": "Szukaj według nazwy...",
+    "ALL_CATEGORIES": "Wszystkie kategorie",
+    "SORT": {
+      "ENDING_SOON": "Kończące się wkrótce",
+      "PRICE_LOW_HIGH": "Cena: rosnąco",
+      "PRICE_HIGH_LOW": "Cena: malejąco",
+      "NEWEST": "Najnowsze"
+    },
+    "ADD_ITEM": "Dodaj przedmiot",
+    "RESULT": {
+      "ONE": "znaleziona aukcja",
+      "MANY": "znalezione aukcje"
+    },
+    "CURRENT_PRICE": "Aktualna cena",
+    "EMPTY": {
+      "TITLE": "Nie znaleziono przedmiotów",
+      "DESCRIPTION": "Obecnie nie ma aktywnych aukcji pasujących do Twojego wyszukiwania."
+    },
+    "TIME": {
+      "ENDED": "Aukcja zakończona",
+      "LEFT": "pozostało"
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Sprzedawaj na BidSphere",
+    "TITLE": "Dodaj nowy przedmiot na aukcję",
+    "DESCRIPTION": "Uzupełnij poniższe dane, aby wystawić przedmiot na aukcji.",
+    "FIELDS": {
+      "NAME": "Nazwa przedmiotu *",
+      "NAME_PLACEHOLDER": "np. rower zabytkowy",
+      "START_PRICE": "Cena wywoławcza (RON) *",
+      "DURATION": "Czas trwania aukcji (dni) *",
+      "CATEGORY": "Kategoria *",
+      "CATEGORY_PLACEHOLDER": "Wybierz kategorię",
+      "LOCATION": "Lokalizacja *",
+      "LOCATION_PLACEHOLDER": "np. Brașov",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_PLACEHOLDER": "Opisz stan, historię i szczegóły przedmiotu..."
+    },
+    "IMAGE": {
+      "TITLE": "Zdjęcie przedmiotu",
+      "UPLOAD": "Kliknij, aby przesłać obraz",
+      "DETAILS": "JPG, PNG lub WEBP, maks. 5 MB",
+      "REMOVE": "Usuń"
+    },
+    "BUTTONS": {
+      "CANCEL": "Anuluj",
+      "PUBLISH": "Opublikuj przedmiot",
+      "PUBLISHING": "Publikowanie..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "Nazwa jest wymagana.",
+      "NAME_MIN": "Nazwa musi mieć co najmniej 3 znaki.",
+      "PRICE_REQUIRED": "Cena wywoławcza jest wymagana.",
+      "PRICE_MIN": "Cena musi być większa niż 0.",
+      "DURATION": "Czas trwania musi wynosić od 1 do 30 dni.",
+      "CATEGORY": "Wybierz kategorię.",
+      "LOCATION": "Lokalizacja jest wymagana.",
+      "IMAGE_TYPE": "Dozwolone są wyłącznie obrazy JPG, PNG lub WEBP.",
+      "IMAGE_SIZE": "Rozmiar obrazu musi być mniejszy niż 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "Przedmiot został pomyślnie wystawiony na aukcji!",
+      "SUCCESS_LOCAL": "Przedmiot został pomyślnie wystawiony na aukcji (zapisano lokalnie — backend nie jest jeszcze gotowy)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "O nas",
+    "ABOUT_TEXT_1": "BidSphere to nowoczesna internetowa platforma aukcyjna, która sprawia, że kupowanie i sprzedawanie poprzez licytację jest proste, bezpieczne i ekscytujące.",
+    "ABOUT_TEXT_2": "Łączymy tysiące kupujących i sprzedających w wielu kategoriach, oferując wszystkim przejrzysty i uczciwy proces licytacji. Niezależnie od tego, czy szukasz okazji, czy chcesz sprzedać odpowiedniemu kupującemu, BidSphere zapewnia narzędzia i zaufanie potrzebne do bezpiecznego licytowania.",
+    "LINKS": "Linki",
+    "HOME": "Strona główna",
+    "SERVICES": "Aukcje",
+    "CONTACT": "Kontakt",
+    "HELP": "Pomoc",
+    "FORUM": "Forum",
+    "CONTACT_TITLE": "Kontakt",
+    "SOCIAL": "Media społecznościowe",
+    "COPYRIGHT": "Wszelkie prawa zastrzeżone."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Ups! Nie znaleziono strony",
+    "MESSAGE": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "BUTTON": "WRÓĆ DO STRONY GŁÓWNEJ"
+  },
+  "FORUM": {
+    "TITLE": "Dyskusje na forum",
+    "DESCRIPTION": "Przeglądaj aktualne dyskusje i uczestnicz w rozmowach z innymi użytkownikami.",
+    "START_DISCUSSION": "Rozpocznij dyskusję",
+    "LOGIN_TO_START": "Zaloguj się, aby rozpocząć dyskusję",
+    "SORT": {
+      "ARIA_LABEL": "Sortuj dyskusje",
+      "LATEST": "Najnowsze najpierw",
+      "OLDEST": "Najstarsze najpierw",
+      "MOST_COMMENTED": "Najczęściej komentowane"
+    },
+    "DISCUSSION": "dyskusja",
+    "DISCUSSIONS": "dyskusje",
+    "LOADING": {
+      "TITLE": "Ładowanie dyskusji"
+    },
+    "ERROR": {
+      "TITLE": "Nie udało się załadować dyskusji",
+      "RETRY": "Spróbuj ponownie"
+    },
+    "POSTED_BY": "Opublikowane przez",
+    "COMMENT": "komentarz",
+    "COMMENTS": "komentarze",
+    "EMPTY": {
+      "TITLE": "Brak dostępnych dyskusji",
+      "MESSAGE": "Obecnie na forum nie ma żadnych dyskusji."
+    }
+  },
+  "NOTIFICATIONS": {
+    "TRUE": "Powiadomienia",
+    "FALSE": "Brak nowych powiadomień."
+  },
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Szczegóły aukcji",
+    "INFO": {
+      "CURRENT_PRICE": "Aktualna cena",
+      "START_PRICE": "Cena wywoławcza",
+      "CATEGORY": "Kategoria",
+      "LOCATION": "Lokalizacja",
+      "STARTS_AT": "Rozpoczyna się",
+      "OWNER": "Właściciel",
+      "ENDS": "Kończy się"
+    },
+    "BID": {
+      "TITLE": "Złóż ofertę",
+      "PLACEHOLDER": "Wpisz kwotę oferty",
+      "BUTTON": "🔨 Złóż ofertę",
+      "MINIMUM": "Minimalna oferta:",
+      "LOGIN_TEXT": "Zaloguj się, aby licytować ten przedmiot.",
+      "LOGIN_BUTTON": "Zaloguj się, aby licytować"
+    },
+    "WISHLIST": {
+      "ADD": "🤍 Dodaj do listy życzeń",
+      "ADDED": "❤️ Na liście życzeń"
+    },
+    "DESCRIPTION": {
+      "TITLE": "Opis produktu"
+    },
+    "STATUS": {
+      "ACTIVE": "Aktywna",
+      "ENDED": "Zakończona",
+      "PENDING": "Oczekująca"
+    },
+    "MESSAGES": {
+      "AUCTION_ENDED": "Aukcja została zakończona.",
+      "BID_HIGHER_CURRENT": "Oferta musi być wyższa niż aktualna cena.",
+      "BID_HIGHER_MINIMUM": "Oferta musi być wyższa niż cena minimalna."
+    },
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "g",
+      "MINUTES": "min",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Opinie",
+    "REVIEWER_ID": "ID autora opinii",
+    "REVIEWED_USER_ID": "ID ocenianego użytkownika",
+    "RATING": "Ocena (0–5)",
+    "RATING_ERROR": "Ocena musi mieścić się w zakresie od 0 do 5.",
+    "COMMENT": "Komentarz",
+    "ADD": "Dodaj",
+    "UPDATE": "Aktualizuj",
+    "CANCEL": "Anuluj",
+    "EDIT": "Edytuj opinię",
+    "DELETE": "Usuń opinię"
+  },
+  "SHARE": {
+    "BUTTON": "Udostępnij",
+    "COPIED": "Skopiowano!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profil",
+    "LOGOUT": "Wyloguj się"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Wróć do dyskusji",
+    "LOADING_DISCUSSION_TITLE": "Ładowanie dyskusji",
+    "LOADING_DISCUSSION_MESSAGE": "Dyskusja jest ładowana.",
+    "LOAD_DISCUSSION_ERROR": "Nie udało się załadować dyskusji",
+    "TRY_AGAIN": "Spróbuj ponownie",
+    "DELETE_POST": "Usuń",
+    "POSTED_BY": "Opublikowane przez",
+    "DISCUSSION": "Dyskusja",
+    "COMMENT": "komentarz",
+    "COMMENTS": "komentarze",
+    "ADD_COMMENT": "Dodaj komentarz",
+    "COMMENT_PLACEHOLDER": "Napisz swój komentarz tutaj...",
+    "COMMENT_REQUIRED": "Komentarz jest wymagany.",
+    "COMMENT_MIN_LENGTH": "Komentarz musi mieć co najmniej 2 znaki.",
+    "COMMENT_MAX_LENGTH": "Komentarz nie może przekraczać 1000 znaków.",
+    "PUBLISHING": "Publikowanie...",
+    "PUBLISH_COMMENT": "Opublikuj komentarz",
+    "LOGIN_REQUIRED": "Musisz być zalogowany, aby opublikować komentarz.",
+    "LOGIN": "Zaloguj się",
+    "LOADING_COMMENTS": "Ładowanie komentarzy",
+    "LOAD_COMMENTS_ERROR": "Nie udało się załadować komentarzy",
+    "DELETE_COMMENT": "Usuń",
+    "NO_COMMENTS": "Brak komentarzy"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Wróć do dyskusji",
+    "TITLE": "Rozpocznij dyskusję",
+    "SUBTITLE": "Utwórz nową dyskusję i udostępnij ją innym użytkownikom forum.",
+    "TITLE_LABEL": "Tytuł",
+    "TITLE_PLACEHOLDER": "Wprowadź jasny tytuł dyskusji",
+    "TITLE_REQUIRED": "Tytuł jest wymagany.",
+    "TITLE_WHITESPACE": "Tytuł nie może składać się wyłącznie ze spacji.",
+    "TITLE_MIN_LENGTH": "Tytuł musi mieć co najmniej 3 znaki.",
+    "TITLE_MAX_LENGTH": "Tytuł nie może przekraczać 150 znaków.",
+    "DESCRIPTION_LABEL": "Opis",
+    "DESCRIPTION_PLACEHOLDER": "Opisz temat, który chcesz przedyskutować...",
+    "DESCRIPTION_REQUIRED": "Opis jest wymagany.",
+    "DESCRIPTION_WHITESPACE": "Opis nie może składać się wyłącznie ze spacji.",
+    "DESCRIPTION_MIN_LENGTH": "Opis musi mieć co najmniej 10 znaków.",
+    "DESCRIPTION_MAX_LENGTH": "Opis nie może przekraczać 5000 znaków.",
+    "CREATE_ERROR": "Nie udało się utworzyć dyskusji",
+    "CANCEL": "Anuluj",
+    "CREATING": "Tworzenie dyskusji...",
+    "SUBMIT": "Rozpocznij dyskusję"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nie ustawiono",
+    "NAME_NOT_SET": "Nie ustawiono nazwy",
+    "EMAIL_NOT_SET": "Nie ustawiono adresu e-mail",
+    "AVERAGE_SCORE": "Średnia ocena"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Edytuj profil",
+    "LOG_OUT": "Wyloguj się",
+    "ADD_ITEM": "Dodaj nowy przedmiot",
+    "CHANGE_PHOTO": "Zmień zdjęcie",
+    "HIDE_PASSWORD": "Ukryj ustawienia hasła",
+    "CHANGE_PASSWORD": "Zmień hasło",
+    "UPDATE_PASSWORD": "Zaktualizuj hasło",
+    "CANCEL": "Anuluj",
+    "SAVE": "Zapisz zmiany"
+  },
+
+  "THEME": {
+    "TITLE": "Dostosuj motyw",
+    "DESCRIPTION": "Wybierz styl wizualny pasujący do Twojego nastroju.",
+    "LIGHT": "Jasny",
+    "SUNSET": "Zachód słońca",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Sprzedaj nowy przedmiot",
+    "DESCRIPTION": "Gotowy, aby coś wystawić?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Moje aktywne sprzedaże",
+    "WON_ITEMS": "Wygrane przedmioty",
+    "WISHLIST": "Moja lista życzeń",
+    "REVIEWS": "Otrzymane opinie"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Nie wystawiono jeszcze żadnych przedmiotów.",
+    "WON_ITEMS": "Nie wygrano jeszcze żadnych przedmiotów.",
+    "WISHLIST": "Nie ma jeszcze żadnych przedmiotów na liście życzeń.",
+    "REVIEWS": "Nie otrzymano jeszcze żadnych opinii."
+  },
+
+  "EDIT": {
+    "TITLE": "Edytuj profil",
+    "USERNAME": "Nazwa użytkownika",
+    "FULL_NAME": "Imię i nazwisko",
+    "EMAIL": "E-mail",
+
+    "USERNAME_PLACEHOLDER": "np. jan_kowalski",
+    "FULL_NAME_PLACEHOLDER": "np. Jan Kowalski",
+    "EMAIL_PLACEHOLDER": "np. jan@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Aktualne hasło",
+    "NEW": "Nowe hasło",
+    "CONFIRM": "Potwierdź hasło",
+
+    "CURRENT_PLACEHOLDER": "Wpisz aktualne hasło",
+    "NEW_PLACEHOLDER": "Wpisz nowe hasło",
+    "CONFIRM_PLACEHOLDER": "Potwierdź nowe hasło",
+
+    "REQUIRED": "Wszystkie pola są wymagane.",
+    "NOT_MATCH": "Nowe hasło i jego potwierdzenie nie pasują do siebie.",
+    "SUCCESS": "Hasło zostało pomyślnie zaktualizowane!",
+    "ERROR": "Błąd podczas aktualizacji hasła. Sprawdź aktualne hasło."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktywny",
+    "ADDED": "Dodano",
+    "WON": "Wygrany"
+  },
+
+  "DEFAULTS": {
+    "USER": "Użytkownik"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Błąd podczas ładowania kategorii.",
+    "LOAD_ITEMS": "Błąd podczas ładowania przedmiotów.",
+    "LOAD_REVIEWS": "Błąd podczas ładowania opinii."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profil został pomyślnie zaktualizowany."
+  }
+}
+}

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Backend.Models;
 
 namespace Backend.DataManagement
@@ -14,13 +14,19 @@ namespace Backend.DataManagement
 
         public Review[] GetReviews()
         {
-            return DbContext.Reviews.ToArray();
+            return DbContext.Reviews
+                .Include(r => r.Reviewer)
+                .Include(r => r.ReviewedUser)
+                .OrderByDescending(r => r.ReviewDate)
+                .ToArray();
         }
 
         public Review? GetReviewById(int id)
         {
-            var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
-            return review;
+            return DbContext.Reviews
+                .Include(r => r.Reviewer)
+                .Include(r => r.ReviewedUser)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void AddReview(Review review)
@@ -31,13 +37,13 @@ namespace Backend.DataManagement
 
         public void UpdateReview(Review review)
         {
-            DbContext?.Reviews.Update(review);
-            DbContext?.SaveChanges();
+            DbContext.Reviews.Update(review);
+            DbContext.SaveChanges();
         }
 
         public void DeleteReview(int id)
         {
-            var review = DbContext.Reviews.Where(x => x.Id == id).FirstOrDefault();
+            var review = DbContext.Reviews.FirstOrDefault(x => x.Id == id);
             if (review != null)
             {
                 DbContext.Reviews.Remove(review);

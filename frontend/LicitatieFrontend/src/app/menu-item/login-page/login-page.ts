@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../app-logic/auth';
-import { Router } from '@angular/router';
-
+import { AuthService } from '../../services/auth';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: false,
   templateUrl: './login-page.html',
-  styleUrl: './login-page.css',
+  styleUrl: './login-page.scss',
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
+  errorMessage: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'login_required') {
+        this.errorMessage = 'You have to be logged in to sell.';
+      }
     });
   }
 
@@ -39,17 +46,19 @@ export class LoginPage implements OnInit {
     const formData = this.loginForm.value;
     console.log('Trimitem datele:', formData);
 
-    this.authService.login(formData).subscribe({
-      next: (response) => {
+    this.authService.login(formData.email, formData.password).subscribe({
+      next: (response: any) => {
         console.log('Login cu succes!', response);
+        this.router.navigate(['/profile-page']);
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
+        this.errorMessage = err.error || 'Incorrect email or password.';
       },
     });
   }
 
   goToRegister(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register-page']);
   }
 }

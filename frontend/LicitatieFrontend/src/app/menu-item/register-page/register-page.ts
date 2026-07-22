@@ -1,27 +1,48 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-register-page',
   standalone: false,
   templateUrl: './register-page.html',
-  styleUrl: './register-page.css',
+  styleUrl: './register-page.scss',
 })
 export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      name: ['', Validators.required], // Aici se află controlul reactiv pt. "Full Name"
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]]
-    }, { validators: this.passwordMatchValidator });
+    this.registerForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+        phoneNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$'),
+          ],
+        ],
+      },
+      { validators: this.passwordMatchValidator },
+    );
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -36,10 +57,38 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      console.log('Datele de inregistrare:', this.registerForm.value);
-    } else {
+    if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      return;
     }
+
+    const { confirmPassword, ...userData } = this.registerForm.value;
+
+    this.authService.register(userData).subscribe({
+      next: (response: any) => {
+        this.errorMessage = '';
+        this.authService.login(userData.email, userData.password).subscribe({
+          next: () => {
+            this.router.navigate(['/home-page']);
+          },
+          error: () => {
+            this.router.navigate(['/login-page']);
+          },
+        });
+      },
+      error: (err: any) => {
+        console.error('Eroare la inregistrare:', err);
+        if (typeof err.error === 'string') {
+          this.errorMessage = err.error;
+        } else if (err.error?.message) {
+          this.errorMessage = err.error.message;
+        } else if (err.error?.errors) {
+          const firstKey = Object.keys(err.error.errors)[0];
+          this.errorMessage = err.error.errors[firstKey][0] || 'Eroare la înregistrare';
+        } else {
+          this.errorMessage = 'Eroare la înregistrare. Verificați datele introduse sau conexiunea la server.';
+        }
+      },
+    });
   }
 }

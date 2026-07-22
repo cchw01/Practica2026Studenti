@@ -1,7 +1,8 @@
-export enum StatusEnum {
-  Added = 'Added',
-  Validated = 'Validated',
-  ActiveBid = 'ActiveBid',
-  NoWinner = 'NoWinner',
-  Sold = 'Sold'
-}
+export type StatusEnum =
+  | 'Added'
+  | 'Validated'
+  | 'Rejected'
+  | 'ActiveBid'
+  | 'NoWinner'
+  | 'Sold'
+  | 'Active';

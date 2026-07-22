@@ -1,17 +1,27 @@
-import { StatusEnum } from "./status-enum";
+import { StatusEnum } from './status-enum';
+import { Category } from './categoryItem';
+import { User } from './user/user';
+import { BidDto } from './bid/bid';
 
 export interface AuctionItem {
-  id: number;
-  name: string;
-  startPrice: number;
-  currentPrice: number;
-  category: string; //TODO category
-  description?: string;
-  location: string;
-  owner: string; //TODO user
-  winner?: string; //TODO user
-  status: StatusEnum;
-  startDate: Date;
-  endDate: Date;
-  //photoList ???
+  ID: number;
+  Name: string;
+  StartPrice: number;
+  CurrentPrice: number;
+  Category: Category;
+  CategoryId: number;
+  WishingUsers: Array<User>;
+  Description?: string;
+  Location: string;
+  Owner: User;
+  OwnerId: number;
+  Winner?: User;
+  WinnerId?: number;
+  Status: StatusEnum;
+  StartDate: Date;
+  EndDate: Date;
+  BidList: Array<BidDto>;
+  PhotoList?: string[];
+  ImageUrl?: string;
+  isFavorite?: boolean;
 }

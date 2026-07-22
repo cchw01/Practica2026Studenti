@@ -1,0 +1,15 @@
+.notif-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.notif-message {
+  font-size: 13px;
+}
+.notif-time {
+  font-size: 11px;
+  color: #a8aaae;
+  white-space: nowrap;
+}

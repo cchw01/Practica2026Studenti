@@ -1,0 +1,59 @@
+<div class="review-container">
+  <h2>{{ 'REVIEWS.TITLE' | translate }}</h2>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'REVIEWS.REVIEWER_ID' | translate }}</mat-label>
+      <input matInput type="number" formControlName="reviewerId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'REVIEWS.REVIEWED_USER_ID' | translate }}</mat-label>
+      <input matInput type="number" formControlName="reviewedUserId" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'REVIEWS.RATING' | translate }}</mat-label>
+      <input matInput type="number" formControlName="rating" min="0" max="5" />
+      <mat-error *ngIf="reviewForm.get('rating')?.hasError('min') || reviewForm.get('rating')?.hasError('max')">
+        {{ 'REVIEWS.RATING_ERROR' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'REVIEWS.COMMENT' | translate }}</mat-label>
+      <textarea matInput formControlName="comment" maxlength="1000"></textarea>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="reviewForm.invalid">
+        {{ (editingReviewId !== null ? 'REVIEWS.UPDATE' : 'REVIEWS.ADD') | translate }}
+      </button>
+      <button mat-button type="button" *ngIf="editingReviewId !== null" (click)="cancelEdit()">
+        Anulează
+      </button>
+    </div>
+  </form>
+
+  <div class="review-list">
+    <div *ngFor="let review of reviews; trackBy: trackByReviewId" class="review-item">
+      <div class="review-header">
+        <strong>{{ review.ReviewerUserName }}</strong> → <strong>{{ review.ReviewedUserUserName }}</strong>
+        <span class="rating">⭐ {{ review.Rating }}/5</span>
+      </div>
+      <p class="comment">{{ review.Comment }}</p>
+      <small>{{ review.ReviewDate | date: 'medium' }}</small>
+
+      <div class="review-actions">
+        <button mat-icon-button (click)="editReview(review)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteReview(review.Id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

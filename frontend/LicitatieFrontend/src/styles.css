@@ -1,2 +1,654 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'material-symbols/outlined.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  --navbar-space: 96px;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(63, 81, 181, 0.14), transparent 40%),
+    radial-gradient(circle at 92% 12%, rgba(233, 30, 99, 0.1), transparent 35%),
+    radial-gradient(circle at 50% 105%, rgba(38, 166, 154, 0.12), transparent 45%),
+    #f5f6fb;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+}
+
+a {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ===== GLOBAL THEME VARIABLES ===== */
+
+body.theme-light {
+  --txt: #1e1e2e;
+  --ttl: #1e1e2e;
+  --sub: #666;
+  --bg: #fff;
+  --bg-alt: #f8f8ff;
+  --brd: #e8e8f0;
+  --pri: #6c63ff;
+  --prh: #574fd6;
+  --inbg: #fff;
+  --shf: rgba(108, 99, 255, .15);
+  --cov: linear-gradient(135deg, #6c63ff, #48cfad);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(108, 99, 255, 0.1), transparent 40%),
+    radial-gradient(circle at 92% 12%, rgba(72, 207, 173, 0.08), transparent 35%),
+    #f7f7fc;
+  background-attachment: fixed;
+  color: #1e1e2e;
+}
+
+/*
+ * SUNSET THEME — warm coral/amber tones, light background.
+ * Similar in structure to Ocean but with warm colors.
+ */
+body.theme-sunset {
+  --txt: #1a1a1a;
+  --ttl: #111111;
+  --sub: #555555;
+  --bg: #ffffff;
+  --bg-alt: #fdf2ec;
+  --brd: #e8d5ca;
+  --pri: #e8602c;
+  --prh: #d4501e;
+  --inbg: #fef8f5;
+  --shf: rgba(232, 96, 44, .15);
+  --cov: linear-gradient(135deg, #e8602c, #e6a817);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(232, 96, 44, 0.1), transparent 40%),
+    radial-gradient(circle at 92% 12%, rgba(230, 168, 23, 0.08), transparent 35%),
+    #fdf6f0;
+  background-attachment: fixed;
+  color: #1a1a1a;
+}
+
+body.theme-ocean {
+  --txt: #1a3340;
+  --ttl: #0d2b38;
+  --sub: #4d7585;
+  --bg: #ffffff;
+  --bg-alt: #e8f4f8;
+  --brd: #c5dde6;
+  --pri: #0891b2;
+  --prh: #0e7490;
+  --inbg: #f5fbfd;
+  --shf: rgba(8, 145, 178, .15);
+  --cov: linear-gradient(135deg, #0891b2, #0d9488);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(8, 145, 178, 0.12), transparent 40%),
+    radial-gradient(circle at 92% 12%, rgba(13, 148, 136, 0.08), transparent 35%),
+    #f0f7f9;
+  background-attachment: fixed;
+  color: #1a3340;
+}
+
+/* ==========================================================================
+   SUNSET THEME — ALL OVERRIDES
+   Warm coral/amber on light cream. Same structure as Ocean.
+   ========================================================================== */
+
+/* --- Navbar --- */
+body.theme-sunset .navbar-inner {
+  background: rgba(253, 246, 240, 0.85);
+  border-color: rgba(232, 96, 44, 0.18);
+  box-shadow: 0 8px 32px rgba(232, 96, 44, 0.1);
+}
+body.theme-sunset .nav-links-main a {
+  color: var(--sub);
+}
+body.theme-sunset .nav-links-main a:hover {
+  background-color: rgba(232, 96, 44, 0.1);
+  color: var(--pri);
+}
+body.theme-sunset .nav-links-main a.active {
+  background: linear-gradient(135deg, var(--pri), #e6a817);
+}
+body.theme-sunset .brand-name-primary {
+  color: var(--ttl);
+}
+body.theme-sunset .brand-name-accent {
+  background: linear-gradient(90deg, var(--pri), #e6a817);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+body.theme-sunset .auth-pill {
+  background: rgba(232, 96, 44, 0.08);
+  border-color: rgba(232, 96, 44, 0.2);
+}
+body.theme-sunset .auth-pill-link {
+  color: var(--pri);
+}
+body.theme-sunset .auth-pill-link.active {
+  background: linear-gradient(135deg, var(--pri), #e6a817);
+}
+body.theme-sunset .btn-add-auction {
+  background: linear-gradient(135deg, var(--pri), #e6a817);
+  box-shadow: 0 4px 14px rgba(232, 96, 44, 0.35);
+}
+
+/* --- Content area --- */
+body.theme-sunset .content {
+  background-color: transparent;
+}
+
+/* --- Hero / banners --- */
+body.theme-sunset .hero,
+body.theme-sunset .page-header,
+body.theme-sunset .forum-introduction {
+  background: linear-gradient(135deg, rgba(232, 96, 44, 0.08), rgba(230, 168, 23, 0.06));
+  box-shadow: 0 20px 40px rgba(232, 96, 44, 0.08);
+}
+body.theme-sunset .hero p,
+body.theme-sunset .page-header p,
+body.theme-sunset .forum-introduction p {
+  color: var(--sub);
+}
+body.theme-sunset .hero h1,
+body.theme-sunset .page-header h1,
+body.theme-sunset .forum-introduction h1 {
+  color: var(--ttl);
+}
+body.theme-sunset .hero-tag {
+  background: rgba(232, 96, 44, 0.12);
+  color: var(--pri);
+}
+body.theme-sunset .PopularCategory h2::after,
+body.theme-sunset .active-auctions h2::after {
+  background: linear-gradient(90deg, var(--pri), #e6a817);
+}
+
+/* --- Search & filters --- */
+body.theme-sunset .search-field input,
+body.theme-sunset .filters-row select,
+body.theme-sunset .sort-control select {
+  background: var(--inbg);
+  color: var(--txt);
+  border-color: var(--brd);
+}
+body.theme-sunset .search-field input::placeholder { color: var(--sub); }
+body.theme-sunset .search-icon { color: var(--sub); }
+
+/* --- Category cards --- */
+body.theme-sunset .card-category {
+  background-color: #ffffff;
+  border: 1px solid var(--brd);
+  box-shadow: 0 8px 20px rgba(232, 96, 44, 0.08) !important;
+}
+body.theme-sunset .card-category h3 {
+  color: var(--ttl);
+}
+body.theme-sunset .icon-circle {
+  background-color: #fde8dc;
+}
+body.theme-sunset .icon-circle mat-icon {
+  color: var(--pri);
+}
+
+/* --- Auction & discussion cards --- */
+body.theme-sunset .card-auction,
+body.theme-sunset .discussion-card {
+  background: var(--bg);
+  border-color: var(--brd);
+  color: var(--txt);
+}
+body.theme-sunset .card-auction h3,
+body.theme-sunset .discussion-heading h2 {
+  color: var(--ttl);
+}
+body.theme-sunset .current-bid,
+body.theme-sunset .discussion-description,
+body.theme-sunset .discussion-author,
+body.theme-sunset .results-count,
+body.theme-sunset .discussion-total {
+  color: var(--sub);
+}
+body.theme-sunset .current-bid strong {
+  color: var(--pri);
+}
+
+/* --- Empty states --- */
+body.theme-sunset .empty-state {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-sunset .empty-state h2,
+body.theme-sunset .empty-state h3 {
+  color: var(--ttl);
+}
+body.theme-sunset .empty-state p {
+  color: var(--sub);
+}
+
+/* --- Forum avatar --- */
+body.theme-sunset .author-avatar {
+  background-color: var(--bg-alt);
+  color: var(--pri);
+}
+
+/* --- Contact page --- */
+body.theme-sunset .contact-page-container {
+  background:
+    radial-gradient(circle at top left, rgba(232, 96, 44, 0.1), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(230, 168, 23, 0.08), transparent 35%),
+    var(--bg-alt);
+}
+body.theme-sunset .contact-card {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+}
+body.theme-sunset .detail-item {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-sunset .contact-header h1,
+body.theme-sunset .detail-label,
+body.theme-sunset .social-text h2 {
+  color: var(--ttl);
+}
+body.theme-sunset .contact-header p,
+body.theme-sunset .detail-value,
+body.theme-sunset .social-text p {
+  color: var(--sub);
+}
+body.theme-sunset .social-media-section {
+  background: linear-gradient(135deg, rgba(232, 96, 44, 0.08), rgba(230, 168, 23, 0.05));
+}
+body.theme-sunset .social-links a {
+  border-color: rgba(232, 96, 44, 0.2);
+  color: var(--pri);
+}
+body.theme-sunset .social-links a:hover {
+  background: var(--pri);
+  border-color: var(--pri);
+  color: #fff;
+}
+
+/* --- Help page --- */
+body.theme-sunset .help-wrapper {
+  color: var(--txt);
+}
+body.theme-sunset .card {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-sunset .card h2 {
+  color: var(--ttl);
+  border-bottom-color: var(--brd);
+}
+body.theme-sunset .faq-item {
+  border-bottom-color: var(--brd);
+}
+body.theme-sunset .faq-question {
+  color: var(--txt);
+}
+body.theme-sunset .faq-answer {
+  color: var(--sub);
+}
+body.theme-sunset .call-card {
+  background: var(--bg-alt) !important;
+  border-color: var(--brd) !important;
+}
+body.theme-sunset .input-group input,
+body.theme-sunset .input-group textarea {
+  background: var(--inbg);
+  color: var(--txt);
+  border-color: var(--brd);
+}
+body.theme-sunset .submit-btn,
+body.theme-sunset .chat-toggle {
+  background: var(--pri);
+}
+body.theme-sunset .submit-btn:hover:not(:disabled) {
+  background: var(--prh);
+}
+body.theme-sunset .phone-number {
+  color: var(--pri);
+}
+
+/* --- Profile: sunset-specific --- */
+body.theme-sunset .btn-sell {
+  background: var(--pri);
+  color: #fff;
+}
+body.theme-sunset .btn-sell:hover {
+  background: var(--prh);
+}
+body.theme-sunset .score-value {
+  color: var(--pri);
+}
+body.theme-sunset .item-price {
+  color: var(--pri);
+}
+
+/* --- Footer --- */
+body.theme-sunset app-footer,
+body.theme-sunset footer,
+body.theme-sunset .site-footer {
+  background: var(--bg-alt) !important;
+  color: var(--txt) !important;
+  border-top: 1px solid var(--brd) !important;
+}
+body.theme-sunset .footer-col h3 {
+  color: #111 !important;
+}
+body.theme-sunset .footer-col a {
+  color: #444 !important;
+}
+body.theme-sunset .footer-col a:hover {
+  color: var(--pri) !important;
+}
+body.theme-sunset .footer-col ul li {
+  color: #333 !important;
+}
+body.theme-sunset .footer-col p,
+body.theme-sunset .footer-col span {
+  color: #333 !important;
+}
+body.theme-sunset .social-icons a {
+  border-color: var(--brd) !important;
+  color: #444 !important;
+}
+body.theme-sunset .footer-bottom {
+  border-top-color: var(--brd);
+  color: #666 !important;
+}
+
+/* ==========================================================================
+   OCEAN THEME — ALL OVERRIDES
+   ========================================================================== */
+
+/* --- Navbar --- */
+body.theme-ocean .navbar-inner {
+  background: rgba(240, 247, 249, 0.85);
+  border-color: rgba(8, 145, 178, 0.18);
+  box-shadow: 0 8px 32px rgba(8, 145, 178, 0.1);
+}
+body.theme-ocean .nav-links-main a {
+  color: var(--sub);
+}
+body.theme-ocean .nav-links-main a:hover {
+  background-color: rgba(8, 145, 178, 0.1);
+  color: var(--pri);
+}
+body.theme-ocean .nav-links-main a.active {
+  background: linear-gradient(135deg, var(--pri), var(--prh));
+}
+body.theme-ocean .brand-name-primary {
+  color: var(--ttl);
+}
+body.theme-ocean .brand-name-accent {
+  background: linear-gradient(90deg, var(--pri), #0d9488);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+body.theme-ocean .auth-pill {
+  background: rgba(8, 145, 178, 0.08);
+  border-color: rgba(8, 145, 178, 0.2);
+}
+body.theme-ocean .auth-pill-link {
+  color: var(--pri);
+}
+body.theme-ocean .auth-pill-link.active {
+  background: linear-gradient(135deg, var(--pri), var(--prh));
+}
+body.theme-ocean .btn-add-auction {
+  background: linear-gradient(135deg, var(--pri), var(--prh));
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.35);
+}
+
+/* --- Content area --- */
+body.theme-ocean .content {
+  background-color: transparent;
+}
+
+/* --- Hero / banners --- */
+body.theme-ocean .hero,
+body.theme-ocean .page-header,
+body.theme-ocean .forum-introduction {
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.08), rgba(13, 148, 136, 0.06));
+  box-shadow: 0 20px 40px rgba(8, 145, 178, 0.08);
+}
+body.theme-ocean .hero p,
+body.theme-ocean .page-header p,
+body.theme-ocean .forum-introduction p {
+  color: var(--sub);
+}
+body.theme-ocean .hero h1,
+body.theme-ocean .page-header h1,
+body.theme-ocean .forum-introduction h1 {
+  color: var(--ttl);
+}
+body.theme-ocean .hero-tag {
+  background: rgba(8, 145, 178, 0.12);
+  color: var(--pri);
+}
+
+/* --- Search & filters --- */
+body.theme-ocean .search-field input,
+body.theme-ocean .filters-row select,
+body.theme-ocean .sort-control select {
+  background: var(--inbg);
+  color: var(--txt);
+  border-color: var(--brd);
+}
+body.theme-ocean .search-field input::placeholder { color: var(--sub); }
+body.theme-ocean .search-icon { color: var(--sub); }
+
+/* --- Category cards --- */
+body.theme-ocean .card-category {
+  background-color: #ffffff;
+  border: 1px solid var(--brd);
+  box-shadow: 0 8px 20px rgba(8, 145, 178, 0.1) !important;
+}
+body.theme-ocean .card-category h3 {
+  color: var(--ttl);
+}
+body.theme-ocean .icon-circle {
+  background-color: #d0eef7;
+}
+body.theme-ocean .icon-circle mat-icon {
+  color: var(--pri);
+}
+
+/* --- Auction & discussion cards --- */
+body.theme-ocean .card-auction,
+body.theme-ocean .discussion-card {
+  background: var(--bg);
+  border-color: var(--brd);
+  color: var(--txt);
+}
+body.theme-ocean .card-auction h3,
+body.theme-ocean .discussion-heading h2 {
+  color: var(--ttl);
+}
+body.theme-ocean .current-bid,
+body.theme-ocean .discussion-description,
+body.theme-ocean .discussion-author,
+body.theme-ocean .results-count,
+body.theme-ocean .discussion-total {
+  color: var(--sub);
+}
+
+/* --- Empty states --- */
+body.theme-ocean .empty-state {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-ocean .empty-state h2,
+body.theme-ocean .empty-state h3 {
+  color: var(--ttl);
+}
+body.theme-ocean .empty-state p {
+  color: var(--sub);
+}
+
+/* --- Forum avatar --- */
+body.theme-ocean .author-avatar {
+  background-color: var(--bg-alt);
+  color: var(--pri);
+}
+
+/* --- Contact page --- */
+body.theme-ocean .contact-page-container {
+  background:
+    radial-gradient(circle at top left, rgba(8, 145, 178, 0.12), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(13, 148, 136, 0.08), transparent 35%),
+    var(--bg-alt);
+}
+body.theme-ocean .contact-card {
+  background: var(--bg);
+  border: 1px solid var(--brd);
+}
+body.theme-ocean .detail-item {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-ocean .contact-header h1,
+body.theme-ocean .detail-label,
+body.theme-ocean .social-text h2 {
+  color: var(--ttl);
+}
+body.theme-ocean .contact-header p,
+body.theme-ocean .detail-value,
+body.theme-ocean .social-text p {
+  color: var(--sub);
+}
+body.theme-ocean .social-media-section {
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.08), rgba(13, 148, 136, 0.05));
+}
+body.theme-ocean .social-links a {
+  border-color: rgba(8, 145, 178, 0.2);
+  color: var(--pri);
+}
+body.theme-ocean .social-links a:hover {
+  background: var(--pri);
+  border-color: var(--pri);
+  color: #fff;
+}
+
+/* --- Help page --- */
+body.theme-ocean .help-wrapper {
+  color: var(--txt);
+}
+body.theme-ocean .card {
+  background: var(--bg);
+  border-color: var(--brd);
+}
+body.theme-ocean .card h2 {
+  color: var(--ttl);
+  border-bottom-color: var(--brd);
+}
+body.theme-ocean .faq-item {
+  border-bottom-color: var(--brd);
+}
+body.theme-ocean .faq-question {
+  color: var(--txt);
+}
+body.theme-ocean .faq-answer {
+  color: var(--sub);
+}
+body.theme-ocean .call-card {
+  background: var(--bg-alt) !important;
+  border-color: var(--brd) !important;
+}
+body.theme-ocean .input-group input,
+body.theme-ocean .input-group textarea {
+  background: var(--inbg);
+  color: var(--txt);
+  border-color: var(--brd);
+}
+body.theme-ocean .submit-btn,
+body.theme-ocean .chat-toggle {
+  background: var(--pri);
+}
+body.theme-ocean .submit-btn:hover:not(:disabled) {
+  background: var(--prh);
+}
+body.theme-ocean .phone-number {
+  color: var(--pri);
+}
+
+/* --- Profile: ocean-specific --- */
+body.theme-ocean .btn-sell {
+  background: var(--pri);
+  color: #fff;
+}
+body.theme-ocean .btn-sell:hover {
+  background: var(--prh);
+}
+body.theme-ocean .score-value {
+  color: var(--pri);
+}
+body.theme-ocean .item-price {
+  color: var(--pri);
+}
+
+/* --- Footer --- */
+body.theme-ocean app-footer,
+body.theme-ocean footer,
+body.theme-ocean .site-footer {
+  background: var(--bg-alt) !important;
+  color: #111 !important;
+  border-top: 1px solid var(--brd) !important;
+}
+body.theme-ocean .footer-col h3 {
+  color: #111 !important;
+}
+body.theme-ocean .footer-col a {
+  color: #444 !important;
+}
+body.theme-ocean .footer-col a:hover {
+  color: var(--pri) !important;
+}
+body.theme-ocean .footer-col ul li {
+  color: #333 !important;
+}
+body.theme-ocean .footer-col p,
+body.theme-ocean .footer-col span {
+  color: #333 !important;
+}
+body.theme-ocean .social-icons a {
+  border-color: var(--brd) !important;
+  color: #444 !important;
+}
+body.theme-ocean .footer-bottom {
+  border-top-color: var(--brd);
+  color: #666 !important;
+}
+
+/* Light theme keeps the footer's original dark styling from footer.css —
+   no override here (sunset/ocean intentionally recolor it to match their palette). */

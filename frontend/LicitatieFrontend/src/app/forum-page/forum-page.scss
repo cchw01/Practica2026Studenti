@@ -1,0 +1,540 @@
+@use '../styles/variables' as v;
+
+:host {
+    display: block;
+    min-height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.forum-page {
+    padding-top: var(--navbar-space, 96px);
+    color: v.$color-text-label;
+}
+
+.forum-container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: v.$space-2xl v.$space-md 64px;
+}
+
+.forum-introduction {
+    margin-bottom: 40px;
+    text-align: center;
+
+    padding: v.$space-xl v.$space-md 40px;
+    border-radius: 28px;
+    background: linear-gradient(
+        135deg,
+        v.$color-primary-tint,
+        v.$color-accent-tint
+    );
+    box-shadow: v.$shadow-md;
+    animation: fade-in-up 0.6s ease both;
+}
+
+.discussion-toolbar {
+    animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.discussion-card {
+    animation: fade-in-up 0.5s ease both;
+}
+
+.discussion-list .discussion-card:nth-child(1) { animation-delay: 0.05s; }
+.discussion-list .discussion-card:nth-child(2) { animation-delay: 0.1s; }
+.discussion-list .discussion-card:nth-child(3) { animation-delay: 0.15s; }
+.discussion-list .discussion-card:nth-child(4) { animation-delay: 0.2s; }
+.discussion-list .discussion-card:nth-child(n + 5) { animation-delay: 0.25s; }
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.forum-introduction h1 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.forum-introduction p {
+    max-width: 550px;
+    margin: 0 auto;
+    color: v.$color-text-body;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.discussion-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: v.$space-md;
+    margin-bottom: v.$space-lg;
+}
+
+.create-discussion-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 11px 24px;
+    border: none;
+    border-radius: v.$radius-pill;
+    background: linear-gradient(90deg, v.$color-primary, #e91e63);
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(63, 81, 181, 0.25);
+    transition: v.$transition-fast;
+}
+
+.create-discussion-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(63, 81, 181, 0.35);
+}
+
+.create-discussion-button:active {
+    transform: scale(0.97);
+}
+
+
+.sort-control select {
+    min-height: 40px;
+    padding: 0 38px 0 v.$space-md;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    color: v.$color-text-secondary;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: v.$transition-fast;
+}
+
+.sort-control select:focus {
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+
+.discussion-total {
+    margin: 0;
+    color: #777777;
+    font-size: 14px;
+}
+
+.discussion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discussion-card {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    padding: v.$space-lg;
+
+    border: 1px solid #eeeeee;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
+    color: inherit;
+    text-decoration: none;
+
+    box-shadow: v.$shadow-sm;
+
+    transition:
+        transform 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
+}
+
+.discussion-card:hover {
+    transform: translateY(-5px);
+    border-color: #d7eeee;
+    box-shadow: v.$shadow-md;
+}
+
+.discussion-card:focus-visible {
+    outline: 3px solid v.$color-primary-tint;
+    outline-offset: 2px;
+}
+
+.author-avatar {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    background-color: #f5f5f5;
+
+    color: v.$color-text-secondary;
+
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    transition: v.$transition-fast;
+}
+
+.discussion-card:hover .author-avatar {
+    background-color: #e0f2f1;
+}
+
+.discussion-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.discussion-heading-block {
+    flex: 0 0 200px;
+    min-width: 0;
+}
+
+.discussion-heading-block h2 {
+    margin: 0;
+
+    color: v.$color-text-label;
+
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.discussion-author {
+    margin: 6px 0 0;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.discussion-author strong {
+    color: v.$color-text-secondary;
+    font-weight: 600;
+}
+
+.discussion-description {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding-left: 20px;
+    border-left: 2px solid #eef0f4;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    color: #6b7280;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.1px;
+}
+.discussion-date {
+    flex-shrink: 0;
+    color: #b0b0b0;
+    font-size: 11.5px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.discussion-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #f2f2f2;
+}
+.discussion-comments {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: v.$color-text-secondary;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.comment-count {
+    margin: 0;
+}
+
+.comment-icon {
+    width: 20px;
+    height: 16px;
+
+    position: relative;
+    flex-shrink: 0;
+
+    border: 2px solid #9ca3af;
+    border-radius: 6px;
+}
+
+.comment-icon::after {
+    content: '';
+
+    width: 6px;
+    height: 6px;
+
+    position: absolute;
+
+    left: 1px;
+    bottom: -4px;
+
+    background-color: v.$color-surface;
+
+    border-left: 2px solid #9ca3af;
+
+    transform: skew(-25deg);
+}
+
+.empty-state {
+    padding: 60px 24px;
+
+    border: 1px solid #eeeeee;
+    border-radius: v.$radius-md;
+
+    background-color: v.$color-surface;
+
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin: 0 0 10px;
+
+    color: v.$color-text-label;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.empty-state p {
+    margin: 0;
+
+    color: v.$color-text-body;
+
+    font-size: 14px;
+}
+.search-bar {
+    margin-bottom: v.$space-md;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    font: inherit;
+    font-size: 14px;
+    transition: v.$transition-fast;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: v.$color-primary;
+    box-shadow: 0 0 0 3px v.$color-primary-tint;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.pagination button {
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid #dddddd;
+    border-radius: v.$radius-pill;
+    background-color: v.$color-surface;
+    color: v.$color-text-secondary;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: v.$transition-fast;
+}
+
+.pagination button:hover:not(:disabled) {
+    border-color: v.$color-primary;
+    color: v.$color-primary;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination button.active {
+    background: linear-gradient(90deg, v.$color-primary, #e91e63);
+    border-color: transparent;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.report-button {
+  background: none;
+  border: 1px solid #ea5455;
+  color: #ea5455;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #ea5455;
+    color: white;
+  }
+}
+
+.report-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.report-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  p {
+    margin: 0 0 16px;
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+
+.report-reasons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.report-reason-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #7367f0;
+    background: #f5f4ff;
+  }
+
+  input[type='radio'] {
+    accent-color: #7367f0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+.report-error {
+  color: #ea5455;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.report-success {
+  color: #28c76f;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.report-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+
+  button {
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+  }
+
+  .secondary-button {
+    background: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+
+  .primary-button {
+    background: linear-gradient(135deg, #7367f0, #ea1e88);
+    color: white;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.9;
+    }
+  }
+}

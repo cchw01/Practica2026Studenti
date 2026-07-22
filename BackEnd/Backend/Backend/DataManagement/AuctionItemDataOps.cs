@@ -1,7 +1,9 @@
-﻿using Backend.DataManagement; 
+using Backend.DataManagement; 
 using Backend.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+
 
 namespace Backend.DataManagement
 {
@@ -16,7 +18,28 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetAuctionItems()
         {
-            return dbContext.AuctionItems.ToArray();
+            return dbContext.AuctionItems
+                .AsNoTracking()
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .ToArray();
+        }
+
+        public AuctionItem[] GetActiveAuctionItems()
+        {
+            var now = DateTime.UtcNow;
+            return dbContext.AuctionItems
+                .AsNoTracking()
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .Where(i =>
+                    (i.Status == AuctionItem.StatusEnum.Validated ||
+                     i.Status == AuctionItem.StatusEnum.ActiveBid) &&
+                    i.EndDate > now)
+                .OrderBy(i => i.EndDate)
+                .ToArray();
         }
 
         public void AddAuctionItem(AuctionItem item)
@@ -25,43 +48,45 @@ namespace Backend.DataManagement
             dbContext?.SaveChanges();
         }
 
-        public void UpdateAuctionItem(AuctionItem item)
-        {
-            try
-            {
-                dbContext?.AuctionItems.Update(item);
-                dbContext?.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
-            }
-        }
+      
 
-        public void DeleteAuctionItem(int id)
+        public bool DeleteAuctionItem(int id)
         {
-            try
-            {
-                var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
-                
-                if (item != null)
-                {
-                    dbContext.AuctionItems.Remove(item);
-                    dbContext.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message); // TODO look into this, reportedly might cause stack trace issues
-            }
+            var item = dbContext.AuctionItems
+                .FirstOrDefault(i => i.ID == id);
+
+            if (item == null)
+                return false;
+
+            dbContext.AuctionItems.Remove(item);
+            dbContext.SaveChanges();
+
+            return true;
         }
 
         public AuctionItem? GetAuctionItemById(int id)
         {
-            var item = dbContext.AuctionItems.Where(x => x.ID == id).FirstOrDefault();
+            var item = dbContext.AuctionItems
+                .AsNoTracking()
+                .Include(i => i.Category)
+                .Include(i => i.Owner)
+                .Include(i => i.Winner)
+                .FirstOrDefault(x => x.ID == id);
             return item;
         }
 
-        
+        public AuctionItem? GetTrackedAuctionItemById(int id)
+        {
+            var item = dbContext.AuctionItems
+                .FirstOrDefault(i => i.ID == id);
+
+            return item;
+        }
+
+        public void SaveChanges()
+        {
+            dbContext.SaveChanges();
+        }
+
     }
 }
