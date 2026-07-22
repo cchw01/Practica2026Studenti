@@ -371,55 +371,86 @@
 },
 
   "AUCTION_ITEM_PAGE": {
-    "HEADER_BADGE": "🏷️ Auction Detail",
+  "HEADER_BADGE": "🏷️ Auction Detail",
 
-    "INFO": {
-      "CURRENT_PRICE": "Current Price",
-      "START_PRICE": "Starting Price",
-      "CATEGORY": "Category",
-      "LOCATION": "Location",
-      "STARTS_AT": "Starts At",
-      "OWNER": "Owner",
-      "ENDS": "Ends"
+  "INFO": {
+    "CURRENT_PRICE": "Current Price",
+    "START_PRICE": "Starting Price",
+    "CATEGORY": "Category",
+    "LOCATION": "Location",
+    "STARTS_AT": "Starts At",
+    "OWNER": "Owner",
+    "ENDS": "Ends"
+  },
+
+  "BID": {
+    "TITLE": "Place Your Bid",
+    "PLACEHOLDER": "Enter bid amount",
+    "BUTTON": "🔨 Place Bid",
+    "MINIMUM": "Minimum bid:",
+    "LOGIN_TEXT": "Sign in to place a bid on this item.",
+    "LOGIN_BUTTON": "Login to Bid"
+  },
+
+  "WISHLIST": {
+    "ADD": "Add to Wishlist",
+    "ADDED": "In Wishlist",
+    "TOAST_ADDED": "Item added to your wishlist.",
+    "TOAST_REMOVED": "Item removed from your wishlist."
+  },
+
+  "ACTIONS": {
+    "REPORT_ITEM": "Report Item",
+    "ITEM_REPORTED": "Item Reported"
+  },
+
+  "REPORT": {
+    "TITLE": "Report Auction",
+    "DESCRIPTION": "Help keep BidSphere safe. Please select a reason for reporting this auction:",
+    "REASON_LABEL": "Reason",
+
+    "REASONS": {
+      "INAPPROPRIATE_CONTENT": "Inappropriate Content",
+      "MISLEADING_DESCRIPTION": "Misleading Description",
+      "FAKE_ITEM": "Fake or Counterfeit Item",
+      "SUSPICIOUS_BIDDING": "Suspicious Bidding Activity",
+      "OTHER": "Other"
     },
 
-    "BID": {
-      "TITLE": "Place Your Bid",
-      "PLACEHOLDER": "Enter bid amount",
-      "BUTTON": "🔨 Place Bid",
-      "MINIMUM": "Minimum bid:",
-      "LOGIN_TEXT": "Sign in to place a bid on this item.",
-      "LOGIN_BUTTON": "Login to Bid"
-    },
+    "DETAILS_LABEL": "Additional Details (Optional)",
+    "DETAILS_PLACEHOLDER": "Describe the issue...",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit Report",
 
-    "WISHLIST": {
-      "ADD": "🤍 Add to Wishlist",
-      "ADDED": "❤️ In Wishlist"
-    },
-
-    "DESCRIPTION": {
-      "TITLE": "Product Description"
-    },
-
-    "STATUS": {
-      "ACTIVE": "Active",
-      "ENDED": "Ended",
-      "PENDING": "Pending"
-    },
-
-    "MESSAGES": {
-      "AUCTION_ENDED": "Auction ended.",
-      "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
-      "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
-    },
-
-    "COUNTDOWN": {
-      "DAYS": "d",
-      "HOURS": "h",
-      "MINUTES": "m",
-      "SECONDS": "s"
+    "TOAST": {
+      "SUCCESS": "The auction was reported successfully.",
+      "ERROR": "The auction could not be reported."
     }
   },
+
+  "DESCRIPTION": {
+    "TITLE": "Product Description"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Active",
+    "ENDED": "Ended",
+    "PENDING": "Pending"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "Auction ended.",
+    "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
+    "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "d",
+    "HOURS": "h",
+    "MINUTES": "m",
+    "SECONDS": "s"
+  }
+},
   "REVIEWS": {
     "TITLE": "Reviews",
     "REVIEWER_ID": "Reviewer ID",
