@@ -4,11 +4,9 @@ import { ForumPost } from '../Models/forum-post/forum-post';
 import { ForumPostService } from '../Models/forum-post/forum-post-service';
 import { ForumComment } from '../Models/forum-comment/forum-comment';
 import { ForumCommentService } from '../Models/forum-comment/forum-comment-service';
-import { AuthService } from  '../services/auth';
-import { ReportService } from '../services/report-service';
-import { ReportReason } from '../Models/report/report-reason-enum';
-type SortOption = 'latest' | 'oldest' | 'comments';
+import { AuthService } from '../services/auth';
 
+type SortOption = 'latest' | 'oldest' | 'comments';
 
 interface ForumPostPreview {
   id: number;
@@ -19,13 +17,6 @@ interface ForumPostPreview {
   description: string;
   commentsCount: number;
 }
-const REPORT_REASON_LABELS: { value: ReportReason; label: string }[] = [
-  { value: 'Spam', label: 'Spam' },
-  { value: 'Harassment', label: 'Hărțuire' },
-  { value: 'InappropriateContent', label: 'Conținut nepotrivit' },
-  { value: 'Fraud', label: 'Fraudă' },
-  { value: 'Other', label: 'Alt motiv' },
-];
 
 @Component({
   selector: 'app-forum-page',
@@ -35,32 +26,23 @@ const REPORT_REASON_LABELS: { value: ReportReason; label: string }[] = [
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
-   searchQuery = '';
-   currentPage = 1;
+  searchQuery = '';
+  currentPage = 1;
   readonly pageSize = 5;
 
   posts: ForumPostPreview[] = [];
 
   isLoading = false;
   errorMessage = '';
-  public  currentUserId: number | null = null;
+  public currentUserId: number | null = null;
 
   private commentCounts = new Map<number, number>();
-
-  readonly reportReasons = REPORT_REASON_LABELS;
-  reportingPostId: number | null = null;
-  selectedReportReason: ReportReason | '' = '';
-  isSubmittingReport = false;
-  reportErrorMessage = '';
-  reportSuccessMessage = '';
 
   constructor(
     private forumPostService: ForumPostService,
     private forumCommentService: ForumCommentService,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService, 
-    private reportService: ReportService,
-    
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -161,7 +143,7 @@ export class ForumPage implements OnInit {
   resetPage(): void {
     this.currentPage = 1;
   }
-  
+
   getUserLabel(userId: number, userName?: string): string {
     return userName ? userName : `User #${userId}`;
   }
@@ -171,7 +153,7 @@ export class ForumPage implements OnInit {
       return userName.charAt(0).toUpperCase();
     }
     return `U${userId}`;
-  } 
+  }
 
   retryLoading(): void {
     this.loadForumPosts();
@@ -216,58 +198,4 @@ export class ForumPage implements OnInit {
         this.commentCounts.get(forumPost.id) ?? 0,
     };
   }
-  openReportModal(postId: number, event: Event): void {
-  event.preventDefault();
-  event.stopPropagation();
-
-  if (this.currentUserId === null) {
-    alert('Trebuie să fii logat pentru a raporta o postare.');
-    return;
-  }
-
-  this.reportingPostId = postId;
-  this.selectedReportReason = '';
-  this.reportErrorMessage = '';
-  this.reportSuccessMessage = '';
 }
-
-  closeReportModal(): void {
-    this.reportingPostId = null;
-    this.selectedReportReason = '';
-    this.reportErrorMessage = '';
-  }
-submitReport(): void {
-    if (!this.selectedReportReason || this.reportingPostId === null || this.currentUserId === null) {
-      this.reportErrorMessage = 'Selectează un motiv pentru raportare.';
-      return;
-    }
-
-    this.isSubmittingReport = true;
-    this.reportErrorMessage = '';
-
-    const payload = {
-      targetType: 'ForumPost',
-      targetId: this.reportingPostId,
-      reason: this.selectedReportReason,
-      reporterId: this.currentUserId,
-    } as any;
-
-    this.reportService.addReport(payload).subscribe({
-      next: () => {
-        this.isSubmittingReport = false;
-        this.reportSuccessMessage = 'Raportarea a fost trimisă. Mulțumim!';
-        this.cdr.detectChanges();
-
-        setTimeout(() => this.closeReportModal(), 1500);
-      },
-      error: (error) => {
-        console.error('Error submitting report:', error);
-        this.isSubmittingReport = false;
-        this.reportErrorMessage = 'Raportarea nu a putut fi trimisă. Încearcă din nou.';
-        this.cdr.detectChanges();
-      },
-    });
-  }
-}
-
-

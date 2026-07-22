@@ -73,10 +73,6 @@
                     </div>
 
                     <div class="discussion-footer">
-                        <button type="button" class="report-button" (click)="openReportModal(post.id, $event)">
-                            Report
-                        </button>
-
                         <div class="discussion-comments">
                             <div class="comment-icon" aria-hidden="true"></div>
                             <p class="comment-count">
@@ -109,40 +105,4 @@
 
         </section>
     </main>
-    @if (reportingPostId !== null) {
-    <div class="report-modal-backdrop" (click)="closeReportModal()">
-      <div class="report-modal" (click)="$event.stopPropagation()">
-        <h3>Raportează postarea</h3>
-        <p>Selectează motivul pentru care raportezi această discuție:</p>
-
-        <div class="report-reasons-list">
-  @for (reasonItem of reportReasons; track reasonItem.value) {
-  <label class="report-reason-option">
-    <input type="radio" name="reportReason" [value]="reasonItem.value" [(ngModel)]="selectedReportReason" />
-    {{ reasonItem.label }}
-  </label>
-  }
-</div>
-
-        @if (reportErrorMessage) {
-        <p class="report-error">{{ reportErrorMessage }}</p>
-        }
-        @if (reportSuccessMessage) {
-        <p class="report-success">{{ reportSuccessMessage }}</p>
-        }
-
-        <div class="report-modal-actions">
-          <button type="button" class="secondary-button" (click)="closeReportModal()">Anulează</button>
-          <button
-            type="button"
-            class="primary-button"
-            [disabled]="!selectedReportReason || isSubmittingReport"
-            (click)="submitReport()"
-          >
-            {{ isSubmittingReport ? 'Se trimite...' : 'Trimite raportarea' }}
-          </button>
-        </div>
-      </div>
-    </div>
-    }
 </div>

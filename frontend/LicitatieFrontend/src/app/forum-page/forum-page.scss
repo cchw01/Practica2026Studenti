@@ -271,12 +271,11 @@
 
 .discussion-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding-top: 10px;
     border-top: 1px solid #f2f2f2;
 }
-
 .discussion-comments {
     display: flex;
     align-items: center;
