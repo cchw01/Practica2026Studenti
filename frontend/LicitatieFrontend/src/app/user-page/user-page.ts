@@ -113,7 +113,12 @@ export class UserPage implements OnInit {
 
           const matchId = +ownerId === this.userId || (ownerObjId !== null && +ownerObjId === this.userId);
           const matchUsername = username && ownerUsername && ownerUsername.toLowerCase() === username.toLowerCase();
-          return matchId || matchUsername;
+          
+          const isOwner = matchId || matchUsername;
+          const status = (item.Status || (item as any).status || '').toString().toLowerCase();
+          const isActive = status === 'validated' || status === 'activebid' || status === 'active';
+          
+          return isOwner && isActive;
         });
 
         const categoryNames = this.userActiveItems
