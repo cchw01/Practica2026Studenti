@@ -141,3 +141,11 @@
   .content-grid { grid-template-columns: 1fr; }
   .chat-box { width: 300px; right: -10px; }
 }
+.form-error {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 14px;
+}

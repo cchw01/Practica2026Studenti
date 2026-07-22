@@ -25,8 +25,10 @@ export class NotificationBell implements OnInit, OnDestroy {
     clearInterval(this.pollTimer);
   }
 
+  unreadCount = signal(0);
+
   refresh() {
-    this.notifService.hasUnread().subscribe((v) => this.hasUnread.set(v));
+    this.notifService.getUnreadCount().subscribe((v) => this.unreadCount.set(v));
   }
 
   open() {
@@ -36,7 +38,7 @@ export class NotificationBell implements OnInit, OnDestroy {
       if (areUnread) {
         this.notifService.markAllRead().subscribe(() => this.refresh());
       } else {
-        this.hasUnread.set(false);
+        this.unreadCount.set(0);
       }
     });
   }
