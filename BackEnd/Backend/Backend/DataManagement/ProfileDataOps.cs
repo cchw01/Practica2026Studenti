@@ -165,6 +165,10 @@ namespace Backend.DataManagement
                 Role = user.Role.ToString(),
                 AverageRating = avgRating,
                 TotalReviewsReceived = reviewsReceived.Count,
+                PictureName = _db.ProfilePictures
+                                .Where(x => x.Id == user.ProfilePictureId)
+                                .Select(x => x.Name)
+                                .FirstOrDefault(),
                 ReviewsReceived = reviewsReceived.Select(r => MapReviewToDto(r)).ToList(),
                 AddedItems = addedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
                 BiddedItems = biddedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
