@@ -37,35 +37,46 @@
 
       <!-- Contact Form -->
       <div class="card form-card">
-        <h2>{{ 'HELP.TICKET' | translate }}</h2>
-        <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
-          <div class="input-group">
-            <input type="text" formControlName="name" [placeholder]="'CONTACT.FORM_NAME_PLACEHOLDER' | translate">
-          </div>
-          <div class="input-group">
-            <input type="email" formControlName="email" [placeholder]="'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate">
-          </div>
-          <!-- Type of Issue dropdown -->
-          <div class="input-group">
-            <select formControlName="issueType" class="form-select">
-              <option value="" disabled selected>{{ 'HELP.ISSUE_TYPE_PLACEHOLDER' | translate }}</option>
-              <option value="general">{{ 'CONTACT.FORM_ISSUE_OPTION_GENERAL' | translate }}</option>
-              <option value="technical">{{ 'CONTACT.FORM_ISSUE_OPTION_TECHNICAL' | translate }}</option>
-              <option value="billing">{{ 'CONTACT.FORM_ISSUE_OPTION_BILLING' | translate }}</option>
-              <option value="listing">{{ 'CONTACT.FORM_ISSUE_OPTION_LISTING' | translate }}</option>
-              <option value="account">{{ 'CONTACT.FORM_ISSUE_OPTION_ACCOUNT' | translate }}</option>
-              <option value="other">{{ 'CONTACT.FORM_ISSUE_OPTION_OTHER' | translate }}</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <textarea formControlName="issue" rows="4"
-                      [placeholder]="'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate"></textarea>
-          </div>
-          <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">
-            {{ 'HELP.REQUEST' | translate }}
-          </button>
-        </form>
+  <h2>{{ 'HELP.TICKET' | translate }}</h2>
+
+  @if (!submitted) {
+    <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
+      <div class="input-group">
+        <input type="text" formControlName="name" [placeholder]="'CONTACT.FORM_NAME_PLACEHOLDER' | translate">
       </div>
+      <div class="input-group">
+        <input type="email" formControlName="email" [placeholder]="'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate">
+      </div>
+      <div class="input-group">
+        <select formControlName="issueType" class="form-select">
+          <option value="" disabled selected>{{ 'HELP.ISSUE_TYPE_PLACEHOLDER' | translate }}</option>
+          <option value="general">{{ 'CONTACT.FORM_ISSUE_OPTION_GENERAL' | translate }}</option>
+          <option value="technical">{{ 'CONTACT.FORM_ISSUE_OPTION_TECHNICAL' | translate }}</option>
+          <option value="billing">{{ 'CONTACT.FORM_ISSUE_OPTION_BILLING' | translate }}</option>
+          <option value="listing">{{ 'CONTACT.FORM_ISSUE_OPTION_LISTING' | translate }}</option>
+          <option value="account">{{ 'CONTACT.FORM_ISSUE_OPTION_ACCOUNT' | translate }}</option>
+          <option value="other">{{ 'CONTACT.FORM_ISSUE_OPTION_OTHER' | translate }}</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <textarea formControlName="issue" rows="4"
+                  [placeholder]="'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate"></textarea>
+      </div>
+      <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">
+        {{ 'HELP.REQUEST' | translate }}
+      </button>
+    </form>
+  } @else {
+    <div class="form-success">
+      <div class="success-icon">✓</div>
+      <h3>{{ 'CONTACT.FORM_SUCCESS_TITLE' | translate }}</h3>
+      <p>{{ 'CONTACT.FORM_SUCCESS_MESSAGE' | translate }}</p>
+      <button type="button" class="btn-send-another" (click)="sendAnother()">
+        {{ 'CONTACT.FORM_SEND_ANOTHER' | translate }}
+      </button>
+    </div>
+  }
+</div>
 <div *ngIf="submitError" class="form-error">{{ submitError }}</div>
     </div>
   </div>

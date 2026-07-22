@@ -119,10 +119,10 @@ export class HelpPageComponent implements OnInit {
   }
 
   submitError = '';
+  submitted = false;
 
   onSubmitHelpForm() {
     if (this.helpForm.invalid) {
-      alert('Please fill in all fields correctly.');
       return;
     }
 
@@ -133,7 +133,7 @@ export class HelpPageComponent implements OnInit {
       .submit('Help', formData.name, formData.email, formData.issue, formData.issueType)
       .subscribe({
         next: () => {
-          alert('Your ticket has been submitted successfully! We will contact you soon.');
+          this.submitted = true;
           this.helpForm.reset({ name: formData.name, email: formData.email });
         },
         error: (err) => {
@@ -141,6 +141,10 @@ export class HelpPageComponent implements OnInit {
           this.submitError = 'Ticketul nu a putut fi trimis. Încearcă din nou.';
         },
       });
+  }
+
+  sendAnother(): void {
+    this.submitted = false;
   }
 
   toggleChat() {
