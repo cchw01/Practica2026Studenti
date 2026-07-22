@@ -44,6 +44,21 @@ export class UserPage implements OnInit {
   reviewComment = '';
 
   reportSuccessMessage = '';
+  isUserReported = false;
+
+  itemsLimit = 3;
+  get displayedItems(): AuctionItem[] {
+    return this.filteredUserItems.slice(0, this.itemsLimit);
+  }
+
+  showMoreItems(): void {
+  if (this.itemsLimit >= this.filteredUserItems.length) {
+    this.itemsLimit = 3;
+  } else {
+    // Altfel, continuăm să încărcăm încă 6 produse
+    this.itemsLimit += 6;
+  }
+}
 
   itemsLimit = 3;
   get displayedItems(): AuctionItem[] {
@@ -70,6 +85,11 @@ export class UserPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getCurrentUserId();
+
+    const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
+    this.isUserReported = reportedUsers.includes(this.userId);
+
     this.route.paramMap.subscribe(params => {
       this.currentUserId = this.authService.getCurrentUserId();
       const idParam = params.get('id');
@@ -203,13 +223,21 @@ export class UserPage implements OnInit {
         this.showReportForm = false;
         this.reportSuccessMessage = `Utilizatorul a fost raportat cu succes pentru: "${this.reportReason}".`;
         this.reportReason = '';
+        
+        this.isUserReported = true;
+        let reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
+        if (!reportedUsers.includes(this.userId)) {
+          reportedUsers.push(this.userId);
+        }
+        localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
+        
         this.cdr.detectChanges();
       },
       error: (err) => {
         alert('A apărut o eroare la trimiterea raportului.');
       }
     });
-  }
+}
 
   // Metode Review-uri
   openReviewForm(): void {

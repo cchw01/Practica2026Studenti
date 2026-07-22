@@ -31,8 +31,8 @@
       </button>
 
       <!-- Buton Raportează -->
-      <button class="btn-action btn-report" (click)="openReportForm()">
-        ⚠️ Raportează Utilizatorul
+      <button class="btn-action btn-report" [disabled]="isUserReported" (click)="openReportForm()">
+        {{ isUserReported ? '✔️ Utilizator Raportat' : '⚠️ Raportează Utilizatorul' }}
       </button>
     </div>
   </div>
