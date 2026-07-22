@@ -121,6 +121,19 @@ export class ProfilePage implements OnInit {
     }
     this.currentUserId = authUserId !== null ? authUserId : 0;
 
+    // Fetch up-to-date user data from backend to avoid stale token data
+    if (this.currentUserId > 0) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (apiUser: any) => {
+          this.user.username = apiUser.UserName || apiUser.userName || this.user.username;
+          this.user.name = apiUser.Name || apiUser.name || this.user.name;
+          this.user.email = apiUser.Email || apiUser.email || this.user.email;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Failed to fetch latest user data', err)
+      });
+    }
+
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
@@ -448,7 +461,6 @@ export class ProfilePage implements OnInit {
           (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
           'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
-        this.editDraft = { ...this.user };
       },
     });
   }

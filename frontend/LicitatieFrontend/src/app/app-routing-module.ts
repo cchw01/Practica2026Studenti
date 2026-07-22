@@ -24,7 +24,7 @@ import { SearchPage } from './search-page/search-page';
 import { UserPage } from './user-page/user-page';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },

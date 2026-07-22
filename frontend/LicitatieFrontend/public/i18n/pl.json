@@ -12,27 +12,27 @@
     "ADD_AUCTION": "Dodaj aukcję"
   },
   "CONTACT": {
-  "TITLE": "Skontaktuj się z nami",
-  "DESCRIPTION": "Masz pytania? Nasz zespół chętnie Ci pomoże.",
-  "EMAIL": "E-mail",
-  "PHONE": "Numer telefonu",
-  "CALL_CENTER_HOURS": "Godziny pracy obsługi klienta",
-  "SCHEDULE": "Poniedziałek–piątek, 09:00–17:00",
-  "FOLLOW_US": "Obserwuj nas",
-  "SOCIAL_DESCRIPTION": "Pozostań z nami w kontakcie za pośrednictwem mediów społecznościowych.",
-  "FORM_TITLE": "Wyślij nam wiadomość",
+    "TITLE": "Skontaktuj się z nami",
+    "DESCRIPTION": "Masz pytania? Nasz zespół chętnie Ci pomoże.",
+    "EMAIL": "E-mail",
+    "PHONE": "Numer telefonu",
+    "CALL_CENTER_HOURS": "Godziny pracy infolinii",
+    "SCHEDULE": "Poniedziałek–piątek, 09:00–17:00",
+    "FOLLOW_US": "Obserwuj nas",
+    "SOCIAL_DESCRIPTION": "Pozostań z nami w kontakcie w mediach społecznościowych.", 
+     "FORM_TITLE": "Wyślij nam wiadomość",
   "FORM_FULL_NAME_LABEL": "Imię i nazwisko",
   "FORM_FULL_NAME_PLACEHOLDER": "np. Jan Kowalski",
-  "FORM_FULL_NAME_REQUIRED": "Imię i nazwisko są wymagane.",
+  "FORM_FULL_NAME_REQUIRED": "Imię i nazwisko jest wymagane.",
   "FORM_EMAIL_LABEL": "Adres e-mail",
-  "FORM_EMAIL_PLACEHOLDER": "np. ty@przyklad.pl",
+  "FORM_EMAIL_PLACEHOLDER": "np. ty@przyklad.com",
   "FORM_EMAIL_REQUIRED": "Adres e-mail jest wymagany.",
-  "FORM_EMAIL_INVALID": "Wprowadź prawidłowy adres e-mail.",
+  "FORM_EMAIL_INVALID": "Wprowadź poprawny adres e-mail.",
   "FORM_ISSUE_TYPE_LABEL": "Rodzaj problemu",
   "FORM_ISSUE_TYPE_REQUIRED": "Wybierz rodzaj problemu.",
-  "FORM_ISSUE_OPTION_GENERAL": "Zapytanie ogólne",
+  "FORM_ISSUE_OPTION_GENERAL": "Ogólne zapytanie",
   "FORM_ISSUE_OPTION_TECHNICAL": "Wsparcie techniczne",
-  "FORM_ISSUE_OPTION_BILLING": "Rozliczenia / Płatności",
+  "FORM_ISSUE_OPTION_BILLING": "Rozliczenia / Płatność",
   "FORM_ISSUE_OPTION_LISTING": "Problem z ogłoszeniem / aukcją",
   "FORM_ISSUE_OPTION_ACCOUNT": "Zarządzanie kontem",
   "FORM_ISSUE_OPTION_OTHER": "Inne",
@@ -41,10 +41,10 @@
   "FORM_MESSAGE_REQUIRED": "Wiadomość jest wymagana.",
   "FORM_MESSAGE_MIN_LENGTH": "Wiadomość musi zawierać co najmniej 10 znaków.",
   "FORM_SUBMIT": "Wyślij wiadomość",
-  "FORM_SUCCESS_TITLE": "Wiadomość została wysłana!",
+  "FORM_SUCCESS_TITLE": "Wiadomość wysłana!",
   "FORM_SUCCESS_MESSAGE": "Dziękujemy za kontakt. Odpowiemy tak szybko, jak to możliwe.",
   "FORM_SEND_ANOTHER": "Wyślij kolejną wiadomość"
-},
+  },
   "LOGIN": {
     "TITLE": "Logowanie",
     "EMAIL_LABEL": "E-mail",
@@ -385,5 +385,126 @@
     "CANCEL": "Anuluj",
     "CREATING": "Tworzenie dyskusji...",
     "SUBMIT": "Rozpocznij dyskusję"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nie ustawiono",
+    "NAME_NOT_SET": "Nie ustawiono nazwy",
+    "EMAIL_NOT_SET": "Nie ustawiono adresu e-mail",
+    "AVERAGE_SCORE": "Średnia ocena"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Edytuj profil",
+    "LOG_OUT": "Wyloguj się",
+    "ADD_ITEM": "Dodaj nowy przedmiot",
+    "CHANGE_PHOTO": "Zmień zdjęcie",
+    "HIDE_PASSWORD": "Ukryj ustawienia hasła",
+    "CHANGE_PASSWORD": "Zmień hasło",
+    "UPDATE_PASSWORD": "Zaktualizuj hasło",
+    "CANCEL": "Anuluj",
+    "SAVE": "Zapisz zmiany"
+  },
+
+  "THEME": {
+    "TITLE": "Dostosuj motyw",
+    "DESCRIPTION": "Wybierz styl wizualny pasujący do Twojego nastroju.",
+    "LIGHT": "Jasny",
+    "SUNSET": "Zachód słońca",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Sprzedaj nowy przedmiot",
+    "DESCRIPTION": "Gotowy, aby coś wystawić?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Moje aktywne sprzedaże",
+    "WON_ITEMS": "Wygrane przedmioty",
+    "WISHLIST": "Moja lista życzeń",
+    "REVIEWS": "Otrzymane opinie"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Nie wystawiono jeszcze żadnych przedmiotów.",
+    "WON_ITEMS": "Nie wygrano jeszcze żadnych przedmiotów.",
+    "WISHLIST": "Nie ma jeszcze żadnych przedmiotów na liście życzeń.",
+    "REVIEWS": "Nie otrzymano jeszcze żadnych opinii."
+  },
+
+  "EDIT": {
+    "TITLE": "Edytuj profil",
+    "USERNAME": "Nazwa użytkownika",
+    "FULL_NAME": "Imię i nazwisko",
+    "EMAIL": "E-mail",
+
+    "USERNAME_PLACEHOLDER": "np. jan_kowalski",
+    "FULL_NAME_PLACEHOLDER": "np. Jan Kowalski",
+    "EMAIL_PLACEHOLDER": "np. jan@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Aktualne hasło",
+    "NEW": "Nowe hasło",
+    "CONFIRM": "Potwierdź hasło",
+
+    "CURRENT_PLACEHOLDER": "Wpisz aktualne hasło",
+    "NEW_PLACEHOLDER": "Wpisz nowe hasło",
+    "CONFIRM_PLACEHOLDER": "Potwierdź nowe hasło",
+
+    "REQUIRED": "Wszystkie pola są wymagane.",
+    "NOT_MATCH": "Nowe hasło i jego potwierdzenie nie pasują do siebie.",
+    "SUCCESS": "Hasło zostało pomyślnie zaktualizowane!",
+    "ERROR": "Błąd podczas aktualizacji hasła. Sprawdź aktualne hasło."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktywny",
+    "ADDED": "Dodano",
+    "WON": "Wygrany"
+  },
+
+  "DEFAULTS": {
+    "USER": "Użytkownik"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Błąd podczas ładowania kategorii.",
+    "LOAD_ITEMS": "Błąd podczas ładowania przedmiotów.",
+    "LOAD_REVIEWS": "Błąd podczas ładowania opinii."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profil został pomyślnie zaktualizowany."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Wyniki wyszukiwania",
+  "DESCRIPTION_WITH_QUERY": "Wyświetlanie wyników dla \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Wyszukuj aukcje, użytkowników lub posty na forum w BidSphere",
+  "SEARCH_PLACEHOLDER": "Wyszukaj aukcje, użytkowników lub posty na forum...",
+  "LOADING": "Ładowanie wyników...",
+
+  "TABS": {
+    "AUCTIONS": "Aukcje",
+    "USERS": "Użytkownicy",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nie znaleziono aukcji",
+    "DESCRIPTION": "Brak aukcji pasujących do Twojego wyszukiwania."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nie znaleziono użytkowników",
+    "DESCRIPTION": "Brak użytkowników pasujących do Twojego wyszukiwania."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nie znaleziono postów na forum",
+    "DESCRIPTION": "Brak dyskusji pasujących do Twojego wyszukiwania."
+  }
+}
 }
