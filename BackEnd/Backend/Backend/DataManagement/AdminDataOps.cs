@@ -9,9 +9,29 @@ namespace Backend.DataManagement
     public class AdminDataOps
     {
         private readonly ApplicationDbContext DbContext;
+
         public AdminDataOps(ApplicationDbContext context) { DbContext = context; }
 
-        public List<User> GetAllUsers() => DbContext.Users.ToList();
+        public List<object> GetAllUsers()
+        {
+            var reportCounts = DbContext.Reports
+                .Where(r => r.TargetType == ReportTargetType.User && r.ReportedUserId != null)
+                .GroupBy(r => r.ReportedUserId)
+                .Select(g => new { UserId = g.Key!.Value, Count = g.Count() })
+                .ToDictionary(x => x.UserId, x => x.Count);
+
+            return DbContext.Users.ToList().Select(u => new
+            {
+                u.ID,
+                u.UserName,
+                u.Name,
+                u.Email,
+                u.Role,
+                u.Rating,
+                u.IsBanned,
+                Reports = reportCounts.TryGetValue(u.ID, out var count) ? count : 0
+            }).ToList<object>();
+        }
 
         public void SetUserRole(int userId, RoleEnum role)
         {
@@ -45,7 +65,7 @@ namespace Backend.DataManagement
             item.Status = status;
             DbContext.SaveChanges();
 
-            if (!statusChanged) return; 
+            if (!statusChanged) return;
 
             var notifOps = new NotificationDataOps(DbContext);
 
