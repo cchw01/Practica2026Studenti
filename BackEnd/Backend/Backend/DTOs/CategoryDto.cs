@@ -2,27 +2,27 @@
 
 namespace Backend.DTOs
 {
-    // Pentru GET 
-    public class CategoryDto
-    {
-        public int Id { get; set; }
+        // Pentru GET 
+        public class CategoryDto
+        {
+                public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
+                [Required]
+                [MaxLength(100)]
+                public string Name { get; set; }
 
-        [MaxLength(500)]
-        public string Description { get; set; } = string.Empty;
-    }
+                [MaxLength(500)]
+                public string Description { get; set; } = string.Empty;
+        }
 
-    // Pentru POST/PUT 
-    public class CategoryCreateDto
-    {
-        [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
+        // Pentru POST/PUT 
+        public class CategoryCreateDto
+        {
+                [Required]
+                [MaxLength(100)]
+                public string Name { get; set; }
 
-        [MaxLength(500)]
-        public string Description { get; set; } = string.Empty;
-    }
+                [MaxLength(500)]
+                public string Description { get; set; } = string.Empty;
+        }
 }

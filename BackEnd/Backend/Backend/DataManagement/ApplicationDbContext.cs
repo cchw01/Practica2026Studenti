@@ -21,6 +21,7 @@ namespace Backend.DataManagement
         public DbSet<ForumComment> ForumComments => Set<ForumComment>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Notification> Notifications => Set<Notification>();
+        public DbSet<Report> Reports => Set<Report>();
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +32,7 @@ namespace Backend.DataManagement
                 .HasForeignKey(r => r.ReviewerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<AuctionItem>() // Relatiee Item -> Categorie
+            modelBuilder.Entity<AuctionItem>() // Relatie Item -> Categorie
                 .HasOne(i => i.Category)
                 .WithMany(c => c.items)
                 .HasForeignKey(i => i.CategoryId)
@@ -88,6 +89,32 @@ namespace Backend.DataManagement
             .WithMany()
             .HasForeignKey(n => n.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Report>() //Report-User
+                .HasOne(r => r.ReportedUser)
+                .WithMany()
+                .HasForeignKey(r => r.ReportedUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Report>() //Report-AuctionItem
+               .HasOne(r => r.ReportedAuctionItem)
+               .WithMany()
+               .HasForeignKey(r => r.ReportedAuctionItemId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Report>() //Report-ForumPost
+               .HasOne(r => r.ReportedForumPost)
+               .WithMany()
+               .HasForeignKey(r => r.ReportedForumPostId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Report>() //USERII CARE-SI IAU REPORT
+                .HasOne(r => r.Reporter)
+                .WithMany()
+                .HasForeignKey(r => r.ReporterId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<AuctionItem>()
                 .Property(a => a.StartPrice)
