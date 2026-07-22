@@ -381,10 +381,56 @@
   border-radius: v.$radius-sm;
   border: 1px solid v.$color-border;
   transition: v.$transition-fast;
+  cursor: pointer;
 
   &:hover {
     transform: translateX(4px);
+    border-color: v.$color-primary;
+    box-shadow: v.$shadow-sm;
   }
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-remove-wishlist {
+  background: transparent;
+  border: none;
+  color: v.$color-text-secondary;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: v.$radius-sm;
+  transition: v.$transition-fast;
+
+  &:hover {
+    color: v.$color-status-urgent-text;
+    background: v.$color-status-urgent-bg;
+  }
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: v.$radius-sm;
+  object-fit: cover;
+  border: 1px solid v.$color-border;
+  background-color: v.$color-surface;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.item-card:hover .item-thumb {
+  transform: scale(1.06);
 }
 
 .item-info {

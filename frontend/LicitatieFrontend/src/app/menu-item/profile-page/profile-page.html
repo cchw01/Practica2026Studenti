@@ -77,10 +77,13 @@
         <div class="profile-section">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' | translate }}</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
-            <div class="item-card" *ngFor="let item of addedItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
+            <div class="item-card" *ngFor="let item of addedItems" (click)="goToAuction(item.id, item)">
+              <div class="item-left">
+                <img class="item-thumb" [src]="item.image" [alt]="item.title" *ngIf="item.image" />
+                <div class="item-info">
+                  <span class="item-title">{{ item.title }}</span>
+                  <span class="item-price">{{ item.price }} RON</span>
+                </div>
               </div>
               <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
             </div>
@@ -92,10 +95,13 @@
         <div class="profile-section">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WON_ITEMS' | translate }}</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
-            <div class="item-card" *ngFor="let item of bidItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
+            <div class="item-card" *ngFor="let item of bidItems" (click)="goToAuction(item.id, item)">
+              <div class="item-left">
+                <img class="item-thumb" [src]="item.image" [alt]="item.title" *ngIf="item.image" />
+                <div class="item-info">
+                  <span class="item-title">{{ item.title }}</span>
+                  <span class="item-price">{{ item.price }} RON</span>
+                </div>
               </div>
               <span class="item-badge badge-won">{{ item.status }}</span>
             </div>
@@ -108,12 +114,18 @@
       <div class="profile-section full-width wishlist-section">
         <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WISHLIST' | translate }}</h2>
         <div class="items-list" *ngIf="wishItems.length > 0">
-          <div class="item-card" *ngFor="let item of wishItems">
-            <div class="item-info">
-              <span class="item-title">{{ item.title }}</span>
-              <span class="item-price">{{ item.price }} RON</span>
+          <div class="item-card" *ngFor="let item of wishItems" (click)="goToAuction(item.id, item)">
+            <div class="item-left">
+              <img class="item-thumb" [src]="item.image" [alt]="item.title" *ngIf="item.image" />
+              <div class="item-info">
+                <span class="item-title">{{ item.title }}</span>
+                <span class="item-price">{{ item.price }} RON</span>
+              </div>
             </div>
-            <span class="item-badge badge-wish">{{ item.status }}</span>
+            <div class="item-actions">
+              <span class="item-badge badge-wish">{{ item.status }}</span>
+              <button class="btn-remove-wishlist" (click)="removeFromWishlist(item.id, $event)" title="Remove from wishlist">✕</button>
+            </div>
           </div>
         </div>
         <p class="empty-state" *ngIf="wishItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WISHLIST' | translate }}</p>
@@ -163,10 +175,6 @@
       <div class="form-group">
         <label for="editName">{{ 'PROFILE_PAGE.EDIT.FULL_NAME' | translate }}</label>
         <input id="editName" type="text" [(ngModel)]="editDraft.name" placeholder="{{ 'PROFILE_PAGE.EDIT.FULL_NAME_PLACEHOLDER' | translate }}" />
-      </div>
-      <div class="form-group">
-        <label for="editEmail">{{ 'PROFILE_PAGE.EDIT.EMAIL' | translate }}</label>
-        <input id="editEmail" type="email" [(ngModel)]="editDraft.email" placeholder="{{ 'PROFILE_PAGE.EDIT.EMAIL_PLACEHOLDER' | translate }}" />
       </div>
     </div>
 

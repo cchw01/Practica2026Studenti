@@ -9,6 +9,20 @@ import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
+<<<<<<< HEAD
+
+const routes: Routes = [
+  { path: 'home-page', component: HomePage },
+  { path: 'login-page', component: LoginPage },
+  { path: 'register-page', component: RegisterPage },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'auctions', component: AuctionsPage },
+
+  { path: 'contact-page', component: ContactPage },
+  { path: 'forum-page', component: ForumPage },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
+  { path: 'help-page', component: HelpPageComponent },
+=======
 import { ReviewComponent } from './Models/review/review';
 import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { AddItemPage } from './add-item-page/add-item-page';
@@ -24,7 +38,7 @@ import { SearchPage } from './search-page/search-page';
 import { UserPage } from './user-page/user-page';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
@@ -47,10 +61,11 @@ const routes: Routes = [
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: 'user-page/:id', component: UserPage },
   { path: '**', component: NotFound },
+>>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,6 +1,6 @@
 export type ReportReason =
-    'Spam'
-    'Harassment'
-    'InappropriateContent'
-    'Fraud'
-    'Other';
+    | 'Spam'
+    | 'Harassment'
+    | 'InappropriateContent'
+    | 'Fraud'
+    | 'Other';

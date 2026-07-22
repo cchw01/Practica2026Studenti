@@ -1,5 +1,5 @@
 export type ReportStatus =
-    'Pending'
-    'InReview'
-    'Dismissed'
-    'ActionTaken';
+    | 'Pending'
+    | 'InReview'
+    | 'Dismissed'
+    | 'ActionTaken';
