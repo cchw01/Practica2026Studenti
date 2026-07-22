@@ -205,7 +205,7 @@ export class ProfilePage implements OnInit {
       return;
     }
     const localWishIds: number[] = JSON.parse(
-      localStorage.getItem(`wishlist_${this.currentUserId}`) || localStorage.getItem('wishlist') || '[]',
+      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
     );
     const localWishRaw: any[] = JSON.parse(
       localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]',
@@ -377,13 +377,6 @@ export class ProfilePage implements OnInit {
         );
         const updatedIds = localWishIds.filter((id) => id !== itemId);
         localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
-
-        // Also update general wishlist storage
-        const generalWishIds: number[] = JSON.parse(
-          localStorage.getItem('wishlist') || '[]',
-        );
-        const updatedGeneral = generalWishIds.filter((id) => id !== itemId);
-        localStorage.setItem('wishlist', JSON.stringify(updatedGeneral));
 
         this.cdr.detectChanges();
       },
