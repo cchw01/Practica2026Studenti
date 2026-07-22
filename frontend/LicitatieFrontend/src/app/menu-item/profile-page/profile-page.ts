@@ -96,12 +96,24 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     const authUserId = this.authService.getCurrentUserId();
     const currentUser = this.authService.getCurrentUser();
+
+    // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
+    if (currentUser) {
+      // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
+      if (currentUser.role === 'Admin' || currentUser.email === 'admin@bidsphere.com') {
+        localStorage.setItem('user_role', 'admin'); // Salvează starea pentru panoul Vuexy
+        this.router.navigate(['/admin']);
+        return; // Oprim execuția codului pentru a nu mai încărca restul paginii
+      }
+    }
+
+    // --- Fluxul normal pentru utilizatorii simpli ---
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email || '';
       this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
@@ -140,12 +152,20 @@ export class ProfilePage implements OnInit {
     if (allItems && itemId) {
       const match = allItems.find((i) => (i.ID || i.id) === itemId);
       if (match) {
-        const matchUrl = match.ImageUrl || match.imageUrl || (match.PhotoList && match.PhotoList.length > 0 ? match.PhotoList[0] : null) || (match.photoList && match.photoList.length > 0 ? match.photoList[0] : null);
+        const matchUrl =
+          match.ImageUrl ||
+          match.imageUrl ||
+          (match.PhotoList && match.PhotoList.length > 0 ? match.PhotoList[0] : null) ||
+          (match.photoList && match.photoList.length > 0 ? match.photoList[0] : null);
         if (matchUrl) return this.itemService.formatImageUrl(matchUrl);
       }
     }
 
-    const rawUrl = item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : '');
+    const rawUrl =
+      item.imageUrl ||
+      item.ImageUrl ||
+      (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+      (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : '');
     if (rawUrl) {
       return this.itemService.formatImageUrl(rawUrl);
     }
@@ -154,7 +174,12 @@ export class ProfilePage implements OnInit {
     if (title.includes('watch')) {
       return 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
     }
-    if (title.includes('bmw') || title.includes('car') || title.includes('leather') || title.includes('jacket')) {
+    if (
+      title.includes('bmw') ||
+      title.includes('car') ||
+      title.includes('leather') ||
+      title.includes('jacket')
+    ) {
       return 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop';
     }
     return 'assets/images/placeholder.png';
@@ -167,14 +192,14 @@ export class ProfilePage implements OnInit {
       return;
     }
     const localWishIds: number[] = JSON.parse(
-      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]'
+      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
     );
     const localWishRaw: any[] = JSON.parse(
-      localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]'
+      localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]',
     );
 
     const validItems = localWishRaw.filter((item: any) =>
-      localWishIds.includes(item.ID || item.id)
+      localWishIds.includes(item.ID || item.id),
     );
 
     this.wishItems = validItems.map((item: any) => ({
@@ -202,27 +227,38 @@ export class ProfilePage implements OnInit {
         this.addedItems = items
           .filter((item: any) => {
             const ownerId = item.OwnerId ?? item.ownerId ?? item.Owner?.id ?? item.Owner?.ID;
-            const ownerUsername = item.Owner?.username ?? item.Owner?.UserName ?? item.owner?.username ?? item.ownerUserName;
+            const ownerUsername =
+              item.Owner?.username ??
+              item.Owner?.UserName ??
+              item.owner?.username ??
+              item.ownerUserName;
 
-            const matchId = ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
-            const matchUser = ownerUsername && this.user.username && ownerUsername.toLowerCase() === this.user.username.toLowerCase();
+            const matchId =
+              ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
+            const matchUser =
+              ownerUsername &&
+              this.user.username &&
+              ownerUsername.toLowerCase() === this.user.username.toLowerCase();
             return matchId || matchUser;
           })
           .map((item: any) => ({
             id: item.ID || item.id || 0,
             title: item.Name || item.name || '',
-            price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
-            status: item.Status || item.status
-              ? (item.Status || item.status).toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            price:
+              item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+            status:
+              item.Status || item.status
+                ? (item.Status || item.status).toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
             image: this.getItemImage(item, items),
           }));
 
-        // Filter won items
         this.bidItems = items
           .filter((item: any) => {
             const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
-            const isSold = (item.status === 'Sold' || item.Status === 'Sold') && (item.currentPrice > 0 || item.CurrentPrice > 0);
+            const isSold =
+              (item.status === 'Sold' || item.Status === 'Sold') &&
+              (item.currentPrice > 0 || item.CurrentPrice > 0);
             return isSold && winnerId !== undefined && Number(winnerId) === this.currentUserId;
           })
           .map((item: any) => ({
@@ -239,8 +275,13 @@ export class ProfilePage implements OnInit {
             this.wishItems = (wishlistItems || []).map((item: any) => ({
               id: item.id || item.ID || 0,
               title: item.name || item.Name || 'Item',
-              price: item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image: this.getItemImage(item, items),
+              price:
+                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
+              image:
+                item.imageUrl ||
+                item.ImageUrl ||
+                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+                this.getItemImage(item, items),
               status: item.status
                 ? item.status.toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
@@ -256,7 +297,6 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
@@ -293,7 +333,9 @@ export class ProfilePage implements OnInit {
         this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
 
         // Also update user-scoped local storage cache if present
-        const localWishIds: number[] = JSON.parse(localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]');
+        const localWishIds: number[] = JSON.parse(
+          localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
+        );
         const updatedIds = localWishIds.filter((id) => id !== itemId);
         localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
 
@@ -328,7 +370,6 @@ export class ProfilePage implements OnInit {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
   }
 
-  // --- Edit actions ---
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
@@ -379,7 +420,6 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // --- Avatar upload ---
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
@@ -391,7 +431,6 @@ export class ProfilePage implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  // --- Change Password ---
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
@@ -424,7 +463,6 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  // --- Navigate to Add Item ---
   goToAddItem(): void {
     this.router.navigate(['/add-item']);
   }
@@ -435,11 +473,10 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['/action-item-page', itemId]);
   }
 
-  // --- Logout ---
   onLogout(): void {
     this.authService.logout();
+    localStorage.removeItem('user_role');
     this.setTheme('light');
-    document.body.className = '';
     this.router.navigate(['/login-page']);
   }
 }
