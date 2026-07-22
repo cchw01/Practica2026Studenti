@@ -457,9 +457,17 @@
   }
 },
 
-  "NOTIFICATIONS":{
+  "NOTIFICATIONS": {
   "TRUE": "Notifications",
   "FALSE": "No notifications yet.",
+  "OPEN_ARIA": "Open notifications",
+  "DO_NOT_DISTURB": "Do not disturb",
+  "LOADING": "Loading notifications...",
+  "ACTIONS_ARIA": "Notification actions",
+  "MARKING_ALL_READ": "Marking as read...",
+  "MARK_ALL_READ": "Mark all as read",
+  "DELETE": "Delete notification",
+
   "TYPES": {
     "AuctionApproved": "Your auction \"{{itemName}}\" was approved and is now public!",
     "AuctionRejected": "Your auction \"{{itemName}}\" was rejected by an admin.",

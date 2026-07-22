@@ -396,11 +396,19 @@
 },
   "NOTIFICATIONS": {
   "TRUE": "Notificări",
-  "FALSE": "Nu există notificări încă.",
+  "FALSE": "Nu există încă notificări.",
+  "OPEN_ARIA": "Deschide notificările",
+  "DO_NOT_DISTURB": "Nu deranja",
+  "LOADING": "Se încarcă notificările...",
+  "ACTIONS_ARIA": "Acțiuni pentru notificare",
+  "MARKING_ALL_READ": "Se marchează ca citite...",
+  "MARK_ALL_READ": "Marchează toate ca citite",
+  "DELETE": "Șterge notificarea",
+
   "TYPES": {
-    "AuctionApproved": "Licitația ta \"{{itemName}}\" a fost aprobată și e acum vizibilă public!",
-    "AuctionRejected": "Licitația ta \"{{itemName}}\" a fost respinsă de un administrator.",
-    "SupportReply": "Un administrator ți-a răspuns la mesajul {{date}}: {{reply}}"
+    "AuctionApproved": "Licitația ta „{{itemName}}” a fost aprobată și este acum publică!",
+    "AuctionRejected": "Licitația ta „{{itemName}}” a fost respinsă de un administrator.",
+    "SupportReply": "Un administrator a răspuns la mesajul tău din {{date}}: {{reply}}"
   }
 },
   "AUCTION_ITEM_PAGE": {
