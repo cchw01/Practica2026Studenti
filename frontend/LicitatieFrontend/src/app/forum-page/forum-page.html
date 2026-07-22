@@ -116,13 +116,13 @@
         <p>Selectează motivul pentru care raportezi această discuție:</p>
 
         <div class="report-reasons-list">
-          @for (reason of reportReasons; track reason) {
-          <label class="report-reason-option">
-            <input type="radio" name="reportReason" [value]="reason" [(ngModel)]="selectedReportReason" />
-            {{ reason }}
-          </label>
-          }
-        </div>
+  @for (reasonItem of reportReasons; track reasonItem.value) {
+  <label class="report-reason-option">
+    <input type="radio" name="reportReason" [value]="reasonItem.value" [(ngModel)]="selectedReportReason" />
+    {{ reasonItem.label }}
+  </label>
+  }
+</div>
 
         @if (reportErrorMessage) {
         <p class="report-error">{{ reportErrorMessage }}</p>

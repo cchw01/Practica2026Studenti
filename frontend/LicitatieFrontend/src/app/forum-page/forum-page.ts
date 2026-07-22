@@ -5,7 +5,8 @@ import { ForumPostService } from '../Models/forum-post/forum-post-service';
 import { ForumComment } from '../Models/forum-comment/forum-comment';
 import { ForumCommentService } from '../Models/forum-comment/forum-comment-service';
 import { AuthService } from  '../services/auth';
-import { REPORT_REASONS } from '../Models/forum-post/forum-post';
+import { ReportService } from '../services/report-service';
+import { ReportReason } from '../Models/report/report-reason-enum';
 type SortOption = 'latest' | 'oldest' | 'comments';
 
 
@@ -18,6 +19,13 @@ interface ForumPostPreview {
   description: string;
   commentsCount: number;
 }
+const REPORT_REASON_LABELS: { value: ReportReason; label: string }[] = [
+  { value: 'Spam', label: 'Spam' },
+  { value: 'Harassment', label: 'Hărțuire' },
+  { value: 'InappropriateContent', label: 'Conținut nepotrivit' },
+  { value: 'Fraud', label: 'Fraudă' },
+  { value: 'Other', label: 'Alt motiv' },
+];
 
 @Component({
   selector: 'app-forum-page',
@@ -39,9 +47,9 @@ export class ForumPage implements OnInit {
 
   private commentCounts = new Map<number, number>();
 
-  readonly reportReasons = REPORT_REASONS;
+  readonly reportReasons = REPORT_REASON_LABELS;
   reportingPostId: number | null = null;
-  selectedReportReason = '';
+  selectedReportReason: ReportReason | '' = '';
   isSubmittingReport = false;
   reportErrorMessage = '';
   reportSuccessMessage = '';
@@ -50,7 +58,8 @@ export class ForumPage implements OnInit {
     private forumPostService: ForumPostService,
     private forumCommentService: ForumCommentService,
     private cdr: ChangeDetectorRef,
-     private authService: AuthService, 
+    private authService: AuthService, 
+    private reportService: ReportService,
     
   ) {}
 
@@ -207,31 +216,27 @@ export class ForumPage implements OnInit {
         this.commentCounts.get(forumPost.id) ?? 0,
     };
   }
-
-  
-  
   openReportModal(postId: number, event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  event.preventDefault();
+  event.stopPropagation();
 
-    if (this.currentUserId === null) {
-      this.reportErrorMessage = 'Trebuie să fii logat pentru a raporta o postare.';
-      return;
-    }
-
-    this.reportingPostId = postId;
-    this.selectedReportReason = '';
-    this.reportErrorMessage = '';
-    this.reportSuccessMessage = '';
+  if (this.currentUserId === null) {
+    alert('Trebuie să fii logat pentru a raporta o postare.');
+    return;
   }
+
+  this.reportingPostId = postId;
+  this.selectedReportReason = '';
+  this.reportErrorMessage = '';
+  this.reportSuccessMessage = '';
+}
 
   closeReportModal(): void {
     this.reportingPostId = null;
     this.selectedReportReason = '';
     this.reportErrorMessage = '';
   }
-
-  submitReport(): void {
+submitReport(): void {
     if (!this.selectedReportReason || this.reportingPostId === null || this.currentUserId === null) {
       this.reportErrorMessage = 'Selectează un motiv pentru raportare.';
       return;
@@ -240,27 +245,29 @@ export class ForumPage implements OnInit {
     this.isSubmittingReport = true;
     this.reportErrorMessage = '';
 
-    this.forumPostService
-      .submitReport({
-        targetType: 'ForumPost',
-        targetId: this.reportingPostId,
-        reason: this.selectedReportReason,
-        reporterId: this.currentUserId,
-      })
-      .subscribe({
-        next: () => {
-          this.isSubmittingReport = false;
-          this.reportSuccessMessage = 'Raportarea a fost trimisă. Mulțumim!';
-          this.cdr.detectChanges();
+    const payload = {
+      targetType: 'ForumPost',
+      targetId: this.reportingPostId,
+      reason: this.selectedReportReason,
+      reporterId: this.currentUserId,
+    } as any;
 
-          setTimeout(() => this.closeReportModal(), 1500);
-        },
-        error: (error) => {
-          console.error('Error submitting report:', error);
-          this.isSubmittingReport = false;
-          this.reportErrorMessage = 'Raportarea nu a putut fi trimisă. Încearcă din nou.';
-          this.cdr.detectChanges();
-        },
-      });
+    this.reportService.addReport(payload).subscribe({
+      next: () => {
+        this.isSubmittingReport = false;
+        this.reportSuccessMessage = 'Raportarea a fost trimisă. Mulțumim!';
+        this.cdr.detectChanges();
+
+        setTimeout(() => this.closeReportModal(), 1500);
+      },
+      error: (error) => {
+        console.error('Error submitting report:', error);
+        this.isSubmittingReport = false;
+        this.reportErrorMessage = 'Raportarea nu a putut fi trimisă. Încearcă din nou.';
+        this.cdr.detectChanges();
+      },
+    });
   }
 }
+
+
