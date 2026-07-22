@@ -7,7 +7,7 @@ import { Review, ReviewCreate } from '../Models/review/review.model';
   providedIn: 'root'
 })
 export class ReviewService {
-  private readonly baseUrl = 'https://localhost:7137/api/Review';
+  private readonly baseUrl = '/api/Review'; // ajustează dacă backend-ul rulează pe alt host/port
 
   constructor(private http: HttpClient) {}
 

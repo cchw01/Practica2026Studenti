@@ -34,21 +34,26 @@
 }
 
 .profile-cover {
-  height: 180px;
-  background: linear-gradient(135deg, v.$color-primary, v.$color-accent);
+  height: 70px;
+  background: linear-gradient(135deg, #eef2ff, #fdf2f8); 
+  border-bottom: 1px solid rgba(108, 99, 255, 0.1);
   border-radius: 0 0 v.$radius-md v.$radius-md;
-  box-shadow: v.$shadow-sm;
+  box-shadow: none;
   animation: fade-in 0.6s ease both;
 }
 
 .profile-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: v.$space-lg;
   padding: 0 v.$space-xl;
-  margin: -50px 0 v.$space-lg;
+  margin: px 0 v.$space-md; 
   flex-wrap: wrap;
   animation: fade-in-up 0.6s ease 0.1s both;
+}
+.avatar-container {
+  display: block;
+  margin-top: 0;
 }
 
 .avatar {
@@ -67,7 +72,7 @@
 
 .profile-info {
   flex: 1;
-  padding-top: 50px;
+  padding-top: 10px;
 }
 
 .profile-username {
@@ -105,7 +110,7 @@
   border: 1px solid v.$color-border;
   border-radius: v.$radius-md;
   padding: v.$space-md v.$space-lg;
-  margin-top: 52px;
+  margin-top: 10px; 
 }
 
 .score-value {
@@ -137,8 +142,8 @@
 
 .header-actions {
   display: flex;
-  gap: v.$space-sm;
-  margin-top: 52px;
+  align-items: center;
+  margin-top: 10px; 
 }
 
 .btn-edit,
@@ -152,23 +157,20 @@
   border: none;
 }
 
-.btn-edit {
-  background: v.$color-primary;
-  color: v.$color-white;
+
+.link-edit {
+  color: v.$color-primary;
+  text-decoration: none;
+  font-weight: v.$font-weight-semibold;
+  cursor: pointer;
+  font-size: v.$font-size-body;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  display: inline-flex;
+  align-items: center;
 
   &:hover {
-    background: color-mix(in srgb, v.$color-primary 80%, black);
-    transform: translateY(-2px);
-  }
-}
-
-.btn-logout {
-  background: v.$color-status-urgent-bg;
-  color: v.$color-status-urgent-text;
-
-  &:hover {
-    background: color-mix(in srgb, v.$color-status-urgent-bg 90%, black);
-    transform: translateY(-2px);
+    color: v.$color-accent; /* Devine rozul premium din aplicație la hover */
+    text-decoration: underline;
   }
 }
 
@@ -374,49 +376,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background-color: var(--color-bg);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative; /* For the remove button */
-}
+  padding: v.$space-sm v.$space-md;
+  background: v.$color-background;
+  border-radius: v.$radius-sm;
+  border: 1px solid v.$color-border;
+  transition: v.$transition-fast;
 
-.item-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.item-card-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-right: 15px;
-  background-color: var(--color-surface);
+  &:hover {
+    transform: translateX(4px);
+  }
 }
 
 .item-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1; /* Take remaining space */
-}
-
-.btn-remove-wish {
-  background: none;
-  border: none;
-  color: #ff4d4f;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 5px 10px;
-  margin-left: 10px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.btn-remove-wish:hover {
-  background-color: rgba(255, 77, 79, 0.1);
+  gap: 2px;
 }
 
 .item-title {
