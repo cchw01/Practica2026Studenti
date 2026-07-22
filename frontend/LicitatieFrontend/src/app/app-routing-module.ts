@@ -18,6 +18,7 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { UserPage } from './user-page/user-page';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { NotFound } from './not-found/not-found';
+import { AdminGuard } from './services/admin-guard';
 
 const routes: Routes = [
   { path: 'home-page', component: HomePage },

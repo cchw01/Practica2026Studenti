@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AppRoutingModule } from './app-routing-module';
 
 // Pages / feature components
@@ -36,11 +36,6 @@ import { CreateForumPost } from './forum-page/create-forum-post/create-forum-pos
 import { Footer } from './app-logic/footer/footer';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
-import { MatBadgeModule } from '@angular/material/badge';
-import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { UserPage } from './user-page/user-page';
@@ -94,14 +89,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     MatCardModule,
     MatIconModule,
     MatInputModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    ReviewComponent,
-    HelpPageComponent,
-    DatePipe,
     MatMenuModule,
     MatBadgeModule,
-
+    MatSlideToggleModule,
     // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
     AiWidgetComponent,
