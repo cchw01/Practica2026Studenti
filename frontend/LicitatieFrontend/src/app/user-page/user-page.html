@@ -85,6 +85,38 @@
     </div>
   </div>
 
+  <!-- Secțiunea Review-uri Utilizator (chenar alb unic cu scroll vertical) -->
+  <div class="reviews-section" *ngIf="user">
+    <div class="section-header">
+      <h3>Review-uri utilizator ({{ userReviews.length }})</h3>
+    </div>
+
+    <!-- Containerul care va avea scroll vertical -->
+    <div class="reviews-scroll-container" *ngIf="userReviews.length > 0; else noReviews">
+      <div class="review-item" *ngFor="let rev of userReviews">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <span class="reviewer-icon">👤</span>
+            <span class="reviewer-name">@{{ rev.reviewerUserName }}</span>
+          </div>
+          <div class="review-stars">
+            <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= rev.rating">★</span>
+          </div>
+        </div>
+        <p class="review-comment">{{ rev.comment }}</p>
+        <span class="review-date" *ngIf="rev.reviewDate">
+          {{ rev.reviewDate | date:'dd.MM.yyyy' }}
+        </span>
+      </div>
+    </div>
+
+    <ng-template #noReviews>
+      <div class="empty-reviews">
+        <p>Acest utilizator nu a primit niciun review până acum.</p>
+      </div>
+    </ng-template>
+  </div>
+
   <!-- Secțiunea Licitații Active ale Utilizatorului -->
   <div class="active-auctions-section">
     <div class="section-header">
@@ -121,9 +153,9 @@
       </div>
     </ng-template>
 
-    <div class="show-more-container" *ngIf="filteredUserItems.length > itemsLimit">
+    <div class="show-more-container" *ngIf="filteredUserItems.length > 3">
       <button class="btn-show-more" (click)="showMoreItems()">
-       Vezi mai multe
+        {{ itemsLimit >= filteredUserItems.length ? 'Arată mai puține' : 'Vezi mai multe' }}
       </button>
     </div>
   </div>
