@@ -20,7 +20,6 @@ namespace Backend.Models
 
         public string? PhoneNumber { get; set; }
 
-
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
         public List<Bid> BidList { get; set; } = new();

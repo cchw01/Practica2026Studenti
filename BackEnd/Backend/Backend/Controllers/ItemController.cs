@@ -7,7 +7,6 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -207,7 +206,7 @@ namespace Backend.Controllers
                 {
                     filesToProcess.AddRange(request.Images);
                 }
-                if (request.Image != null && request.Image.Length > 0 && !filesToProcess.Contains(request.Image))
+                else if (request.Image != null && request.Image.Length > 0)
                 {
                     filesToProcess.Add(request.Image);
                 }

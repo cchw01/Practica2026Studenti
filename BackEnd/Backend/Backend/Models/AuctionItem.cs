@@ -32,11 +32,9 @@ namespace Backend.Models
         public string Location { get; set; } = string.Empty;
 
         public User? Owner { get; set; }
-
         public int OwnerId { get; set; }
 
         public User? Winner { get; set; }
-
         public int? WinnerId { get; set; }
 
         public StatusEnum Status { get; set; }

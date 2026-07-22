@@ -1,0 +1,154 @@
+/* -- 1. Butonul Plutitor -- */
+.floating-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #186bd6 0%, #762d98 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Cum arată butonul când chat-ul e deschis (Cerc Roșu cu X) */
+.floating-btn.close-mode {
+  background: #e92658; /* Culoarea roz/roșie din imagine */
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  padding: 0; /* Scoatem padding-ul ca să fie un cerc perfect */
+  box-shadow: 0 4px 15px rgba(233, 38, 88, 0.4);
+}
+
+.floating-btn:hover {
+  transform: scale(1.05);
+}
+
+/* -- 2. Fereastra de Chat -- */
+.chat-container {
+  position: fixed;
+  bottom: 100px; /* Ridicăm containerul ca să facă loc butonului rotund de sub el */
+  right: 30px;
+  width: 350px;
+  background-color: #ffffff;
+  border-radius: 20px; /* Colțuri mai rotunjite ca în poză */
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15); /* Umbră mai fină și difuză */
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+  border: none; /* Fără margini vizibile */
+}
+
+/* Antetul (Header-ul) ferestrei */
+.chat-header {
+  background: linear-gradient(135deg, #186bd6 0%, #762d98 100%);
+  color: white;
+  padding: 18px 20px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #4ade80; /* Bulinuța verde de online */
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* -- 3. Zona de afișare a mesajelor -- */
+.chat-body {
+  padding: 20px;
+  height: 280px;
+  overflow-y: auto;
+  background-color: #ffffff; /* Fundal complet alb */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  max-width: 85%;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* Mesaj AI (fundal gri deschis) */
+.ai-message {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  align-self: flex-start;
+  border-radius: 4px 18px 18px 18px; 
+}
+
+/* Mesajul Tău (Gradient) */
+.user-message {
+  background: linear-gradient(135deg, #186bd6 0%, #762d98 100%);
+  color: white;
+  align-self: flex-end;
+  border-radius: 18px 4px 18px 18px; 
+}
+
+/* -- 4. Zona unde scrii mesajul -- */
+.chat-footer {
+  display: flex;
+  padding: 12px 15px;
+  background-color: white;
+  border-top: none; /* Am șters linia de sus ca în poză */
+  align-items: center;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px 5px;
+  border: none; /* Fără border deloc */
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: #333;
+}
+
+.send-btn {
+  background: linear-gradient(135deg, #186bd6 0%, #762d98 100%);
+  color: white;
+  border: none;
+  width: 42px;
+  height: 38px;
+  border-radius: 10px; /* Buton ușor pătrățos rotunjit */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.send-btn:hover {
+  opacity: 0.85;
+}

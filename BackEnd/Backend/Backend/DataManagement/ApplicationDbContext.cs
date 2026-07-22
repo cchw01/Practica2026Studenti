@@ -26,7 +26,7 @@ namespace Backend.DataManagement
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Review>() // Relatie Review -> Reviewer
+            modelBuilder.Entity<Review>()
                 .HasOne(r => r.Reviewer)
                 .WithMany(s => s.ReviewList)
                 .HasForeignKey(r => r.ReviewerId)
