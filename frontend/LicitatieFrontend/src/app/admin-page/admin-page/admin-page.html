@@ -136,7 +136,7 @@
               <th>Product Title</th>
               <th>Seller</th>
               <th>Starting Price</th>
-              <th class="text-right">Visibility Decision</th>
+              <th>Visibility Decision</th>
             </tr>
           </thead>
           <tbody>
@@ -144,10 +144,12 @@
               <td><strong>{{ item.name }}</strong></td>
               <td>{{ item.owner?.userName || 'Platform User' }}</td>
               <td class="bold-price-cell">{{ item.startPrice }} RON</td>
-              <td class="text-right">
-                <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Approve Listing</button>
-                <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Reject</button>
-                <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Delete Permanently</button>
+              <td>
+                <div class="user-actions-cell">
+                  <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Approve Listing</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Reject</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Delete Permanently</button>
+                </div>
               </td>
             </tr>
             <tr *ngIf="pendingAuctions.length === 0">
@@ -164,7 +166,7 @@
           <input type="text" class="users-search-input" placeholder="Search by name or email..."
             [(ngModel)]="userSearchTerm" (ngModelChange)="onUserSearchChange()" />
           <select [(ngModel)]="userSortBy" (ngModelChange)="onUserSortChange()">
-            <option value="name">Sort by namee</option>
+            <option value="name">Sort by name</option>
             <option value="email">Sort by email</option>
             <option value="reports">Sort by reports</option>
           </select>
@@ -260,7 +262,7 @@
       Help ({{ unresolvedHelpMessages.length }})
     </button>
     <button [class.active]="messagesView === 'history'" (click)="setMessagesView('history')">
-      Istoric ({{ resolvedMessagesCount }})
+      History ({{ resolvedMessagesCount }})
     </button>
   </div>
 
@@ -268,7 +270,7 @@
     <input
       type="text"
       class="users-search-input"
-      placeholder="Caută după nume, email sau mesaj..."
+      placeholder="Search by name, email or text..."
       [(ngModel)]="messageSearchTerm"
     />
   </div>
@@ -345,7 +347,7 @@
               <tr>
                 <th>Category Name</th>
                 <th>Description</th>
-                <th class="text-right">Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
 
@@ -363,7 +365,7 @@
                     [(ngModel)]="editingCategoryDescription"></textarea>
                 </td>
 
-                <td class="text-right">
+                <td>
                   <div *ngIf="editingCategoryId !== cat.Id" class="category-actions">
                     <button type="button" class="vuexy-btn" (click)="startCategoryEdit(cat)">Edit</button>
 
