@@ -32,7 +32,7 @@
 
       <!-- Rating box mai mic -->
       <div class="score-box">
-        <span class="score-value">{{ score || '—' }}</span>
+        <span class="score-value">{{ score ?? '-' }}</span>
           <div class="score-stars">
             <!-- Folosește s - 0.5 în loc de s -->
            <span *ngFor="let s of stars" class="star"
