@@ -73,9 +73,6 @@ export class UserPage implements OnInit {
   ngOnInit(): void {
     this.currentUserId = this.authService.getCurrentUserId();
 
-    const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
-    this.isUserReported = reportedUsers.includes(this.userId);
-
     this.route.paramMap.subscribe((params) => {
       this.currentUserId = this.authService.getCurrentUserId();
       const idParam = params.get('id');
@@ -83,6 +80,10 @@ export class UserPage implements OnInit {
 
       if (idParam) {
         this.userId = +idParam;
+
+        const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
+        this.isUserReported = reportedUsers.includes(this.userId);
+        
         this.loadUserProfile();
       }
     });
