@@ -146,6 +146,12 @@
         </div>
       </div>
 
+      <!-- Edit Button: Only shows if the logged in user is the owner -->
+        <button *ngIf="isOwner()" type="button" class="btn-edit" (click)="editItem()">
+          <span class="edit-icon">✏️</span>
+          <span>Edit Item</span>
+        </button>
+
       <!-- Report Button (only visible when logged in) -->
       <div class="actions-footer" *ngIf="authService.isLoggedIn()">
         <button type="button" class="btn-report" [class.reported]="isReported" (click)="openReportModal()">
