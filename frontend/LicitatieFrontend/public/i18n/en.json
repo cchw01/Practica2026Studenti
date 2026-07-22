@@ -361,9 +361,14 @@
   },
 
   "NOTIFICATIONS":{
-    "TRUE": "Notifications",
-    "FALSE": "No notifications yet."
-  },
+  "TRUE": "Notifications",
+  "FALSE": "No notifications yet.",
+  "TYPES": {
+    "AuctionApproved": "Your auction \"{{itemName}}\" was approved and is now public!",
+    "AuctionRejected": "Your auction \"{{itemName}}\" was rejected by an admin.",
+    "SupportReply": "An admin replied to your message from {{date}}: {{reply}}"
+  }
+},
 
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Auction Detail",

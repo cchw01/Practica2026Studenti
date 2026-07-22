@@ -15,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AppRoutingModule } from './app-routing-module';
 
 // Pages / feature components
@@ -91,7 +91,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     MatInputModule,
     MatMenuModule,
     MatBadgeModule,
-
+    MatSlideToggleModule,
     // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
     AiWidgetComponent,

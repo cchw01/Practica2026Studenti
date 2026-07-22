@@ -1,41 +1,118 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SupportMessageService } from '../../services/support-message-service';
+import { AuthService } from '../../services/auth';
+
+interface Faq {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+}
+
+interface FaqCategory {
+  title: string;
+  faqs: Faq[];
+}
 
 @Component({
   selector: 'app-help-page',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './help-page.html',
-  styleUrls: ['./help-page.css'],
+  styleUrls: ['./help-page.scss'],
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
-  isLoggedIn = false; // Controlăm afișarea formularului vs. butoanele de oaspeți
+  isLoggedIn = false;
 
-  faqCategories = [
+  faqCategories: FaqCategory[] = [
     {
-      title: '🚨 Urgențe și Probleme la Licitare',
+      title: '🚨 Licitații și Oferte',
       faqs: [
         {
-          question: 'Am tastat o sumă greșită. Cum anulez?',
-          answer: 'Ofertele sunt angajamente ferme. Totuși, sunați la call center.',
+          question: 'How do I place a bid on an auction?',
+          answer:
+            'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
           isOpen: false,
         },
         {
-          question: 'Am fost supralicitat în ultima secundă.',
-          answer: 'Orice ofertă plasată pe final prelungește automat cronometrul.',
+          question: 'Can I cancel a bid after placing it?',
+          answer:
+            'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
+          isOpen: false,
+        },
+        {
+          question: 'How do I know if I won an auction?',
+          answer:
+            'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
           isOpen: false,
         },
       ],
     },
     {
-      title: '💳 Plăți, Taxe și Garanții',
+      title: '👤 Cont și Autentificare',
       faqs: [
         {
-          question: 'De ce suma finală este mai mare?',
-          answer: 'La prețul câștigător se adaugă comisionul platformei și TVA-ul aplicabil.',
+          question: 'How do I create an account?',
+          answer:
+            'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
+          isOpen: false,
+        },
+        {
+          question: 'I forgot my password. What should I do?',
+          answer:
+            'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
+          isOpen: false,
+        },
+      ],
+    },
+    {
+      title: '📦 Livrare și Plăți',
+      faqs: [
+        {
+          question: 'How is the item delivered after I win?',
+          answer:
+            'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
+          isOpen: false,
+        },
+        {
+          question: 'What happens if the seller does not deliver the item?',
+          answer:
+            'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
+          isOpen: false,
+        },
+        {
+          question: 'Who pays for shipping?',
+          answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
+          isOpen: false,
+        },
+        {
+          question: 'When do I get paid?',
+          answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
+          isOpen: false,
+        },
+      ],
+    },
+    {
+      title: '🏷️ Vânzare',
+      faqs: [
+        {
+          question: 'How do I list an item for sale?',
+          answer:
+            'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
+          isOpen: false,
+        },
+        {
+          question: 'Can I edit or remove an auction after posting it?',
+          answer:
+            'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
+          isOpen: false,
+        },
+        {
+          question: 'What if my item does not sell?',
+          answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
           isOpen: false,
         },
       ],
@@ -45,19 +122,29 @@ export class HelpPageComponent implements OnInit {
   isChatOpen = false;
   isTyping = false;
   chatMessages: { sender: string; text: string }[] = [
-    { sender: 'ai', text: 'Salut! Sunt asistentul tău virtual. Cu ce te pot ajuta astăzi?' },
+    { sender: 'ai', text: "Hi! I'm your virtual assistant. How can I help you today?" },
   ];
 
-  // Am scos momentan authService și supportService ca să oprim erorile TS
+  submitError = '';
+  submitted = false;
+
   constructor(
     private fb: FormBuilder,
+    private supportService: SupportMessageService,
+    private authService: AuthService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
+    const currentUser = this.authService.getCurrentUser();
+    this.isLoggedIn = this.authService.isLoggedIn();
+
     this.helpForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      name: [currentUser?.name || '', Validators.required],
+      email: [
+        { value: currentUser?.email || '', disabled: !!currentUser },
+        [Validators.required, Validators.email],
+      ],
       issueType: ['', Validators.required],
       issue: ['', [Validators.required, Validators.minLength(10)]],
     });
@@ -76,18 +163,37 @@ export class HelpPageComponent implements OnInit {
   }
 
   onSubmitHelpForm() {
-    if (this.helpForm.valid) {
-      alert('Tichetul tău a fost înregistrat cu succes!');
-      this.helpForm.reset();
+    if (this.helpForm.invalid) {
+      return;
     }
+
+    this.submitError = '';
+    const formData = this.helpForm.getRawValue();
+
+    this.supportService
+      .submit('Help', formData.name, formData.email, formData.issue, formData.issueType)
+      .subscribe({
+        next: () => {
+          this.submitted = true;
+          this.helpForm.reset({ name: formData.name, email: formData.email });
+        },
+        error: (err) => {
+          console.error('Eroare la trimiterea ticketului:', err);
+          this.submitError = 'Ticketul nu a putut fi trimis. Încearcă din nou.';
+        },
+      });
+  }
+
+  sendAnother(): void {
+    this.submitted = false;
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login-page']);
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register-page']);
   }
 
   toggleChat() {
@@ -103,7 +209,13 @@ export class HelpPageComponent implements OnInit {
 
       setTimeout(() => {
         this.isTyping = false;
-        this.chatMessages.push({ sender: 'ai', text: 'Te rog să consulți secțiunea FAQ!' });
+        this.chatMessages.push({
+          sender: 'ai',
+          text:
+            'I understand you have a question about: "' +
+            text +
+            '". Please check the FAQ or use the form below for human assistance!',
+        });
       }, 1500);
     }
   }

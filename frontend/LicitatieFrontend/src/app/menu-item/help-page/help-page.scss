@@ -31,22 +31,23 @@
 
 .hero-section p {
   margin-top: v.$space-sm;
-  font-size: 1.1rem; /* slightly larger than default body */
+  font-size: 1.1rem;
   color: v.$color-text-body;
 }
 
 /* Grid și Carduri */
 .content-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: v.$space-xl;
 }
 
 .card {
   background: v.$color-surface;
-  border-radius: v.$radius-md; /* 16px – close to original 20px */
-  padding: v.$space-xl;
-  box-shadow: v.$shadow-sm;
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(10px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(v.$color-primary, 0.1);
   animation: fade-in-up 0.6s ease both;
@@ -57,23 +58,58 @@
 .form-card { animation-delay: 0.2s; }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(63, 81, 181, 0.14);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
 }
 
 .card h2 {
   margin-top: 0;
   color: v.$color-text-heading;
-  font-size: 1.4rem;
-  font-weight: v.$font-weight-bold;
+  font-size: 1.6rem;
+  font-weight: v.$font-weight-extra-bold;
   border-bottom: 2px solid rgba(v.$color-primary, 0.1);
-  padding-bottom: 14px;
+  padding-bottom: 15px;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   gap: v.$space-xl;
+}
+
+/* Chips de categorii FAQ */
+.category-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: v.$space-lg;
+}
+.chip-btn {
+  background: v.$color-primary-tint;
+  color: v.$color-primary;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: v.$font-weight-semibold;
+  cursor: pointer;
+  transition: v.$transition-fast;
+}
+.chip-btn:hover {
+  filter: brightness(0.95);
+}
+
+.faq-category {
+  margin-bottom: v.$space-lg;
+  scroll-margin-top: 100px;
+}
+.category-title {
+  font-size: 1.1rem;
+  font-weight: v.$font-weight-bold;
+  color: v.$color-text-heading;
+  margin-bottom: v.$space-sm;
+  border-bottom: 2px solid v.$color-border;
+  padding-bottom: 8px;
 }
 
 /* FAQ Acordeon */
@@ -129,16 +165,35 @@
 .input-group input,
 .input-group textarea {
   width: 100%;
-  padding: v.$space-sm 15px;
+  padding: 15px 20px;
   border: 1px solid v.$color-border;
-  border-radius: v.$radius-sm;
+  border-radius: 30px;
   font-size: v.$font-size-body;
   box-sizing: border-box;
   font-family: inherit;
+  background: v.$color-surface;
+  color: v.$color-text-heading;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
+.input-group textarea {
+  border-radius: 20px;
+  min-height: 120px;
+  resize: vertical;
+}
+.input-group select {
+  width: 100%;
+  padding: 15px 20px;
+  border: 1px solid v.$color-border;
+  border-radius: 20px;
+  font-size: v.$font-size-body;
+  font-family: inherit;
+  background: v.$color-surface;
+  color: v.$color-text-heading;
+  box-sizing: border-box;
+}
 .input-group input:focus,
-.input-group textarea:focus {
+.input-group textarea:focus,
+.input-group select:focus {
   border-color: v.$color-primary;
   outline: none;
   box-shadow: 0 0 0 3px v.$color-primary-tint;
@@ -148,9 +203,9 @@
   background: linear-gradient(135deg, v.$color-primary, color-mix(in srgb, v.$color-primary 50%, v.$color-accent));
   color: v.$color-white;
   border: none;
-  padding: 14px;
-  border-radius: v.$radius-pill;
-  font-size: 1.05rem;
+  padding: 16px;
+  border-radius: 40px;
+  font-size: 1.1rem;
   font-weight: v.$font-weight-bold;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -164,6 +219,54 @@
   background: v.$color-border;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
+}
+
+/* Zona pentru vizitatori nelogați */
+.guest-cta {
+  text-align: center;
+  padding: 15px 0;
+}
+.guest-message {
+  margin-bottom: 25px;
+  color: v.$color-text-secondary;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.guest-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.guest-login-btn {
+  background: #415ad6 !important;
+  border-color: #415ad6 !important;
+}
+.guest-register-btn {
+  background: #7e38b7 !important;
+  border-color: #7e38b7 !important;
+}
+
+/* Mesaj de eroare la trimitere */
+.form-error {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Stare de succes dupa trimitere */
+.form-success {
+  text-align: center;
+  padding: 20px 0;
+}
+.success-icon {
+  font-size: 2.5rem;
+  color: v.$color-primary;
+  margin-bottom: 10px;
 }
 
 /* Chat AI Widget */
@@ -313,13 +416,38 @@
   40% { transform: scale(1); }
 }
 
+/* Buton "Trimite alt mesaj" — MUTAT afara din media query (bug reparat) */
+.btn-send-another {
+  padding: 10px 24px;
+  background-color: v.$color-surface;
+  color: v.$color-primary;
+  border: 1px solid v.$color-border;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-send-another:hover {
+  color: v.$color-white;
+  background-color: v.$color-primary;
+  border-color: v.$color-primary;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
 /* Responsivitate Mobile */
-@media(max-width: 768px) {
+@media (max-width: 900px) {
   .content-grid {
     grid-template-columns: 1fr;
   }
+}
+@media (max-width: 768px) {
   .chat-box {
     width: 300px;
     right: -10px;
+  }
+  .hero-section h1 {
+    font-size: 2.2rem;
   }
 }

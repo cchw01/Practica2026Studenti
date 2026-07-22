@@ -18,6 +18,7 @@ import { AuctionItemPage } from './auction-item-page/auction-item-page';
 import { UserPage } from './user-page/user-page';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { NotFound } from './not-found/not-found';
+import { AdminGuard } from './services/admin-guard';
 
 const routes: Routes = [
   { path: 'home-page', component: HomePage },
@@ -37,8 +38,8 @@ const routes: Routes = [
   { path: 'add-item', component: AddItemPage },
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'action-item-page/:id', component: AuctionItemPage },
+  { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
   { path: 'user-page/:id', component: UserPage },
-  { path: 'admin', component: AdminPage },
   { path: '**', component: NotFound },
 ];
 

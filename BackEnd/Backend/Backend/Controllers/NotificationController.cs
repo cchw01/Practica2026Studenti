@@ -14,13 +14,6 @@ namespace Backend.Controllers
 
         private int CurrentUserId => int.Parse(User.FindFirst("id")!.Value);
 
-
-        [HttpPost("test/{userId}")]
-        public ActionResult CreateTest(int userId)
-        {
-            dataOps.Create(userId, "Acesta este un test de notificare!");
-            return Ok();
-        }
         [HttpPost("read-all")]
         public ActionResult MarkAllRead()
         {
