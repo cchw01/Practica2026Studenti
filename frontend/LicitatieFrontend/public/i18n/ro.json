@@ -506,30 +506,71 @@
     "LOGOUT": "Deconectare"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
-    "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
-    "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
-    "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
-    "TRY_AGAIN": "Încearcă din nou",
-    "DELETE_POST": "Șterge",
-    "POSTED_BY": "Publicat de",
-    "DISCUSSION": "Discuție",
+  "BACK": "Înapoi la discuții",
+
+  "POST": {
+    "LOADING_TITLE": "Se încarcă discuția",
+    "LOADING_MESSAGE": "Discuția se încarcă.",
+    "ERROR_TITLE": "Discuția nu a putut fi încărcată",
+    "POSTED_BY": "Publicat de"
+  },
+
+  "ACTIONS": {
+    "REPORT": "Raportează",
+    "EDIT": "Editează",
+    "DELETE": "Șterge",
+    "CANCEL": "Anulează",
+    "SAVE": "Salvează",
+    "RETRY": "Încearcă din nou"
+  },
+
+  "EDIT_POST": {
+    "TITLE_LABEL": "Titlu",
+    "TITLE_VALIDATION": "Titlul trebuie să conțină între 3 și 150 de caractere.",
+    "DESCRIPTION_LABEL": "Descriere",
+    "DESCRIPTION_VALIDATION": "Descrierea trebuie să conțină între 10 și 5000 de caractere."
+  },
+
+  "COMMENTS": {
+    "TITLE": "Discuție",
     "COMMENT": "comentariu",
     "COMMENTS": "comentarii",
-    "ADD_COMMENT": "Adaugă un comentariu",
-    "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
-    "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
-    "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
-    "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
+    "ADD_LABEL": "Adaugă un comentariu",
+    "PLACEHOLDER": "Scrie comentariul aici...",
+
+    "VALIDATION": {
+      "REQUIRED": "Comentariul este obligatoriu.",
+      "MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
+      "MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere."
+    },
+
     "PUBLISHING": "Se publică...",
-    "PUBLISH_COMMENT": "Publică comentariul",
+    "PUBLISH": "Publică comentariul",
+
     "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
-    "LOGIN": "Autentifică-te",
-    "LOADING_COMMENTS": "Se încarcă comentariile",
-    "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
-    "DELETE_COMMENT": "Șterge",
-    "NO_COMMENTS": "Nu există comentarii încă"
+    "LOGIN": "Autentificare",
+
+    "LOADING": "Se încarcă comentariile",
+    "ERROR": "Comentariile nu au putut fi încărcate",
+    "EMPTY": "Nu există încă niciun comentariu"
   },
+
+  "REPORT": {
+    "TITLE": "Raportează postarea",
+    "DESCRIPTION": "Selectează motivul pentru care raportezi această discuție:",
+    "CANCEL": "Anulează",
+    "SUBMITTING": "Se trimite...",
+    "SUBMIT": "Trimite raportarea",
+
+    "REASONS": {
+      "SPAM": "Spam",
+      "INAPPROPRIATE_CONTENT": "Conținut neadecvat",
+      "HARASSMENT": "Hărțuire sau comportament abuziv",
+      "MISLEADING_INFORMATION": "Informații înșelătoare",
+      "OTHER": "Alt motiv"
+    }
+  }
+},
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
     "TITLE": "Începe o discuție",

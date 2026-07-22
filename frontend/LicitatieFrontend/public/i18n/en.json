@@ -569,39 +569,72 @@
     "PROFILE": "Profile",
     "LOGOUT": "Log out"
   },
-  "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Back to discussions",
+ "FORUM_DETAILS": {
+  "BACK": "Back to discussions",
 
-    "LOADING_DISCUSSION_TITLE": "Loading discussion",
-    "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
-    "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
-    "TRY_AGAIN": "Try again",
+  "POST": {
+    "LOADING_TITLE": "Loading discussion",
+    "LOADING_MESSAGE": "The discussion is loading.",
+    "ERROR_TITLE": "Unable to load discussion",
+    "POSTED_BY": "Posted by"
+  },
 
-    "DELETE_POST": "Delete",
-    "POSTED_BY": "Posted by",
+  "ACTIONS": {
+    "REPORT": "Report",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "RETRY": "Try again"
+  },
 
-    "DISCUSSION": "Discussion",
+  "EDIT_POST": {
+    "TITLE_LABEL": "Title",
+    "TITLE_VALIDATION": "The title must be between 3 and 150 characters.",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_VALIDATION": "The description must be between 10 and 5000 characters."
+  },
+
+  "COMMENTS": {
+    "TITLE": "Discussion",
     "COMMENT": "comment",
     "COMMENTS": "comments",
+    "ADD_LABEL": "Add a comment",
+    "PLACEHOLDER": "Write your comment here...",
 
-    "ADD_COMMENT": "Add a comment",
-    "COMMENT_PLACEHOLDER": "Write your comment here...",
-    "COMMENT_REQUIRED": "A comment is required.",
-    "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
-    "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
+    "VALIDATION": {
+      "REQUIRED": "A comment is required.",
+      "MIN_LENGTH": "The comment must contain at least 2 characters.",
+      "MAX_LENGTH": "The comment cannot exceed 1000 characters."
+    },
 
     "PUBLISHING": "Publishing...",
-    "PUBLISH_COMMENT": "Publish comment",
+    "PUBLISH": "Publish comment",
 
     "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
     "LOGIN": "Log in",
 
-    "LOADING_COMMENTS": "Loading comments",
-    "LOAD_COMMENTS_ERROR": "Unable to load comments",
-
-    "DELETE_COMMENT": "Delete",
-    "NO_COMMENTS": "No comments yet"
+    "LOADING": "Loading comments",
+    "ERROR": "Unable to load comments",
+    "EMPTY": "No comments yet"
   },
+
+  "REPORT": {
+    "TITLE": "Report post",
+    "DESCRIPTION": "Select the reason for reporting this discussion:",
+    "CANCEL": "Cancel",
+    "SUBMITTING": "Submitting...",
+    "SUBMIT": "Submit report",
+
+    "REASONS": {
+      "SPAM": "Spam",
+      "INAPPROPRIATE_CONTENT": "Inappropriate content",
+      "HARASSMENT": "Harassment or abusive behavior",
+      "MISLEADING_INFORMATION": "Misleading information",
+      "OTHER": "Other"
+    }
+  }
+},
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Back to discussions",
     "TITLE": "Start a discussion",
