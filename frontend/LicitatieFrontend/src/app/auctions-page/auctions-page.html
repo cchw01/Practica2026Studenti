@@ -72,8 +72,8 @@
             <div class="current-bid-wrapper">
               <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
               
-              <!-- Aici am adăugat clasa dinamică și funcția de click -->
-              <div class="favorite-badge" [class.active]="item.isFavorite" (click)="toggleFavorite(item, $event)">
+              <!-- Am adăugat *ngIf="!isOwner(item)" -->
+              <div class="favorite-badge" *ngIf="!isOwner(item)" [class.active]="item.isFavorite" (click)="toggleFavorite(item, $event)">
                 <span>{{ item.isFavorite ? '❤️' : '🤍' }}</span>
               </div>
             </div>
