@@ -62,6 +62,7 @@ export class RegisterPage implements OnInit {
       return;
     }
 
+    this.errorMessage = '';
     const { confirmPassword, ...userData } = this.registerForm.value;
 
     this.authService.register(userData).subscribe({
@@ -71,16 +72,19 @@ export class RegisterPage implements OnInit {
             this.router.navigate(['/home-page']);
           },
           error: () => {
-            this.router.navigate(['/home-page']);
+            this.router.navigate(['/login-page']);
           },
         });
       },
       error: (err: any) => {
         console.error('Eroare la inregistrare:', err);
-        this.authService.login(userData.email, userData.password).subscribe({
-          next: () => this.router.navigate(['/home-page']),
-          error: () => this.router.navigate(['/home-page'])
-        });
+        if (typeof err.error === 'string') {
+          this.errorMessage = err.error;
+        } else if (err.error?.message) {
+          this.errorMessage = err.error.message;
+        } else {
+          this.errorMessage = 'A apărut o eroare la înregistrare. Asigură-te că backend-ul este pornit și conexiunea la baza de date funcționează.';
+        }
       },
     });
   }
