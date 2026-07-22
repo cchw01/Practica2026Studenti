@@ -35,7 +35,7 @@ namespace Backend.DataManagement
                 .Include(i => i.Owner)
                 .Include(i => i.Winner)
                 .Where(i =>
-                    (i.Status == AuctionItem.StatusEnum.Added ||
+                    (
                      i.Status == AuctionItem.StatusEnum.Validated ||
                      i.Status == AuctionItem.StatusEnum.ActiveBid) &&
                     i.EndDate > now)
