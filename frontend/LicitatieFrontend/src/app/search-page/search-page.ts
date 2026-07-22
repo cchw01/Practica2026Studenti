@@ -133,11 +133,6 @@ export class SearchPage implements OnInit {
     this.router.navigate(['/forum', post.id]);
   }
 
-  goToUserProfile(user: UserReadDto): void {
-    // TODO: leagă la pagina de profil a colegului odată ce e pe main
-    // (ruta nu e încă stabilită).
-  }
-
   getRemainingTime(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
     if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');

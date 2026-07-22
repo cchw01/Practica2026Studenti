@@ -16,7 +16,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
 import { AuctionItem } from '../Models/item-model';
-import { AuthService } from '../services/auth';
 
 export interface Category {
   name: string;
@@ -30,7 +29,7 @@ export interface AboutFeature {
   descriptionKey: string;
 }
 
-const MIN_REMAINING_MS = 10 * 60 * 1000;
+
 
 interface Particle {
   ox: number;
@@ -52,8 +51,6 @@ const HERO_TITLE = 'BID. WIN. REPEAT.';
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
-  @ViewChild('auctionsTrack') auctionsTrackRef?: ElementRef<HTMLDivElement>;
-  @ViewChild('categoriesTrack') categoriesTrackRef?: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
@@ -88,7 +85,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly translate: TranslateService,
     private readonly itemService: ItemService,
     private readonly cdr: ChangeDetectorRef,
-    private readonly authService: AuthService,
   ) {}
 
   categories: Category[] = [
@@ -151,10 +147,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login-page']);
-      return;
-    }
     this.router.navigate(['/add-item']);
   }
 
@@ -169,21 +161,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
-  }
-
-  scrollAuctions(direction: number): void {
-    this.scrollTrack(this.auctionsTrackRef, direction);
-  }
-
-  scrollCategories(direction: number): void {
-    this.scrollTrack(this.categoriesTrackRef, direction);
-  }
-
-  private scrollTrack(trackRef: ElementRef<HTMLDivElement> | undefined, direction: number): void {
-    const track = trackRef?.nativeElement;
-    if (!track) return;
-
-    track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
   getRemainingLabel(endDate: Date): string {
@@ -214,9 +191,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.displayedAuctions = this.allAuctions
       .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
-      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
+      .filter((entry) => entry.remainingMs > 0)
       .sort((a, b) => a.remainingMs - b.remainingMs)
-      .map((entry) => entry.item);
+      .map((entry) => entry.item)
+      .slice(0, 4);
 
     this.cdr.detectChanges();
   }
@@ -236,7 +214,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-    this.itemService.getItems().subscribe({
+    this.itemService.getActiveItems().subscribe({
       next: (items) => {
         this.allAuctions = items;
         this.refreshDisplayedAuctions();
@@ -271,6 +249,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (this.auctionsTimerId !== undefined) {
       clearInterval(this.auctionsTimerId);
     }
+
 
     const hero = this.heroRef.nativeElement;
 
