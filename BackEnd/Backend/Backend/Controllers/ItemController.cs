@@ -311,8 +311,10 @@ namespace Backend.Controllers
                 item.CategoryId = dto.CategoryId;
                 item.Description = dto.Description;
                 item.Location = dto.Location;
-                item.StartDate = dto.StartDate;
-                item.EndDate = dto.EndDate;
+                TimeSpan durationDays = item.EndDate - item.StartDate;
+                item.StartDate = DateTime.UtcNow;
+                item.EndDate = item.StartDate.Add(durationDays);
+                item.Status = AuctionItem.StatusEnum.Added; // Might want to make a separate "Edited" status later for clarity
 
                 dataOps.SaveChanges();
 
