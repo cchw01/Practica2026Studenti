@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-help-page',
@@ -11,6 +12,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
+  isLoggedIn = false; // <-- Aici controlăm dacă e logat sau nu
 
   faqCategories = [
     {
@@ -84,7 +86,10 @@ export class HelpPageComponent implements OnInit {
     { sender: 'ai', text: 'Salut! Sunt asistentul tău virtual. Cu ce te pot ajuta astăzi?' },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.helpForm = this.fb.group({
@@ -114,6 +119,14 @@ export class HelpPageComponent implements OnInit {
     } else {
       alert('Te rugăm să completezi corect toate câmpurile.');
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
   toggleChat() {
