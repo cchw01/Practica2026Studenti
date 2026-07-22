@@ -297,48 +297,86 @@
   }
 },
   "AUCTION_ITEM_PAGE": {
-    "HEADER_BADGE": "🏷️ Detalii licitație",
-    "INFO": {
-      "CURRENT_PRICE": "Preț curent",
-      "START_PRICE": "Preț de pornire",
-      "CATEGORY": "Categorie",
-      "LOCATION": "Locație",
-      "STARTS_AT": "Data începerii",
-      "OWNER": "Proprietar",
-      "ENDS": "Se încheie"
+  "HEADER_BADGE": "🏷️ Detalii licitație",
+
+  "INFO": {
+    "CURRENT_PRICE": "Preț curent",
+    "START_PRICE": "Preț de pornire",
+    "CATEGORY": "Categorie",
+    "LOCATION": "Locație",
+    "STARTS_AT": "Începe la",
+    "OWNER": "Proprietar",
+    "ENDS": "Se încheie la"
+  },
+
+  "BID": {
+    "TITLE": "Plasează oferta ta",
+    "PLACEHOLDER": "Introdu valoarea ofertei",
+    "BUTTON": "🔨 Plasează oferta",
+    "MINIMUM": "Ofertă minimă:",
+    "LOGIN_TEXT": "Autentifică-te pentru a plasa o ofertă pentru acest produs.",
+    "LOGIN_BUTTON": "Autentificare pentru licitare"
+  },
+
+  "WISHLIST": {
+    "ADD": "Adaugă la favorite",
+    "ADDED": "În lista de favorite",
+    "TOAST_ADDED": "Produsul a fost adăugat la lista de favorite.",
+    "TOAST_REMOVED": "Produsul a fost eliminat din lista de favorite."
+  },
+
+  "ACTIONS": {
+    "REPORT_ITEM": "Raportează produsul",
+    "ITEM_REPORTED": "Produs raportat"
+  },
+
+  "REPORT": {
+    "TITLE": "Raportează licitația",
+    "DESCRIPTION": "Ajută-ne să păstrăm BidSphere în siguranță. Selectează motivul pentru care raportezi această licitație:",
+    "REASON_LABEL": "Motiv",
+
+    "REASONS": {
+      "INAPPROPRIATE_CONTENT": "Conținut neadecvat",
+      "MISLEADING_DESCRIPTION": "Descriere înșelătoare",
+      "FAKE_ITEM": "Produs fals sau contrafăcut",
+      "SUSPICIOUS_BIDDING": "Activitate de licitare suspectă",
+      "OTHER": "Alt motiv"
     },
-    "BID": {
-      "TITLE": "Plasează oferta ta",
-      "PLACEHOLDER": "Introdu suma licitată",
-      "BUTTON": "🔨 Licitează",
-      "MINIMUM": "Oferta minimă:",
-      "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
-      "LOGIN_BUTTON": "Autentificare pentru licitare"
-    },
-    "WISHLIST": {
-      "ADD": "🤍 Adaugă la favorite",
-      "ADDED": "❤️ În lista de favorite"
-    },
-    "DESCRIPTION": {
-      "TITLE": "Descriere produs"
-    },
-    "STATUS": {
-      "ACTIVE": "Activă",
-      "ENDED": "Încheiată",
-      "PENDING": "În așteptare"
-    },
-    "MESSAGES": {
-      "AUCTION_ENDED": "Licitația s-a încheiat.",
-      "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
-      "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
-    },
-    "COUNTDOWN": {
-      "DAYS": "z",
-      "HOURS": "h",
-      "MINUTES": "m",
-      "SECONDS": "s"
+
+    "DETAILS_LABEL": "Detalii suplimentare (opțional)",
+    "DETAILS_PLACEHOLDER": "Descrie problema...",
+    "CANCEL": "Anulează",
+    "SUBMIT": "Trimite raportarea",
+
+    "TOAST": {
+      "SUCCESS": "Licitația a fost raportată cu succes.",
+      "ERROR": "Licitația nu a putut fi raportată."
     }
   },
+
+  "DESCRIPTION": {
+    "TITLE": "Descrierea produsului"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activă",
+    "ENDED": "Încheiată",
+    "PENDING": "În așteptare"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "Licitația s-a încheiat.",
+    "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
+    "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "z",
+    "HOURS": "h",
+    "MINUTES": "min",
+    "SECONDS": "s"
+  }
+},
   "REVIEWS": {
     "TITLE": "Recenzii",
     "REVIEWER_ID": "ID-ul autorului recenziei",
