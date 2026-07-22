@@ -84,6 +84,7 @@ export class AdminPage implements OnInit {
     this.loadStats();
     this.loadAuctions();
     this.loadForum();
+    this.loadMessages(); // <- NOU, ca badge-ul de Mesaje sa fie corect de la inceput
   }
   get visibleForumPosts(): any[] {
     return this.forumPosts.filter((post) => !this.verifiedPostIds.has(post.id));
@@ -399,6 +400,11 @@ export class AdminPage implements OnInit {
   get displayedUsers(): any[] {
     return this.usersView === 'all' ? this.filteredUsers : this.reportedUsers;
   }
+  get unresolvedMessagesCount(): number {
+    const unresolvedContact = this.contactMessages.filter((m) => !m.isResolved).length;
+    const unresolvedHelp = this.helpMessages.filter((m) => !m.isResolved).length;
+    return unresolvedContact + unresolvedHelp;
+  }
 
   setUsersView(view: 'all' | 'reported'): void {
     this.usersView = view;
@@ -444,9 +450,12 @@ export class AdminPage implements OnInit {
 
   resolveMessage(msg: any): void {
     const reply = this.replyDrafts[msg.id] || '';
-    this.adminService.resolveMessage(msg.id, reply).subscribe(() => {
-      delete this.replyDrafts[msg.id];
-      this.loadMessages();
+    this.adminService.resolveMessage(msg.id, reply).subscribe({
+      next: () => {
+        delete this.replyDrafts[msg.id];
+        this.loadMessages();
+      },
+      error: (err) => console.error('Eroare la rezolvarea mesajului:', err),
     });
   }
 }

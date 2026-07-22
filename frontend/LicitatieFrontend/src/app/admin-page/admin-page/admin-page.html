@@ -25,16 +25,16 @@
         <span class="menu-icon"></span> Evidență Conturi
       </button>
       <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
-        <span class="menu-icon"></span> Moderare Forum
-        <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
-      </button>
+  <span class="menu-icon"></span> Moderare Forum
+  <span *ngIf="visibleForumPosts.length > 0" class="sidebar-badge">{{ visibleForumPosts.length }}</span>
+</button>
       <button (click)="setTab('categories')" [class.active]="activeTab === 'categories'">
         <span class="menu-icon"></span> Categorii Produse
       </button>
       <button (click)="setTab('messages')" [class.active]="activeTab === 'messages'">
   <span class="menu-icon"></span> Mesaje
-  <span *ngIf="contactMessages.length + helpMessages.length > 0" class="sidebar-badge">
-    {{ contactMessages.length + helpMessages.length }}
+  <span *ngIf="unresolvedMessagesCount > 0" class="sidebar-badge">
+    {{ unresolvedMessagesCount }}
   </span>
 </button>
     </div>
@@ -265,13 +265,15 @@
   <div class="vuexy-card">
     <div class="vuexy-list-stack">
       <div *ngFor="let msg of displayedMessages" class="vuexy-stack-item message-item">
-        <div class="stack-left">
-          <span class="vuexy-author-headline">{{ msg.name }} — {{ msg.email }}</span>
-          <span *ngIf="msg.issueType" class="subject-emphasis">{{ msg.issueType }}</span>
-          <p class="forum-body-text">"{{ msg.message }}"</p>
-          <small>{{ msg.createdAt | date:'dd MMM, HH:mm' }} — {{ msg.userId ? 'Cont logat, poate primi notificare' : 'Vizitator, nu poate primi notificare' }}</small>
-          <span class="vuexy-pill" [class.pill-banned]="!msg.isResolved">{{ msg.isResolved ? 'Rezolvat' : 'Nerezolvat' }}</span>
-        </div>
+  <div class="stack-left">
+    <div class="message-header-row">
+      <span class="vuexy-author-headline">{{ msg.name }} — {{ msg.email }}</span>
+      <span *ngIf="msg.issueType" class="issue-type-badge">{{ msg.issueType }}</span>
+    </div>
+    <p class="forum-body-text">"{{ msg.message }}"</p>
+    <small>{{ msg.createdAt | date:'dd MMM, HH:mm' }}</small>
+    <span class="vuexy-pill" [class.pill-banned]="!msg.isResolved">{{ msg.isResolved ? 'Rezolvat' : 'Nerezolvat' }}</span>
+  </div>
         <div class="stack-actions" *ngIf="!msg.isResolved">
           <input
             type="text"
