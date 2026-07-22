@@ -260,14 +260,14 @@ export class ProfilePage implements OnInit {
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.ReviewedUserId === this.currentUserId)
+          .filter((r) => r.reviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.Id,
-            author: r.ReviewerUserName || 'Anonymous',
-            rating: r.Rating,
-            comment: r.Comment,
-            date: r.ReviewDate
-              ? new Date(r.ReviewDate).toLocaleDateString()
+            id: r.id,
+            author: r.reviewerUserName || 'Anonymous',
+            rating: r.rating,
+            comment: r.comment,
+            date: r.reviewDate
+              ? new Date(r.reviewDate).toLocaleDateString()
               : new Date().toLocaleDateString(),
           }));
 

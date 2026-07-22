@@ -6,6 +6,7 @@ import { ItemService } from '../services/item-service';
 import { AuthService } from '../services/auth';
 import { ReviewService } from '../services/review-service';
 import { AuctionItem } from '../Models/item-model';
+import { Review, ReviewCreate } from '../Models/review/review.model';
 
 @Component({
   selector: 'app-user-page',
@@ -23,11 +24,20 @@ export class UserPage implements OnInit {
   userCategories: string[] = [];
   selectedCategory: string = '';
 
+  // Review-uri primite de utilizator (afișate pe pagină)
+  userReviews: Review[] = [];
+  get averageRating(): number {
+  if (this.userReviews.length === 0) return 0;
+  const sum = this.userReviews.reduce((acc, r) => acc + r.rating, 0);
+  return Math.round((sum / this.userReviews.length) * 10) / 10;
+}
+  
+
   // Rapoarte
   showReportForm = false;
   reportReason = '';
 
-  // Review-uri
+  // Formular Review (modal adăugare)
   showReviewForm = false;
   reviewRating = 5;
   reviewComment = '';
@@ -64,6 +74,7 @@ export class UserPage implements OnInit {
         console.log('DEBUG: Date utilizator primite de la backend:', userData);
         this.user = userData;
         this.loadUserActiveCategories();
+        this.loadUserReviews();
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -102,6 +113,21 @@ export class UserPage implements OnInit {
       }
     });
   }
+
+  loadUserReviews(): void {
+  this.reviewService.getReviews().subscribe({
+    next: (allReviews) => {
+      this.userReviews = allReviews
+        .filter(r => r.reviewedUserId === this.userId)
+        .sort((a, b) => new Date(b.reviewDate).getTime() - new Date(a.reviewDate).getTime());
+
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('DEBUG: Eroare la încărcarea review-urilor utilizatorului:', err);
+    }
+  });
+}
 
   getItemImage(item: any): string {
     const rawUrl = item.ImageUrl || item.imageUrl || (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : null) || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null);
@@ -191,19 +217,19 @@ export class UserPage implements OnInit {
     }
     if (!this.reviewComment.trim()) return;
 
-    const reviewData = {
-      ReviewerId: currentUserId,
-      ReviewedUserId: this.userId,
-      Rating: this.reviewRating,
-      Comment: this.reviewComment
-    };
+    const reviewData: ReviewCreate = {
+  reviewerId: currentUserId,
+  reviewedUserId: this.userId,
+  rating: this.reviewRating,
+  comment: this.reviewComment
+};
 
     this.reviewService.addReview(reviewData).subscribe({
       next: () => {
         this.showReviewForm = false;
         this.reportSuccessMessage = `Review-ul tău de ${this.reviewRating} stele a fost trimis cu succes!`;
         this.reviewComment = '';
-        // Reîncărcăm profilul pentru a vedea noul rating mediu calculat pe backend
+        // Reîncărcăm profilul + review-urile pentru a vedea noul rating și comentariul
         this.loadUserProfile();
       },
       error: (err) => {

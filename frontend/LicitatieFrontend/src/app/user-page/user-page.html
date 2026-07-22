@@ -10,10 +10,9 @@
 
     <!-- Rating-ul cu stele securizat -->
     <div class="rating-box">
-      <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
+      <span class="rating-value">{{ averageRating }} / 5</span>
       <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star"
-          [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+        <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= averageRating">★</span>
       </div>
     </div>
 
@@ -79,6 +78,28 @@
       <p>{{ reportSuccessMessage }}</p>
       <button class="btn-close-banner" (click)="reportSuccessMessage = ''">Închide</button>
     </div>
+  </div>
+
+  <!-- Secțiunea Review-uri primite de utilizator -->
+  <div class="reviews-section" *ngIf="user">
+    <h3>Review-uri ({{ userReviews.length }})</h3>
+
+    <div class="reviews-list" *ngIf="userReviews.length > 0; else noReviews">
+      <div class="review-card" *ngFor="let review of userReviews">
+        <div class="review-header">
+          <strong>@{{ review.reviewerUserName }}</strong>
+          <div class="stars-small">
+            <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= review.rating">★</span>
+          </div>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+        <small class="review-date">{{ review.reviewDate | date: 'dd.MM.yyyy' }}</small>
+      </div>
+    </div>
+
+    <ng-template #noReviews>
+      <p class="empty-reviews">Acest utilizator nu are încă niciun review.</p>
+    </ng-template>
   </div>
 
   <!-- Secțiunea Licitații Active ale Utilizatorului -->
