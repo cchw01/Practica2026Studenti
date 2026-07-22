@@ -5,11 +5,11 @@ namespace Backend.DTOs
     public class RegisterDto
     {
         [Required(ErrorMessage = "UserName is required.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "UserName must be between 3 and 50 characters.")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "UserName must be between 1 and 50 characters.")]
         public string UserName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Name is required.")]
-        [StringLength(100, ErrorMessage = "Name can have a maximum of 100 characters.")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Name must be between 1 and 100 characters.")]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required.")]

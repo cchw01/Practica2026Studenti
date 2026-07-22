@@ -87,7 +87,7 @@ namespace Backend.Controllers
 
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
-                    return BadRequest("This username is already in use");
+                    return BadRequest(new { message = "This username is already in use" });
 
                 var user = new User
                 {
@@ -104,7 +104,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
