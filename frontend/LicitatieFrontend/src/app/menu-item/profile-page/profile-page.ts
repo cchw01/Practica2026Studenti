@@ -271,7 +271,13 @@ export class ProfilePage implements OnInit {
               ownerUsername &&
               this.user.username &&
               ownerUsername.toLowerCase() === this.user.username.toLowerCase();
-            return matchId || matchUser;
+              
+            const isOwner = matchId || matchUser;
+            const status = (item.Status || item.status || '').toString().toLowerCase();
+            // In backend the statuses are: Added, Validated, ActiveBid, NoWinner, Sold, Rejected.
+            const isActive = status === 'validated' || status === 'activebid' || status === 'active';
+            
+            return isOwner && isActive;
           })
           .map((item: any) => ({
             id: item.ID || item.id || 0,
