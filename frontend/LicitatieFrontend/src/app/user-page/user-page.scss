@@ -114,6 +114,7 @@
 .stars .star.half {
   background: linear-gradient(90deg, #ffb400 50%, #ccc 50%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
