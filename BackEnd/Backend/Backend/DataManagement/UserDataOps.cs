@@ -132,5 +132,10 @@ namespace Backend.DataManagement
         {
             return DbContext.Users.Any(u => u.Email == email);
         }
+
+        public bool PhoneNumberExists(string phoneNumber)
+        {
+            return DbContext.Users.Any(u => u.PhoneNumber == phoneNumber);
+        }
     }
 }

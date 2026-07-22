@@ -89,6 +89,9 @@ namespace Backend.Controllers
                 if (existingUser != null)
                     return BadRequest(new { message = "This username is already in use" });
 
+                if (dataOps.PhoneNumberExists(request.PhoneNumber))
+                    return BadRequest(new { message = "This phone number is already in use" });
+                    
                 var user = new User
                 {
                     UserName = request.UserName,
