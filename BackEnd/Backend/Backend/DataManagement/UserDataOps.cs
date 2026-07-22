@@ -79,7 +79,7 @@ namespace Backend.DataManagement
                 return false;
 
             if (user.WishList.Any(i => i.ID == itemId))
-                return false;
+                return true;
 
             user.WishList.Add(item);
             DbContext.SaveChanges();
@@ -111,11 +111,11 @@ namespace Backend.DataManagement
             var item = user.WishList
                 .FirstOrDefault(i => i.ID == itemId);
 
-            if (item == null)
-                return false;
-
-            user.WishList.Remove(item);
-            DbContext.SaveChanges();
+            if (item != null)
+            {
+                user.WishList.Remove(item);
+                DbContext.SaveChanges();
+            }
 
             return true;
         }

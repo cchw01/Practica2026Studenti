@@ -220,11 +220,10 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    // Load Items listed by user
+    // Load items listed by user & won items
     this.itemService.getItems().subscribe({
-      next: (items) => {
-        // Filter items where OwnerId matches current user ID or username
-        this.addedItems = items
+      next: (allItems) => {
+        const localAdded = (allItems || [])
           .filter((item: any) => {
             const ownerId = item.OwnerId ?? item.ownerId ?? item.Owner?.id ?? item.Owner?.ID;
             const ownerUsername =
@@ -250,10 +249,37 @@ export class ProfilePage implements OnInit {
               item.Status || item.status
                 ? (item.Status || item.status).toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
-            image: this.getItemImage(item, items),
+            image: this.getItemImage(item, allItems),
           }));
 
-        this.bidItems = items
+        // Fetch added items directly from profile API
+        this.UserService.getUserAddedItems(this.currentUserId).subscribe({
+          next: (apiAdded) => {
+            const apiMapped = (apiAdded || []).map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || '',
+              price:
+                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+              image: this.getItemImage(item, allItems),
+            }));
+
+            const map = new Map<number, Item>();
+            for (const item of localAdded) if (item.id) map.set(item.id, item);
+            for (const item of apiMapped) if (item.id) map.set(item.id, item);
+            this.addedItems = Array.from(map.values());
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            this.addedItems = localAdded;
+            this.cdr.detectChanges();
+          },
+        });
+
+        // Won items
+        const localWon = (allItems || [])
           .filter((item: any) => {
             const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
             const isSold =
@@ -266,10 +292,32 @@ export class ProfilePage implements OnInit {
             title: item.name || item.Name || '',
             price: item.currentPrice ?? item.CurrentPrice ?? 0,
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
-            image: this.getItemImage(item, items),
+            image: this.getItemImage(item, allItems),
           }));
 
-        // Fetch wishlist items specifically from backend for current user
+        this.UserService.getUserWonItems(this.currentUserId).subscribe({
+          next: (apiWon) => {
+            const apiWonMapped = (apiWon || []).map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || '',
+              price: item.currentPrice ?? item.startPrice ?? 0,
+              status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
+              image: this.getItemImage(item, allItems),
+            }));
+
+            const map = new Map<number, Item>();
+            for (const item of localWon) if (item.id) map.set(item.id, item);
+            for (const item of apiWonMapped) if (item.id) map.set(item.id, item);
+            this.bidItems = Array.from(map.values());
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            this.bidItems = localWon;
+            this.cdr.detectChanges();
+          },
+        });
+
+        // Load Wishlist independently
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
             this.wishItems = (wishlistItems || []).map((item: any) => ({
@@ -277,15 +325,15 @@ export class ProfilePage implements OnInit {
               title: item.name || item.Name || 'Item',
               price:
                 item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image:
-                item.imageUrl ||
-                item.ImageUrl ||
-                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
-                this.getItemImage(item, items),
+              image: this.getItemImage(item, allItems),
               status: item.status
                 ? item.status.toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
             }));
+
+            // Sync wishlist local storage cache
+            const wishIds = this.wishItems.map((w) => w.id).filter(Boolean);
+            localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(wishIds));
             this.cdr.detectChanges();
           },
           error: (err) => {
@@ -294,7 +342,39 @@ export class ProfilePage implements OnInit {
           },
         });
       },
-      error: (err) => console.error('Error loading items:', err),
+      error: (err) => {
+        console.error('Error loading items:', err);
+        this.UserService.getUserAddedItems(this.currentUserId).subscribe({
+          next: (apiAdded) => {
+            this.addedItems = (apiAdded || []).map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || '',
+              price: item.currentPrice ?? item.startPrice ?? 0,
+              status: item.status ? item.status.toString() : 'Active',
+              image: this.getItemImage(item),
+            }));
+            this.cdr.detectChanges();
+          },
+          error: () => {},
+        });
+
+        this.UserService.getWishlist(this.currentUserId).subscribe({
+          next: (wishlistItems: any[]) => {
+            this.wishItems = (wishlistItems || []).map((item: any) => ({
+              id: item.id || item.ID || 0,
+              title: item.name || item.Name || 'Item',
+              price:
+                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
+              image: this.getItemImage(item),
+              status: item.status
+                ? item.status.toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+            }));
+            this.cdr.detectChanges();
+          },
+          error: () => this.loadWishlistFromStorage(),
+        });
+      },
     });
 
     this.reviewService.getReviews().subscribe({

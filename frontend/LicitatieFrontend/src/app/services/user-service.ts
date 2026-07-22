@@ -46,6 +46,15 @@ export class UserService {
 
   // --- Operațiuni Wishlist ---
   addToWishlist(userId: number, itemId: number): Observable<void> {
+    if (userId) {
+      const localWishIds: number[] = JSON.parse(
+        localStorage.getItem(`wishlist_${userId}`) || '[]'
+      );
+      if (!localWishIds.includes(itemId)) {
+        localWishIds.push(itemId);
+        localStorage.setItem(`wishlist_${userId}`, JSON.stringify(localWishIds));
+      }
+    }
     return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
   }
 
@@ -54,7 +63,22 @@ export class UserService {
   }
 
   removeFromWishlist(userId: number, itemId: number): Observable<void> {
+    if (userId) {
+      const localWishIds: number[] = JSON.parse(
+        localStorage.getItem(`wishlist_${userId}`) || '[]'
+      );
+      const updated = localWishIds.filter((id) => id !== itemId);
+      localStorage.setItem(`wishlist_${userId}`, JSON.stringify(updated));
+    }
     return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`);
+  }
+
+  getUserAddedItems(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`https://localhost:7137/api/Profile/${userId}/items`);
+  }
+
+  getUserWonItems(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`https://localhost:7137/api/Profile/${userId}/items/won`);
   }
 
     reportUser(userId: number, reason: string): Observable<void> {
