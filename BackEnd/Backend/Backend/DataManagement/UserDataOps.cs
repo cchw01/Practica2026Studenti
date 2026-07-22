@@ -58,8 +58,6 @@ namespace Backend.DataManagement
 
             return user;
         }
-<<<<<<< HEAD
-=======
         public User? GetUserByEmail(string email)
         {
             var user = DbContext.Users
@@ -133,6 +131,5 @@ namespace Backend.DataManagement
         {
             return DbContext.Users.Any(u => u.Email == email);
         }
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
     }
 }
