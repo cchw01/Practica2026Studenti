@@ -11,7 +11,8 @@
         <circle cx="11" cy="11" r="7"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="text" placeholder="{{ 'AUCTIONS_PAGE.SEARCH_PLACEHOLDER' | translate }}" [(ngModel)]="searchText" (ngModelChange)="onFilterChange()" />
+      <input type="text" placeholder="{{ 'AUCTIONS_PAGE.SEARCH_PLACEHOLDER' | translate }}" [(ngModel)]="searchText"
+        (ngModelChange)="onFilterChange()" />
     </div>
   </div>
 
@@ -54,14 +55,16 @@
   <ng-container *ngIf="!isLoading && !hasError">
     <p class="results-count" *ngIf="filteredItems.length > 0">
       {{ filteredItems.length }}
-      {{ filteredItems.length === 1 ? ('AUCTIONS_PAGE.RESULT.ONE' | translate) : ('AUCTIONS_PAGE.RESULT.MANY' | translate) }}
+      {{ filteredItems.length === 1 ? ('AUCTIONS_PAGE.RESULT.ONE' | translate) : ('AUCTIONS_PAGE.RESULT.MANY' |
+      translate) }}
     </p>
 
     <div class="active-auctions">
       <div class="cards-container" *ngIf="filteredItems.length > 0">
         <div class="card-auction" *ngFor="let item of filteredItems" (click)="goToAuctionDetail(item)">
           <div class="card-image-wrap">
-            <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
+            <img
+              [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
               [alt]="item.Name" />
             <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
               {{ getRemainingTime(item.EndDate) }}
@@ -70,12 +73,15 @@
           <div class="card-content">
             <h3>{{ item.Name }}</h3>
             <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
-            <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
+            <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }}
+                RON</strong></p>
             <div class="card-footer" *ngIf="item.Owner" (click)="$event.stopPropagation()">
               <span>{{ 'AUCTIONS_PAGE.POSTED_BY' | translate }}: </span>
-              <a [routerLink]="isOwner(item) ? ['/profile-page'] : ['/user-page', item.Owner.ID || $any(item.Owner).id || $any(item.Owner).ID]" class="owner-link">
+              <a [routerLink]="isOwner(item) ? ['/profile-page'] : ['/user-page', item.Owner.ID || $any(item.Owner).id || $any(item.Owner).ID]"
+                class="owner-link">
                 <!-- Suport complet pentru orice variantă de scriere a username-ului -->
-                {{ isOwner(item) ? ('AUCTIONS_PAGE.YOU' | translate) : (item.Owner.UserName || $any(item.Owner).userName || $any(item.Owner).username) }}
+                {{ isOwner(item) ? ('AUCTIONS_PAGE.YOU' | translate) : (item.Owner.UserName || $any(item.Owner).userName
+                || $any(item.Owner).username) }}
               </a>
             </div>
           </div>
