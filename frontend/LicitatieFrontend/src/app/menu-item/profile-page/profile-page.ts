@@ -56,7 +56,7 @@ export class ProfilePage implements OnInit {
   editDraft: UserProfile = { ...this.user };
 
   // --- Score ---
-  score: number = 4.5;
+  score: number = 0;
 
   // --- Theme ---
   currentTheme: string = 'light';
@@ -354,7 +354,7 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5;
+          this.score = 0;
         }
       },
       error: (err: any) => console.error('Error loading reviews:', err.message || err),
