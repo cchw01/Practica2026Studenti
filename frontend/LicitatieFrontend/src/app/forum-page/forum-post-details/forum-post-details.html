@@ -27,12 +27,15 @@
                     <div class="post-title-row">
     @if (!isEditingPost) {
         <h1>{{ post.title }}</h1>
-        @if (currentUserId !== null && post.userId === currentUserId) {
         <div class="post-actions">
+            @if (currentUserId !== null) {
+            <button type="button" class="report-button" (click)="openReportModal()">Report</button>
+            }
+            @if (currentUserId !== null && post.userId === currentUserId) {
             <button type="button" class="secondary-button" (click)="startEditPost()">Edit</button>
             <button type="button" class="delete-button" (click)="deletePost()">Delete</button>
+            }
         </div>
-        }
     }
 </div>
 
@@ -193,4 +196,41 @@
         </section>
         }
     </main>
+
+    @if (isReportModalOpen) {
+    <div class="report-modal-backdrop" (click)="closeReportModal()">
+      <div class="report-modal" (click)="$event.stopPropagation()">
+        <h3>Raportează postarea</h3>
+        <p>Selectează motivul pentru care raportezi această discuție:</p>
+
+        <div class="report-reasons-list">
+          @for (reasonItem of reportReasons; track reasonItem.value) {
+          <label class="report-reason-option">
+            <input type="radio" name="reportReason" [value]="reasonItem.value" [(ngModel)]="selectedReportReason" />
+            {{ reasonItem.label }}
+          </label>
+          }
+        </div>
+
+        @if (reportErrorMessage) {
+        <p class="report-error">{{ reportErrorMessage }}</p>
+        }
+        @if (reportSuccessMessage) {
+        <p class="report-success">{{ reportSuccessMessage }}</p>
+        }
+
+        <div class="report-modal-actions">
+          <button type="button" class="secondary-button" (click)="closeReportModal()">Anulează</button>
+          <button
+            type="button"
+            class="primary-button"
+            [disabled]="!selectedReportReason || isSubmittingReport"
+            (click)="submitReport()"
+          >
+            {{ isSubmittingReport ? 'Se trimite...' : 'Trimite raportarea' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    }
 </div>

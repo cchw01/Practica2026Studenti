@@ -152,7 +152,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   startSelling() {
     if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login-page']);
+      this.router.navigate(['/login-page'], { queryParams: { error: 'login_required' } });
       return;
     }
     this.router.navigate(['/add-item']);

@@ -532,3 +532,110 @@
     justify-content: flex-end;
     gap: 8px;
 }
+/* ============ REPORT BUTTON + MODAL ============ */
+.report-button {
+    flex-shrink: 0;
+    padding: 8px 20px;
+    border: 1.5px solid #7367f0;
+    border-radius: 30px;
+    background-color: #ffffff;
+    color: #7367f0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(30, 42, 90, 0.05);
+}
+
+.report-button:hover {
+    background-color: #7367f0;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(115, 103, 240, 0.25);
+}
+
+.report-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 30, 46, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+}
+
+.report-modal {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(30, 42, 90, 0.2);
+}
+
+.report-modal h3 {
+    margin: 0 0 8px;
+    color: #1e1e2e;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.report-modal p {
+    margin: 0 0 18px;
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.report-reasons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.report-reason-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(63, 81, 181, 0.15);
+    color: #444444;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.report-reason-option:hover {
+    border-color: #7367f0;
+    background: rgba(115, 103, 240, 0.06);
+}
+
+.report-reason-option input[type='radio'] {
+    accent-color: #7367f0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.report-error {
+    margin: 0 0 8px;
+    color: #d32f2f;
+    font-size: 13px;
+}
+
+.report-success {
+    margin: 0 0 8px;
+    color: #2e7d32;
+    font-size: 13px;
+}
+
+.report-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
