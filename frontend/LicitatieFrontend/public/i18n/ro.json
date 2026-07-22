@@ -1,5 +1,5 @@
 {
-    "NAV": {
+  "NAV": {
     "HOME": "Acasă",
     "AUCTIONS": "Licitații",
     "FORUM": "Forum",
@@ -11,7 +11,6 @@
     "HELP": "Ajutor",
     "ADD_AUCTION": "Adaugă licitație"
   },
-
   "CONTACT": {
     "TITLE": "Contactează-ne",
     "DESCRIPTION": "Ai întrebări? Echipa noastră este pregătită să te ajute.",
@@ -22,7 +21,6 @@
     "FOLLOW_US": "Urmărește-ne",
     "SOCIAL_DESCRIPTION": "Rămâi conectat cu noi pe rețelele sociale."
   },
-
   "LOGIN": {
     "TITLE": "Autentificare",
     "EMAIL_LABEL": "E-mail",
@@ -37,7 +35,6 @@
     "NO_ACCOUNT": "Nu ai un cont?",
     "REGISTER_HERE": "Înregistrează-te aici"
   },
-
   "REGISTER": {
     "TITLE": "Creează un cont",
     "USERNAME_LABEL": "Nume de utilizator",
@@ -66,7 +63,6 @@
     "ALREADY_HAVE_ACCOUNT": "Ai deja un cont?",
     "SIGN_IN": "Autentifică-te"
   },
-
   "HOME": {
     "HERO": {
       "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
@@ -77,13 +73,11 @@
       "SEARCH_LABEL": "Caută produse și licitații...",
       "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
     },
-
     "ABOUT": {
       "EYEBROW": "Despre noi",
       "TITLE_START": "Cine",
       "TITLE_END": "suntem",
       "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă. Conectăm mii de cumpărători și vânzători din numeroase categorii, printr-un proces transparent și corect pentru toți.",
-
       "FEATURES": {
         "SECURE": {
           "TITLE": "Sigur și de încredere",
@@ -99,35 +93,29 @@
         }
       }
     },
-
     "CATEGORIES": {
       "EYEBROW": "Categorii",
       "TITLE_START": "Explorează",
       "TITLE_END": "categoriile",
-
       "ITEMS": {
         "TECHNOLOGY": {
           "NAME": "Tehnologie",
           "DESCRIPTION": "Gadgeturi de ultimă generație și cele mai noi produse electronice."
         },
-
         "AUTO_MOTORS": {
           "NAME": "Auto și moto",
           "DESCRIPTION": "Mașini, motociclete și piese rare."
         },
-
         "ART_COLLECTIBLES": {
           "NAME": "Artă și obiecte de colecție",
           "DESCRIPTION": "Opere de artă exclusive și colecții speciale."
         },
-
         "REAL_ESTATE": {
           "NAME": "Imobiliare",
           "DESCRIPTION": "Proprietăți și terenuri deosebite."
         }
       }
     },
-
     "AUCTIONS": {
       "EYEBROW": "Piață",
       "TITLE_START": "Licitații",
@@ -136,207 +124,172 @@
       "EMPTY": "Momentan nu există licitații care se termină în curând — revino mai târziu."
     }
   },
-
   "HELP": {
-  "TITLE": "Centrul de Ajutor",
-  "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
-  "FAQ": "❓ Întrebări Frecvente",
-  "SUPPORT": "📞 Asistență Telefonică Rapidă",
-  "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
-  "FORM": "📝 Deschide un Tichet",
-  "REQUEST":"Trimite solicitarea",
-  "ASSISTANT": "Asistent Virtual Live"
-  }
-,
-"AUCTIONS_PAGE": {
-  "TITLE": "Licitații active",
-  "DESCRIPTION": "Descoperă produse unice și licitează în timp real",
-
-  "SEARCH_PLACEHOLDER": "Caută după nume...",
-
-  "ALL_CATEGORIES": "Toate categoriile",
-
-  "SORT": {
-    "ENDING_SOON": "Se termină curând",
-    "PRICE_LOW_HIGH": "Preț: crescător",
-    "PRICE_HIGH_LOW": "Preț: descrescător",
-    "NEWEST": "Cele mai noi"
+    "TITLE": "Centrul de Ajutor",
+    "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
+    "FAQ": "❓ Întrebări Frecvente",
+    "SUPPORT": "📞 Asistență Telefonică Rapidă",
+    "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
+    "FORM": "📝 Deschide un Tichet",
+    "REQUEST": "Trimite solicitarea",
+    "ASSISTANT": "Asistent Virtual Live"
   },
-
-  "ADD_ITEM": "Adaugă produs",
-
-  "RESULT": {
-    "ONE": "licitație găsită",
-    "MANY": "licitații găsite"
+  "AUCTIONS_PAGE": {
+    "TITLE": "Licitații active",
+    "DESCRIPTION": "Descoperă produse unice și licitează în timp real",
+    "SEARCH_PLACEHOLDER": "Caută după nume...",
+    "ALL_CATEGORIES": "Toate categoriile",
+    "SORT": {
+      "ENDING_SOON": "Se termină curând",
+      "PRICE_LOW_HIGH": "Preț: crescător",
+      "PRICE_HIGH_LOW": "Preț: descrescător",
+      "NEWEST": "Cele mai noi"
+    },
+    "ADD_ITEM": "Adaugă produs",
+    "RESULT": {
+      "ONE": "licitație găsită",
+      "MANY": "licitații găsite"
+    },
+    "CURRENT_PRICE": "Preț curent",
+    "EMPTY": {
+      "TITLE": "Nu au fost găsite produse",
+      "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
+    },
+    "TIME": {
+      "ENDED": "Licitația s-a încheiat",
+      "LEFT": "rămase"
+    }
+  },
+  "SEARCH_PAGE": {
+    "TITLE": "Rezultate căutare",
+    "DESCRIPTION_WITH_QUERY": "Rezultate pentru \"{{query}}\"",
+    "DESCRIPTION_EMPTY": "Caută licitații, useri sau postări de forum pe BidSphere",
+    "SEARCH_PLACEHOLDER": "Caută licitații, useri sau postări de forum...",
+    "LOADING": "Se încarcă rezultatele...",
+    "TABS": {
+      "AUCTIONS": "Licitații",
+      "USERS": "Useri",
+      "FORUM": "Forum"
+    },
+    "AUCTIONS_EMPTY": {
+      "TITLE": "Nicio licitație găsită",
+      "DESCRIPTION": "Nu există licitații care să corespundă căutării tale."
+    },
+    "USERS_EMPTY": {
+      "TITLE": "Niciun utilizator găsit",
+      "DESCRIPTION": "Nu există utilizatori care să corespundă căutării tale."
+    },
+    "FORUM_EMPTY": {
+      "TITLE": "Nicio postare găsită",
+      "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
+    }
   },
 
   "CURRENT_PRICE": "Preț curent",
+  "POSTED_BY": "Adăugat de",
+  "YOU": "Tu",
 
   "EMPTY": {
     "TITLE": "Nu au fost găsite produse",
     "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
   },
-
-  "TIME": {
-    "ENDED": "Licitația s-a încheiat",
-    "LEFT": "rămase"
-  }
-},
-"SEARCH_PAGE": {
-  "TITLE": "Rezultate căutare",
-  "DESCRIPTION_WITH_QUERY": "Rezultate pentru \"{{query}}\"",
-  "DESCRIPTION_EMPTY": "Caută licitații, useri sau postări de forum pe BidSphere",
-  "SEARCH_PLACEHOLDER": "Caută licitații, useri sau postări de forum...",
-  "LOADING": "Se încarcă rezultatele...",
-
-  "TABS": {
-    "AUCTIONS": "Licitații",
-    "USERS": "Useri",
-    "FORUM": "Forum"
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Vinde pe BidSphere",
+    "TITLE": "Adaugă un articol nou la licitație",
+    "DESCRIPTION": "Completează detaliile de mai jos pentru a publica articolul tău la licitație.",
+    "FIELDS": {
+      "NAME": "Nume articol *",
+      "NAME_PLACEHOLDER": "ex.: Bicicletă vintage",
+      "START_PRICE": "Preț de pornire (RON) *",
+      "DURATION": "Durata licitației (zile) *",
+      "CATEGORY": "Categorie *",
+      "CATEGORY_PLACEHOLDER": "Selectează o categorie",
+      "LOCATION": "Locație *",
+      "LOCATION_PLACEHOLDER": "ex.: Brașov",
+      "DESCRIPTION": "Descriere",
+      "DESCRIPTION_PLACEHOLDER": "Descrie starea articolului, istoricul și alte detalii..."
+    },
+    "IMAGE": {
+      "TITLE": "Fotografie articol",
+      "UPLOAD": "Apasă pentru a încărca o imagine",
+      "DETAILS": "JPG, PNG sau WEBP, maxim 5 MB",
+      "REMOVE": "Elimină"
+    },
+    "BUTTONS": {
+      "CANCEL": "Anulează",
+      "PUBLISH": "Publică articolul",
+      "PUBLISHING": "Se publică..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "Numele este obligatoriu.",
+      "NAME_MIN": "Numele trebuie să conțină cel puțin 3 caractere.",
+      "PRICE_REQUIRED": "Prețul de pornire este obligatoriu.",
+      "PRICE_MIN": "Prețul trebuie să fie mai mare decât 0.",
+      "DURATION": "Durata trebuie să fie între 1 și 30 de zile.",
+      "CATEGORY": "Selectează o categorie.",
+      "LOCATION": "Locația este obligatorie.",
+      "IMAGE_TYPE": "Sunt permise doar imaginile JPG, PNG sau WEBP.",
+      "IMAGE_SIZE": "Imaginea trebuie să fie mai mică de 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "Articolul a fost publicat cu succes!",
+      "SUCCESS_LOCAL": "Articolul a fost publicat cu succes (salvat local - backend-ul nu este încă pregătit)."
+    }
   },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "Nicio licitație găsită",
-    "DESCRIPTION": "Nu există licitații care să corespundă căutării tale."
+  "FOOTER": {
+    "ABOUT_TITLE": "Despre noi",
+    "ABOUT_TEXT_1": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă.",
+    "ABOUT_TEXT_2": "Conectăm mii de cumpărători și vânzători din numeroase categorii, oferind un proces de licitație transparent și corect pentru toți. Indiferent dacă dorești să găsești o ofertă excelentă sau să vinzi către cumpărătorul potrivit, BidSphere îți oferă instrumentele și încrederea necesare pentru a licita cu succes.",
+    "LINKS": "Link-uri",
+    "HOME": "Acasă",
+    "SERVICES": "Licitații",
+    "CONTACT": "Contact",
+    "HELP": "Ajutor",
+    "FORUM": "Forum",
+    "CONTACT_TITLE": "Contact",
+    "SOCIAL": "Rețele sociale",
+    "COPYRIGHT": "Toate drepturile rezervate."
   },
-
-  "USERS_EMPTY": {
-    "TITLE": "Niciun utilizator găsit",
-    "DESCRIPTION": "Nu există utilizatori care să corespundă căutării tale."
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Oops! Pagina nu a fost găsită",
+    "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
+    "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
   },
-
-  "FORUM_EMPTY": {
-    "TITLE": "Nicio postare găsită",
-    "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
-  }
-},
-"ADD_ITEM_PAGE": {
-  "BADGE": "🔨 Vinde pe BidSphere",
-  "TITLE": "Adaugă un articol nou la licitație",
-  "DESCRIPTION": "Completează detaliile de mai jos pentru a publica articolul tău la licitație.",
-
-  "FIELDS": {
-    "NAME": "Nume articol *",
-    "NAME_PLACEHOLDER": "ex.: Bicicletă vintage",
-
-    "START_PRICE": "Preț de pornire (RON) *",
-
-    "DURATION": "Durata licitației (zile) *",
-
-    "CATEGORY": "Categorie *",
-    "CATEGORY_PLACEHOLDER": "Selectează o categorie",
-
-    "LOCATION": "Locație *",
-    "LOCATION_PLACEHOLDER": "ex.: Brașov",
-
-    "DESCRIPTION": "Descriere",
-    "DESCRIPTION_PLACEHOLDER": "Descrie starea articolului, istoricul și alte detalii..."
-  },
-
-  "IMAGE": {
-    "TITLE": "Fotografie articol",
-    "UPLOAD": "Apasă pentru a încărca o imagine",
-    "DETAILS": "JPG, PNG sau WEBP, maxim 5 MB",
-    "REMOVE": "Elimină"
-  },
-
-  "BUTTONS": {
-    "CANCEL": "Anulează",
-    "PUBLISH": "Publică articolul",
-    "PUBLISHING": "Se publică..."
-  },
-
-  "VALIDATION": {
-    "NAME_REQUIRED": "Numele este obligatoriu.",
-    "NAME_MIN": "Numele trebuie să conțină cel puțin 3 caractere.",
-
-    "PRICE_REQUIRED": "Prețul de pornire este obligatoriu.",
-    "PRICE_MIN": "Prețul trebuie să fie mai mare decât 0.",
-
-    "DURATION": "Durata trebuie să fie între 1 și 30 de zile.",
-
-    "CATEGORY": "Selectează o categorie.",
-
-    "LOCATION": "Locația este obligatorie.",
-
-    "IMAGE_TYPE": "Sunt permise doar imaginile JPG, PNG sau WEBP.",
-    "IMAGE_SIZE": "Imaginea trebuie să fie mai mică de 5 MB."
-  },
-
-  "MESSAGES": {
-    "SUCCESS": "Articolul a fost publicat cu succes!",
-    "SUCCESS_LOCAL": "Articolul a fost publicat cu succes (salvat local - backend-ul nu este încă pregătit)."
-  }
-} ,
-"FOOTER": {
-  "ABOUT_TITLE": "Despre noi",
-  "ABOUT_TEXT_1": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă.",
-  "ABOUT_TEXT_2": "Conectăm mii de cumpărători și vânzători din numeroase categorii, oferind un proces de licitație transparent și corect pentru toți. Indiferent dacă dorești să găsești o ofertă excelentă sau să vinzi către cumpărătorul potrivit, BidSphere îți oferă instrumentele și încrederea necesare pentru a licita cu succes.",
-
-  "LINKS": "Link-uri",
-  "HOME": "Acasă",
-  "SERVICES": "Licitații",
-  "CONTACT": "Contact",
-  "HELP": "Ajutor",
-  "FORUM": "Forum",
-
-  "CONTACT_TITLE": "Contact",
-
-  "SOCIAL": "Rețele sociale",
-
-  "COPYRIGHT": "Toate drepturile rezervate."
-},
-"NOT_FOUND": {
-  "CODE": "404",
-  "TITLE": "Oops! Pagina nu a fost găsită",
-  "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
-  "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
-},
- "FORUM": {
+  "FORUM": {
     "TITLE": "Discuții pe forum",
     "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu alți utilizatori.",
-
     "START_DISCUSSION": "Începe o discuție",
     "LOGIN_TO_START": "Autentifică-te pentru a începe o discuție",
-
     "SORT": {
       "ARIA_LABEL": "Sortează discuțiile",
       "LATEST": "Cele mai recente",
       "OLDEST": "Cele mai vechi",
       "MOST_COMMENTED": "Cele mai comentate"
     },
-
     "DISCUSSION": "discuție",
     "DISCUSSIONS": "discuții",
-
     "LOADING": {
       "TITLE": "Se încarcă discuțiile"
     },
-
     "ERROR": {
       "TITLE": "Discuțiile nu au putut fi încărcate",
       "RETRY": "Încearcă din nou"
     },
-
     "POSTED_BY": "Publicat de",
-
     "COMMENT": "comentariu",
     "COMMENTS": "comentarii",
-
     "EMPTY": {
       "TITLE": "Nu există discuții disponibile",
       "MESSAGE": "În prezent, nu există discuții pe forum."
     }
   },
-
   "NOTIFICATIONS": {
     "TRUE": "Notificări",
     "FALSE": "Nu există notificări încă."
   },
-
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalii licitație",
-
     "INFO": {
       "CURRENT_PRICE": "Preț curent",
       "START_PRICE": "Preț de pornire",
@@ -346,7 +299,6 @@
       "OWNER": "Proprietar",
       "ENDS": "Se încheie"
     },
-
     "BID": {
       "TITLE": "Plasează oferta ta",
       "PLACEHOLDER": "Introdu suma licitată",
@@ -355,28 +307,23 @@
       "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
       "LOGIN_BUTTON": "Autentificare pentru licitare"
     },
-
     "WISHLIST": {
       "ADD": "🤍 Adaugă la favorite",
       "ADDED": "❤️ În lista de favorite"
     },
-
     "DESCRIPTION": {
       "TITLE": "Descriere produs"
     },
-
     "STATUS": {
       "ACTIVE": "Activă",
       "ENDED": "Încheiată",
       "PENDING": "În așteptare"
     },
-
     "MESSAGES": {
       "AUCTION_ENDED": "Licitația s-a încheiat.",
       "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
       "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
     },
-
     "COUNTDOWN": {
       "DAYS": "z",
       "HOURS": "h",
@@ -407,34 +354,26 @@
   },
   "FORUM_DETAILS": {
     "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
-
     "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
     "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
     "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
     "TRY_AGAIN": "Încearcă din nou",
-
     "DELETE_POST": "Șterge",
     "POSTED_BY": "Publicat de",
-
     "DISCUSSION": "Discuție",
     "COMMENT": "comentariu",
     "COMMENTS": "comentarii",
-
     "ADD_COMMENT": "Adaugă un comentariu",
     "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
     "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
     "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
     "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
-
     "PUBLISHING": "Se publică...",
     "PUBLISH_COMMENT": "Publică comentariul",
-
     "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
     "LOGIN": "Autentifică-te",
-
     "LOADING_COMMENTS": "Se încarcă comentariile",
     "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
-
     "DELETE_COMMENT": "Șterge",
     "NO_COMMENTS": "Nu există comentarii încă"
   },
@@ -442,113 +381,100 @@
     "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
     "TITLE": "Începe o discuție",
     "SUBTITLE": "Creează o discuție nouă și distribuie-o celorlalți utilizatori ai forumului.",
-
     "TITLE_LABEL": "Titlu",
     "TITLE_PLACEHOLDER": "Introdu un titlu clar pentru discuție",
     "TITLE_REQUIRED": "Titlul este obligatoriu.",
     "TITLE_WHITESPACE": "Titlul nu poate conține doar spații.",
     "TITLE_MIN_LENGTH": "Titlul trebuie să conțină cel puțin 3 caractere.",
     "TITLE_MAX_LENGTH": "Titlul nu poate depăși 150 de caractere.",
-
     "DESCRIPTION_LABEL": "Descriere",
     "DESCRIPTION_PLACEHOLDER": "Descrie subiectul pe care dorești să îl discuți...",
     "DESCRIPTION_REQUIRED": "Descrierea este obligatorie.",
     "DESCRIPTION_WHITESPACE": "Descrierea nu poate conține doar spații.",
     "DESCRIPTION_MIN_LENGTH": "Descrierea trebuie să conțină cel puțin 10 caractere.",
     "DESCRIPTION_MAX_LENGTH": "Descrierea nu poate depăși 5000 de caractere.",
-
     "CREATE_ERROR": "Discuția nu a putut fi creată",
     "CANCEL": "Anulează",
     "CREATING": "Se creează discuția...",
     "SUBMIT": "Începe discuția"
-  }, 
+  },
   "PROFILE_PAGE": {
-  "PROFILE": {
-    "USERNAME_NOT_SET": "@username necompletat",
-    "NAME_NOT_SET": "Nume necompletat",
-    "EMAIL_NOT_SET": "Email necompletat",
-    "AVERAGE_SCORE": "Scor mediu"
-  },
-
-  "BUTTONS": {
-    "EDIT_PROFILE": "Editează profilul",
-    "LOG_OUT": "Deconectare",
-    "ADD_ITEM": "Adaugă articol",
-    "CHANGE_PHOTO": "Schimbă fotografia",
-    "HIDE_PASSWORD": "Ascunde setările parolei",
-    "CHANGE_PASSWORD": "Schimbă parola",
-    "UPDATE_PASSWORD": "Actualizează parola",
-    "CANCEL": "Anulează",
-    "SAVE": "Salvează modificările"
-  },
-
-  "THEME": {
-    "TITLE": "Personalizează tema",
-    "DESCRIPTION": "Alege un stil vizual care ți se potrivește.",
-    "LIGHT": "Luminoasă",
-    "SUNSET": "Apus",
-    "OCEAN": "Ocean"
-  },
-
-  "SELL": {
-    "TITLE": "Vinde un articol nou",
-    "DESCRIPTION": "Ești gata să publici un articol?"
-  },
-
-  "SECTIONS": {
-    "ACTIVE_SALES": "Licitațiile mele active",
-    "WON_ITEMS": "Articole câștigate",
-    "WISHLIST": "Lista mea de dorințe",
-    "REVIEWS": "Recenzii primite"
-  },
-
-  "EMPTY": {
-    "ACTIVE_SALES": "Nu ai articole listate.",
-    "WON_ITEMS": "Nu ai câștigat niciun articol.",
-    "WISHLIST": "Lista ta de dorințe este goală.",
-    "REVIEWS": "Nu ai primit încă recenzii."
-  },
-
-  "EDIT": {
-    "TITLE": "Editează profilul",
-    "USERNAME": "Nume utilizator",
-    "FULL_NAME": "Nume complet",
-    "EMAIL": "Email",
-
-    "USERNAME_PLACEHOLDER": "ex. john_doe",
-    "FULL_NAME_PLACEHOLDER": "ex. Ion Popescu",
-    "EMAIL_PLACEHOLDER": "ex. ion@email.com"
-  },
-
-  "PASSWORD": {
-    "CURRENT": "Parola curentă",
-    "NEW": "Parolă nouă",
-    "CONFIRM": "Confirmă parola",
-
-    "CURRENT_PLACEHOLDER": "Introdu parola curentă",
-    "NEW_PLACEHOLDER": "Introdu parola nouă",
-    "CONFIRM_PLACEHOLDER": "Confirmă parola nouă",
-
-    "REQUIRED": "Toate câmpurile sunt obligatorii.",
-    "NOT_MATCH": "Parola nouă și confirmarea nu coincid.",
-    "SUCCESS": "Parola a fost actualizată cu succes!",
-    "ERROR": "Eroare la actualizarea parolei. Verifică parola curentă."
-  },
-
-  "STATUS": {
-    "ACTIVE": "Activ",
-    "ADDED": "Adăugat",
-    "WON": "Câștigat"
-  }, 
-  "DEFAULTS": {
-  "USER": "Utilizator"
-}, 
-"ERRORS": {
-  "LOAD_CATEGORIES": "Eroare la încărcarea categoriilor.",
-  "LOAD_ITEMS": "Eroare la încărcarea articolelor.",
-  "LOAD_REVIEWS": "Eroare la încărcarea recenziilor."
-}, 
-"MESSAGES": {
-  "PROFILE_UPDATED": "Profilul a fost actualizat cu succes."
+    "PROFILE": {
+      "USERNAME_NOT_SET": "@username necompletat",
+      "NAME_NOT_SET": "Nume necompletat",
+      "EMAIL_NOT_SET": "Email necompletat",
+      "AVERAGE_SCORE": "Scor mediu"
+    },
+    "BUTTONS": {
+      "EDIT_PROFILE": "Editează profilul",
+      "LOG_OUT": "Deconectare",
+      "ADD_ITEM": "Adaugă articol",
+      "CHANGE_PHOTO": "Schimbă fotografia",
+      "HIDE_PASSWORD": "Ascunde setările parolei",
+      "CHANGE_PASSWORD": "Schimbă parola",
+      "UPDATE_PASSWORD": "Actualizează parola",
+      "CANCEL": "Anulează",
+      "SAVE": "Salvează modificările"
+    },
+    "THEME": {
+      "TITLE": "Personalizează tema",
+      "DESCRIPTION": "Alege un stil vizual care ți se potrivește.",
+      "LIGHT": "Luminoasă",
+      "SUNSET": "Apus",
+      "OCEAN": "Ocean"
+    },
+    "SELL": {
+      "TITLE": "Vinde un articol nou",
+      "DESCRIPTION": "Ești gata să publici un articol?"
+    },
+    "SECTIONS": {
+      "ACTIVE_SALES": "Licitațiile mele active",
+      "WON_ITEMS": "Articole câștigate",
+      "WISHLIST": "Lista mea de dorințe",
+      "REVIEWS": "Recenzii primite"
+    },
+    "EMPTY": {
+      "ACTIVE_SALES": "Nu ai articole listate.",
+      "WON_ITEMS": "Nu ai câștigat niciun articol.",
+      "WISHLIST": "Lista ta de dorințe este goală.",
+      "REVIEWS": "Nu ai primit încă recenzii."
+    },
+    "EDIT": {
+      "TITLE": "Editează profilul",
+      "USERNAME": "Nume utilizator",
+      "FULL_NAME": "Nume complet",
+      "EMAIL": "Email",
+      "USERNAME_PLACEHOLDER": "ex. john_doe",
+      "FULL_NAME_PLACEHOLDER": "ex. Ion Popescu",
+      "EMAIL_PLACEHOLDER": "ex. ion@email.com"
+    },
+    "PASSWORD": {
+      "CURRENT": "Parola curentă",
+      "NEW": "Parolă nouă",
+      "CONFIRM": "Confirmă parola",
+      "CURRENT_PLACEHOLDER": "Introdu parola curentă",
+      "NEW_PLACEHOLDER": "Introdu parola nouă",
+      "CONFIRM_PLACEHOLDER": "Confirmă parola nouă",
+      "REQUIRED": "Toate câmpurile sunt obligatorii.",
+      "NOT_MATCH": "Parola nouă și confirmarea nu coincid.",
+      "SUCCESS": "Parola a fost actualizată cu succes!",
+      "ERROR": "Eroare la actualizarea parolei. Verifică parola curentă."
+    },
+    "STATUS": {
+      "ACTIVE": "Activ",
+      "ADDED": "Adăugat",
+      "WON": "Câștigat"
+    },
+    "DEFAULTS": {
+      "USER": "Utilizator"
+    },
+    "ERRORS": {
+      "LOAD_CATEGORIES": "Eroare la încărcarea categoriilor.",
+      "LOAD_ITEMS": "Eroare la încărcarea articolelor.",
+      "LOAD_REVIEWS": "Eroare la încărcarea recenziilor."
+    },
+    "MESSAGES": {
+      "PROFILE_UPDATED": "Profilul a fost actualizat cu succes."
+    }
+  }
 }
-}}

@@ -44,5 +44,8 @@ namespace Backend.Controllers
             dataOps.Create(CurrentUserId, "Test notification ");
             return Ok();
         }
+
+        [HttpGet("unread-count")]
+        public ActionResult GetUnreadCount() => Ok(dataOps.GetUnreadCount(CurrentUserId));
     }
 }

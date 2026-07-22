@@ -25,7 +25,7 @@ export class AddItemPage implements OnInit {
   message = '';
   isError = false;
 
-  private currentUserId = 3;
+  private currentUserId = 0;
 
   private readonly maxImageSize = 5 * 1024 * 1024;
   private readonly allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -50,11 +50,10 @@ export class AddItemPage implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser) {
-      this.currentUserId = +currentUser.id || this.currentUserId;
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.currentUserId = userId;
     }
-
     this.categoryService.getCategories().subscribe({
       next: (cats) => (this.categories = cats),
       error: (err) => console.error('Could not load categories', err),

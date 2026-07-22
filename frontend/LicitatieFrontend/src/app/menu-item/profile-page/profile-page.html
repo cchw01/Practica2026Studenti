@@ -1,16 +1,19 @@
 <div class="profile-wrapper">
 
-  <!-- Cover -->
-  <div class="profile-cover"></div>
 
   <!-- ===== VIEW MODE ===== -->
   <ng-container *ngIf="!isEditing">
 
     <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
     <div class="profile-header">
+      <!-- Doar Avatarul în stânga -->
       <div class="avatar-container">
         <img class="avatar" [src]="displayAvatar" alt="Profile picture" />
       </div>
+      
+      <!-- Detalii utilizator + Edit Profile sub email -->
       <div class="profile-info">
         <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
         <p class="profile-username empty-field" *ngIf="!user.username">
@@ -19,23 +22,21 @@
         <h1 class="profile-name empty-field" *ngIf="!user.name">
   {{ 'PROFILE_PAGE.PROFILE.NAME_NOT_SET' | translate }}</h1>
         <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
-        <p class="profile-email empty-field" *ngIf="!user.email">
-  {{ 'PROFILE_PAGE.PROFILE.EMAIL_NOT_SET' | translate }}</p>
+        <p class="profile-email empty-field" *ngIf="!user.email">Email not set</p>
+        
+        <!-- Mutat sub e-mail -->
+        <div class="header-actions">
+          <a href="javascript:void(0)" class="link-edit" (click)="startEdit()">Edit Profile</a>
+        </div>
       </div>
 
-      <!-- Rating box -->
+      <!-- Rating box mai mic -->
       <div class="score-box">
         <span class="score-value">{{ score || '—' }}</span>
         <div class="score-stars">
           <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
         </div>
         <span class="score-label">{{ 'PROFILE_PAGE.PROFILE.AVERAGE_SCORE' | translate }}</span>
-      </div>
-
-      <!-- Header actions -->
-      <div class="header-actions">
-        <button class="btn-edit" (click)="startEdit()">  {{ 'PROFILE_PAGE.BUTTONS.EDIT_PROFILE' | translate }}</button>
-        <button class="btn-logout" (click)="onLogout()">  {{ 'PROFILE_PAGE.BUTTONS.LOG_OUT' | translate }}</button>
       </div>
     </div>
 
@@ -76,14 +77,13 @@
         <div class="profile-section">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' | translate }}</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
-            <div class="item-card" *ngFor="let item of addedItems" (click)="goToItem(item.id)" style="cursor: pointer;">
-            <img [src]="item.image" alt="Item image" class="item-card-image" />
-            <div class="item-info">
-              <span class="item-title">{{ item.title }}</span>
-              <span class="item-price">{{ item.price }} RON</span>
+            <div class="item-card" *ngFor="let item of addedItems">
+              <div class="item-info">
+                <span class="item-title">{{ item.title }}</span>
+                <span class="item-price">{{ item.price }} RON</span>
+              </div>
+              <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
             </div>
-            <span class="item-badge badge-added">{{ item.status }}</span>
-          </div>
           </div>
           <p class="empty-state" *ngIf="addedItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.ACTIVE_SALES' | translate }}</p>
         </div>
@@ -92,14 +92,13 @@
         <div class="profile-section">
           <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WON_ITEMS' | translate }}</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
-            <div class="item-card" *ngFor="let item of bidItems" (click)="goToItem(item.id)" style="cursor: pointer;">
-            <img [src]="item.image" alt="Item image" class="item-card-image" />
-            <div class="item-info">
-              <span class="item-title">{{ item.title }}</span>
-              <span class="item-price">{{ item.price }} RON</span>
+            <div class="item-card" *ngFor="let item of bidItems">
+              <div class="item-info">
+                <span class="item-title">{{ item.title }}</span>
+                <span class="item-price">{{ item.price }} RON</span>
+              </div>
+              <span class="item-badge badge-won">{{ item.status }}</span>
             </div>
-            <span class="item-badge badge-won">{{ item.status }}</span>
-          </div>
           </div>
           <p class="empty-state" *ngIf="bidItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WON_ITEMS' | translate }}</p>
         </div>
@@ -109,14 +108,12 @@
       <div class="profile-section full-width wishlist-section">
         <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WISHLIST' | translate }}</h2>
         <div class="items-list" *ngIf="wishItems.length > 0">
-          <div class="item-card" *ngFor="let item of wishItems" (click)="goToItem(item.id)" style="cursor: pointer;">
-            <img [src]="item.image" alt="Item image" class="item-card-image" />
+          <div class="item-card" *ngFor="let item of wishItems">
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
             <span class="item-badge badge-wish">{{ item.status }}</span>
-            <button class="btn-remove-wish" (click)="removeFromWishlist(item.id, $event)" title="Remove from Wishlist">✕</button>
           </div>
         </div>
         <p class="empty-state" *ngIf="wishItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WISHLIST' | translate }}</p>

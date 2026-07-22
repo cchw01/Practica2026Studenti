@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIsBannedToUser : Migration
+    public partial class AddSupportMessages : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace Backend.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,6 +39,26 @@ namespace Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SupportMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IssueType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    IsResolved = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupportMessages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -328,6 +349,9 @@ namespace Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "SupportMessages");
 
             migrationBuilder.DropTable(
                 name: "AuctionItems");
