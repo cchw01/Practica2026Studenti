@@ -328,9 +328,14 @@
   },
 
   "NOTIFICATIONS": {
-    "TRUE": "Notificaciones",
-    "FALSE": "Aún no hay notificaciones."
-  },
+  "TRUE": "Notificaciones",
+  "FALSE": "No hay notificaciones todavía.",
+  "TYPES": {
+    "AuctionApproved": "¡Tu subasta \"{{itemName}}\" ha sido aprobada y ya es pública!",
+    "AuctionRejected": "Tu subasta \"{{itemName}}\" fue rechazada por un administrador.",
+    "SupportReply": "Un administrador respondió a tu mensaje del {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalles de la subasta",
 

@@ -1,4 +1,5 @@
 ﻿using Backend.Models;
+using System.Text.Json;
 
 namespace Backend.DataManagement
 {
@@ -47,6 +48,12 @@ namespace Backend.DataManagement
             DbContext.Notifications.Add(new Notification { UserId = userId, Message = message });
             DbContext.SaveChanges();
 
+        }
+        public void Create(int userId, string type, object paramsObj)
+        {
+            var payload = JsonSerializer.Serialize(new { type, @params = paramsObj });
+            DbContext.Notifications.Add(new Notification { UserId = userId, Message = payload });
+            DbContext.SaveChanges();
         }
     }
 }
