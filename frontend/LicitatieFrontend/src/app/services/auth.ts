@@ -42,18 +42,7 @@ export class AuthService {
           observer.complete();
         },
         error: (err) => {
-          // Fallback dacă backend-ul nu este pornit
-          const fakeToken = this.createLocalToken(payload);
-          const authResult = {
-            idToken: fakeToken,
-            accessToken: fakeToken,
-            expiresIn: 86400,
-            user: payload
-          };
-          this.setSession(authResult);
-          localStorage.setItem('profile_user', JSON.stringify(payload));
-          observer.next(authResult);
-          observer.complete();
+          observer.error(err);
         }
       });
     });

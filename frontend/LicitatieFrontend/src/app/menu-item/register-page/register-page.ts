@@ -77,10 +77,11 @@ export class RegisterPage implements OnInit {
       },
       error: (err: any) => {
         console.error('Eroare la inregistrare:', err);
-        this.authService.login(userData.email, userData.password).subscribe({
-          next: () => this.router.navigate(['/home-page']),
-          error: () => this.router.navigate(['/home-page'])
-        });
+        if (err.error && err.error.message) {
+          this.errorMessage = err.error.message;
+        } else {
+          this.errorMessage = 'Eroare la inregistrare. Vă rugăm să încercați din nou.';
+        }
       },
     });
   }
