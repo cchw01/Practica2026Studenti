@@ -363,6 +363,11 @@ export class ProfilePage implements OnInit {
           username: updatedUser.UserName || updatedUser.userName || this.editDraft.username,
           name: updatedUser.Name || updatedUser.name || this.editDraft.name,
         };
+        if (this.selectedAvatarFile) {
+          this.UserService.uploadProfilePicture(this.selectedAvatarFile).subscribe((pictureName: string) => {
+            this.user.avatarUrl = this.itemService.formatImageUrl(`Assets/ProfilePictures/${pictureName}`);
+          });
+        }
         this.editDraft = { ...this.user };
         this.saveProfile();
         this.isEditing = false;
@@ -379,11 +384,13 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // --- Avatar upload ---
+  private selectedAvatarFile: File | null = null;
+
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
+    this.selectedAvatarFile = file;
     const reader = new FileReader();
     reader.onload = () => {
       this.editDraft.avatarUrl = reader.result as string;

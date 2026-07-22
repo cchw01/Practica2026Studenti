@@ -14,17 +14,19 @@ namespace Backend.Controllers
         private readonly DbContext dbContext;
         private readonly UserDataOps userDataOps;
         private readonly ProfilePictureDataOps dataOps;
+        private readonly IWebHostEnvironment _environment;
 
-        public ProfilePictureController(ApplicationDbContext dbContext)
+        public ProfilePictureController(ApplicationDbContext dbContext, IWebHostEnvironment environment)
         {
-            this.dbContext = dbContext; 
+            this.dbContext = dbContext;
             dataOps = new ProfilePictureDataOps(dbContext);
             userDataOps = new UserDataOps(dbContext);
+            _environment = environment;
         }
 
         [Authorize]
         [HttpPost("upload")]
-       public ActionResult<ProfilePicture> UploadProfilePicture(ProfilePictureDto profilePicture)
+       public async Task<ActionResult<ProfilePicture>> UploadProfilePicture([FromForm] ProfilePictureDto profilePicture)
         {
 
             if (profilePicture == null)
@@ -35,10 +37,6 @@ namespace Backend.Controllers
             {
                 return Unauthorized("The user doesn't exist.");
             }
-            if(user.ProfilePictureId!= null)
-            {         
-                dataOps.DeletePicture(user.ProfilePictureId.Value);
-            }
             var AllowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
             var picture = profilePicture.Picture;
@@ -47,7 +45,30 @@ namespace Backend.Controllers
             {
                 return BadRequest("The file extension is not allowed.");
             }
+            string webRoot = _environment.WebRootPath
+                 ?? Path.Combine(_environment.ContentRootPath, "wwwroot");
+            string uploadsFolder = Path.Combine(webRoot, "Assets", "ProfilePictures");
+            if (user.ProfilePictureId != null)
+            {
+                var oldPicture = dataOps.GetProfilePictureById(user.ProfilePictureId.Value);
+                if (oldPicture != null)
+                {
+                    string oldFilePath = Path.Combine(uploadsFolder, oldPicture.Name);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath); 
+                    }
+                    dataOps.DeletePicture(oldPicture.Id); 
+                }
+            }
+ 
             string name = $"{timestamp}{extension}";
+            string fullPath = Path.Combine(uploadsFolder, name);
+
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await picture.CopyToAsync(stream);
+            }            
             var newPicture = new ProfilePicture { Name = name };
             dataOps.AddPicture(newPicture);
             user.ProfilePictureId = newPicture.Id;

@@ -29,6 +29,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
     });
 
+builder.Services.AddDirectoryBrowser(); 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
@@ -130,7 +131,6 @@ using (var scope = app.Services.CreateScope())
     }
     dbContext.SaveChanges();
 }
-
 app.UseRouting();
 app.UseCors(myAngularPolicy);
 
