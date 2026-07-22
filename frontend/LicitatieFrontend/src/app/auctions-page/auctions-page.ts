@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
-import { Router } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { CategoryService } from '../services/category-service';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../services/user-service';
+import { AuthService } from '../services/auth';
 
 type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
 
@@ -25,6 +26,7 @@ export class AuctionsPage implements OnInit {
 
   isLoading: boolean = true;
   hasError: boolean = false;
+  currentUserId: number = 0;
 
   constructor(
     private itemService: ItemService,
@@ -33,23 +35,37 @@ export class AuctionsPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private categoryService: CategoryService,
-  ) {}
+    public authService: AuthService,
+    private userService: UserService
+  ) { }
+
+  getCategoryName(item: AuctionItem): string {
+    if (!item || !item.Category) return '';
+    return typeof item.Category === 'string' ? item.Category : item.Category.name || '';
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params['category']) {
         this.selectedCategory = params['category'];
-        if (this.allItems.length > 0) {
-          this.applyFiltersAndSort();
-        }
       }
+      if (params['search']) {
+        this.searchText = params['search'];
+      }
+      this.applyFiltersAndSort();
     });
+
+    const authUserId = this.authService.getCurrentUserId();
+    this.currentUserId = authUserId !== null ? authUserId : 0;
 
     this.loadActiveAuctions();
 
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
-        this.categories = categories.map((c) => c.name);
+        if (categories && categories.length > 0) {
+          const fetchedCatNames = categories.map((c) => c.name);
+          this.categories = Array.from(new Set([...this.categories, ...fetchedCatNames]));
+        }
       },
       error: (err) => console.error('Eroare la încărcarea categoriilor', err),
     });
@@ -63,13 +79,35 @@ export class AuctionsPage implements OnInit {
       next: (items) => {
         this.allItems = items;
         // build category list from returned active items
-        const fromItems = [...new Set(items.filter(i => i.Category?.name).map(i => i.Category.name))];
+        const fromItems = [
+          ...new Set(items.filter((i) => i.Category?.name).map((i) => i.Category.name)),
+        ];
         if (this.categories.length === 0) {
           this.categories = fromItems;
         }
         this.applyFiltersAndSort();
         this.isLoading = false;
         this.cdr.detectChanges();
+        // Fetch wishlist only if logged in
+        if (this.authService.isLoggedIn()) {
+          this.userService.getWishlist(this.currentUserId).subscribe({
+            next: (wishlistItems: any[]) => {
+              const wishlistIds = wishlistItems.map((w) => w.id || w.ID);
+              console.log('AUCTIONS PAGE WISHLIST:', wishlistItems, 'IDS:', wishlistIds);
+              this.allItems.forEach((item) => {
+                item.isFavorite = wishlistIds.includes(item.ID);
+                if (item.isFavorite) console.log('Marked as favorite:', item.Name);
+              });
+              this.applyFiltersAndSort();
+              this.cdr.detectChanges();
+            },
+            error: (err) => console.error('Error loading wishlist in auctions page', err),
+          });
+        } else {
+          this.allItems.forEach((item) => (item.isFavorite = false));
+          this.applyFiltersAndSort();
+          this.cdr.detectChanges();
+        }
       },
       error: (err) => {
         console.error('Eroare la încărcarea licitațiilor active', err);
@@ -84,12 +122,12 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter((i) => i.Category?.name === this.selectedCategory);
+      result = result.filter((i) => this.getCategoryName(i) === this.selectedCategory);
     }
 
     if (this.searchText.trim()) {
       const search = this.searchText.toLowerCase();
-      result = result.filter((i) => i.Name.toLowerCase().includes(search));
+      result = result.filter((i) => i.Name && i.Name.toLowerCase().includes(search));
     }
 
     result.sort((a, b) => {
@@ -113,14 +151,51 @@ export class AuctionsPage implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  getRemainingTime(endDate: Date): string {
+  toggleFavorite(item: any, event: Event): void {
+    event.stopPropagation();
+
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
+
+    // Update instantly (optimistic update)
+    const originalState = item.isFavorite;
+    item.isFavorite = !originalState;
+    this.cdr.detectChanges();
+
+    if (originalState) {
+      this.userService.removeFromWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => {
+          /* Server confirmed */
+        },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error removing from wishlist', err);
+        },
+      });
+    } else {
+      this.userService.addToWishlist(this.currentUserId, item.ID).subscribe({
+        next: () => {
+          /* Server confirmed */
+        },
+        error: (err) => {
+          item.isFavorite = originalState; // Revert
+          this.cdr.detectChanges();
+          console.error('Error adding to wishlist', err);
+        },
+      });
+    }
+  }
+
+  getRemainingTime(endDate: string | Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();
     if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
     if (days > 0) return `${days}d ${hours}h left`;
     if (hours > 0) return `${hours}h ${mins}m left`;
     return `${mins}m left`;
@@ -136,7 +211,12 @@ export class AuctionsPage implements OnInit {
   }
 
   goToAuctionDetail(item: AuctionItem): void {
-    this.router.navigate(['/action-item-page'], { state: { auction: item } });
+    this.router.navigate(['/action-item-page', item.ID], { state: { auction: item } });
+  }
+  isOwner(item: AuctionItem): boolean {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = item.OwnerId || (item.Owner as any)?.ID || (item.Owner as any)?.id;
+    return +ownerId === currentUserId;
   }
 }
-

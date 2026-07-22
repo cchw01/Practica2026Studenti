@@ -78,6 +78,28 @@
       "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
     },
 
+    "ABOUT": {
+      "EYEBROW": "Despre noi",
+      "TITLE_START": "Cine",
+      "TITLE_END": "suntem",
+      "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă. Conectăm mii de cumpărători și vânzători din numeroase categorii, printr-un proces transparent și corect pentru toți.",
+
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Sigur și de încredere",
+          "DESCRIPTION": "Fiecare tranzacție este protejată, așa că poți licita cu încredere."
+        },
+        "REALTIME": {
+          "TITLE": "Licitații în timp real",
+          "DESCRIPTION": "Urmărește prețurile actualizate live și nu rata niciun moment câștigător."
+        },
+        "COMMUNITY": {
+          "TITLE": "Comunitate în creștere",
+          "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
+        }
+      }
+    },
+
     "CATEGORIES": {
       "EYEBROW": "Categorii",
       "TITLE_START": "Explorează",
@@ -111,28 +133,7 @@
       "TITLE_START": "Licitații",
       "TITLE_END": "active",
       "PLACE_BID": "Licitează",
-
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW Seria 7, anul 2022, în stare impecabilă, cu un singur proprietar."
-        },
-
-        "GOLD_EARRINGS": {
-          "TITLE": "Cercei din aur",
-          "DESCRIPTION": "Cercei din aur de 18 karate cu diamante certificate."
-        },
-
-        "PATEK_PHILIPPE": {
-          "TITLE": "Ceas Patek Philippe",
-          "DESCRIPTION": "Ceas de colecție în ediție limitată, cu cutie și certificat incluse."
-        },
-
-        "VILLA": {
-          "TITLE": "Vilă",
-          "DESCRIPTION": "Vilă de lux cu piscină, cinci dormitoare și vedere panoramică."
-        }
-      }
+      "EMPTY": "Momentan nu există licitații care se termină în curând — revino mai târziu."
     }
   },
 
@@ -170,6 +171,8 @@
   },
 
   "CURRENT_PRICE": "Preț curent",
+  "POSTED_BY": "Adăugat de",
+  "YOU": "Tu",
 
   "EMPTY": {
     "TITLE": "Nu au fost găsite produse",
@@ -179,6 +182,34 @@
   "TIME": {
     "ENDED": "Licitația s-a încheiat",
     "LEFT": "rămase"
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Rezultate căutare",
+  "DESCRIPTION_WITH_QUERY": "Rezultate pentru \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Caută licitații, useri sau postări de forum pe BidSphere",
+  "SEARCH_PLACEHOLDER": "Caută licitații, useri sau postări de forum...",
+  "LOADING": "Se încarcă rezultatele...",
+
+  "TABS": {
+    "AUCTIONS": "Licitații",
+    "USERS": "Useri",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nicio licitație găsită",
+    "DESCRIPTION": "Nu există licitații care să corespundă căutării tale."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Niciun utilizator găsit",
+    "DESCRIPTION": "Nu există utilizatori care să corespundă căutării tale."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nicio postare găsită",
+    "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
   }
 },
 "ADD_ITEM_PAGE": {
@@ -301,140 +332,225 @@
   },
 
   "NOTIFICATIONS": {
-  "TRUE": "Notificări",
-  "FALSE": "Nu există notificări încă."
-}, 
- 
-"AUCTION_ITEM_PAGE": {
-  "HEADER_BADGE": "🏷️ Detalii licitație",
-
-  "INFO": {
-    "CURRENT_PRICE": "Preț curent",
-    "START_PRICE": "Preț de pornire",
-    "CATEGORY": "Categorie",
-    "LOCATION": "Locație",
-    "STARTS_AT": "Data începerii",
-    "OWNER": "Proprietar",
-    "ENDS": "Se încheie"
+    "TRUE": "Notificări",
+    "FALSE": "Nu există notificări încă."
   },
 
-  "BID": {
-    "TITLE": "Plasează oferta ta",
-    "PLACEHOLDER": "Introdu suma licitată",
-    "BUTTON": "🔨 Licitează",
-    "MINIMUM": "Oferta minimă:",
-    "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
-    "LOGIN_BUTTON": "Autentificare pentru licitare"
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Detalii licitație",
+
+    "INFO": {
+      "CURRENT_PRICE": "Preț curent",
+      "START_PRICE": "Preț de pornire",
+      "CATEGORY": "Categorie",
+      "LOCATION": "Locație",
+      "STARTS_AT": "Data începerii",
+      "OWNER": "Proprietar",
+      "ENDS": "Se încheie"
+    },
+
+    "BID": {
+      "TITLE": "Plasează oferta ta",
+      "PLACEHOLDER": "Introdu suma licitată",
+      "BUTTON": "🔨 Licitează",
+      "MINIMUM": "Oferta minimă:",
+      "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
+      "LOGIN_BUTTON": "Autentificare pentru licitare"
+    },
+
+    "WISHLIST": {
+      "ADD": "🤍 Adaugă la favorite",
+      "ADDED": "❤️ În lista de favorite"
+    },
+
+    "DESCRIPTION": {
+      "TITLE": "Descriere produs"
+    },
+
+    "STATUS": {
+      "ACTIVE": "Activă",
+      "ENDED": "Încheiată",
+      "PENDING": "În așteptare"
+    },
+
+    "MESSAGES": {
+      "AUCTION_ENDED": "Licitația s-a încheiat.",
+      "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
+      "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
+    },
+
+    "COUNTDOWN": {
+      "DAYS": "z",
+      "HOURS": "h",
+      "MINUTES": "m",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Recenzii",
+    "REVIEWER_ID": "ID-ul autorului recenziei",
+    "REVIEWED_USER_ID": "ID-ul utilizatorului evaluat",
+    "RATING": "Evaluare (0–5)",
+    "RATING_ERROR": "Evaluarea trebuie să fie între 0 și 5.",
+    "COMMENT": "Comentariu",
+    "ADD": "Adaugă",
+    "UPDATE": "Actualizează",
+    "CANCEL": "Anulează",
+    "EDIT": "Editează recenzia",
+    "DELETE": "Șterge recenzia"
+  },
+  "SHARE": {
+    "BUTTON": "Distribuie",
+    "COPIED": "Copiat!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profil",
+    "LOGOUT": "Deconectare"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
+
+    "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
+    "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
+    "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
+    "TRY_AGAIN": "Încearcă din nou",
+
+    "DELETE_POST": "Șterge",
+    "POSTED_BY": "Publicat de",
+
+    "DISCUSSION": "Discuție",
+    "COMMENT": "comentariu",
+    "COMMENTS": "comentarii",
+
+    "ADD_COMMENT": "Adaugă un comentariu",
+    "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
+    "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
+    "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
+    "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
+
+    "PUBLISHING": "Se publică...",
+    "PUBLISH_COMMENT": "Publică comentariul",
+
+    "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
+    "LOGIN": "Autentifică-te",
+
+    "LOADING_COMMENTS": "Se încarcă comentariile",
+    "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
+
+    "DELETE_COMMENT": "Șterge",
+    "NO_COMMENTS": "Nu există comentarii încă"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
+    "TITLE": "Începe o discuție",
+    "SUBTITLE": "Creează o discuție nouă și distribuie-o celorlalți utilizatori ai forumului.",
+
+    "TITLE_LABEL": "Titlu",
+    "TITLE_PLACEHOLDER": "Introdu un titlu clar pentru discuție",
+    "TITLE_REQUIRED": "Titlul este obligatoriu.",
+    "TITLE_WHITESPACE": "Titlul nu poate conține doar spații.",
+    "TITLE_MIN_LENGTH": "Titlul trebuie să conțină cel puțin 3 caractere.",
+    "TITLE_MAX_LENGTH": "Titlul nu poate depăși 150 de caractere.",
+
+    "DESCRIPTION_LABEL": "Descriere",
+    "DESCRIPTION_PLACEHOLDER": "Descrie subiectul pe care dorești să îl discuți...",
+    "DESCRIPTION_REQUIRED": "Descrierea este obligatorie.",
+    "DESCRIPTION_WHITESPACE": "Descrierea nu poate conține doar spații.",
+    "DESCRIPTION_MIN_LENGTH": "Descrierea trebuie să conțină cel puțin 10 caractere.",
+    "DESCRIPTION_MAX_LENGTH": "Descrierea nu poate depăși 5000 de caractere.",
+
+    "CREATE_ERROR": "Discuția nu a putut fi creată",
+    "CANCEL": "Anulează",
+    "CREATING": "Se creează discuția...",
+    "SUBMIT": "Începe discuția"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username necompletat",
+    "NAME_NOT_SET": "Nume necompletat",
+    "EMAIL_NOT_SET": "Email necompletat",
+    "AVERAGE_SCORE": "Scor mediu"
   },
 
-  "WISHLIST": {
-    "ADD": "🤍 Adaugă la favorite",
-    "ADDED": "❤️ În lista de favorite"
+  "BUTTONS": {
+    "EDIT_PROFILE": "Editează profilul",
+    "LOG_OUT": "Deconectare",
+    "ADD_ITEM": "Adaugă articol",
+    "CHANGE_PHOTO": "Schimbă fotografia",
+    "HIDE_PASSWORD": "Ascunde setările parolei",
+    "CHANGE_PASSWORD": "Schimbă parola",
+    "UPDATE_PASSWORD": "Actualizează parola",
+    "CANCEL": "Anulează",
+    "SAVE": "Salvează modificările"
   },
 
-  "DESCRIPTION": {
-    "TITLE": "Descriere produs"
+  "THEME": {
+    "TITLE": "Personalizează tema",
+    "DESCRIPTION": "Alege un stil vizual care ți se potrivește.",
+    "LIGHT": "Luminoasă",
+    "SUNSET": "Apus",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Vinde un articol nou",
+    "DESCRIPTION": "Ești gata să publici un articol?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Licitațiile mele active",
+    "WON_ITEMS": "Articole câștigate",
+    "WISHLIST": "Lista mea de dorințe",
+    "REVIEWS": "Recenzii primite"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Nu ai articole listate.",
+    "WON_ITEMS": "Nu ai câștigat niciun articol.",
+    "WISHLIST": "Lista ta de dorințe este goală.",
+    "REVIEWS": "Nu ai primit încă recenzii."
+  },
+
+  "EDIT": {
+    "TITLE": "Editează profilul",
+    "USERNAME": "Nume utilizator",
+    "FULL_NAME": "Nume complet",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "ex. john_doe",
+    "FULL_NAME_PLACEHOLDER": "ex. Ion Popescu",
+    "EMAIL_PLACEHOLDER": "ex. ion@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Parola curentă",
+    "NEW": "Parolă nouă",
+    "CONFIRM": "Confirmă parola",
+
+    "CURRENT_PLACEHOLDER": "Introdu parola curentă",
+    "NEW_PLACEHOLDER": "Introdu parola nouă",
+    "CONFIRM_PLACEHOLDER": "Confirmă parola nouă",
+
+    "REQUIRED": "Toate câmpurile sunt obligatorii.",
+    "NOT_MATCH": "Parola nouă și confirmarea nu coincid.",
+    "SUCCESS": "Parola a fost actualizată cu succes!",
+    "ERROR": "Eroare la actualizarea parolei. Verifică parola curentă."
   },
 
   "STATUS": {
-    "ACTIVE": "Activă",
-    "ENDED": "Încheiată",
-    "PENDING": "În așteptare"
-  },
-
-  "MESSAGES": {
-    "AUCTION_ENDED": "Licitația s-a încheiat.",
-    "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
-    "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
-  },
-
-  "COUNTDOWN": {
-    "DAYS": "z",
-    "HOURS": "h",
-    "MINUTES": "m",
-    "SECONDS": "s"
-  }
-},
-
-"REVIEWS": {
-  "TITLE": "Recenzii",
-  "REVIEWER_ID": "ID-ul autorului recenziei",
-  "REVIEWED_USER_ID": "ID-ul utilizatorului evaluat",
-  "RATING": "Evaluare (0–5)",
-  "RATING_ERROR": "Evaluarea trebuie să fie între 0 și 5.",
-  "COMMENT": "Comentariu",
-  "ADD": "Adaugă",
-  "UPDATE": "Actualizează",
-  "CANCEL": "Anulează",
-  "EDIT": "Editează recenzia",
-  "DELETE": "Șterge recenzia"
-},
-"SHARE": {
-  "BUTTON": "Distribuie",
-  "COPIED": "Copiat!"
-},
-
-"USER_MENU": {
-  "PROFILE": "Profil",
-  "LOGOUT": "Deconectare"
-},
-
-"FORUM_DETAILS": {
-  "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
-
-  "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
-  "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
-  "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
-  "TRY_AGAIN": "Încearcă din nou",
-
-  "DELETE_POST": "Șterge",
-  "POSTED_BY": "Publicat de",
-
-  "DISCUSSION": "Discuție",
-  "COMMENT": "comentariu",
-  "COMMENTS": "comentarii",
-
-  "ADD_COMMENT": "Adaugă un comentariu",
-  "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
-  "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
-  "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
-  "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
-
-  "PUBLISHING": "Se publică...",
-  "PUBLISH_COMMENT": "Publică comentariul",
-
-  "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
-  "LOGIN": "Autentifică-te",
-
-  "LOADING_COMMENTS": "Se încarcă comentariile",
-  "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
-
-  "DELETE_COMMENT": "Șterge",
-  "NO_COMMENTS": "Nu există comentarii încă"
-},
-
-"CREATE_POST": {
-  "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
-  "TITLE": "Începe o discuție",
-  "SUBTITLE": "Creează o discuție nouă și distribuie-o celorlalți utilizatori ai forumului.",
-
-  "TITLE_LABEL": "Titlu",
-  "TITLE_PLACEHOLDER": "Introdu un titlu clar pentru discuție",
-  "TITLE_REQUIRED": "Titlul este obligatoriu.",
-  "TITLE_WHITESPACE": "Titlul nu poate conține doar spații.",
-  "TITLE_MIN_LENGTH": "Titlul trebuie să conțină cel puțin 3 caractere.",
-  "TITLE_MAX_LENGTH": "Titlul nu poate depăși 150 de caractere.",
-
-  "DESCRIPTION_LABEL": "Descriere",
-  "DESCRIPTION_PLACEHOLDER": "Descrie subiectul pe care dorești să îl discuți...",
-  "DESCRIPTION_REQUIRED": "Descrierea este obligatorie.",
-  "DESCRIPTION_WHITESPACE": "Descrierea nu poate conține doar spații.",
-  "DESCRIPTION_MIN_LENGTH": "Descrierea trebuie să conțină cel puțin 10 caractere.",
-  "DESCRIPTION_MAX_LENGTH": "Descrierea nu poate depăși 5000 de caractere.",
-
-  "CREATE_ERROR": "Discuția nu a putut fi creată",
-  "CANCEL": "Anulează",
-  "CREATING": "Se creează discuția...",
-  "SUBMIT": "Începe discuția"
+    "ACTIVE": "Activ",
+    "ADDED": "Adăugat",
+    "WON": "Câștigat"
+  }, 
+  "DEFAULTS": {
+  "USER": "Utilizator"
+}, 
+"ERRORS": {
+  "LOAD_CATEGORIES": "Eroare la încărcarea categoriilor.",
+  "LOAD_ITEMS": "Eroare la încărcarea articolelor.",
+  "LOAD_REVIEWS": "Eroare la încărcarea recenziilor."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Profilul a fost actualizat cu succes."
 }
-}
+}}

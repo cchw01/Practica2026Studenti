@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Models
@@ -23,5 +24,7 @@ namespace Backend.Models
         public int DurationDays { get; set; }
 
         public IFormFile? Image { get; set; }
+
+        public List<IFormFile>? Images { get; set; }
     }
 }

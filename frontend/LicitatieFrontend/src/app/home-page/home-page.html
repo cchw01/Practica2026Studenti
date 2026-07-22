@@ -2,11 +2,6 @@
   <canvas #particleCanvas class="hero-canvas"></canvas>
 
   <div class="hero-content">
-    <div class="hero-logo">
-      <span class="hero-logo-icon"><mat-icon>gavel</mat-icon></span>
-      <span class="hero-logo-text">Bid<span class="hero-logo-accent">Sphere</span></span>
-    </div>
-
     <span class="hero-tag">{{ 'HOME.HERO.TAG' | translate }}</span>
 
     <h1><span>{{ displayedTitle() }}</span><span class="typing-cursor"></span></h1>
@@ -52,10 +47,56 @@
         </button>
       </mat-form-field>
     </div>
-  </div>
 
-  <div class="hero-scroll-cue">
-    <mat-icon>keyboard_arrow_down</mat-icon>
+    <div class="hero-auctions-heading">
+      <span class="section-eyebrow">{{ 'HOME.AUCTIONS.EYEBROW' | translate }}</span>
+      <h2 class="section-title">{{ 'HOME.AUCTIONS.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.AUCTIONS.TITLE_END' | translate }}</span></h2>
+    </div>
+  </div>
+</div>
+
+<div class="content-section auctions-section">
+  <div class="section-inner">
+    <div class="reveal-on-scroll">
+      @if (displayedAuctions.length === 0) {
+        <p class="auctions-empty">{{ 'HOME.AUCTIONS.EMPTY' | translate }}</p>
+      } @else {
+        <div class="carousel">
+          <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left" (click)="scrollAuctions(-1)">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <div class="carousel-track auctions-grid" #auctionsTrack>
+            @for (auction of displayedAuctions; track auction.ID) {
+              <div class="auction-card" (click)="goToAuction(auction)">
+                <div class="auction-image-wrap">
+                  <img
+                    [src]="(auction.PhotoList && auction.PhotoList.length > 0) ? auction.PhotoList[0] : (auction.ImageUrl ? auction.ImageUrl : 'assets/images/placeholder.png')"
+                    [alt]="auction.Name"
+                  />
+                  <span class="auction-timer" [ngClass]="getTimeUrgencyClass(auction.EndDate)">
+                    {{ getRemainingLabel(auction.EndDate) }}
+                  </span>
+                </div>
+                <div class="auction-body">
+                  <h3>{{ auction.Name }}</h3>
+                  <span class="auction-price">{{ auction.CurrentPrice }} RON</span>
+                </div>
+                <div class="auction-details-overlay">
+                  <p>{{ auction.Description }}</p>
+                  <button mat-flat-button color="primary" (click)="placeBid(auction); $event.stopPropagation()">
+                  {{ 'HOME.AUCTIONS.PLACE_BID' | translate }}</button>
+                </div>
+              </div>
+            }
+          </div>
+
+          <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right" (click)="scrollAuctions(1)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
   </div>
 </div>
 
@@ -64,39 +105,45 @@
     <span class="section-eyebrow">{{ 'HOME.CATEGORIES.EYEBROW' | translate }}</span>
     <h2 class="section-title">{{ 'HOME.CATEGORIES.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.CATEGORIES.TITLE_END' | translate }}</span></h2>
 
-    <div class="categories-grid reveal-on-scroll">
-      @for (category of categories; track category.name) {
-        <div class="category-card" [routerLink]="['/auctions']" [queryParams]="{ category: category.name }" style="cursor: pointer;">
-          <div class="category-icon">
-            <mat-icon>{{ category.icon }}</mat-icon>
+    <div class="carousel reveal-on-scroll">
+      <button type="button" class="carousel-arrow carousel-arrow-left" aria-label="Scroll left" (click)="scrollCategories(-1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <div class="carousel-track categories-grid" #categoriesTrack>
+        @for (category of categories; track category.name) {
+          <div class="category-card" [routerLink]="['/auctions']" [queryParams]="{ category: category.name }" style="cursor: pointer;">
+            <div class="category-icon">
+              <mat-icon>{{ category.icon }}</mat-icon>
+            </div>
+            <h3>{{ category.name | translate }}</h3>
+            <p>{{ category.description | translate }}</p>
           </div>
-          <h3>{{ category.name | translate }}</h3>
-          <p>{{ category.description | translate }}</p>
-        </div>
-      }
+        }
+      </div>
+
+      <button type="button" class="carousel-arrow carousel-arrow-right" aria-label="Scroll right" (click)="scrollCategories(1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
     </div>
   </div>
 </div>
 
-<div class="content-section auctions-section">
+<div class="content-section about-section">
   <div class="section-inner">
-    <span class="section-eyebrow">{{ 'HOME.AUCTIONS.EYEBROW' | translate }}</span>
-    <h2 class="section-title">{{ 'HOME.AUCTIONS.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.AUCTIONS.TITLE_END' | translate }}</span></h2>
+    <span class="section-eyebrow">{{ 'HOME.ABOUT.EYEBROW' | translate }}</span>
+    <h2 class="section-title">{{ 'HOME.ABOUT.TITLE_START' | translate }} <span class="gradient-text">{{ 'HOME.ABOUT.TITLE_END' | translate }}</span></h2>
+    <p class="about-text reveal-on-scroll">{{ 'HOME.ABOUT.DESCRIPTION' | translate }}</p>
 
-    <div class="auctions-grid reveal-on-scroll">
-      @for (auction of auctions; track auction.title) {
-        <div class="auction-card" (click)="goToAuction(auction)">
-          <div class="auction-image-wrap">
-            <img [src]="auction.image" [alt]="auction.title | translate" />
+    <div class="about-features reveal-on-scroll">
+      @for (feature of aboutFeatures; track feature.titleKey) {
+        <div class="about-feature-card">
+          <div class="about-feature-icon">
+            <mat-icon>{{ feature.icon }}</mat-icon>
           </div>
-          <div class="auction-body">
-            <h3>{{ auction.title | translate}}</h3>
-            <span class="auction-price">${{ auction.currentBid }}</span>
-          </div>
-          <div class="auction-details-overlay">
-            <p>{{ auction.description | translate}}</p>
-            <button mat-flat-button color="primary" (click)="placeBid(auction); $event.stopPropagation()">
-            {{ 'HOME.AUCTIONS.PLACE_BID' | translate }}</button>
+          <div class="about-feature-text">
+            <h3>{{ feature.titleKey | translate }}</h3>
+            <p>{{ feature.descriptionKey | translate }}</p>
           </div>
         </div>
       }

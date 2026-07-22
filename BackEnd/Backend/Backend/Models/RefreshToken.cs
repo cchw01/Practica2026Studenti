@@ -5,7 +5,7 @@ namespace Backend.Models
     public class RefreshToken
     {
         public int Id { get; set; }
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public DateTime CreatedAt { get; set; }

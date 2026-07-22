@@ -1,38 +1,42 @@
 <div class="profile-wrapper">
 
-  <!-- Cover -->
-  <div class="profile-cover"></div>
 
   <!-- ===== VIEW MODE ===== -->
   <ng-container *ngIf="!isEditing">
 
     <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
+        <!-- Profile Header Info -->
     <div class="profile-header">
+      <!-- Doar Avatarul în stânga -->
       <div class="avatar-container">
         <img class="avatar" [src]="displayAvatar" alt="Profile picture" />
       </div>
+      
+      <!-- Detalii utilizator + Edit Profile sub email -->
       <div class="profile-info">
         <p class="profile-username" *ngIf="user.username">&#64;{{ user.username }}</p>
-        <p class="profile-username empty-field" *ngIf="!user.username">&#64;username not set</p>
+        <p class="profile-username empty-field" *ngIf="!user.username">
+  @{{ 'PROFILE_PAGE.PROFILE.USERNAME_NOT_SET' | translate }}</p>
         <h1 class="profile-name" *ngIf="user.name">{{ user.name }}</h1>
-        <h1 class="profile-name empty-field" *ngIf="!user.name">Name not set</h1>
+        <h1 class="profile-name empty-field" *ngIf="!user.name">
+  {{ 'PROFILE_PAGE.PROFILE.NAME_NOT_SET' | translate }}</h1>
         <p class="profile-email" *ngIf="user.email">{{ user.email }}</p>
         <p class="profile-email empty-field" *ngIf="!user.email">Email not set</p>
+        
+        <!-- Mutat sub e-mail -->
+        <div class="header-actions">
+          <a href="javascript:void(0)" class="link-edit" (click)="startEdit()">Edit Profile</a>
+        </div>
       </div>
 
-      <!-- Rating box -->
+      <!-- Rating box mai mic -->
       <div class="score-box">
         <span class="score-value">{{ score || '—' }}</span>
         <div class="score-stars">
           <span *ngFor="let s of stars" class="star" [class.filled]="s <= score">★</span>
         </div>
-        <span class="score-label">Average Score</span>
-      </div>
-
-      <!-- Header actions -->
-      <div class="header-actions">
-        <button class="btn-edit" (click)="startEdit()">Edit Profile</button>
-        <button class="btn-logout" (click)="onLogout()">Log Out</button>
+        <span class="score-label">{{ 'PROFILE_PAGE.PROFILE.AVERAGE_SCORE' | translate }}</span>
       </div>
     </div>
 
@@ -43,27 +47,27 @@
       <div class="theme-action-row full-width">
         <!-- Theme Switcher Card -->
         <div class="profile-section theme-card">
-          <h2 class="section-title"><span class="section-icon"></span> Customize Theme</h2>
-          <p class="theme-desc">Choose a visual style that matches your mood.</p>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.THEME.TITLE' | translate }}</h2>
+          <p class="theme-desc">{{ 'PROFILE_PAGE.THEME.DESCRIPTION' | translate }}</p>
           <div class="theme-options">
             <button class="theme-btn light-btn" [class.active]="currentTheme === 'light'" (click)="setTheme('light')">
-              Light
+              {{ 'PROFILE_PAGE.THEME.LIGHT' | translate }}
             </button>
             <button class="theme-btn sunset-btn" [class.active]="currentTheme === 'sunset'"
               (click)="setTheme('sunset')">
-              Sunset
+              {{ 'PROFILE_PAGE.THEME.SUNSET' | translate }}
             </button>
             <button class="theme-btn ocean-btn" [class.active]="currentTheme === 'ocean'" (click)="setTheme('ocean')">
-              Ocean
+              {{ 'PROFILE_PAGE.THEME.OCEAN' | translate }}
             </button>
           </div>
         </div>
 
         <!-- Sell Item Button -->
         <div class="profile-section add-item-card">
-          <h2 class="section-title"><span class="section-icon"></span> Sell a New Item</h2>
-          <p class="add-item-desc">Ready to list something?</p>
-          <button class="btn-submit btn-sell" (click)="goToAddItem()">Add New Item</button>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SELL.TITLE' | translate }}</h2>
+          <p class="add-item-desc">{{ 'PROFILE_PAGE.SELL.DESCRIPTION' | translate }}</p>
+          <button class="btn-submit btn-sell" (click)="goToAddItem()">{{ 'PROFILE_PAGE.BUTTONS.ADD_ITEM' | translate }}</button>
         </div>
       </div>
 
@@ -71,53 +75,57 @@
       <div class="sales-won-row full-width">
         <!-- Listed Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon"></span> My Active Sales</h2>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.ACTIVE_SALES' | translate }}</h2>
           <div class="items-list" *ngIf="addedItems.length > 0">
-            <div class="item-card" *ngFor="let item of addedItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
-              </div>
-              <span class="item-badge badge-{{ item.status.toLowerCase() }}">{{ item.status }}</span>
+            <div class="item-card" *ngFor="let item of addedItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
             </div>
+            <span class="item-badge badge-added">{{ item.status }}</span>
           </div>
-          <p class="empty-state" *ngIf="addedItems.length === 0">No items listed yet.</p>
+          </div>
+          <p class="empty-state" *ngIf="addedItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.ACTIVE_SALES' | translate }}</p>
         </div>
 
         <!-- Won Items List -->
         <div class="profile-section">
-          <h2 class="section-title"><span class="section-icon"></span> Items Won</h2>
+          <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WON_ITEMS' | translate }}</h2>
           <div class="items-list" *ngIf="bidItems.length > 0">
-            <div class="item-card" *ngFor="let item of bidItems">
-              <div class="item-info">
-                <span class="item-title">{{ item.title }}</span>
-                <span class="item-price">{{ item.price }} RON</span>
-              </div>
-              <span class="item-badge badge-won">{{ item.status }}</span>
+            <div class="item-card" *ngFor="let item of bidItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
+            <div class="item-info">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-price">{{ item.price }} RON</span>
             </div>
+            <span class="item-badge badge-won">{{ item.status }}</span>
           </div>
-          <p class="empty-state" *ngIf="bidItems.length === 0">No items won yet.</p>
+          </div>
+          <p class="empty-state" *ngIf="bidItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WON_ITEMS' | translate }}</p>
         </div>
       </div>
 
       <!-- Wish List (Full Width) -->
       <div class="profile-section full-width wishlist-section">
-        <h2 class="section-title"><span class="section-icon"></span> My Wish List</h2>
+        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.WISHLIST' | translate }}</h2>
         <div class="items-list" *ngIf="wishItems.length > 0">
-          <div class="item-card" *ngFor="let item of wishItems">
+          <div class="item-card" *ngFor="let item of wishItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+            <img [src]="item.image" alt="Item image" class="item-card-image" />
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
             <span class="item-badge badge-wish">{{ item.status }}</span>
+            <button class="btn-remove-wish" (click)="removeFromWishlist(item.id, $event)" title="Remove from Wishlist">✕</button>
           </div>
         </div>
-        <p class="empty-state" *ngIf="wishItems.length === 0">No items in your wish list yet.</p>
+        <p class="empty-state" *ngIf="wishItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WISHLIST' | translate }}</p>
       </div>
 
       <!-- REVIEWS (Full Width) -->
       <div class="profile-section full-width reviews-section">
-        <h2 class="section-title"><span class="section-icon"></span> Reviews Received</h2>
+        <h2 class="section-title"><span class="section-icon"></span>{{ 'PROFILE_PAGE.SECTIONS.REVIEWS' | translate }}</h2>
         <div class="reviews-list" *ngIf="reviews.length > 0">
           <div class="review-card" *ngFor="let review of reviews">
             <div class="review-header">
@@ -130,7 +138,7 @@
             <p class="review-comment">{{ review.comment }}</p>
           </div>
         </div>
-        <p class="empty-state" *ngIf="reviews.length === 0">No reviews received yet.</p>
+        <p class="empty-state" *ngIf="reviews.length === 0">{{ 'PROFILE_PAGE.EMPTY.REVIEWS' | translate }}</p>
       </div>
 
     </div>
@@ -139,13 +147,13 @@
   <!-- ===== EDIT MODE ===== -->
   <div class="edit-panel" *ngIf="isEditing">
 
-    <h2 class="edit-title">Edit Profile</h2>
+    <h2 class="edit-title">{{ 'PROFILE_PAGE.EDIT.TITLE' | translate }}</h2>
 
     <!-- Avatar upload -->
     <div class="avatar-upload-area">
       <img class="avatar avatar-large" [src]="editDraft.avatarUrl || displayAvatar" alt="Profile picture preview" />
       <label class="btn-upload" for="avatarInput">
-        Change Photo
+        {{ 'PROFILE_PAGE.BUTTONS.CHANGE_PHOTO' | translate }}
       </label>
       <input id="avatarInput" type="file" accept="image/*" (change)="onAvatarSelected($event)" hidden />
     </div>
@@ -153,16 +161,16 @@
     <!-- Form fields -->
     <div class="edit-form">
       <div class="form-group">
-        <label for="editUsername">Username</label>
-        <input id="editUsername" type="text" [(ngModel)]="editDraft.username" placeholder="e.g. john_doe" />
+        <label for="editUsername">{{ 'PROFILE_PAGE.EDIT.USERNAME' | translate }}</label>
+        <input id="editUsername" type="text" [(ngModel)]="editDraft.username" placeholder="{{ 'PROFILE_PAGE.EDIT.USERNAME_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
-        <label for="editName">Full Name</label>
-        <input id="editName" type="text" [(ngModel)]="editDraft.name" placeholder="e.g. John Doe" />
+        <label for="editName">{{ 'PROFILE_PAGE.EDIT.FULL_NAME' | translate }}</label>
+        <input id="editName" type="text" [(ngModel)]="editDraft.name" placeholder="{{ 'PROFILE_PAGE.EDIT.FULL_NAME_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
-        <label for="editEmail">Email</label>
-        <input id="editEmail" type="email" [(ngModel)]="editDraft.email" placeholder="e.g. john@email.com" />
+        <label for="editEmail">{{ 'PROFILE_PAGE.EDIT.EMAIL' | translate }}</label>
+        <input id="editEmail" type="email" [(ngModel)]="editDraft.email" placeholder="{{ 'PROFILE_PAGE.EDIT.EMAIL_PLACEHOLDER' | translate }}" />
       </div>
     </div>
 
@@ -172,28 +180,30 @@
     <!-- Toggle Password Form -->
     <div class="toggle-password-section">
       <button type="button" class="btn-toggle-password" (click)="showPasswordForm = !showPasswordForm">
-        {{ showPasswordForm ? 'Hide Password Settings' : 'Change Password' }}
+        {{ showPasswordForm
+    ? ('PROFILE_PAGE.BUTTONS.HIDE_PASSWORD' | translate)
+    : ('PROFILE_PAGE.BUTTONS.CHANGE_PASSWORD' | translate) }}
       </button>
     </div>
 
     <!-- Password Form Fields -->
     <div class="edit-form password-fields-container" *ngIf="showPasswordForm">
       <div class="form-group">
-        <label for="currentPassword">Current Password</label>
+        <label for="currentPassword">{{ 'PROFILE_PAGE.PASSWORD.CURRENT' | translate }}</label>
         <input id="currentPassword" type="password" [(ngModel)]="currentPassword"
-          placeholder="Enter current password" />
+          placeholder="{{ 'PROFILE_PAGE.PASSWORD.CURRENT_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
-        <label for="newPassword">New Password</label>
-        <input id="newPassword" type="password" [(ngModel)]="newPassword" placeholder="Enter new password" />
+        <label for="newPassword">{{ 'PROFILE_PAGE.PASSWORD.NEW' | translate }}</label>
+        <input id="newPassword" type="password" [(ngModel)]="newPassword" placeholder="{{ 'PROFILE_PAGE.PASSWORD.NEW_PLACEHOLDER' | translate }}" />
       </div>
       <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password" />
+        <label for="confirmPassword">{{ 'PROFILE_PAGE.PASSWORD.CONFIRM' | translate }}</label>
+        <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="{{ 'PROFILE_PAGE.PASSWORD.CONFIRM_PLACEHOLDER' | translate }}" />
       </div>
 
       <button type="button" class="btn-submit btn-change-password" (click)="onChangePassword()">
-        Update Password
+        {{ 'PROFILE_PAGE.BUTTONS.UPDATE_PASSWORD' | translate }}
       </button>
 
       <div class="msg-box" [class.error]="passwordError" *ngIf="passwordMessage">
@@ -203,8 +213,8 @@
 
     <!-- Actions -->
     <div class="edit-actions">
-      <button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
-      <button class="btn-save" (click)="saveEdit()">Save Changes</button>
+      <button class="btn-cancel" (click)="cancelEdit()">{{ 'PROFILE_PAGE.BUTTONS.CANCEL' | translate }}</button>
+      <button class="btn-save" (click)="saveEdit()">{{ 'PROFILE_PAGE.BUTTONS.SAVE' | translate }}</button>
     </div>
 
   </div>

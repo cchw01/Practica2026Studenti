@@ -20,7 +20,32 @@
     "CALL_CENTER_HOURS": "Call Center Hours",
     "SCHEDULE": "Monday–Friday, 09:00–17:00",
     "FOLLOW_US": "Follow Us",
-    "SOCIAL_DESCRIPTION": "Stay connected with us on social media."
+    "SOCIAL_DESCRIPTION": "Stay connected with us on social media.",
+
+  "FORM_TITLE": "Send us a message",
+  "FORM_FULL_NAME_LABEL": "Full Name",
+  "FORM_FULL_NAME_PLACEHOLDER": "e.g. John Doe",
+  "FORM_FULL_NAME_REQUIRED": "Full Name is required.",
+  "FORM_EMAIL_LABEL": "Email Address",
+  "FORM_EMAIL_PLACEHOLDER": "e.g. you@example.com",
+  "FORM_EMAIL_REQUIRED": "Email is required.",
+  "FORM_EMAIL_INVALID": "Please enter a valid email address.",
+  "FORM_ISSUE_TYPE_LABEL": "Type of Issue",
+  "FORM_ISSUE_TYPE_REQUIRED": "Please select an issue type.",
+  "FORM_ISSUE_OPTION_GENERAL": "General Inquiry",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Technical Support",
+  "FORM_ISSUE_OPTION_BILLING": "Billing / Payment",
+  "FORM_ISSUE_OPTION_LISTING": "Listing / Auction Issue",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Account Management",
+  "FORM_ISSUE_OPTION_OTHER": "Other",
+  "FORM_MESSAGE_LABEL": "Describe your issue",
+  "FORM_MESSAGE_PLACEHOLDER": "Please provide details...",
+  "FORM_MESSAGE_REQUIRED": "Message is required.",
+  "FORM_MESSAGE_MIN_LENGTH": "Message must be at least 10 characters.",
+  "FORM_SUBMIT": "Send Message",
+  "FORM_SUCCESS_TITLE": "Message sent!",
+  "FORM_SUCCESS_MESSAGE": "Thank you for reaching out. We'll get back to you as soon as possible.",
+  "FORM_SEND_ANOTHER": "Send another message"
   },
 
   "LOGIN": {
@@ -78,6 +103,28 @@
       "SEARCH_PLACEHOLDER": "Example: BMW, gold earrings"
     },
 
+    "ABOUT": {
+      "EYEBROW": "About Us",
+      "TITLE_START": "Who",
+      "TITLE_END": "We Are",
+      "DESCRIPTION": "BidSphere is a modern online auction platform built to make buying and selling through bidding simple, secure, and exciting. We connect thousands of buyers and sellers across a wide range of categories through a transparent, fair process for everyone.",
+
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Secure & Trusted",
+          "DESCRIPTION": "Every transaction is protected, so you can bid with confidence."
+        },
+        "REALTIME": {
+          "TITLE": "Real-Time Bidding",
+          "DESCRIPTION": "Watch prices update live and never miss a winning moment."
+        },
+        "COMMUNITY": {
+          "TITLE": "Growing Community",
+          "DESCRIPTION": "Thousands of buyers and sellers active across every category."
+        }
+      }
+    },
+
     "CATEGORIES": {
       "EYEBROW": "Categories",
       "TITLE_START": "Explore",
@@ -111,28 +158,7 @@
       "TITLE_START": "Active",
       "TITLE_END": "Auctions",
       "PLACE_BID": "Place Bid",
-
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW 7 Series, 2022, pristine condition, single owner."
-        },
-
-        "GOLD_EARRINGS": {
-          "TITLE": "Gold Earrings",
-          "DESCRIPTION": "18k gold earrings with certified diamonds."
-        },
-
-        "PATEK_PHILIPPE": {
-          "TITLE": "Patek Philippe Watch",
-          "DESCRIPTION": "Limited-edition collector's watch with box and certificate included."
-        },
-
-        "VILLA": {
-          "TITLE": "Villa",
-          "DESCRIPTION": "Luxury villa with a pool, five bedrooms, and a panoramic view."
-        }
-      }
+      "EMPTY": "No auctions ending soon right now — check back shortly."
     }
   },
 
@@ -144,7 +170,8 @@
     "PROGRAM":"Monday - Friday: 09:00 - 18:00",
     "FORM":"📝 Open a Ticket",
     "REQUEST":"Send Request",
-    "ASSISTANT":"Live Virtual Assistant"
+    "ASSISTANT":"Live Virtual Assistant",
+    "ISSUE_TYPE_PLACEHOLDER": "Select the type of issue"
   }
 ,
 "AUCTIONS_PAGE": {
@@ -170,6 +197,8 @@
   },
 
   "CURRENT_PRICE": "Current price",
+  "POSTED_BY": "Posted by",
+  "YOU": "You",
 
   "EMPTY": {
     "TITLE": "No items found",
@@ -181,6 +210,34 @@
     "LEFT": "left"
   }
 
+},
+"SEARCH_PAGE": {
+  "TITLE": "Search Results",
+  "DESCRIPTION_WITH_QUERY": "Showing results for \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Search for auctions, users or forum posts across BidSphere",
+  "SEARCH_PLACEHOLDER": "Search auctions, users or forum posts...",
+  "LOADING": "Loading results...",
+
+  "TABS": {
+    "AUCTIONS": "Auctions",
+    "USERS": "Users",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "No auctions found",
+    "DESCRIPTION": "There are no auctions matching your search."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "No users found",
+    "DESCRIPTION": "There are no users matching your search."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "No forum posts found",
+    "DESCRIPTION": "There are no discussions matching your search."
+  }
 },
 "ADD_ITEM_PAGE": {
   "BADGE": "🔨 Sell on BidSphere",
@@ -304,140 +361,226 @@
     }
   },
 
-    "NOTIFICATIONS":{
-      "TRUE": "Notifications",
-      "FALSE": "No notifications yet."
-    }, 
-    
+  "NOTIFICATIONS":{
+    "TRUE": "Notifications",
+    "FALSE": "No notifications yet."
+  },
+
   "AUCTION_ITEM_PAGE": {
-  "HEADER_BADGE": "🏷️ Auction Detail",
+    "HEADER_BADGE": "🏷️ Auction Detail",
 
-  "INFO": {
-    "CURRENT_PRICE": "Current Price",
-    "START_PRICE": "Starting Price",
-    "CATEGORY": "Category",
-    "LOCATION": "Location",
-    "STARTS_AT": "Starts At",
-    "OWNER": "Owner",
-    "ENDS": "Ends"
+    "INFO": {
+      "CURRENT_PRICE": "Current Price",
+      "START_PRICE": "Starting Price",
+      "CATEGORY": "Category",
+      "LOCATION": "Location",
+      "STARTS_AT": "Starts At",
+      "OWNER": "Owner",
+      "ENDS": "Ends"
+    },
+
+    "BID": {
+      "TITLE": "Place Your Bid",
+      "PLACEHOLDER": "Enter bid amount",
+      "BUTTON": "🔨 Place Bid",
+      "MINIMUM": "Minimum bid:",
+      "LOGIN_TEXT": "Sign in to place a bid on this item.",
+      "LOGIN_BUTTON": "Login to Bid"
+    },
+
+    "WISHLIST": {
+      "ADD": "🤍 Add to Wishlist",
+      "ADDED": "❤️ In Wishlist"
+    },
+
+    "DESCRIPTION": {
+      "TITLE": "Product Description"
+    },
+
+    "STATUS": {
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PENDING": "Pending"
+    },
+
+    "MESSAGES": {
+      "AUCTION_ENDED": "Auction ended.",
+      "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
+      "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
+    },
+
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "m",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Reviews",
+    "REVIEWER_ID": "Reviewer ID",
+    "REVIEWED_USER_ID": "Reviewed User ID",
+    "RATING": "Rating (0–5)",
+    "RATING_ERROR": "The rating must be between 0 and 5.",
+    "COMMENT": "Comment",
+    "ADD": "Add",
+    "UPDATE": "Update",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit review",
+    "DELETE": "Delete review"
+  },
+  "SHARE": {
+    "BUTTON": "Share",
+    "COPIED": "Copied!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profile",
+    "LOGOUT": "Log out"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
+
+    "LOADING_DISCUSSION_TITLE": "Loading discussion",
+    "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
+    "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
+    "TRY_AGAIN": "Try again",
+
+    "DELETE_POST": "Delete",
+    "POSTED_BY": "Posted by",
+
+    "DISCUSSION": "Discussion",
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+
+    "ADD_COMMENT": "Add a comment",
+    "COMMENT_PLACEHOLDER": "Write your comment here...",
+    "COMMENT_REQUIRED": "A comment is required.",
+    "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
+    "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
+
+    "PUBLISHING": "Publishing...",
+    "PUBLISH_COMMENT": "Publish comment",
+
+    "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
+    "LOGIN": "Log in",
+
+    "LOADING_COMMENTS": "Loading comments",
+    "LOAD_COMMENTS_ERROR": "Unable to load comments",
+
+    "DELETE_COMMENT": "Delete",
+    "NO_COMMENTS": "No comments yet"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
+    "TITLE": "Start a discussion",
+    "SUBTITLE": "Create a new discussion and share it with other forum users.",
+
+    "TITLE_LABEL": "Title",
+    "TITLE_PLACEHOLDER": "Enter a clear discussion title",
+    "TITLE_REQUIRED": "A title is required.",
+    "TITLE_WHITESPACE": "The title cannot contain only spaces.",
+    "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
+    "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
+
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
+    "DESCRIPTION_REQUIRED": "A description is required.",
+    "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
+    "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
+    "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
+
+    "CREATE_ERROR": "Unable to create discussion",
+    "CANCEL": "Cancel",
+    "CREATING": "Creating discussion...",
+    "SUBMIT": "Start discussion"
+  },
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username not set",
+    "NAME_NOT_SET": "Name not set",
+    "EMAIL_NOT_SET": "Email not set",
+    "AVERAGE_SCORE": "Average Score"
   },
 
-  "BID": {
-    "TITLE": "Place Your Bid",
-    "PLACEHOLDER": "Enter bid amount",
-    "BUTTON": "🔨 Place Bid",
-    "MINIMUM": "Minimum bid:",
-    "LOGIN_TEXT": "Sign in to place a bid on this item.",
-    "LOGIN_BUTTON": "Login to Bid"
+  "BUTTONS": {
+    "EDIT_PROFILE": "Edit Profile",
+    "LOG_OUT": "Log Out",
+    "ADD_ITEM": "Add New Item",
+    "CHANGE_PHOTO": "Change Photo",
+    "HIDE_PASSWORD": "Hide Password Settings",
+    "CHANGE_PASSWORD": "Change Password",
+    "UPDATE_PASSWORD": "Update Password",
+    "CANCEL": "Cancel",
+    "SAVE": "Save Changes"
   },
 
-  "WISHLIST": {
-    "ADD": "🤍 Add to Wishlist",
-    "ADDED": "❤️ In Wishlist"
+  "THEME": {
+    "TITLE": "Customize Theme",
+    "DESCRIPTION": "Choose a visual style that matches your mood.",
+    "LIGHT": "Light",
+    "SUNSET": "Sunset",
+    "OCEAN": "Ocean"
   },
 
-  "DESCRIPTION": {
-    "TITLE": "Product Description"
+  "SELL": {
+    "TITLE": "Sell a New Item",
+    "DESCRIPTION": "Ready to list something?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "My Active Sales",
+    "WON_ITEMS": "Items Won",
+    "WISHLIST": "My Wish List",
+    "REVIEWS": "Reviews Received"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "No items listed yet.",
+    "WON_ITEMS": "No items won yet.",
+    "WISHLIST": "No items in your wish list yet.",
+    "REVIEWS": "No reviews received yet."
+  },
+
+  "EDIT": {
+    "TITLE": "Edit Profile",
+    "USERNAME": "Username",
+    "FULL_NAME": "Full Name",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "e.g. john_doe",
+    "FULL_NAME_PLACEHOLDER": "e.g. John Doe",
+    "EMAIL_PLACEHOLDER": "e.g. john@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Current Password",
+    "NEW": "New Password",
+    "CONFIRM": "Confirm Password",
+
+    "CURRENT_PLACEHOLDER": "Enter current password",
+    "NEW_PLACEHOLDER": "Enter new password",
+    "CONFIRM_PLACEHOLDER": "Confirm new password",
+
+    "REQUIRED": "All fields are required.",
+    "NOT_MATCH": "The new password and its confirmation do not match.",
+    "SUCCESS": "Password updated successfully!",
+    "ERROR": "Error updating password. Please check your current password."
   },
 
   "STATUS": {
     "ACTIVE": "Active",
-    "ENDED": "Ended",
-    "PENDING": "Pending"
+    "ADDED": "Added",
+    "WON": "Won"
   },
-
-  "MESSAGES": {
-    "AUCTION_ENDED": "Auction ended.",
-    "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
-    "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
-  },
-
-  "COUNTDOWN": {
-    "DAYS": "d",
-    "HOURS": "h",
-    "MINUTES": "m",
-    "SECONDS": "s"
-  }
-},
-"REVIEWS": {
-  "TITLE": "Reviews",
-  "REVIEWER_ID": "Reviewer ID",
-  "REVIEWED_USER_ID": "Reviewed User ID",
-  "RATING": "Rating (0–5)",
-  "RATING_ERROR": "The rating must be between 0 and 5.",
-  "COMMENT": "Comment",
-  "ADD": "Add",
-  "UPDATE": "Update",
-  "CANCEL": "Cancel",
-  "EDIT": "Edit review",
-  "DELETE": "Delete review"
-},
- "SHARE": {
-  "BUTTON": "Share",
-  "COPIED": "Copied!"
-},
- "USER_MENU": {
-  "PROFILE": "Profile",
-  "LOGOUT": "Log out"
-},
-
-"FORUM_DETAILS": {
-  "BACK_TO_DISCUSSIONS": "Back to discussions",
-
-  "LOADING_DISCUSSION_TITLE": "Loading discussion",
-  "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
-  "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
-  "TRY_AGAIN": "Try again",
-
-  "DELETE_POST": "Delete",
-  "POSTED_BY": "Posted by",
-
-  "DISCUSSION": "Discussion",
-  "COMMENT": "comment",
-  "COMMENTS": "comments",
-
-  "ADD_COMMENT": "Add a comment",
-  "COMMENT_PLACEHOLDER": "Write your comment here...",
-  "COMMENT_REQUIRED": "A comment is required.",
-  "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
-  "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
-
-  "PUBLISHING": "Publishing...",
-  "PUBLISH_COMMENT": "Publish comment",
-
-  "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
-  "LOGIN": "Log in",
-
-  "LOADING_COMMENTS": "Loading comments",
-  "LOAD_COMMENTS_ERROR": "Unable to load comments",
-
-  "DELETE_COMMENT": "Delete",
-  "NO_COMMENTS": "No comments yet"
-},
-
-"CREATE_POST": {
-  "BACK_TO_DISCUSSIONS": "Back to discussions",
-  "TITLE": "Start a discussion",
-  "SUBTITLE": "Create a new discussion and share it with other forum users.",
-
-  "TITLE_LABEL": "Title",
-  "TITLE_PLACEHOLDER": "Enter a clear discussion title",
-  "TITLE_REQUIRED": "A title is required.",
-  "TITLE_WHITESPACE": "The title cannot contain only spaces.",
-  "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
-  "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
-
-  "DESCRIPTION_LABEL": "Description",
-  "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
-  "DESCRIPTION_REQUIRED": "A description is required.",
-  "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
-  "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
-  "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
-
-  "CREATE_ERROR": "Unable to create discussion",
-  "CANCEL": "Cancel",
-  "CREATING": "Creating discussion...",
-  "SUBMIT": "Start discussion"
+  "DEFAULTS": {
+  "USER": "User"
+}, 
+   "ERRORS": {
+  "LOAD_CATEGORIES": "Error loading categories.",
+  "LOAD_ITEMS": "Error loading items.",
+  "LOAD_REVIEWS": "Error loading reviews."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Profile updated successfully."
 }
-
-}
+}}

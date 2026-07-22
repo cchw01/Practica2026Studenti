@@ -8,7 +8,7 @@
         public AuctionItem? BiddedItem { get; set; }
         public int BiddedItemId { get; set; }
         public decimal Price { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.UtcNow;
 
     }
 }
