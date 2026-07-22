@@ -24,7 +24,7 @@ namespace Backend.Controllers
 
         [Authorize]
         [HttpPost("upload")]
-       public ActionResult<ProfilePicture> UploadProfilePicture(ProfilePictureDto profilePicture)
+       public ActionResult<ProfilePicture> UploadProfilePicture(IFormFile profilePicture)
         {
 
             if (profilePicture == null)
@@ -40,19 +40,21 @@ namespace Backend.Controllers
                 dataOps.DeletePicture(user.ProfilePictureId.Value);
             }
             var AllowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
-            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            var picture = profilePicture.Picture;
-            var extension = Path.GetExtension(picture.FileName).ToLowerInvariant();
+            var extension = Path.GetExtension(profilePicture.FileName).ToLowerInvariant();
             if (!AllowedExtensions.Contains(extension))
             {
                 return BadRequest("The file extension is not allowed.");
             }
-            string name = $"{timestamp}{extension}";
-            var newPicture = new ProfilePicture { Name = name };
+
+            using var ms = new MemoryStream();
+            profilePicture.CopyTo(ms);
+            var base64 = Convert.ToBase64String(ms.ToArray());
+
+            var newPicture = new ProfilePicture { PictureBase64 = base64 };
             dataOps.AddPicture(newPicture);
             user.ProfilePictureId = newPicture.Id;
             userDataOps.UpdateUser(user);
-            return Ok(newPicture.Name);
+            return Ok(newPicture.PictureBase64);
         }
     }
 }

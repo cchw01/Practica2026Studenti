@@ -167,7 +167,7 @@ namespace Backend.DataManagement
                 TotalReviewsReceived = reviewsReceived.Count,
                 PictureName = _db.ProfilePictures
                                 .Where(x => x.Id == user.ProfilePictureId)
-                                .Select(x => x.Name)
+                                .Select(x => x.PictureBase64)
                                 .FirstOrDefault(),
                 ReviewsReceived = reviewsReceived.Select(r => MapReviewToDto(r)).ToList(),
                 AddedItems = addedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
