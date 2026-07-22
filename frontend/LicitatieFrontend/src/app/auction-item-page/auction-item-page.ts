@@ -56,6 +56,11 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   countdownText: string = '';
   private timerInterval: any;
 
+  // ================= NEW: Debug control (remove or set false before final commit) =================
+  public readonly showDebugControls = true; // <-- NEW – set to false after testing
+  public debugCountdown: number = 0; // 0 = not counting
+  private debugTimer: any = null;
+
   auctionItem: AuctionItem = {
     ID: 1,
     Name: 'Loading Item...',
@@ -126,9 +131,11 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         next: (wishlistItems: any[]) => {
           const wishlistIds = wishlistItems.map((w) => w.id || w.ID);
           this.isInWishlist = wishlistIds.includes(this.auctionItem.ID);
-          try { this.cdr.markForCheck(); } catch { }
+          try {
+            this.cdr.markForCheck();
+          } catch {}
         },
-        error: (err) => console.error('Error fetching wishlist for item page', err)
+        error: (err) => console.error('Error fetching wishlist for item page', err),
       });
     }
 
@@ -223,13 +230,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   ngOnDestroy(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
+    if (this.timerInterval) clearInterval(this.timerInterval);
+    if (this.debugTimer) clearInterval(this.debugTimer); // <-- added this
   }
 
   private startCountdown(): void {
@@ -246,7 +252,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         this.countdownText = 'Auction ended';
         try {
           this.cdr.markForCheck();
-        } catch { }
+        } catch {}
         clearInterval(this.timerInterval);
         return;
       }
@@ -264,7 +270,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     };
 
     updateTimer();
@@ -298,7 +304,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           this.bidAmount = this.auctionItem.CurrentPrice + 10;
           try {
             this.cdr.markForCheck();
-          } catch { }
+          } catch {}
         },
         error: (err) => {
           // Fallback local state if offline
@@ -310,7 +316,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
               : err.error?.message || err.message || 'Failed to place bid. Please try again.';
           try {
             this.cdr.detectChanges();
-          } catch { }
+          } catch {}
         },
       });
   }
@@ -334,7 +340,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.isInWishlist = !originalState;
     try {
       this.cdr.detectChanges();
-    } catch { }
+    } catch {}
 
     if (originalState) {
       this.userService.removeFromWishlist(currentUserId, itemId).subscribe({
@@ -347,7 +353,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           this.isInWishlist = originalState; // Revert
           try {
             this.cdr.detectChanges();
-          } catch { }
+          } catch {}
           console.error('Error removing from wishlist', err);
         },
       });
@@ -362,7 +368,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           this.isInWishlist = originalState; // Revert
           try {
             this.cdr.detectChanges();
-          } catch { }
+          } catch {}
           console.error('Error adding to wishlist', err);
         },
       });
@@ -390,7 +396,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.isToastHiding = true;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }, 800);
 
     this.toastTimeout = setTimeout(() => {
@@ -398,12 +404,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.isToastHiding = false;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }, 1200);
 
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   // Report Modal & Handling
@@ -415,7 +421,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.showReportModal = true;
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   closeReportModal(): void {
@@ -423,7 +429,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.reportDetails = '';
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   submitReport(): void {
@@ -457,7 +463,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.isReportToastHiding = true;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }, 1500);
 
     this.reportToastTimeout = setTimeout(() => {
@@ -465,13 +471,13 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.isReportToastHiding = false;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }, 2000);
 
     this.reportDetails = '';
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   prevImage(event: Event): void {
@@ -482,7 +488,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         this.auctionItem.PhotoList.length;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }
   }
 
@@ -492,7 +498,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.selectedImageIndex = (this.selectedImageIndex + 1) % this.auctionItem.PhotoList.length;
       try {
         this.cdr.markForCheck();
-      } catch { }
+      } catch {}
     }
   }
 
@@ -500,7 +506,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.selectedImageIndex = idx;
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   setPeek(offset: number): void {
@@ -517,13 +523,55 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     }
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   isOwner(): boolean {
     const currentUserId = this.authService.getCurrentUserId();
     if (!currentUserId) return false;
-    const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
+    const ownerId =
+      this.auctionItem.OwnerId ||
+      (this.auctionItem.Owner as any)?.ID ||
+      (this.auctionItem.Owner as any)?.id;
     return +ownerId === currentUserId;
   }
+
+  // ================= NEW: Computed getters =================
+  get isAuctionEnded(): boolean {
+    // <-- NEW
+    if (!this.auctionItem) return false;
+    if (
+      this.auctionItem.Status === 'Sold' ||
+      this.auctionItem.Status === 'NoWinner' ||
+      this.auctionItem.Status === 'Rejected'
+    ) {
+      return true;
+    }
+    if (this.auctionItem.EndDate) {
+      return new Date(this.auctionItem.EndDate) < new Date();
+    }
+    return false;
+  }
+
+  get isCurrentUserWinner(): boolean {
+    // <-- NEW
+    if (!this.auctionItem || !this.auctionItem.WinnerId) return false;
+    const currentUserId = this.authService.getCurrentUserId();
+    return currentUserId ? this.auctionItem.WinnerId === currentUserId : false;
+  }
+
+  // ================= NEW: Debug method =================
+  simulateAuctionEnd(): void {
+    // <-- NEW
+    this.auctionItem.EndDate = new Date(Date.now() - 60000);
+    this.auctionItem.Status = 'Sold';
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.auctionItem.WinnerId = userId;
+    }
+    try {
+      this.cdr.detectChanges();
+    } catch {}
+  }
+
 }

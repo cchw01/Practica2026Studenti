@@ -947,3 +947,95 @@
   background: rgba(220, 53, 69, 0.12);
   color: #c0392b;
 }
+
+// ================= NEW: Debug tool styles =================
+.debug-tool {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 8px 14px;
+  background: #fff3cd;
+  border: 1px dashed #ffc107;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #856404;
+}
+
+.debug-badge {
+  background: #856404;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.debug-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.debug-btn:hover {
+  background: #b02a37;
+}
+
+.debug-hint {
+  font-size: 11px;
+  color: #856404;
+  opacity: 0.7;
+}
+
+// ================= NEW: Auction ended state =================
+.auction-item-wrapper.auction-ended {
+  opacity: 0.75;
+  filter: grayscale(0.2);
+  pointer-events: none;
+
+  // Keep actions row and wishlist clickable if you wish
+  .actions-footer,
+  .wishlist-container {
+    pointer-events: auto;
+  }
+
+  img, .description-card, .info-card {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+.auction-ended-banner {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #f5c6cb;
+}
+
+.bid-section.ended {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+}
+
+.ended-message {
+  margin: 0;
+  font-size: 14px;
+}
