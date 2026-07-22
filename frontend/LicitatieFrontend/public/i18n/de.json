@@ -272,10 +272,15 @@
       "MESSAGE": "Derzeit gibt es keine Diskussionen im Forum."
     }
   },
-  "NOTIFICATIONS": {
-    "TRUE": "Benachrichtigungen",
-    "FALSE": "Noch keine Benachrichtigungen."
-  },
+ "NOTIFICATIONS": {
+  "TRUE": "Benachrichtigungen",
+  "FALSE": "Noch keine Benachrichtigungen.",
+  "TYPES": {
+    "AuctionApproved": "Ihre Auktion \"{{itemName}}\" wurde genehmigt und ist jetzt öffentlich!",
+    "AuctionRejected": "Ihre Auktion \"{{itemName}}\" wurde von einem Admin abgelehnt.",
+    "SupportReply": "Ein Admin hat auf Ihre Nachricht vom {{date}} geantwortet: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Auktionsdetails",
     "INFO": {

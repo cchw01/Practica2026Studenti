@@ -309,9 +309,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Notificări",
-    "FALSE": "Nu există notificări încă."
-  },
+  "TRUE": "Notificări",
+  "FALSE": "Nu există notificări încă.",
+  "TYPES": {
+    "AuctionApproved": "Licitația ta \"{{itemName}}\" a fost aprobată și e acum vizibilă public!",
+    "AuctionRejected": "Licitația ta \"{{itemName}}\" a fost respinsă de un administrator.",
+    "SupportReply": "Un administrator ți-a răspuns la mesajul {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalii licitație",
     "INFO": {

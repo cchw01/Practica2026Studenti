@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Bildirimler",
-    "FALSE": "Henüz bildirim yok."
-  },
+  "TRUE": "Bildirimler",
+  "FALSE": "Henüz bildirim yok.",
+  "TYPES": {
+    "AuctionApproved": "\"{{itemName}}\" isimli açık artırmanız onaylandı ve şu anda yayında!",
+    "AuctionRejected": "\"{{itemName}}\" isimli açık artırmanız bir yönetici tarafından reddedildi.",
+    "SupportReply": "Bir yönetici {{date}} tarihli mesajınızı yanıtladı: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Açık artırma ayrıntıları",
     "INFO": {

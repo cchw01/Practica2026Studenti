@@ -272,10 +272,15 @@
       "MESSAGE": "Il n’y a actuellement aucune discussion sur le forum."
     }
   },
-  "NOTIFICATIONS": {
-    "TRUE": "Notifications",
-    "FALSE": "Aucune notification pour le moment."
-  },
+ "NOTIFICATIONS": {
+  "TRUE": "Notifications",
+  "FALSE": "Pas encore de notifications.",
+  "TYPES": {
+    "AuctionApproved": "Votre enchère \"{{itemName}}\" a été approuvée et est maintenant publique !",
+    "AuctionRejected": "Votre enchère \"{{itemName}}\" a été rejetée par un administrateur.",
+    "SupportReply": "Un administrateur a répondu à votre message du {{date}} : {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Détails de l’enchère",
     "INFO": {

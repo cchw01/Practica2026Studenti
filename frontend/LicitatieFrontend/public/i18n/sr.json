@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Obaveštenja",
-    "FALSE": "Još nema obaveštenja."
-  },
+  "TRUE": "Obaveštenja",
+  "FALSE": "Još uvek nema obaveštenja.",
+  "TYPES": {
+    "AuctionApproved": "Vaša aukcija \"{{itemName}}\" je odobrena i sada je javna!",
+    "AuctionRejected": "Vašu aukciju \"{{itemName}}\" je odbio administrator.",
+    "SupportReply": "Administrator je odgovorio na vašu poruku od {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalji aukcije",
     "INFO": {

@@ -40,9 +40,11 @@
 
         <div class="notification-content">
           <p class="notification-message">
-            {{ notification.message }}
-          </p>
-
+  <ng-container *ngIf="getNotificationKey(notification) as key; else legacyMsg">
+    {{ key | translate: getNotificationParams(notification) }}
+  </ng-container>
+  <ng-template #legacyMsg>{{ notification.message }}</ng-template>
+</p>
           <time class="notification-time" [attr.datetime]="notification.createdAt">
             {{ getRelativeTime(notification.createdAt) }}
           </time>

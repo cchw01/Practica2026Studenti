@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Notifiche",
-    "FALSE": "Nessuna notifica al momento."
-  },
+  "TRUE": "Notifiche",
+  "FALSE": "Non ci son ancora notifiche.",
+  "TYPES": {
+    "AuctionApproved": "La tua asta \"{{itemName}}\" è stata approvata ed es adesso pubblica!",
+    "AuctionRejected": "La tua asta \"{{itemName}}\" è stata rifiutata da un amministratore.",
+    "SupportReply": "Un amministratore ha risposto al tuo messaggio del {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Dettagli dell’asta",
     "INFO": {
