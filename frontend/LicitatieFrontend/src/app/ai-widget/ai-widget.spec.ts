@@ -12,12 +12,14 @@ import { CommonModule } from '@angular/common';
 })
 export class AiWidgetComponent {
   mesaj: string = '';
-  raspuns: string = '';
-  isChatOpen: boolean = false; // <-- Fereastra este ascunsă la început
+  isChatOpen: boolean = false;
+
+  // Iată variabilele pe care Angular nu le găsea!
+  listaMesaje: { expeditor: string; text: string }[] = [];
+  seIncarca: boolean = false;
 
   constructor(private http: HttpClient) {}
 
-  // Funcția care deschide/închide fereastra
   toggleChat() {
     this.isChatOpen = !this.isChatOpen;
   }
@@ -25,13 +27,21 @@ export class AiWidgetComponent {
   trimiteIntrebare() {
     if (!this.mesaj.trim()) return;
 
-    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: this.mesaj }).subscribe({
+    const textIntrebare = this.mesaj;
+    this.listaMesaje.push({ expeditor: 'user', text: textIntrebare });
+
+    this.mesaj = '';
+    this.seIncarca = true;
+
+    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: textIntrebare }).subscribe({
       next: (data) => {
-        this.raspuns = data.raspuns;
+        this.listaMesaje.push({ expeditor: 'ai', text: data.raspuns });
+        this.seIncarca = false;
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-        this.raspuns = 'Eroare de conectare la serverul AI.';
+        this.listaMesaje.push({ expeditor: 'ai', text: 'Eroare de conectare la serverul AI.' });
+        this.seIncarca = false;
       },
     });
   }

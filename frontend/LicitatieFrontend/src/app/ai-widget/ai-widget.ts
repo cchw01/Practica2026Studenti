@@ -12,8 +12,11 @@ import { CommonModule } from '@angular/common';
 })
 export class AiWidgetComponent {
   mesaj: string = '';
-  raspuns: string = '';
   isChatOpen: boolean = false;
+
+  // IATĂ CELE DOUĂ VARIABILE CARE LIPSESC ACUM ȘI CAUZEAZĂ EROAREA:
+  listaMesaje: { expeditor: string, text: string }[] = [];
+  seIncarca: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -24,18 +27,21 @@ export class AiWidgetComponent {
   trimiteIntrebare() {
     if (!this.mesaj.trim()) return;
 
-    // Salvăm textul și afișăm mesajul de așteptare vizual
-    const textDeTrimis = this.mesaj;
-    this.raspuns = 'AI-ul se gândește... (poate dura câteva secunde) ⏳';
-    this.mesaj = ''; // Golim căsuța instant
+    const textIntrebare = this.mesaj;
+    this.listaMesaje.push({ expeditor: 'user', text: textIntrebare });
+    
+    this.mesaj = '';
+    this.seIncarca = true;
 
-    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: textDeTrimis }).subscribe({
+    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: textIntrebare }).subscribe({
       next: (data) => {
-        this.raspuns = data.raspuns;
+        this.listaMesaje.push({ expeditor: 'ai', text: data.raspuns });
+        this.seIncarca = false;
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-        this.raspuns = 'Eroare de conectare. Verifică consola browser-ului (F12).';
+        this.listaMesaje.push({ expeditor: 'ai', text: 'Eroare de conectare la serverul AI.' });
+        this.seIncarca = false;
       },
     });
   }

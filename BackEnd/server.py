@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import OllamaEmbeddings, OllamaLLM
+from langdetect import detect
+from deep_translator import GoogleTranslator
 
 app = FastAPI()
 
@@ -33,16 +35,31 @@ class MesajUtilizator(BaseModel):
 @app.post("/api/chat")
 async def chat(mesaj: MesajUtilizator):
     try:
-        # 1. Căutăm cele mai relevante paragrafe în baza noastră de date
+        # 1. Detectăm automat limba în care a scris utilizatorul
+        try:
+            limba_detectata = detect(mesaj.text)
+        except:
+            limba_detectata = 'ro' # Dacă pui doar semne de punctuație, asumată ca română
+            
+        # 2. Căutăm cele mai relevante paragrafe în baza noastră de date
         documente_gasite = vectorstore.similarity_search(mesaj.text, k=3)
         context = "\n".join([doc.page_content for doc in documente_gasite])
         
-        # 2. Construim instrucțiunea clară pentru AI
-        prompt = f"Folosind DOAR următoarele informații, răspunde la întrebare în limba română.\n\nInformații:\n{context}\n\nÎntrebare: {mesaj.text}\nRăspuns:"
+        # 3. AI-ul generează răspunsul din documentație în română
+        prompt = f"""Folosind DOAR următoarele informații, răspunde clar și direct la întrebare.
+        Informații: {context}
+        Întrebare: {mesaj.text}
+        Răspuns:"""
         
-        # 3. AI-ul generează răspunsul
-        raspuns_ai = llm.invoke(prompt)
+        raspuns_romana = llm.invoke(prompt)
         
-        return {"raspuns": raspuns_ai}
+        # 4. Traducem răspunsul folosind Google Translate (deep-translator)
+        if limba_detectata != 'ro':
+            translator = GoogleTranslator(source='ro', target=limba_detectata)
+            raspuns_final = translator.translate(raspuns_romana)
+        else:
+            raspuns_final = raspuns_romana
+            
+        return {"raspuns": raspuns_final}
     except Exception as e:
         return {"raspuns": f"Oups! Am întâmpinat o problemă: {str(e)}"}
