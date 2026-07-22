@@ -102,17 +102,20 @@
   color: #1a1a24;
 }
 
-.stars {
-  font-size: 16px;
+.stars .star {
+  display: inline-block;
   color: #ccc;
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  line-height: 1;
 }
 
-.star.filled {
+.stars .star.filled {
   color: #ffb400;
+}
+
+.stars .star.half {
+  background: linear-gradient(90deg, #ffb400 50%, #ccc 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 /* Containerul de butoane */
@@ -510,7 +513,7 @@
 
 /* Containerul de scroll intern */
 .reviews-scroll-container {
-  max-height: 340px;       /* Limită de înălțime ajustată pentru text mai mare */
+  max-height: 180px;       /* Limită de înălțime ajustată pentru text mai mare */
   overflow-y: auto;        /* Activează scroll-ul vertical */
   padding-right: 12px;
   

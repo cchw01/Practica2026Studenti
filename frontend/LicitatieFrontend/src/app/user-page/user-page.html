@@ -12,10 +12,12 @@
 
         <!-- Rating-ul cu stele securizat -->
         <div class="rating-box">
-          <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
+          <span class="rating-value">{{ averageRating || 0 }} / 5</span>
           <div class="stars">
+             <!-- Folosește star - 0.5 în loc de star -->
             <span *ngFor="let star of [1,2,3,4,5]" class="star"
-              [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+              [class.filled]="averageRating >= star"
+              [class.half]="averageRating >= star - 0.5 && averageRating < star">★</span>
           </div>
         </div>
       </div>
