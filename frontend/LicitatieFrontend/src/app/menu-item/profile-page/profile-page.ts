@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
-import { ReviewService } from '../../app-logic/review';
+import { ReviewService } from '../../services/review-service';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -97,7 +97,7 @@ export class ProfilePage implements OnInit {
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const authUserId = this.authService.getCurrentUserId();
