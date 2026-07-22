@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: false,
   templateUrl: './login-page.html',
-  styleUrl: './login-page.css',
+  styleUrl: './login-page.scss',
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
@@ -17,12 +16,20 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'login_required') {
+        this.errorMessage = 'You have to be logged in to sell.';
+      }
     });
   }
 
@@ -40,15 +47,17 @@ export class LoginPage implements OnInit {
     const formData = this.loginForm.value;
     console.log('Trimitem datele:', formData);
 
-this.authService.login(formData.email,formData.password ).subscribe({  next: (response: any) => {
-    console.log('Login cu succes!', response);
-    this.router.navigate(['/profile']);
-  },
-  error: (err) => {
-    console.error('Eroare de la server:', err);
-    this.errorMessage = 'Email sau parolă incorecte.';
-  },
-});
+    this.authService.login(formData.email, formData.password).subscribe({
+      next: (response: any) => {
+        console.log('Login cu succes!', response);
+        this.router.navigate(['/profile-page']);
+      },
+      error: (err) => {
+        console.error('Eroare de la server:', err);
+        this.errorMessage = err.error || 'Email sau parolă incorecte.';
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   goToRegister(): void {

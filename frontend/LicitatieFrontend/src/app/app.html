@@ -1,6 +1,8 @@
 <!-- NAV-UL TĂU -->
 <nav class="navbar">
   <div class="navbar-inner">
+
+    <!-- Logo -->
     <a routerLink="/home-page" class="brand" (click)="closeMenu()">
       <span class="brand-icon-wrap">
         <mat-icon class="brand-icon">gavel</mat-icon>
@@ -10,35 +12,44 @@
       </span>
     </a>
 
-    <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()" aria-label="Toggle navigation"
-      (click)="toggleMenu()">
+    <!-- Mobile menu toggle -->
+    <button class="menu-toggle" type="button" [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="'NAV.TOGGLE_MENU' | translate" (click)="toggleMenu()">
       <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
     </button>
 
     <div class="nav-links" [class.open]="menuOpen()">
+
+      <!-- Main links -->
       <div class="nav-links-main">
-        <a routerLink="/home-page" routerLinkActive="active" (click)="closeMenu()">
+        <a routerLink="/home-page" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()">
           <mat-icon>home</mat-icon>
-          <span>Home</span>
+          <span>{{ 'NAV.HOME' | translate }}</span>
         </a>
         <a routerLink="/auctions" routerLinkActive="active" (click)="closeMenu()">
           <mat-icon>gavel</mat-icon>
-          <span>Auctions</span>
+          <span>{{ 'NAV.AUCTIONS' | translate }}</span>
         </a>
         <a routerLink="/forum-page" routerLinkActive="active" (click)="closeMenu()">
           <mat-icon>forum</mat-icon>
-          <span>Forum</span>
+          <span>{{ 'NAV.FORUM' | translate }}</span>
         </a>
         <a routerLink="/contact-page" routerLinkActive="active" (click)="closeMenu()">
           <mat-icon>mail</mat-icon>
-          <span>Contact</span>
+          <span>{{ 'NAV.CONTACT' | translate }}</span>
         </a>
         <a routerLink="/help-page" routerLinkActive="active" (click)="closeMenu()">
           <mat-icon>help</mat-icon>
-          <span>Help</span>
+          <span>{{ 'NAV.HELP' | translate }}</span>
+        </a>
+        <a *ngIf="isAdmin()" routerLink="/admin" (click)="closeMenu()">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin</span>
         </a>
       </div>
 
+      <!-- Actions -->
       <div class="nav-links-actions">
         <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction"
           title="Add Auction">
@@ -54,6 +65,7 @@
     </div>
   </div>
 </nav>
+<router-outlet />
 
 <!-- Aici se încarcă paginile tale -->
 <router-outlet></router-outlet>
@@ -63,3 +75,4 @@
 
 <!-- Asistentul AI -->
 <app-ai-widget></app-ai-widget>
+

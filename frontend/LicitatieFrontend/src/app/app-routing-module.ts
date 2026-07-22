@@ -9,24 +9,26 @@ import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ContactPage } from './menu-item/contact-page/contact-page';
 import { ForumPage } from './forum-page/forum-page';
 import { HelpPageComponent } from './menu-item/help-page/help-page';
-import { ReviewComponent } from './Models/review/review';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'auctions', component: AuctionsPage },
   { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
+  { path: 'forum/new', component: CreateForumPost },
+  { path: 'forum/:id', component: ForumPostDetails },
   { path: 'profile-page', component: ProfilePage },
   { path: 'review-page', component: ReviewComponent },
   { path: 'help-page', component: HelpPageComponent },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

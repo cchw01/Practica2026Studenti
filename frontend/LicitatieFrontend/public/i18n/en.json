@@ -1,0 +1,585 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "AUCTIONS": "Auctions",
+    "FORUM": "Forum",
+    "CONTACT": "Contact",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "TOGGLE_MENU": "Toggle navigation",
+    "SELECT_LANGUAGE": "Select language",
+    "HELP": "Help",
+    "ADD_AUCTION": "Add auction"
+  },
+
+  "CONTACT": {
+    "TITLE": "Contact Us",
+    "DESCRIPTION": "Do you have any questions? Our team is ready to help you.",
+    "EMAIL": "Email",
+    "PHONE": "Phone number",
+    "CALL_CENTER_HOURS": "Call Center Hours",
+    "SCHEDULE": "Monday–Friday, 09:00–17:00",
+    "FOLLOW_US": "Follow Us",
+    "SOCIAL_DESCRIPTION": "Stay connected with us on social media.",
+    "FORM_TITLE": "Send us a message",
+    "FORM_FULL_NAME_LABEL": "Full Name",
+    "FORM_FULL_NAME_PLACEHOLDER": "e.g. John Doe",
+    "FORM_FULL_NAME_REQUIRED": "Full Name is required.",
+    "FORM_EMAIL_LABEL": "Email Address",
+    "FORM_EMAIL_PLACEHOLDER": "e.g. you@example.com",
+    "FORM_EMAIL_REQUIRED": "Email is required.",
+    "FORM_EMAIL_INVALID": "Please enter a valid email address.",
+    "FORM_ISSUE_TYPE_LABEL": "Type of Issue",
+    "FORM_ISSUE_TYPE_REQUIRED": "Please select an issue type.",
+    "FORM_ISSUE_OPTION_GENERAL": "General Inquiry",
+    "FORM_ISSUE_OPTION_TECHNICAL": "Technical Support",
+    "FORM_ISSUE_OPTION_BILLING": "Billing / Payment",
+    "FORM_ISSUE_OPTION_LISTING": "Listing / Auction Issue",
+    "FORM_ISSUE_OPTION_ACCOUNT": "Account Management",
+    "FORM_ISSUE_OPTION_OTHER": "Other",
+    "FORM_MESSAGE_LABEL": "Describe your issue",
+    "FORM_MESSAGE_PLACEHOLDER": "Please provide details...",
+    "FORM_MESSAGE_REQUIRED": "Message is required.",
+    "FORM_MESSAGE_MIN_LENGTH": "Message must be at least 10 characters.",
+    "FORM_SUBMIT": "Send Message",
+    "FORM_SUCCESS_TITLE": "Message sent!",
+    "FORM_SUCCESS_MESSAGE": "Thank you for reaching out. We'll get back to you as soon as possible.",
+    "FORM_SEND_ANOTHER": "Send another message"
+  },
+
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email address",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Invalid email format",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Enter password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters",
+    "SUBMIT": "Log In",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER_HERE": "Register here"
+  },
+
+  "REGISTER": {
+    "TITLE": "Create an account",
+    "USERNAME_LABEL": "Username",
+    "USERNAME_PLACEHOLDER": "Username",
+    "USERNAME_REQUIRED": "Username is required.",
+    "FULL_NAME_LABEL": "Full Name",
+    "FULL_NAME_PLACEHOLDER": "Full name",
+    "FULL_NAME_REQUIRED": "Full name is required.",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email",
+    "EMAIL_REQUIRED": "Email is required.",
+    "EMAIL_INVALID": "Please enter a valid email.",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_PLACEHOLDER": "Password",
+    "PASSWORD_REQUIRED": "Password is required.",
+    "PASSWORD_MIN_LENGTH": "Password must be at least 6 characters.",
+    "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm password",
+    "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password.",
+    "PASSWORDS_MISMATCH": "Passwords do not match.",
+    "PHONE_LABEL": "Phone Number",
+    "PHONE_PLACEHOLDER": "Phone Number (+40...)",
+    "PHONE_REQUIRED": "Phone number is required.",
+    "PHONE_INVALID": "Please enter a valid phone number.",
+    "SUBMIT": "Create account",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "SIGN_IN": "Sign in"
+  },
+
+  "HOME": {
+    "HERO": {
+      "TITLE": "BID. WIN. REPEAT.",
+      "TAG": "🔥 Live auctions every day",
+      "DESCRIPTION": "The safest online auction platform. Sell fast or catch unique deals.",
+      "EXPLORE_AUCTIONS": "Explore Auctions",
+      "START_SELLING": "Start Selling",
+      "SEARCH_LABEL": "Search products and auctions...",
+      "SEARCH_PLACEHOLDER": "Example: BMW, gold earrings"
+    },
+
+    "ABOUT": {
+      "EYEBROW": "About Us",
+      "TITLE_START": "Who",
+      "TITLE_END": "We Are",
+      "DESCRIPTION": "BidSphere is a modern online auction platform built to make buying and selling through bidding simple, secure, and exciting. We connect thousands of buyers and sellers across a wide range of categories through a transparent, fair process for everyone.",
+
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Secure & Trusted",
+          "DESCRIPTION": "Every transaction is protected, so you can bid with confidence."
+        },
+        "REALTIME": {
+          "TITLE": "Real-Time Bidding",
+          "DESCRIPTION": "Watch prices update live and never miss a winning moment."
+        },
+        "COMMUNITY": {
+          "TITLE": "Growing Community",
+          "DESCRIPTION": "Thousands of buyers and sellers active across every category."
+        }
+      }
+    },
+
+    "CATEGORIES": {
+      "EYEBROW": "Categories",
+      "TITLE_START": "Explore",
+      "TITLE_END": "Categories",
+
+      "ITEMS": {
+        "TECHNOLOGY": {
+          "NAME": "Technology",
+          "DESCRIPTION": "Cutting-edge gadgets and the latest electronics."
+        },
+
+        "AUTO_MOTORS": {
+          "NAME": "Auto & Motors",
+          "DESCRIPTION": "Cars, motorcycles, and rare parts."
+        },
+
+        "ART_COLLECTIBLES": {
+          "NAME": "Art & Collectibles",
+          "DESCRIPTION": "Exclusive art pieces and collections."
+        },
+
+        "REAL_ESTATE": {
+          "NAME": "Real Estate",
+          "DESCRIPTION": "Exceptional properties and land."
+        }
+      }
+    },
+
+    "AUCTIONS": {
+      "EYEBROW": "Marketplace",
+      "TITLE_START": "Active",
+      "TITLE_END": "Auctions",
+      "PLACE_BID": "Place Bid",
+      "EMPTY": "No auctions ending soon right now — check back shortly."
+    }
+  },
+
+  "HELP": {
+    "TITLE": "Help Center",
+    "INFORMATION": "Find quick answers, reach us by phone, or chat with our AI assistant.",
+    "FAQ":"❓ Frequently Asked Questions",
+    "SUPPORT":"📞 Quick Phone Support",
+    "PROGRAM":"Monday - Friday: 09:00 - 18:00",
+    "FORM":"📝 Open a Ticket",
+    "REQUEST":"Send Request",
+    "ASSISTANT":"Live Virtual Assistant",
+    "ISSUE_TYPE_PLACEHOLDER": "Select the type of issue"
+  }
+,
+"AUCTIONS_PAGE": {
+  "TITLE": "Active Auctions",
+  "DESCRIPTION": "Discover unique items and bid in real time",
+
+  "SEARCH_PLACEHOLDER": "Search by name...",
+
+  "ALL_CATEGORIES": "All categories",
+
+  "SORT": {
+    "ENDING_SOON": "Ending soon",
+    "PRICE_LOW_HIGH": "Price: low to high",
+    "PRICE_HIGH_LOW": "Price: high to low",
+    "NEWEST": "Newest"
+  },
+
+  "ADD_ITEM": "Add Item",
+
+  "RESULT": {
+    "ONE": "auction found",
+    "MANY": "auctions found"
+  },
+
+  "CURRENT_PRICE": "Current price",
+  "POSTED_BY": "Posted by",
+  "YOU": "You",
+
+  "EMPTY": {
+    "TITLE": "No items found",
+    "DESCRIPTION": "There are currently no active auctions matching your search."
+  },
+
+  "TIME": {
+    "ENDED": "Auction ended",
+    "LEFT": "left"
+  }
+
+},
+"SEARCH_PAGE": {
+  "TITLE": "Search Results",
+  "DESCRIPTION_WITH_QUERY": "Showing results for \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Search for auctions, users or forum posts across BidSphere",
+  "SEARCH_PLACEHOLDER": "Search auctions, users or forum posts...",
+  "LOADING": "Loading results...",
+
+  "TABS": {
+    "AUCTIONS": "Auctions",
+    "USERS": "Users",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "No auctions found",
+    "DESCRIPTION": "There are no auctions matching your search."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "No users found",
+    "DESCRIPTION": "There are no users matching your search."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "No forum posts found",
+    "DESCRIPTION": "There are no discussions matching your search."
+  }
+},
+"ADD_ITEM_PAGE": {
+  "BADGE": "🔨 Sell on BidSphere",
+  "TITLE": "Add New Auction Item",
+  "DESCRIPTION": "Fill in the details below to publish your item for auction.",
+
+  "FIELDS": {
+    "NAME": "Item name *",
+    "NAME_PLACEHOLDER": "e.g. Vintage bicycle",
+
+    "START_PRICE": "Starting price (RON) *",
+
+    "DURATION": "Auction duration (days) *",
+
+    "CATEGORY": "Category *",
+    "CATEGORY_PLACEHOLDER": "Select a category",
+
+    "LOCATION": "Location *",
+    "LOCATION_PLACEHOLDER": "e.g. Brașov",
+
+    "DESCRIPTION": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the item's condition, history and details..."
+  },
+
+  "IMAGE": {
+    "TITLE": "Item photo",
+    "UPLOAD": "Click to upload an image",
+    "DETAILS": "JPG, PNG or WEBP, max 5 MB",
+    "REMOVE": "Remove"
+  },
+
+  "BUTTONS": {
+    "CANCEL": "Cancel",
+    "PUBLISH": "Publish Item",
+    "PUBLISHING": "Publishing..."
+  },
+
+  "VALIDATION": {
+    "NAME_REQUIRED": "Name is required.",
+    "NAME_MIN": "Name must be at least 3 characters.",
+
+    "PRICE_REQUIRED": "Starting price is required.",
+    "PRICE_MIN": "Price must be greater than 0.",
+
+    "DURATION": "Duration must be between 1 and 30 days.",
+
+    "CATEGORY": "Please select a category.",
+
+    "LOCATION": "Location is required.",
+
+    "IMAGE_TYPE": "Only JPG, PNG or WEBP images are allowed.",
+    "IMAGE_SIZE": "Image must be smaller than 5 MB."
+  },
+
+  "MESSAGES": {
+    "SUCCESS": "Item successfully published for auction!",
+    "SUCCESS_LOCAL": "Item successfully published for auction (saved locally - backend not ready)."
+  }
+}, 
+
+  "FOOTER": {
+    "ABOUT_TITLE": "About us",
+    "ABOUT_TEXT_1": "BidSphere is a modern online auction platform designed to make buying and selling through bidding simple, secure, and exciting.",
+    "ABOUT_TEXT_2": "We connect thousands of buyers and sellers across a wide range of categories, offering a transparent and fair bidding process for everyone. Whether you're looking for a great deal or hoping to sell to the right buyer, BidSphere gives you the tools and trust you need to bid with confidence.",
+
+    "LINKS": "Links",
+    "HOME": "Home",
+    "SERVICES": "Auctions",
+    "CONTACT": "Contact",
+    "HELP": "Help",
+    "FORUM": "Forum",
+
+    "CONTACT_TITLE": "Contact",
+
+    "SOCIAL": "Social media",
+
+    "COPYRIGHT": "All rights reserved."
+  }, 
+
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "Oops! Page not found",
+    "MESSAGE": "The page you're looking for doesn't exist or has been moved.",
+    "BUTTON":"Go BACK HOME"
+  },
+
+  "FORUM": {
+    "TITLE": "Forum discussions",
+    "DESCRIPTION": "Browse current discussions and participate in conversations with other users.",
+
+    "START_DISCUSSION": "Start a discussion",
+    "LOGIN_TO_START": "Log in to start a discussion",
+
+    "SORT": {
+      "ARIA_LABEL": "Sort discussions",
+      "LATEST": "Latest first",
+      "OLDEST": "Oldest first",
+      "MOST_COMMENTED": "Most commented"
+    },
+
+    "DISCUSSION": "discussion",
+    "DISCUSSIONS": "discussions",
+
+    "LOADING": {
+      "TITLE": "Loading discussions"
+    },
+
+    "ERROR": {
+      "TITLE": "Unable to load discussions",
+      "RETRY": "Try again"
+    },
+
+    "POSTED_BY": "Posted by",
+
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+
+    "EMPTY": {
+      "TITLE": "No discussions available",
+      "MESSAGE": "There are currently no discussions in the forum."
+    }
+  },
+
+  "NOTIFICATIONS":{
+    "TRUE": "Notifications",
+    "FALSE": "No notifications yet."
+  },
+
+  "AUCTION_ITEM_PAGE": {
+    "HEADER_BADGE": "🏷️ Auction Detail",
+
+    "INFO": {
+      "CURRENT_PRICE": "Current Price",
+      "START_PRICE": "Starting Price",
+      "CATEGORY": "Category",
+      "LOCATION": "Location",
+      "STARTS_AT": "Starts At",
+      "OWNER": "Owner",
+      "ENDS": "Ends"
+    },
+
+    "BID": {
+      "TITLE": "Place Your Bid",
+      "PLACEHOLDER": "Enter bid amount",
+      "BUTTON": "🔨 Place Bid",
+      "MINIMUM": "Minimum bid:",
+      "LOGIN_TEXT": "Sign in to place a bid on this item.",
+      "LOGIN_BUTTON": "Login to Bid"
+    },
+
+    "WISHLIST": {
+      "ADD": "🤍 Add to Wishlist",
+      "ADDED": "❤️ In Wishlist"
+    },
+
+    "DESCRIPTION": {
+      "TITLE": "Product Description"
+    },
+
+    "STATUS": {
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PENDING": "Pending"
+    },
+
+    "MESSAGES": {
+      "AUCTION_ENDED": "Auction ended.",
+      "BID_HIGHER_CURRENT": "The bid must be greater than the current price.",
+      "BID_HIGHER_MINIMUM": "The bid must be greater than the minimum price."
+    },
+
+    "COUNTDOWN": {
+      "DAYS": "d",
+      "HOURS": "h",
+      "MINUTES": "m",
+      "SECONDS": "s"
+    }
+  },
+  "REVIEWS": {
+    "TITLE": "Reviews",
+    "REVIEWER_ID": "Reviewer ID",
+    "REVIEWED_USER_ID": "Reviewed User ID",
+    "RATING": "Rating (0–5)",
+    "RATING_ERROR": "The rating must be between 0 and 5.",
+    "COMMENT": "Comment",
+    "ADD": "Add",
+    "UPDATE": "Update",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit review",
+    "DELETE": "Delete review"
+  },
+  "SHARE": {
+    "BUTTON": "Share",
+    "COPIED": "Copied!"
+  },
+  "USER_MENU": {
+    "PROFILE": "Profile",
+    "LOGOUT": "Log out"
+  },
+  "FORUM_DETAILS": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
+
+    "LOADING_DISCUSSION_TITLE": "Loading discussion",
+    "LOADING_DISCUSSION_MESSAGE": "Discussions are loading.",
+    "LOAD_DISCUSSION_ERROR": "Unable to load discussion",
+    "TRY_AGAIN": "Try again",
+
+    "DELETE_POST": "Delete",
+    "POSTED_BY": "Posted by",
+
+    "DISCUSSION": "Discussion",
+    "COMMENT": "comment",
+    "COMMENTS": "comments",
+
+    "ADD_COMMENT": "Add a comment",
+    "COMMENT_PLACEHOLDER": "Write your comment here...",
+    "COMMENT_REQUIRED": "A comment is required.",
+    "COMMENT_MIN_LENGTH": "The comment must contain at least 2 characters.",
+    "COMMENT_MAX_LENGTH": "The comment cannot exceed 1000 characters.",
+
+    "PUBLISHING": "Publishing...",
+    "PUBLISH_COMMENT": "Publish comment",
+
+    "LOGIN_REQUIRED": "You need to be logged in to post a comment.",
+    "LOGIN": "Log in",
+
+    "LOADING_COMMENTS": "Loading comments",
+    "LOAD_COMMENTS_ERROR": "Unable to load comments",
+
+    "DELETE_COMMENT": "Delete",
+    "NO_COMMENTS": "No comments yet"
+  },
+  "CREATE_POST": {
+    "BACK_TO_DISCUSSIONS": "Back to discussions",
+    "TITLE": "Start a discussion",
+    "SUBTITLE": "Create a new discussion and share it with other forum users.",
+
+    "TITLE_LABEL": "Title",
+    "TITLE_PLACEHOLDER": "Enter a clear discussion title",
+    "TITLE_REQUIRED": "A title is required.",
+    "TITLE_WHITESPACE": "The title cannot contain only spaces.",
+    "TITLE_MIN_LENGTH": "The title must contain at least 3 characters.",
+    "TITLE_MAX_LENGTH": "The title cannot exceed 150 characters.",
+
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the topic you would like to discuss...",
+    "DESCRIPTION_REQUIRED": "A description is required.",
+    "DESCRIPTION_WHITESPACE": "The description cannot contain only spaces.",
+    "DESCRIPTION_MIN_LENGTH": "The description must contain at least 10 characters.",
+    "DESCRIPTION_MAX_LENGTH": "The description cannot exceed 5000 characters.",
+
+    "CREATE_ERROR": "Unable to create discussion",
+    "CANCEL": "Cancel",
+    "CREATING": "Creating discussion...",
+    "SUBMIT": "Start discussion"
+  },
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username not set",
+    "NAME_NOT_SET": "Name not set",
+    "EMAIL_NOT_SET": "Email not set",
+    "AVERAGE_SCORE": "Average Score"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Edit Profile",
+    "LOG_OUT": "Log Out",
+    "ADD_ITEM": "Add New Item",
+    "CHANGE_PHOTO": "Change Photo",
+    "HIDE_PASSWORD": "Hide Password Settings",
+    "CHANGE_PASSWORD": "Change Password",
+    "UPDATE_PASSWORD": "Update Password",
+    "CANCEL": "Cancel",
+    "SAVE": "Save Changes"
+  },
+
+  "THEME": {
+    "TITLE": "Customize Theme",
+    "DESCRIPTION": "Choose a visual style that matches your mood.",
+    "LIGHT": "Light",
+    "SUNSET": "Sunset",
+    "OCEAN": "Ocean"
+  },
+
+  "SELL": {
+    "TITLE": "Sell a New Item",
+    "DESCRIPTION": "Ready to list something?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "My Active Sales",
+    "WON_ITEMS": "Items Won",
+    "WISHLIST": "My Wish List",
+    "REVIEWS": "Reviews Received"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "No items listed yet.",
+    "WON_ITEMS": "No items won yet.",
+    "WISHLIST": "No items in your wish list yet.",
+    "REVIEWS": "No reviews received yet."
+  },
+
+  "EDIT": {
+    "TITLE": "Edit Profile",
+    "USERNAME": "Username",
+    "FULL_NAME": "Full Name",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "e.g. john_doe",
+    "FULL_NAME_PLACEHOLDER": "e.g. John Doe",
+    "EMAIL_PLACEHOLDER": "e.g. john@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Current Password",
+    "NEW": "New Password",
+    "CONFIRM": "Confirm Password",
+
+    "CURRENT_PLACEHOLDER": "Enter current password",
+    "NEW_PLACEHOLDER": "Enter new password",
+    "CONFIRM_PLACEHOLDER": "Confirm new password",
+
+    "REQUIRED": "All fields are required.",
+    "NOT_MATCH": "The new password and its confirmation do not match.",
+    "SUCCESS": "Password updated successfully!",
+    "ERROR": "Error updating password. Please check your current password."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Active",
+    "ADDED": "Added",
+    "WON": "Won"
+  },
+  "DEFAULTS": {
+  "USER": "User"
+}, 
+   "ERRORS": {
+  "LOAD_CATEGORIES": "Error loading categories.",
+  "LOAD_ITEMS": "Error loading items.",
+  "LOAD_REVIEWS": "Error loading reviews."
+}, 
+"MESSAGES": {
+  "PROFILE_UPDATED": "Profile updated successfully."
+}
+}}

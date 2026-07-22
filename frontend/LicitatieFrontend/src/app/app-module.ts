@@ -7,9 +7,28 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 // Material Design Imports
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AppRoutingModule } from './app-routing-module';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+
+import { App } from './app';
+import { HomePage } from './home-page/home-page';
+import { ProfilePage } from './profile/profile-page/profile-page';
+import { RegisterPage } from './menu-item/register-page/register-page';
+import { LoginPage } from './menu-item/login-page/login-page';
+import { ContactPage } from './menu-item/contact-page/contact-page';
+import { ForumPage } from './forum-page/forum-page';
+import { AuctionsPage } from './auctions-page/auctions-page';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
+
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -37,6 +56,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
 // ATENȚIE: Această componentă era importată în fișierul tău, dar nefolosită în modul
 import { HelpPageComponent } from './menu-item/help-page/help-page';
 
+
 @NgModule({
   declarations: [
     App,
@@ -47,7 +67,17 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     ContactPage,
     ForumPage,
     AuctionsPage,
+    SearchPage,
+    AddItemPage,
+    AuctionItemPage,
+    Add,
+    Edit,
+    View,
+    AuctionDetail,
     ShareListingButton,
+    AddItem,
+    ForumPostDetails,
+    CreateForumPost,
     AuctionDetail,
     Footer,
 
@@ -55,6 +85,20 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
   ],
   imports: [
     // Angular Core & Routing
+  BrowserModule,
+  AppRoutingModule,
+  FormsModule,
+  CommonModule,
+  ReactiveFormsModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  HttpClientModule,
+  HelpPageComponent, // <--- Pune-o aici în schimb!
+  ],
+  providers: [provideBrowserGlobalErrorListeners()],
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
@@ -82,7 +126,18 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './i18n/',
+        suffix: '.json',
+        failOnError: true,
+      }),
+
+      fallbackLang: 'en',
+      lang: 'en',
+    }),
   ],
+
   bootstrap: [App],
 })
 export class AppModule {}

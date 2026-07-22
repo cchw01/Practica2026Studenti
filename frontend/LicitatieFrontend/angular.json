@@ -28,32 +28,51 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-          "assets": [
-            {
-              "glob": "**/*",
-              "input": "public"
-            },
-            {
-              "glob": "**/*",
-              "input": "src/assets",
-              "output": "assets"
-            }
-          ],
+<<<<<<< HEAD
+           "assets": [
+  {
+    "glob": "**/*",
+    "input": "public"
+  },
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  }
+],
             "styles": ["src/material-theme.scss", "src/styles.css"]
+=======
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css"
+            ]
+>>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "3MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "12kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "50kB"
                 }
               ],
               "outputHashing": "all"

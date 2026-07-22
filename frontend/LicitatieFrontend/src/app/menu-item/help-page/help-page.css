@@ -1,3 +1,4 @@
+
 /* =========================================
    Layout General & Fundal
    ========================================= */
@@ -6,7 +7,6 @@ body {
   margin: 0;
   background: linear-gradient(135deg, #e6ebfa 0%, #ffffff 40%, #ffffff 60%, #fae2ea 100%);
   min-height: 100vh;
-}
 
 .help-wrapper {
   max-width: 1200px;
@@ -46,8 +46,14 @@ body {
    ========================================= */
 .content-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 30px;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -74,7 +80,40 @@ body {
   font-weight: 800;
 }
 
-.right-column { display: flex; flex-direction: column; gap: 30px; }
+.category-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.chip-btn {
+  background-color: #f1f5f9;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-btn:hover {
+  background-color: #e2e8f0;
+  color: #1e3c72;
+}
+
+.faq-category {
+  margin-bottom: 25px;
+}
+
+.category-title {
+  font-size: 1.1rem;
+  color: #334155;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 8px;
+}
 
 /* =========================================
    FAQ Acordeon
@@ -83,8 +122,15 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.05);
   padding: 18px 0;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+.faq-item:hover {
+  border-color: #cbd5e1;
+}
+
 .faq-question {
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   font-weight: 700;
@@ -172,6 +218,7 @@ body {
   display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.3s;
   border: 1px solid rgba(0,0,0,0.05);
 }
+
 .chat-header {
   background: #f8fbff; color: #111; padding: 20px;
   font-weight: 800; display: flex; align-items: center; gap: 10px;
@@ -213,9 +260,6 @@ body {
   background: #94a3b8; border-radius: 50%; margin: 0 2px;
   animation: typingBounce 1.4s infinite ease-in-out both;
 }
-.typing .dot:nth-child(1) { animation-delay: -0.32s; }
-.typing .dot:nth-child(2) { animation-delay: -0.16s; }
-@keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
 /* =========================================
    Responsivitate Mobile

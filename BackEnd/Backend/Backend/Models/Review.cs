@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,7 +24,7 @@ namespace Backend.Models
         public float Rating { get; set; }
 
         [MaxLength(1000)]
-        public string Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         public DateTime ReviewDate { get; set; } = DateTime.UtcNow;
     }

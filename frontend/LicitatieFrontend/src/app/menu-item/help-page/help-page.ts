@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-help-page',
@@ -11,57 +12,82 @@ import { CommonModule } from '@angular/common';
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
+  isLoggedIn = false; // Controlăm afișarea formularului vs. butoanele de oaspeți
 
-  // FAQ cu stare de deschis/închis
-  faqs = [
+  faqCategories = [
     {
-      question: 'Cum pot plasa o sumă la o licitație?',
-      answer:
-        'Navighează către pagina produsului dorit și introdu suma în câmpul "Bid now". Suma trebuie să fie mai mare decât prețul curent.',
-      isOpen: false,
+      title: '🚨 Urgențe și Probleme la Licitare',
+      faqs: [
+        {
+          question: 'Am tastat o sumă greșită. Cum anulez?',
+          answer: 'Ofertele sunt angajamente ferme. Totuși, sunați la call center.',
+          isOpen: false,
+        },
+        {
+          question: 'Am fost supralicitat în ultima secundă.',
+          answer: 'Orice ofertă plasată pe final prelungește automat cronometrul.',
+          isOpen: false,
+        },
+      ],
     },
     {
-      question: 'Cum adaug un produs pentru a-l vinde?',
-      answer:
-        'Mergi în secțiunea "Profilul meu" și apasă butonul "Adaugă Licitație". Completează detaliile și așteaptă validarea unui Admin.',
-      isOpen: false,
-    },
-    {
-      question: 'Cum știu dacă am câștigat?',
-      answer:
-        'Vei primi o notificare pe email și în aplicație atunci când licitația se încheie și tu ai avut cea mai mare ofertă.',
-      isOpen: false,
+      title: '💳 Plăți, Taxe și Garanții',
+      faqs: [
+        {
+          question: 'De ce suma finală este mai mare?',
+          answer: 'La prețul câștigător se adaugă comisionul platformei și TVA-ul aplicabil.',
+          isOpen: false,
+        },
+      ],
     },
   ];
 
   isChatOpen = false;
-  isTyping = false; // Efect de scriere pentru AI
+  isTyping = false;
   chatMessages: { sender: string; text: string }[] = [
     { sender: 'ai', text: 'Salut! Sunt asistentul tău virtual. Cu ce te pot ajuta astăzi?' },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  // Am scos momentan authService și supportService ca să oprim erorile TS
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.helpForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      issueType: ['', Validators.required],
       issue: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
-  // Deschide/închide o întrebare FAQ
-  toggleFaq(index: number) {
-    this.faqs[index].isOpen = !this.faqs[index].isOpen;
+  scrollToCategory(index: number) {
+    const element = document.getElementById('cat-' + index);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  toggleFaq(catIndex: number, faqIndex: number) {
+    this.faqCategories[catIndex].faqs[faqIndex].isOpen =
+      !this.faqCategories[catIndex].faqs[faqIndex].isOpen;
   }
 
   onSubmitHelpForm() {
     if (this.helpForm.valid) {
-      alert('Tichetul tău a fost înregistrat cu succes! Te vom contacta în curând.');
+      alert('Tichetul tău a fost înregistrat cu succes!');
       this.helpForm.reset();
-    } else {
-      alert('Te rugăm să completezi corect toate câmpurile.');
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
   toggleChat() {
@@ -75,16 +101,9 @@ export class HelpPageComponent implements OnInit {
       inputEl.value = '';
       this.isTyping = true;
 
-      // Simulare răspuns inteligent cu întârziere
       setTimeout(() => {
         this.isTyping = false;
-        this.chatMessages.push({
-          sender: 'ai',
-          text:
-            'Am înțeles că ai o întrebare despre: "' +
-            text +
-            '". Te rog să consulți FAQ sau să folosești formularul pentru asistență umană!',
-        });
+        this.chatMessages.push({ sender: 'ai', text: 'Te rog să consulți secțiunea FAQ!' });
       }, 1500);
     }
   }
