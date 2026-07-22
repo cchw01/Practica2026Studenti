@@ -75,11 +75,11 @@ export class AddItemPage implements OnInit {
       const file = files[i];
 
       if (!this.allowedTypes.includes(file.type)) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_TYPE');
         continue;
       }
       if (file.size > this.maxImageSize) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_SIZE');
         continue;
       }
 
@@ -135,7 +135,7 @@ export class AddItemPage implements OnInit {
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
+        this.message = this.translate.instant('ADD_ITEM_PAGE.MESSAGES.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.clearAllImages();
         this.isSubmitting = false;
