@@ -37,7 +37,7 @@ export class AuctionsPage implements OnInit {
     private categoryService: CategoryService,
     public authService: AuthService,
     private userService: UserService,
-  ) {}
+  ) { }
 
   getCategoryName(item: AuctionItem): string {
     if (!item || !item.Category) return '';
