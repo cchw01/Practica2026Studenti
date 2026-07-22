@@ -40,7 +40,7 @@ export class SearchPage implements OnInit {
     private forumPostService: ForumPostService,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -110,19 +110,19 @@ export class SearchPage implements OnInit {
     this.filteredUsers = !search
       ? this.allUsers
       : this.allUsers.filter(
-          (u) =>
-            u.UserName?.toLowerCase().includes(search) ||
-            u.Name?.toLowerCase().includes(search),
-        );
+        (u) =>
+          u.UserName?.toLowerCase().includes(search) ||
+          u.Name?.toLowerCase().includes(search),
+      );
 
     this.filteredPosts = !search
       ? this.allPosts
       : this.allPosts.filter(
-          (p) =>
-            p.title?.toLowerCase().includes(search) ||
-            p.description?.toLowerCase().includes(search) ||
-            p.userName?.toLowerCase().includes(search),
-        );
+        (p) =>
+          p.title?.toLowerCase().includes(search) ||
+          p.description?.toLowerCase().includes(search) ||
+          p.userName?.toLowerCase().includes(search),
+      );
   }
 
   goToAuctionDetail(item: AuctionItem): void {
@@ -131,6 +131,24 @@ export class SearchPage implements OnInit {
 
   goToForumDetail(post: ForumPost): void {
     this.router.navigate(['/forum', post.id]);
+  }
+
+  goToUserProfile(user: UserReadDto): void {
+    this.router.navigate(['/user-page', user.ID]);
+  }
+
+  goToOwnerProfile(event: Event, ownerId: number | string): void {
+    event.stopPropagation();
+    if (ownerId) {
+      this.router.navigate(['/user-page', ownerId]);
+    }
+  }
+
+  goToPostAuthor(event: Event, userId: number): void {
+    event.stopPropagation();
+    if (userId) {
+      this.router.navigate(['/user-page', userId]);
+    }
   }
 
   getRemainingTime(endDate: Date): string {

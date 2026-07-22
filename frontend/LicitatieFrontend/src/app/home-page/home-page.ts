@@ -31,6 +31,8 @@ export interface AboutFeature {
   descriptionKey: string;
 }
 
+const MIN_REMAINING_MS = 10 * 60 * 1000;
+
 interface Particle {
   ox: number;
   oy: number;
@@ -51,6 +53,8 @@ const HERO_TITLE = 'BID. WIN. REPEAT.';
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('auctionsTrack') auctionsTrackRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('categoriesTrack') categoriesTrackRef?: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
@@ -120,6 +124,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page'], { queryParams: { error: 'login_required' } });
+      return;
+    }
     this.router.navigate(['/add-item']);
   }
 
@@ -134,6 +142,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
+  }
+
+  goToOwner(event: Event, auction: AuctionItem): void {
+    event.stopPropagation();
+    const ownerId = auction.OwnerId || auction.Owner?.ID;
+    if (ownerId) {
+      this.router.navigate(['/user-page', ownerId]);
+    }
+  }
+
+  getOwnerDisplayName(auction: AuctionItem): string {
+    const owner = auction.Owner as any;
+    if (owner) {
+      const name = owner.UserName || owner.userName || owner.username || owner.Name || owner.name;
+      if (name) return name;
+    }
+    return auction.OwnerId ? `seller #${auction.OwnerId}` : '';
+  }
+
+  scrollAuctions(direction: number): void {
+    this.scrollTrack(this.auctionsTrackRef, direction);
+  }
+
+  scrollCategories(direction: number): void {
+    this.scrollTrack(this.categoriesTrackRef, direction);
+  }
+
+  private scrollTrack(trackRef: ElementRef<HTMLDivElement> | undefined, direction: number): void {
+    const track = trackRef?.nativeElement;
+    if (!track) return;
+
+    track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
   getRemainingLabel(endDate: Date): string {
@@ -164,10 +204,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.displayedAuctions = this.allAuctions
       .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
-      .filter((entry) => entry.remainingMs > 0)
+      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
       .sort((a, b) => a.remainingMs - b.remainingMs)
-      .map((entry) => entry.item)
-      .slice(0, 4);
+      .map((entry) => entry.item);
 
     this.cdr.detectChanges();
   }
@@ -184,7 +223,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-    this.itemService.getActiveItems().subscribe({
+    this.itemService.getItems().subscribe({
       next: (items) => {
         this.allAuctions = items;
         this.refreshDisplayedAuctions();

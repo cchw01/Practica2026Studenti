@@ -20,31 +20,31 @@
     "CALL_CENTER_HOURS": "Horario del centro de atención",
     "SCHEDULE": "Lunes–Viernes, 09:00–17:00",
     "FOLLOW_US": "Síguenos",
-    "SOCIAL_DESCRIPTION": "Mantente conectado con nosotros en las redes sociales.",
-    "FORM_TITLE": "Envíanos un mensaje",
-    "FORM_FULL_NAME_LABEL": "Nombre completo",
-    "FORM_FULL_NAME_PLACEHOLDER": "p. ej., Juan Pérez",
-    "FORM_FULL_NAME_REQUIRED": "El nombre completo es obligatorio.",
-    "FORM_EMAIL_LABEL": "Dirección de correo electrónico",
-    "FORM_EMAIL_PLACEHOLDER": "p. ej., tu@ejemplo.com",
-    "FORM_EMAIL_REQUIRED": "El correo electrónico es obligatorio.",
-    "FORM_EMAIL_INVALID": "Introduce una dirección de correo electrónico válida.",
-    "FORM_ISSUE_TYPE_LABEL": "Tipo de problema",
-    "FORM_ISSUE_TYPE_REQUIRED": "Selecciona un tipo de problema.",
-    "FORM_ISSUE_OPTION_GENERAL": "Consulta general",
-    "FORM_ISSUE_OPTION_TECHNICAL": "Soporte técnico",
-    "FORM_ISSUE_OPTION_BILLING": "Facturación / Pago",
-    "FORM_ISSUE_OPTION_LISTING": "Problema con el anuncio / la subasta",
-    "FORM_ISSUE_OPTION_ACCOUNT": "Gestión de la cuenta",
-    "FORM_ISSUE_OPTION_OTHER": "Otro",
-    "FORM_MESSAGE_LABEL": "Describe tu problema",
-    "FORM_MESSAGE_PLACEHOLDER": "Proporciona más detalles...",
-    "FORM_MESSAGE_REQUIRED": "El mensaje es obligatorio.",
-    "FORM_MESSAGE_MIN_LENGTH": "El mensaje debe tener al menos 10 caracteres.",
-    "FORM_SUBMIT": "Enviar mensaje",
-    "FORM_SUCCESS_TITLE": "¡Mensaje enviado!",
-    "FORM_SUCCESS_MESSAGE": "Gracias por contactarnos. Te responderemos lo antes posible.",
-    "FORM_SEND_ANOTHER": "Enviar otro mensaje"  
+    "SOCIAL_DESCRIPTION": "Mantente conectado con nosotros en las redes sociales.", 
+     "FORM_TITLE": "Envíanos un mensaje",
+  "FORM_FULL_NAME_LABEL": "Nombre completo",
+  "FORM_FULL_NAME_PLACEHOLDER": "p. ej. Juan Pérez",
+  "FORM_FULL_NAME_REQUIRED": "El nombre completo es obligatorio.",
+  "FORM_EMAIL_LABEL": "Correo electrónico",
+  "FORM_EMAIL_PLACEHOLDER": "p. ej. tu@ejemplo.com",
+  "FORM_EMAIL_REQUIRED": "El correo electrónico es obligatorio.",
+  "FORM_EMAIL_INVALID": "Por favor, introduce una dirección de correo electrónico válida.",
+  "FORM_ISSUE_TYPE_LABEL": "Tipo de incidencia",
+  "FORM_ISSUE_TYPE_REQUIRED": "Por favor, selecciona un tipo de incidencia.",
+  "FORM_ISSUE_OPTION_GENERAL": "Consulta general",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Soporte técnico",
+  "FORM_ISSUE_OPTION_BILLING": "Facturación / Pago",
+  "FORM_ISSUE_OPTION_LISTING": "Problema con el anuncio / subasta",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Gestión de la cuenta",
+  "FORM_ISSUE_OPTION_OTHER": "Otro",
+  "FORM_MESSAGE_LABEL": "Describe tu incidencia",
+  "FORM_MESSAGE_PLACEHOLDER": "Por favor, proporciona más detalles...",
+  "FORM_MESSAGE_REQUIRED": "El mensaje es obligatorio.",
+  "FORM_MESSAGE_MIN_LENGTH": "El mensaje debe tener al menos 10 caracteres.",
+  "FORM_SUBMIT": "Enviar mensaje",
+  "FORM_SUCCESS_TITLE": "¡Mensaje enviado!",
+  "FORM_SUCCESS_MESSAGE": "Gracias por ponerte en contacto con nosotros. Te responderemos lo antes posible.",
+  "FORM_SEND_ANOTHER": "Enviar otro mensaje"
   },
 
   "LOGIN": {
@@ -206,36 +206,8 @@
     "TITLE": "No se encontraron artículos",
     "DESCRIPTION": "Actualmente no hay subastas activas que coincidan con tu búsqueda."
   }
-}
-,
-"SEARCH_PAGE": {
-  "TITLE": "Resultados de búsqueda",
-  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
-  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
-  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
-  "LOADING": "Cargando resultados...",
-
-  "TABS": {
-    "AUCTIONS": "Subastas",
-    "USERS": "Usuarios",
-    "FORUM": "Foro"
-  },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "No se encontraron subastas",
-    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
-  },
-
-  "USERS_EMPTY": {
-    "TITLE": "No se encontraron usuarios",
-    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
-  },
-
-  "FORUM_EMPTY": {
-    "TITLE": "No se encontraron publicaciones",
-    "DESCRIPTION": "No hay debates que coincidan con tu búsqueda."
-  }
 },
+
 "ADD_ITEM_PAGE": {
   "BADGE": "🔨 Vende en BidSphere",
   "TITLE": "Añadir un nuevo artículo a la subasta",
@@ -581,4 +553,33 @@
 "MESSAGES": {
   "PROFILE_UPDATED": "Perfil actualizado con éxito."
 }
+},
+
+"SEARCH_PAGE": {
+  "TITLE": "Resultados de búsqueda",
+  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
+  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
+  "LOADING": "Cargando resultados...",
+
+  "TABS": {
+    "AUCTIONS": "Subastas",
+    "USERS": "Usuarios",
+    "FORUM": "Foro"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "No se encontraron subastas",
+    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "No se encontraron usuarios",
+    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "No se encontraron publicaciones en el foro",
+    "DESCRIPTION": "No hay conversaciones que coincidan con tu búsqueda."
+  }
 }}

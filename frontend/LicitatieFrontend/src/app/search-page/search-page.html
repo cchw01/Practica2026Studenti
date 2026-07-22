@@ -12,12 +12,8 @@
         <circle cx="11" cy="11" r="7"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input
-        type="text"
-        [(ngModel)]="query"
-        (ngModelChange)="onSearchChange()"
-        placeholder="{{ 'SEARCH_PAGE.SEARCH_PLACEHOLDER' | translate }}"
-      />
+      <input type="text" [(ngModel)]="query" (ngModelChange)="onSearchChange()"
+        placeholder="{{ 'SEARCH_PAGE.SEARCH_PLACEHOLDER' | translate }}" />
     </div>
   </div>
 
@@ -53,8 +49,7 @@
         <div class="card-image-wrap">
           <img
             [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')"
-            [alt]="item.Name"
-          />
+            [alt]="item.Name" />
           <span class="time-left" [ngClass]="getTimeUrgencyClass(item.EndDate)">
             {{ getRemainingTime(item.EndDate) }}
           </span>
@@ -64,6 +59,10 @@
           <p class="current-bid">
             {{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong>
           </p>
+          <span *ngIf="item.OwnerId || item.Owner" class="card-owner-link"
+            (click)="goToOwnerProfile($event, item.OwnerId || item.Owner?.ID)">
+            &#64;{{ item.Owner?.UserName || item.Owner?.Name || ('owner #' + item.OwnerId) }}
+          </span>
         </div>
       </div>
     </div>
@@ -89,7 +88,7 @@
     </div>
 
     <div class="users-grid" *ngIf="usersLoaded && filteredUsers.length > 0">
-      <div class="user-card" *ngFor="let u of filteredUsers">
+      <div class="user-card" *ngFor="let u of filteredUsers" (click)="goToUserProfile(u)">
         <div class="user-avatar">{{ getInitial(u) }}</div>
         <div class="user-info">
           <h3>{{ u.Name || u.UserName }}</h3>
@@ -132,7 +131,8 @@
         </div>
         <p class="post-description">{{ post.description }}</p>
         <div class="post-meta">
-          <span class="post-author">&#64;{{ post.userName || 'unknown' }}</span>
+          <span class="post-author post-author-link" (click)="goToPostAuthor($event, post.userId)"
+            title="Vezi profilul lui {{ post.userName }}">&#64;{{ post.userName || 'unknown' }}</span>
           <span class="post-date">{{ post.date | date:'mediumDate' }}</span>
         </div>
       </div>

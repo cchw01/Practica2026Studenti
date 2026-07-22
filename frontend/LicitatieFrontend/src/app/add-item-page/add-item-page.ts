@@ -128,7 +128,6 @@ export class AddItemPage implements OnInit {
 
     for (const file of this.selectedFiles) {
       formData.append('Images', file, file.name);
-      formData.append('Image', file, file.name);
     }
 
     this.isSubmitting = true;

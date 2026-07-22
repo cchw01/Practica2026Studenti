@@ -59,8 +59,8 @@ namespace Backend.DataManagement
                         Location = "Cluj-Napoca",
                         OwnerId = defaultUser.ID,
                         Status = AuctionItem.StatusEnum.Validated,
-                        StartDate = DateTime.UtcNow.AddDays(-2),
-                        EndDate = DateTime.UtcNow.AddDays(10),
+                        StartDate = DateTime.Now.AddDays(-2),
+                        EndDate = DateTime.Now.AddDays(10),
                         ImageUrl = "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop"
                     },
                     new AuctionItem
@@ -73,8 +73,8 @@ namespace Backend.DataManagement
                         Location = "București",
                         OwnerId = defaultUser.ID,
                         Status = AuctionItem.StatusEnum.Validated,
-                        StartDate = DateTime.UtcNow.AddDays(-1),
-                        EndDate = DateTime.UtcNow.AddDays(7),
+                        StartDate = DateTime.Now.AddDays(-1),
+                        EndDate = DateTime.Now.AddDays(7),
                         ImageUrl = "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop"
                     },
                     new AuctionItem
@@ -87,8 +87,8 @@ namespace Backend.DataManagement
                         Location = "Bucharest",
                         OwnerId = defaultUser.ID,
                         Status = AuctionItem.StatusEnum.Validated,
-                        StartDate = DateTime.UtcNow.AddDays(-3),
-                        EndDate = DateTime.UtcNow.AddDays(14),
+                        StartDate = DateTime.Now.AddDays(-3),
+                        EndDate = DateTime.Now.AddDays(14),
                         ImageUrl = "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop"
                     },
                     new AuctionItem
@@ -101,8 +101,8 @@ namespace Backend.DataManagement
                         Location = "Timișoara",
                         OwnerId = defaultUser.ID,
                         Status = AuctionItem.StatusEnum.Validated,
-                        StartDate = DateTime.UtcNow,
-                        EndDate = DateTime.UtcNow.AddDays(5),
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now.AddDays(5),
                         ImageUrl = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop"
                     },
                     new AuctionItem
@@ -115,8 +115,8 @@ namespace Backend.DataManagement
                         Location = "Cluj-Napoca",
                         OwnerId = defaultUser.ID,
                         Status = AuctionItem.StatusEnum.Validated,
-                        StartDate = DateTime.UtcNow.AddDays(-4),
-                        EndDate = DateTime.UtcNow.AddDays(20),
+                        StartDate = DateTime.Now.AddDays(-4),
+                        EndDate = DateTime.Now.AddDays(20),
                         ImageUrl = "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop"
                     }
                 );

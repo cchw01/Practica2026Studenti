@@ -12,38 +12,38 @@
     "ADD_AUCTION": "Auktion hinzufügen"
   },
   "CONTACT": {
-      "TITLE": "Επικοινωνήστε μαζί μας",
-      "DESCRIPTION": "Έχετε απορίες; Η ομάδα μας είναι έτοιμη να σας βοηθήσει.",
-      "EMAIL": "Email",
-      "PHONE": "Αριθμός τηλεφώνου",
-      "CALL_CENTER_HOURS": "Ώρες εξυπηρέτησης",
-      "SCHEDULE": "Δευτέρα–Παρασκευή, 09:00–17:00",
-      "FOLLOW_US": "Ακολουθήστε μας",
-      "SOCIAL_DESCRIPTION": "Μείνετε συνδεδεμένοι μαζί μας μέσω των μέσων κοινωνικής δικτύωσης.",
-      "FORM_TITLE": "Στείλτε μας ένα μήνυμα",
-      "FORM_FULL_NAME_LABEL": "Ονοματεπώνυμο",
-      "FORM_FULL_NAME_PLACEHOLDER": "π.χ. Γιάννης Παπαδόπουλος",
-      "FORM_FULL_NAME_REQUIRED": "Το ονοματεπώνυμο είναι υποχρεωτικό.",
-      "FORM_EMAIL_LABEL": "Διεύθυνση email",
-      "FORM_EMAIL_PLACEHOLDER": "π.χ. onoma@example.gr",
-      "FORM_EMAIL_REQUIRED": "Η διεύθυνση email είναι υποχρεωτική.",
-      "FORM_EMAIL_INVALID": "Παρακαλώ εισαγάγετε μια έγκυρη διεύθυνση email.",
-      "FORM_ISSUE_TYPE_LABEL": "Τύπος ζητήματος",
-      "FORM_ISSUE_TYPE_REQUIRED": "Παρακαλώ επιλέξτε έναν τύπο ζητήματος.",
-      "FORM_ISSUE_OPTION_GENERAL": "Γενική ερώτηση",
-      "FORM_ISSUE_OPTION_TECHNICAL": "Τεχνική υποστήριξη",
-      "FORM_ISSUE_OPTION_BILLING": "Χρέωση / Πληρωμή",
-      "FORM_ISSUE_OPTION_LISTING": "Πρόβλημα με καταχώριση / δημοπρασία",
-      "FORM_ISSUE_OPTION_ACCOUNT": "Διαχείριση λογαριασμού",
-      "FORM_ISSUE_OPTION_OTHER": "Άλλο",
-      "FORM_MESSAGE_LABEL": "Περιγράψτε το πρόβλημά σας",
-      "FORM_MESSAGE_PLACEHOLDER": "Παρακαλώ δώστε περισσότερες λεπτομέρειες...",
-      "FORM_MESSAGE_REQUIRED": "Το μήνυμα είναι υποχρεωτικό.",
-      "FORM_MESSAGE_MIN_LENGTH": "Το μήνυμα πρέπει να περιέχει τουλάχιστον 10 χαρακτήρες.",
-      "FORM_SUBMIT": "Αποστολή μηνύματος",
-      "FORM_SUCCESS_TITLE": "Το μήνυμα στάλθηκε!",
-      "FORM_SUCCESS_MESSAGE": "Σας ευχαριστούμε που επικοινωνήσατε μαζί μας. Θα σας απαντήσουμε το συντομότερο δυνατό.",
-      "FORM_SEND_ANOTHER": "Αποστολή άλλου μηνύματος"
+    "TITLE": "Kontaktieren Sie uns",
+    "DESCRIPTION": "Haben Sie Fragen? Unser Team hilft Ihnen gerne weiter.",
+    "EMAIL": "E-Mail",
+    "PHONE": "Telefonnummer",
+    "CALL_CENTER_HOURS": "Servicezeiten",
+    "SCHEDULE": "Montag–Freitag, 09:00–17:00 Uhr",
+    "FOLLOW_US": "Folgen Sie uns",
+    "SOCIAL_DESCRIPTION": "Bleiben Sie über soziale Medien mit uns in Verbindung.",
+     "FORM_TITLE": "Senden Sie uns eine Nachricht",
+  "FORM_FULL_NAME_LABEL": "Vollständiger Name",
+  "FORM_FULL_NAME_PLACEHOLDER": "z. B. Max Mustermann",
+  "FORM_FULL_NAME_REQUIRED": "Der vollständige Name ist erforderlich.",
+  "FORM_EMAIL_LABEL": "E-Mail-Adresse",
+  "FORM_EMAIL_PLACEHOLDER": "z. B. sie@beispiel.de",
+  "FORM_EMAIL_REQUIRED": "Die E-Mail-Adresse ist erforderlich.",
+  "FORM_EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+  "FORM_ISSUE_TYPE_LABEL": "Art des Problems",
+  "FORM_ISSUE_TYPE_REQUIRED": "Bitte wählen Sie eine Problemart aus.",
+  "FORM_ISSUE_OPTION_GENERAL": "Allgemeine Anfrage",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Technischer Support",
+  "FORM_ISSUE_OPTION_BILLING": "Abrechnung / Zahlung",
+  "FORM_ISSUE_OPTION_LISTING": "Problem mit Anzeige / Auktion",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Kontoverwaltung",
+  "FORM_ISSUE_OPTION_OTHER": "Sonstiges",
+  "FORM_MESSAGE_LABEL": "Beschreiben Sie Ihr Problem",
+  "FORM_MESSAGE_PLACEHOLDER": "Bitte geben Sie weitere Details an...",
+  "FORM_MESSAGE_REQUIRED": "Die Nachricht ist erforderlich.",
+  "FORM_MESSAGE_MIN_LENGTH": "Die Nachricht muss mindestens 10 Zeichen lang sein.",
+  "FORM_SUBMIT": "Nachricht senden",
+  "FORM_SUCCESS_TITLE": "Nachricht gesendet!",
+  "FORM_SUCCESS_MESSAGE": "Vielen Dank für Ihre Nachricht. Wir werden uns so schnell wie möglich bei Ihnen melden.",
+  "FORM_SEND_ANOTHER": "Weitere Nachricht senden"
   },
   "LOGIN": {
     "TITLE": "Anmelden",
@@ -390,5 +390,126 @@
     "CANCEL": "Abbrechen",
     "CREATING": "Diskussion wird erstellt...",
     "SUBMIT": "Diskussion starten"
+  },
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nicht festgelegt",
+    "NAME_NOT_SET": "Name nicht festgelegt",
+    "EMAIL_NOT_SET": "E-Mail nicht festgelegt",
+    "AVERAGE_SCORE": "Durchschnittliche Bewertung"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Profil bearbeiten",
+    "LOG_OUT": "Abmelden",
+    "ADD_ITEM": "Neuen Artikel hinzufügen",
+    "CHANGE_PHOTO": "Foto ändern",
+    "HIDE_PASSWORD": "Passworteinstellungen ausblenden",
+    "CHANGE_PASSWORD": "Passwort ändern",
+    "UPDATE_PASSWORD": "Passwort aktualisieren",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Änderungen speichern"
+  },
+
+  "THEME": {
+    "TITLE": "Design anpassen",
+    "DESCRIPTION": "Wählen Sie einen visuellen Stil, der zu Ihrer Stimmung passt.",
+    "LIGHT": "Hell",
+    "SUNSET": "Sonnenuntergang",
+    "OCEAN": "Ozean"
+  },
+
+  "SELL": {
+    "TITLE": "Neuen Artikel verkaufen",
+    "DESCRIPTION": "Bereit, etwas einzustellen?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Meine aktiven Verkäufe",
+    "WON_ITEMS": "Gewonnene Artikel",
+    "WISHLIST": "Meine Wunschliste",
+    "REVIEWS": "Erhaltene Bewertungen"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Noch keine Artikel eingestellt.",
+    "WON_ITEMS": "Noch keine Artikel gewonnen.",
+    "WISHLIST": "Noch keine Artikel auf der Wunschliste.",
+    "REVIEWS": "Noch keine Bewertungen erhalten."
+  },
+
+  "EDIT": {
+    "TITLE": "Profil bearbeiten",
+    "USERNAME": "Benutzername",
+    "FULL_NAME": "Vollständiger Name",
+    "EMAIL": "E-Mail",
+
+    "USERNAME_PLACEHOLDER": "z. B. max_mustermann",
+    "FULL_NAME_PLACEHOLDER": "z. B. Max Mustermann",
+    "EMAIL_PLACEHOLDER": "z. B. max@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Aktuelles Passwort",
+    "NEW": "Neues Passwort",
+    "CONFIRM": "Passwort bestätigen",
+
+    "CURRENT_PLACEHOLDER": "Aktuelles Passwort eingeben",
+    "NEW_PLACEHOLDER": "Neues Passwort eingeben",
+    "CONFIRM_PLACEHOLDER": "Neues Passwort bestätigen",
+
+    "REQUIRED": "Alle Felder sind erforderlich.",
+    "NOT_MATCH": "Das neue Passwort und die Bestätigung stimmen nicht überein.",
+    "SUCCESS": "Passwort erfolgreich aktualisiert!",
+    "ERROR": "Fehler beim Aktualisieren des Passworts. Bitte überprüfen Sie Ihr aktuelles Passwort."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktiv",
+    "ADDED": "Hinzugefügt",
+    "WON": "Gewonnen"
+  },
+
+  "DEFAULTS": {
+    "USER": "Benutzer"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Fehler beim Laden der Kategorien.",
+    "LOAD_ITEMS": "Fehler beim Laden der Artikel.",
+    "LOAD_REVIEWS": "Fehler beim Laden der Bewertungen."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profil erfolgreich aktualisiert."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Suchergebnisse",
+  "DESCRIPTION_WITH_QUERY": "Ergebnisse für \"{{query}}\" werden angezeigt",
+  "DESCRIPTION_EMPTY": "Durchsuchen Sie BidSphere nach Auktionen, Nutzern oder Forenbeiträgen",
+  "SEARCH_PLACEHOLDER": "Nach Auktionen, Nutzern oder Forenbeiträgen suchen...",
+  "LOADING": "Ergebnisse werden geladen...",
+
+  "TABS": {
+    "AUCTIONS": "Auktionen",
+    "USERS": "Nutzer",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Keine Auktionen gefunden",
+    "DESCRIPTION": "Es gibt keine Auktionen, die Ihrer Suche entsprechen."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Keine Nutzer gefunden",
+    "DESCRIPTION": "Es gibt keine Nutzer, die Ihrer Suche entsprechen."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Keine Forenbeiträge gefunden",
+    "DESCRIPTION": "Es gibt keine Diskussionen, die Ihrer Suche entsprechen."
+  }
+}
 }

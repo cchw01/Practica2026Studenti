@@ -905,3 +905,45 @@
 .btn-report:hover .report-icon {
   transform: scale(1.25);
 }
+
+// Report + Share actions row
+// NOTE: these .actions-footer / .btn-report rules previously only
+// existed in the unused legacy auction-item-page.css — styleUrl
+// points at this .scss file, so that CSS was never actually loaded
+// and the Report button was rendering unstyled. Porting them here
+// fixes that, and turns the row into a flex container so the new
+// share button sits to the right of it.
+.actions-footer {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-report {
+  flex: 1 1 auto;
+  padding: 9px 14px;
+  border: 1px dashed rgba(220, 53, 69, 0.4);
+  border-radius: 10px;
+  background: transparent;
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-report:hover {
+  background: rgba(220, 53, 69, 0.08);
+  border-color: #dc3545;
+}
+
+.btn-report.reported {
+  border: 1px solid #dc3545;
+  background: rgba(220, 53, 69, 0.12);
+  color: #c0392b;
+}

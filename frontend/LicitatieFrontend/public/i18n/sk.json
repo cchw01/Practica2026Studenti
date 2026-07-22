@@ -12,20 +12,20 @@
     "ADD_AUCTION": "Pridať aukciu"
   },
   "CONTACT": {
-  "TITLE": "Kontaktujte nás",
-  "DESCRIPTION": "Máte otázky? Náš tím je pripravený vám pomôcť.",
-  "EMAIL": "E-mail",
-  "PHONE": "Telefónne číslo",
-  "CALL_CENTER_HOURS": "Otváracie hodiny zákazníckej podpory",
-  "SCHEDULE": "Pondelok–piatok, 09:00–17:00",
-  "FOLLOW_US": "Sledujte nás",
-  "SOCIAL_DESCRIPTION": "Zostaňte s nami v kontakte prostredníctvom sociálnych sietí.",
-  "FORM_TITLE": "Pošlite nám správu",
-  "FORM_FULL_NAME_LABEL": "Meno a priezvisko",
+    "TITLE": "Kontaktujte nás",
+    "DESCRIPTION": "Máte otázky? Náš tím je pripravený vám pomôcť.",
+    "EMAIL": "E-mail",
+    "PHONE": "Telefónne číslo",
+    "CALL_CENTER_HOURS": "Otváracie hodiny zákazníckej linky",
+    "SCHEDULE": "Pondelok–piatok, 09:00–17:00",
+    "FOLLOW_US": "Sledujte nás",
+    "SOCIAL_DESCRIPTION": "Zostaňte s nami v kontakte na sociálnych sieťach.", 
+    "FORM_TITLE": "Pošlite nám správu",
+  "FORM_FULL_NAME_LABEL": "Celé meno",
   "FORM_FULL_NAME_PLACEHOLDER": "napr. Ján Novák",
-  "FORM_FULL_NAME_REQUIRED": "Meno a priezvisko sú povinné.",
+  "FORM_FULL_NAME_REQUIRED": "Celé meno je povinné.",
   "FORM_EMAIL_LABEL": "E-mailová adresa",
-  "FORM_EMAIL_PLACEHOLDER": "napr. vy@priklad.sk",
+  "FORM_EMAIL_PLACEHOLDER": "napr. vy@example.com",
   "FORM_EMAIL_REQUIRED": "E-mailová adresa je povinná.",
   "FORM_EMAIL_INVALID": "Zadajte platnú e-mailovú adresu.",
   "FORM_ISSUE_TYPE_LABEL": "Typ problému",
@@ -33,18 +33,18 @@
   "FORM_ISSUE_OPTION_GENERAL": "Všeobecná otázka",
   "FORM_ISSUE_OPTION_TECHNICAL": "Technická podpora",
   "FORM_ISSUE_OPTION_BILLING": "Fakturácia / Platba",
-  "FORM_ISSUE_OPTION_LISTING": "Problém s inzerátom / aukciou",
+  "FORM_ISSUE_OPTION_LISTING": "Problém s ponukou / aukciou",
   "FORM_ISSUE_OPTION_ACCOUNT": "Správa účtu",
   "FORM_ISSUE_OPTION_OTHER": "Iné",
-  "FORM_MESSAGE_LABEL": "Opíšte svoj problém",
-  "FORM_MESSAGE_PLACEHOLDER": "Uveďte ďalšie podrobnosti...",
+  "FORM_MESSAGE_LABEL": "Popíšte svoj problém",
+  "FORM_MESSAGE_PLACEHOLDER": "Uveďte viac podrobností...",
   "FORM_MESSAGE_REQUIRED": "Správa je povinná.",
   "FORM_MESSAGE_MIN_LENGTH": "Správa musí obsahovať aspoň 10 znakov.",
   "FORM_SUBMIT": "Odoslať správu",
-  "FORM_SUCCESS_TITLE": "Správa bola odoslaná!",
+  "FORM_SUCCESS_TITLE": "Správa odoslaná!",
   "FORM_SUCCESS_MESSAGE": "Ďakujeme, že ste nás kontaktovali. Odpovieme vám čo najskôr.",
   "FORM_SEND_ANOTHER": "Odoslať ďalšiu správu"
-},
+  },
   "LOGIN": {
     "TITLE": "Prihlásenie",
     "EMAIL_LABEL": "E-mail",
@@ -390,5 +390,126 @@
     "CANCEL": "Zrušiť",
     "CREATING": "Vytvára sa diskusia...",
     "SUBMIT": "Začať diskusiu"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nie je nastavené",
+    "NAME_NOT_SET": "Meno nie je nastavené",
+    "EMAIL_NOT_SET": "E-mail nie je nastavený",
+    "AVERAGE_SCORE": "Priemerné hodnotenie"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Upraviť profil",
+    "LOG_OUT": "Odhlásiť sa",
+    "ADD_ITEM": "Pridať novú položku",
+    "CHANGE_PHOTO": "Zmeniť fotografiu",
+    "HIDE_PASSWORD": "Skryť nastavenia hesla",
+    "CHANGE_PASSWORD": "Zmeniť heslo",
+    "UPDATE_PASSWORD": "Aktualizovať heslo",
+    "CANCEL": "Zrušiť",
+    "SAVE": "Uložiť zmeny"
+  },
+
+  "THEME": {
+    "TITLE": "Prispôsobiť motív",
+    "DESCRIPTION": "Vyberte vizuálny štýl, ktorý zodpovedá vašej nálade.",
+    "LIGHT": "Svetlý",
+    "SUNSET": "Západ slnka",
+    "OCEAN": "Oceán"
+  },
+
+  "SELL": {
+    "TITLE": "Predať novú položku",
+    "DESCRIPTION": "Ste pripravení niečo ponúknuť?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Moje aktívne predaje",
+    "WON_ITEMS": "Vyhrané položky",
+    "WISHLIST": "Môj zoznam želaní",
+    "REVIEWS": "Prijaté hodnotenia"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Zatiaľ nie sú uvedené žiadne položky.",
+    "WON_ITEMS": "Zatiaľ ste nevyhrali žiadnu položku.",
+    "WISHLIST": "V zozname želaní zatiaľ nie sú žiadne položky.",
+    "REVIEWS": "Zatiaľ ste nedostali žiadne hodnotenia."
+  },
+
+  "EDIT": {
+    "TITLE": "Upraviť profil",
+    "USERNAME": "Používateľské meno",
+    "FULL_NAME": "Celé meno",
+    "EMAIL": "E-mail",
+
+    "USERNAME_PLACEHOLDER": "napr. john_doe",
+    "FULL_NAME_PLACEHOLDER": "napr. Ján Novák",
+    "EMAIL_PLACEHOLDER": "napr. john@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Aktuálne heslo",
+    "NEW": "Nové heslo",
+    "CONFIRM": "Potvrdiť heslo",
+
+    "CURRENT_PLACEHOLDER": "Zadajte aktuálne heslo",
+    "NEW_PLACEHOLDER": "Zadajte nové heslo",
+    "CONFIRM_PLACEHOLDER": "Potvrďte nové heslo",
+
+    "REQUIRED": "Všetky polia sú povinné.",
+    "NOT_MATCH": "Nové heslo a jeho potvrdenie sa nezhodujú.",
+    "SUCCESS": "Heslo bolo úspešne aktualizované!",
+    "ERROR": "Chyba pri aktualizácii hesla. Skontrolujte svoje aktuálne heslo."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktívne",
+    "ADDED": "Pridané",
+    "WON": "Vyhrané"
+  },
+
+  "DEFAULTS": {
+    "USER": "Používateľ"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Chyba pri načítavaní kategórií.",
+    "LOAD_ITEMS": "Chyba pri načítavaní položiek.",
+    "LOAD_REVIEWS": "Chyba pri načítavaní hodnotení."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profil bol úspešne aktualizovaný."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Výsledky vyhľadávania",
+  "DESCRIPTION_WITH_QUERY": "Zobrazujú sa výsledky pre \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Vyhľadávajte aukcie, používateľov alebo príspevky na fóre v BidSphere",
+  "SEARCH_PLACEHOLDER": "Vyhľadávajte aukcie, používateľov alebo príspevky na fóre...",
+  "LOADING": "Načítavajú sa výsledky...",
+
+  "TABS": {
+    "AUCTIONS": "Aukcie",
+    "USERS": "Používatelia",
+    "FORUM": "Fórum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nenašli sa žiadne aukcie",
+    "DESCRIPTION": "Neexistujú žiadne aukcie zodpovedajúce vášmu vyhľadávaniu."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nenašli sa žiadni používatelia",
+    "DESCRIPTION": "Neexistujú žiadni používatelia zodpovedajúci vášmu vyhľadávaniu."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nenašli sa žiadne príspevky na fóre",
+    "DESCRIPTION": "Neexistujú žiadne diskusie zodpovedajúce vášmu vyhľadávaniu."
+  }
+}
 }
