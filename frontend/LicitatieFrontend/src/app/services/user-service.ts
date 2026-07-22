@@ -71,8 +71,8 @@ export class UserService {
 
     uploadProfilePicture(file: File): Observable<string> {
       const formData = new FormData();      
-      formData.append('Picture', file);       
-      return this.http.post<string>('/api/ProfilePicture/upload', formData, {
+      formData.append(file.name, file);       
+      return this.http.post('https://localhost:7137/api/ProfilePicture/upload', formData, {
       responseType: 'text',
     });
     }

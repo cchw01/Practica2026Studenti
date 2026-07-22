@@ -38,7 +38,8 @@ namespace Backend.Controllers
                         Email = u.Email,
                         Role = u.Role,
                         Rating = u.Rating,
-                        PhoneNumber = u.PhoneNumber
+                        PhoneNumber = u.PhoneNumber,
+                        ProfilePictureName = u.ProfilePicture
                     }).ToArray();
                     return Ok(userDtos);
                 }
@@ -66,7 +67,8 @@ namespace Backend.Controllers
                         Email = user.Email,
                         Role = user.Role,
                         Rating = user.Rating,
-                        PhoneNumber = user.PhoneNumber
+                        PhoneNumber = user.PhoneNumber,
+                        ProfilePictureName = user.ProfilePicture
                     };
 
                     return Ok(userDto);

@@ -24,7 +24,6 @@ namespace Backend.Controllers
             _environment = environment;
         }
 
-        [Authorize]
         [HttpPost("upload")]
        public async Task<ActionResult<ProfilePicture>> UploadProfilePicture([FromForm] ProfilePictureDto profilePicture)
         {
@@ -48,6 +47,10 @@ namespace Backend.Controllers
             string webRoot = _environment.WebRootPath
                  ?? Path.Combine(_environment.ContentRootPath, "wwwroot");
             string uploadsFolder = Path.Combine(webRoot, "Assets", "ProfilePictures");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
             if (user.ProfilePictureId != null)
             {
                 var oldPicture = dataOps.GetProfilePictureById(user.ProfilePictureId.Value);

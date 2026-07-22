@@ -7,6 +7,7 @@ import { ReviewService } from '../../app-logic/review';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserReadDto } from '../../Models/user/userDto';
 
 interface Item {
   id: number;
@@ -25,10 +26,11 @@ interface Review {
 }
 
 interface UserProfile {
-  username: string;
-  name: string;
-  email: string;
-  avatarUrl: string;
+  UserName: string;
+  Name: string;
+  Email: string;
+  avatarUrl?: string;
+  profilePictureName?: string;
 }
 
 const STORAGE_KEY = 'profile_user';
@@ -44,13 +46,14 @@ export class ProfilePage implements OnInit {
   isEditing = false;
   currentUserId: number = 0;
   categories: any[] = [];
-
+  avatarUrl : string = '';
+  defaultAvatar : string = 'assets/default-avatar.png';
   // --- User data ---
   user: UserProfile = {
-    username: 'john_doe',
-    name: 'John Doe',
-    email: 'john@example.com',
-    avatarUrl: '',
+    UserName: 'john_doe',
+    Name: 'John Doe',
+    Email: 'john@example.com',
+    avatarUrl: 'assets/default-avatar.png',
   };
 
   editDraft: UserProfile = { ...this.user };
@@ -80,13 +83,20 @@ export class ProfilePage implements OnInit {
     return [1, 2, 3, 4, 5];
   }
 
+  private readonly backendAssetsUrl = 'https://localhost:7137/Assets/ProfilePictures/';
+
   get displayAvatar(): string {
-    if (this.user.avatarUrl) return this.user.avatarUrl;
-    const name = encodeURIComponent(
-      this.user.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER'),
-    );
-    return `https://ui-avatars.com/api/?name=${name}&background=6c63ff&color=fff&size=120`;
-  }
+  if (this.user.profilePictureName) {
+    return `${this.backendAssetsUrl}${this.user.profilePictureName}`;
+  } 
+  if (this.user.avatarUrl) {
+    return this.user.avatarUrl;
+  }  
+  const name = encodeURIComponent(
+    this.user.Name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER')
+  );
+  return `https://ui-avatars.com/api/?name=${name}&background=6c63ff&color=fff&size=120`;
+}
 
   constructor(
     private authService: AuthService,
@@ -96,16 +106,18 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     const authUserId = this.authService.getCurrentUserId();
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
-      this.user.username = currentUser.username || currentUser.email || '';
-      this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
-      this.user.email = currentUser.email || '';
+      this.user.UserName = currentUser.username || currentUser.email || '';
+      this.user.Name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
+      this.user.Email = currentUser.email || '';
+      this.loadUserProfile(currentUser.ID);
     }
     this.currentUserId = authUserId !== null ? authUserId : 0;
 
@@ -205,7 +217,7 @@ export class ProfilePage implements OnInit {
             const ownerUsername = item.Owner?.username ?? item.Owner?.UserName ?? item.owner?.username ?? item.ownerUserName;
 
             const matchId = ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
-            const matchUser = ownerUsername && this.user.username && ownerUsername.toLowerCase() === this.user.username.toLowerCase();
+            const matchUser = ownerUsername && this.user.UserName && ownerUsername.toLowerCase() === this.user.UserName.toLowerCase();
             return matchId || matchUser;
           })
           .map((item: any) => ({
@@ -353,15 +365,15 @@ export class ProfilePage implements OnInit {
   saveEdit(): void {
     this.UserService.updateUser(
       this.currentUserId,
-      this.editDraft.username,
-      this.editDraft.name,
+      this.editDraft.UserName,
+      this.editDraft.Name,
     ).subscribe({
       next: (updatedUser: any) => {
         // UserService.mapUser() returns UserReadDto with PascalCase fields (UserName, Name)
         this.user = {
           ...this.user,
-          username: updatedUser.UserName || updatedUser.userName || this.editDraft.username,
-          name: updatedUser.Name || updatedUser.name || this.editDraft.name,
+          UserName: updatedUser.UserName || updatedUser.userName || this.editDraft.UserName,
+          Name: updatedUser.Name || updatedUser.name || this.editDraft.Name,
         };
         if (this.selectedAvatarFile) {
           this.UserService.uploadProfilePicture(this.selectedAvatarFile).subscribe((pictureName: string) => {
@@ -396,6 +408,7 @@ export class ProfilePage implements OnInit {
       this.editDraft.avatarUrl = reader.result as string;
     };
     reader.readAsDataURL(file);
+    this.userService.uploadProfilePicture(file);
   }
 
   // --- Change Password ---
@@ -448,5 +461,33 @@ export class ProfilePage implements OnInit {
     this.setTheme('light');
     document.body.className = '';
     this.router.navigate(['/login-page']);
+  }
+
+  loadUserProfile(userId: number): void {
+    this.userService.getUser(userId).subscribe({
+      next: (userData) => {
+        this.user = userData;
+
+        // Dacă utilizatorul are poză salvată pe backend, îi construim URL-ul
+        if (userData.profilePictureName) {
+          this.avatarUrl = `${this.backendAssetsUrl}${userData.profilePictureName}`;
+        }
+      },
+      error: (err) => console.error('Eroare la încărcarea profilului:', err)
+    });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const selectedFile = input.files[0];
+
+      this.userService.uploadProfilePicture(selectedFile).subscribe({
+        next: (newPictureName) => {
+          this.avatarUrl = `${this.backendAssetsUrl}${newPictureName}`;
+        },
+        error: (err) => console.error('Eroare la upload:', err)
+      });
+    }
   }
 }

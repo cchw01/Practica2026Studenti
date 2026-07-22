@@ -34,7 +34,7 @@ namespace Backend.Models
         public List<Review> ReviewList { get; set; } = new();
         public List<ForumPost> ForumPosts { get; set; } = new();
         public List<ForumComment> ForumComments { get; set; } = new();
-
+        public string? ProfilePicture { get; internal set; }
 
         public User() { }
 

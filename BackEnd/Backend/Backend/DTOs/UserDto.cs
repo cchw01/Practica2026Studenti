@@ -13,6 +13,7 @@ namespace Backend.DTOs
         public RoleEnum Role { get; set; }
         public float Rating { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? ProfilePictureName { get; set; }
     }
 
     public class UserUpdateDto

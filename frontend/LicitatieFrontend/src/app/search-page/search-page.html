@@ -92,8 +92,8 @@
       <div class="user-card" *ngFor="let u of filteredUsers" (click)="goToUserProfile(u)">
         <div class="user-avatar">{{ getInitial(u) }}</div>
         <div class="user-info">
-          <h3>{{ u.Name || u.UserName }}</h3>
-          <span class="user-username">&#64;{{ u.UserName }}</span>
+          <h3>{{ u.name || u.username }}</h3>
+          <span class="user-username">&#64;{{ u.username }}</span>
           <div class="user-rating">
             <span class="star" *ngFor="let s of getStars(u.Rating)" [class.filled]="s">★</span>
           </div>

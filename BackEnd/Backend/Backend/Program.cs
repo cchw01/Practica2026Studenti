@@ -33,6 +33,7 @@ builder.Services.AddDirectoryBrowser();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
+builder.Services.AddScoped<ProfilePictureDataOps>();
 builder.Services.AddScoped<TokenProvider>();
 
 if (string.IsNullOrWhiteSpace(jwtSecret))
