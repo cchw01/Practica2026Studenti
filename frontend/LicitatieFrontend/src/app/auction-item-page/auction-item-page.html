@@ -147,9 +147,21 @@
       </div>
 
       <!-- Edit Button: Only shows if the logged in user is the owner -->
-        <button *ngIf="isOwner()" type="button" class="btn-edit" (click)="editItem()">
+  <!-- Edit Button: visible only for the owner -->
+        <button
+          *ngIf="isOwner()"
+          type="button"
+          class="btn-edit"
+          (click)="openEditModal()"
+          [disabled]="auctionItem.HasBids"
+          [title]="
+            auctionItem.HasBids
+              ? 'Itemul nu mai poate fi editat deoarece a primit deja o ofertă.'
+              : 'Editează itemul'
+          "
+        >
           <span class="edit-icon">✏️</span>
-          <span>Edit Item</span>
+          <span>{{ auctionItem.HasBids ? 'Editing unavailable' : 'Edit Item' }}</span>
         </button>
 
       <!-- Report Button (only visible when logged in) -->
@@ -216,12 +228,17 @@
         <input type="number" [(ngModel)]="editData.startPrice" class="modal-textarea" style="height: 40px; margin-bottom: 15px;" />
 
         <label class="field-label">Category</label>
-        <select [(ngModel)]="editData.categoryId" class="modal-select">
-          <!-- TODO : POPULATE DYNAMICALLY FROM CATEGORIES -->
-          <option value="1">Electronics</option>
-          <option value="2">Vehicles</option>
-          <option value="3">Real Estate</option>
-          <option value="4">Fashion</option>
+
+        <select
+          [(ngModel)]="editData.categoryId"
+          class="modal-select"
+        >
+          <option
+            *ngFor="let category of categories"
+            [ngValue]="category.Id"
+          >
+            {{ category.name }}
+          </option>
         </select>
 
         <label class="field-label">Location</label>

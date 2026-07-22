@@ -8,6 +8,7 @@ import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 import { TranslateService } from '@ngx-translate/core';
+import { CategoryService } from '../services/category-service';
 
 const defaultCategory = new Category({ Id: 1, name: 'Vehicles' });
 const defaultOwner = new User({
@@ -55,7 +56,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   // Edit functionality
   showEditModal: boolean = false;
   editData: any = {};
-
+  categories: Category[] = [];
   errorMessage: string = '';
   countdownText: string = '';
   private timerInterval: any;
@@ -90,6 +91,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     private bidService: BidService,
     private route: ActivatedRoute,
     private itemService: ItemService,
+    private categoryService: CategoryService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -98,7 +100,18 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     this.selectedImageIndex = 0;
+    this.categoryService.getCategories().subscribe({
+    next: (categories) => {
+        this.categories = categories;
 
+        try {
+          this.cdr.markForCheck();
+        } catch {}
+      },
+      error: (err) => {
+        console.error('Could not load categories:', err);
+      }
+    });
     const auctionFromState = this.navState?.auction;
     if (auctionFromState) {
       this.setAuctionItemData(auctionFromState);
@@ -175,6 +188,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else if (item.OwnerId || item.ownerId) {
       this.auctionItem.OwnerId = Number(item.OwnerId || item.ownerId);
     }
+
+    this.auctionItem.HasBids =
+          item.HasBids ?? item.hasBids ?? false;
+
 
     if (item.StartDate || item.startDate) {
       this.auctionItem.StartDate = new Date(item.StartDate || item.startDate);
@@ -523,13 +540,28 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.cdr.markForCheck();
     } catch { }
   }
-  editItem(){
-    this.showEditModal = true; 
-  }
+  
 
   openEditModal(): void {
     if (!this.authService.isLoggedIn()) {
       this.redirectToLogin();
+      return;
+    }
+    if (!this.isOwner()) {
+      return;
+    }
+
+    if (this.auctionItem.HasBids) {
+      this.reportToastMessage =
+        'Itemul nu mai poate fi editat deoarece a primit deja o ofertă.';
+
+      this.showReportToast = true;
+      this.isReportToastHiding = false;
+
+      try {
+        this.cdr.markForCheck();
+      } catch {}
+
       return;
     }
 
@@ -560,10 +592,52 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   //Submit edits
   
   submitEdit(): void {
+    if (!this.isOwner()) {
+      return;
+    }
+
+    if (this.auctionItem.HasBids) {
+      this.reportToastMessage =
+        'Itemul nu mai poate fi editat deoarece a primit deja o ofertă.';
+
+      this.showReportToast = true;
+      this.isReportToastHiding = false;
+
+      return;
+    }
+    if (!this.editData.name?.trim()) {
+      this.reportToastMessage = 'Numele este obligatoriu.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (
+      this.editData.startPrice === null ||
+      this.editData.startPrice === undefined ||
+      Number(this.editData.startPrice) <= 0
+    ) {
+      this.reportToastMessage =
+        'Prețul de pornire trebuie să fie mai mare decât 0.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (!this.editData.categoryId) {
+      this.reportToastMessage = 'Categoria este obligatorie.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (!this.editData.location?.trim()) {
+      this.reportToastMessage = 'Locația este obligatorie.';
+      this.showReportToast = true;
+      return;
+    }
+
     const itemToUpdate = { ...this.auctionItem };
     itemToUpdate.Name = this.editData.name;
-    itemToUpdate.StartPrice = this.editData.startPrice;
-    itemToUpdate.CategoryId = this.editData.categoryId;
+    itemToUpdate.StartPrice = Number(this.editData.startPrice);
+    itemToUpdate.CategoryId = Number(this.editData.categoryId);
     itemToUpdate.Description = this.editData.description;
     itemToUpdate.Location = this.editData.location;
 
@@ -575,10 +649,18 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           this.auctionItem.Name = itemToUpdate.Name;
           this.auctionItem.StartPrice = itemToUpdate.StartPrice;
           this.auctionItem.CategoryId = itemToUpdate.CategoryId;
+          const selectedCategory = this.categories.find(
+            category => category.Id === itemToUpdate.CategoryId
+          );
+
+          if (selectedCategory) {
+            this.auctionItem.Category = selectedCategory;
+          }
           this.auctionItem.Description = itemToUpdate.Description;
           this.auctionItem.Location = itemToUpdate.Location;
           this.auctionItem.Status = 'Added' as any; // Reset status to pending
-          
+          this.auctionItem.CurrentPrice = itemToUpdate.StartPrice;
+          this.bidAmount = itemToUpdate.StartPrice + 10;
           // Success Toast
           this.reportToastMessage = `Item updated and sent for Admin review!`;
           this.showReportToast = true;
@@ -604,7 +686,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           console.error('Failed to edit item:', err);
           
           // Error Toast
-          this.reportToastMessage = `Error updating item. Please try again.`;
+          this.reportToastMessage =
+                  err.error?.message ||
+                  err.error ||
+                  'Error updating item. Please try again.';
           this.showReportToast = true;
           this.isReportToastHiding = false;
           try { this.cdr.markForCheck(); } catch { }
