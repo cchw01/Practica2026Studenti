@@ -68,4 +68,20 @@ export class UserService {
       observer.complete();
     });
   }
+
+  forgotPassword(email: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/forgot-password`, {
+    email: email
+  });
+}
+
+resetPassword(token: string, newPassword: string) {
+  return this.http.post<{ message: string }>(
+    `${this.apiUrl}/reset-password`,
+    {
+      token,
+      newPassword
+    }
+  );
+}
 }
