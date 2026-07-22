@@ -164,12 +164,14 @@
 
   "ADD_ITEM": "Añadir artículo",
 
-  "RESULTS": {
+  "RESULT": {
     "ONE": "subasta encontrada",
     "MANY": "subastas encontradas"
   },
 
   "CURRENT_PRICE": "Precio actual:",
+  "POSTED_BY": "Añadido por",
+  "YOU": "Tú",
 
   "TIME": {
     "ENDED": "Subasta finalizada",
@@ -460,8 +462,7 @@
     "CANCEL": "Cancelar",
     "CREATING": "Creando la discusión...",
     "SUBMIT": "Iniciar discusión"
-  }
-}, 
+  }, 
 "PROFILE_PAGE": {
   "PROFILE": {
     "USERNAME_NOT_SET": "@nombre de usuario no establecido",

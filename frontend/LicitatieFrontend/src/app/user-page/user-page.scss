@@ -1,0 +1,431 @@
+@use '../styles/variables' as v;
+
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Animații de încărcare */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 140px 20px 40px;
+}
+
+/* Cardul de profil principal */
+.profile-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  position: relative;
+  
+  /* Animație la încărcare */
+  animation: fade-in-up 0.6s ease both;
+}
+
+.avatar-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, v.$color-primary, v.$color-accent);
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.2);
+}
+
+.profile-card h2 {
+  font-size: 24px;
+  margin: 0 0 5px;
+  color: #1a1a24;
+}
+
+.real-name {
+  color: #75758a;
+  font-size: 16px;
+  margin: 0 0 20px;
+}
+
+.rating-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f8fc;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.rating-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a24;
+}
+
+.stars {
+  font-size: 20px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+.star.filled {
+  color: #ffb400;
+}
+
+/* Containerul de butoane */
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 25px auto 0;
+  width: 100%;
+}
+
+.profile-actions .btn-action {
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1.5px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 !important;
+  min-width: 180px;
+}
+
+.profile-actions .btn-add-review {
+  background: rgba(v.$color-primary, 0.08);
+  color: v.$color-primary;
+  border-color: rgba(v.$color-primary, 0.2);
+}
+
+.profile-actions .btn-add-review:hover {
+  background: v.$color-primary;
+  color: white;
+  border-color: v.$color-primary;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(v.$color-primary, 0.25);
+}
+
+.profile-actions .btn-report {
+  background: rgba(v.$color-accent, 0.08);
+  color: v.$color-accent;
+  border-color: rgba(v.$color-accent, 0.2);
+}
+
+.profile-actions .btn-report:hover {
+  background: v.$color-accent;
+  color: white;
+  border-color: v.$color-accent;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(v.$color-accent, 0.25);
+}
+
+/* Secțiunea de Licitații Active */
+.active-auctions-section {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  
+  /* Animație la încărcare (pornește puțin mai târziu) */
+  animation: fade-in-up 0.6s ease 0.1s both;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f5;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.section-header h3 {
+  font-size: 20px;
+  margin: 0;
+  color: #1a1a24;
+}
+
+.filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #75758a;
+}
+
+.filter-wrap select {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #e4e4ee;
+  background: white;
+  font-weight: 500;
+  color: #1a1a24;
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-wrap select:focus {
+  border-color: v.$color-primary;
+}
+
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  border: 1px solid #f0f0f5;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Fiecare produs se încarcă animat */
+  animation: fade-in-up 0.5s ease both;
+}
+
+/* Staggered Delay pentru produsele din grilă */
+.items-grid .item-card:nth-child(1) { animation-delay: 0.15s; }
+.items-grid .item-card:nth-child(2) { animation-delay: 0.2s; }
+.items-grid .item-card:nth-child(3) { animation-delay: 0.25s; }
+.items-grid .item-card:nth-child(n + 4) { animation-delay: 0.3s; }
+
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.item-image-wrap {
+  height: 140px;
+  overflow: hidden;
+  background: #f8f8fc;
+}
+
+.item-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-info {
+  padding: 15px;
+}
+
+.item-info h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #1a1a24;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-cat {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: v.$color-primary;
+  background: rgba(v.$color-primary, 0.08);
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.price-row {
+  font-size: 13px;
+  color: #75758a;
+  margin: 0;
+}
+
+.price-row strong {
+  color: #1a1a24;
+  font-size: 14px;
+}
+
+.empty-auctions {
+  text-align: center;
+  padding: 40px 20px;
+  color: #75758a;
+  font-style: italic;
+}
+
+
+.report-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.report-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  animation: fade-in-up 0.3s ease both;
+}
+
+.report-modal h3 {
+  margin: 0 0 10px;
+  color: v.$color-accent;
+}
+
+.report-modal p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.report-modal textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel {
+  background: #f5f5f7;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+  &:hover {
+    background: #e4e4e6;
+  }
+}
+
+.btn-submit {
+  background: v.$color-accent;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  &:disabled {
+    background: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+  }
+}
+
+
+.rating-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.star-btn {
+  cursor: pointer;
+  color: #e4e4ee;
+  transition: transform 0.15s ease, color 0.15s ease;
+  user-select: none;
+  &:hover {
+    transform: scale(1.2);
+  }
+  &.filled {
+    color: #ffb400;
+  }
+}
+
+.btn-review-submit {
+  background: #2e7d32 !important;
+  color: white !important;
+  &:hover:not(:disabled) {
+    background: #1b5e20 !important;
+  }
+}
+
+/* Succes Banner */
+.success-banner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1001;
+}
+
+.success-content {
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  color: #2e7d32;
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.btn-close-banner {
+  background: transparent;
+  border: 1px solid #2e7d32;
+  color: #2e7d32;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}

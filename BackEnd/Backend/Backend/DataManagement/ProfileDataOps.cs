@@ -200,7 +200,8 @@ namespace Backend.DataManagement
             Status = a.Status.ToString(),
             StartDate = a.StartDate,
             EndDate = a.EndDate,
-            OwnerName = a.OwnerId.ToString()
+            OwnerName = a.OwnerId.ToString(),
+            ImageUrl = a.ImageUrl ?? string.Empty
         };
     }
 }

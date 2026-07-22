@@ -142,6 +142,8 @@
 .card-image-wrap {
   position: relative;
   overflow: hidden;
+  height: 180px;
+  background-color: #f1f5f9;
 }
 
 .card-auction img {
@@ -157,6 +159,36 @@
 
 .card-content {
   padding: v.$space-md;
+  position: relative;
+
+  .current-bid-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .favorite-badge {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      span {
+        color: v.$color-text-heading;
+        font-size: 24px;
+        transition: color 0.2s ease;
+      }
+
+      &.active span {
+        color: #ff4d4f;
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    }
+  }
 }
 
 .card-auction h3 {
@@ -376,4 +408,35 @@
   margin: 0 0 4px;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-}
+}
+
+.card-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f5;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #888;
+}
+
+.owner-prefix {
+  font-weight: 400;
+  color: #9598a6;
+}
+
+.owner-link {
+  color: v.$color-primary;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.owner-link:hover {
+  color: #6c4bd6;
+  text-decoration: underline;
+}
+
+

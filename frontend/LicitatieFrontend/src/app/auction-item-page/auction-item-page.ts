@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth';
+import { UserService } from '../services/user-service';
 import { ItemService } from '../services/item-service';
 import { BidService } from '../services/bid-service';
 import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
+import { TranslateService } from '@ngx-translate/core';
 
 const defaultCategory = new Category({ Id: 1, name: 'Vehicles' });
 const defaultOwner = new User({
@@ -18,17 +20,16 @@ const defaultOwner = new User({
   BidList: [],
   WonItemsList: [],
   WhishList: [],
-  ReviewList: []
+  ReviewList: [],
 });
 
 @Component({
   selector: 'app-auction-item-page',
   standalone: false,
   templateUrl: './auction-item-page.html',
-  styleUrl: './auction-item-page.css'
+  styleUrl: './auction-item-page.scss',
 })
 export class AuctionItemPage implements OnInit, OnDestroy {
-
   private navState: any;
   selectedImageIndex = 0;
   peekOffset = 0;
@@ -71,18 +72,20 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     StartDate: new Date(),
     EndDate: new Date(Date.now() + 7 * 86400000),
     BidList: [],
-    PhotoList: []
+    PhotoList: [],
   };
 
   bidAmount = this.auctionItem.CurrentPrice + 10;
 
   constructor(
     public authService: AuthService,
+    private userService: UserService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    private bidService: BidService,
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private bidService: BidService,
-    private cdr: ChangeDetectorRef
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -109,15 +112,25 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.error('Could not fetch live item by ID:', err);
-          }
+          },
         });
       }
     }
 
     this.startCountdown();
 
-    const wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    this.isInWishlist = wishlist.includes(this.auctionItem.ID);
+    const currentUserId = this.authService.getCurrentUserId();
+
+    if (currentUserId) {
+      this.userService.getWishlist(currentUserId).subscribe({
+        next: (wishlistItems: any[]) => {
+          const wishlistIds = wishlistItems.map((w) => w.id || w.ID);
+          this.isInWishlist = wishlistIds.includes(this.auctionItem.ID);
+          try { this.cdr.markForCheck(); } catch { }
+        },
+        error: (err) => console.error('Error fetching wishlist for item page', err)
+      });
+    }
 
     const reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
     this.isReported = reportedList.includes(this.auctionItem.ID);
@@ -137,9 +150,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     }
 
     if (item.Category) {
-      this.auctionItem.Category = typeof item.Category === 'string'
-        ? new Category({ Id: item.CategoryId || 1, name: item.Category })
-        : item.Category;
+      this.auctionItem.Category =
+        typeof item.Category === 'string'
+          ? new Category({ Id: item.CategoryId || 1, name: item.Category })
+          : item.Category;
     }
 
     if (item.Description || item.description) {
@@ -152,6 +166,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     if (item.Owner || item.owner) {
       this.auctionItem.Owner = item.Owner || item.owner;
+      const ownerObj = item.Owner || item.owner;
+      this.auctionItem.OwnerId = Number(ownerObj.id || ownerObj.ID || item.OwnerId || item.ownerId);
+    } else if (item.OwnerId || item.ownerId) {
+      this.auctionItem.OwnerId = Number(item.OwnerId || item.ownerId);
     }
 
     if (item.StartDate || item.startDate) {
@@ -163,52 +181,49 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     }
 
     const galleryMap: { [key: string]: string[] } = {
-      'Vehicles': [
+      Vehicles: [
         'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&auto=format&fit=crop',
       ],
-      'Art': [
+      Art: [
         'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&auto=format&fit=crop',
       ],
-      'Clothing': [
+      Clothing: [
         'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=800&auto=format&fit=crop',
       ],
-      'Electronics': [
+      Electronics: [
         'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop'
+        'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop',
       ],
       'Real Estate': [
         'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop'
-      ]
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop',
+      ],
     };
 
     const catName = this.auctionItem.Category?.name || 'Vehicles';
     const defaultGallery = galleryMap[catName] || galleryMap['Vehicles'];
 
-    if (item.ID === 2 || (this.auctionItem.Name && this.auctionItem.Name.toLowerCase().includes('watch'))) {
-      this.auctionItem.PhotoList = galleryMap['Art'];
+    const photos = item.PhotoList || item.photoList;
+    if (Array.isArray(photos) && photos.length > 0) {
+      this.auctionItem.PhotoList = photos.map((img: string) =>
+        img.startsWith('http') || img.startsWith('data:') ? img : `https://localhost:7137${img}`,
+      );
+    } else if (item.ImageUrl || item.image) {
+      const img = item.ImageUrl || item.image;
+      const formattedImg =
+        img.startsWith('http') || img.startsWith('data:') ? img : `https://localhost:7137${img}`;
+      this.auctionItem.PhotoList = [formattedImg];
     } else {
-      const photos = item.PhotoList || item.photoList;
-      if (Array.isArray(photos) && photos.length >= 2) {
-        this.auctionItem.PhotoList = photos;
-      } else if (Array.isArray(photos) && photos.length === 1) {
-        this.auctionItem.PhotoList = [photos[0], ...defaultGallery.slice(1)];
-      } else if (item.ImageUrl || item.image) {
-        const img = item.ImageUrl || item.image;
-        const formattedImg = img.startsWith('http') ? img : `https://localhost:7137${img}`;
-        this.auctionItem.PhotoList = [formattedImg, ...defaultGallery.slice(1)];
-      } else {
-        this.auctionItem.PhotoList = defaultGallery;
-      }
+      this.auctionItem.PhotoList = [];
     }
 
     try {
       this.cdr.markForCheck();
-    } catch {}
+    } catch { }
   }
 
   ngOnDestroy(): void {
@@ -229,7 +244,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
       if (diff <= 0) {
         this.countdownText = 'Auction ended';
-        try { this.cdr.markForCheck(); } catch {}
+        try {
+          this.cdr.markForCheck();
+        } catch { }
         clearInterval(this.timerInterval);
         return;
       }
@@ -245,7 +262,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const sStr = seconds.toString().padStart(2, '0') + 's';
 
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     };
 
     updateTimer();
@@ -265,26 +284,35 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
 
-    const currentUser = this.authService.getCurrentUser();
-    const bidderId = currentUser ? (+currentUser.id || 3) : 3;
+    const bidderId = this.authService.getCurrentUserId() || 0;
 
-    this.bidService.addBid({
-      bidderId: bidderId,
-      biddedItemId: this.auctionItem.ID,
-      price: this.bidAmount
-    }).subscribe({
-      next: (res) => {
-        this.auctionItem.CurrentPrice = this.bidAmount;
-        this.bidAmount = this.auctionItem.CurrentPrice + 10;
-        try { this.cdr.markForCheck(); } catch {}
-      },
-      error: (err) => {
-        // Fallback local state if offline
-        this.auctionItem.CurrentPrice = this.bidAmount;
-        this.bidAmount = this.auctionItem.CurrentPrice + 10;
-        try { this.cdr.markForCheck(); } catch {}
-      }
-    });
+    this.bidService
+      .addBid({
+        bidderId: bidderId,
+        biddedItemId: this.auctionItem.ID,
+        price: this.bidAmount,
+      })
+      .subscribe({
+        next: (res) => {
+          this.auctionItem.CurrentPrice = this.bidAmount;
+          this.bidAmount = this.auctionItem.CurrentPrice + 10;
+          try {
+            this.cdr.markForCheck();
+          } catch { }
+        },
+        error: (err) => {
+          // Fallback local state if offline
+          this.auctionItem.CurrentPrice = this.bidAmount;
+          this.bidAmount = this.auctionItem.CurrentPrice + 10;
+          this.errorMessage =
+            typeof err.error === 'string'
+              ? err.error
+              : err.error?.message || err.message || 'Failed to place bid. Please try again.';
+          try {
+            this.cdr.detectChanges();
+          } catch { }
+        },
+      });
   }
 
   redirectToLogin(): void {
@@ -292,37 +320,65 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   toggleWishlist(): void {
-    if (!this.authService.isLoggedIn()) {
+    const currentUserId = this.authService.getCurrentUserId();
+
+    if (!currentUserId || !this.authService.isLoggedIn()) {
       this.redirectToLogin();
       return;
     }
 
-    this.isInWishlist = !this.isInWishlist;
-    let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    const itemId = (this.auctionItem as any).id || this.auctionItem.ID;
 
+    // Update instantly (optimistic update)
+    const originalState = this.isInWishlist;
+    this.isInWishlist = !originalState;
+    try {
+      this.cdr.detectChanges();
+    } catch { }
+
+    if (originalState) {
+      this.userService.removeFromWishlist(currentUserId, itemId).subscribe({
+        next: () => {
+          this.toastAction = 'removed';
+          this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
+          this.showWishlistToastMessage();
+        },
+        error: (err) => {
+          this.isInWishlist = originalState; // Revert
+          try {
+            this.cdr.detectChanges();
+          } catch { }
+          console.error('Error removing from wishlist', err);
+        },
+      });
+    } else {
+      this.userService.addToWishlist(currentUserId, itemId).subscribe({
+        next: () => {
+          this.toastAction = 'added';
+          this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
+          this.showWishlistToastMessage();
+        },
+        error: (err) => {
+          this.isInWishlist = originalState; // Revert
+          try {
+            this.cdr.detectChanges();
+          } catch { }
+          console.error('Error adding to wishlist', err);
+        },
+      });
+    }
+  }
+
+  private showWishlistToastMessage(): void {
+    let wishlist: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
     if (this.isInWishlist) {
       if (!wishlist.includes(this.auctionItem.ID)) {
         wishlist.push(this.auctionItem.ID);
       }
-      this.toastAction = 'added';
-      this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
     } else {
-      wishlist = wishlist.filter(id => id !== this.auctionItem.ID);
-      this.toastAction = 'removed';
-      this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
+      wishlist = wishlist.filter((id) => id !== this.auctionItem.ID);
     }
-
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
-
-    let userWishlist: any[] = JSON.parse(localStorage.getItem('user_wishlist_items') || '[]');
-    if (this.isInWishlist) {
-      if (!userWishlist.some((i: any) => i.ID === this.auctionItem.ID)) {
-        userWishlist.push(this.auctionItem);
-      }
-    } else {
-      userWishlist = userWishlist.filter((i: any) => i.ID !== this.auctionItem.ID);
-    }
-    localStorage.setItem('user_wishlist_items', JSON.stringify(userWishlist));
 
     this.showWishlistToast = true;
     this.isToastHiding = false;
@@ -332,16 +388,22 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.toastHideTimeout = setTimeout(() => {
       this.isToastHiding = true;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }, 800);
 
     this.toastTimeout = setTimeout(() => {
       this.showWishlistToast = false;
       this.isToastHiding = false;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }, 1200);
 
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   // Report Modal & Handling
@@ -351,13 +413,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
     this.showReportModal = true;
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   closeReportModal(): void {
     this.showReportModal = false;
     this.reportDetails = '';
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   submitReport(): void {
@@ -376,7 +442,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       itemName: this.auctionItem.Name,
       reason: this.reportReason,
       details: this.reportDetails,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
     });
     localStorage.setItem('reported_items_details', JSON.stringify(reportLogs));
 
@@ -389,24 +455,34 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.reportToastHideTimeout = setTimeout(() => {
       this.isReportToastHiding = true;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }, 1500);
 
     this.reportToastTimeout = setTimeout(() => {
       this.showReportToast = false;
       this.isReportToastHiding = false;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }, 2000);
 
     this.reportDetails = '';
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   prevImage(event: Event): void {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
-      this.selectedImageIndex = (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) % this.auctionItem.PhotoList.length;
-      try { this.cdr.markForCheck(); } catch {}
+      this.selectedImageIndex =
+        (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) %
+        this.auctionItem.PhotoList.length;
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }
   }
 
@@ -414,13 +490,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
       this.selectedImageIndex = (this.selectedImageIndex + 1) % this.auctionItem.PhotoList.length;
-      try { this.cdr.markForCheck(); } catch {}
+      try {
+        this.cdr.markForCheck();
+      } catch { }
     }
   }
 
   goToImage(idx: number): void {
     this.selectedImageIndex = idx;
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   setPeek(offset: number): void {
@@ -435,6 +515,15 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.peekOffset = offset;
     }
-    try { this.cdr.markForCheck(); } catch {}
+    try {
+      this.cdr.markForCheck();
+    } catch { }
+  }
+
+  isOwner(): boolean {
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) return false;
+    const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
+    return +ownerId === currentUserId;
   }
 }

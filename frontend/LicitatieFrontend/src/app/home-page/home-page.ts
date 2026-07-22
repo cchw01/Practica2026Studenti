@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
 import { AuctionItem } from '../Models/item-model';
+import { AuthService } from '../services/auth';
 
 export interface Category {
   name: string;
@@ -51,6 +52,8 @@ const HERO_TITLE = 'BID. WIN. REPEAT.';
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('auctionsTrack') auctionsTrackRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('categoriesTrack') categoriesTrackRef?: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
@@ -85,6 +88,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly translate: TranslateService,
     private readonly itemService: ItemService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly authService: AuthService,
   ) {}
 
   categories: Category[] = [
@@ -107,6 +111,16 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       name: 'Real Estate',
       icon: 'home_work',
       description: 'Exceptional properties and land.',
+    },
+    {
+      name: 'Clothing',
+      icon: 'checkroom',
+      description: 'Trendy apparel, footwear, and accessories.',
+    },
+    {
+      name: 'Home & Garden',
+      icon: 'yard',
+      description: 'Furniture, décor, and outdoor essentials.',
     },
   ];
 
@@ -137,6 +151,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
     this.router.navigate(['/add-item']);
   }
 
@@ -151,6 +169,21 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
+  }
+
+  scrollAuctions(direction: number): void {
+    this.scrollTrack(this.auctionsTrackRef, direction);
+  }
+
+  scrollCategories(direction: number): void {
+    this.scrollTrack(this.categoriesTrackRef, direction);
+  }
+
+  private scrollTrack(trackRef: ElementRef<HTMLDivElement> | undefined, direction: number): void {
+    const track = trackRef?.nativeElement;
+    if (!track) return;
+
+    track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
   getRemainingLabel(endDate: Date): string {
