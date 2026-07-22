@@ -1,19 +1,23 @@
 <div class="user-page-container">
-  <!-- Secțiunea Antet Profil (Avatar, Username, Rating) -->
+  <!-- Secțiunea Antet Profil (Avatar, Username, Rating în stânga, Butoane în dreapta) -->
   <div class="profile-card" *ngIf="user">
-    <div class="avatar-circle">
-      {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
-    </div>
+    <div class="profile-info-section">
+      <div class="avatar-circle">
+        {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
+      </div>
 
-    <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
-    <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
+      <div class="user-details">
+        <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
+        <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
 
-    <!-- Rating-ul cu stele securizat -->
-    <div class="rating-box">
-      <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
-      <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star"
-          [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+        <!-- Rating-ul cu stele securizat -->
+        <div class="rating-box">
+          <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
+          <div class="stars">
+            <span *ngFor="let star of [1,2,3,4,5]" class="star"
+              [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -98,15 +102,14 @@
 
     <!-- Grila de articole active -->
     <div class="items-grid" *ngIf="filteredUserItems.length > 0; else noItems">
-      <div class="item-card" *ngFor="let item of filteredUserItems" (click)="goToItemDetail(item)">
+      <div class="item-card" *ngFor="let item of displayedItems" (click)="goToItemDetail(item)">
         <div class="item-image-wrap">
           <img [src]="getItemImage(item)" [alt]="item.Name" />
         </div>
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
           <!-- Corectat folosind $any(item.Category) -->
-          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name
-            }}</span>
+          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name }}</span>
           <p class="price-row">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
         </div>
       </div>
@@ -117,5 +120,11 @@
         <p>Acest utilizator nu are nicio licitație activă în această categorie în acest moment.</p>
       </div>
     </ng-template>
+
+    <div class="show-more-container" *ngIf="filteredUserItems.length > itemsLimit">
+      <button class="btn-show-more" (click)="showMoreItems()">
+       Vezi mai multe
+      </button>
+    </div>
   </div>
 </div>

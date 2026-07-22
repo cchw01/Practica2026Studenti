@@ -34,6 +34,15 @@ export class UserPage implements OnInit {
 
   reportSuccessMessage = '';
 
+  itemsLimit = 3;
+  get displayedItems(): AuctionItem[] {
+    return this.filteredUserItems.slice(0, this.itemsLimit);
+  }
+
+  showMoreItems(): void {
+    this.itemsLimit += 6;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -124,6 +133,7 @@ export class UserPage implements OnInit {
   }
 
   applyCategoryFilter(): void {
+    this.itemsLimit = 3;
     if (this.selectedCategory) {
       this.filteredUserItems = this.userActiveItems.filter(item => {
         const catName = item.Category?.name || (item.Category as any)?.Name;
