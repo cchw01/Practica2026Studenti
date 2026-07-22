@@ -2,6 +2,26 @@ import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+<<<<<<< HEAD
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AppRoutingModule } from './app-routing-module';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+
+import { App } from './app';
+import { HomePage } from './home-page/home-page';
+import { ProfilePage } from './profile/profile-page/profile-page';
+import { RegisterPage } from './menu-item/register-page/register-page';
+import { LoginPage } from './menu-item/login-page/login-page';
+import { ContactPage } from './menu-item/contact-page/contact-page';
+import { ForumPage } from './forum-page/forum-page';
+import { AuctionsPage } from './auctions-page/auctions-page';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
+=======
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -49,6 +69,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+>>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
 
 @NgModule({
   declarations: [
@@ -80,6 +101,22 @@ import { MatSelectModule } from '@angular/material/select';
     UserPage,
   ],
   imports: [
+<<<<<<< HEAD
+  BrowserModule,
+  AppRoutingModule,
+  FormsModule,
+  CommonModule,
+  ReactiveFormsModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  HttpClientModule,
+  HelpPageComponent, // <--- Pune-o aici în schimb!
+  ],
+  providers: [provideBrowserGlobalErrorListeners()],
+=======
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
@@ -119,6 +156,7 @@ import { MatSelectModule } from '@angular/material/select';
       lang: 'en',
     }),
   ],
+>>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
   bootstrap: [App],
 })
 export class AppModule {}
