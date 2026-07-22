@@ -478,5 +478,33 @@
   "MESSAGES": {
     "PROFILE_UPDATED": "Profilo aggiornato con successo."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Risultati della ricerca",
+  "DESCRIPTION_WITH_QUERY": "Risultati visualizzati per \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Cerca aste, utenti o post del forum su BidSphere",
+  "SEARCH_PLACEHOLDER": "Cerca aste, utenti o post del forum...",
+  "LOADING": "Caricamento dei risultati...",
+
+  "TABS": {
+    "AUCTIONS": "Aste",
+    "USERS": "Utenti",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nessuna asta trovata",
+    "DESCRIPTION": "Non ci sono aste corrispondenti alla tua ricerca."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nessun utente trovato",
+    "DESCRIPTION": "Non ci sono utenti corrispondenti alla tua ricerca."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nessun post del forum trovato",
+    "DESCRIPTION": "Non ci sono discussioni corrispondenti alla tua ricerca."
+  }
 }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -17,12 +17,19 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'login_required') {
+        this.errorMessage = 'You have to be logged in to sell.';
+      }
     });
   }
 

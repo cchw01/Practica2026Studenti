@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
 import { AuctionItem } from '../Models/item-model';
+import { AuthService } from '../services/auth';
 
 export interface Category {
   name: string;
@@ -85,6 +86,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly translate: TranslateService,
     private readonly itemService: ItemService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly authService: AuthService,
   ) {}
 
   categories: Category[] = [
@@ -147,6 +149,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page'], { queryParams: { error: 'login_required' } });
+      return;
+    }
     this.router.navigate(['/add-item']);
   }
 

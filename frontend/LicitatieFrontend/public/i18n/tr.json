@@ -478,5 +478,33 @@
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil başarıyla güncellendi."
   }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Arama sonuçları",
+  "DESCRIPTION_WITH_QUERY": "\"{{query}}\" için sonuçlar gösteriliyor",
+  "DESCRIPTION_EMPTY": "BidSphere genelinde açık artırmaları, kullanıcıları veya forum gönderilerini arayın",
+  "SEARCH_PLACEHOLDER": "Açık artırmaları, kullanıcıları veya forum gönderilerini arayın...",
+  "LOADING": "Sonuçlar yükleniyor...",
+
+  "TABS": {
+    "AUCTIONS": "Açık artırmalar",
+    "USERS": "Kullanıcılar",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Açık artırma bulunamadı",
+    "DESCRIPTION": "Aramanızla eşleşen açık artırma bulunmamaktadır."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Kullanıcı bulunamadı",
+    "DESCRIPTION": "Aramanızla eşleşen kullanıcı bulunmamaktadır."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Forum gönderisi bulunamadı",
+    "DESCRIPTION": "Aramanızla eşleşen tartışma bulunmamaktadır."
+  }
 }
 }
