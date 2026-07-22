@@ -19,7 +19,31 @@
     "CALL_CENTER_HOURS": "Ügyfélszolgálati nyitvatartás",
     "SCHEDULE": "Hétfő–péntek, 09:00–17:00",
     "FOLLOW_US": "Kövess minket",
-    "SOCIAL_DESCRIPTION": "Maradj kapcsolatban velünk a közösségi médiában."
+    "SOCIAL_DESCRIPTION": "Maradj kapcsolatban velünk a közösségi médiában.", 
+     "FORM_TITLE": "Küldjön nekünk üzenetet",
+  "FORM_FULL_NAME_LABEL": "Teljes név",
+  "FORM_FULL_NAME_PLACEHOLDER": "pl. Kovács János",
+  "FORM_FULL_NAME_REQUIRED": "A teljes név megadása kötelező.",
+  "FORM_EMAIL_LABEL": "E-mail cím",
+  "FORM_EMAIL_PLACEHOLDER": "pl. on@pelda.hu",
+  "FORM_EMAIL_REQUIRED": "Az e-mail cím megadása kötelező.",
+  "FORM_EMAIL_INVALID": "Kérjük, adjon meg egy érvényes e-mail címet.",
+  "FORM_ISSUE_TYPE_LABEL": "Probléma típusa",
+  "FORM_ISSUE_TYPE_REQUIRED": "Kérjük, válasszon egy problématípust.",
+  "FORM_ISSUE_OPTION_GENERAL": "Általános kérdés",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Technikai támogatás",
+  "FORM_ISSUE_OPTION_BILLING": "Számlázás / Fizetés",
+  "FORM_ISSUE_OPTION_LISTING": "Hirdetés / Aukció probléma",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Fiókkezelés",
+  "FORM_ISSUE_OPTION_OTHER": "Egyéb",
+  "FORM_MESSAGE_LABEL": "Írja le a problémáját",
+  "FORM_MESSAGE_PLACEHOLDER": "Kérjük, adjon meg további részleteket...",
+  "FORM_MESSAGE_REQUIRED": "Az üzenet megadása kötelező.",
+  "FORM_MESSAGE_MIN_LENGTH": "Az üzenetnek legalább 10 karakterből kell állnia.",
+  "FORM_SUBMIT": "Üzenet küldése",
+  "FORM_SUCCESS_TITLE": "Az üzenet elküldve!",
+  "FORM_SUCCESS_MESSAGE": "Köszönjük, hogy kapcsolatba lépett velünk. Hamarosan válaszolunk.",
+  "FORM_SEND_ANOTHER": "Új üzenet küldése"
   },
   "LOGIN": {
     "TITLE": "Bejelentkezés",
@@ -361,5 +385,98 @@
     "CANCEL": "Mégse",
     "CREATING": "Beszélgetés létrehozása...",
     "SUBMIT": "Beszélgetés indítása"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nincs beállítva",
+    "NAME_NOT_SET": "A név nincs beállítva",
+    "EMAIL_NOT_SET": "Az e-mail nincs beállítva",
+    "AVERAGE_SCORE": "Átlagos pontszám"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Profil szerkesztése",
+    "LOG_OUT": "Kijelentkezés",
+    "ADD_ITEM": "Új elem hozzáadása",
+    "CHANGE_PHOTO": "Fénykép módosítása",
+    "HIDE_PASSWORD": "Jelszóbeállítások elrejtése",
+    "CHANGE_PASSWORD": "Jelszó módosítása",
+    "UPDATE_PASSWORD": "Jelszó frissítése",
+    "CANCEL": "Mégse",
+    "SAVE": "Változtatások mentése"
+  },
+
+  "THEME": {
+    "TITLE": "Téma testreszabása",
+    "DESCRIPTION": "Válasszon egy vizuális stílust, amely illik a hangulatához.",
+    "LIGHT": "Világos",
+    "SUNSET": "Naplemente",
+    "OCEAN": "Óceán"
+  },
+
+  "SELL": {
+    "TITLE": "Új elem eladása",
+    "DESCRIPTION": "Készen áll valamit meghirdetni?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Aktív eladásaim",
+    "WON_ITEMS": "Megnyert elemek",
+    "WISHLIST": "Kívánságlistám",
+    "REVIEWS": "Kapott értékelések"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Még nincs meghirdetett elem.",
+    "WON_ITEMS": "Még nem nyert egyetlen elemet sem.",
+    "WISHLIST": "Még nincs elem a kívánságlistáján.",
+    "REVIEWS": "Még nem kapott értékelést."
+  },
+
+  "EDIT": {
+    "TITLE": "Profil szerkesztése",
+    "USERNAME": "Felhasználónév",
+    "FULL_NAME": "Teljes név",
+    "EMAIL": "E-mail",
+
+    "USERNAME_PLACEHOLDER": "pl. john_doe",
+    "FULL_NAME_PLACEHOLDER": "pl. Kovács János",
+    "EMAIL_PLACEHOLDER": "pl. john@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Jelenlegi jelszó",
+    "NEW": "Új jelszó",
+    "CONFIRM": "Jelszó megerősítése",
+
+    "CURRENT_PLACEHOLDER": "Adja meg a jelenlegi jelszót",
+    "NEW_PLACEHOLDER": "Adja meg az új jelszót",
+    "CONFIRM_PLACEHOLDER": "Erősítse meg az új jelszót",
+
+    "REQUIRED": "Minden mező kitöltése kötelező.",
+    "NOT_MATCH": "Az új jelszó és a megerősítés nem egyezik.",
+    "SUCCESS": "A jelszó sikeresen frissítve!",
+    "ERROR": "Hiba történt a jelszó frissítésekor. Ellenőrizze a jelenlegi jelszavát."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktív",
+    "ADDED": "Hozzáadva",
+    "WON": "Megnyert"
+  },
+
+  "DEFAULTS": {
+    "USER": "Felhasználó"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Hiba a kategóriák betöltésekor.",
+    "LOAD_ITEMS": "Hiba az elemek betöltésekor.",
+    "LOAD_REVIEWS": "Hiba az értékelések betöltésekor."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "A profil sikeresen frissítve."
   }
+}
 }
