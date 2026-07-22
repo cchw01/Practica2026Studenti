@@ -45,15 +45,31 @@ export class UserService {
 
   // --- Operațiuni Wishlist ---
   addToWishlist(userId: number, itemId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
+    // return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
+    return new Observable<void>(observer => {
+      console.log(`Simulated adding item ${itemId} to wishlist for user ${userId}`);
+      observer.next();
+      observer.complete();
+    });
   }
 
   getWishlist(userId: number): Observable<AuctionItem[]> {
-    return this.http.get<AuctionItem[]>(`${this.apiUrl}/${userId}/wishlist`);
+    // return this.http.get<AuctionItem[]>(`${this.apiUrl}/${userId}/wishlist`);
+    return new Observable<AuctionItem[]>(observer => {
+      const savedIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const mockItems: any[] = savedIds.map(id => ({ id }));
+      observer.next(mockItems);
+      observer.complete();
+    });
   }
 
   removeFromWishlist(userId: number, itemId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`);
+    // return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`);
+    return new Observable<void>(observer => {
+      console.log(`Simulated removing item ${itemId} from wishlist for user ${userId}`);
+      observer.next();
+      observer.complete();
+    });
   }
 
     reportUser(userId: number, reason: string): Observable<void> {
