@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Backend.DTOs
 {
     public class ProfileDto
@@ -38,13 +40,17 @@ namespace Backend.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string OwnerName { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class UpdateProfileDto
     {
+        [StringLength(100, ErrorMessage = "Name can have a maximum of 100 characters.")]
         public string Name { get; set; } = string.Empty;
+
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string Email { get; set; } = string.Empty;
+
+        [Phone(ErrorMessage = "Invalid phone number format.")]
         public string PhoneNumber { get; set; } = string.Empty;
     }
 }

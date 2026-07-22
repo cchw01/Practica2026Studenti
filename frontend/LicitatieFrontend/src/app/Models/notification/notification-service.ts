@@ -27,4 +27,7 @@ export class NotificationService {
   markAllRead(): Observable<any> {
     return this.http.post(`${this.apiUrl}/read-all`, {});
   }
+  getUnreadCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/unread-count`);
+  }
 }

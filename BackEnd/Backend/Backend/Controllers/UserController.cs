@@ -87,7 +87,7 @@ namespace Backend.Controllers
 
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
-                    return BadRequest("This username is already in use");
+                    return BadRequest(new { message = "This username is already in use" });
 
                 var user = new User
                 {
@@ -104,7 +104,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -272,69 +272,6 @@ namespace Backend.Controllers
                 return Ok();
             }
             catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpPost("{userId}/wishlist/{itemId}")]
-        public IActionResult AddToWishlist(int userId, int itemId)
-        {
-            try
-            {
-                var success = dataOps.AddToWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User or item not found, or item already in wishlist.");
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("{userId}/wishlist")]
-        public ActionResult<IEnumerable<AuctionItemSummaryDto>> GetWishlist(int userId)
-        {
-            try
-            {
-                var items = dataOps.GetWishlist(userId);
-                if (items == null)
-                    return NotFound("User not found.");
-
-                // Map to DTO
-                var dtoList = items.Select(a => new AuctionItemSummaryDto
-                {
-                    ID = a.ID,
-                    Name = a.Name,
-                    StartPrice = a.StartPrice,
-                    CurrentPrice = a.CurrentPrice,
-                    Category = a.Category != null ? a.Category.name : string.Empty,
-                    Status = a.Status.ToString(),
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    OwnerName = a.OwnerId.ToString(),
-                    ImageUrl = a.ImageUrl ?? string.Empty
-                }).ToList();
-
-                return Ok(dtoList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete("{userId}/wishlist/{itemId}")]
-        public IActionResult RemoveFromWishlist(int userId, int itemId)
-        {
-            try
-            {
-                var success = dataOps.RemoveFromWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User, item not found, or item not in wishlist.");
-                return Ok();
-            }
-            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

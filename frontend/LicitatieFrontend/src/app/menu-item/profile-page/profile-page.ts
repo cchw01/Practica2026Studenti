@@ -7,6 +7,7 @@ import { ReviewService } from '../../app-logic/review';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
+
 interface Item {
   id: number;
   title: string;
@@ -41,7 +42,7 @@ const STORAGE_KEY = 'profile_user';
 export class ProfilePage implements OnInit {
   // --- Edit mode ---
   isEditing = false;
-  currentUserId: number = 3; // Default fallback
+  currentUserId: number = 0;
   categories: any[] = [];
 
   // --- User data ---
@@ -95,23 +96,36 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
+    const authUserId = this.authService.getCurrentUserId();
     const currentUser = this.authService.getCurrentUser();
+
+    // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
     if (currentUser) {
-      this.user.username = currentUser.username || currentUser.email;
-      this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
-      this.user.email = currentUser.email;
-      this.currentUserId = +currentUser.id || 3;
+      // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
+      if (currentUser.role === 'Admin' || currentUser.email === 'admin@bidsphere.com') {
+        localStorage.setItem('user_role', 'admin'); // Salvează starea pentru panoul Vuexy
+        this.router.navigate(['/admin']);
+        return; // Oprim execuția codului pentru a nu mai încărca restul paginii
+      }
     }
+
+    // --- Fluxul normal pentru utilizatorii simpli ---
+    if (currentUser) {
+      this.user.username = currentUser.username || currentUser.email || '';
+      this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
+      this.user.email = currentUser.email || '';
+    }
+    this.currentUserId = authUserId !== null ? authUserId : 0;
 
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
 
-    // ---- Aici adaugi citirea categoriilor ----
+    // Fetch category list
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
@@ -133,57 +147,156 @@ export class ProfilePage implements OnInit {
     this.setTheme(savedTheme);
   }
 
+  private getItemImage(item: any, allItems?: any[]): string {
+    const itemId = item.id || item.ID;
+    if (allItems && itemId) {
+      const match = allItems.find((i) => (i.ID || i.id) === itemId);
+      if (match) {
+        const matchUrl =
+          match.ImageUrl ||
+          match.imageUrl ||
+          (match.PhotoList && match.PhotoList.length > 0 ? match.PhotoList[0] : null) ||
+          (match.photoList && match.photoList.length > 0 ? match.photoList[0] : null);
+        if (matchUrl) return this.itemService.formatImageUrl(matchUrl);
+      }
+    }
+
+    const rawUrl =
+      item.imageUrl ||
+      item.ImageUrl ||
+      (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+      (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : '');
+    if (rawUrl) {
+      return this.itemService.formatImageUrl(rawUrl);
+    }
+
+    const title = (item.title || item.name || item.Name || '').toLowerCase();
+    if (title.includes('watch')) {
+      return 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
+    }
+    if (
+      title.includes('bmw') ||
+      title.includes('car') ||
+      title.includes('leather') ||
+      title.includes('jacket')
+    ) {
+      return 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop';
+    }
+    return 'assets/images/placeholder.png';
+  }
+
+  // --- Load wishlist directly from localStorage ---
+  private loadWishlistFromStorage(): void {
+    if (!this.currentUserId) {
+      this.wishItems = [];
+      return;
+    }
+    const localWishIds: number[] = JSON.parse(
+      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
+    );
+    const localWishRaw: any[] = JSON.parse(
+      localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]',
+    );
+
+    const validItems = localWishRaw.filter((item: any) =>
+      localWishIds.includes(item.ID || item.id),
+    );
+
+    this.wishItems = validItems.map((item: any) => ({
+      id: item.ID || item.id || 0,
+      title: item.Name || item.name || 'Unknown Item',
+      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+      status: (item.Status || item.status || 'Active').toString(),
+      image: this.getItemImage(item),
+    }));
+  }
+
   // --- Load API data ---
   loadItemsAndReviews(): void {
+    if (!this.currentUserId || this.currentUserId === 0) {
+      this.addedItems = [];
+      this.bidItems = [];
+      this.wishItems = [];
+      return;
+    }
+
     // Load Items listed by user
     this.itemService.getItems().subscribe({
       next: (items) => {
-        // Filter items where OwnerId matches current user ID
+        // Filter items where OwnerId matches current user ID or username
         this.addedItems = items
-          .filter(
-            (item: any) => item.ownerId === this.currentUserId || item.owner === this.user.username,
-          )
+          .filter((item: any) => {
+            const ownerId = item.OwnerId ?? item.ownerId ?? item.Owner?.id ?? item.Owner?.ID;
+            const ownerUsername =
+              item.Owner?.username ??
+              item.Owner?.UserName ??
+              item.owner?.username ??
+              item.ownerUserName;
+
+            const matchId =
+              ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
+            const matchUser =
+              ownerUsername &&
+              this.user.username &&
+              ownerUsername.toLowerCase() === this.user.username.toLowerCase();
+            return matchId || matchUser;
+          })
           .map((item: any) => ({
-            id: item.id || 0,
-            title: item.name,
-            price: item.currentPrice || item.startPrice,
-            status: item.status
-              ? item.status.toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
-            image: item.imageUrl || item.ImageUrl || 'assets/images/placeholder.png'
+            id: item.ID || item.id || 0,
+            title: item.Name || item.name || '',
+            price:
+              item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+            status:
+              item.Status || item.status
+                ? (item.Status || item.status).toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            image: this.getItemImage(item, items),
           }));
 
-        // Filter won items
         this.bidItems = items
-          .filter((item: any) => item.status === 'Sold' && item.currentPrice > 0) // Mock bid items or won
+          .filter((item: any) => {
+            const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
+            const isSold =
+              (item.status === 'Sold' || item.Status === 'Sold') &&
+              (item.currentPrice > 0 || item.CurrentPrice > 0);
+            return isSold && winnerId !== undefined && Number(winnerId) === this.currentUserId;
+          })
           .map((item: any) => ({
-            id: item.id || 0,
-            title: item.name,
-            price: item.currentPrice,
+            id: item.id || item.ID || 0,
+            title: item.name || item.Name || '',
+            price: item.currentPrice ?? item.CurrentPrice ?? 0,
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
+            image: this.getItemImage(item, items),
           }));
 
-        // Fetch wishlist items specifically from backend
+        // Fetch wishlist items specifically from backend for current user
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
-            this.wishItems = wishlistItems.map((item: any) => ({
+            this.wishItems = (wishlistItems || []).map((item: any) => ({
               id: item.id || item.ID || 0,
               title: item.name || item.Name || 'Item',
-              price: item.currentPrice || item.startPrice || 0,
-              image: item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || 'assets/images/placeholder.png',
+              price:
+                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
+              image:
+                item.imageUrl ||
+                item.ImageUrl ||
+                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+                this.getItemImage(item, items),
               status: item.status
                 ? item.status.toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
             }));
             this.cdr.detectChanges();
           },
-          error: (err) => console.error('Error loading wishlist:', err)
+          error: (err) => {
+            console.error('Error loading wishlist from API:', err);
+            this.loadWishlistFromStorage();
+          },
         });
       },
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
@@ -202,10 +315,10 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5; // Default fallback score
+          this.score = 4.5;
         }
       },
-      error: (err) => console.error('Error loading reviews (detalii complete):', err.message || err),
+      error: (err) => console.error('Error loading reviews:', err.message || err),
     });
   }
 
@@ -213,12 +326,22 @@ export class ProfilePage implements OnInit {
     if (event) {
       event.stopPropagation();
     }
+    if (!this.currentUserId) return;
+
     this.UserService.removeFromWishlist(this.currentUserId, itemId).subscribe({
       next: () => {
-        this.wishItems = this.wishItems.filter(i => i.id !== itemId);
+        this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
+
+        // Also update user-scoped local storage cache if present
+        const localWishIds: number[] = JSON.parse(
+          localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
+        );
+        const updatedIds = localWishIds.filter((id) => id !== itemId);
+        localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
+
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error removing from wishlist', err)
+      error: (err) => console.error('Error removing from wishlist', err),
     });
   }
 
@@ -233,7 +356,13 @@ export class ProfilePage implements OnInit {
   private loadProfile(): void {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      this.user = JSON.parse(saved);
+      const cached = JSON.parse(saved);
+      // Only restore the avatar URL from cache.
+      // username/name must NOT be overwritten here — they come from the JWT token.
+      // Overwriting them causes the old username to reappear after a page refresh.
+      if (cached.avatarUrl) {
+        this.user.avatarUrl = cached.avatarUrl;
+      }
     }
   }
 
@@ -241,7 +370,6 @@ export class ProfilePage implements OnInit {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
   }
 
-  // --- Edit actions ---
   startEdit(): void {
     this.editDraft = { ...this.user };
     this.isEditing = true;
@@ -270,24 +398,28 @@ export class ProfilePage implements OnInit {
       this.editDraft.name,
     ).subscribe({
       next: (updatedUser: any) => {
+        // UserService.mapUser() returns UserReadDto with PascalCase fields (UserName, Name)
         this.user = {
           ...this.user,
-          username: updatedUser.userName,
-          name: updatedUser.name,
+          username: updatedUser.UserName || updatedUser.userName || this.editDraft.username,
+          name: updatedUser.Name || updatedUser.name || this.editDraft.name,
         };
+        this.editDraft = { ...this.user };
         this.saveProfile();
         this.isEditing = false;
+        this.cdr.detectChanges();
         alert(this.translate.instant('PROFILE_PAGE.MESSAGES.PROFILE_UPDATED'));
       },
       error: (err: any) => {
-        const errorMsg = err.error || 'A apărut o eroare la actualizarea profilului.';
+        const errorMsg =
+          (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
+          'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
         this.editDraft = { ...this.user };
       },
     });
   }
 
-  // --- Avatar upload ---
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
@@ -299,7 +431,6 @@ export class ProfilePage implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  // --- Change Password ---
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
@@ -316,7 +447,7 @@ export class ProfilePage implements OnInit {
     this.authService
       .changePassword(this.currentUserId, this.currentPassword, this.newPassword)
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.passwordError = false;
           this.passwordMessage = this.translate.instant('PROFILE_PAGE.PASSWORD.SUCCESS');
           this.currentPassword = '';
@@ -324,7 +455,6 @@ export class ProfilePage implements OnInit {
           this.confirmPassword = '';
           setTimeout(() => (this.passwordMessage = ''), 3000);
         },
-
         error: (err) => {
           this.passwordError = true;
           this.passwordMessage =
@@ -333,16 +463,20 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  // --- Navigate to Add Item ---
   goToAddItem(): void {
     this.router.navigate(['/add-item']);
   }
 
-  // --- Logout ---
+  // --- Navigate to Auction Item page ---
+  goToAuction(itemId: number): void {
+    if (!itemId) return;
+    this.router.navigate(['/action-item-page', itemId]);
+  }
+
   onLogout(): void {
     this.authService.logout();
-    this.setTheme('light'); // Reset theme classes
-    document.body.className = '';
+    localStorage.removeItem('user_role');
+    this.setTheme('light');
     this.router.navigate(['/login-page']);
   }
 }
