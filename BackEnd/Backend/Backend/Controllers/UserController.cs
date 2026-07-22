@@ -14,12 +14,6 @@ namespace Backend.Controllers
         public class UserController : ControllerBase
         {
             private readonly UserDataOps dataOps;
-<<<<<<< HEAD
-
-            public UserController(ApplicationDbContext DbContext)
-            {
-                dataOps = new UserDataOps(DbContext);
-=======
             private readonly RefreshTokenDataOps refreshTokenDataOps;
             private readonly TokenProvider tokenProvider;
             private const int EXPIRES_IN = 900;
@@ -28,7 +22,6 @@ namespace Backend.Controllers
                 dataOps = new UserDataOps(DbContext);
                 this.tokenProvider = tokenProvider;
                 this.refreshTokenDataOps = refreshTokenDataOps;
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
             }
 
             [HttpGet]
@@ -120,25 +113,16 @@ namespace Backend.Controllers
         {
             try
             {
-                var user = dataOps.GetUserByUsername(request.UserName);
+                var user = dataOps.GetUserByEmail(request.Email);
 
                 if (user == null)
-<<<<<<< HEAD
-                    return Unauthorized("Utilizator sau parolă incorectă.");
-=======
                     return Unauthorized("Email sau parolă incorectă.");
                 if (user.IsBanned)
                     return Unauthorized("Contul tău a fost suspendat.");
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
 
                 bool parolaCorecta = PasswordHasher.VerifyPassword(request.Password, user.Password);
 
                 if (!parolaCorecta)
-<<<<<<< HEAD
-                    return Unauthorized("Utilizator sau parolă incorectă.");
-
-                return Ok("Login reușit.");
-=======
                     return Unauthorized("Email sau parolă incorectă.");
                 var token = tokenProvider.GenerateAccesToken(user);
                 RefreshToken? refreshToken = refreshTokenDataOps.CreateRefreshToken(user);
@@ -151,7 +135,6 @@ namespace Backend.Controllers
                 Response.Cookies.Append("refreshToken", refreshToken.Token, refreshTokenCookie);
                 var tokenInfo = new { accessToken = token, expiresIn = EXPIRES_IN };
                 return Ok(tokenInfo);
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
             }
             catch (Exception ex)
             {

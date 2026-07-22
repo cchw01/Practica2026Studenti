@@ -55,18 +55,22 @@
           title="Add Auction">
           <mat-icon>add</mat-icon>
         </a>
-        <div class="auth-pill">
-          <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
-          <span class="auth-pill-divider"></span>
-          <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()"
-            class="auth-pill-link">Register</a>
-        </div>
+        <ng-container *ngIf="isLoggedIn(); else loggedOutActions">
+          <app-notification-bell></app-notification-bell>
+          <app-profile-menu (loggedOut)="logout()"></app-profile-menu>
+        </ng-container>
+        <ng-template #loggedOutActions>
+          <div class="auth-pill">
+            <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
+            <span class="auth-pill-divider"></span>
+            <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()"
+              class="auth-pill-link">Register</a>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
 </nav>
-<router-outlet />
-
 <!-- Aici se încarcă paginile tale -->
 <router-outlet></router-outlet>
 

@@ -1,7 +1,4 @@
 using Backend.DataManagement;
-<<<<<<< HEAD
-using Microsoft.EntityFrameworkCore;
-=======
 using Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -9,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSecret = builder.Configuration["Jwt:Secret"];
@@ -35,8 +31,6 @@ builder.Services.AddControllers()
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-<<<<<<< HEAD
-=======
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
 
@@ -71,7 +65,6 @@ builder.Services.AddAuthentication(options =>
         RoleClaimType = "role",
     };
 });
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

@@ -1,48 +1,25 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
-@Component({
-  selector: 'app-ai-widget',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './ai-widget.html',
-  styleUrls: ['./ai-widget.css'],
-})
-export class AiWidgetComponent {
-  mesaj: string = '';
-  isChatOpen: boolean = false;
+import { AiWidgetComponent } from './ai-widget';
 
-  // Iată variabilele pe care Angular nu le găsea!
-  listaMesaje: { expeditor: string; text: string }[] = [];
-  seIncarca: boolean = false;
+describe('AiWidgetComponent', () => {
+  let component: AiWidgetComponent;
+  let fixture: ComponentFixture<AiWidgetComponent>;
 
-  constructor(private http: HttpClient) {}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AiWidgetComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    }).compileComponents();
 
-  toggleChat() {
-    this.isChatOpen = !this.isChatOpen;
-  }
+    fixture = TestBed.createComponent(AiWidgetComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  trimiteIntrebare() {
-    if (!this.mesaj.trim()) return;
-
-    const textIntrebare = this.mesaj;
-    this.listaMesaje.push({ expeditor: 'user', text: textIntrebare });
-
-    this.mesaj = '';
-    this.seIncarca = true;
-
-    this.http.post<any>('http://127.0.0.1:8000/api/chat', { text: textIntrebare }).subscribe({
-      next: (data) => {
-        this.listaMesaje.push({ expeditor: 'ai', text: data.raspuns });
-        this.seIncarca = false;
-      },
-      error: (err) => {
-        console.error('Eroare de la server:', err);
-        this.listaMesaje.push({ expeditor: 'ai', text: 'Eroare de conectare la serverul AI.' });
-        this.seIncarca = false;
-      },
-    });
-  }
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
