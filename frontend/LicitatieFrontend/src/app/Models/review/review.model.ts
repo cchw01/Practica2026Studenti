@@ -1,17 +1,17 @@
 export interface Review {
-  Id: number;
-  ReviewerId: number;
-  ReviewerUserName: string;
-  ReviewedUserId: number;
-  ReviewedUserUserName: string;
-  Rating: number;
-  Comment: string;
-  ReviewDate: string;
+  id: number;
+  reviewerId: number;
+  reviewerUserName: string;
+  reviewedUserId: number;
+  reviewedUserUserName: string;
+  rating: number;
+  comment: string;
+  reviewDate: string;
 }
 
 export interface ReviewCreate {
-  ReviewerId: number;
-  ReviewedUserId: number;
-  Rating: number;
-  Comment: string;
+  reviewerId: number;
+  reviewedUserId: number;
+  rating: number;
+  comment: string;
 }

@@ -18,6 +18,7 @@ interface Item {
 
 interface Review {
   id: number;
+  reviewerId: number;
   author: string;
   rating: number;
   comment: string;
@@ -56,7 +57,7 @@ export class ProfilePage implements OnInit {
   editDraft: UserProfile = { ...this.user };
 
   // --- Score ---
-  score: number = 4.5;
+  score: number = 0;
 
   // --- Theme ---
   currentTheme: string = 'light';
@@ -271,7 +272,13 @@ export class ProfilePage implements OnInit {
               ownerUsername &&
               this.user.username &&
               ownerUsername.toLowerCase() === this.user.username.toLowerCase();
-            return matchId || matchUser;
+              
+            const isOwner = matchId || matchUser;
+            const status = (item.Status || item.status || '').toString().toLowerCase();
+            // In backend the statuses are: Added, Validated, ActiveBid, NoWinner, Sold, Rejected.
+            const isActive = status === 'validated' || status === 'activebid' || status === 'active';
+            
+            return isOwner && isActive;
           })
           .map((item: any) => ({
             id: item.ID || item.id || 0,
@@ -339,14 +346,15 @@ export class ProfilePage implements OnInit {
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.ReviewedUserId === this.currentUserId)
+          .filter((r) => r.reviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.Id,
-            author: r.ReviewerUserName || 'Anonymous',
-            rating: r.Rating,
-            comment: r.Comment,
-            date: r.ReviewDate
-              ? new Date(r.ReviewDate).toLocaleDateString()
+            id: r.id,
+            reviewerId: r.reviewerId,
+            author: r.reviewerUserName || 'Anonymous',
+            rating: r.rating,
+            comment: r.comment,
+            date: r.reviewDate
+              ? new Date(r.reviewDate).toLocaleDateString()
               : new Date().toLocaleDateString(),
           }));
 
@@ -354,7 +362,7 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5;
+          this.score = 0;
         }
       },
       error: (err: any) => console.error('Error loading reviews:', err.message || err),
@@ -384,10 +392,23 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  // --- Badge styling ---
+  getBadgeClass(status: string): string {
+    if (!status) return 'badge-added';
+    const lower = status.toLowerCase();
+    if (lower.includes('activebid') || lower.includes('active')) return 'badge-activebid';
+    if (lower.includes('added')) return 'badge-added';
+    if (lower.includes('sold')) return 'badge-sold';
+    if (lower.includes('nowinner')) return 'badge-nowinner';
+    if (lower.includes('validated')) return 'badge-validated';
+    if (lower.includes('won')) return 'badge-won';
+    return 'badge-added';
+  }
+
   // --- Navigate to Item Details ---
   goToItem(id: number): void {
     if (id) {
-      this.router.navigate(['/auctions', id]);
+      this.router.navigate(['/action-item-page', id]);
     }
   }
 

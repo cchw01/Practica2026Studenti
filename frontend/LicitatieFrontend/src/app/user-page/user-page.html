@@ -1,19 +1,25 @@
 <div class="user-page-container">
-  <!-- Secțiunea Antet Profil (Avatar, Username, Rating) -->
+  <!-- Secțiunea Antet Profil (Avatar, Username, Rating în stânga, Butoane în dreapta) -->
   <div class="profile-card" *ngIf="user">
-    <div class="avatar-circle">
-      {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
-    </div>
+    <div class="profile-info-section">
+      <div class="avatar-circle">
+        {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
+      </div>
 
-    <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
-    <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
+      <div class="user-details">
+        <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
+        <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
 
-    <!-- Rating-ul cu stele securizat -->
-    <div class="rating-box">
-      <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
-      <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star"
-          [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+        <!-- Rating-ul cu stele securizat -->
+        <div class="rating-box">
+          <span class="rating-value">{{ averageRating || 0 }} / 5</span>
+          <div class="stars">
+             <!-- Folosește star - 0.5 în loc de star -->
+            <span *ngFor="let star of [1,2,3,4,5]" class="star"
+              [class.filled]="averageRating >= star"
+              [class.half]="averageRating >= star - 0.5 && averageRating < star">★</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -81,6 +87,40 @@
     </div>
   </div>
 
+  <!-- Secțiunea Review-uri Utilizator -->
+  <div class="reviews-section" *ngIf="user">
+    <div class="section-header">
+      <h3>Review-uri utilizator ({{ userReviews.length }})</h3>
+    </div>
+
+    <!-- Containerul care va avea scroll vertical -->
+    <div class="reviews-scroll-container" *ngIf="userReviews.length > 0; else noReviews">
+      <div class="review-item" *ngFor="let rev of userReviews">
+        <div class="review-header">
+          <div class="reviewer-info">
+            <span class="reviewer-icon">👤</span>
+              <a [routerLink]="rev.reviewerId === currentUserId ? ['/profile-page'] : ['/user-page', rev.reviewerId]" class="reviewer-link">
+                {{ rev.reviewerId === currentUserId ? 'Tu' : '@' + rev.reviewerUserName }}
+              </a>
+          </div>
+          <div class="review-stars">
+            <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= rev.rating">★</span>
+          </div>
+        </div>
+        <p class="review-comment">{{ rev.comment }}</p>
+        <span class="review-date" *ngIf="rev.reviewDate">
+          {{ rev.reviewDate | date:'dd.MM.yyyy' }}
+        </span>
+      </div>
+    </div>
+
+    <ng-template #noReviews>
+      <div class="empty-reviews">
+        <p>Acest utilizator nu a primit niciun review până acum.</p>
+      </div>
+    </ng-template>
+  </div>
+
   <!-- Secțiunea Licitații Active ale Utilizatorului -->
   <div class="active-auctions-section">
     <div class="section-header">
@@ -98,15 +138,14 @@
 
     <!-- Grila de articole active -->
     <div class="items-grid" *ngIf="filteredUserItems.length > 0; else noItems">
-      <div class="item-card" *ngFor="let item of filteredUserItems" (click)="goToItemDetail(item)">
+      <div class="item-card" *ngFor="let item of displayedItems" (click)="goToItemDetail(item)">
         <div class="item-image-wrap">
           <img [src]="getItemImage(item)" [alt]="item.Name" />
         </div>
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
           <!-- Corectat folosind $any(item.Category) -->
-          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name
-            }}</span>
+          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name }}</span>
           <p class="price-row">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
         </div>
       </div>
@@ -117,5 +156,11 @@
         <p>Acest utilizator nu are nicio licitație activă în această categorie în acest moment.</p>
       </div>
     </ng-template>
+
+    <div class="show-more-container" *ngIf="filteredUserItems.length > 3">
+      <button class="btn-show-more" (click)="showMoreItems()">
+        {{ itemsLimit >= filteredUserItems.length ? 'Arată mai puține' : 'Vezi mai multe' }}
+      </button>
+    </div>
   </div>
 </div>
