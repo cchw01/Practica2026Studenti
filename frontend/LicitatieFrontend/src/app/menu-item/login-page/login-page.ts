@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -16,12 +16,19 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'login_required') {
+        this.errorMessage = 'You have to be logged in to sell.';
+      }
     });
   }
 
@@ -46,7 +53,7 @@ export class LoginPage implements OnInit {
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-        this.errorMessage = err.error || 'Email sau parolă incorecte.';
+        this.errorMessage = err.error || 'Incorrect email or password.';
       },
     });
   }

@@ -23,7 +23,7 @@ import { AdminPage } from './admin-page/admin-page/admin-page';
 import { SearchPage } from './search-page/search-page';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register-page', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
   { path: 'register-page', component: RegisterPage },
