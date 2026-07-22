@@ -152,15 +152,96 @@
     }
   },
   "HELP": {
-    "TITLE": "Centrul de Ajutor",
-    "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
-    "FAQ": "❓ Întrebări Frecvente",
-    "SUPPORT": "📞 Asistență Telefonică Rapidă",
-    "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
-    "FORM": "📝 Deschide un Tichet",
-    "REQUEST": "Trimite solicitarea",
-    "ASSISTANT": "Asistent Virtual Live"
+  "TITLE": "Centru de ajutor",
+  "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru virtual.",
+  "FAQ": "❓ Întrebări frecvente",
+  "SUPPORT": "📞 Asistență telefonică rapidă",
+  "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
+  "FORM": "📝 Deschide un tichet",
+  "REQUEST": "Trimite solicitarea",
+  "ASSISTANT": "Asistent virtual disponibil",
+  "ISSUE_TYPE_PLACEHOLDER": "Selectează tipul problemei",
+  "CHAT_PLACEHOLDER": "Scrie mesajul tău...",
+
+  "GUEST": {
+    "MESSAGE": "Pentru a deschide un tichet și a primi asistență tehnică, trebuie să te autentifici în contul tău.",
+    "LOGIN": "Autentificare",
+    "REGISTER": "Creează un cont"
   },
+  "FAQ_CATEGORIES": {
+  "AUCTIONS": {
+    "TITLE": "🚨 Licitații și oferte",
+    "QUESTIONS": {
+      "PLACE_BID": {
+        "QUESTION": "Cum plasez o ofertă la o licitație?",
+        "ANSWER": "Accesează pagina produsului dorit și introdu suma în câmpul „Licitează acum”. Oferta ta trebuie să fie mai mare decât prețul curent."
+      },
+      "CANCEL_BID": {
+        "QUESTION": "Pot anula o ofertă după ce am plasat-o?",
+        "ANSWER": "Ofertele devin obligatorii după plasare și, în general, nu pot fi anulate. Verifică suma cu atenție înainte de confirmare."
+      },
+      "WIN_AUCTION": {
+        "QUESTION": "Cum aflu dacă am câștigat o licitație?",
+        "ANSWER": "Vei primi un e-mail și o notificare în aplicație atunci când licitația se încheie și oferta ta este cea mai mare."
+      }
+    }
+  },
+
+  "ACCOUNT": {
+    "TITLE": "👤 Cont și autentificare",
+    "QUESTIONS": {
+      "CREATE_ACCOUNT": {
+        "QUESTION": "Cum îmi creez un cont?",
+        "ANSWER": "Apasă pe „Înregistrare” în meniul de sus, completează numele de utilizator, adresa de e-mail și parola, apoi confirmă adresa de e-mail pentru activarea contului."
+      },
+      "FORGOT_PASSWORD": {
+        "QUESTION": "Mi-am uitat parola. Ce trebuie să fac?",
+        "ANSWER": "Apasă pe „Ai uitat parola?” pe pagina de autentificare și urmează instrucțiunile trimise la adresa de e-mail asociată contului."
+      }
+    }
+  },
+
+  "DELIVERY": {
+    "TITLE": "📦 Livrare și plăți",
+    "QUESTIONS": {
+      "ITEM_DELIVERY": {
+        "QUESTION": "Cum este livrat produsul după ce câștig?",
+        "ANSWER": "După confirmarea plății, vânzătorul va organiza expedierea sau ridicarea produsului. Detaliile despre livrare sunt transmise prin mesajele contului tău."
+      },
+      "NOT_DELIVERED": {
+        "QUESTION": "Ce se întâmplă dacă vânzătorul nu livrează produsul?",
+        "ANSWER": "Contactează imediat echipa noastră de asistență folosind formularul de mai jos. Investigăm toate disputele și putem suspenda vânzătorii care nu livrează produsele."
+      },
+      "SHIPPING_COST": {
+        "QUESTION": "Cine plătește transportul?",
+        "ANSWER": "Cumpărătorul achită costurile de transport, cu excepția cazului în care vânzătorul oferă livrare gratuită."
+      },
+      "PAYOUT": {
+        "QUESTION": "Când primesc banii?",
+        "ANSWER": "Plata este transferată în contul tău bancar în termen de 3–5 zile lucrătoare după confirmarea plății cumpărătorului."
+      }
+    }
+  },
+
+  "SELLING": {
+    "TITLE": "🏷️ Vânzare",
+    "QUESTIONS": {
+      "LIST_ITEM": {
+        "QUESTION": "Cum listez un produs pentru vânzare?",
+        "ANSWER": "Accesează secțiunea „Profilul meu” și apasă pe „Adaugă licitație”. Completează detaliile și așteaptă validarea administratorului."
+      },
+      "EDIT_AUCTION": {
+        "QUESTION": "Pot modifica sau șterge o licitație după publicare?",
+        "ANSWER": "Poți modifica sau șterge o licitație numai înainte de primirea primei oferte. După aceea, modificările sunt blocate pentru protejarea participanților."
+      },
+      "NOT_SOLD": {
+        "QUESTION": "Ce se întâmplă dacă produsul meu nu se vinde?",
+        "ANSWER": "Poți reduce prețul de rezervă și republica produsul sau îl poți oferi participantului care a plasat cea mai mare ofertă."
+      }
+    }
+  }
+}
+},
   "AUCTIONS_PAGE": {
     "TITLE": "Licitații active",
     "DESCRIPTION": "Descoperă produse unice și licitează în timp real",
