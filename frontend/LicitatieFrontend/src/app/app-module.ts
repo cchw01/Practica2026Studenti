@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { provideTranslateService, TranslatePipe } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Material Design Imports
 import { MatCardModule } from '@angular/material/card';
@@ -12,39 +13,36 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AppRoutingModule } from './app-routing-module';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
+import { AppRoutingModule } from './app-routing-module';
+
+// Pages / feature components
 import { App } from './app';
 import { HomePage } from './home-page/home-page';
-import { ProfilePage } from './profile/profile-page/profile-page';
-import { RegisterPage } from './menu-item/register-page/register-page';
-import { LoginPage } from './menu-item/login-page/login-page';
-import { ContactPage } from './menu-item/contact-page/contact-page';
-import { ForumPage } from './forum-page/forum-page';
-import { AuctionsPage } from './auctions-page/auctions-page';
-import { HelpPageComponent } from './menu-item/help-page/help-page';
-
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule, DatePipe } from '@angular/common';
-
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-
-// Components
-import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
-import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
-import { AppRoutingModule } from './app-routing-module';
-import { App } from './app';
 import { ProfilePage } from './menu-item/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-import { HomePage } from './home-page/home-page';
-import { AuctionsPage } from './auctions-page/auctions-page';
 import { ForumPage } from './forum-page/forum-page';
+import { AuctionsPage } from './auctions-page/auctions-page';
+import { SearchPage } from './search-page/search-page';
+import { AddItemPage } from './add-item-page/add-item-page';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
+import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
+import { NotificationBell } from './menu-item/notification-bell/notification-bell';
+import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
+import { AdminPage } from './admin-page/admin-page/admin-page';
+import { UserPage } from './user-page/user-page';
+import { NotFound } from './not-found/not-found';
+
+// Components
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
 
 // Standalone Components
 import { ReviewComponent } from './Models/review/review';
@@ -52,10 +50,6 @@ import { AiWidgetComponent } from './ai-widget/ai-widget';
 
 // Servicii / Interceptoare
 import { AuthInterceptor } from './services/auth-interceptor';
-
-// ATENȚIE: Această componentă era importată în fișierul tău, dar nefolosită în modul
-import { HelpPageComponent } from './menu-item/help-page/help-page';
-
 
 @NgModule({
   declarations: [
@@ -70,41 +64,23 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     SearchPage,
     AddItemPage,
     AuctionItemPage,
-    Add,
-    Edit,
-    View,
     AuctionDetail,
     ShareListingButton,
-    AddItem,
     ForumPostDetails,
     CreateForumPost,
-    AuctionDetail,
     Footer,
-
-    // HelpPageComponent // Dacă ai erori pe pagina de Help, decomentează această linie!
+    NotificationBell,
+    ProfileMenu,
+    AdminPage,
+    UserPage,
+    NotFound,
   ],
   imports: [
-    // Angular Core & Routing
-  BrowserModule,
-  AppRoutingModule,
-  FormsModule,
-  CommonModule,
-  ReactiveFormsModule,
-  MatFormFieldModule,
-  MatButtonModule,
-  MatCardModule,
-  MatIconModule,
-  MatInputModule,
-  HttpClientModule,
-  HelpPageComponent, // <--- Pune-o aici în schimb!
-  ],
-  providers: [provideBrowserGlobalErrorListeners()],
     BrowserModule,
-    CommonModule,
     BrowserAnimationsModule,
-    AiWidgetComponent,
     AppRoutingModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
 
     // Angular Material
@@ -113,14 +89,19 @@ import { HelpPageComponent } from './menu-item/help-page/help-page';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
+    MatBadgeModule,
 
     // Standalone Components (Componentele independente stau aici!)
     ReviewComponent,
+    AiWidgetComponent,
     HelpPageComponent,
+    TranslatePipe,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

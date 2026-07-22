@@ -31,8 +31,6 @@ namespace Backend.DataManagement
                 .WithMany(s => s.ReviewList)
                 .HasForeignKey(r => r.ReviewerId)
                 .OnDelete(DeleteBehavior.NoAction);
-<<<<<<< HEAD
-=======
 
             modelBuilder.Entity<AuctionItem>() // Relatie Item -> Categorie
                 .HasOne(i => i.Category)
@@ -129,7 +127,6 @@ namespace Backend.DataManagement
             modelBuilder.Entity<Bid>()
                 .Property(b => b.Price)
                 .HasPrecision(18, 2);
->>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
         }
     }
 }
