@@ -200,6 +200,44 @@
     </div>
   </div>
 
+    <!-- Edit Item Modal -->
+  <div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>✏️ Edit Auction</h3>
+        <button type="button" class="close-btn" (click)="closeEditModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <label class="field-label">Name</label>
+        <input type="text" [(ngModel)]="editData.name" class="modal-textarea" style="height: 40px; margin-bottom: 15px;" />
+
+        <label class="field-label">Start Price (RON)</label>
+        <input type="number" [(ngModel)]="editData.startPrice" class="modal-textarea" style="height: 40px; margin-bottom: 15px;" />
+
+        <label class="field-label">Category</label>
+        <select [(ngModel)]="editData.categoryId" class="modal-select">
+          <!-- TODO : POPULATE DYNAMICALLY FROM CATEGORIES -->
+          <option value="1">Electronics</option>
+          <option value="2">Vehicles</option>
+          <option value="3">Real Estate</option>
+          <option value="4">Fashion</option>
+        </select>
+
+        <label class="field-label">Location</label>
+        <input type="text" [(ngModel)]="editData.location" class="modal-textarea" style="height: 40px; margin-bottom: 15px;" />
+
+        <label class="field-label">Description</label>
+        <textarea [(ngModel)]="editData.description" rows="4" class="modal-textarea"></textarea>
+
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeEditModal()">Cancel</button>
+        <button type="button" class="btn-submit-report" style="background: #3b82f6;" (click)="submitEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Report Toast Notification -->
   <div *ngIf="showReportToast" class="report-toast" [class.toast-hiding]="isReportToastHiding">
     <span class="report-badge">🚩</span>

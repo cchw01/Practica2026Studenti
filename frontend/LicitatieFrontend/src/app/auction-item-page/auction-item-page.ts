@@ -519,7 +519,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.cdr.markForCheck();
     } catch { }
   }
-
+  editItem(){
+    this.showEditModal = true; 
+  }
   isOwner(): boolean {
     const currentUserId = this.authService.getCurrentUserId();
     if (!currentUserId) return false;
