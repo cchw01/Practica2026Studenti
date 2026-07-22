@@ -1,4 +1,4 @@
 export type ReportTargetType =
-    'User'
-    'AuctionItem'
-    'ForumPost';
+    | 'User'
+    | 'AuctionItem'
+    | 'ForumPost';
