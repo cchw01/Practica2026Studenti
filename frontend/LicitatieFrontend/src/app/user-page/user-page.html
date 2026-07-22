@@ -4,16 +4,16 @@
     <div class="avatar-circle">
       {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
     </div>
-    
+
     <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
     <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
-    
+
     <!-- Rating-ul cu stele securizat -->
     <div class="rating-box">
       <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
       <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star" 
-              [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+        <span *ngFor="let star of [1,2,3,4,5]" class="star"
+          [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
       </div>
     </div>
 
@@ -36,13 +36,10 @@
     <div class="report-modal">
       <h3>Raportează utilizatorul @{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h3>
       <p>Te rugăm să introduci motivul raportării pentru ca echipa noastră să poată analiza activitatea contului.</p>
-      
-      <textarea 
-        [(ngModel)]="reportReason" 
-        placeholder="Scrie aici motivul raportării..."
-        rows="4">
+
+      <textarea [(ngModel)]="reportReason" placeholder="Scrie aici motivul raportării..." rows="4">
       </textarea>
-      
+
       <div class="modal-actions">
         <button class="btn-cancel" (click)="closeReportForm()">Anulează</button>
         <button class="btn-submit" [disabled]="!reportReason.trim()" (click)="submitReport()">Trimite Raport</button>
@@ -55,26 +52,22 @@
     <div class="report-modal">
       <h3>Adaugă un review pentru @{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h3>
       <p>Părerea ta contează! Oferă o notă și un scurt comentariu despre experiența ta cu acest utilizator.</p>
-      
+
       <!-- Selectare Rating cu Stele Interactive -->
       <div class="rating-selector">
-        <span *ngFor="let star of [1,2,3,4,5]" 
-              class="star-btn" 
-              [class.filled]="star <= reviewRating" 
-              (click)="reviewRating = star">
+        <span *ngFor="let star of [1,2,3,4,5]" class="star-btn" [class.filled]="star <= reviewRating"
+          (click)="reviewRating = star">
           ★
         </span>
       </div>
 
-      <textarea 
-        [(ngModel)]="reviewComment" 
-        placeholder="Scrie aici părerea ta..."
-        rows="4">
+      <textarea [(ngModel)]="reviewComment" placeholder="Scrie aici părerea ta..." rows="4">
       </textarea>
-      
+
       <div class="modal-actions">
         <button class="btn-cancel" (click)="closeReviewForm()">Anulează</button>
-        <button class="btn-submit btn-review-submit" [disabled]="!reviewComment.trim()" (click)="submitReview()">Trimite Review</button>
+        <button class="btn-submit btn-review-submit" [disabled]="!reviewComment.trim()" (click)="submitReview()">Trimite
+          Review</button>
       </div>
     </div>
   </div>
@@ -92,7 +85,7 @@
   <div class="active-auctions-section">
     <div class="section-header">
       <h3>Licitații active ale utilizatorului</h3>
-      
+
       <!-- Filtrare Categorie -->
       <div class="filter-wrap" *ngIf="userCategories.length > 0">
         <label for="catFilter">Filtrează după categorie: </label>
@@ -107,13 +100,13 @@
     <div class="items-grid" *ngIf="filteredUserItems.length > 0; else noItems">
       <div class="item-card" *ngFor="let item of filteredUserItems" (click)="goToItemDetail(item)">
         <div class="item-image-wrap">
-          <img [src]="(item.PhotoList && item.PhotoList.length > 0) ? item.PhotoList[0] : (item.ImageUrl ? item.ImageUrl : 'assets/images/placeholder.png')" 
-               [alt]="item.Name" />
+          <img [src]="getItemImage(item)" [alt]="item.Name" />
         </div>
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
           <!-- Corectat folosind $any(item.Category) -->
-          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name }}</span>
+          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name
+            }}</span>
           <p class="price-row">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
         </div>
       </div>
