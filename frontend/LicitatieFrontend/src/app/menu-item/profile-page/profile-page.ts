@@ -106,7 +106,7 @@ export class ProfilePage implements OnInit {
     // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
     if (currentUser) {
       // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
-      if (currentUser.role === 'admin' || currentUser.email === 'admin@bidsphere.com') {
+      if (currentUser.role === 'Admin' || currentUser.email === 'admin@bidsphere.com') {
         localStorage.setItem('user_role', 'admin'); // Salvează starea pentru panoul Vuexy
         this.router.navigate(['/admin']);
         return; // Oprim execuția codului pentru a nu mai încărca restul paginii
@@ -277,13 +277,11 @@ export class ProfilePage implements OnInit {
               title: item.name || item.Name || 'Item',
               price:
                 item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image: this.getItemImage(item, items),
-              price: item.currentPrice || item.startPrice || 0,
               image:
                 item.imageUrl ||
                 item.ImageUrl ||
                 (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
-                'assets/images/placeholder.png',
+                this.getItemImage(item, items),
               status: item.status
                 ? item.status.toString()
                 : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
@@ -341,7 +339,6 @@ export class ProfilePage implements OnInit {
         const updatedIds = localWishIds.filter((id) => id !== itemId);
         localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
 
-        this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error removing from wishlist', err),
@@ -476,18 +473,10 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['/action-item-page', itemId]);
   }
 
-  // --- Navigate to Auction Item page ---
-  goToAuction(itemId: number): void {
-    if (!itemId) return;
-    this.router.navigate(['/action-item-page', itemId]);
-  }
-
   onLogout(): void {
     this.authService.logout();
-    this.setTheme('light');
     localStorage.removeItem('user_role');
     this.setTheme('light');
-    document.body.className = '';
     this.router.navigate(['/login-page']);
   }
 }
