@@ -536,7 +536,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     this.editData = {
       name: this.auctionItem.Name,
       startPrice: this.auctionItem.StartPrice,
-      categoryId: this.auctionItem.CategoryId || this.auctionItem.Category?.id || 1,
+      categoryId: this.auctionItem.CategoryId || this.auctionItem.Category?.Id || 1,
       location: this.auctionItem.Location,
       description: this.auctionItem.Description
     };
@@ -558,38 +558,52 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   //Submit edits
+  
   submitEdit(): void {
-    this.http.put(`https://localhost:7137/api/AuctionItem/${this.auctionItem.ID}`, this.editData)
-      .subscribe({
-        next: (res) => {
+    const itemToUpdate = { ...this.auctionItem };
+    itemToUpdate.Name = this.editData.name;
+    itemToUpdate.StartPrice = this.editData.startPrice;
+    itemToUpdate.CategoryId = this.editData.categoryId;
+    itemToUpdate.Description = this.editData.description;
+    itemToUpdate.Location = this.editData.location;
+
+    this.itemService.updateItem(itemToUpdate).subscribe({
+        next: (res: any) => {
           this.showEditModal = false;
-          // update UI for user
-          this.auctionItem.Name = this.editData.name;
-          this.auctionItem.StartPrice = this.editData.startPrice;
-          this.auctionItem.Description = this.editData.description;
-          this.auctionItem.Location = this.editData.location;
+          
+          // Change the ui for the user to see the updated data and that it's pending review
+          this.auctionItem.Name = itemToUpdate.Name;
+          this.auctionItem.StartPrice = itemToUpdate.StartPrice;
+          this.auctionItem.CategoryId = itemToUpdate.CategoryId;
+          this.auctionItem.Description = itemToUpdate.Description;
+          this.auctionItem.Location = itemToUpdate.Location;
           this.auctionItem.Status = 'Added' as any; // Reset status to pending
           
-          //Trigger post
+          // Success Toast
           this.reportToastMessage = `Item updated and sent for Admin review!`;
           this.showReportToast = true;
           this.isReportToastHiding = false;
+
           if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
           if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
+
           this.reportToastHideTimeout = setTimeout(() => {
             this.isReportToastHiding = true;
             try { this.cdr.markForCheck(); } catch { }
           }, 1500);
+
           this.reportToastTimeout = setTimeout(() => {
             this.showReportToast = false;
             this.isReportToastHiding = false;
             try { this.cdr.markForCheck(); } catch { }
           }, 2000);
+
           try { this.cdr.markForCheck(); } catch { }
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Failed to edit item:', err);
-          // Show error 
+          
+          // Error Toast
           this.reportToastMessage = `Error updating item. Please try again.`;
           this.showReportToast = true;
           this.isReportToastHiding = false;
