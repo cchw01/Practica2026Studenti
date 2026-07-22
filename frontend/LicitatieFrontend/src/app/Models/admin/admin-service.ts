@@ -10,6 +10,7 @@ export class AdminService {
   private forumPostUrl = 'https://localhost:7137/api/ForumPost';
   private forumCommentUrl = 'https://localhost:7137/api/ForumComment';
   private supportUrl = 'https://localhost:7137/api/SupportMessage';
+  private reportUrl = 'https://localhost:7137/api/Report';
 
   constructor(private http: HttpClient) {}
 
@@ -82,5 +83,17 @@ export class AdminService {
   }
   deleteMessage(id: number): Observable<any> {
     return this.http.delete(`${this.supportUrl}/${id}`);
+  }
+
+  getReports(): Observable<any[]> {
+    return this.http.get<any[]>(this.reportUrl);
+  }
+
+  updateReportStatus(id: number, status: string): Observable<any> {
+    return this.http.put(`${this.reportUrl}/${id}`, { status });
+  }
+
+  deleteReport(id: number): Observable<any> {
+    return this.http.delete(`${this.reportUrl}/${id}`);
   }
 }
