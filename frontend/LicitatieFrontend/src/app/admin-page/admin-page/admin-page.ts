@@ -31,7 +31,9 @@ export class AdminPage implements OnInit {
 
   contactMessages: any[] = [];
   helpMessages: any[] = [];
-  messagesView: 'contact' | 'help' = 'contact';
+  messagesView: 'contact' | 'help' | 'history' = 'contact';
+  historyFilter: 'all' | 'contact' | 'help' = 'all';
+  messageSearchTerm = '';
   replyDrafts: { [id: number]: string } = {};
 
   pendingAuctions: any[] = [];
@@ -439,12 +441,61 @@ export class AdminPage implements OnInit {
     return fallbackMessage;
   }
 
-  setMessagesView(view: 'contact' | 'help'): void {
+  setMessagesView(view: 'contact' | 'help' | 'history'): void {
     this.messagesView = view;
   }
 
+  setHistoryFilter(filter: 'all' | 'contact' | 'help'): void {
+    this.historyFilter = filter;
+  }
+
+  get unresolvedContactMessages(): any[] {
+    return this.contactMessages.filter((m) => !m.isResolved);
+  }
+
+  get unresolvedHelpMessages(): any[] {
+    return this.helpMessages.filter((m) => !m.isResolved);
+  }
+
+  get resolvedMessagesCount(): number {
+    const resolvedContact = this.contactMessages.filter((m) => m.isResolved).length;
+    const resolvedHelp = this.helpMessages.filter((m) => m.isResolved).length;
+    return resolvedContact + resolvedHelp;
+  }
+
   get displayedMessages(): any[] {
-    return this.messagesView === 'contact' ? this.contactMessages : this.helpMessages;
+    let source: any[];
+
+    if (this.messagesView === 'contact') {
+      source = this.unresolvedContactMessages;
+    } else if (this.messagesView === 'help') {
+      source = this.unresolvedHelpMessages;
+    } else {
+      const resolvedContact = this.contactMessages.filter((m) => m.isResolved);
+      const resolvedHelp = this.helpMessages.filter((m) => m.isResolved);
+
+      if (this.historyFilter === 'contact') {
+        source = resolvedContact;
+      } else if (this.historyFilter === 'help') {
+        source = resolvedHelp;
+      } else {
+        source = [...resolvedContact, ...resolvedHelp];
+      }
+    }
+
+    const term = this.messageSearchTerm.trim().toLowerCase();
+
+    if (!term) {
+      return source;
+    }
+
+    return source.filter(
+      (m) =>
+        m.name?.toLowerCase().includes(term) ||
+        m.email?.toLowerCase().includes(term) ||
+        m.message?.toLowerCase().includes(term) ||
+        m.issueType?.toLowerCase().includes(term),
+    );
   }
 
   loadMessages(): void {
@@ -468,5 +519,12 @@ export class AdminPage implements OnInit {
       },
       error: (err) => console.error('Eroare la rezolvarea mesajului:', err),
     });
+  }
+  deleteMessage(id: number): void {
+    const confirmed = confirm('Ștergi definitiv acest mesaj?');
+    if (!confirmed) {
+      return;
+    }
+    this.adminService.deleteMessage(id).subscribe(() => this.loadMessages());
   }
 }

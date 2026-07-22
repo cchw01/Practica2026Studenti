@@ -80,5 +80,20 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                dataOps.Delete(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

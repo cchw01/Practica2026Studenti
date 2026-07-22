@@ -49,5 +49,13 @@ namespace Backend.DataManagement
                 notifOps.Create(msg.UserId.Value, notificationText);
             }
         }
+        public void Delete(int id)
+        {
+            var msg = DbContext.SupportMessages.Find(id);
+            if (msg == null) throw new Exception("Mesajul nu a fost gasit");
+
+            DbContext.SupportMessages.Remove(msg);
+            DbContext.SaveChanges();
+        }
     }
 }
