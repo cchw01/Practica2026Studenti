@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SupportMessageService } from '../../services/support-message-service';
 
 @Component({
   selector: 'app-contact',
@@ -24,10 +23,7 @@ export class ContactPage implements OnInit {
   contactForm!: FormGroup;
   submitted = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private supportService: SupportMessageService,
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
@@ -42,7 +38,6 @@ export class ContactPage implements OnInit {
     const control = this.contactForm.get(controlName);
     return control !== null && control.hasError(errorName) && control.touched;
   }
-  submitError = '';
 
   onSubmit(): void {
     if (this.contactForm.invalid) {
@@ -50,21 +45,13 @@ export class ContactPage implements OnInit {
       return;
     }
 
-    this.submitError = '';
     const formData = this.contactForm.value;
 
-    this.supportService
-      .submit('Contact', formData.fullName, formData.email, formData.message)
-      .subscribe({
-        next: () => {
-          this.submitted = true;
-          this.contactForm.reset();
-        },
-        error: (err) => {
-          console.error('Eroare la trimiterea mesajului:', err);
-          this.submitError = 'Mesajul nu a putut fi trimis. Încearcă din nou.';
-        },
-      });
+    // Frontend-only — logs data to console
+    console.log('Contact form submitted:', formData);
+
+    this.submitted = true;
+    this.contactForm.reset();
   }
 
   sendAnother(): void {

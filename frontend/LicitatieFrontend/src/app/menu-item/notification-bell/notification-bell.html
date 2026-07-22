@@ -1,17 +1,15 @@
 <button mat-icon-button [matMenuTriggerFor]="menu" (click)="open()">
   <mat-icon
-    [matBadge]="unreadCount() > 0 ? unreadCount() : null"
+    matBadge="•"
     matBadgeColor="warn"
-    matBadgeSize="small">
-    notifications
+    matBadgeSize="small"
+    [matBadgeHidden]="!hasUnread()">
+    {{'NOTIFICATIONS.TRUE' | translate}}
   </mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item *ngFor="let n of notifications()" (click)="read(n)" [class.unread]="!n.isRead">
-    <div class="notif-content">
-      <span class="notif-message">{{ n.message }}</span>
-      <span class="notif-time">{{ n.createdAt | date:'dd MMM, HH:mm' }}</span>
-    </div>
+    {{ n.message }}
   </button>
-  <div *ngIf="notifications().length === 0" class="empty">{{ 'NOTIFICATIONS.FALSE' | translate }}</div>
+  <div *ngIf="notifications().length === 0" class="empty">{{'NOTIFICATIONS.FALSE' | translate}}</div>
 </mat-menu>

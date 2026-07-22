@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { SupportMessageService } from '../../services/support-message-service';
-import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-help-page',
@@ -93,21 +91,12 @@ export class HelpPageComponent implements OnInit {
     { sender: 'ai', text: "Hi! I'm your virtual assistant. How can I help you today?" },
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private supportService: SupportMessageService,
-    private authService: AuthService,
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-
     this.helpForm = this.fb.group({
-      name: [currentUser?.name || '', Validators.required],
-      email: [
-        { value: currentUser?.email || '', disabled: !!currentUser },
-        [Validators.required, Validators.email],
-      ],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       issueType: ['', Validators.required],
       issue: ['', [Validators.required, Validators.minLength(10)]],
     });
@@ -118,29 +107,13 @@ export class HelpPageComponent implements OnInit {
     this.faqs[index].isOpen = !this.faqs[index].isOpen;
   }
 
-  submitError = '';
-
   onSubmitHelpForm() {
-    if (this.helpForm.invalid) {
+    if (this.helpForm.valid) {
+      alert('Your ticket has been submitted successfully! We will contact you soon.');
+      this.helpForm.reset();
+    } else {
       alert('Please fill in all fields correctly.');
-      return;
     }
-
-    this.submitError = '';
-    const formData = this.helpForm.getRawValue();
-
-    this.supportService
-      .submit('Help', formData.name, formData.email, formData.issue, formData.issueType)
-      .subscribe({
-        next: () => {
-          alert('Your ticket has been submitted successfully! We will contact you soon.');
-          this.helpForm.reset({ name: formData.name, email: formData.email });
-        },
-        error: (err) => {
-          console.error('Eroare la trimiterea ticketului:', err);
-          this.submitError = 'Ticketul nu a putut fi trimis. Încearcă din nou.';
-        },
-      });
   }
 
   toggleChat() {

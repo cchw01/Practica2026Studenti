@@ -3,6 +3,8 @@ using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Backend.Controllers
 {
@@ -11,130 +13,113 @@ namespace Backend.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly CategoryDataOps dataOps;
-
-        public CategoryController(ApplicationDbContext dbContext)
+        public CategoryController(ApplicationDbContext DbContext)
         {
-            dataOps = new CategoryDataOps(dbContext);
+            dataOps = new CategoryDataOps(DbContext);
         }
 
         [HttpGet]
         public ActionResult<List<CategoryDto>> GetCategories()
         {
-            var categories = dataOps.GetCategories();
-
-            var result = categories.Select(MapToDto).ToList();
-
-            return Ok(result);
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<CategoryDto> GetCategoryById(int id)
-        {
-            var category = dataOps.GetCategoryById(id);
-
-            if (category == null)
-            {
-                return NotFound( "Categoria nu a fost găsită.");
-            }
-
-            return Ok(MapToDto(category));
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public ActionResult<CategoryDto> AddCategory(
-            [FromBody] CategoryCreateDto dto
-        )
-        {
             try
             {
-                var category = new CategoryItem
+                var categories = dataOps.GetCategories();
+                var dtos = categories.Select(c => new CategoryDto
                 {
-                    name = dto.Name,
-                    description = dto.Description
-                };
-
-                var createdCategory = dataOps.AddCategory(category);
-                var result = MapToDto(createdCategory);
-
-                return CreatedAtAction( nameof(GetCategoryById), new { id = createdCategory.id }, result);
+                    Id = c.id,
+                    Name = c.name
+                }).ToList();
+                return Ok(dtos);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (InvalidOperationException ex)
+        }
+      
+        [HttpGet("{id}")]
+        public ActionResult<CategoryDto> GetCategoryById(int id)
+        {
+            try
             {
-                return Conflict(ex.Message);
+                var category = dataOps.GetCategoryById(id);
+                if (category == null) return NotFound();
+                var dto = new CategoryDto
+                {
+                    Id = category.id,
+                    Name = category.name
+                };
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
-
+        
+        [HttpPost]
+        public ActionResult<CategoryDto> AddCategory(CategoryCreateDto dto)
+        {
+            var category = new CategoryItem
+            {
+                name = dto.Name
+            };
+            dataOps.AddCategory(category);
+            var result = new CategoryDto { Id = category.id, Name = category.name };
+            return Ok(result);
+        }
+      
         [HttpPut]
-        [Authorize(Roles = "Admin")]
-        public ActionResult<CategoryDto> UpdateCategory(
-            [FromBody] CategoryDto dto
-        )
+        public ActionResult UpdateCategory(CategoryDto dto)
         {
             try
             {
                 var category = new CategoryItem
                 {
                     id = dto.Id,
-                    name = dto.Name,
-                    description = dto.Description
+                    name = dto.Name
                 };
 
-                var updatedCategory =
-                    dataOps.UpdateCategory(category);
 
-                if (updatedCategory == null)
+                if (dataOps.UpdateCategory(category))
                 {
-                    return NotFound("Categoria nu a fost găsită.");
-                }
+                    return Ok();
 
-                return Ok(MapToDto(updatedCategory));
+                }
+                else
+                {
+                    return NotFound();
+
+                }
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(ex.Message);
             }
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteCategory(int id)
         {
             try
             {
-                bool deleted = dataOps.DeleteCategory(id);
 
-                if (!deleted)
+                if (dataOps.DeleteCategory(id))
                 {
-                    return NotFound("Categoria nu a fost găsită.");
+                    return Ok();
+
                 }
+                else
+                {
+                    return NotFound();
 
-                return NoContent();
+                }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-                return Conflict(ex.Message);
+                return BadRequest(ex.Message);
             }
-        }
-
-        private static CategoryDto MapToDto(
-            CategoryItem category
-        )
-        {
-            return new CategoryDto
-            {
-                Id = category.id,
-                Name = category.name,
-                Description = category.description
-            };
         }
     }
 }
+
