@@ -12,22 +12,22 @@
     "ADD_AUCTION": "Dodaj aukciju"
   },
   "CONTACT": {
-  "TITLE": "Kontaktirajte nas",
-  "DESCRIPTION": "Imate pitanja? Naš tim je spreman da vam pomogne.",
-  "EMAIL": "E-mail",
-  "PHONE": "Broj telefona",
-  "CALL_CENTER_HOURS": "Radno vreme korisničke podrške",
-  "SCHEDULE": "Ponedeljak–petak, 09:00–17:00",
-  "FOLLOW_US": "Pratite nas",
-  "SOCIAL_DESCRIPTION": "Ostanite povezani sa nama putem društvenih mreža.",
-  "FORM_TITLE": "Pošaljite nam poruku",
-  "FORM_FULL_NAME_LABEL": "Ime i prezime",
-  "FORM_FULL_NAME_PLACEHOLDER": "npr. Marko Petrović",
-  "FORM_FULL_NAME_REQUIRED": "Ime i prezime su obavezni.",
+    "TITLE": "Kontaktirajte nas",
+    "DESCRIPTION": "Imate pitanja? Naš tim je spreman da vam pomogne.",
+    "EMAIL": "E-adresa",
+    "PHONE": "Broj telefona",
+    "CALL_CENTER_HOURS": "Radno vreme pozivnog centra",
+    "SCHEDULE": "Ponedeljak–petak, 09:00–17:00",
+    "FOLLOW_US": "Pratite nas",
+    "SOCIAL_DESCRIPTION": "Ostanite povezani sa nama na društvenim mrežama.", 
+      "FORM_TITLE": "Pošaljite nam poruku",
+  "FORM_FULL_NAME_LABEL": "Puno ime",
+  "FORM_FULL_NAME_PLACEHOLDER": "npr. Marko Marković",
+  "FORM_FULL_NAME_REQUIRED": "Puno ime je obavezno.",
   "FORM_EMAIL_LABEL": "E-mail adresa",
-  "FORM_EMAIL_PLACEHOLDER": "npr. vi@primer.rs",
+  "FORM_EMAIL_PLACEHOLDER": "npr. vi@example.com",
   "FORM_EMAIL_REQUIRED": "E-mail adresa je obavezna.",
-  "FORM_EMAIL_INVALID": "Unesite važeću e-mail adresu.",
+  "FORM_EMAIL_INVALID": "Unesite ispravnu e-mail adresu.",
   "FORM_ISSUE_TYPE_LABEL": "Vrsta problema",
   "FORM_ISSUE_TYPE_REQUIRED": "Izaberite vrstu problema.",
   "FORM_ISSUE_OPTION_GENERAL": "Opšti upit",
@@ -37,14 +37,14 @@
   "FORM_ISSUE_OPTION_ACCOUNT": "Upravljanje nalogom",
   "FORM_ISSUE_OPTION_OTHER": "Drugo",
   "FORM_MESSAGE_LABEL": "Opišite svoj problem",
-  "FORM_MESSAGE_PLACEHOLDER": "Navedite više detalja...",
+  "FORM_MESSAGE_PLACEHOLDER": "Unesite više detalja...",
   "FORM_MESSAGE_REQUIRED": "Poruka je obavezna.",
-  "FORM_MESSAGE_MIN_LENGTH": "Poruka mora sadržati najmanje 10 znakova.",
+  "FORM_MESSAGE_MIN_LENGTH": "Poruka mora imati najmanje 10 karaktera.",
   "FORM_SUBMIT": "Pošalji poruku",
   "FORM_SUCCESS_TITLE": "Poruka je poslata!",
   "FORM_SUCCESS_MESSAGE": "Hvala što ste nas kontaktirali. Odgovorićemo vam u najkraćem mogućem roku.",
-  "FORM_SEND_ANOTHER": "Pošalji još jednu poruku"
-},
+  "FORM_SEND_ANOTHER": "Pošalji novu poruku"
+  },
   "LOGIN": {
     "TITLE": "Prijava",
     "EMAIL_LABEL": "E-adresa",
@@ -385,5 +385,98 @@
     "CANCEL": "Otkaži",
     "CREATING": "Kreiranje diskusije...",
     "SUBMIT": "Pokreni diskusiju"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username nije podešeno",
+    "NAME_NOT_SET": "Ime nije podešeno",
+    "EMAIL_NOT_SET": "Email nije podešen",
+    "AVERAGE_SCORE": "Prosečna ocena"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Uredi profil",
+    "LOG_OUT": "Odjavi se",
+    "ADD_ITEM": "Dodaj novu stavku",
+    "CHANGE_PHOTO": "Promeni fotografiju",
+    "HIDE_PASSWORD": "Sakrij podešavanja lozinke",
+    "CHANGE_PASSWORD": "Promeni lozinku",
+    "UPDATE_PASSWORD": "Ažuriraj lozinku",
+    "CANCEL": "Otkaži",
+    "SAVE": "Sačuvaj izmene"
+  },
+
+  "THEME": {
+    "TITLE": "Prilagodi temu",
+    "DESCRIPTION": "Izaberite vizuelni stil koji odgovara vašem raspoloženju.",
+    "LIGHT": "Svetlo",
+    "SUNSET": "Zalazak sunca",
+    "OCEAN": "Okean"
+  },
+
+  "SELL": {
+    "TITLE": "Prodaj novu stavku",
+    "DESCRIPTION": "Spremni ste da postavite nešto?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Moje aktivne prodaje",
+    "WON_ITEMS": "Osvojene stavke",
+    "WISHLIST": "Moja lista želja",
+    "REVIEWS": "Primljene recenzije"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Još nema postavljenih stavki.",
+    "WON_ITEMS": "Još niste osvojili nijednu stavku.",
+    "WISHLIST": "Još nema stavki na vašoj listi želja.",
+    "REVIEWS": "Još niste dobili nijednu recenziju."
+  },
+
+  "EDIT": {
+    "TITLE": "Uredi profil",
+    "USERNAME": "Korisničko ime",
+    "FULL_NAME": "Puno ime",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "npr. marko_markovic",
+    "FULL_NAME_PLACEHOLDER": "npr. Marko Marković",
+    "EMAIL_PLACEHOLDER": "npr. marko@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Trenutna lozinka",
+    "NEW": "Nova lozinka",
+    "CONFIRM": "Potvrdi lozinku",
+
+    "CURRENT_PLACEHOLDER": "Unesite trenutnu lozinku",
+    "NEW_PLACEHOLDER": "Unesite novu lozinku",
+    "CONFIRM_PLACEHOLDER": "Potvrdite novu lozinku",
+
+    "REQUIRED": "Sva polja su obavezna.",
+    "NOT_MATCH": "Nova lozinka i njena potvrda se ne podudaraju.",
+    "SUCCESS": "Lozinka je uspešno ažurirana!",
+    "ERROR": "Greška prilikom ažuriranja lozinke. Proverite trenutnu lozinku."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Aktivno",
+    "ADDED": "Dodato",
+    "WON": "Osvojeno"
+  },
+
+  "DEFAULTS": {
+    "USER": "Korisnik"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Greška pri učitavanju kategorija.",
+    "LOAD_ITEMS": "Greška pri učitavanju stavki.",
+    "LOAD_REVIEWS": "Greška pri učitavanju recenzija."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profil je uspešno ažuriran."
   }
+}
 }
