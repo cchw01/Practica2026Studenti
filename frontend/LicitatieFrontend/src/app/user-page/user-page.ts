@@ -17,6 +17,7 @@ import { Review, ReviewCreate } from '../Models/review/review.model';
 export class UserPage implements OnInit {
   userId!: number;
   user?: UserReadDto;
+  currentUserId: number | null = null;
 
   // Liste pentru produse și categorii
   userActiveItems: AuctionItem[] = [];
@@ -70,6 +71,7 @@ export class UserPage implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
+      this.currentUserId = this.authService.getCurrentUserId();
       const idParam = params.get('id');
       console.log('DEBUG: ID Utilizator detectat în URL:', idParam);
 

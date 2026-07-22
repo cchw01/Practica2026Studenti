@@ -132,7 +132,7 @@
         <div class="reviews-list" *ngIf="reviews.length > 0">
           <div class="review-card" *ngFor="let review of reviews">
             <div class="review-header">
-              <span class="review-author">&#64;{{ review.author }}</span>
+              <a [routerLink]="['/user-page', review.reviewerId]" class="reviewer-link">&#64;{{ review.author }}</a>
               <span class="review-date">{{ review.date }}</span>
             </div>
             <div class="review-stars">

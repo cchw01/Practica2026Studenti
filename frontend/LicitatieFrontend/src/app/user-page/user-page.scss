@@ -599,6 +599,17 @@
   color: #9e9eaf;
 }
 
+.reviewer-link {
+  color: v.$color-primary;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .empty-reviews {
   text-align: center;
   padding: 30px 20px;

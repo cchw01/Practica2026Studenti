@@ -18,6 +18,7 @@ interface Item {
 
 interface Review {
   id: number;
+  reviewerId: number;
   author: string;
   rating: number;
   comment: string;
@@ -348,6 +349,7 @@ export class ProfilePage implements OnInit {
           .filter((r) => r.reviewedUserId === this.currentUserId)
           .map((r) => ({
             id: r.id,
+            reviewerId: r.reviewerId,
             author: r.reviewerUserName || 'Anonymous',
             rating: r.rating,
             comment: r.comment,

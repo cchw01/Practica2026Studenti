@@ -99,7 +99,9 @@
         <div class="review-header">
           <div class="reviewer-info">
             <span class="reviewer-icon">👤</span>
-            <span class="reviewer-name">@{{ rev.reviewerUserName }}</span>
+              <a [routerLink]="rev.reviewerId === currentUserId ? ['/profile-page'] : ['/user-page', rev.reviewerId]" class="reviewer-link">
+                {{ rev.reviewerId === currentUserId ? 'Tu' : '@' + rev.reviewerUserName }}
+              </a>
           </div>
           <div class="review-stars">
             <span *ngFor="let star of [1,2,3,4,5]" class="star" [class.filled]="star <= rev.rating">★</span>
