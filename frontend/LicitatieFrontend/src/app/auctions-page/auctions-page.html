@@ -69,7 +69,7 @@
           </div>
           <div class="card-content">
             <h3>{{ item.Name }}</h3>
-            <p class="item-category" *ngIf="item.Category?.name">{{ item.Category.name }}</p>
+            <p class="item-category" *ngIf="getCategoryName(item) as categoryName">{{ categoryName }}</p>
             <p class="current-bid">{{ 'AUCTIONS_PAGE.CURRENT_PRICE' | translate }}: <strong>{{ item.CurrentPrice }} RON</strong></p>
             <div class="card-footer" *ngIf="item.Owner" (click)="$event.stopPropagation()">
               <span>{{ 'AUCTIONS_PAGE.POSTED_BY' | translate }}: </span>

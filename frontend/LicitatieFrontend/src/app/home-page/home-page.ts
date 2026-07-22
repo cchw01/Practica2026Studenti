@@ -17,8 +17,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
 import { AuctionItem } from '../Models/item-model';
 import { AuthService } from '../services/auth';
+import { CategoryService } from '../services/category-service';
 
-export interface Category {
+export interface HomeCategory {
   name: string;
   icon: string;
   description: string;
@@ -87,42 +88,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private readonly translate: TranslateService,
     private readonly itemService: ItemService,
+    private readonly categoryService: CategoryService,
     private readonly cdr: ChangeDetectorRef,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
-  categories: Category[] = [
-    {
-      name: 'Technology',
-      icon: 'memory',
-      description: 'Cutting-edge gadgets and the latest electronics.',
-    },
-    {
-      name: 'Auto & Motors',
-      icon: 'directions_car',
-      description: 'Cars, motorcycles, and rare parts.',
-    },
-    {
-      name: 'Art & Collectibles',
-      icon: 'palette',
-      description: 'Exclusive art pieces and collections.',
-    },
-    {
-      name: 'Real Estate',
-      icon: 'home_work',
-      description: 'Exceptional properties and land.',
-    },
-    {
-      name: 'Clothing',
-      icon: 'checkroom',
-      description: 'Trendy apparel, footwear, and accessories.',
-    },
-    {
-      name: 'Home & Garden',
-      icon: 'yard',
-      description: 'Furniture, décor, and outdoor essentials.',
-    },
-  ];
+  categories: HomeCategory[] = [];
+  categoriesLoading = true;
+  categoriesError = false;
 
   displayedAuctions: AuctionItem[] = [];
 
@@ -243,7 +216,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       },
       error: (err) => console.error('Eroare la încărcarea licitațiilor', err),
     });
-
+    this.loadCategories();
     this.auctionsTimerId = setInterval(() => this.refreshDisplayedAuctions(), 1000);
   }
 
@@ -402,4 +375,50 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
+
+  private getCategoryIcon(categoryName: string): string {
+    const normalizedName = categoryName.trim().toLowerCase();
+
+    const categoryIcons: Record<string, string> = {
+      art: 'palette',
+      clothing: 'checkroom',
+      electronics: 'memory',
+      'home & garden': 'yard',
+      jewelry: 'diamond',
+      others: 'category',
+      'real estate': 'home_work',
+      vehicles: 'directions_car',
+    };
+
+    return categoryIcons[normalizedName] || 'category';
+  }
+
+  private loadCategories(): void {
+    this.categoriesLoading = true;
+    this.categoriesError = false;
+
+    this.categoryService.getCategories().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (categories) => {
+        this.categories = (categories || []).map((category) => {
+          const name = String(category.name ?? (category as any).Name ?? '').trim();
+          const description = String(category.description ?? (category as any).Description ?? '').trim();
+
+          return { name, icon: this.getCategoryIcon(name), description: description || 'No description available.' };
+        })
+          .filter((category) => category.name.length > 0)
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        this.categoriesLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Eroare la încărcarea categoriilor', error);
+
+        this.categories = [];
+        this.categoriesLoading = false;
+        this.categoriesError = true;
+        this.cdr.detectChanges();
+      },
+    });
+  }
 }
