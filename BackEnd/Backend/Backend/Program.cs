@@ -199,5 +199,4 @@ using (var scope = app.Services.CreateScope())
     catch { }
 }
 
-
-app.Run();
+ app.Run();
