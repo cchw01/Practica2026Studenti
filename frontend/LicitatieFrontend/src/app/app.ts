@@ -6,7 +6,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 
 import { AuthService } from './services/auth';
 
-type SupportedLanguage = 'en' | 'ro' | 'es' | 'it' | 'de' | 'fr' | 'pl' | 'sk' | 'sr' | 'tr' | 'uk' | 'el' | 'hu' ;
+type SupportedLanguage =
+  'en' | 'ro' | 'es' | 'it' | 'de' | 'fr' | 'pl' | 'sk' | 'sr' | 'tr' | 'uk' | 'el' | 'hu';
 
 @Component({
   selector: 'app-root',
@@ -99,6 +100,7 @@ export class App implements OnInit, OnDestroy {
 
     this.translate.use(language);
     this.closeMenu();
+    this.languageMenuOpen = false;
   }
 
   currentLanguageLabel(): string {
@@ -125,6 +127,7 @@ export class App implements OnInit, OnDestroy {
     this.authService.logout();
     this.isLoggedIn.set(false);
     this.isAdmin.set(false);
+    this.profileMenuOpen = false;
     this.router.navigate(['/home-page']);
   }
 
@@ -137,4 +140,22 @@ export class App implements OnInit, OnDestroy {
       this.router.navigate(['/login-page']);
     }
   }
+  languageMenuOpen = false;
+
+  languages: SupportedLanguage[] = [
+    'en',
+    'ro',
+    'es',
+    'it',
+    'de',
+    'fr',
+    'pl',
+    'sk',
+    'sr',
+    'tr',
+    'uk',
+    'el',
+    'hu',
+  ];
+  profileMenuOpen = false;
 }

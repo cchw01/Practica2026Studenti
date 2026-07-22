@@ -50,24 +50,126 @@
       </div>
 
       <!-- Actions -->
-      <div class="nav-links-actions">
-        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction"
-          title="Add Auction">
-          <mat-icon>add</mat-icon>
-        </a>
-        <ng-container *ngIf="isLoggedIn(); else loggedOutActions">
-          <app-notification-bell></app-notification-bell>
-          <app-profile-menu (loggedOut)="logout()"></app-profile-menu>
-        </ng-container>
-        <ng-template #loggedOutActions>
-          <div class="auth-pill">
-            <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
-            <span class="auth-pill-divider"></span>
-            <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()"
-              class="auth-pill-link">Register</a>
-          </div>
-        </ng-template>
-      </div>
+<div class="nav-links-actions">
+  <a
+    routerLink="/add-item"
+    (click)="closeMenu()"
+    class="btn-add-auction"
+    aria-label="Add Auction"
+    title="Add Auction">
+    <mat-icon>add</mat-icon>
+  </a>
+
+  <!-- Language -->
+  <div class="language-dropdown" (click)="$event.stopPropagation()">
+  <button
+    class="language-pill"
+    type="button"
+    (click)="languageMenuOpen = !languageMenuOpen">
+
+    <mat-icon>language</mat-icon>
+
+    <span>{{ currentLanguage().toUpperCase() }}</span>
+
+    <mat-icon class="arrow">
+      {{ languageMenuOpen ? 'expand_less' : 'expand_more' }}
+    </mat-icon>
+  </button>
+
+  <div
+    class="language-menu"
+    *ngIf="languageMenuOpen">
+
+    <button
+      *ngFor="let lang of languages"
+      type="button"
+      (click)="changeLanguage(lang); languageMenuOpen=false">
+
+      {{ lang.toUpperCase() }}
+
+    </button>
+
+  </div>
+</div>
+
+<!-- Login/Register dacă utilizatorul NU este logat -->
+<div class="auth-pill" *ngIf="!isLoggedIn()">
+
+  <a
+    routerLink="/login-page"
+    routerLinkActive="active"
+    (click)="closeMenu()"
+    class="auth-pill-link">
+    Login
+  </a>
+
+  <span class="auth-pill-divider"></span>
+
+  <a
+    routerLink="/register-page"
+    routerLinkActive="active"
+    (click)="closeMenu()"
+    class="auth-pill-link">
+    Register
+  </a>
+
+</div>
+
+
+<!-- Profil + notificări dacă utilizatorul ESTE logat -->
+<div class="user-actions" *ngIf="isLoggedIn()">
+
+  <a
+    routerLink="/notifications"
+    (click)="closeMenu()"
+    class="btn-add-auction"
+    title="Notifications">
+    <mat-icon>notifications</mat-icon>
+  </a>
+<div class="profile-dropdown">
+
+  <button
+    class="btn-add-auction"
+    type="button"
+    (click)="profileMenuOpen = !profileMenuOpen"
+    title="Profile">
+
+    <mat-icon>account_circle</mat-icon>
+
+  </button>
+
+
+  <div 
+    class="profile-menu"
+    *ngIf="profileMenuOpen">
+
+    <a
+      routerLink="/profile-page"
+      (click)="profileMenuOpen = false">
+
+      <mat-icon>person</mat-icon>
+      Profil
+
+    </a>
+
+
+    <button
+      type="button"
+      (click)="logout()">
+
+      <mat-icon>logout</mat-icon>
+      Log out
+
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+  
+  
+</div>
     </div>
   </div>
 </nav>
