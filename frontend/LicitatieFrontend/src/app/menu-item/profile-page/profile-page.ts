@@ -29,6 +29,11 @@ interface UserProfile {
   name: string;
   email: string;
   avatarUrl: string;
+  profilePictureBase64?: string;
+  // Numele fisierului asa cum e salvat pe backend (in wwwroot/Assets/ProfilePictures).
+  // E sursa de adevar pentru poza persistata; profilePictureBase64 e doar preview local,
+  // inainte de a apasa Save.
+  profilePictureName?: string;
 }
 
 const STORAGE_KEY = 'profile_user';
@@ -54,6 +59,11 @@ export class ProfilePage implements OnInit {
   };
 
   editDraft: UserProfile = { ...this.user };
+
+  // Fisierul selectat pentru upload, retinut pana la Save
+  private selectedAvatarFile: File | null = null;
+
+  private readonly backendAssetsUrl = 'https://localhost:7137/Assets/ProfilePictures/';
 
   // --- Score ---
   score: number = 4.5;
@@ -81,7 +91,17 @@ export class ProfilePage implements OnInit {
   }
 
   get displayAvatar(): string {
-    if (this.user.avatarUrl) return this.user.avatarUrl;
+    // Preview local (poza abia selectata, inainte de Save) are prioritate maxima
+    if (this.user?.profilePictureBase64) {
+      if (!this.user.profilePictureBase64.startsWith('data:image')) {
+        return `data:image/png;base64,${this.user.profilePictureBase64}`;
+      }
+      return this.user.profilePictureBase64;
+    }
+    // Apoi poza deja salvata pe backend
+    if (this.user?.profilePictureName) {
+      return `${this.backendAssetsUrl}${this.user.profilePictureName}`;
+    }
     const name = encodeURIComponent(
       this.user.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER'),
     );
@@ -112,6 +132,18 @@ export class ProfilePage implements OnInit {
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
+
+    // Incarcam datele complete de la backend (inclusiv poza de profil salvata),
+    // altfel dupa refresh poza uploadata anterior nu s-ar mai afisa niciodata.
+    if (this.currentUserId) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (userData: any) => {
+          this.user.profilePictureName = userData.profilePictureName || userData.ProfilePictureName;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Eroare la incarcarea profilului:', err),
+      });
+    }
 
     // Fetch category list
     this.categoryService.getCategories().subscribe({
@@ -331,6 +363,7 @@ export class ProfilePage implements OnInit {
   // --- Edit actions ---
   startEdit(): void {
     this.editDraft = { ...this.user };
+    this.selectedAvatarFile = null;
     this.isEditing = true;
     this.showPasswordForm = false;
     this.currentPassword = '';
@@ -342,6 +375,7 @@ export class ProfilePage implements OnInit {
 
   cancelEdit(): void {
     this.isEditing = false;
+    this.selectedAvatarFile = null;
     this.showPasswordForm = false;
     this.currentPassword = '';
     this.newPassword = '';
@@ -363,6 +397,25 @@ export class ProfilePage implements OnInit {
           username: updatedUser.UserName || updatedUser.userName || this.editDraft.username,
           name: updatedUser.Name || updatedUser.name || this.editDraft.name,
         };
+
+        // Daca a fost selectata o poza noua, o urcam acum pe backend
+        if (this.selectedAvatarFile) {
+          this.UserService.uploadProfilePicture(this.selectedAvatarFile).subscribe({
+            next: (pictureName: string) => {
+              this.user.profilePictureName = pictureName;
+              this.user.profilePictureBase64 = undefined; // preview-ul local nu mai e necesar
+              this.selectedAvatarFile = null;
+              this.editDraft = { ...this.user };
+              this.saveProfile();
+              this.cdr.detectChanges();
+            },
+            error: (err) => {
+              console.error('Eroare la upload-ul pozei de profil:', err);
+              alert('Poza de profil nu a putut fi salvata.');
+            },
+          });
+        }
+
         this.editDraft = { ...this.user };
         this.saveProfile();
         this.isEditing = false;
@@ -384,9 +437,14 @@ export class ProfilePage implements OnInit {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
+
+    // Retinem fisierul, se urca efectiv pe backend abia la Save (in saveEdit())
+    this.selectedAvatarFile = file;
+
     const reader = new FileReader();
     reader.onload = () => {
       this.editDraft.avatarUrl = reader.result as string;
+      this.editDraft.profilePictureBase64 = reader.result as string;
     };
     reader.readAsDataURL(file);
   }

@@ -8,6 +8,7 @@ export interface UserReadDto {
   Role: RoleEnum;
   Rating: number;
   Password?: string;
+  profilePictureName?: string;
 }
 
 export interface UserUpdateDto{

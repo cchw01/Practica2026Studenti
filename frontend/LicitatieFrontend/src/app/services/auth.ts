@@ -25,47 +25,27 @@ export class AuthService {
   }
 
   register(userData: any): Observable<any> {
-    const payload = {
-      UserName: userData.username || userData.UserName,
-      username: userData.username || userData.UserName,
-      Name: userData.name || userData.Name,
-      Email: userData.email || userData.Email,
-      Password: userData.password || userData.Password,
-      PhoneNumber: userData.phoneNumber || userData.PhoneNumber,
-      phoneNumber: userData.phoneNumber || userData.PhoneNumber
-    };
+  const payload = {
+    UserName: userData.username || userData.UserName,
+    Name: userData.name || userData.Name,
+    Email: userData.email || userData.Email,
+    Password: userData.password || userData.Password,
+    PhoneNumber: userData.phoneNumber || userData.PhoneNumber
+  };
 
-    return new Observable<any>(observer => {
-      this.http.post(`${this.apiUrl}/register`, payload).subscribe({
-        next: (res: any) => {
-          observer.next(res);
-          observer.complete();
-        },
-        error: (err) => {
-          // Fallback dacă backend-ul nu este pornit
-          const fakeToken = this.createLocalToken(payload);
-          const authResult = {
-            idToken: fakeToken,
-            accessToken: fakeToken,
-            expiresIn: 86400,
-            user: payload
-          };
-          this.setSession(authResult);
-          localStorage.setItem('profile_user', JSON.stringify(payload));
-          observer.next(authResult);
-          observer.complete();
-        }
-      });
-    });
+  return this.http.post(`${this.apiUrl}/register`, payload);
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http
-      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
-      .pipe(
-        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
-      );
-  }
+  return this.http
+    .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+    .pipe(
+      tap((res: any) => {
+        // Backend-ul returnează { accessToken: "...", expiresIn: 900 }
+        this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn });
+      })
+    );
+}
 
   private setSession(authResult: any): void {
     if (!authResult) return;

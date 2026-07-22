@@ -10,6 +10,7 @@ import { AuctionItemSummaryDto } from '../Models/profile/profile-dto';
 })
 export class UserService {
   private readonly apiUrl = 'https://localhost:7137/api/User';
+  private readonly profilePictureApiUrl = 'https://localhost:7137/api/ProfilePicture';
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +22,9 @@ export class UserService {
       Email: u.email,
       Role: u.role,
       Rating: u.rating,
+      // Lipsea aici — chiar daca backend-ul intoarce ProfilePictureName,
+      // fara linia asta se pierdea la mapare si frontend-ul nu-l vedea niciodata.
+      profilePictureName: u.profilePictureName,
     };
   }
 
@@ -42,6 +46,14 @@ export class UserService {
 
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  uploadProfilePicture(file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+    return this.http.post(`${this.profilePictureApiUrl}/upload`, formData, {
+      responseType: 'text',
+    });
   }
 
   // --- Operațiuni Wishlist ---
