@@ -32,3 +32,6 @@ yarn-error.log*
 # ASP.NET Core secrets (contains DB connection strings & passwords)
 **/appsettings.json
 **/appsettings.*.json
+BackEnd/Backend/Backend/Migrations/20260722082305_AddReportsTable.cs
+BackEnd/Backend/Backend/Migrations/20260722082305_AddReportsTable.Designer.cs
+BackEnd/Backend/Backend/Migrations/ApplicationDbContextModelSnapshot.cs
