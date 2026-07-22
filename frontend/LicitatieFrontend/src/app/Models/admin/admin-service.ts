@@ -9,6 +9,7 @@ export class AdminService {
   private itemUrl = 'https://localhost:7137/api/AuctionItem';
   private forumPostUrl = 'https://localhost:7137/api/ForumPost';
   private forumCommentUrl = 'https://localhost:7137/api/ForumComment';
+  private supportUrl = 'https://localhost:7137/api/SupportMessage';
 
   constructor(private http: HttpClient) {}
 
@@ -70,16 +71,13 @@ export class AdminService {
     return this.http.delete(`${this.forumCommentUrl}/${id}`);
   }
 
-  // Metode suport local pentru a evita erori dacă backend-ul nu are încă tabelele
-  getSupportTickets(): Observable<any[]> {
-    return of([
-      { id: 1, name: 'Mihai Popescu', email: 'mihai@email.com', subject: 'Eroare Bid', message: 'Nu pot licita', status: 'deschis' },
-      { id: 2, name: 'Elena Radu', email: 'elena@email.com', subject: 'Cont suspect', message: 'Bogdan99 refuză livrarea', status: 'deschis' }
-    ]);
+  getContactMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.supportUrl}/contact`);
   }
-
-  resolveTicket(id: number): Observable<any> {
-    return of({ success: true });
+  getHelpMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.supportUrl}/help`);
   }
-
+  resolveMessage(id: number, replyMessage?: string): Observable<any> {
+    return this.http.post(`${this.supportUrl}/${id}/resolve`, { replyMessage });
+  }
 }

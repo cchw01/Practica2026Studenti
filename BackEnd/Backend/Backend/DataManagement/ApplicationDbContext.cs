@@ -11,6 +11,7 @@ namespace Backend.DataManagement
         }
 
         public DbSet<AuctionItem> AuctionItems => Set<AuctionItem>();
+        public DbSet<SupportMessage> SupportMessages => Set<SupportMessage>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Bid> Bids => Set<Bid>();
