@@ -276,6 +276,75 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{userId}/wishlist")]
+        public ActionResult<IEnumerable<AuctionItemResponseDto>> GetWishlist(int userId)
+        {
+            try
+            {
+                var wishlist = dataOps.GetWishlist(userId);
+                if (wishlist == null)
+                    return NotFound("Utilizatorul nu a fost găsit.");
+
+                var response = wishlist.Select(item => new AuctionItemResponseDto
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    StartPrice = item.StartPrice,
+                    CurrentPrice = item.CurrentPrice,
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.Category?.name ?? string.Empty,
+                    Description = item.Description,
+                    Location = item.Location,
+                    OwnerId = item.OwnerId,
+                    OwnerUserName = item.Owner?.UserName ?? string.Empty,
+                    WinnerId = item.WinnerId,
+                    WinnerUserName = item.Winner?.UserName,
+                    Status = item.Status,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    ImageUrl = item.ImageUrl
+                });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{userId}/wishlist/{itemId}")]
+        public ActionResult AddToWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var result = dataOps.AddToWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut adăuga produsul în wishlist.");
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{userId}/wishlist/{itemId}")]
+        public ActionResult RemoveFromWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var result = dataOps.RemoveFromWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut șterge produsul din wishlist.");
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
 

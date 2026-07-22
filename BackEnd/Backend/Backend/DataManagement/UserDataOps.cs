@@ -78,8 +78,11 @@ namespace Backend.DataManagement
             if (user == null || item == null)
                 return false;
 
+            if (user.WishList == null)
+                user.WishList = new List<AuctionItem>();
+
             if (user.WishList.Any(i => i.ID == itemId))
-                return false;
+                return true;
 
             user.WishList.Add(item);
             DbContext.SaveChanges();
@@ -96,7 +99,7 @@ namespace Backend.DataManagement
             if (user == null)
                 return null;
 
-            return user.WishList.ToArray();
+            return user.WishList?.ToArray() ?? Array.Empty<AuctionItem>();
         }
 
         public bool RemoveFromWishlist(int userId, int itemId)
@@ -106,13 +109,16 @@ namespace Backend.DataManagement
                 .FirstOrDefault(u => u.ID == userId);
 
             if (user == null)
-                return false;
+                return true;
+
+            if (user.WishList == null)
+                return true;
 
             var item = user.WishList
                 .FirstOrDefault(i => i.ID == itemId);
 
             if (item == null)
-                return false;
+                return true;
 
             user.WishList.Remove(item);
             DbContext.SaveChanges();
