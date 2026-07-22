@@ -34,7 +34,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("WishingUsersID");
 
-                    b.ToTable("AuctionItemUser");
+                    b.ToTable("AuctionItemUser", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.AuctionItem", b =>
@@ -93,7 +93,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("WinnerId");
 
-                    b.ToTable("AuctionItems");
+                    b.ToTable("AuctionItems", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.Bid", b =>
@@ -123,7 +123,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("BidderId");
 
-                    b.ToTable("Bids");
+                    b.ToTable("Bids", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.CategoryItem", b =>
@@ -145,7 +145,7 @@ namespace Backend.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.ForumComment", b =>
@@ -175,7 +175,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ForumComments");
+                    b.ToTable("ForumComments", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.ForumPost", b =>
@@ -204,7 +204,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ForumPosts");
+                    b.ToTable("ForumPosts", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.Notification", b =>
@@ -232,7 +232,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.RefreshToken", b =>
@@ -258,7 +258,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.Review", b =>
@@ -292,7 +292,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.SupportMessage", b =>
@@ -333,7 +333,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SupportMessages");
+                    b.ToTable("SupportMessages", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Models.User", b =>
@@ -373,7 +373,7 @@ namespace Backend.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AuctionItemUser", b =>

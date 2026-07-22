@@ -67,12 +67,19 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning)));
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    try
+    {
+        dbContext.Database.Migrate();
+    }
+    catch { }
 
     try
     {
@@ -91,6 +98,14 @@ using (var scope = app.Services.CreateScope())
             )
             BEGIN
                 ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[AuctionItems]') AND name = 'ImageUrl'
+            )
+            BEGIN
+                ALTER TABLE [AuctionItems] ADD [ImageUrl] nvarchar(max) NULL;
             END");
     }
     catch { }

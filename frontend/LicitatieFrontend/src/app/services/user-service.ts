@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { UserReadDto } from '../Models/user/userDto';
 import { AuctionItem } from '../Models/item-model';
+import { AuctionItemSummaryDto } from '../Models/profile/profile-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -45,38 +47,53 @@ export class UserService {
 
   // --- Operațiuni Wishlist ---
   addToWishlist(userId: number, itemId: number): Observable<void> {
-    // return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
-    return new Observable<void>(observer => {
-      console.log(`Simulated adding item ${itemId} to wishlist for user ${userId}`);
-      observer.next();
-      observer.complete();
-    });
+    if (userId) {
+      const localWishIds: number[] = JSON.parse(
+        localStorage.getItem(`wishlist_${userId}`) || '[]'
+      );
+      if (!localWishIds.includes(itemId)) {
+        localWishIds.push(itemId);
+        localStorage.setItem(`wishlist_${userId}`, JSON.stringify(localWishIds));
+      }
+    }
+    return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {}).pipe(
+      catchError(() => of(undefined))
+    );
   }
 
-  getWishlist(userId: number): Observable<AuctionItem[]> {
-    // return this.http.get<AuctionItem[]>(`${this.apiUrl}/${userId}/wishlist`);
-    return new Observable<AuctionItem[]>(observer => {
-      const savedIds: number[] = JSON.parse(localStorage.getItem('wishlist') || '[]');
-      const mockItems: any[] = savedIds.map(id => ({ id }));
-      observer.next(mockItems);
-      observer.complete();
-    });
+  getWishlist(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}/wishlist`).pipe(
+      catchError(() => {
+        const savedIds: number[] = JSON.parse(
+          localStorage.getItem(`wishlist_${userId}`) || '[]'
+        );
+        return of(savedIds.map((id) => ({ id, ID: id })));
+      })
+    );
   }
 
   removeFromWishlist(userId: number, itemId: number): Observable<void> {
-    // return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`);
-    return new Observable<void>(observer => {
-      console.log(`Simulated removing item ${itemId} from wishlist for user ${userId}`);
-      observer.next();
-      observer.complete();
-    });
+    if (userId) {
+      const localWishIds: number[] = JSON.parse(
+        localStorage.getItem(`wishlist_${userId}`) || '[]'
+      );
+      const updated = localWishIds.filter((id) => id !== itemId);
+      localStorage.setItem(`wishlist_${userId}`, JSON.stringify(updated));
+    }
+    return this.http.delete<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`).pipe(
+      catchError(() => of(undefined))
+    );
   }
 
-    reportUser(userId: number, reason: string): Observable<void> {
-    // Când vei face tabela în backend, poți de-comenta linia de mai jos:
-    // return this.http.post<void>(`${this.apiUrl}/${userId}/report`, { reason });
-    
-    // Momentan simulăm succesul local:
+  getUserAddedItems(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`https://localhost:7137/api/Profile/${userId}/items`);
+  }
+
+  getUserWonItems(userId: number): Observable<AuctionItemSummaryDto[]> {
+    return this.http.get<AuctionItemSummaryDto[]>(`https://localhost:7137/api/Profile/${userId}/items/won`);
+  }
+
+  reportUser(userId: number, reason: string): Observable<void> {
     return new Observable<void>(observer => {
       console.log(`Utilizatorul ${userId} a fost raportat. Motiv: ${reason}`);
       observer.next();

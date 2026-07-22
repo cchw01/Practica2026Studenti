@@ -19,9 +19,9 @@ namespace Backend.DataManagement
                 .Include(r => r.Reporter)
                 .Include(r => r.ReportedUser)
                 .Include(r => r.ReportedAuctionItem)
-                    .ThenInclude(item => item.Owner)
+                    .ThenInclude(item => item!.Owner)
                 .Include(r => r.ReportedForumPost)
-                    .ThenInclude(post => post.User);
+                    .ThenInclude(post => post!.User);
         }
 
         public Report[] GetReports()
