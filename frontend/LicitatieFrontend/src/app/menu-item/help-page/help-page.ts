@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SupportMessageService } from '../../services/support-message-service';
 import { AuthService } from '../../services/auth';
+
+interface Faq {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+}
+
+interface FaqCategory {
+  title: string;
+  faqs: Faq[];
+}
 
 @Component({
   selector: 'app-help-page',
@@ -13,94 +25,119 @@ import { AuthService } from '../../services/auth';
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
+  isLoggedIn = false;
 
-  // FAQ with open/closed state
-  faqs = [
+  faqCategories: FaqCategory[] = [
     {
-      question: 'How do I place a bid on an auction?',
-      answer:
-        'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
-      isOpen: false,
+      title: '🚨 Licitații și Oferte',
+      faqs: [
+        {
+          question: 'How do I place a bid on an auction?',
+          answer:
+            'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
+          isOpen: false,
+        },
+        {
+          question: 'Can I cancel a bid after placing it?',
+          answer:
+            'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
+          isOpen: false,
+        },
+        {
+          question: 'How do I know if I won an auction?',
+          answer:
+            'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
+          isOpen: false,
+        },
+      ],
     },
     {
-      question: 'How do I list an item for sale?',
-      answer:
-        'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
-      isOpen: false,
+      title: '👤 Cont și Autentificare',
+      faqs: [
+        {
+          question: 'How do I create an account?',
+          answer:
+            'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
+          isOpen: false,
+        },
+        {
+          question: 'I forgot my password. What should I do?',
+          answer:
+            'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
+          isOpen: false,
+        },
+      ],
     },
     {
-      question: 'How do I know if I won an auction?',
-      answer:
-        'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
-      isOpen: false,
+      title: '📦 Livrare și Plăți',
+      faqs: [
+        {
+          question: 'How is the item delivered after I win?',
+          answer:
+            'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
+          isOpen: false,
+        },
+        {
+          question: 'What happens if the seller does not deliver the item?',
+          answer:
+            'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
+          isOpen: false,
+        },
+        {
+          question: 'Who pays for shipping?',
+          answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
+          isOpen: false,
+        },
+        {
+          question: 'When do I get paid?',
+          answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
+          isOpen: false,
+        },
+      ],
     },
     {
-      question: 'Can I cancel a bid after placing it?',
-      answer:
-        'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
-      isOpen: false,
-    },
-    {
-      question: 'How do I create an account?',
-      answer:
-        'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
-      isOpen: false,
-    },
-    {
-      question: 'I forgot my password. What should I do?',
-      answer:
-        'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
-      isOpen: false,
-    },
-    {
-      question: 'How is the item delivered after I win?',
-      answer:
-        'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
-      isOpen: false,
-    },
-    {
-      question: 'What happens if the seller does not deliver the item?',
-      answer:
-        'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
-      isOpen: false,
-    },
-    {
-      question: 'Can I edit or remove an auction after posting it?',
-      answer:
-        'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
-      isOpen: false,
-    },
-    {
-      question: 'What if my item does not sell?',
-      answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
-      isOpen: false,
-    },
-    {
-      question: 'When do I get paid?',
-      answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
-      isOpen: false,
-    },
-    {
-      question: 'Who pays for shipping?',
-      answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
-      isOpen: false,
+      title: '🏷️ Vânzare',
+      faqs: [
+        {
+          question: 'How do I list an item for sale?',
+          answer:
+            'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
+          isOpen: false,
+        },
+        {
+          question: 'Can I edit or remove an auction after posting it?',
+          answer:
+            'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
+          isOpen: false,
+        },
+        {
+          question: 'What if my item does not sell?',
+          answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
+          isOpen: false,
+        },
+      ],
     },
   ];
 
   isChatOpen = false;
-  isTyping = false; // AI typing effect
+  isTyping = false;
   chatMessages: { sender: string; text: string }[] = [
     { sender: 'ai', text: "Hi! I'm your virtual assistant. How can I help you today?" },
   ];
+
+  submitError = '';
+  submitted = false;
 
   constructor(
     private fb: FormBuilder,
     private supportService: SupportMessageService,
     private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
+    this.isLoggedIn = this.authService.isLoggedIn();
 
     this.helpForm = this.fb.group({
       name: [currentUser?.name || '', Validators.required],
@@ -113,16 +150,20 @@ export class HelpPageComponent implements OnInit {
     });
   }
 
-  // Toggle a FAQ item open/closed
-  toggleFaq(index: number) {
-    this.faqs[index].isOpen = !this.faqs[index].isOpen;
+  scrollToCategory(index: number) {
+    const element = document.getElementById('cat-' + index);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
-  submitError = '';
+  toggleFaq(catIndex: number, faqIndex: number) {
+    this.faqCategories[catIndex].faqs[faqIndex].isOpen =
+      !this.faqCategories[catIndex].faqs[faqIndex].isOpen;
+  }
 
   onSubmitHelpForm() {
     if (this.helpForm.invalid) {
-      alert('Please fill in all fields correctly.');
       return;
     }
 
@@ -133,7 +174,7 @@ export class HelpPageComponent implements OnInit {
       .submit('Help', formData.name, formData.email, formData.issue, formData.issueType)
       .subscribe({
         next: () => {
-          alert('Your ticket has been submitted successfully! We will contact you soon.');
+          this.submitted = true;
           this.helpForm.reset({ name: formData.name, email: formData.email });
         },
         error: (err) => {
@@ -141,6 +182,18 @@ export class HelpPageComponent implements OnInit {
           this.submitError = 'Ticketul nu a putut fi trimis. Încearcă din nou.';
         },
       });
+  }
+
+  sendAnother(): void {
+    this.submitted = false;
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login-page']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register-page']);
   }
 
   toggleChat() {
@@ -154,7 +207,6 @@ export class HelpPageComponent implements OnInit {
       inputEl.value = '';
       this.isTyping = true;
 
-      // Simulate a delayed AI response
       setTimeout(() => {
         this.isTyping = false;
         this.chatMessages.push({

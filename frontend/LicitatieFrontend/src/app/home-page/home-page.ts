@@ -16,8 +16,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { ItemService } from '../services/item-service';
 import { AuctionItem } from '../Models/item-model';
+import { AuthService } from '../services/auth';
+import { CategoryService } from '../services/category-service';
 
-export interface Category {
+export interface HomeCategory {
   name: string;
   icon: string;
   description: string;
@@ -29,7 +31,7 @@ export interface AboutFeature {
   descriptionKey: string;
 }
 
-
+const MIN_REMAINING_MS = 10 * 60 * 1000;
 
 interface Particle {
   ox: number;
@@ -51,6 +53,8 @@ const HERO_TITLE = 'BID. WIN. REPEAT.';
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('particleCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroRef', { static: true }) heroRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('auctionsTrack') auctionsTrackRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('categoriesTrack') categoriesTrackRef?: ElementRef<HTMLDivElement>;
 
   protected readonly displayedTitle = signal('');
 
@@ -84,41 +88,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private readonly translate: TranslateService,
     private readonly itemService: ItemService,
+    private readonly categoryService: CategoryService,
     private readonly cdr: ChangeDetectorRef,
+    private readonly authService: AuthService,
   ) {}
 
-  categories: Category[] = [
-    {
-      name: 'Technology',
-      icon: 'memory',
-      description: 'Cutting-edge gadgets and the latest electronics.',
-    },
-    {
-      name: 'Auto & Motors',
-      icon: 'directions_car',
-      description: 'Cars, motorcycles, and rare parts.',
-    },
-    {
-      name: 'Art & Collectibles',
-      icon: 'palette',
-      description: 'Exclusive art pieces and collections.',
-    },
-    {
-      name: 'Real Estate',
-      icon: 'home_work',
-      description: 'Exceptional properties and land.',
-    },
-    {
-      name: 'Clothing',
-      icon: 'checkroom',
-      description: 'Trendy apparel, footwear, and accessories.',
-    },
-    {
-      name: 'Home & Garden',
-      icon: 'yard',
-      description: 'Furniture, décor, and outdoor essentials.',
-    },
-  ];
+  categories: HomeCategory[] = [];
+  categoriesLoading = true;
+  categoriesError = false;
 
   displayedAuctions: AuctionItem[] = [];
 
@@ -147,6 +124,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startSelling() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page'], { queryParams: { error: 'login_required' } });
+      return;
+    }
     this.router.navigate(['/add-item']);
   }
 
@@ -161,6 +142,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   goToAuction(auction: AuctionItem) {
     this.router.navigate(['/action-item-page', auction.ID], { state: { auction } });
+  }
+
+  goToOwner(event: Event, auction: AuctionItem): void {
+    event.stopPropagation();
+    const ownerId = auction.OwnerId || auction.Owner?.ID;
+    if (ownerId) {
+      this.router.navigate(['/user-page', ownerId]);
+    }
+  }
+
+  getOwnerDisplayName(auction: AuctionItem): string {
+    const owner = auction.Owner as any;
+    if (owner) {
+      const name = owner.UserName || owner.userName || owner.username || owner.Name || owner.name;
+      if (name) return name;
+    }
+    return auction.OwnerId ? `seller #${auction.OwnerId}` : '';
+  }
+
+  scrollAuctions(direction: number): void {
+    this.scrollTrack(this.auctionsTrackRef, direction);
+  }
+
+  scrollCategories(direction: number): void {
+    this.scrollTrack(this.categoriesTrackRef, direction);
+  }
+
+  private scrollTrack(trackRef: ElementRef<HTMLDivElement> | undefined, direction: number): void {
+    const track = trackRef?.nativeElement;
+    if (!track) return;
+
+    track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
   getRemainingLabel(endDate: Date): string {
@@ -191,10 +204,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.displayedAuctions = this.allAuctions
       .map((item) => ({ item, remainingMs: new Date(item.EndDate).getTime() - now }))
-      .filter((entry) => entry.remainingMs > 0)
+      .filter((entry) => entry.remainingMs >= MIN_REMAINING_MS)
       .sort((a, b) => a.remainingMs - b.remainingMs)
-      .map((entry) => entry.item)
-      .slice(0, 4);
+      .map((entry) => entry.item);
 
     this.cdr.detectChanges();
   }
@@ -205,23 +217,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((title) => {
         if (typeof title === 'string') {
-          const heroTitle =
-            title === 'HOME.HERO.TITLE'
-              ? HERO_TITLE
-              : title;
+          const heroTitle = title === 'HOME.HERO.TITLE' ? HERO_TITLE : title;
 
           this.typeHeroTitle(heroTitle);
         }
       });
 
-    this.itemService.getActiveItems().subscribe({
+    this.itemService.getItems().subscribe({
       next: (items) => {
         this.allAuctions = items;
         this.refreshDisplayedAuctions();
       },
       error: (err) => console.error('Eroare la încărcarea licitațiilor', err),
     });
-
+    this.loadCategories();
     this.auctionsTimerId = setInterval(() => this.refreshDisplayedAuctions(), 1000);
   }
 
@@ -250,7 +259,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       clearInterval(this.auctionsTimerId);
     }
 
-
     const hero = this.heroRef.nativeElement;
 
     hero.removeEventListener('mousemove', this.onMouseMove);
@@ -274,10 +282,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.displayedTitle.set(title.slice(0, i));
 
       if (i < title.length) {
-        this.titleTypingTimeoutId = setTimeout(
-          step,
-          45 + Math.random() * 35,
-        );
+        this.titleTypingTimeoutId = setTimeout(step, 45 + Math.random() * 35);
       }
     };
 
@@ -326,9 +331,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         oy,
         x: ox,
         y: oy,
-        radius: accent
-          ? 2.2 + Math.random() * 1.6
-          : 1.1 + Math.random() * 1.2,
+        radius: accent ? 2.2 + Math.random() * 1.6 : 1.1 + Math.random() * 1.2,
         accent,
       };
     });
@@ -364,13 +367,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       p.y += (targetY - p.y) * 0.16;
 
       this.ctx.beginPath();
-      this.ctx.arc(
-        p.x,
-        p.y,
-        p.radius + nearBoost * 2,
-        0,
-        Math.PI * 2,
-      );
+      this.ctx.arc(p.x, p.y, p.radius + nearBoost * 2, 0, Math.PI * 2);
 
       this.ctx.fillStyle = p.accent
         ? `rgba(63, 81, 181, ${0.35 + nearBoost * 0.6})`
@@ -381,4 +378,60 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
+
+  private getCategoryIcon(categoryName: string): string {
+    const normalizedName = categoryName.trim().toLowerCase();
+
+    const categoryIcons: Record<string, string> = {
+      art: 'palette',
+      clothing: 'checkroom',
+      electronics: 'memory',
+      'home & garden': 'yard',
+      jewelry: 'diamond',
+      others: 'category',
+      'real estate': 'home_work',
+      vehicles: 'directions_car',
+    };
+
+    return categoryIcons[normalizedName] || 'category';
+  }
+
+  private loadCategories(): void {
+    this.categoriesLoading = true;
+    this.categoriesError = false;
+
+    this.categoryService
+      .getCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (categories) => {
+          this.categories = (categories || [])
+            .map((category) => {
+              const name = String(category.name ?? (category as any).Name ?? '').trim();
+              const description = String(
+                category.description ?? (category as any).Description ?? '',
+              ).trim();
+
+              return {
+                name,
+                icon: this.getCategoryIcon(name),
+                description: description || 'No description available.',
+              };
+            })
+            .filter((category) => category.name.length > 0)
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+          this.categoriesLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Eroare la încărcarea categoriilor', error);
+
+          this.categories = [];
+          this.categoriesLoading = false;
+          this.categoriesError = true;
+          this.cdr.detectChanges();
+        },
+      });
+  }
 }

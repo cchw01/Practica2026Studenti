@@ -80,4 +80,7 @@ export class AdminService {
   resolveMessage(id: number, replyMessage?: string): Observable<any> {
     return this.http.post(`${this.supportUrl}/${id}/resolve`, { replyMessage });
   }
+  deleteMessage(id: number): Observable<any> {
+    return this.http.delete(`${this.supportUrl}/${id}`);
+  }
 }

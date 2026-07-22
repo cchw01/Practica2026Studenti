@@ -274,10 +274,15 @@
       "MESSAGE": "Il n’y a actuellement aucune discussion sur le forum."
     }
   },
-  "NOTIFICATIONS": {
-    "TRUE": "Notifications",
-    "FALSE": "Aucune notification pour le moment."
-  },
+ "NOTIFICATIONS": {
+  "TRUE": "Notifications",
+  "FALSE": "Pas encore de notifications.",
+  "TYPES": {
+    "AuctionApproved": "Votre enchère \"{{itemName}}\" a été approuvée et est maintenant publique !",
+    "AuctionRejected": "Votre enchère \"{{itemName}}\" a été rejetée par un administrateur.",
+    "SupportReply": "Un administrateur a répondu à votre message du {{date}} : {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Détails de l’enchère",
     "INFO": {
@@ -479,6 +484,34 @@
 
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil mis à jour avec succès."
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Résultats de recherche",
+  "DESCRIPTION_WITH_QUERY": "Affichage des résultats pour \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Recherchez des enchères, des utilisateurs ou des publications du forum sur BidSphere",
+  "SEARCH_PLACEHOLDER": "Rechercher des enchères, des utilisateurs ou des publications du forum...",
+  "LOADING": "Chargement des résultats...",
+
+  "TABS": {
+    "AUCTIONS": "Enchères",
+    "USERS": "Utilisateurs",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Aucune enchère trouvée",
+    "DESCRIPTION": "Aucune enchère ne correspond à votre recherche."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Aucun utilisateur trouvé",
+    "DESCRIPTION": "Aucun utilisateur ne correspond à votre recherche."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Aucune publication du forum trouvée",
+    "DESCRIPTION": "Aucune discussion ne correspond à votre recherche."
   }
 }
 }

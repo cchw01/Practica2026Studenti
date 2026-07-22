@@ -28,7 +28,7 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetActiveAuctionItems()
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             return dbContext.AuctionItems
                 .AsNoTracking()
                 .Include(i => i.Category)

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
-import { ReviewService } from '../../app-logic/review';
+import { ReviewService } from '../../services/review-service';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,7 @@ interface Item {
 
 interface Review {
   id: number;
+  reviewerId: number;
   author: string;
   rating: number;
   comment: string;
@@ -56,7 +57,7 @@ export class ProfilePage implements OnInit {
   editDraft: UserProfile = { ...this.user };
 
   // --- Score ---
-  score: number = 4.5;
+  score: number = 0;
 
   // --- Theme ---
   currentTheme: string = 'light';
@@ -120,6 +121,19 @@ export class ProfilePage implements OnInit {
       this.user.email = currentUser.email || '';
     }
     this.currentUserId = authUserId !== null ? authUserId : 0;
+
+    // Fetch up-to-date user data from backend to avoid stale token data
+    if (this.currentUserId > 0) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (apiUser: any) => {
+          this.user.username = apiUser.UserName || apiUser.userName || this.user.username;
+          this.user.name = apiUser.Name || apiUser.name || this.user.name;
+          this.user.email = apiUser.Email || apiUser.email || this.user.email;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Failed to fetch latest user data', err)
+      });
+    }
 
     this.loadProfile();
     this.loadTheme();
@@ -202,13 +216,32 @@ export class ProfilePage implements OnInit {
       localWishIds.includes(item.ID || item.id),
     );
 
-    this.wishItems = validItems.map((item: any) => ({
-      id: item.ID || item.id || 0,
-      title: item.Name || item.name || 'Unknown Item',
-      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
-      status: (item.Status || item.status || 'Active').toString(),
-      image: this.getItemImage(item),
-    }));
+    if (validItems.length > 0) {
+      this.wishItems = validItems.map((item: any) => ({
+        id: item.ID || item.id || 0,
+        title: item.Name || item.name || 'Unknown Item',
+        price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+        status: (item.Status || item.status || 'Active').toString(),
+        image: this.getItemImage(item),
+      }));
+    } else if (localWishIds.length > 0) {
+      this.itemService.getItems().subscribe({
+        next: (allItems) => {
+          this.wishItems = allItems
+            .filter((item: any) => localWishIds.includes(item.ID || item.id))
+            .map((item: any) => ({
+              id: item.ID || item.id || 0,
+              title: item.Name || item.name || 'Item',
+              price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+              status: (item.Status || item.status || 'Active').toString(),
+              image: this.getItemImage(item, allItems),
+            }));
+          this.cdr.detectChanges();
+        },
+      });
+    } else {
+      this.wishItems = [];
+    }
   }
 
   // --- Load API data ---
@@ -239,7 +272,13 @@ export class ProfilePage implements OnInit {
               ownerUsername &&
               this.user.username &&
               ownerUsername.toLowerCase() === this.user.username.toLowerCase();
-            return matchId || matchUser;
+              
+            const isOwner = matchId || matchUser;
+            const status = (item.Status || item.status || '').toString().toLowerCase();
+            // In backend the statuses are: Added, Validated, ActiveBid, NoWinner, Sold, Rejected.
+            const isActive = status === 'validated' || status === 'activebid' || status === 'active';
+            
+            return isOwner && isActive;
           })
           .map((item: any) => ({
             id: item.ID || item.id || 0,
@@ -272,20 +311,27 @@ export class ProfilePage implements OnInit {
         // Fetch wishlist items specifically from backend for current user
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
-            this.wishItems = (wishlistItems || []).map((item: any) => ({
-              id: item.id || item.ID || 0,
-              title: item.name || item.Name || 'Item',
-              price:
-                item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image:
-                item.imageUrl ||
-                item.ImageUrl ||
-                (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
-                this.getItemImage(item, items),
-              status: item.status
-                ? item.status.toString()
-                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-            }));
+            this.wishItems = (wishlistItems || [])
+              .map((item: any) => {
+                const itemId = item.id || item.ID || 0;
+                const matchedItem = items.find((i: any) => (i.ID || i.id) === itemId);
+                const sourceItem = matchedItem || item;
+                return {
+                  id: itemId,
+                  title: sourceItem.Name || sourceItem.name || sourceItem.title || 'Item',
+                  price:
+                    sourceItem.CurrentPrice ?? sourceItem.currentPrice ?? sourceItem.StartPrice ?? sourceItem.startPrice ?? 0,
+                  image:
+                    sourceItem.imageUrl ||
+                    sourceItem.ImageUrl ||
+                    (sourceItem.photoList && sourceItem.photoList.length > 0 ? sourceItem.photoList[0] : null) ||
+                    this.getItemImage(sourceItem, items),
+                  status: sourceItem.status || sourceItem.Status
+                    ? (sourceItem.status || sourceItem.Status).toString()
+                    : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+                };
+              })
+              .filter((item) => item.id > 0);
             this.cdr.detectChanges();
           },
           error: (err) => {
@@ -300,14 +346,15 @@ export class ProfilePage implements OnInit {
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.ReviewedUserId === this.currentUserId)
+          .filter((r) => r.reviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.Id,
-            author: r.ReviewerUserName || 'Anonymous',
-            rating: r.Rating,
-            comment: r.Comment,
-            date: r.ReviewDate
-              ? new Date(r.ReviewDate).toLocaleDateString()
+            id: r.id,
+            reviewerId: r.reviewerId,
+            author: r.reviewerUserName || 'Anonymous',
+            rating: r.rating,
+            comment: r.comment,
+            date: r.reviewDate
+              ? new Date(r.reviewDate).toLocaleDateString()
               : new Date().toLocaleDateString(),
           }));
 
@@ -315,10 +362,10 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5;
+          this.score = 0;
         }
       },
-      error: (err) => console.error('Error loading reviews:', err.message || err),
+      error: (err: any) => console.error('Error loading reviews:', err.message || err),
     });
   }
 
@@ -345,10 +392,23 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  // --- Badge styling ---
+  getBadgeClass(status: string): string {
+    if (!status) return 'badge-added';
+    const lower = status.toLowerCase();
+    if (lower.includes('activebid') || lower.includes('active')) return 'badge-activebid';
+    if (lower.includes('added')) return 'badge-added';
+    if (lower.includes('sold')) return 'badge-sold';
+    if (lower.includes('nowinner')) return 'badge-nowinner';
+    if (lower.includes('validated')) return 'badge-validated';
+    if (lower.includes('won')) return 'badge-won';
+    return 'badge-added';
+  }
+
   // --- Navigate to Item Details ---
   goToItem(id: number): void {
     if (id) {
-      this.router.navigate(['/auctions', id]);
+      this.router.navigate(['/action-item-page', id]);
     }
   }
 
@@ -415,7 +475,6 @@ export class ProfilePage implements OnInit {
           (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
           'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
-        this.editDraft = { ...this.user };
       },
     });
   }
@@ -468,9 +527,9 @@ export class ProfilePage implements OnInit {
   }
 
   // --- Navigate to Auction Item page ---
-  goToAuction(itemId: number): void {
+  goToAuction(itemId: number, item?: any): void {
     if (!itemId) return;
-    this.router.navigate(['/action-item-page', itemId]);
+    this.router.navigate(['/action-item-page', itemId], item ? { state: { auction: item } } : {});
   }
 
   onLogout(): void {

@@ -128,10 +128,19 @@
 .star {
   font-size: 1.1rem;
   color: v.$color-border;
+  display: inline-block;
 }
 
 .star.filled {
   color: #f5a623;
+}
+
+.star.half {
+  background: linear-gradient(90deg, #f5a623 50%, v.$color-border 50%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .score-label {
@@ -370,33 +379,70 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 6px;
+
+  /* Scrollbar custom pentru un aspect premium */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: v.$color-border;
+    border-radius: 10px;
+  }
 }
 
 .item-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: v.$space-sm v.$space-md;
-  background: v.$color-background;
-  border-radius: v.$radius-sm;
-  border: 1px solid v.$color-border;
-  transition: v.$transition-fast;
+  padding: 12px 16px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative; /* For the remove button */
+}
 
-  &:hover {
-    transform: translateX(4px);
-  }
+.item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.item-card-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-right: 15px;
+  background-color: var(--color-surface);
 }
 
 .item-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  flex: 1; 
 }
 
-.item-title {
-  font-size: v.$font-size-body;
-  font-weight: v.$font-weight-semibold;
-  color: v.$color-text-heading;
+.btn-remove-wish {
+ background: none;
+  border: none;
+  color: #ff4d4f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 77, 79, 0.1);
+  }
 }
 
 .item-price {
@@ -423,8 +469,8 @@
 }
 
 .badge-activebid {
-  background: v.$color-status-medium-bg;
-  color: v.$color-status-medium-text;
+  background: #f6ffed; /* Fundal verde pal */
+  color: #52c41a;      /* Text verde fresh */
 }
 
 .badge-nowinner {
@@ -438,8 +484,18 @@
 }
 
 .badge-won {
-  background: v.$color-accent-tint;
-  color: v.$color-accent;
+  background: #fdf2f8; /* Fundal roz pal */
+  color: #ec4899;      /* Roz domol (soft pink) */
+}
+
+/* Noua clasă care transformă prețul într-un badge pentru asimetrie */
+.item-price-badge {
+  font-size: 0.85rem;
+  color: v.$color-primary;
+  font-weight: v.$font-weight-extra-bold;
+  padding: 6px 12px;
+  background: color-mix(in srgb, v.$color-primary 10%, transparent);
+  border-radius: 20px;
 }
 
 .badge-wish {
@@ -457,9 +513,23 @@
 }
 
 .reviews-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: v.$space-md;
+  max-height: 280px;      
+  overflow-y: auto;       
+  padding-right: 6px;    
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: v.$color-border;
+    border-radius: 10px;
+  }
 }
 
 .review-card {
@@ -499,6 +569,17 @@
   font-size: 0.85rem;
   color: v.$color-text-body;
   line-height: 1.5;
+}
+
+.reviewer-link {
+  color: v.$color-primary;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .edit-panel {

@@ -206,36 +206,8 @@
     "TITLE": "No se encontraron artículos",
     "DESCRIPTION": "Actualmente no hay subastas activas que coincidan con tu búsqueda."
   }
-}
-,
-"SEARCH_PAGE": {
-  "TITLE": "Resultados de búsqueda",
-  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
-  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
-  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
-  "LOADING": "Cargando resultados...",
-
-  "TABS": {
-    "AUCTIONS": "Subastas",
-    "USERS": "Usuarios",
-    "FORUM": "Foro"
-  },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "No se encontraron subastas",
-    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
-  },
-
-  "USERS_EMPTY": {
-    "TITLE": "No se encontraron usuarios",
-    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
-  },
-
-  "FORUM_EMPTY": {
-    "TITLE": "No se encontraron publicaciones",
-    "DESCRIPTION": "No hay debates que coincidan con tu búsqueda."
-  }
 },
+
 "ADD_ITEM_PAGE": {
   "BADGE": "🔨 Vende en BidSphere",
   "TITLE": "Añadir un nuevo artículo a la subasta",
@@ -356,9 +328,14 @@
   },
 
   "NOTIFICATIONS": {
-    "TRUE": "Notificaciones",
-    "FALSE": "Aún no hay notificaciones."
-  },
+  "TRUE": "Notificaciones",
+  "FALSE": "No hay notificaciones todavía.",
+  "TYPES": {
+    "AuctionApproved": "¡Tu subasta \"{{itemName}}\" ha sido aprobada y ya es pública!",
+    "AuctionRejected": "Tu subasta \"{{itemName}}\" fue rechazada por un administrador.",
+    "SupportReply": "Un administrador respondió a tu mensaje del {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalles de la subasta",
 
@@ -576,4 +553,33 @@
 "MESSAGES": {
   "PROFILE_UPDATED": "Perfil actualizado con éxito."
 }
+},
+
+"SEARCH_PAGE": {
+  "TITLE": "Resultados de búsqueda",
+  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
+  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
+  "LOADING": "Cargando resultados...",
+
+  "TABS": {
+    "AUCTIONS": "Subastas",
+    "USERS": "Usuarios",
+    "FORUM": "Foro"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "No se encontraron subastas",
+    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "No se encontraron usuarios",
+    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "No se encontraron publicaciones en el foro",
+    "DESCRIPTION": "No hay conversaciones que coincidan con tu búsqueda."
+  }
 }}

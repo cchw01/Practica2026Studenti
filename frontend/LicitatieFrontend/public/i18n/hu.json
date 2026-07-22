@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Értesítések",
-    "FALSE": "Még nincs értesítés."
-  },
+  "TRUE": "Értesítések",
+  "FALSE": "Még nincsenek értesítések.",
+  "TYPES": {
+    "AuctionApproved": "A(z) \"{{itemName}}\" aukciódat jóváhagyták, most már nyilvános!",
+    "AuctionRejected": "A(z) \"{{itemName}}\" aukciódat egy adminisztrátor elutasította.",
+    "SupportReply": "Egy adminisztrátor válaszolt a {{date}} napon küldött üzenetedre: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Aukció részletei",
     "INFO": {
@@ -477,6 +482,35 @@
 
   "MESSAGES": {
     "PROFILE_UPDATED": "A profil sikeresen frissítve."
+  }
+},
+
+"SEARCH_PAGE": {
+  "TITLE": "Keresési eredmények",
+  "DESCRIPTION_WITH_QUERY": "A(z) \"{{query}}\" kifejezésre vonatkozó találatok",
+  "DESCRIPTION_EMPTY": "Keressen aukciókat, felhasználókat vagy fórumbejegyzéseket a BidSphere-en",
+  "SEARCH_PLACEHOLDER": "Aukciók, felhasználók vagy fórumbejegyzések keresése...",
+  "LOADING": "Találatok betöltése...",
+
+  "TABS": {
+    "AUCTIONS": "Aukciók",
+    "USERS": "Felhasználók",
+    "FORUM": "Fórum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nem található aukció",
+    "DESCRIPTION": "Nincs a keresésnek megfelelő aukció."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nem található felhasználó",
+    "DESCRIPTION": "Nincs a keresésnek megfelelő felhasználó."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nem található fórumbejegyzés",
+    "DESCRIPTION": "Nincs a keresésnek megfelelő beszélgetés."
   }
 }
 }

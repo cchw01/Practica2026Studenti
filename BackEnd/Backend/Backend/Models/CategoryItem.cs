@@ -10,7 +10,7 @@ namespace Backend.Models
         [Required]
         [MaxLength(100)]
         public string name { get; set; } = string.Empty;
-            
+
         [MaxLength(500)]
         public string? description { get; set; } = string.Empty;
 

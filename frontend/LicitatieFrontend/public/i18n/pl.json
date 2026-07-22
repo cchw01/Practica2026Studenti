@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Powiadomienia",
-    "FALSE": "Brak nowych powiadomień."
-  },
+  "TRUE": "Powiadomienia",
+  "FALSE": "Brak nowych powiadomień.",
+  "TYPES": {
+    "AuctionApproved": "Twoja aukcja \"{{itemName}}\" została zatwierdzona i jest teraz publiczna!",
+    "AuctionRejected": "Twoja aukcja \"{{itemName}}\" została odrzucona przez administratora.",
+    "SupportReply": "Administrator odpowiedział na Twoją wiadomość z dnia {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Szczegóły aukcji",
     "INFO": {
@@ -477,6 +482,34 @@
 
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil został pomyślnie zaktualizowany."
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Wyniki wyszukiwania",
+  "DESCRIPTION_WITH_QUERY": "Wyświetlanie wyników dla \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Wyszukuj aukcje, użytkowników lub posty na forum w BidSphere",
+  "SEARCH_PLACEHOLDER": "Wyszukaj aukcje, użytkowników lub posty na forum...",
+  "LOADING": "Ładowanie wyników...",
+
+  "TABS": {
+    "AUCTIONS": "Aukcje",
+    "USERS": "Użytkownicy",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nie znaleziono aukcji",
+    "DESCRIPTION": "Brak aukcji pasujących do Twojego wyszukiwania."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nie znaleziono użytkowników",
+    "DESCRIPTION": "Brak użytkowników pasujących do Twojego wyszukiwania."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nie znaleziono postów na forum",
+    "DESCRIPTION": "Brak dyskusji pasujących do Twojego wyszukiwania."
   }
 }
 }

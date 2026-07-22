@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Obaveštenja",
-    "FALSE": "Još nema obaveštenja."
-  },
+  "TRUE": "Obaveštenja",
+  "FALSE": "Još uvek nema obaveštenja.",
+  "TYPES": {
+    "AuctionApproved": "Vaša aukcija \"{{itemName}}\" je odobrena i sada je javna!",
+    "AuctionRejected": "Vašu aukciju \"{{itemName}}\" je odbio administrator.",
+    "SupportReply": "Administrator je odgovorio na vašu poruku od {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalji aukcije",
     "INFO": {
@@ -477,6 +482,34 @@
 
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil je uspešno ažuriran."
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Rezultati pretrage",
+  "DESCRIPTION_WITH_QUERY": "Prikazuju se rezultati za \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Pretražite aukcije, korisnike ili objave na forumu na BidSphere platformi",
+  "SEARCH_PLACEHOLDER": "Pretražite aukcije, korisnike ili objave na forumu...",
+  "LOADING": "Učitavanje rezultata...",
+
+  "TABS": {
+    "AUCTIONS": "Aukcije",
+    "USERS": "Korisnici",
+    "FORUM": "Forum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nema pronađenih aukcija",
+    "DESCRIPTION": "Nema aukcija koje odgovaraju vašoj pretrazi."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nema pronađenih korisnika",
+    "DESCRIPTION": "Nema korisnika koji odgovaraju vašoj pretrazi."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nema pronađenih objava na forumu",
+    "DESCRIPTION": "Nema diskusija koje odgovaraju vašoj pretrazi."
   }
 }
 }

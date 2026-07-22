@@ -4,10 +4,9 @@ import { ForumPost } from '../Models/forum-post/forum-post';
 import { ForumPostService } from '../Models/forum-post/forum-post-service';
 import { ForumComment } from '../Models/forum-comment/forum-comment';
 import { ForumCommentService } from '../Models/forum-comment/forum-comment-service';
-import { AuthService } from  '../services/auth';
+import { AuthService } from '../services/auth';
 
 type SortOption = 'latest' | 'oldest' | 'comments';
-
 
 interface ForumPostPreview {
   id: number;
@@ -27,15 +26,15 @@ interface ForumPostPreview {
 })
 export class ForumPage implements OnInit {
   sortOption: SortOption = 'latest';
-   searchQuery = '';
-   currentPage = 1;
+  searchQuery = '';
+  currentPage = 1;
   readonly pageSize = 5;
 
   posts: ForumPostPreview[] = [];
 
   isLoading = false;
   errorMessage = '';
-  public  currentUserId: number | null = null;
+  public currentUserId: number | null = null;
 
   private commentCounts = new Map<number, number>();
 
@@ -43,8 +42,7 @@ export class ForumPage implements OnInit {
     private forumPostService: ForumPostService,
     private forumCommentService: ForumCommentService,
     private cdr: ChangeDetectorRef,
-     private authService: AuthService, 
-    
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -145,7 +143,7 @@ export class ForumPage implements OnInit {
   resetPage(): void {
     this.currentPage = 1;
   }
-  
+
   getUserLabel(userId: number, userName?: string): string {
     return userName ? userName : `User #${userId}`;
   }
@@ -155,7 +153,7 @@ export class ForumPage implements OnInit {
       return userName.charAt(0).toUpperCase();
     }
     return `U${userId}`;
-  } 
+  }
 
   retryLoading(): void {
     this.loadForumPosts();

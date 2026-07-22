@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Upozornenia",
-    "FALSE": "Zatiaľ žiadne upozornenia."
-  },
+  "TRUE": "Oznámenia",
+  "FALSE": "Zatiaľ žiadne oznámenia.",
+  "TYPES": {
+    "AuctionApproved": "Vaša aukcia \"{{itemName}}\" bola schválená a je teraz verejná!",
+    "AuctionRejected": "Vaša aukcia \"{{itemName}}\" bola zamietnutá administrátorom.",
+    "SupportReply": "Administrátor odpovedal na vašu správu zo dňa {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Podrobnosti aukcie",
     "INFO": {
@@ -477,6 +482,34 @@
 
   "MESSAGES": {
     "PROFILE_UPDATED": "Profil bol úspešne aktualizovaný."
+  }
+},
+"SEARCH_PAGE": {
+  "TITLE": "Výsledky vyhľadávania",
+  "DESCRIPTION_WITH_QUERY": "Zobrazujú sa výsledky pre \"{{query}}\"",
+  "DESCRIPTION_EMPTY": "Vyhľadávajte aukcie, používateľov alebo príspevky na fóre v BidSphere",
+  "SEARCH_PLACEHOLDER": "Vyhľadávajte aukcie, používateľov alebo príspevky na fóre...",
+  "LOADING": "Načítavajú sa výsledky...",
+
+  "TABS": {
+    "AUCTIONS": "Aukcie",
+    "USERS": "Používatelia",
+    "FORUM": "Fórum"
+  },
+
+  "AUCTIONS_EMPTY": {
+    "TITLE": "Nenašli sa žiadne aukcie",
+    "DESCRIPTION": "Neexistujú žiadne aukcie zodpovedajúce vášmu vyhľadávaniu."
+  },
+
+  "USERS_EMPTY": {
+    "TITLE": "Nenašli sa žiadni používatelia",
+    "DESCRIPTION": "Neexistujú žiadni používatelia zodpovedajúci vášmu vyhľadávaniu."
+  },
+
+  "FORUM_EMPTY": {
+    "TITLE": "Nenašli sa žiadne príspevky na fóre",
+    "DESCRIPTION": "Neexistujú žiadne diskusie zodpovedajúce vášmu vyhľadávaniu."
   }
 }
 }

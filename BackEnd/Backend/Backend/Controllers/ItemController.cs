@@ -7,7 +7,6 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -104,7 +103,7 @@ namespace Backend.Controllers
                 if (owner == null)
                 {
                     return Unauthorized(
-                        "Utilizatorul autentificat nu există.");
+                        "User does not exist");
                 }
 
                 var category = categoryDataOps.GetCategoryById(
@@ -113,7 +112,7 @@ namespace Backend.Controllers
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "Category not found");
                 }
 
                 var item = new AuctionItem
@@ -138,7 +137,7 @@ namespace Backend.Controllers
                 if (createdItem == null)
                 {
                     return BadRequest(
-                        "Itemul a fost salvat, dar nu a putut fi citit.");
+                        "ERROR");
                 }
 
                 var response = MapToResponseDto(createdItem);
@@ -176,7 +175,7 @@ namespace Backend.Controllers
                 if (owner == null)
                 {
                     return Unauthorized(
-                        "Utilizatorul autentificat nu există.");
+                        "error");
                 }
 
                 var category = categoryDataOps.GetCategoryById(
@@ -185,19 +184,19 @@ namespace Backend.Controllers
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "error");
                 }
 
                 if (request.StartPrice <= 0)
                 {
                     return BadRequest(
-                        "Prețul de pornire trebuie să fie mai mare decât 0.");
+                        "Price must be higher than 0");
                 }
 
                 if (request.DurationDays <= 0)
                 {
                     return BadRequest(
-                        "Durata licitației trebuie să fie mai mare decât 0.");
+                        "Duration must be higher than 0");
                 }
 
                 var imageList = new List<string>();
@@ -207,7 +206,7 @@ namespace Backend.Controllers
                 {
                     filesToProcess.AddRange(request.Images);
                 }
-                if (request.Image != null && request.Image.Length > 0 && !filesToProcess.Contains(request.Image))
+                else if (request.Image != null && request.Image.Length > 0)
                 {
                     filesToProcess.Add(request.Image);
                 }
@@ -226,7 +225,7 @@ namespace Backend.Controllers
 
                 string? imageUrl = imageList.Count > 0 ? string.Join("|||", imageList) : null;
 
-                var startDate = DateTime.UtcNow;
+                var startDate = DateTime.Now;
 
                 var item = new AuctionItem
                 {
@@ -252,7 +251,7 @@ namespace Backend.Controllers
                 if (createdItem == null)
                 {
                     return BadRequest(
-                        "Itemul a fost salvat, dar nu a putut fi citit.");
+                        "error");
                 }
 
                 var response = MapToResponseDto(createdItem);
@@ -311,7 +310,7 @@ namespace Backend.Controllers
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "Category not found");
                 }
 
                 item.Name = dto.Name;
