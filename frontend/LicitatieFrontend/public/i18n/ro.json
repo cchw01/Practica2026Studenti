@@ -340,34 +340,60 @@
     "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
     "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
   },
-  "FORUM": {
+  "FORUM_PAGE": {
+  "HEADER": {
     "TITLE": "Discuții pe forum",
-    "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu alți utilizatori.",
+    "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu ceilalți utilizatori."
+  },
+
+  "SEARCH": {
+    "PLACEHOLDER": "Caută discuții...",
+    "ARIA_LABEL": "Caută discuții"
+  },
+
+  "ACTIONS": {
     "START_DISCUSSION": "Începe o discuție",
     "LOGIN_TO_START": "Autentifică-te pentru a începe o discuție",
-    "SORT": {
-      "ARIA_LABEL": "Sortează discuțiile",
-      "LATEST": "Cele mai recente",
-      "OLDEST": "Cele mai vechi",
-      "MOST_COMMENTED": "Cele mai comentate"
-    },
+    "TRY_AGAIN": "Încearcă din nou"
+  },
+
+  "SORT": {
+    "ARIA_LABEL": "Sortează discuțiile",
+    "LATEST": "Cele mai recente",
+    "OLDEST": "Cele mai vechi",
+    "MOST_COMMENTED": "Cele mai comentate"
+  },
+
+  "COUNT": {
     "DISCUSSION": "discuție",
     "DISCUSSIONS": "discuții",
-    "LOADING": {
-      "TITLE": "Se încarcă discuțiile"
-    },
-    "ERROR": {
-      "TITLE": "Discuțiile nu au putut fi încărcate",
-      "RETRY": "Încearcă din nou"
-    },
-    "POSTED_BY": "Publicat de",
     "COMMENT": "comentariu",
-    "COMMENTS": "comentarii",
-    "EMPTY": {
-      "TITLE": "Nu există discuții disponibile",
-      "MESSAGE": "În prezent, nu există discuții pe forum."
-    }
+    "COMMENTS": "comentarii"
   },
+
+  "LOADING": {
+    "TITLE": "Se încarcă discuțiile"
+  },
+
+  "ERROR": {
+    "TITLE": "Discuțiile nu au putut fi încărcate"
+  },
+
+  "POST": {
+    "POSTED_BY": "Publicat de"
+  },
+
+  "EMPTY": {
+    "TITLE": "Nu există discuții disponibile",
+    "DESCRIPTION": "În prezent, nu există discuții pe forum."
+  },
+
+  "PAGINATION": {
+    "ARIA_LABEL": "Paginare",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Următor"
+  }
+},
   "NOTIFICATIONS": {
   "TRUE": "Notificări",
   "FALSE": "Nu există notificări încă.",

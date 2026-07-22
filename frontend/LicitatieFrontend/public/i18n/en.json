@@ -402,42 +402,60 @@
     "BUTTON":"Go BACK HOME"
   },
 
-  "FORUM": {
-    "TITLE": "Forum discussions",
-    "DESCRIPTION": "Browse current discussions and participate in conversations with other users.",
+"FORUM_PAGE": {
+  "HEADER": {
+    "TITLE": "Forum Discussions",
+    "DESCRIPTION": "Browse current discussions and participate in conversations with other users."
+  },
 
+  "SEARCH": {
+    "PLACEHOLDER": "Search discussions...",
+    "ARIA_LABEL": "Search discussions"
+  },
+
+  "ACTIONS": {
     "START_DISCUSSION": "Start a discussion",
     "LOGIN_TO_START": "Log in to start a discussion",
+    "TRY_AGAIN": "Try again"
+  },
 
-    "SORT": {
-      "ARIA_LABEL": "Sort discussions",
-      "LATEST": "Latest first",
-      "OLDEST": "Oldest first",
-      "MOST_COMMENTED": "Most commented"
-    },
+  "SORT": {
+    "ARIA_LABEL": "Sort discussions",
+    "LATEST": "Latest first",
+    "OLDEST": "Oldest first",
+    "MOST_COMMENTED": "Most commented"
+  },
 
+  "COUNT": {
     "DISCUSSION": "discussion",
     "DISCUSSIONS": "discussions",
-
-    "LOADING": {
-      "TITLE": "Loading discussions"
-    },
-
-    "ERROR": {
-      "TITLE": "Unable to load discussions",
-      "RETRY": "Try again"
-    },
-
-    "POSTED_BY": "Posted by",
-
     "COMMENT": "comment",
-    "COMMENTS": "comments",
-
-    "EMPTY": {
-      "TITLE": "No discussions available",
-      "MESSAGE": "There are currently no discussions in the forum."
-    }
+    "COMMENTS": "comments"
   },
+
+  "LOADING": {
+    "TITLE": "Loading discussions"
+  },
+
+  "ERROR": {
+    "TITLE": "Unable to load discussions"
+  },
+
+  "POST": {
+    "POSTED_BY": "Posted by"
+  },
+
+  "EMPTY": {
+    "TITLE": "No discussions available",
+    "DESCRIPTION": "There are currently no discussions in the forum."
+  },
+
+  "PAGINATION": {
+    "ARIA_LABEL": "Pagination",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next"
+  }
+},
 
   "NOTIFICATIONS":{
   "TRUE": "Notifications",
