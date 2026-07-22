@@ -28,8 +28,27 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
+<<<<<<< HEAD
+           "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "src/material-theme.scss",
+              "src/styles.css"
+            ]
+=======
             "assets": [
               {
                 "glob": "**/*",
@@ -45,6 +64,7 @@
               "src/material-theme.scss",
               "src/styles.css"
             ]
+>>>>>>> ac1cf0e7929a56e7ae04d9849f400fe098d0475f
           },
           "configurations": {
             "production": {
