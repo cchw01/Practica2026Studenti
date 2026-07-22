@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private cdr: ChangeDetectorRef
     private route: ActivatedRoute,
   ) {}
 
@@ -53,7 +54,8 @@ export class LoginPage implements OnInit {
       },
       error: (err) => {
         console.error('Eroare de la server:', err);
-        this.errorMessage = err.error || 'Incorrect email or password.';
+        this.errorMessage = err.error || 'Email sau parolă incorecte.';
+        this.cdr.detectChanges();
       },
     });
   }
