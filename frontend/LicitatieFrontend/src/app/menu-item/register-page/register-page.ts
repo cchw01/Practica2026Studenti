@@ -66,21 +66,28 @@ export class RegisterPage implements OnInit {
 
     this.authService.register(userData).subscribe({
       next: (response: any) => {
+        this.errorMessage = '';
         this.authService.login(userData.email, userData.password).subscribe({
           next: () => {
             this.router.navigate(['/home-page']);
           },
           error: () => {
-            this.router.navigate(['/home-page']);
+            this.router.navigate(['/login-page']);
           },
         });
       },
       error: (err: any) => {
         console.error('Eroare la inregistrare:', err);
-        if (err.error && err.error.message) {
+        if (typeof err.error === 'string') {
+          this.errorMessage = err.error;
+        } else if (err.error?.message) {
           this.errorMessage = err.error.message;
+        } else if (err.error?.errors) {
+          const firstKey = Object.keys(err.error.errors)[0];
+          this.errorMessage = err.error.errors[firstKey][0] || 'Eroare la înregistrare';
         } else {
-          this.errorMessage = 'Eroare la inregistrare. Vă rugăm să încercați din nou.';
+          this.errorMessage =
+            'Eroare la înregistrare. Verificați datele introduse sau conexiunea la server.';
         }
       },
     });

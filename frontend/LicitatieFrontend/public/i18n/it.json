@@ -19,7 +19,31 @@
     "CALL_CENTER_HOURS": "Orari del call center",
     "SCHEDULE": "Lunedì–venerdì, 09:00–17:00",
     "FOLLOW_US": "Seguici",
-    "SOCIAL_DESCRIPTION": "Resta in contatto con noi sui social media."
+    "SOCIAL_DESCRIPTION": "Resta in contatto con noi sui social media.", 
+     "FORM_TITLE": "Inviaci un messaggio",
+  "FORM_FULL_NAME_LABEL": "Nome completo",
+  "FORM_FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
+  "FORM_FULL_NAME_REQUIRED": "Il nome completo è obbligatorio.",
+  "FORM_EMAIL_LABEL": "Indirizzo e-mail",
+  "FORM_EMAIL_PLACEHOLDER": "es. tu@esempio.com",
+  "FORM_EMAIL_REQUIRED": "L'indirizzo e-mail è obbligatorio.",
+  "FORM_EMAIL_INVALID": "Inserisci un indirizzo e-mail valido.",
+  "FORM_ISSUE_TYPE_LABEL": "Tipo di problema",
+  "FORM_ISSUE_TYPE_REQUIRED": "Seleziona un tipo di problema.",
+  "FORM_ISSUE_OPTION_GENERAL": "Richiesta generale",
+  "FORM_ISSUE_OPTION_TECHNICAL": "Supporto tecnico",
+  "FORM_ISSUE_OPTION_BILLING": "Fatturazione / Pagamento",
+  "FORM_ISSUE_OPTION_LISTING": "Problema con annuncio / asta",
+  "FORM_ISSUE_OPTION_ACCOUNT": "Gestione dell'account",
+  "FORM_ISSUE_OPTION_OTHER": "Altro",
+  "FORM_MESSAGE_LABEL": "Descrivi il tuo problema",
+  "FORM_MESSAGE_PLACEHOLDER": "Fornisci maggiori dettagli...",
+  "FORM_MESSAGE_REQUIRED": "Il messaggio è obbligatorio.",
+  "FORM_MESSAGE_MIN_LENGTH": "Il messaggio deve contenere almeno 10 caratteri.",
+  "FORM_SUBMIT": "Invia messaggio",
+  "FORM_SUCCESS_TITLE": "Messaggio inviato!",
+  "FORM_SUCCESS_MESSAGE": "Grazie per averci contattato. Ti risponderemo il prima possibile.",
+  "FORM_SEND_ANOTHER": "Invia un altro messaggio"
   },
   "LOGIN": {
     "TITLE": "Accedi",
@@ -361,5 +385,98 @@
     "CANCEL": "Annulla",
     "CREATING": "Creazione della discussione...",
     "SUBMIT": "Avvia discussione"
+  }, 
+  "PROFILE_PAGE": {
+  "PROFILE": {
+    "USERNAME_NOT_SET": "@username non impostato",
+    "NAME_NOT_SET": "Nome non impostato",
+    "EMAIL_NOT_SET": "Email non impostata",
+    "AVERAGE_SCORE": "Punteggio medio"
+  },
+
+  "BUTTONS": {
+    "EDIT_PROFILE": "Modifica profilo",
+    "LOG_OUT": "Disconnetti",
+    "ADD_ITEM": "Aggiungi nuovo articolo",
+    "CHANGE_PHOTO": "Cambia foto",
+    "HIDE_PASSWORD": "Nascondi impostazioni password",
+    "CHANGE_PASSWORD": "Cambia password",
+    "UPDATE_PASSWORD": "Aggiorna password",
+    "CANCEL": "Annulla",
+    "SAVE": "Salva modifiche"
+  },
+
+  "THEME": {
+    "TITLE": "Personalizza tema",
+    "DESCRIPTION": "Scegli uno stile visivo che corrisponda al tuo umore.",
+    "LIGHT": "Chiaro",
+    "SUNSET": "Tramonto",
+    "OCEAN": "Oceano"
+  },
+
+  "SELL": {
+    "TITLE": "Vendi un nuovo articolo",
+    "DESCRIPTION": "Pronto a mettere qualcosa in vendita?"
+  },
+
+  "SECTIONS": {
+    "ACTIVE_SALES": "Le mie vendite attive",
+    "WON_ITEMS": "Articoli vinti",
+    "WISHLIST": "La mia lista dei desideri",
+    "REVIEWS": "Recensioni ricevute"
+  },
+
+  "EMPTY": {
+    "ACTIVE_SALES": "Nessun articolo pubblicato al momento.",
+    "WON_ITEMS": "Nessun articolo vinto al momento.",
+    "WISHLIST": "Nessun articolo nella tua lista dei desideri.",
+    "REVIEWS": "Nessuna recensione ricevuta al momento."
+  },
+
+  "EDIT": {
+    "TITLE": "Modifica profilo",
+    "USERNAME": "Nome utente",
+    "FULL_NAME": "Nome completo",
+    "EMAIL": "Email",
+
+    "USERNAME_PLACEHOLDER": "es. mario_rossi",
+    "FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
+    "EMAIL_PLACEHOLDER": "es. mario@email.com"
+  },
+
+  "PASSWORD": {
+    "CURRENT": "Password attuale",
+    "NEW": "Nuova password",
+    "CONFIRM": "Conferma password",
+
+    "CURRENT_PLACEHOLDER": "Inserisci la password attuale",
+    "NEW_PLACEHOLDER": "Inserisci la nuova password",
+    "CONFIRM_PLACEHOLDER": "Conferma la nuova password",
+
+    "REQUIRED": "Tutti i campi sono obbligatori.",
+    "NOT_MATCH": "La nuova password e la conferma non coincidono.",
+    "SUCCESS": "Password aggiornata con successo!",
+    "ERROR": "Errore durante l'aggiornamento della password. Controlla la password attuale."
+  },
+
+  "STATUS": {
+    "ACTIVE": "Attivo",
+    "ADDED": "Aggiunto",
+    "WON": "Vinto"
+  },
+
+  "DEFAULTS": {
+    "USER": "Utente"
+  },
+
+  "ERRORS": {
+    "LOAD_CATEGORIES": "Errore durante il caricamento delle categorie.",
+    "LOAD_ITEMS": "Errore durante il caricamento degli articoli.",
+    "LOAD_REVIEWS": "Errore durante il caricamento delle recensioni."
+  },
+
+  "MESSAGES": {
+    "PROFILE_UPDATED": "Profilo aggiornato con successo."
   }
+}
 }
