@@ -37,13 +37,13 @@
 
       <!-- Contact Form -->
       <div class="card form-card">
-        <h2>{{ 'HELP.PROGRAM' | translate }}</h2>
+        <h2>{{ 'HELP.TICKET' | translate }}</h2>
         <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
           <div class="input-group">
-            <input type="text" formControlName="name" placeholder="Full name">
+            <input type="text" formControlName="name" [placeholder]="'CONTACT.FORM_NAME_PLACEHOLDER' | translate">
           </div>
           <div class="input-group">
-            <input type="email" formControlName="email" placeholder="Email address">
+            <input type="email" formControlName="email" [placeholder]="'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate">
           </div>
           <!-- Type of Issue dropdown -->
           <div class="input-group">
@@ -59,7 +59,7 @@
           </div>
           <div class="input-group">
             <textarea formControlName="issue" rows="4"
-                      placeholder="Describe your issue in detail..."></textarea>
+                      [placeholder]="'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate"></textarea>
           </div>
           <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">
             {{ 'HELP.REQUEST' | translate }}
@@ -73,7 +73,7 @@
   <!-- AI Chat Widget -->
   <div class="chat-widget">
     <button class="chat-toggle" (click)="toggleChat()" [class.chat-open]="isChatOpen">
-      {{ isChatOpen ? '✖' : '💬 AI Assistant' }}
+      {{ isChatOpen ? '✖' : '💬 ' + ('HELP.CHAT_BUTTON' | translate) }}
     </button>
     <div class="chat-box" *ngIf="isChatOpen">
       <div class="chat-header">
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="chat-input-area">
-        <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" placeholder="Ask something...">
+        <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" [placeholder]="'HELP.CHAT_PLACEHOLDER' | translate">
         <button (click)="sendMessage(chatInput)">➤</button>
       </div>
     </div>

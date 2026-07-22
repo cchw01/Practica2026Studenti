@@ -42,6 +42,7 @@ import { provideTranslateService, TranslateDirective, TranslatePipe } from '@ngx
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AdminPage } from './admin-page/admin-page/admin-page';
+import { UserPage } from './user-page/user-page';
 import { SearchPage } from './search-page/search-page';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -76,6 +77,7 @@ import { MatSelectModule } from '@angular/material/select';
     ProfileMenu,
     NotificationBell,
     AdminPage,
+    UserPage,
   ],
   imports: [
     BrowserModule,

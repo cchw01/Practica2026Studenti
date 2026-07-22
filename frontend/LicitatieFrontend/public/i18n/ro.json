@@ -184,6 +184,15 @@
       "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
     }
   },
+
+  "CURRENT_PRICE": "Preț curent",
+  "POSTED_BY": "Adăugat de",
+  "YOU": "Tu",
+
+  "EMPTY": {
+    "TITLE": "Nu au fost găsite produse",
+    "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
+  },
   "ADD_ITEM_PAGE": {
     "BADGE": "🔨 Vinde pe BidSphere",
     "TITLE": "Adaugă un articol nou la licitație",
