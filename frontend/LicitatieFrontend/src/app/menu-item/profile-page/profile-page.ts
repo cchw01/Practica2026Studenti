@@ -303,6 +303,19 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  // --- Badge styling ---
+  getBadgeClass(status: string): string {
+    if (!status) return 'badge-added';
+    const lower = status.toLowerCase();
+    if (lower.includes('activebid') || lower.includes('active')) return 'badge-activebid';
+    if (lower.includes('added')) return 'badge-added';
+    if (lower.includes('sold')) return 'badge-sold';
+    if (lower.includes('nowinner')) return 'badge-nowinner';
+    if (lower.includes('validated')) return 'badge-validated';
+    if (lower.includes('won')) return 'badge-won';
+    return 'badge-added';
+  }
+
   // --- Navigate to Item Details ---
   goToItem(id: number): void {
     if (id) {

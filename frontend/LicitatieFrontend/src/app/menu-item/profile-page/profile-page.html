@@ -83,7 +83,7 @@
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
-            <span class="item-badge badge-added">{{ item.status }}</span>
+            <span class="item-badge" [ngClass]="getBadgeClass(item.status)">{{ item.status }}</span>
           </div>
           </div>
           <p class="empty-state" *ngIf="addedItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.ACTIVE_SALES' | translate }}</p>
@@ -97,9 +97,9 @@
             <img [src]="item.image" alt="Item image" class="item-card-image" />
             <div class="item-info">
               <span class="item-title">{{ item.title }}</span>
-              <span class="item-price">{{ item.price }} RON</span>
             </div>
-            <span class="item-badge badge-won">{{ item.status }}</span>
+            <!-- Am mutat prețul în dreapta (în locul badge-ului) pentru a menține simetria -->
+            <span class="item-price-badge">{{ item.price }} RON</span>
           </div>
           </div>
           <p class="empty-state" *ngIf="bidItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WON_ITEMS' | translate }}</p>
@@ -116,7 +116,7 @@
               <span class="item-title">{{ item.title }}</span>
               <span class="item-price">{{ item.price }} RON</span>
             </div>
-            <span class="item-badge badge-wish">{{ item.status }}</span>
+            <span class="item-badge" [ngClass]="getBadgeClass(item.status)">{{ item.status }}</span>
             <button class="btn-remove-wish" (click)="removeFromWishlist(item.id, $event)" title="Remove from Wishlist">✕</button>
           </div>
         </div>
