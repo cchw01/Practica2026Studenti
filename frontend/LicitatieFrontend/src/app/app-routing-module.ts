@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'register-page', component: RegisterPage },
   { path: 'search-page', component: SearchPage },
   { path: 'auctions', component: AuctionsPage },
-  { path: 'auctions/:id', component: AuctionItemPage },
+  { path: 'auctions/:id', component: AuctionDetail },
   { path: 'contact-page', component: ContactPage },
   { path: 'forum-page', component: ForumPage },
   { path: 'forum/new', component: CreateForumPost },

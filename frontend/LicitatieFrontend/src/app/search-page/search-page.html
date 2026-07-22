@@ -89,7 +89,7 @@
     </div>
 
     <div class="users-grid" *ngIf="usersLoaded && filteredUsers.length > 0">
-      <div class="user-card" *ngFor="let u of filteredUsers" (click)="goToUserProfile(u)">
+      <div class="user-card" *ngFor="let u of filteredUsers">
         <div class="user-avatar">{{ getInitial(u) }}</div>
         <div class="user-info">
           <h3>{{ u.Name || u.UserName }}</h3>
