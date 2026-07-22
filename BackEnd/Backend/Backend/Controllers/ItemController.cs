@@ -207,7 +207,7 @@ namespace Backend.Controllers
                 {
                     filesToProcess.AddRange(request.Images);
                 }
-                else if (request.Image != null && request.Image.Length > 0)
+                if (request.Image != null && request.Image.Length > 0 && !filesToProcess.Contains(request.Image))
                 {
                     filesToProcess.Add(request.Image);
                 }
