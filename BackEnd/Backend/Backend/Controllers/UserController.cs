@@ -26,16 +26,13 @@ namespace Backend.Controllers
             this.refreshTokenDataOps = refreshTokenDataOps;
         }
 
-        // Helper: transforma ProfilePictureId in numele fisierului, folosind ProfilePictureDataOps.
-        // Inainte, codul citea direct user.ProfilePicture (un camp string separat, care nu era
-        // populat niciodata la upload), motiv pentru care poza de profil parea ca "nu se salveaza".
         private string? GetProfilePictureName(User user)
         {
             if (user.ProfilePictureId == null)
                 return null;
 
             var picture = profilePictureDataOps.GetProfilePictureById(user.ProfilePictureId.Value);
-            return picture?.Name;
+            return picture?.name;
         }
 
         [HttpGet]

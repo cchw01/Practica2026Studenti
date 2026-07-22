@@ -138,8 +138,17 @@ export class ProfilePage implements OnInit {
     if (this.currentUserId) {
       this.UserService.getUser(this.currentUserId).subscribe({
         next: (userData: any) => {
-          this.user.profilePictureName = userData.profilePictureName || userData.ProfilePictureName;
-          this.cdr.detectChanges();
+          // profilePictureName venit de la GetUser e mereu null pe backend (nu e populat).
+          // Poza reala se ia separat, ca Base64, de la endpointul dedicat.
+          this.UserService.getProfilePicture(this.currentUserId).subscribe({
+            next: (base64: string) => {
+              this.user.profilePictureBase64 = base64;
+              this.cdr.detectChanges();
+            },
+            error: () => {
+              // Userul nu are inca poza de profil setata - e ok, ramane avatarul implicit.
+            },
+          });
         },
         error: (err) => console.error('Eroare la incarcarea profilului:', err),
       });
@@ -401,9 +410,11 @@ export class ProfilePage implements OnInit {
         // Daca a fost selectata o poza noua, o urcam acum pe backend
         if (this.selectedAvatarFile) {
           this.UserService.uploadProfilePicture(this.selectedAvatarFile).subscribe({
-            next: (pictureName: string) => {
-              this.user.profilePictureName = pictureName;
-              this.user.profilePictureBase64 = undefined; // preview-ul local nu mai e necesar
+            next: (pictureBase64: string) => {
+              // Backend-ul intoarce continutul Base64 al pozei, nu un nume de fisier,
+              // asa ca il stocam ca Base64 (displayAvatar stie sa il transforme in data URI).
+              this.user.profilePictureBase64 = pictureBase64;
+              this.user.profilePictureName = undefined;
               this.selectedAvatarFile = null;
               this.editDraft = { ...this.user };
               this.saveProfile();
@@ -432,13 +443,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // --- Avatar upload ---
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
-
-    // Retinem fisierul, se urca efectiv pe backend abia la Save (in saveEdit())
     this.selectedAvatarFile = file;
 
     const reader = new FileReader();

@@ -22,8 +22,6 @@ export class UserService {
       Email: u.email,
       Role: u.role,
       Rating: u.rating,
-      // Lipsea aici — chiar daca backend-ul intoarce ProfilePictureName,
-      // fara linia asta se pierdea la mapare si frontend-ul nu-l vedea niciodata.
       profilePictureName: u.profilePictureName,
     };
   }
@@ -56,6 +54,12 @@ export class UserService {
     });
   }
 
+  getProfilePicture(userId: number): Observable<string> {
+    return this.http.get(`${this.profilePictureApiUrl}/${userId}`, {
+      responseType: 'text',
+    });
+  }
+
   // --- Operațiuni Wishlist ---
   addToWishlist(userId: number, itemId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
@@ -73,7 +77,6 @@ export class UserService {
     // Când vei face tabela în backend, poți de-comenta linia de mai jos:
     // return this.http.post<void>(`${this.apiUrl}/${userId}/report`, { reason });
     
-    // Momentan simulăm succesul local:
     return new Observable<void>(observer => {
       console.log(`Utilizatorul ${userId} a fost raportat. Motiv: ${reason}`);
       observer.next();
