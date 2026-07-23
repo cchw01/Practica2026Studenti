@@ -56,6 +56,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   countdownText: string = '';
   private timerInterval: any;
 
+  // ================= NEW: Debug control =================
+  public readonly showDebugControls = true; // set to false before final commit
+
   auctionItem: AuctionItem = {
     ID: 1,
     Name: 'Loading Item...',
@@ -229,9 +232,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
+    if (this.timerInterval) clearInterval(this.timerInterval);
   }
 
   private startCountdown(): void {
@@ -537,5 +538,37 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       (this.auctionItem.Owner as any)?.ID ||
       (this.auctionItem.Owner as any)?.id;
     return +ownerId === currentUserId;
+  }
+
+  
+  // ================= NEW: Computed getters =================
+  get isAuctionEnded(): boolean {
+    if (!this.auctionItem) return false;
+    if (this.auctionItem.Status === 'Sold' ||
+        this.auctionItem.Status === 'NoWinner' ||
+        this.auctionItem.Status === 'Rejected') {
+      return true;
+    }
+    if (this.auctionItem.EndDate) {
+      return new Date(this.auctionItem.EndDate) < new Date();
+    }
+    return false;
+  }
+
+  get isCurrentUserWinner(): boolean {
+    if (!this.auctionItem || !this.auctionItem.WinnerId) return false;
+    const currentUserId = this.authService.getCurrentUserId();
+    return currentUserId ? this.auctionItem.WinnerId === currentUserId : false;
+  }
+
+  // ================= NEW: Debug method =================
+  simulateAuctionEnd(): void {
+    this.auctionItem.EndDate = new Date(Date.now() - 60000);
+    this.auctionItem.Status = 'Sold';
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.auctionItem.WinnerId = userId;
+    }
+    try { this.cdr.detectChanges(); } catch { }
   }
 }
