@@ -106,8 +106,9 @@
           <div class="category-icon">
             <mat-icon>{{ category.icon }}</mat-icon>
           </div>
-          <h3> {{ ('HOME.CATEGORIES.ITEMS.' + getCategoryKey(category.name) + '.NAME') | translate }}</h3>
-          <p> {{ ('HOME.CATEGORIES.ITEMS.' + getCategoryKey(category.name) + '.DESCRIPTION') | translate }}</p>
+
+          <h3>{{ category.name }}</h3>
+          <p>{{ category.description || 'No description available.' }}</p>
         </div>
         }
       </div>

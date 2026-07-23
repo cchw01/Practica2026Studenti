@@ -2,10 +2,11 @@ using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 
 namespace Backend.Controllers
@@ -17,6 +18,7 @@ namespace Backend.Controllers
         private readonly AuctionItemDataOps dataOps;
         private readonly CategoryDataOps categoryDataOps;
         private readonly UserDataOps userDataOps;
+        private readonly BidDataOps bidDataOps;
         private readonly IWebHostEnvironment env;
 
         public AuctionItemController(
@@ -26,6 +28,7 @@ namespace Backend.Controllers
             dataOps = new AuctionItemDataOps(dbContext);
             categoryDataOps = new CategoryDataOps(dbContext);
             userDataOps = new UserDataOps(dbContext);
+            bidDataOps = new BidDataOps(dbContext);
             this.env = env;
         }
 
@@ -419,6 +422,35 @@ item.WinnerId = null;
                 return userId;
 
             return null;
+        }
+
+        [Authorize]
+        [HttpPost("{id}/end")]
+        public ActionResult<AuctionItemResponseDto> EndAuction(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+                if (authenticatedUserId == null)
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+                if (item == null)
+                    return NotFound();
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+                if (!isOwner && !isAdmin)
+                    return Forbid();
+     
+                dataOps.ProcessAuctionEnd(item, bidDataOps);
+                var updatedItem = dataOps.GetAuctionItemById(id);
+
+                return Ok(MapToResponseDto(updatedItem!));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
