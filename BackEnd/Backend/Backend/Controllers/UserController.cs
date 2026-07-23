@@ -1,11 +1,16 @@
 using Azure.Core;
-using Backend.DataManagement;
-using Backend.DTOs;
-using Backend.Models;
-using Backend.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+    using Backend.DataManagement;
+    using Backend.DTOs;
+    using Backend.Models;
+    using Backend.Services;
 using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 
 namespace Backend.Controllers
 {
@@ -17,15 +22,28 @@ namespace Backend.Controllers
         private readonly ProfilePictureDataOps profilePictureDataOps;
         private readonly RefreshTokenDataOps refreshTokenDataOps;
         private readonly TokenProvider tokenProvider;
+
+        private readonly EmailService emailService;
+        private readonly IConfiguration configuration;
+
         private const int EXPIRES_IN = 900;
-        public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
+
+        public UserController(
+            ApplicationDbContext DbContext,
+            TokenProvider tokenProvider,
+            RefreshTokenDataOps refreshTokenDataOps,
+            EmailService emailService,
+            IConfiguration configuration)
         {
             dataOps = new UserDataOps(DbContext);
             profilePictureDataOps = new ProfilePictureDataOps(DbContext);
+
             this.tokenProvider = tokenProvider;
             this.refreshTokenDataOps = refreshTokenDataOps;
-        }
 
+            this.emailService = emailService;
+            this.configuration = configuration;
+        }
         private string? GetProfilePictureName(User user)
         {
             if (user.ProfilePictureId == null)
@@ -359,5 +377,117 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto request)
+        {
+            var user = dataOps.GetUserByEmail(request.Email);
+
+            // Din motive de securitate răspundem la fel chiar dacă emailul nu există
+            if (user == null)
+            {
+                return Ok(new
+                {
+                    message = "If an account with this email exists, a reset link has been sent."
+                });
+            }
+
+            var token = tokenProvider.GeneratePasswordResetToken(user);
+
+            var frontendUrl = configuration["Brevo:FrontendUrl"];
+
+            var resetLink =
+                $"{frontendUrl}/reset-password?token={Uri.EscapeDataString(token)}";
+
+            await emailService.SendResetPasswordEmail(
+                user.Email,
+                resetLink);
+
+            return Ok(new
+            {
+                message = "If an account with this email exists, a reset link has been sent."
+            });
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordDto request)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                // 1. Validăm token-ul corect, trecând parametrii în ordinea așteptată
+                var principal = tokenHandler.ValidateToken(
+                    request.Token,
+                    new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!)),
+
+                        ValidateIssuer = true,
+                        ValidIssuer = configuration["Jwt:Issuer"],
+
+                        ValidateAudience = true,
+                        ValidAudience = configuration["Jwt:Audience"],
+
+                        ValidateLifetime = true,
+
+                        ClockSkew = TimeSpan.Zero
+                    },
+                    out _
+                );
+
+                // 2. Debugging: Afișăm claims după ce validarea a reușit
+                Console.WriteLine("===== CLAIMS =====");
+                foreach (var claim in principal.Claims)
+                {
+                    Console.WriteLine($"{claim.Type} = {claim.Value}");
+                }
+
+                var typeClaim = principal.FindFirst("type")?.Value;
+                Console.WriteLine($"TYPE = {typeClaim}");
+
+                if (typeClaim != "password-reset")
+                {
+                    return BadRequest("Invalid token.");
+                }
+
+               
+
+                var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+                Console.WriteLine($"EMAIL = {email}");
+
+                if (string.IsNullOrEmpty(email))
+                {
+                    return BadRequest("Invalid token.");
+                }
+
+                var user = dataOps.GetUserByEmail(email);
+
+                if (user == null)
+                {
+                    return BadRequest("User not found.");
+                }
+
+                user.Password = PasswordHasher.HashPassword(request.NewPassword);
+
+                dataOps.UpdateUser(user);
+
+                return Ok(new
+                {
+                    message = "Password changed successfully."
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
+
 }
+
+            
+        
+    

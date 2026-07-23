@@ -20,6 +20,10 @@ import { AdminPage } from './admin-page/admin-page/admin-page';
 import { NotFound } from './not-found/not-found';
 import { AdminGuard } from './services/admin-guard';
 
+import { ResetPasswordPage } from './menu-item/reset-password-page/reset-password-page';
+import { ForgotPasswordPage } from './menu-item/forgot-password-page/forgot-password-page';
+
+
 const routes: Routes = [
   { path: 'home-page', component: HomePage },
   { path: 'login-page', component: LoginPage },
@@ -39,8 +43,11 @@ const routes: Routes = [
   { path: 'action-item-page', component: AuctionItemPage },
   { path: 'action-item-page/:id', component: AuctionItemPage },
   { path: 'admin', component: AdminPage, canActivate: [AdminGuard] },
-  { path: 'user-page/:id', component: UserPage },
+  { path: 'user-page/:id', component: UserPage},
+  { path: 'reset-password', component: ResetPasswordPage },
+  { path: 'forgot-password', component: ForgotPasswordPage },
   { path: '**', component: NotFound },
+  
 ];
 
 @NgModule({

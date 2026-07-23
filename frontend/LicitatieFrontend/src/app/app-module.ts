@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { provideTranslateService, TranslatePipe } from '@ngx-translate/core';
+import { provideTranslateService, TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Material Design Imports
@@ -17,6 +17,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AppRoutingModule } from './app-routing-module';
+import { MatSelectModule } from '@angular/material/select';
 
 // Pages / feature components
 import { App } from './app';
@@ -50,6 +51,8 @@ import { AiWidgetComponent } from './ai-widget/ai-widget';
 
 // Servicii / Interceptoare
 import { AuthInterceptor } from './services/auth-interceptor';
+import { ResetPasswordPage } from './menu-item/reset-password-page/reset-password-page';
+import { ForgotPasswordPage } from './menu-item/forgot-password-page/forgot-password-page';
 
 @NgModule({
   declarations: [
@@ -74,30 +77,34 @@ import { AuthInterceptor } from './services/auth-interceptor';
     AdminPage,
     UserPage,
     NotFound,
+    ResetPasswordPage,
+    ForgotPasswordPage,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
+  BrowserModule,
+  BrowserAnimationsModule,
+  AppRoutingModule,
+  FormsModule,
+  CommonModule,
+  ReactiveFormsModule,
 
-    // Angular Material
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatBadgeModule,
-    MatSlideToggleModule,
-    // Standalone Components (Componentele independente stau aici!)
-    ReviewComponent,
-    AiWidgetComponent,
-    HelpPageComponent,
-    TranslatePipe,
-  ],
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatBadgeModule,
+  MatSlideToggleModule,
+  MatSelectModule,
+  HelpPageComponent,
+  ReviewComponent,
+  AiWidgetComponent,
+
+
+  TranslatePipe,
+  TranslateDirective,
+],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
@@ -113,9 +120,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
         suffix: '.json',
         failOnError: true,
       }),
-
       fallbackLang: 'en',
-      lang: 'en',
     }),
   ],
 
