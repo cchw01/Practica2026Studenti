@@ -335,76 +335,6 @@ namespace Backend.Controllers
         }
 
         [Authorize]
-        [HttpPost("{id}/close")]
-        public ActionResult<AuctionItemResponseDto> CloseAuctionItem(int id)
-        {
-            try
-            {
-                var authenticatedUserId = GetAuthenticatedUserId();
-
-                if (authenticatedUserId == null)
-                    return Unauthorized();
-
-                var item = dataOps.GetTrackedAuctionItemById(id);
-
-                if (item == null)
-                    return NotFound("Auction not found.");
-
-                var isOwner = item.OwnerId == authenticatedUserId.Value;
-                var isAdmin = User.IsInRole("Admin");
-
-                if (!isOwner && !isAdmin)
-                    return Forbid();
-
-                if (
-                    item.Status == AuctionItem.StatusEnum.Sold ||
-                    item.Status == AuctionItem.StatusEnum.Expired
-                )
-                {
-                    return BadRequest("The auction has already been closed.");
-                }
-
-                if (item.EndDate > DateTime.Now && !isAdmin)
-                {
-                    return BadRequest(
-                        "The auction cannot be closed before its end date."
-                    );
-                }
-
-                var winningBid = bidDataOps.GetHighestBidByItemId(item.ID);
-
-                if (winningBid != null)
-                {
-                    item.WinnerId = winningBid.BidderId;
-                    item.CurrentPrice = winningBid.Price;
-                    item.Status = AuctionItem.StatusEnum.Sold;
-                }
-                else
-                {
-                    item.WinnerId = null;
-                    item.CurrentPrice = item.StartPrice;
-                    item.Status = AuctionItem.StatusEnum.Expired;
-                }
-
-                dataOps.SaveChanges();
-
-                var closedItem = dataOps.GetAuctionItemById(id);
-
-                if (closedItem == null)
-                    return NotFound();
-
-                return Ok(MapToResponseDto(closedItem));
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = ex.InnerException?.Message
-                    ?? ex.Message;
-
-                return BadRequest(errorMessage);
-            }
-        }
-
-        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteAuctionItem(int id)
         {
@@ -481,33 +411,6 @@ namespace Backend.Controllers
             return null;
         }
 
-        public AuctionItem? ProcessAuctionEnd(int auctionId, BidDataOps bidDataOps)
-        {
-            var item = dataOps.GetTrackedAuctionItemById(auctionId);
-            if (item == null) return null;
-
-            if (item.Status == AuctionItem.StatusEnum.Sold ||
-                item.Status == AuctionItem.StatusEnum.NoWinner ||
-                item.Status == AuctionItem.StatusEnum.Rejected)
-            {
-                return item; 
-            }
-            item.EndDate = DateTime.Now;
-            var bids = bidDataOps.GetBidsByItemId(auctionId);
-            if (bids != null && bids.Length > 0)
-            {
-                var highestBid = bids.OrderByDescending(b => b.Price).First();
-                item.Status = AuctionItem.StatusEnum.Sold;
-                item.WinnerId = highestBid.BidderId;
-            }
-            else
-            {
-                item.Status = AuctionItem.StatusEnum.NoWinner;
-            }
-            dataOps.SaveChanges();
-            return item;
-        }
-
         [Authorize]
         [HttpPost("{id}/end")]
         public ActionResult<AuctionItemResponseDto> EndAuction(int id)
@@ -515,23 +418,20 @@ namespace Backend.Controllers
             try
             {
                 var authenticatedUserId = GetAuthenticatedUserId();
-
-                if (authenticatedUserId == null) 
+                if (authenticatedUserId == null)
                     return Unauthorized();
 
                 var item = dataOps.GetTrackedAuctionItemById(id);
-
-                if (item == null) 
+                if (item == null)
                     return NotFound();
-
                 var isOwner = item.OwnerId == authenticatedUserId.Value;
                 var isAdmin = User.IsInRole("Admin");
-                if (!isOwner && !isAdmin) 
+                if (!isOwner && !isAdmin)
                     return Forbid();
-
-                var endedItem = ProcessAuctionEnd(id, bidDataOps);
-
+     
+                dataOps.ProcessAuctionEnd(item, bidDataOps);
                 var updatedItem = dataOps.GetAuctionItemById(id);
+
                 return Ok(MapToResponseDto(updatedItem!));
             }
             catch (Exception ex)
