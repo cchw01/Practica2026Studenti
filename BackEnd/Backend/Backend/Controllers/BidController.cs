@@ -14,11 +14,13 @@ namespace Backend.Controllers
     {
         private readonly BidDataOps dataOps;
         private readonly AuctionItemDataOps itemDataOps;
+        private readonly NotificationDataOps notificationDataOps;
 
         public BidController(ApplicationDbContext DbContext)
         {
             dataOps = new BidDataOps(DbContext);
             itemDataOps = new AuctionItemDataOps(DbContext);
+            notificationDataOps = new NotificationDataOps(DbContext);
         }
 
 
@@ -84,21 +86,33 @@ namespace Backend.Controllers
             try
             {
                 var item = itemDataOps.GetTrackedAuctionItemById(
-                                bidDto.AuctionItemId);
+                    bidDto.AuctionItemId
+                );
+
                 if (item == null)
                     return NotFound("Item not found.");
 
                 if (DateTime.Now > item.EndDate)
-                    return BadRequest("Licitation has ended.");
+                    return BadRequest("Auction has ended.");
 
                 if (bidDto.Price <= item.CurrentPrice)
-                    return BadRequest($"Price must be higher than the current price ({item.CurrentPrice}).");
+                {
+                    return BadRequest(
+                        $"Price must be higher than the current price ({item.CurrentPrice})."
+                    );
+                }
 
                 var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+
                 if (userIdClaim == null)
                     return Unauthorized("You must be logged in to place a bid.");
-                
-                int currentUserId = int.Parse(userIdClaim.Value);
+
+                if (!int.TryParse(userIdClaim.Value, out int currentUserId))
+                    return Unauthorized("Invalid user identification.");
+
+                var previousHighestBid = dataOps.GetHighestBidByItemId(
+                    bidDto.AuctionItemId
+                );
 
                 var newBid = new Bid
                 {
@@ -111,16 +125,28 @@ namespace Backend.Controllers
                 dataOps.AddBid(newBid);
 
                 item.CurrentPrice = bidDto.Price;
-                item.WinnerId = currentUserId;
                 item.Status = AuctionItem.StatusEnum.ActiveBid;
 
                 itemDataOps.SaveChanges();
+
+                if (
+                    previousHighestBid != null &&
+                    previousHighestBid.BidderId != currentUserId
+                )
+                {
+                    notificationDataOps.Create(
+                        previousHighestBid.BidderId,
+                        $"Someone placed a higher bid than yours on \"{item.Name}\"."
+                    );
+                }
 
                 return Ok(new BidDto
                 {
                     Id = newBid.Id,
                     AuctionItemId = newBid.BiddedItemId,
                     UserId = newBid.BidderId,
+                    UserName = string.Empty,
+                    ItemName = item.Name,
                     Price = newBid.Price,
                     Date = newBid.Date
                 });

@@ -17,6 +17,7 @@ namespace Backend.Controllers
         private readonly AuctionItemDataOps dataOps;
         private readonly CategoryDataOps categoryDataOps;
         private readonly UserDataOps userDataOps;
+        private readonly BidDataOps bidDataOps;
         private readonly IWebHostEnvironment env;
 
         public AuctionItemController(
@@ -26,6 +27,7 @@ namespace Backend.Controllers
             dataOps = new AuctionItemDataOps(dbContext);
             categoryDataOps = new CategoryDataOps(dbContext);
             userDataOps = new UserDataOps(dbContext);
+            bidDataOps = new BidDataOps(dbContext);
             this.env = env;
         }
 
@@ -321,6 +323,76 @@ namespace Backend.Controllers
                     return NotFound();
 
                 return Ok(MapToResponseDto(updatedItem));
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = ex.InnerException?.Message
+                    ?? ex.Message;
+
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("{id}/close")]
+        public ActionResult<AuctionItemResponseDto> CloseAuctionItem(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+
+                if (authenticatedUserId == null)
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+
+                if (item == null)
+                    return NotFound("Auction not found.");
+
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+
+                if (!isOwner && !isAdmin)
+                    return Forbid();
+
+                if (
+                    item.Status == AuctionItem.StatusEnum.Sold ||
+                    item.Status == AuctionItem.StatusEnum.Expired
+                )
+                {
+                    return BadRequest("The auction has already been closed.");
+                }
+
+                if (item.EndDate > DateTime.Now && !isAdmin)
+                {
+                    return BadRequest(
+                        "The auction cannot be closed before its end date."
+                    );
+                }
+
+                var winningBid = bidDataOps.GetHighestBidByItemId(item.ID);
+
+                if (winningBid != null)
+                {
+                    item.WinnerId = winningBid.BidderId;
+                    item.CurrentPrice = winningBid.Price;
+                    item.Status = AuctionItem.StatusEnum.Sold;
+                }
+                else
+                {
+                    item.WinnerId = null;
+                    item.CurrentPrice = item.StartPrice;
+                    item.Status = AuctionItem.StatusEnum.Expired;
+                }
+
+                dataOps.SaveChanges();
+
+                var closedItem = dataOps.GetAuctionItemById(id);
+
+                if (closedItem == null)
+                    return NotFound();
+
+                return Ok(MapToResponseDto(closedItem));
             }
             catch (Exception ex)
             {

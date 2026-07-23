@@ -24,6 +24,7 @@ namespace Backend.Models
             NoWinner,
             Sold,
             Rejected,
+            Expired,
         }
 
         public List<User>? WishingUsers { get; set; }

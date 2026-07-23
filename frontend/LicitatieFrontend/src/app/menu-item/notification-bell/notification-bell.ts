@@ -262,7 +262,7 @@ export class NotificationBell implements OnInit, OnDestroy {
       const parsed = JSON.parse(n.message);
       return parsed?.type ? { type: parsed.type, params: parsed.params || {} } : null;
     } catch {
-      return null; // notificare veche, text simplu - nu-i JSON valid
+      return null; 
     }
   }
   getNotificationKey(n: AppNotification): string | null {
