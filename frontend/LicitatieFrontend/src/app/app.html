@@ -141,7 +141,7 @@
       <!-- Actions -->
       <div class="nav-links-actions">
         <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="'NAV.ADD_AUCTION' | translate"
-          title="'NAV.ADD_AUCTION' | translate">
+          title="{{'NAV.ADD_AUCTION' | translate}}">
           <mat-icon>add</mat-icon>
         </a>
         <ng-container *ngIf="isLoggedIn(); else loggedOutActions">

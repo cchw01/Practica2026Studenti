@@ -91,66 +91,93 @@
     "SIGN_IN": "Autentifică-te"
   },
   "HOME": {
-    "HERO": {
-      "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
-      "TAG": "🔥 Licitații live în fiecare zi",
-      "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
-      "EXPLORE_AUCTIONS": "Explorează licitațiile",
-      "START_SELLING": "Începe să vinzi",
-      "SEARCH_LABEL": "Caută produse și licitații...",
-      "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
-    },
-    "ABOUT": {
-      "EYEBROW": "Despre noi",
-      "TITLE_START": "Cine",
-      "TITLE_END": "suntem",
-      "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă. Conectăm mii de cumpărători și vânzători din numeroase categorii, printr-un proces transparent și corect pentru toți.",
-      "FEATURES": {
-        "SECURE": {
-          "TITLE": "Sigur și de încredere",
-          "DESCRIPTION": "Fiecare tranzacție este protejată, așa că poți licita cu încredere."
-        },
-        "REALTIME": {
-          "TITLE": "Licitații în timp real",
-          "DESCRIPTION": "Urmărește prețurile actualizate live și nu rata niciun moment câștigător."
-        },
-        "COMMUNITY": {
-          "TITLE": "Comunitate în creștere",
-          "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
-        }
+  "HERO": {
+    "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
+    "TAG": "🔥 Licitații live în fiecare zi",
+    "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
+    "EXPLORE_AUCTIONS": "Explorează licitațiile",
+    "START_SELLING": "Începe să vinzi",
+    "SEARCH_LABEL": "Caută produse și licitații...",
+    "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
+  },
+
+  "ABOUT": {
+    "EYEBROW": "Despre noi",
+    "TITLE_START": "Cine",
+    "TITLE_END": "Suntem",
+    "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitare simple, sigure și atractive. Conectăm mii de cumpărători și vânzători din numeroase categorii printr-un proces transparent și echitabil pentru toți.",
+
+    "FEATURES": {
+      "SECURE": {
+        "TITLE": "Sigur și de încredere",
+        "DESCRIPTION": "Fiecare tranzacție este protejată, astfel încât să poți licita cu încredere."
+      },
+      "REALTIME": {
+        "TITLE": "Licitare în timp real",
+        "DESCRIPTION": "Urmărește actualizarea prețurilor în timp real și nu rata momentul câștigător."
+      },
+      "COMMUNITY": {
+        "TITLE": "Comunitate în creștere",
+        "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
       }
-    },
-    "CATEGORIES": {
-      "EYEBROW": "Categorii",
-      "TITLE_START": "Explorează",
-      "TITLE_END": "categoriile",
-      "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Tehnologie",
-          "DESCRIPTION": "Gadgeturi de ultimă generație și cele mai noi produse electronice."
-        },
-        "AUTO_MOTORS": {
-          "NAME": "Auto și moto",
-          "DESCRIPTION": "Mașini, motociclete și piese rare."
-        },
-        "ART_COLLECTIBLES": {
-          "NAME": "Artă și obiecte de colecție",
-          "DESCRIPTION": "Opere de artă exclusive și colecții speciale."
-        },
-        "REAL_ESTATE": {
-          "NAME": "Imobiliare",
-          "DESCRIPTION": "Proprietăți și terenuri deosebite."
-        }
-      }
-    },
-    "AUCTIONS": {
-      "EYEBROW": "Piață",
-      "TITLE_START": "Licitații",
-      "TITLE_END": "active",
-      "PLACE_BID": "Licitează",
-      "EMPTY": "Momentan nu există licitații care se termină în curând — revino mai târziu."
     }
   },
+
+  "CATEGORIES": {
+    "EYEBROW": "Categorii",
+    "TITLE_START": "Explorează",
+    "TITLE_END": "Categoriile",
+
+    "ITEMS": {
+      "Art": {
+        "NAME": "Artă",
+        "DESCRIPTION": "Picturi, sculpturi și opere de artă de colecție."
+      },
+      "Clothing": {
+        "NAME": "Îmbrăcăminte",
+        "DESCRIPTION": "Haine, încălțăminte și accesorii de modă."
+      },
+      "Electronics": {
+        "NAME": "Electronice",
+        "DESCRIPTION": "Telefoane, calculatoare și dispozitive electronice."
+      },
+      "Home & Garden": {
+        "NAME": "Casă și grădină",
+        "DESCRIPTION": "Mobilier, decorațiuni și produse pentru grădină."
+      },
+      "Jewelry": {
+        "NAME": "Bijuterii",
+        "DESCRIPTION": "Inele, coliere, ceasuri și accesorii valoroase."
+      },
+      "Others": {
+        "NAME": "Altele",
+        "DESCRIPTION": "Descoperă produse din alte categorii."
+      },
+      "Real Estate": {
+        "NAME": "Imobiliare",
+        "DESCRIPTION": "Case, apartamente, terenuri și proprietăți comerciale."
+      },
+      "Vehicles": {
+        "NAME": "Vehicule",
+        "DESCRIPTION": "Autoturisme, motociclete și alte vehicule."
+      }
+    }
+  },
+
+  "AUCTIONS": {
+    "EYEBROW": "Piață",
+    "TITLE_START": "Licitații",
+    "TITLE_END": "Active",
+    "PLACE_BID": "Licitează",
+    "EMPTY": "Momentan nu există licitații care se încheie în curând.",
+
+    "COUNTDOWN": {
+      "DAYS_HOURS": "Mai sunt {{days}}z {{hours}}h",
+      "HOURS_MINUTES": "Mai sunt {{hours}}h {{minutes}}min",
+      "MINUTES_SECONDS": "Mai sunt {{minutes}}min {{seconds}}s"
+    }
+  }
+},
   "HELP": {
   "TITLE": "Centru de ajutor",
   "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru virtual.",
