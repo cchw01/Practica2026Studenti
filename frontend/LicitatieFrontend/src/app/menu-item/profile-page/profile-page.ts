@@ -101,6 +101,12 @@ export class ProfilePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Verificăm dacă utilizatorul este logat
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
+
     const authUserId = this.authService.getCurrentUserId();
     const currentUser = this.authService.getCurrentUser();
 
@@ -131,7 +137,7 @@ export class ProfilePage implements OnInit {
           this.user.email = apiUser.Email || apiUser.email || this.user.email;
           this.cdr.detectChanges();
         },
-        error: (err) => console.error('Failed to fetch latest user data', err)
+        error: (err) => console.error('Failed to fetch latest user data', err),
       });
     }
 
@@ -232,7 +238,8 @@ export class ProfilePage implements OnInit {
             .map((item: any) => ({
               id: item.ID || item.id || 0,
               title: item.Name || item.name || 'Item',
-              price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+              price:
+                item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
               status: (item.Status || item.status || 'Active').toString(),
               image: this.getItemImage(item, allItems),
             }));
@@ -272,12 +279,13 @@ export class ProfilePage implements OnInit {
               ownerUsername &&
               this.user.username &&
               ownerUsername.toLowerCase() === this.user.username.toLowerCase();
-              
+
             const isOwner = matchId || matchUser;
             const status = (item.Status || item.status || '').toString().toLowerCase();
             // In backend the statuses are: Added, Validated, ActiveBid, NoWinner, Sold, Rejected.
-            const isActive = status === 'validated' || status === 'activebid' || status === 'active';
-            
+            const isActive =
+              status === 'validated' || status === 'activebid' || status === 'active';
+
             return isOwner && isActive;
           })
           .map((item: any) => ({
@@ -320,15 +328,22 @@ export class ProfilePage implements OnInit {
                   id: itemId,
                   title: sourceItem.Name || sourceItem.name || sourceItem.title || 'Item',
                   price:
-                    sourceItem.CurrentPrice ?? sourceItem.currentPrice ?? sourceItem.StartPrice ?? sourceItem.startPrice ?? 0,
+                    sourceItem.CurrentPrice ??
+                    sourceItem.currentPrice ??
+                    sourceItem.StartPrice ??
+                    sourceItem.startPrice ??
+                    0,
                   image:
                     sourceItem.imageUrl ||
                     sourceItem.ImageUrl ||
-                    (sourceItem.photoList && sourceItem.photoList.length > 0 ? sourceItem.photoList[0] : null) ||
+                    (sourceItem.photoList && sourceItem.photoList.length > 0
+                      ? sourceItem.photoList[0]
+                      : null) ||
                     this.getItemImage(sourceItem, items),
-                  status: sourceItem.status || sourceItem.Status
-                    ? (sourceItem.status || sourceItem.Status).toString()
-                    : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+                  status:
+                    sourceItem.status || sourceItem.Status
+                      ? (sourceItem.status || sourceItem.Status).toString()
+                      : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
                 };
               })
               .filter((item) => item.id > 0);
