@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth';
 import { ReviewService } from '../services/review-service';
 import { AuctionItem } from '../Models/item-model';
 import { Review, ReviewCreate } from '../Models/review/review.model';
+import { ReportService } from '../services/report-service';
 
 @Component({
   selector: 'app-user-page',
@@ -67,14 +68,12 @@ export class UserPage implements OnInit {
     private itemService: ItemService,
     private authService: AuthService,
     private reviewService: ReviewService,
+    private reportService: ReportService,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getCurrentUserId();
-
-    const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
-    this.isUserReported = reportedUsers.includes(this.userId);
 
     this.route.paramMap.subscribe((params) => {
       this.currentUserId = this.authService.getCurrentUserId();
@@ -212,22 +211,33 @@ export class UserPage implements OnInit {
   }
   submitReport(): void {
     if (!this.reportReason.trim()) return;
-    this.userService.reportUser(this.userId, this.reportReason).subscribe({
+
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      alert('Trebuie să fii autentificat pentru a raporta un utilizator.');
+      return;
+    }
+
+    const payload = {
+      targetType: 'User',
+      targetId: this.userId,
+      reason: 'Other',
+      description: this.reportReason.trim(),
+      reporterId: currentUserId,
+    } as any;
+
+    this.reportService.addReport(payload).subscribe({
       next: () => {
         this.showReportForm = false;
         this.reportSuccessMessage = `Utilizatorul a fost raportat cu succes pentru: "${this.reportReason}".`;
         this.reportReason = '';
 
         this.isUserReported = true;
-        let reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
-        if (!reportedUsers.includes(this.userId)) {
-          reportedUsers.push(this.userId);
-        }
-        localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
 
         this.cdr.detectChanges();
       },
       error: (err) => {
+        console.error('Error submitting user report:', err);
         alert('A apărut o eroare la trimiterea raportului.');
       },
     });

@@ -37,6 +37,10 @@
     {{ unresolvedMessagesCount }}
   </span>
 </button>
+      <!-- NOU: buton Reports -->
+      <button (click)="setTab('reports')" [class.active]="activeTab === 'reports'">
+        <span class="menu-icon"></span> Reports
+      </button>
     </div>
 
     <!-- BOTTOM AREA: PROFILE + LOGOUT BUTTON -->
@@ -318,6 +322,48 @@
     </div>
   </div>
 </div>
+
+      <!-- NOU: TAB 7: REPORTS -->
+      <div *ngIf="activeTab === 'reports'" class="users-tab-wrapper">
+
+        <div class="users-view-toggle">
+          <button [class.active]="reportsFilter === 'pending'" (click)="setReportsFilter('pending')">
+            Pending
+          </button>
+          <button [class.active]="reportsFilter === 'all'" (click)="setReportsFilter('all')">
+            All ({{ reports.length }})
+          </button>
+        </div>
+
+        <div class="vuexy-card">
+          <div class="vuexy-list-stack">
+            <div *ngFor="let report of displayedReports" class="vuexy-stack-item">
+              <div class="stack-left">
+                <span class="vuexy-author-headline">
+                  Reported by: @{{ report.reporterUserName || 'User #' + report.reporterId }}
+                </span>
+                <h4>{{ report.targetType }}: {{ report.targetDisplayName || '#' + report.targetId }}</h4>
+                <p class="forum-body-text">Reason: <strong>{{ report.reason }}</strong></p>
+                <p class="forum-body-text" *ngIf="report.description">"{{ report.description }}"</p>
+                <small>{{ report.createdAt | date:'dd MMM, HH:mm' }}</small>
+                <span class="vuexy-pill" [class.pill-banned]="report.status === 'Pending'">
+                  {{ report.status }}
+                </span>
+              </div>
+
+              <div class="stack-actions">
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn btn-vuexy-success" (click)="resolveReport(report.id)">Action Taken</button>
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn" (click)="dismissReport(report.id)">Dismiss</button>
+                <button class="vuexy-text-danger-btn" (click)="removeReport(report.id)">Delete</button>
+              </div>
+            </div>
+
+            <div *ngIf="displayedReports.length === 0" class="vuexy-empty-row">
+              No reports at the moment.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- TAB 6: CATEGORY MANAGEMENT -->
       <div class="vuexy-categories-split" *ngIf="activeTab === 'categories'">
