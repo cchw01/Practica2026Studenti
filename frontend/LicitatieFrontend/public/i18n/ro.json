@@ -291,10 +291,12 @@
       "TITLE": "Nu au fost găsite produse",
       "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
     },
-    "TIME": {
-      "ENDED": "Licitația s-a încheiat",
-      "LEFT": "rămase"
-    }
+"TIME": {
+  "ENDED": "Licitația s-a încheiat",
+  "DAYS_HOURS": "{{days}}z {{hours}}h rămase",
+  "HOURS_MINUTES": "{{hours}}h {{minutes}}min rămase",
+  "MINUTES_SECONDS": "{{minutes}}min {{seconds}}s rămase"
+}
   },
 
   "CURRENT_PRICE": "Preț curent",
