@@ -112,10 +112,10 @@
               <span class="bid-currency">RON</span>
               <!-- [disabled] adăugat la input -->
               <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input" placeholder="{{ 'AUCTION_ITEM_PAGE.BID.PLACEHOLDER' | translate }}"
-                [min]="auctionItem.CurrentPrice + 1" [disabled]="isOwner()" />
+                [min]="auctionItem.CurrentPrice + 1" [disabled]="isOwner() || isReported" />
             </div>
             <!-- [disabled] adăugat la buton -->
-            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner()">
+            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner() || isReported">
                {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
             </button>
           </div>
@@ -135,7 +135,7 @@
 
       <!-- Wishlist container (only visible when logged in) -->
       <div class="wishlist-container" *ngIf="authService.isLoggedIn()">
-        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()" [disabled]="isOwner()">
+        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()" [disabled]="isOwner() || isReported">
           <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
           <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
         </button>
@@ -194,7 +194,9 @@
       </div>
       <div class="modal-actions">
         <button type="button" class="btn-cancel" (click)="closeReportModal()">Cancel</button>
-        <button type="button" class="btn-submit-report" (click)="submitReport()">Submit Report</button>
+        <button type="button" class="btn-submit-report" [disabled]="isSubmittingReport" (click)="submitReport()">
+          {{ isSubmittingReport ? 'Submitting...' : 'Submit Report' }}
+        </button>
       </div>
     </div>
   </div>

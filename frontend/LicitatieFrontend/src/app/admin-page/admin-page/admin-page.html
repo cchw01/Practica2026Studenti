@@ -37,9 +37,9 @@
     {{ unresolvedMessagesCount }}
   </span>
 </button>
-      <!-- NOU: buton Reports -->
-      <button (click)="setTab('reports')" [class.active]="activeTab === 'reports'">
-        <span class="menu-icon"></span> Reports
+      <button (click)="setTab('itemReports')" [class.active]="activeTab === 'itemReports'">
+        <span class="menu-icon"></span> Item Reports
+        <span *ngIf="itemReports.length > 0" class="sidebar-badge">{{ itemReports.length }}</span>
       </button>
     </div>
 
@@ -216,9 +216,10 @@
                       <option value="Guest">Guest</option>
                       <option value="Admin">Admin</option>
                     </select>
-                    <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger"
+                    <button *ngIf="!user.isBanned && user.id !== adminId" class="vuexy-btn btn-vuexy-danger"
                       (click)="banUser(user.id)">Ban</button>
                     <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Unban</button>
+                    <button *ngIf="user.reports > 0" class="vuexy-btn" (click)="viewUserReports(user)">View Reports</button>
                     <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Delete</button>
                   </div>
                 </td>
@@ -250,7 +251,6 @@
               <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Delete</button>
             </div>
           </div>
-          <!-- MODIFICAT: forumPosts.length -> visibleForumPosts.length -->
           <div *ngIf="visibleForumPosts.length === 0" class="vuexy-empty-row">No inappropriate language has been detected.</div>
         </div>
       </div>
@@ -323,26 +323,27 @@
   </div>
 </div>
 
-      <!-- NOU: TAB 7: REPORTS -->
-      <div *ngIf="activeTab === 'reports'" class="users-tab-wrapper">
+      <!-- TAB ITEM REPORTS -->
+      <div *ngIf="activeTab === 'itemReports'" class="users-tab-wrapper">
 
         <div class="users-view-toggle">
-          <button [class.active]="reportsFilter === 'pending'" (click)="setReportsFilter('pending')">
+          <button [class.active]="itemReportsFilter === 'pending'" (click)="setItemReportsFilter('pending')">
             Pending
           </button>
-          <button [class.active]="reportsFilter === 'all'" (click)="setReportsFilter('all')">
-            All ({{ reports.length }})
+          <button [class.active]="itemReportsFilter === 'all'" (click)="setItemReportsFilter('all')">
+            All ({{ itemReports.length }})
           </button>
         </div>
 
         <div class="vuexy-card">
           <div class="vuexy-list-stack">
-            <div *ngFor="let report of displayedReports" class="vuexy-stack-item">
+            <div *ngFor="let report of displayedItemReports" class="vuexy-stack-item">
               <div class="stack-left">
                 <span class="vuexy-author-headline">
                   Reported by: @{{ report.reporterUserName || 'User #' + report.reporterId }}
                 </span>
-                <h4>{{ report.targetType }}: {{ report.targetDisplayName || '#' + report.targetId }}</h4>
+                <h4>{{ report.targetDisplayName || 'Item #' + report.targetId }}</h4>
+                <p class="forum-body-text">Owner: {{ report.targetOwnerUserName || 'User #' + report.targetOwnerId }}</p>
                 <p class="forum-body-text">Reason: <strong>{{ report.reason }}</strong></p>
                 <p class="forum-body-text" *ngIf="report.description">"{{ report.description }}"</p>
                 <small>{{ report.createdAt | date:'dd MMM, HH:mm' }}</small>
@@ -352,14 +353,14 @@
               </div>
 
               <div class="stack-actions">
-                <button *ngIf="report.status === 'Pending'" class="vuexy-btn btn-vuexy-success" (click)="resolveReport(report.id)">Action Taken</button>
-                <button *ngIf="report.status === 'Pending'" class="vuexy-btn" (click)="dismissReport(report.id)">Dismiss</button>
-                <button class="vuexy-text-danger-btn" (click)="removeReport(report.id)">Delete</button>
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn btn-vuexy-success" (click)="resolveItemReport(report.id)">Action Taken</button>
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn" (click)="dismissItemReport(report.id)">Dismiss</button>
+                <button class="vuexy-text-danger-btn" (click)="removeItemReport(report.id)">Delete</button>
               </div>
             </div>
 
-            <div *ngIf="displayedReports.length === 0" class="vuexy-empty-row">
-              No reports at the moment.
+            <div *ngIf="displayedItemReports.length === 0" class="vuexy-empty-row">
+              No item reports at the moment.
             </div>
           </div>
         </div>
@@ -438,5 +439,33 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Modal cu motivele rapoartelor pentru un user -->
+  <div class="report-modal-backdrop" *ngIf="showUserReportsModal" (click)="closeUserReportsModal()">
+    <div class="report-modal" (click)="$event.stopPropagation()">
+      <h3>Reports for @{{ selectedUserForReports?.userName }}</h3>
+
+      <div class="vuexy-list-stack" *ngIf="selectedUserReports.length > 0; else noUserReports">
+        <div *ngFor="let report of selectedUserReports" class="vuexy-stack-item">
+          <div class="stack-left">
+            <span class="vuexy-author-headline">
+              Reported by: @{{ report.reporterUserName || 'User #' + report.reporterId }}
+            </span>
+            <p class="forum-body-text">Reason: <strong>{{ report.reason }}</strong></p>
+            <p class="forum-body-text" *ngIf="report.description">"{{ report.description }}"</p>
+            <small>{{ report.createdAt | date:'dd MMM, HH:mm' }}</small>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noUserReports>
+        <p class="forum-body-text">No report details available.</p>
+      </ng-template>
+
+      <div class="report-modal-actions">
+        <button type="button" class="secondary-button" (click)="closeUserReportsModal()">Close</button>
+      </div>
+    </div>
   </div>
 </div>
