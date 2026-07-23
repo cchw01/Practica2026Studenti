@@ -312,11 +312,19 @@ export class AdminPage implements OnInit {
     this.categorySubmitting = true;
 
     this.categoryService.addCategory(category).subscribe({
-      next: () => {
+      next: (createdCategory) => {
         nameInput.value = '';
         descriptionInput.value = '';
         this.categorySubmitting = false;
+        this.categoryErrorMessage = '';
 
+        // Adaugam noua categorie direct in lista locala, imediat, fara sa astept raspunsul de la GET
+        this.categories = [...this.categories, createdCategory].sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
+        this.cdr.detectChanges();
+
+        // Sincronizam si cu backend-ul, ca sa fim siguri ca lista e 100% la zi
         this.loadCategories();
       },
       error: (error: HttpErrorResponse) => {
@@ -572,5 +580,8 @@ export class AdminPage implements OnInit {
       return;
     }
     this.adminService.deleteMessage(id).subscribe(() => this.loadMessages());
+  }
+  onCategoryFieldChange(): void {
+    // gol intentionat — doar ca sa oblige Angular sa reevalueze [disabled] la fiecare litera tastata
   }
 }

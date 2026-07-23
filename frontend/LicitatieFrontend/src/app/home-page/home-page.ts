@@ -91,7 +91,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly categoryService: CategoryService,
     private readonly cdr: ChangeDetectorRef,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   categories: HomeCategory[] = [];
   categoriesLoading = true;
@@ -176,38 +176,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
-getRemainingLabel(endDate: Date): string {
-  const diffMs = new Date(endDate).getTime() - Date.now();
+  getRemainingLabel(endDate: Date): string {
+    const diffMs = new Date(endDate).getTime() - Date.now();
 
-  if (diffMs <= 0) {
-    return this.translate.instant('HOME.AUCTIONS.COUNTDOWN.ENDED');
-  }
+    if (diffMs <= 0) {
+      return this.translate.instant('HOME.AUCTIONS.COUNTDOWN.ENDED');
+    }
 
-  const totalSeconds = Math.floor(diffMs / 1000);
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-  if (days > 0) {
+    if (days > 0) {
+      return this.translate.instant(
+        'HOME.AUCTIONS.COUNTDOWN.DAYS_HOURS',
+        { days, hours }
+      );
+    }
+
+    if (hours > 0) {
+      return this.translate.instant(
+        'HOME.AUCTIONS.COUNTDOWN.HOURS_MINUTES',
+        { hours, minutes }
+      );
+    }
+
     return this.translate.instant(
-      'HOME.AUCTIONS.COUNTDOWN.DAYS_HOURS',
-      { days, hours }
+      'HOME.AUCTIONS.COUNTDOWN.MINUTES_SECONDS',
+      { minutes, seconds }
     );
   }
-
-  if (hours > 0) {
-    return this.translate.instant(
-      'HOME.AUCTIONS.COUNTDOWN.HOURS_MINUTES',
-      { hours, minutes }
-    );
-  }
-
-  return this.translate.instant(
-    'HOME.AUCTIONS.COUNTDOWN.MINUTES_SECONDS',
-    { minutes, seconds }
-  );
-}
 
   getTimeUrgencyClass(endDate: Date): string {
     const minutesLeft = (new Date(endDate).getTime() - Date.now()) / (1000 * 60);
@@ -396,20 +396,6 @@ getRemainingLabel(endDate: Date): string {
 
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
-  getCategoryKey(categoryName: string): string {
-  const categoryKeys: Record<string, string> = {
-    art: 'ART',
-    clothing: 'CLOTHING',
-    electronics: 'ELECTRONICS',
-    'home & garden': 'HOME_GARDEN',
-    jewelry: 'JEWELRY',
-    others: 'OTHERS',
-    'real estate': 'REAL_ESTATE',
-    vehicles: 'VEHICLES',
-  };
-
-  return categoryKeys[categoryName.trim().toLowerCase()] || 'OTHERS';
-}
 
   private getCategoryIcon(categoryName: string): string {
     const normalizedName = categoryName.trim().toLowerCase();
@@ -440,14 +426,14 @@ getRemainingLabel(endDate: Date): string {
           this.categories = (categories || [])
             .map((category) => {
               const name = String(category.name ?? (category as any).Name ?? '').trim();
+
               const description = String(
-                category.description ?? (category as any).Description ?? '',
-              ).trim();
+                category.description ?? (category as any).Description ?? '').trim();
 
               return {
                 name,
                 icon: this.getCategoryIcon(name),
-                description: description || 'No description available.',
+                description,
               };
             })
             .filter((category) => category.name.length > 0)
@@ -457,7 +443,7 @@ getRemainingLabel(endDate: Date): string {
           this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Eroare la încărcarea categoriilor', error);
+          console.error('Error loading categories:',error);
 
           this.categories = [];
           this.categoriesLoading = false;

@@ -425,22 +425,24 @@
   }
 },
   "NOTIFICATIONS": {
-  "TRUE": "Notificări",
-  "FALSE": "Nu există încă notificări.",
-  "OPEN_ARIA": "Deschide notificările",
-  "DO_NOT_DISTURB": "Nu deranja",
-  "LOADING": "Se încarcă notificările...",
-  "ACTIONS_ARIA": "Acțiuni pentru notificare",
-  "MARKING_ALL_READ": "Se marchează ca citite...",
-  "MARK_ALL_READ": "Marchează toate ca citite",
-  "DELETE": "Șterge notificarea",
-
-  "TYPES": {
-    "AuctionApproved": "Licitația ta „{{itemName}}” a fost aprobată și este acum publică!",
-    "AuctionRejected": "Licitația ta „{{itemName}}” a fost respinsă de un administrator.",
-    "SupportReply": "Un administrator a răspuns la mesajul tău din {{date}}: {{reply}}"
-  }
-},
+    "TRUE": "Notificări",
+    "FALSE": "Nu există notificări încă.",
+    "OPEN_ARIA": "Deschide notificările",
+    "DO_NOT_DISTURB": "Nu deranja",
+    "LOADING": "Se încarcă notificările...",
+    "MARK_ALL_READ": "Marchează tot ca citit",
+    "MARKING_ALL_READ": "Se marchează...",
+    "ACTIONS_ARIA": "Acțiuni notificare",
+    "DELETE": "Șterge notificarea",
+    "TYPES": {
+      "AuctionApproved": "Licitația ta \"{{itemName}}\" a fost aprobată și e acum vizibilă public!",
+      "AuctionRejected": "Licitația ta \"{{itemName}}\" a fost respinsă de un administrator.",
+      "SupportReply": "Ai primit un răspuns la mesajul tău de {{issueType}} din {{date}}: \"{{reply}}\"",
+      "UserReported": "Ai primit un raport de la un alt utilizator.",
+      "PostReported": "Postarea ta de pe forum \"{{postTitle}}\" a fost raportată.",
+      "PostDeleted": "Postarea ta de pe forum \"{{postTitle}}\" a fost ștearsă de un moderator."
+    }
+  },
   "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Detalii licitație",
 
