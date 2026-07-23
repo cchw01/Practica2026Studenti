@@ -7,7 +7,7 @@ import { AppNotification } from './notification';
 export class NotificationService {
   private apiUrl = 'https://localhost:7137/api/Notification';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMine(): Observable<AppNotification[]> {
     return this.http.get<AppNotification[]>(this.apiUrl);
@@ -26,5 +26,8 @@ export class NotificationService {
   }
   markAllRead(): Observable<any> {
     return this.http.post(`${this.apiUrl}/read-all`, {});
+  }
+  getUnreadCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/unread-count`);
   }
 }

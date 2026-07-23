@@ -12,6 +12,7 @@ namespace Backend.DTOs
         public string Role { get; set; } = string.Empty;
         public double? AverageRating { get; set; }
         public int TotalReviewsReceived { get; set; }
+        public string? PictureName { get; set; }
         public List<ReviewDto> ReviewsReceived { get; set; } = new();
         public List<AuctionItemSummaryDto> AddedItems { get; set; } = new();
         public List<AuctionItemSummaryDto> BiddedItems { get; set; } = new();
@@ -40,7 +41,6 @@ namespace Backend.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string OwnerName { get; set; } = string.Empty;
-        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class UpdateProfileDto

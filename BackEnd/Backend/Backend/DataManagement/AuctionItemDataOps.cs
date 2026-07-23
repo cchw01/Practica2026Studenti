@@ -28,15 +28,14 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetActiveAuctionItems()
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             return dbContext.AuctionItems
                 .AsNoTracking()
                 .Include(i => i.Category)
                 .Include(i => i.Owner)
                 .Include(i => i.Winner)
                 .Where(i =>
-                    (i.Status == AuctionItem.StatusEnum.Added ||
-                     i.Status == AuctionItem.StatusEnum.Validated ||
+                    (i.Status == AuctionItem.StatusEnum.Validated ||
                      i.Status == AuctionItem.StatusEnum.ActiveBid) &&
                     i.EndDate > now)
                 .OrderBy(i => i.EndDate)
@@ -84,10 +83,39 @@ namespace Backend.DataManagement
             return item;
         }
 
+        public bool HasBids(int itemId)
+        {
+            return dbContext.Bids.Any(
+                bid => bid.BiddedItemId == itemId);
+        }
+
         public void SaveChanges()
         {
             dbContext.SaveChanges();
         }
 
+        public void ProcessAuctionEnd(AuctionItem item, BidDataOps bidDataOps)
+        {
+            if (item.Status == AuctionItem.StatusEnum.Sold ||
+                item.Status == AuctionItem.StatusEnum.NoWinner ||
+                item.Status == AuctionItem.StatusEnum.Rejected)
+            {
+                return;
+            }
+            item.EndDate = DateTime.Now;
+
+            var bids = bidDataOps.GetBidsByItemId(item.ID);
+            if (bids != null && bids.Length > 0)
+            {
+                var highestBid = bids.OrderByDescending(b => b.Price).First();
+                item.Status = AuctionItem.StatusEnum.Sold;
+                item.WinnerId = highestBid.BidderId;
+            }
+            else
+            {
+                item.Status = AuctionItem.StatusEnum.NoWinner;
+            }
+            dbContext.SaveChanges();
+        }
     }
 }

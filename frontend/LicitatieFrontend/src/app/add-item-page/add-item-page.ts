@@ -63,10 +63,8 @@ export class AddItemPage implements OnInit {
       this.router.navigate(['/profile-page']);
       return;
     }
-    const userId = this.authService.getCurrentUserId();
-    if (userId) {
-      this.currentUserId = userId;
-    }
+    this.currentUserId = +currentUser.id || this.currentUserId;
+
     this.categoryService.getCategories().subscribe({
       next: (cats) => (this.categories = cats),
       error: (err) => console.error('Could not load categories', err),
@@ -88,11 +86,11 @@ export class AddItemPage implements OnInit {
       const file = files[i];
 
       if (!this.allowedTypes.includes(file.type)) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_TYPE');
         continue;
       }
       if (file.size > this.maxImageSize) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_SIZE');
         continue;
       }
 
@@ -141,14 +139,13 @@ export class AddItemPage implements OnInit {
 
     for (const file of this.selectedFiles) {
       formData.append('Images', file, file.name);
-      formData.append('Image', file, file.name);
     }
 
     this.isSubmitting = true;
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
+        this.message = this.translate.instant('ADD_ITEM_PAGE.MESSAGES.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.clearAllImages();
         this.isSubmitting = false;

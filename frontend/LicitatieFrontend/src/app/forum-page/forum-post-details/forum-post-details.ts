@@ -7,6 +7,16 @@ import { ForumComment } from '../../Models/forum-comment/forum-comment';
 import { ForumPostService } from '../../Models/forum-post/forum-post-service';
 import { ForumCommentService } from '../../Models/forum-comment/forum-comment-service';
 import { AuthService } from '../../services/auth';
+import { ReportService } from '../../services/report-service';
+import { ReportReason } from '../../Models/report/report-reason-enum';
+
+const REPORT_REASON_LABELS: { value: ReportReason; label: string }[] = [
+  { value: 'Spam', label: 'Spam' },
+  { value: 'Harassment', label: 'Harassment' },
+  { value: 'InappropriateContent', label: 'Inappropriate content' },
+  { value: 'Fraud', label: 'Fraud' },
+  { value: 'Other', label: 'Other reason' },
+];
 
 @Component({
   selector: 'app-forum-post-details',
@@ -35,6 +45,14 @@ export class ForumPostDetails implements OnInit {
   //public readonly currentUserId = 1;
   public  currentUserId: number | null = null;
 
+  // NOU: proprietăți pentru Report
+  readonly reportReasons = REPORT_REASON_LABELS;
+  isReportModalOpen = false;
+  selectedReportReason: ReportReason | '' = '';
+  isSubmittingReport = false;
+  reportErrorMessage = '';
+  reportSuccessMessage = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -43,6 +61,7 @@ export class ForumPostDetails implements OnInit {
     private forumCommentService: ForumCommentService,
     private cdr: ChangeDetectorRef,
      private authService: AuthService,
+     private reportService: ReportService, // NOU
   ) {
     this.commentForm = this.formBuilder.group({
       commentText: [
@@ -303,5 +322,58 @@ editingCommentId: number | null = null;
 
   get commentTextControl() {
     return this.commentForm.get('commentText');
+  }
+
+  // NOU: metodele pentru Report
+
+  openReportModal(): void {
+    if (this.currentUserId === null) {
+      alert('Trebuie să fii logat pentru a raporta o postare.');
+      return;
+    }
+
+    this.isReportModalOpen = true;
+    this.selectedReportReason = '';
+    this.reportErrorMessage = '';
+    this.reportSuccessMessage = '';
+  }
+
+  closeReportModal(): void {
+    this.isReportModalOpen = false;
+    this.selectedReportReason = '';
+    this.reportErrorMessage = '';
+  }
+
+  submitReport(): void {
+    if (!this.selectedReportReason || !this.post || this.currentUserId === null) {
+      this.reportErrorMessage = 'Selectează un motiv pentru raportare.';
+      return;
+    }
+
+    this.isSubmittingReport = true;
+    this.reportErrorMessage = '';
+
+    const payload = {
+      targetType: 'ForumPost',
+      targetId: this.post.id,
+      reason: this.selectedReportReason,
+      reporterId: this.currentUserId,
+    } as any;
+
+    this.reportService.addReport(payload).subscribe({
+      next: () => {
+        this.isSubmittingReport = false;
+        this.reportSuccessMessage = 'Raportarea a fost trimisă. Mulțumim!';
+        this.cdr.detectChanges();
+
+        setTimeout(() => this.closeReportModal(), 1500);
+      },
+      error: (error) => {
+        console.error('Error submitting report:', error);
+        this.isSubmittingReport = false;
+        this.reportErrorMessage = 'Raportarea nu a putut fi trimisă. Încearcă din nou.';
+        this.cdr.detectChanges();
+      },
+    });
   }
 }

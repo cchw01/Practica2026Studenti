@@ -1,7 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SupportMessageService } from '../../services/support-message-service';
+import { AuthService } from '../../services/auth';
+
+interface Faq {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+}
+
+interface FaqCategory {
+  title: string;
+  faqs: Faq[];
+}
 
 @Component({
   selector: 'app-help-page',
@@ -11,109 +25,165 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class HelpPageComponent implements OnInit {
   helpForm!: FormGroup;
+  isLoggedIn = false;
 
-  // FAQ with open/closed state
-  faqs = [
-    {
-      question: 'How do I place a bid on an auction?',
-      answer:
-        'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
-      isOpen: false,
-    },
-    {
-      question: 'How do I list an item for sale?',
-      answer:
-        'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
-      isOpen: false,
-    },
-    {
-      question: 'How do I know if I won an auction?',
-      answer:
-        'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
-      isOpen: false,
-    },
-    {
-      question: 'Can I cancel a bid after placing it?',
-      answer:
-        'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
-      isOpen: false,
-    },
-    {
-      question: 'How do I create an account?',
-      answer:
-        'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
-      isOpen: false,
-    },
-    {
-      question: 'I forgot my password. What should I do?',
-      answer:
-        'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
-      isOpen: false,
-    },
-    {
-      question: 'How is the item delivered after I win?',
-      answer:
-        'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
-      isOpen: false,
-    },
-    {
-      question: 'What happens if the seller does not deliver the item?',
-      answer:
-        'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
-      isOpen: false,
-    },
-    {
-      question: 'Can I edit or remove an auction after posting it?',
-      answer:
-        'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
-      isOpen: false,
-    },
-    {
-      question: 'What if my item does not sell?',
-      answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
-      isOpen: false,
-    },
-    {
-      question: 'When do I get paid?',
-      answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
-      isOpen: false,
-    },
-    {
-      question: 'Who pays for shipping?',
-      answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
-      isOpen: false,
-    },
-  ];
-
+  faqCategories: FaqCategory[] = [
+  {
+    title: 'HELP.FAQ_CATEGORIES.AUCTIONS.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.PLACE_BID.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.PLACE_BID.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.CANCEL_BID.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.CANCEL_BID.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.WIN_AUCTION.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.WIN_AUCTION.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.ACCOUNT.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.CREATE_ACCOUNT.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.CREATE_ACCOUNT.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.FORGOT_PASSWORD.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.FORGOT_PASSWORD.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.DELIVERY.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.ITEM_DELIVERY.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.ITEM_DELIVERY.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.NOT_DELIVERED.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.NOT_DELIVERED.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.SHIPPING_COST.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.SHIPPING_COST.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.PAYOUT.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.PAYOUT.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.SELLING.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.LIST_ITEM.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.LIST_ITEM.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.EDIT_AUCTION.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.EDIT_AUCTION.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.NOT_SOLD.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.NOT_SOLD.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+];
   isChatOpen = false;
-  isTyping = false; // AI typing effect
+  isTyping = false;
   chatMessages: { sender: string; text: string }[] = [
     { sender: 'ai', text: "Hi! I'm your virtual assistant. How can I help you today?" },
   ];
 
-  constructor(private fb: FormBuilder) {}
+  submitError = '';
+  submitted = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private supportService: SupportMessageService,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
+    const currentUser = this.authService.getCurrentUser();
+    this.isLoggedIn = this.authService.isLoggedIn();
+
     this.helpForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      name: [currentUser?.name || '', Validators.required],
+      email: [
+        { value: currentUser?.email || '', disabled: !!currentUser },
+        [Validators.required, Validators.email],
+      ],
       issueType: ['', Validators.required],
       issue: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
 
-  // Toggle a FAQ item open/closed
-  toggleFaq(index: number) {
-    this.faqs[index].isOpen = !this.faqs[index].isOpen;
+  scrollToCategory(index: number) {
+    const element = document.getElementById('cat-' + index);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  toggleFaq(catIndex: number, faqIndex: number) {
+    this.faqCategories[catIndex].faqs[faqIndex].isOpen =
+      !this.faqCategories[catIndex].faqs[faqIndex].isOpen;
   }
 
   onSubmitHelpForm() {
-    if (this.helpForm.valid) {
-      alert('Your ticket has been submitted successfully! We will contact you soon.');
-      this.helpForm.reset();
-    } else {
-      alert('Please fill in all fields correctly.');
+    if (this.helpForm.invalid) {
+      return;
     }
+
+    this.submitError = '';
+    const formData = this.helpForm.getRawValue();
+
+    this.supportService
+      .submit('Help', formData.name, formData.email, formData.issue, formData.issueType)
+      .subscribe({
+        next: () => {
+          this.submitted = true;
+          this.helpForm.reset({ name: formData.name, email: formData.email });
+        },
+        error: (err) => {
+          console.error('Eroare la trimiterea ticketului:', err);
+          this.submitError = 'Ticketul nu a putut fi trimis. Încearcă din nou.';
+        },
+      });
+  }
+
+  sendAnother(): void {
+    this.submitted = false;
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login-page']);
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register-page']);
   }
 
   toggleChat() {
@@ -127,7 +197,6 @@ export class HelpPageComponent implements OnInit {
       inputEl.value = '';
       this.isTyping = true;
 
-      // Simulate a delayed AI response
       setTimeout(() => {
         this.isTyping = false;
         this.chatMessages.push({

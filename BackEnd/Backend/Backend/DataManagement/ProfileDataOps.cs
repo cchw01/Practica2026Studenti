@@ -165,6 +165,10 @@ namespace Backend.DataManagement
                 Role = user.Role.ToString(),
                 AverageRating = avgRating,
                 TotalReviewsReceived = reviewsReceived.Count,
+                PictureName = _db.ProfilePictures
+                                .Where(x => x.Id == user.ProfilePictureId)
+                                .Select(x => x.PictureBase64)
+                                .FirstOrDefault(),
                 ReviewsReceived = reviewsReceived.Select(r => MapReviewToDto(r)).ToList(),
                 AddedItems = addedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
                 BiddedItems = biddedItems.Select(a => MapAuctionItemToDto(a)).ToList(),
@@ -196,8 +200,7 @@ namespace Backend.DataManagement
             Status = a.Status.ToString(),
             StartDate = a.StartDate,
             EndDate = a.EndDate,
-            OwnerName = a.OwnerId.ToString(),
-            ImageUrl = a.ImageUrl ?? string.Empty
+            OwnerName = a.OwnerId.ToString()
         };
     }
 }

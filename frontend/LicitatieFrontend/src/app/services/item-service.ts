@@ -85,7 +85,11 @@ export class ItemService {
       WishingUsers: item.wishingUsers || [],
       Description: item.description || item.Description,
       Location: item.location || item.Location,
-      Owner: item.owner || { id: item.ownerId || item.OwnerId, username: item.ownerUserName || item.OwnerUserName },
+      Owner: {
+        id: item.owner?.id || item.ownerId || item.OwnerId,
+        username: item.owner?.username || item.ownerUserName || item.OwnerUserName,
+        Name: item.owner?.name || item.owner?.Name || item.ownerUserName || item.OwnerUserName || 'Necunoscut'
+      },
       OwnerId: item.ownerId || item.OwnerId,
       Winner: item.winner || (item.winnerId ? { id: item.winnerId, username: item.winnerUserName } : undefined),
       WinnerId: item.winnerId || item.WinnerId,
@@ -93,6 +97,7 @@ export class ItemService {
       StartDate: new Date(item.startDate || item.StartDate),
       EndDate: new Date(item.endDate || item.EndDate),
       BidList: item.bidList || item.BidList || [],
+      HasBids: item.hasBids ?? item.HasBids ?? false,
       PhotoList: parsedPhotoList,
       ImageUrl: mainImageUrl
     });
@@ -100,6 +105,15 @@ export class ItemService {
 
   private sanitizeItem(item: any): AuctionItem {
     if (!item) return item;
+
+    try {
+      const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+      const numId = Number(item.ID || item.id);
+      if (priceMap[numId] && priceMap[numId] > (item.CurrentPrice || 0)) {
+        item.CurrentPrice = priceMap[numId];
+        item.currentPrice = priceMap[numId];
+      }
+    } catch {}
 
     const categoryMap: { [key: number]: string } = {
       1: 'Vehicles',
@@ -183,11 +197,7 @@ export class ItemService {
       this.http.get<AuctionItem[]>(this.apiUrl).subscribe({
         next: (backendItems) => {
           const sanitizedBackend = (backendItems || []).map(i => this.mapResponse(i));
-          const localItems = this.getLocalItems();
-          const map = new Map<number, AuctionItem>();
-          for (const l of localItems) map.set(l.ID, l);
-          for (const s of sanitizedBackend) map.set(s.ID, s);
-          observer.next(Array.from(map.values()));
+          observer.next(sanitizedBackend);
           observer.complete();
         },
         error: () => {
@@ -213,34 +223,78 @@ export class ItemService {
   }
 
   getActiveItems(): Observable<AuctionItem[]> {
-    return this.http
-      .get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`)
-      .pipe(map((items) => items.map((item) => this.mapResponse(item))));
+    return new Observable<AuctionItem[]>(observer => {
+      this.http.get<AuctionItemResponseDto[]>(`${this.apiUrl}/active`).subscribe({
+        next: (res) => {
+          const items = (res || []).map((item) => this.mapResponse(item));
+          observer.next(items);
+          observer.complete();
+        },
+        error: () => {
+          this.getItems().subscribe({
+            next: (items) => {
+              observer.next(items);
+              observer.complete();
+            },
+            error: () => {
+              observer.next(this.getLocalItems());
+              observer.complete();
+            }
+          });
+        }
+      });
+    });
   }
 
   getItemById(id: number): Observable<AuctionItem> {
     return new Observable<AuctionItem>(observer => {
       this.http.get<AuctionItem>(`${this.apiUrl}/${id}`).subscribe({
         next: (res) => {
-          observer.next(this.mapResponse(res));
+          const item = this.mapResponse(res);
+          const localItems = this.getLocalItems();
+          const localItem = localItems.find((i: any) => i.ID === id);
+          if (localItem && localItem.CurrentPrice > item.CurrentPrice) {
+            item.CurrentPrice = localItem.CurrentPrice;
+          }
+          try {
+            const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+            if (priceMap[id] && priceMap[id] > item.CurrentPrice) {
+              item.CurrentPrice = priceMap[id];
+            }
+          } catch {}
+          observer.next(item);
           observer.complete();
         },
-        error: (err) => {
+        error: () => {
           const localItems = this.getLocalItems();
           const localItem = localItems.find((item: any) => item.ID === id);
           if (localItem) {
-            observer.next(this.sanitizeItem(localItem));
+            const sanitized = this.sanitizeItem(localItem);
+            try {
+              const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+              if (priceMap[id] && priceMap[id] > sanitized.CurrentPrice) {
+                sanitized.CurrentPrice = priceMap[id];
+              }
+            } catch {}
+            observer.next(sanitized);
             observer.complete();
-          } else {
-            this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
-              next: (mockItems) => {
-                const found = mockItems.find(i => i.ID === id) || mockItems[0];
-                observer.next(this.sanitizeItem(found));
-                observer.complete();
-              },
-              error: () => observer.error(err)
-            });
+            return;
           }
+          this.http.get<AuctionItem[]>(this.mockUrl).subscribe({
+            next: (mockItems) => {
+              const found = mockItems.find(i => i.ID === id) || mockItems[0];
+              const sanitized = this.sanitizeItem(found);
+              try {
+                const priceMap = JSON.parse(localStorage.getItem('item_prices_map') || '{}');
+                if (priceMap[id] && priceMap[id] > sanitized.CurrentPrice) {
+                  sanitized.CurrentPrice = priceMap[id];
+                }
+              } catch {}
+              observer.next(sanitized);
+              observer.complete();
+            },
+            error: (err) => observer.error(err)
+          });
         }
       });
     });
@@ -340,16 +394,8 @@ export class ItemService {
           observer.next(this.mapResponse(res));
           observer.complete();
         },
-        error: () => {
-          const items: AuctionItem[] = this.getLocalItems();
-          const index = items.findIndex(i => i.ID === item.ID);
-          if (index !== -1) {
-            items[index] = this.sanitizeItem(item);
-            localStorage.setItem(this.storageKey, JSON.stringify(items));
-            localStorage.setItem('local_auctions', JSON.stringify(items));
-          }
-          observer.next(this.sanitizeItem(item));
-          observer.complete();
+        error: (err) => {
+          observer.error(err);
         }
       });
     });

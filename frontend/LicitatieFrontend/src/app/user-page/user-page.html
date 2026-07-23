@@ -1,121 +1,326 @@
 <div class="user-page-container">
-  <!-- Secțiunea Antet Profil (Avatar, Username, Rating) -->
+  <!-- Secțiunea Antet Profil -->
   <div class="profile-card" *ngIf="user">
-    <div class="avatar-circle">
-      {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
-    </div>
+    <div class="profile-info-section">
+      <div class="avatar-circle">
+        {{ ($any(user).UserName || $any(user).userName || $any(user).username || 'US').substring(0, 2).toUpperCase() }}
+      </div>
 
-    <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
-    <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
+      <div class="user-details">
+        <h2>@{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h2>
+        <p class="real-name">{{ $any(user).Name || $any(user).name }}</p>
 
-    <!-- Rating-ul cu stele securizat -->
-    <div class="rating-box">
-      <span class="rating-value">{{ $any(user).Rating || $any(user).rating || 0 }} / 5</span>
-      <div class="stars">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star"
-          [class.filled]="star <= ($any(user).Rating || $any(user).rating || 0)">★</span>
+        <div class="rating-box">
+          <span class="rating-value">{{ averageRating || 0 }} / 5</span>
+
+          <div class="stars">
+            <span
+              *ngFor="let star of [1,2,3,4,5]"
+              class="star"
+              [class.filled]="averageRating >= star"
+              [class.half]="averageRating >= star - 0.5 && averageRating < star">
+              ★
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Container Acțiuni Utilizator -->
     <div class="profile-actions">
-      <!-- Buton Adaugă Review -->
-      <button class="btn-action btn-add-review" (click)="openReviewForm()">
-        ⭐ Adaugă Review
+      <button
+        class="btn-action btn-add-review"
+        [disabled]="isUserReported"
+        (click)="openReviewForm()">
+        {{ 'USER_PAGE.ACTIONS.ADD_REVIEW' | translate }}
       </button>
 
-      <!-- Buton Raportează -->
-      <button class="btn-action btn-report" (click)="openReportForm()">
-        ⚠️ Raportează Utilizatorul
+      <button
+        class="btn-action btn-report"
+        [disabled]="isUserReported"
+        (click)="openReportForm()">
+        {{
+          (
+            isUserReported
+              ? 'USER_PAGE.ACTIONS.USER_REPORTED'
+              : 'USER_PAGE.ACTIONS.REPORT_USER'
+          ) | translate
+        }}
       </button>
     </div>
   </div>
 
-  <!-- Formularul de Raport (Afișat sub formă de pop-up modal) -->
-  <div class="report-overlay animate-fade-in" *ngIf="showReportForm">
-    <div class="report-modal">
-      <h3>Raportează utilizatorul @{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h3>
-      <p>Te rugăm să introduci motivul raportării pentru ca echipa noastră să poată analiza activitatea contului.</p>
+  <!-- Formular raportare -->
+  <div
+    class="report-overlay animate-fade-in"
+    *ngIf="showReportForm">
 
-      <textarea [(ngModel)]="reportReason" placeholder="Scrie aici motivul raportării..." rows="4">
+    <div class="report-modal">
+      <h3>
+        {{
+          'USER_PAGE.REPORT_MODAL.TITLE'
+            | translate: {
+                username:
+                  ($any(user).UserName ||
+                   $any(user).userName ||
+                   $any(user).username)
+              }
+        }}
+      </h3>
+
+      <p>
+        {{ 'USER_PAGE.REPORT_MODAL.DESCRIPTION' | translate }}
+      </p>
+
+      <textarea
+        [(ngModel)]="reportReason"
+        [placeholder]="'USER_PAGE.REPORT_MODAL.PLACEHOLDER' | translate"
+        rows="4">
       </textarea>
 
       <div class="modal-actions">
-        <button class="btn-cancel" (click)="closeReportForm()">Anulează</button>
-        <button class="btn-submit" [disabled]="!reportReason.trim()" (click)="submitReport()">Trimite Raport</button>
+        <button
+          class="btn-cancel"
+          (click)="closeReportForm()">
+          {{ 'USER_PAGE.COMMON.CANCEL' | translate }}
+        </button>
+
+        <button
+          class="btn-submit"
+          [disabled]="!reportReason.trim()"
+          (click)="submitReport()">
+          {{ 'USER_PAGE.REPORT_MODAL.SUBMIT' | translate }}
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Formularul de Review (Afișat sub formă de pop-up modal) -->
-  <div class="report-overlay animate-fade-in" *ngIf="showReviewForm">
-    <div class="report-modal">
-      <h3>Adaugă un review pentru @{{ $any(user).UserName || $any(user).userName || $any(user).username }}</h3>
-      <p>Părerea ta contează! Oferă o notă și un scurt comentariu despre experiența ta cu acest utilizator.</p>
+  <!-- Formular review -->
+  <div
+    class="report-overlay animate-fade-in"
+    *ngIf="showReviewForm">
 
-      <!-- Selectare Rating cu Stele Interactive -->
+    <div class="report-modal">
+      <h3>
+        {{
+          'USER_PAGE.REVIEW_MODAL.TITLE'
+            | translate: {
+                username:
+                  ($any(user).UserName ||
+                   $any(user).userName ||
+                   $any(user).username)
+              }
+        }}
+      </h3>
+
+      <p>
+        {{ 'USER_PAGE.REVIEW_MODAL.DESCRIPTION' | translate }}
+      </p>
+
       <div class="rating-selector">
-        <span *ngFor="let star of [1,2,3,4,5]" class="star-btn" [class.filled]="star <= reviewRating"
+        <span
+          *ngFor="let star of [1,2,3,4,5]"
+          class="star-btn"
+          [class.filled]="star <= reviewRating"
           (click)="reviewRating = star">
           ★
         </span>
       </div>
 
-      <textarea [(ngModel)]="reviewComment" placeholder="Scrie aici părerea ta..." rows="4">
+      <textarea
+        [(ngModel)]="reviewComment"
+        [placeholder]="'USER_PAGE.REVIEW_MODAL.PLACEHOLDER' | translate"
+        rows="4">
       </textarea>
 
       <div class="modal-actions">
-        <button class="btn-cancel" (click)="closeReviewForm()">Anulează</button>
-        <button class="btn-submit btn-review-submit" [disabled]="!reviewComment.trim()" (click)="submitReview()">Trimite
-          Review</button>
+        <button
+          class="btn-cancel"
+          (click)="closeReviewForm()">
+          {{ 'USER_PAGE.COMMON.CANCEL' | translate }}
+        </button>
+
+        <button
+          class="btn-submit btn-review-submit"
+          [disabled]="!reviewComment.trim()"
+          (click)="submitReview()">
+          {{ 'USER_PAGE.REVIEW_MODAL.SUBMIT' | translate }}
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Banner de succes după acțiuni -->
-  <div class="success-banner animate-fade-in" *ngIf="reportSuccessMessage">
+  <!-- Banner succes -->
+  <div
+    class="success-banner animate-fade-in"
+    *ngIf="reportSuccessMessage">
+
     <div class="success-content">
       <span>✅</span>
+
       <p>{{ reportSuccessMessage }}</p>
-      <button class="btn-close-banner" (click)="reportSuccessMessage = ''">Închide</button>
+
+      <button
+        class="btn-close-banner"
+        (click)="reportSuccessMessage = ''">
+        {{ 'USER_PAGE.COMMON.CLOSE' | translate }}
+      </button>
     </div>
   </div>
 
-  <!-- Secțiunea Licitații Active ale Utilizatorului -->
+  <!-- Review-uri -->
+  <div class="reviews-section" *ngIf="user">
+    <div class="section-header">
+      <h3>
+        {{
+          'USER_PAGE.REVIEWS.TITLE'
+            | translate: { count: userReviews.length }
+        }}
+      </h3>
+    </div>
+
+    <div
+      class="reviews-scroll-container"
+      *ngIf="userReviews.length > 0; else noReviews">
+
+      <div
+        class="review-item"
+        *ngFor="let rev of userReviews">
+
+        <div class="review-header">
+          <div class="reviewer-info">
+            <span class="reviewer-icon">👤</span>
+
+            <a
+              [routerLink]="
+                rev.reviewerId === currentUserId
+                  ? ['/profile-page']
+                  : ['/user-page', rev.reviewerId]
+              "
+              class="reviewer-link">
+
+              {{
+                rev.reviewerId === currentUserId
+                  ? ('USER_PAGE.REVIEWS.YOU' | translate)
+                  : '@' + rev.reviewerUserName
+              }}
+            </a>
+          </div>
+
+          <div class="review-stars">
+            <span
+              *ngFor="let star of [1,2,3,4,5]"
+              class="star"
+              [class.filled]="star <= rev.rating">
+              ★
+            </span>
+          </div>
+        </div>
+
+        <p class="review-comment">{{ rev.comment }}</p>
+
+        <span
+          class="review-date"
+          *ngIf="rev.reviewDate">
+          {{ rev.reviewDate | date:'dd.MM.yyyy' }}
+        </span>
+      </div>
+    </div>
+
+    <ng-template #noReviews>
+      <div class="empty-reviews">
+        <p>{{ 'USER_PAGE.REVIEWS.EMPTY' | translate }}</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Licitații active -->
   <div class="active-auctions-section">
     <div class="section-header">
-      <h3>Licitații active ale utilizatorului</h3>
+      <h3>{{ 'USER_PAGE.AUCTIONS.TITLE' | translate }}</h3>
 
-      <!-- Filtrare Categorie -->
-      <div class="filter-wrap" *ngIf="userCategories.length > 0">
-        <label for="catFilter">Filtrează după categorie: </label>
-        <select id="catFilter" [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()">
-          <option value="">Toate categoriile</option>
-          <option *ngFor="let cat of userCategories" [value]="cat">{{ cat }}</option>
+      <div
+        class="filter-wrap"
+        *ngIf="userCategories.length > 0">
+
+        <label for="catFilter">
+          {{ 'USER_PAGE.AUCTIONS.FILTER_LABEL' | translate }}
+        </label>
+
+        <select
+          id="catFilter"
+          [(ngModel)]="selectedCategory"
+          (ngModelChange)="onCategoryChange()">
+
+          <option value="">
+            {{ 'USER_PAGE.AUCTIONS.ALL_CATEGORIES' | translate }}
+          </option>
+
+          <option
+            *ngFor="let cat of userCategories"
+            [value]="cat">
+            {{ cat }}
+          </option>
         </select>
       </div>
     </div>
 
-    <!-- Grila de articole active -->
-    <div class="items-grid" *ngIf="filteredUserItems.length > 0; else noItems">
-      <div class="item-card" *ngFor="let item of filteredUserItems" (click)="goToItemDetail(item)">
+    <div
+      class="items-grid"
+      *ngIf="filteredUserItems.length > 0; else noItems">
+
+      <div
+        class="item-card"
+        *ngFor="let item of displayedItems"
+        (click)="goToItemDetail(item)">
+
         <div class="item-image-wrap">
-          <img [src]="getItemImage(item)" [alt]="item.Name" />
+          <img
+            [src]="getItemImage(item)"
+            [alt]="item.Name"
+          />
         </div>
+
         <div class="item-info">
           <h4>{{ item.Name }}</h4>
-          <!-- Corectat folosind $any(item.Category) -->
-          <span class="badge-cat">{{ item.Category?.name || $any(item.Category)?.Name || $any(item.Category)?.name
-            }}</span>
-          <p class="price-row">Preț curent: <strong>{{ item.CurrentPrice }} RON</strong></p>
+
+          <span class="badge-cat">
+            {{
+              item.Category?.name ||
+              $any(item.Category)?.Name ||
+              $any(item.Category)?.name
+            }}
+          </span>
+
+          <p class="price-row">
+            {{ 'USER_PAGE.AUCTIONS.CURRENT_PRICE' | translate }}
+            <strong>{{ item.CurrentPrice }} RON</strong>
+          </p>
         </div>
       </div>
     </div>
 
     <ng-template #noItems>
       <div class="empty-auctions">
-        <p>Acest utilizator nu are nicio licitație activă în această categorie în acest moment.</p>
+        <p>{{ 'USER_PAGE.AUCTIONS.EMPTY' | translate }}</p>
       </div>
     </ng-template>
+
+    <div
+      class="show-more-container"
+      *ngIf="filteredUserItems.length > 3">
+
+      <button
+        class="btn-show-more"
+        (click)="showMoreItems()">
+
+        {{
+          (
+            itemsLimit >= filteredUserItems.length
+              ? 'USER_PAGE.AUCTIONS.SHOW_LESS'
+              : 'USER_PAGE.AUCTIONS.SHOW_MORE'
+          ) | translate
+        }}
+      </button>
+    </div>
   </div>
 </div>

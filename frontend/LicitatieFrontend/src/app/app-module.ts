@@ -3,51 +3,54 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { provideTranslateService, TranslatePipe, TranslateDirective } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
+// Material Design Imports
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AppRoutingModule } from './app-routing-module';
 import { MatSelectModule } from '@angular/material/select';
 
-import { AppRoutingModule } from './app-routing-module';
+// Pages / feature components
 import { App } from './app';
-
+import { HomePage } from './home-page/home-page';
 import { ProfilePage } from './menu-item/profile-page/profile-page';
 import { RegisterPage } from './menu-item/register-page/register-page';
 import { LoginPage } from './menu-item/login-page/login-page';
 import { ContactPage } from './menu-item/contact-page/contact-page';
-import { HomePage } from './home-page/home-page';
-import { AuctionsPage } from './auctions-page/auctions-page';
-import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { ForumPage } from './forum-page/forum-page';
-import { ReviewComponent } from './Models/review/review';
+import { AuctionsPage } from './auctions-page/auctions-page';
+import { SearchPage } from './search-page/search-page';
 import { AddItemPage } from './add-item-page/add-item-page';
-import { AddItem } from './add-item/add-item';
+import { AuctionItemPage } from './auction-item-page/auction-item-page';
+import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
 import { ForumPostDetails } from './forum-page/forum-post-details/forum-post-details';
 import { CreateForumPost } from './forum-page/create-forum-post/create-forum-post';
 import { Footer } from './app-logic/footer/footer';
-import { AuctionItemPage } from './auction-item-page/auction-item-page';
-import { Add } from './menu-item/add/add';
-import { Edit } from './menu-item/edit/edit';
-import { View } from './menu-item/view/view';
-import { NotFound } from './not-found/not-found';
-import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
+import { HelpPageComponent } from './menu-item/help-page/help-page';
 import { NotificationBell } from './menu-item/notification-bell/notification-bell';
+import { ProfileMenu } from './menu-item/profile-menu/profile-menu';
 import { AdminPage } from './admin-page/admin-page/admin-page';
 import { UserPage } from './user-page/user-page';
-import { SearchPage } from './search-page/search-page';
-import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
-import { AuctionDetail } from './auctions-page/auction-detail/auction-detail';
+import { NotFound } from './not-found/not-found';
 
-// Servicii și Traduceri
+// Components
+import { ShareListingButton } from './shared/share-listing-button/share-listing-button';
+
+// Standalone Components
+import { ReviewComponent } from './Models/review/review';
+import { AiWidgetComponent } from './ai-widget/ai-widget';
+
+// Servicii / Interceptoare
 import { AuthInterceptor } from './services/auth-interceptor';
-import { provideTranslateService, TranslatePipe } from '@ngx-translate/core'; // Importăm TranslatePipe
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ResetPasswordPage } from './menu-item/reset-password-page/reset-password-page';
 import { ForgotPasswordPage } from './menu-item/forgot-password-page/forgot-password-page';
 
@@ -64,43 +67,48 @@ import { ForgotPasswordPage } from './menu-item/forgot-password-page/forgot-pass
     SearchPage,
     AddItemPage,
     AuctionItemPage,
-    Add,
-    Edit,
-    View,
     AuctionDetail,
     ShareListingButton,
-    AddItem,
     ForumPostDetails,
     CreateForumPost,
     Footer,
-    NotFound,
-    ProfileMenu,
     NotificationBell,
+    ProfileMenu,
     AdminPage,
     UserPage,
+    NotFound,
     ResetPasswordPage,
     ForgotPasswordPage,
   ],
   imports: [
-    BrowserModule,
-    CommonModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatBadgeModule,
-    TranslatePipe, // <--- Folosim Pipe-ul direct în imports
-  ],
+  BrowserModule,
+  BrowserAnimationsModule,
+  AppRoutingModule,
+  FormsModule,
+  CommonModule,
+  ReactiveFormsModule,
+
+  MatFormFieldModule,
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatBadgeModule,
+  MatSlideToggleModule,
+  MatSelectModule,
+  HelpPageComponent,
+  ReviewComponent,
+  AiWidgetComponent,
+
+
+  TranslatePipe,
+  TranslateDirective,
+],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -115,6 +123,7 @@ import { ForgotPasswordPage } from './menu-item/forgot-password-page/forgot-pass
       fallbackLang: 'en',
     }),
   ],
+
   bootstrap: [App],
 })
 export class AppModule {}

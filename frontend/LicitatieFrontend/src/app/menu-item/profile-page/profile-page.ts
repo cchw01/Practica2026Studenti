@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ItemService } from '../../services/item-service';
 import { AuctionItem } from '../../Models/item-model';
 import { AuthService } from '../../services/auth';
-import { ReviewService } from '../../app-logic/review';
+import { ReviewService } from '../../services/review-service';
 import { CategoryService } from '../../services/category-service';
 import { UserService } from '../../services/user-service';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,7 @@ interface Item {
 
 interface Review {
   id: number;
+  reviewerId: number;
   author: string;
   rating: number;
   comment: string;
@@ -29,6 +30,11 @@ interface UserProfile {
   name: string;
   email: string;
   avatarUrl: string;
+  profilePictureBase64?: string;
+  // Numele fisierului asa cum e salvat pe backend (in wwwroot/Assets/ProfilePictures).
+  // E sursa de adevar pentru poza persistata; profilePictureBase64 e doar preview local,
+  // inainte de a apasa Save.
+  profilePictureName?: string;
 }
 
 const STORAGE_KEY = 'profile_user';
@@ -55,8 +61,13 @@ export class ProfilePage implements OnInit {
 
   editDraft: UserProfile = { ...this.user };
 
+  // Fisierul selectat pentru upload, retinut pana la Save
+  private selectedAvatarFile: File | null = null;
+
+  private readonly backendAssetsUrl = 'https://localhost:7137/Assets/ProfilePictures/';
+
   // --- Score ---
-  score: number = 4.5;
+  score: number = 0;
 
   // --- Theme ---
   currentTheme: string = 'light';
@@ -72,6 +83,7 @@ export class ProfilePage implements OnInit {
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
+  outbidItems: Item[] = [];
   wishItems: Item[] = [];
   reviews: Review[] = [];
 
@@ -81,7 +93,17 @@ export class ProfilePage implements OnInit {
   }
 
   get displayAvatar(): string {
-    if (this.user.avatarUrl) return this.user.avatarUrl;
+    // Preview local (poza abia selectata, inainte de Save) are prioritate maxima
+    if (this.user?.profilePictureBase64) {
+      if (!this.user.profilePictureBase64.startsWith('data:image')) {
+        return `data:image/png;base64,${this.user.profilePictureBase64}`;
+      }
+      return this.user.profilePictureBase64;
+    }
+    // Apoi poza deja salvata pe backend
+    if (this.user?.profilePictureName) {
+      return `${this.backendAssetsUrl}${this.user.profilePictureName}`;
+    }
     const name = encodeURIComponent(
       this.user.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER'),
     );
@@ -96,12 +118,30 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private categoryService: CategoryService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
+    // Verificăm dacă utilizatorul este logat
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
+    }
+
     const authUserId = this.authService.getCurrentUserId();
     const currentUser = this.authService.getCurrentUser();
+
+    // --- REDIRECȚIONARE AUTOMATĂ CORECTĂ PENTRU ADMIN ---
+    if (currentUser) {
+      // Verificăm dacă contul are rol de admin sau dacă e adresa configurată de admin
+      if (currentUser.role === 'Admin' || currentUser.email === 'admin@bidsphere.com') {
+        localStorage.setItem('user_role', 'admin'); // Salvează starea pentru panoul Vuexy
+        this.router.navigate(['/admin']);
+        return; // Oprim execuția codului pentru a nu mai încărca restul paginii
+      }
+    }
+
+    // --- Fluxul normal pentru utilizatorii simpli ---
     if (currentUser) {
       this.user.username = currentUser.username || currentUser.email || '';
       this.user.name = currentUser.name || this.translate.instant('PROFILE_PAGE.DEFAULTS.USER');
@@ -109,9 +149,43 @@ export class ProfilePage implements OnInit {
     }
     this.currentUserId = authUserId !== null ? authUserId : 0;
 
+    // Fetch up-to-date user data from backend to avoid stale token data
+    if (this.currentUserId > 0) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (apiUser: any) => {
+          this.user.username = apiUser.UserName || apiUser.userName || this.user.username;
+          this.user.name = apiUser.Name || apiUser.name || this.user.name;
+          this.user.email = apiUser.Email || apiUser.email || this.user.email;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Failed to fetch latest user data', err),
+      });
+    }
+
     this.loadProfile();
     this.loadTheme();
     this.loadItemsAndReviews();
+
+    // Incarcam datele complete de la backend (inclusiv poza de profil salvata),
+    // altfel dupa refresh poza uploadata anterior nu s-ar mai afisa niciodata.
+    if (this.currentUserId) {
+      this.UserService.getUser(this.currentUserId).subscribe({
+        next: (userData: any) => {
+          // profilePictureName venit de la GetUser e mereu null pe backend (nu e populat).
+          // Poza reala se ia separat, ca Base64, de la endpointul dedicat.
+          this.UserService.getProfilePicture(this.currentUserId).subscribe({
+            next: (base64: string) => {
+              this.user.profilePictureBase64 = base64;
+              this.cdr.detectChanges();
+            },
+            error: () => {
+              // Userul nu are inca poza de profil setata - e ok, ramane avatarul implicit.
+            },
+          });
+        },
+        error: (err) => console.error('Eroare la incarcarea profilului:', err),
+      });
+    }
 
     // Fetch category list
     this.categoryService.getCategories().subscribe({
@@ -140,12 +214,20 @@ export class ProfilePage implements OnInit {
     if (allItems && itemId) {
       const match = allItems.find((i) => (i.ID || i.id) === itemId);
       if (match) {
-        const matchUrl = match.ImageUrl || match.imageUrl || (match.PhotoList && match.PhotoList.length > 0 ? match.PhotoList[0] : null) || (match.photoList && match.photoList.length > 0 ? match.photoList[0] : null);
+        const matchUrl =
+          match.ImageUrl ||
+          match.imageUrl ||
+          (match.PhotoList && match.PhotoList.length > 0 ? match.PhotoList[0] : null) ||
+          (match.photoList && match.photoList.length > 0 ? match.photoList[0] : null);
         if (matchUrl) return this.itemService.formatImageUrl(matchUrl);
       }
     }
 
-    const rawUrl = item.imageUrl || item.ImageUrl || (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) || (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : '');
+    const rawUrl =
+      item.imageUrl ||
+      item.ImageUrl ||
+      (item.photoList && item.photoList.length > 0 ? item.photoList[0] : null) ||
+      (item.PhotoList && item.PhotoList.length > 0 ? item.PhotoList[0] : '');
     if (rawUrl) {
       return this.itemService.formatImageUrl(rawUrl);
     }
@@ -154,7 +236,12 @@ export class ProfilePage implements OnInit {
     if (title.includes('watch')) {
       return 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop';
     }
-    if (title.includes('bmw') || title.includes('car') || title.includes('leather') || title.includes('jacket')) {
+    if (
+      title.includes('bmw') ||
+      title.includes('car') ||
+      title.includes('leather') ||
+      title.includes('jacket')
+    ) {
       return 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop';
     }
     return 'assets/images/placeholder.png';
@@ -167,23 +254,43 @@ export class ProfilePage implements OnInit {
       return;
     }
     const localWishIds: number[] = JSON.parse(
-      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]'
+      localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
     );
     const localWishRaw: any[] = JSON.parse(
-      localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]'
+      localStorage.getItem(`user_wishlist_items_${this.currentUserId}`) || '[]',
     );
 
     const validItems = localWishRaw.filter((item: any) =>
-      localWishIds.includes(item.ID || item.id)
+      localWishIds.includes(item.ID || item.id),
     );
 
-    this.wishItems = validItems.map((item: any) => ({
-      id: item.ID || item.id || 0,
-      title: item.Name || item.name || 'Unknown Item',
-      price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
-      status: (item.Status || item.status || 'Active').toString(),
-      image: this.getItemImage(item),
-    }));
+    if (validItems.length > 0) {
+      this.wishItems = validItems.map((item: any) => ({
+        id: item.ID || item.id || 0,
+        title: item.Name || item.name || 'Unknown Item',
+        price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+        status: (item.Status || item.status || 'Active').toString(),
+        image: this.getItemImage(item),
+      }));
+    } else if (localWishIds.length > 0) {
+      this.itemService.getItems().subscribe({
+        next: (allItems) => {
+          this.wishItems = allItems
+            .filter((item: any) => localWishIds.includes(item.ID || item.id))
+            .map((item: any) => ({
+              id: item.ID || item.id || 0,
+              title: item.Name || item.name || 'Item',
+              price:
+                item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+              status: (item.Status || item.status || 'Active').toString(),
+              image: this.getItemImage(item, allItems),
+            }));
+          this.cdr.detectChanges();
+        },
+      });
+    } else {
+      this.wishItems = [];
+    }
   }
 
   // --- Load API data ---
@@ -202,27 +309,45 @@ export class ProfilePage implements OnInit {
         this.addedItems = items
           .filter((item: any) => {
             const ownerId = item.OwnerId ?? item.ownerId ?? item.Owner?.id ?? item.Owner?.ID;
-            const ownerUsername = item.Owner?.username ?? item.Owner?.UserName ?? item.owner?.username ?? item.ownerUserName;
+            const ownerUsername =
+              item.Owner?.username ??
+              item.Owner?.UserName ??
+              item.owner?.username ??
+              item.ownerUserName;
 
-            const matchId = ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
-            const matchUser = ownerUsername && this.user.username && ownerUsername.toLowerCase() === this.user.username.toLowerCase();
-            return matchId || matchUser;
+            const matchId =
+              ownerId !== undefined && ownerId !== null && Number(ownerId) === this.currentUserId;
+            const matchUser =
+              ownerUsername &&
+              this.user.username &&
+              ownerUsername.toLowerCase() === this.user.username.toLowerCase();
+
+            const isOwner = matchId || matchUser;
+            const status = (item.Status || item.status || '').toString().toLowerCase();
+            // In backend the statuses are: Added, Validated, ActiveBid, NoWinner, Sold, Rejected.
+            const isActive =
+              status === 'validated' || status === 'activebid' || status === 'active';
+
+            return isOwner && isActive;
           })
           .map((item: any) => ({
             id: item.ID || item.id || 0,
             title: item.Name || item.name || '',
-            price: item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
-            status: item.Status || item.status
-              ? (item.Status || item.status).toString()
-              : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
+            price:
+              item.CurrentPrice ?? item.currentPrice ?? item.StartPrice ?? item.startPrice ?? 0,
+            status:
+              item.Status || item.status
+                ? (item.Status || item.status).toString()
+                : this.translate.instant('PROFILE_PAGE.STATUS.ADDED'),
             image: this.getItemImage(item, items),
           }));
 
-        // Filter won items
         this.bidItems = items
           .filter((item: any) => {
             const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
-            const isSold = (item.status === 'Sold' || item.Status === 'Sold') && (item.currentPrice > 0 || item.CurrentPrice > 0);
+            const isSold =
+              (item.status === 'Sold' || item.Status === 'Sold') &&
+              (item.currentPrice > 0 || item.CurrentPrice > 0);
             return isSold && winnerId !== undefined && Number(winnerId) === this.currentUserId;
           })
           .map((item: any) => ({
@@ -232,19 +357,75 @@ export class ProfilePage implements OnInit {
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
             image: this.getItemImage(item, items),
           }));
+        this.outbidItems = items
+          .filter((item: any) => {
+            const bids = item.BidList || item.bidList || [];
 
+            const hasBid = bids.some(
+              (b: any) => Number(b.bidderId || b.BidderId) === this.currentUserId,
+            );
+
+            const isSold = item.status === 'Sold' || item.Status === 'Sold';
+            const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
+
+            if (isSold && winnerId !== undefined && Number(winnerId) !== this.currentUserId) {
+              return true;
+            }
+
+            const isActive =
+              item.status === 'ActiveBid' ||
+              item.Status === 'ActiveBid' ||
+              item.status === 'Active' ||
+              item.Status === 'Active';
+            if (isActive && bids.length > 0) {
+              const highestBid = [...bids].sort(
+                (a: any, b: any) => (b.price || b.Price) - (a.price || a.Price),
+              )[0];
+              if (Number(highestBid.bidderId || highestBid.BidderId) !== this.currentUserId) {
+                return true;
+              }
+            }
+
+            return false;
+          })
+          .map((item: any) => ({
+            id: item.id || item.ID || 0,
+            title: item.name || item.Name || '',
+            price: item.currentPrice ?? item.CurrentPrice ?? 0,
+            status: 'Outbid',
+            image: this.getItemImage(item, items),
+          }));
         // Fetch wishlist items specifically from backend for current user
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
-            this.wishItems = (wishlistItems || []).map((item: any) => ({
-              id: item.id || item.ID || 0,
-              title: item.name || item.Name || 'Item',
-              price: item.currentPrice ?? item.startPrice ?? item.CurrentPrice ?? item.StartPrice ?? 0,
-              image: this.getItemImage(item, items),
-              status: item.status
-                ? item.status.toString()
-                : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
-            }));
+            this.wishItems = (wishlistItems || [])
+              .map((item: any) => {
+                const itemId = item.id || item.ID || 0;
+                const matchedItem = items.find((i: any) => (i.ID || i.id) === itemId);
+                const sourceItem = matchedItem || item;
+                return {
+                  id: itemId,
+                  title: sourceItem.Name || sourceItem.name || sourceItem.title || 'Item',
+                  price:
+                    sourceItem.CurrentPrice ??
+                    sourceItem.currentPrice ??
+                    sourceItem.StartPrice ??
+                    sourceItem.startPrice ??
+                    0,
+                  image:
+                    sourceItem.imageUrl ||
+                    sourceItem.ImageUrl ||
+                    (sourceItem.photoList && sourceItem.photoList.length > 0
+                      ? sourceItem.photoList[0]
+                      : null) ||
+                    this.getItemImage(sourceItem, items),
+                  status:
+                    sourceItem.status || sourceItem.Status
+                      ? (sourceItem.status || sourceItem.Status).toString()
+                      : this.translate.instant('PROFILE_PAGE.STATUS.ACTIVE'),
+                };
+              })
+              .filter((item) => item.id > 0);
             this.cdr.detectChanges();
           },
           error: (err) => {
@@ -256,18 +437,18 @@ export class ProfilePage implements OnInit {
       error: (err) => console.error('Error loading items:', err),
     });
 
-    // Load reviews
     this.reviewService.getReviews().subscribe({
       next: (reviews: any[]) => {
         this.reviews = reviews
-          .filter((r) => r.ReviewedUserId === this.currentUserId)
+          .filter((r) => r.reviewedUserId === this.currentUserId)
           .map((r) => ({
-            id: r.Id,
-            author: r.ReviewerUserName || 'Anonymous',
-            rating: r.Rating,
-            comment: r.Comment,
-            date: r.ReviewDate
-              ? new Date(r.ReviewDate).toLocaleDateString()
+            id: r.id,
+            reviewerId: r.reviewerId,
+            author: r.reviewerUserName || 'Anonymous',
+            rating: r.rating,
+            comment: r.comment,
+            date: r.reviewDate
+              ? new Date(r.reviewDate).toLocaleDateString()
               : new Date().toLocaleDateString(),
           }));
 
@@ -275,10 +456,10 @@ export class ProfilePage implements OnInit {
           const sum = this.reviews.reduce((acc, r) => acc + r.rating, 0);
           this.score = parseFloat((sum / this.reviews.length).toFixed(1));
         } else {
-          this.score = 4.5;
+          this.score = 0;
         }
       },
-      error: (err) => console.error('Error loading reviews:', err.message || err),
+      error: (err: any) => console.error('Error loading reviews:', err.message || err),
     });
   }
 
@@ -293,7 +474,9 @@ export class ProfilePage implements OnInit {
         this.wishItems = this.wishItems.filter((i) => i.id !== itemId);
 
         // Also update user-scoped local storage cache if present
-        const localWishIds: number[] = JSON.parse(localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]');
+        const localWishIds: number[] = JSON.parse(
+          localStorage.getItem(`wishlist_${this.currentUserId}`) || '[]',
+        );
         const updatedIds = localWishIds.filter((id) => id !== itemId);
         localStorage.setItem(`wishlist_${this.currentUserId}`, JSON.stringify(updatedIds));
 
@@ -303,10 +486,24 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  // --- Badge styling ---
+  getBadgeClass(status: string): string {
+    if (!status) return 'badge-added';
+    const lower = status.toLowerCase();
+    if (lower.includes('activebid') || lower.includes('active')) return 'badge-activebid';
+    if (lower.includes('added')) return 'badge-added';
+    if (lower.includes('sold')) return 'badge-sold';
+    if (lower.includes('nowinner')) return 'badge-nowinner';
+    if (lower.includes('validated')) return 'badge-validated';
+    if (lower.includes('won')) return 'badge-won';
+    if (lower.includes('outbid')) return 'badge-nowinner';
+    return 'badge-added';
+  }
+
   // --- Navigate to Item Details ---
   goToItem(id: number): void {
     if (id) {
-      this.router.navigate(['/auctions', id]);
+      this.router.navigate(['/action-item-page', id]);
     }
   }
 
@@ -328,9 +525,9 @@ export class ProfilePage implements OnInit {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user));
   }
 
-  // --- Edit actions ---
   startEdit(): void {
     this.editDraft = { ...this.user };
+    this.selectedAvatarFile = null;
     this.isEditing = true;
     this.showPasswordForm = false;
     this.currentPassword = '';
@@ -342,6 +539,7 @@ export class ProfilePage implements OnInit {
 
   cancelEdit(): void {
     this.isEditing = false;
+    this.selectedAvatarFile = null;
     this.showPasswordForm = false;
     this.currentPassword = '';
     this.newPassword = '';
@@ -351,10 +549,22 @@ export class ProfilePage implements OnInit {
   }
 
   saveEdit(): void {
+    const username = (this.editDraft.username || '').trim();
+    const name = (this.editDraft.name || '').trim();
+
+    if (username.length < 3) {
+      alert('Username-ul trebuie să aibă cel puțin 3 caractere.');
+      return;
+    }
+    if (name.length < 2) {
+      alert('Numele trebuie să aibă cel puțin 2 caractere.');
+      return;
+    }
+
     this.UserService.updateUser(
       this.currentUserId,
-      this.editDraft.username,
-      this.editDraft.name,
+      username,
+      name,
     ).subscribe({
       next: (updatedUser: any) => {
         // UserService.mapUser() returns UserReadDto with PascalCase fields (UserName, Name)
@@ -363,6 +573,27 @@ export class ProfilePage implements OnInit {
           username: updatedUser.UserName || updatedUser.userName || this.editDraft.username,
           name: updatedUser.Name || updatedUser.name || this.editDraft.name,
         };
+
+        // Daca a fost selectata o poza noua, o urcam acum pe backend
+        if (this.selectedAvatarFile) {
+          this.UserService.uploadProfilePicture(this.selectedAvatarFile).subscribe({
+            next: (pictureBase64: string) => {
+              // Backend-ul intoarce continutul Base64 al pozei, nu un nume de fisier,
+              // asa ca il stocam ca Base64 (displayAvatar stie sa il transforme in data URI).
+              this.user.profilePictureBase64 = pictureBase64;
+              this.user.profilePictureName = undefined;
+              this.selectedAvatarFile = null;
+              this.editDraft = { ...this.user };
+              this.saveProfile();
+              this.cdr.detectChanges();
+            },
+            error: (err) => {
+              console.error('Eroare la upload-ul pozei de profil:', err);
+              alert('Poza de profil nu a putut fi salvata.');
+            },
+          });
+        }
+
         this.editDraft = { ...this.user };
         this.saveProfile();
         this.isEditing = false;
@@ -372,26 +603,36 @@ export class ProfilePage implements OnInit {
       error: (err: any) => {
         const errorMsg =
           (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
+          (err.error?.errors ? Object.values(err.error.errors).flat().join(' ') : null) ||
           'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
-        this.editDraft = { ...this.user };
       },
     });
   }
 
-  // --- Avatar upload ---
+
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
+    this.selectedAvatarFile = file;
+
     const reader = new FileReader();
     reader.onload = () => {
       this.editDraft.avatarUrl = reader.result as string;
+      this.editDraft.profilePictureBase64 = reader.result as string;
+      // FileReader este un API nativ de browser; callback-ul lui 'onload' nu e
+      // mereu prins automat de Angular/Zone.js, asa ca fortam explicit un ciclu
+      // de detectare a schimbarilor ca preview-ul sa apara imediat, din prima selectie.
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
+
+    // Resetam valoarea input-ului, altfel unele browsere nu mai declanseaza
+    // evenimentul (change) daca utilizatorul reselecteaza acelasi fisier.
+    input.value = '';
   }
 
-  // --- Change Password ---
   onChangePassword(): void {
     if (!this.currentPassword || !this.newPassword || !this.confirmPassword) {
       this.passwordError = true;
@@ -424,22 +665,20 @@ export class ProfilePage implements OnInit {
       });
   }
 
-  // --- Navigate to Add Item ---
   goToAddItem(): void {
     this.router.navigate(['/add-item']);
   }
 
   // --- Navigate to Auction Item page ---
-  goToAuction(itemId: number): void {
+  goToAuction(itemId: number, item?: any): void {
     if (!itemId) return;
-    this.router.navigate(['/action-item-page', itemId]);
+    this.router.navigate(['/action-item-page', itemId], item ? { state: { auction: item } } : {});
   }
 
-  // --- Logout ---
   onLogout(): void {
     this.authService.logout();
+    localStorage.removeItem('user_role');
     this.setTheme('light');
-    document.body.className = '';
     this.router.navigate(['/login-page']);
   }
 }

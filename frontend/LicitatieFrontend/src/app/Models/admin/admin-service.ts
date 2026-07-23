@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private adminUrl = 'https://localhost:7137/api/Admin';
   private userUrl = 'https://localhost:7137/api/User';
   private itemUrl = 'https://localhost:7137/api/AuctionItem';
+  private forumPostUrl = 'https://localhost:7137/api/ForumPost';
+  private forumCommentUrl = 'https://localhost:7137/api/ForumComment';
+  private supportUrl = 'https://localhost:7137/api/SupportMessage';
+  private reportUrl = 'https://localhost:7137/api/Report';
 
   constructor(private http: HttpClient) {}
 
@@ -50,5 +54,46 @@ export class AdminService {
 
   deleteAuction(id: number): Observable<any> {
     return this.http.delete(`${this.itemUrl}/${id}`);
+  }
+
+  getForumPosts(): Observable<any[]> {
+    return this.http.get<any[]>(this.forumPostUrl);
+  }
+
+  deleteForumPost(id: number): Observable<any> {
+    return this.http.delete(`${this.forumPostUrl}/${id}`);
+  }
+
+  getForumComments(): Observable<any[]> {
+    return this.http.get<any[]>(this.forumCommentUrl);
+  }
+
+  deleteForumComment(id: number): Observable<any> {
+    return this.http.delete(`${this.forumCommentUrl}/${id}`);
+  }
+
+  getContactMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.supportUrl}/contact`);
+  }
+  getHelpMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.supportUrl}/help`);
+  }
+  resolveMessage(id: number, replyMessage?: string): Observable<any> {
+    return this.http.post(`${this.supportUrl}/${id}/resolve`, { replyMessage });
+  }
+  deleteMessage(id: number): Observable<any> {
+    return this.http.delete(`${this.supportUrl}/${id}`);
+  }
+
+  getReports(): Observable<any[]> {
+    return this.http.get<any[]>(this.reportUrl);
+  }
+
+  updateReportStatus(id: number, status: string): Observable<any> {
+    return this.http.put(`${this.reportUrl}/${id}`, { status });
+  }
+
+  deleteReport(id: number): Observable<any> {
+    return this.http.delete(`${this.reportUrl}/${id}`);
   }
 }

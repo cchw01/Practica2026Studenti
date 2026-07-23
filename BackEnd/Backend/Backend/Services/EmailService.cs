@@ -27,6 +27,10 @@ namespace Backend.Services
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("api-key", apiKey);
 
+            Console.WriteLine("===== BREVO CONFIG =====");
+            Console.WriteLine(senderEmail);
+            Console.WriteLine(senderName);
+
             var body = new
             {
                 sender = new

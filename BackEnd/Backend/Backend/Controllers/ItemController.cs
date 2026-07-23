@@ -2,12 +2,12 @@ using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
@@ -18,6 +18,7 @@ namespace Backend.Controllers
         private readonly AuctionItemDataOps dataOps;
         private readonly CategoryDataOps categoryDataOps;
         private readonly UserDataOps userDataOps;
+        private readonly BidDataOps bidDataOps;
         private readonly IWebHostEnvironment env;
 
         public AuctionItemController(
@@ -27,6 +28,7 @@ namespace Backend.Controllers
             dataOps = new AuctionItemDataOps(dbContext);
             categoryDataOps = new CategoryDataOps(dbContext);
             userDataOps = new UserDataOps(dbContext);
+            bidDataOps = new BidDataOps(dbContext);
             this.env = env;
         }
 
@@ -104,7 +106,7 @@ namespace Backend.Controllers
                 if (owner == null)
                 {
                     return Unauthorized(
-                        "Utilizatorul autentificat nu există.");
+                        "User does not exist");
                 }
 
                 var category = categoryDataOps.GetCategoryById(
@@ -113,7 +115,7 @@ namespace Backend.Controllers
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "Category not found");
                 }
 
                 var item = new AuctionItem
@@ -138,7 +140,7 @@ namespace Backend.Controllers
                 if (createdItem == null)
                 {
                     return BadRequest(
-                        "Itemul a fost salvat, dar nu a putut fi citit.");
+                        "ERROR");
                 }
 
                 var response = MapToResponseDto(createdItem);
@@ -176,7 +178,7 @@ namespace Backend.Controllers
                 if (owner == null)
                 {
                     return Unauthorized(
-                        "Utilizatorul autentificat nu există.");
+                        "error");
                 }
 
                 var category = categoryDataOps.GetCategoryById(
@@ -185,19 +187,19 @@ namespace Backend.Controllers
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "error");
                 }
 
                 if (request.StartPrice <= 0)
                 {
                     return BadRequest(
-                        "Prețul de pornire trebuie să fie mai mare decât 0.");
+                        "Price must be higher than 0");
                 }
 
                 if (request.DurationDays <= 0)
                 {
                     return BadRequest(
-                        "Durata licitației trebuie să fie mai mare decât 0.");
+                        "Duration must be higher than 0");
                 }
 
                 var imageList = new List<string>();
@@ -207,7 +209,7 @@ namespace Backend.Controllers
                 {
                     filesToProcess.AddRange(request.Images);
                 }
-                if (request.Image != null && request.Image.Length > 0 && !filesToProcess.Contains(request.Image))
+                else if (request.Image != null && request.Image.Length > 0)
                 {
                     filesToProcess.Add(request.Image);
                 }
@@ -226,7 +228,7 @@ namespace Backend.Controllers
 
                 string? imageUrl = imageList.Count > 0 ? string.Join("|||", imageList) : null;
 
-                var startDate = DateTime.UtcNow;
+                var startDate = DateTime.Now;
 
                 var item = new AuctionItem
                 {
@@ -252,7 +254,7 @@ namespace Backend.Controllers
                 if (createdItem == null)
                 {
                     return BadRequest(
-                        "Itemul a fost salvat, dar nu a putut fi citit.");
+                        "error");
                 }
 
                 var response = MapToResponseDto(createdItem);
@@ -297,22 +299,34 @@ namespace Backend.Controllers
                 if (!isOwner && !isAdmin)
                     return Forbid();
 
+                if (dataOps.HasBids(id))
+                {
+                    return Conflict(new
+                    {
+                        message =
+                            "Itemul nu mai poate fi editat deoarece a primit deja o ofertă."
+                    });
+                }
                 var category = categoryDataOps.GetCategoryById(
                     dto.CategoryId);
 
                 if (category == null)
                 {
                     return BadRequest(
-                        "Categoria specificată nu există.");
+                        "Category not found");
                 }
 
                 item.Name = dto.Name;
                 item.StartPrice = dto.StartPrice;
                 item.CategoryId = dto.CategoryId;
+                item.CurrentPrice = dto.StartPrice;
+item.WinnerId = null;
                 item.Description = dto.Description;
                 item.Location = dto.Location;
-                item.StartDate = dto.StartDate;
-                item.EndDate = dto.EndDate;
+                TimeSpan durationDays = item.EndDate - item.StartDate;
+                item.StartDate = DateTime.UtcNow;
+                item.EndDate = item.StartDate.Add(durationDays);
+                item.Status = AuctionItem.StatusEnum.Added; // Might want to make a separate "Edited" status later for clarity
 
                 dataOps.SaveChanges();
 
@@ -372,7 +386,7 @@ namespace Backend.Controllers
             }
         }
 
-        private static AuctionItemResponseDto MapToResponseDto(
+        private  AuctionItemResponseDto MapToResponseDto(
             AuctionItem item)
         {
             return new AuctionItemResponseDto
@@ -394,7 +408,8 @@ namespace Backend.Controllers
                 Status = item.Status,
                 StartDate = item.StartDate,
                 EndDate = item.EndDate,
-                ImageUrl = item.ImageUrl
+                ImageUrl = item.ImageUrl,
+                HasBids = dataOps.HasBids(item.ID)
             };
         }
 
@@ -407,6 +422,35 @@ namespace Backend.Controllers
                 return userId;
 
             return null;
+        }
+
+        [Authorize]
+        [HttpPost("{id}/end")]
+        public ActionResult<AuctionItemResponseDto> EndAuction(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+                if (authenticatedUserId == null)
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+                if (item == null)
+                    return NotFound();
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+                if (!isOwner && !isAdmin)
+                    return Forbid();
+     
+                dataOps.ProcessAuctionEnd(item, bidDataOps);
+                var updatedItem = dataOps.GetAuctionItemById(id);
+
+                return Ok(MapToResponseDto(updatedItem!));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

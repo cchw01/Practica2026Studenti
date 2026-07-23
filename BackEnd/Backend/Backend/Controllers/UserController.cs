@@ -13,17 +13,21 @@ using System.Text;
 
 
 namespace Backend.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        [ApiController]
-        [Route("api/[controller]")]
-        public class UserController : ControllerBase
-        {
-            private readonly UserDataOps dataOps;
-            private readonly RefreshTokenDataOps refreshTokenDataOps;
-            private readonly TokenProvider tokenProvider;
-            private readonly EmailService emailService;
-            private readonly IConfiguration configuration;
+        private readonly UserDataOps dataOps;
+        private readonly ProfilePictureDataOps profilePictureDataOps;
+        private readonly RefreshTokenDataOps refreshTokenDataOps;
+        private readonly TokenProvider tokenProvider;
+
+        private readonly EmailService emailService;
+        private readonly IConfiguration configuration;
+
         private const int EXPIRES_IN = 900;
+
         public UserController(
             ApplicationDbContext DbContext,
             TokenProvider tokenProvider,
@@ -32,68 +36,77 @@ namespace Backend.Controllers
             IConfiguration configuration)
         {
             dataOps = new UserDataOps(DbContext);
+            profilePictureDataOps = new ProfilePictureDataOps(DbContext);
 
             this.tokenProvider = tokenProvider;
-
             this.refreshTokenDataOps = refreshTokenDataOps;
 
             this.emailService = emailService;
-
             this.configuration = configuration;
+        }
+        private string? GetProfilePictureName(User user)
+        {
+            if (user.ProfilePictureId == null)
+                return null;
+
+            var picture = profilePictureDataOps.GetProfilePictureById(user.ProfilePictureId.Value);
+            return picture?.name;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<UserReadDto>> GetUsers()
         {
-                try
-                {
-                    var users = dataOps.GetUsers();
-                    var userDtos = users.Select(u => new UserReadDto
-                    {
-                        ID = u.ID,
-                        UserName = u.UserName,
-                        Name = u.Name,
-                        Email = u.Email,
-                        Role = u.Role,
-                        Rating = u.Rating,
-                        PhoneNumber = u.PhoneNumber
-                    }).ToArray();
-                    return Ok(userDtos);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
-
-            [HttpGet("{id}")]
-            public ActionResult<UserReadDto> GetUser(int id)
+            try
             {
-                try
+                var users = dataOps.GetUsers();
+                var userDtos = users.Select(u => new UserReadDto
                 {
-                    var user = dataOps.GetUserById(id);
-
-                    if (user == null)
-                        return NotFound();
-
-                    var userDto = new UserReadDto
-                    {
-                        ID = user.ID,
-                        UserName = user.UserName,
-                        Name = user.Name,
-                        Email = user.Email,
-                        Role = user.Role,
-                        Rating = user.Rating,
-                        PhoneNumber = user.PhoneNumber
-                    };
-
-                    return Ok(userDto);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+                    ID = u.ID,
+                    UserName = u.UserName,
+                    Name = u.Name,
+                    Email = u.Email,
+                    Role = u.Role,
+                    Rating = u.Rating,
+                    PhoneNumber = u.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(u)
+                }).ToArray();
+                return Ok(userDtos);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<UserReadDto> GetUser(int id)
+        {
+            try
+            {
+                var user = dataOps.GetUserById(id);
+
+                if (user == null)
+                    return NotFound();
+
+                var userDto = new UserReadDto
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Rating = user.Rating,
+                    PhoneNumber = user.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(user)
+                };
+
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpPost("register")]
         public ActionResult<User> Register(RegisterDto request)
@@ -105,7 +118,7 @@ namespace Backend.Controllers
 
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
-                    return BadRequest("This username is already in use");
+                    return BadRequest(new { message = "This username is already in use" });
 
                 var user = new User
                 {
@@ -122,7 +135,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -166,30 +179,30 @@ namespace Backend.Controllers
             {
 
                 var refreshTokenFromRequest = Request.Cookies["refreshToken"];
-                if(refreshTokenFromRequest==null)
+                if (refreshTokenFromRequest == null)
                 {
                     return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
                 }
                 var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
-                if(token==null)
+                if (token == null)
                 {
                     return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
                 }
                 var user = dataOps.GetUserById(token.UserId);
-                if (user==null)
+                if (user == null)
                 {
                     return Unauthorized("Utilizator neconectat");
                 }
                 var refreshToken = refreshTokenDataOps.GetRefreshToken(user);
-                if(refreshToken == null)
+                if (refreshToken == null)
                 {
                     return Unauthorized("Refresh Token invalid, se redirectioneaza la Login");
                 }
-                else if(refreshToken.ExpiresAt < DateTime.Now)
+                else if (refreshToken.ExpiresAt < DateTime.Now)
                 {
                     return Unauthorized("Refresh Token expirat, se redirectioneaza la Login");
                 }
-                else if(refreshToken.Token == refreshTokenFromRequest)
+                else if (refreshToken.Token == refreshTokenFromRequest)
                 {
                     var accessToken = tokenProvider.GenerateAccesToken(user);
                     Response.Cookies.Delete("refreshToken");
@@ -209,7 +222,7 @@ namespace Backend.Controllers
                     return Unauthorized("Refresh Token expirat sau invalid, se redirectioneaza la Login");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -245,7 +258,8 @@ namespace Backend.Controllers
                     Email = user.Email,
                     Role = user.Role,
                     Rating = user.Rating,
-                    PhoneNumber=user.PhoneNumber
+                    PhoneNumber = user.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(user)
                 };
 
                 return Ok(userRead);
@@ -289,19 +303,57 @@ namespace Backend.Controllers
                 Response.Cookies.Delete("refreshToken");
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("{userId}/wishlist/{itemId}")]
-        public IActionResult AddToWishlist(int userId, int itemId)
+
+        [HttpGet("{userId}/wishlist")]
+        public ActionResult<IEnumerable<AuctionItemResponseDto>> GetWishlist(int userId)
         {
             try
             {
-                var success = dataOps.AddToWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User or item not found, or item already in wishlist.");
+                var wishlist = dataOps.GetWishlist(userId);
+                if (wishlist == null)
+                    return NotFound("Utilizatorul nu a fost găsit.");
+
+                var response = wishlist.Select(item => new AuctionItemResponseDto
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    StartPrice = item.StartPrice,
+                    CurrentPrice = item.CurrentPrice,
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.Category?.name ?? string.Empty,
+                    Description = item.Description,
+                    Location = item.Location,
+                    OwnerId = item.OwnerId,
+                    OwnerUserName = item.Owner?.UserName ?? string.Empty,
+                    WinnerId = item.WinnerId,
+                    WinnerUserName = item.Winner?.UserName,
+                    Status = item.Status,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    ImageUrl = item.ImageUrl
+                });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{userId}/wishlist/{itemId}")]
+        public ActionResult AddToWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var result = dataOps.AddToWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut adăuga produsul în wishlist.");
                 return Ok();
             }
             catch (Exception ex)
@@ -310,46 +362,14 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpGet("{userId}/wishlist")]
-        public ActionResult<IEnumerable<AuctionItemSummaryDto>> GetWishlist(int userId)
-        {
-            try
-            {
-                var items = dataOps.GetWishlist(userId);
-                if (items == null)
-                    return NotFound("User not found.");
-
-                // Map to DTO
-                var dtoList = items.Select(a => new AuctionItemSummaryDto
-                {
-                    ID = a.ID,
-                    Name = a.Name,
-                    StartPrice = a.StartPrice,
-                    CurrentPrice = a.CurrentPrice,
-                    Category = a.Category != null ? a.Category.name : string.Empty,
-                    Status = a.Status.ToString(),
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    OwnerName = a.OwnerId.ToString(),
-                    ImageUrl = a.ImageUrl ?? string.Empty
-                }).ToList();
-
-                return Ok(dtoList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpDelete("{userId}/wishlist/{itemId}")]
-        public IActionResult RemoveFromWishlist(int userId, int itemId)
+        public ActionResult RemoveFromWishlist(int userId, int itemId)
         {
             try
             {
-                var success = dataOps.RemoveFromWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User, item not found, or item not in wishlist.");
+                var result = dataOps.RemoveFromWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut șterge produsul din wishlist.");
                 return Ok();
             }
             catch (Exception ex)
