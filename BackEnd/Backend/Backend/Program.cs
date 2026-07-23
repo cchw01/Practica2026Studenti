@@ -9,8 +9,8 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSecret = builder.Configuration["Jwt:Secret"];
-var myAngularPolicy = "AllowAngularApp";
 
+var myAngularPolicy = "AllowAngularApp";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(myAngularPolicy, policy =>
@@ -34,7 +34,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddScoped<EmailService>();
-
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
     throw new InvalidOperationException(
@@ -47,7 +46,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-// nu schimba fara sa verifici se strica admin+notificari fara 
+//nu schimba fara sa verifici se strica admin+notificari fara 
 .AddJwtBearer(options =>
 {
     options.MapInboundClaims = false;
@@ -71,22 +70,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
-
-// ==========================================
-// INITIALIZARE BAZĂ DE DATE (SCOPE UNIC)
-// ==========================================
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    // 1. Populare automată prin DbSeeder
-    try
-    {
-        DbSeeder.Seed(dbContext);
-    }
-    catch { }
-
-    // 2. Verificare/Adăugare Coloane Lipsă
     try
     {
         dbContext.Database.ExecuteSqlRaw(@"
@@ -108,37 +95,43 @@ using (var scope = app.Services.CreateScope())
     }
     catch { }
 
-    // 3. Inserare Utilizator de Test (ID = 3)
-    try
+    const string adminEmail = "admin@bidsphere.com";
+    const string adminPassword = "admin123!";
+
+    var admin = dbContext.Users.FirstOrDefault(u => u.Email == adminEmail);
+
+    if (admin == null)
     {
-        dbContext.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT 1 FROM [Users] WHERE [ID] = 3)
-            BEGIN
-                SET IDENTITY_INSERT [Users] ON;
-
-                INSERT INTO [Users]
-                    ([ID], [UserName], [Name], [Email], [Role],
-                     [Rating], [PhoneNumber], [IsBanned])
-                VALUES
-                    (3, 'test', 'Test', 'test@test.com', 0,
-                     0, '123456', 0);
-
-                SET IDENTITY_INSERT [Users] OFF;
-            END");
+        dbContext.Users.Add(new Backend.Models.User
+        {
+            UserName = "admin",
+            Name = "Administrator",
+            Email = adminEmail,
+            Role = Backend.Models.RoleEnum.Admin,
+            Password = Backend.Services.PasswordHasher.HashPassword(adminPassword),
+            PhoneNumber = "0000000000",
+            IsBanned = false,
+        });
+        dbContext.SaveChanges();
     }
-    catch { }
-
-    // 4. Ințializare adițională prin DbInitializer
-    try
+    else if (admin.Role != Backend.Models.RoleEnum.Admin)
     {
-        DbInitializer.Seed(dbContext);
+        admin.Role = Backend.Models.RoleEnum.Admin;
+        dbContext.SaveChanges();
     }
-    catch { }
+
+    // Seed Categories
+    var defaultCategories = new[] { "Vehicles", "Electronics", "Art", "Clothing", "Home & Garden", "Real Estate" };
+    foreach (var categoryName in defaultCategories)
+    {
+        if (!dbContext.Category.Any(c => c.name == categoryName))
+        {
+            dbContext.Category.Add(new Backend.Models.CategoryItem { name = categoryName });
+        }
+    }
+    dbContext.SaveChanges();
 }
 
-// ==========================================
-// MIDDLEWARE & RUTE
-// ==========================================
 app.UseRouting();
 app.UseCors(myAngularPolicy);
 
@@ -153,7 +146,58 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        db.Database.ExecuteSqlRaw(@"
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'PhoneNumber'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [PhoneNumber] nvarchar(max) NULL;
+            END
+
+            IF NOT EXISTS (
+                SELECT * FROM sys.columns 
+                WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = 'IsBanned'
+            )
+            BEGIN
+                ALTER TABLE [Users] ADD [IsBanned] bit NOT NULL DEFAULT 0;
+            END");
+    }
+    catch { }
+
+    try
+    {
+        db.Database.ExecuteSqlRaw(@"
+    IF NOT EXISTS (SELECT 1 FROM [Users] WHERE [ID] = 3)
+    BEGIN
+        SET IDENTITY_INSERT [Users] ON;
+
+        INSERT INTO [Users]
+            ([ID], [UserName], [Name], [Email], [Role],
+             [Rating], [PhoneNumber], [IsBanned])
+        VALUES
+            (3, 'test', 'Test', 'test@test.com', 0,
+             0, '123456', 0);
+
+        SET IDENTITY_INSERT [Users] OFF;
+    END
+");
+    }
+    catch { }
+
+    try
+    {
+        DbInitializer.Seed(db);
+    }
+    catch { }
+}
+
 
 app.Run();
