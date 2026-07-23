@@ -56,6 +56,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   countdownText: string = '';
   private timerInterval: any;
 
+  // ================= NEW: Debug control =================
+  public readonly showDebugControls = true; // set to false before final commit
+
   auctionItem: AuctionItem = {
     ID: 1,
     Name: 'Loading Item...',
@@ -129,7 +132,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           this.isInWishlist = wishlistIds.includes(targetId);
           try { this.cdr.markForCheck(); } catch { }
         },
-        error: (err) => console.error('Error fetching wishlist for item page', err)
+        error: (err) => console.error('Error fetching wishlist for item page', err),
       });
     }
 
@@ -228,9 +231,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
+    if (this.timerInterval) clearInterval(this.timerInterval);
   }
 
   private startCountdown(): void {
@@ -245,9 +246,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
       if (diff <= 0) {
         this.countdownText = 'Auction ended';
-        try {
-          this.cdr.markForCheck();
-        } catch { }
+        try { this.cdr.markForCheck(); } catch { }
         clearInterval(this.timerInterval);
         return;
       }
@@ -263,9 +262,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const sStr = seconds.toString().padStart(2, '0') + 's';
 
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     };
 
     updateTimer();
@@ -297,9 +294,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         next: (res) => {
           this.auctionItem.CurrentPrice = this.bidAmount;
           this.bidAmount = this.auctionItem.CurrentPrice + 10;
-          try {
-            this.cdr.markForCheck();
-          } catch { }
+          try { this.cdr.markForCheck(); } catch { }
         },
         error: (err) => {
           // Fallback local state if offline
@@ -309,9 +304,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
             typeof err.error === 'string'
               ? err.error
               : err.error?.message || err.message || 'Failed to place bid. Please try again.';
-          try {
-            this.cdr.detectChanges();
-          } catch { }
+          try { this.cdr.detectChanges(); } catch { }
         },
       });
   }
@@ -333,9 +326,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     // Update instantly (optimistic update)
     const originalState = this.isInWishlist;
     this.isInWishlist = !originalState;
-    try {
-      this.cdr.detectChanges();
-    } catch { }
+    try { this.cdr.detectChanges(); } catch { }
 
     if (originalState) {
       this.userService.removeFromWishlist(currentUserId, itemId).subscribe({
@@ -346,9 +337,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
-          try {
-            this.cdr.detectChanges();
-          } catch { }
+          try { this.cdr.detectChanges(); } catch { }
           console.error('Error removing from wishlist', err);
         },
       });
@@ -361,9 +350,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
-          try {
-            this.cdr.detectChanges();
-          } catch { }
+          try { this.cdr.detectChanges(); } catch { }
           console.error('Error adding to wishlist', err);
         },
       });
@@ -391,22 +378,16 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.toastHideTimeout = setTimeout(() => {
       this.isToastHiding = true;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }, 800);
 
     this.toastTimeout = setTimeout(() => {
       this.showWishlistToast = false;
       this.isToastHiding = false;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }, 1200);
 
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   // Report Modal & Handling
@@ -416,17 +397,13 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
     this.showReportModal = true;
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   closeReportModal(): void {
     this.showReportModal = false;
     this.reportDetails = '';
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   submitReport(): void {
@@ -458,23 +435,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.reportToastHideTimeout = setTimeout(() => {
       this.isReportToastHiding = true;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }, 1500);
 
     this.reportToastTimeout = setTimeout(() => {
       this.showReportToast = false;
       this.isReportToastHiding = false;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }, 2000);
 
     this.reportDetails = '';
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   prevImage(event: Event): void {
@@ -483,9 +454,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.selectedImageIndex =
         (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) %
         this.auctionItem.PhotoList.length;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }
   }
 
@@ -493,17 +462,13 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
       this.selectedImageIndex = (this.selectedImageIndex + 1) % this.auctionItem.PhotoList.length;
-      try {
-        this.cdr.markForCheck();
-      } catch { }
+      try { this.cdr.markForCheck(); } catch { }
     }
   }
 
   goToImage(idx: number): void {
     this.selectedImageIndex = idx;
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   setPeek(offset: number): void {
@@ -518,9 +483,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.peekOffset = offset;
     }
-    try {
-      this.cdr.markForCheck();
-    } catch { }
+    try { this.cdr.markForCheck(); } catch { }
   }
 
   isOwner(): boolean {
@@ -528,5 +491,36 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     if (!currentUserId) return false;
     const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
     return +ownerId === currentUserId;
+  }
+
+  // ================= NEW: Computed getters =================
+  get isAuctionEnded(): boolean {
+    if (!this.auctionItem) return false;
+    if (this.auctionItem.Status === 'Sold' ||
+        this.auctionItem.Status === 'NoWinner' ||
+        this.auctionItem.Status === 'Rejected') {
+      return true;
+    }
+    if (this.auctionItem.EndDate) {
+      return new Date(this.auctionItem.EndDate) < new Date();
+    }
+    return false;
+  }
+
+  get isCurrentUserWinner(): boolean {
+    if (!this.auctionItem || !this.auctionItem.WinnerId) return false;
+    const currentUserId = this.authService.getCurrentUserId();
+    return currentUserId ? this.auctionItem.WinnerId === currentUserId : false;
+  }
+
+  // ================= NEW: Debug method =================
+  simulateAuctionEnd(): void {
+    this.auctionItem.EndDate = new Date(Date.now() - 60000);
+    this.auctionItem.Status = 'Sold';
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.auctionItem.WinnerId = userId;
+    }
+    try { this.cdr.detectChanges(); } catch { }
   }
 }
