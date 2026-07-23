@@ -19,6 +19,7 @@ namespace Backend.Models
         public string? Password { get; set; }
 
         public string? PhoneNumber { get; set; }
+        public int? ProfilePictureId { get; set; }
 
         public List<AuctionItem> AddedItemsList { get; set; } = new();
 
