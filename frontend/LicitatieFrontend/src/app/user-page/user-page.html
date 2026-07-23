@@ -29,6 +29,7 @@
     <div class="profile-actions">
       <button
         class="btn-action btn-add-review"
+        [disabled]="isUserReported"
         (click)="openReviewForm()">
         {{ 'USER_PAGE.ACTIONS.ADD_REVIEW' | translate }}
       </button>
