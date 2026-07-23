@@ -378,6 +378,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
+  getCategoryKey(categoryName: string): string {
+  const categoryKeys: Record<string, string> = {
+    art: 'ART',
+    clothing: 'CLOTHING',
+    electronics: 'ELECTRONICS',
+    'home & garden': 'HOME_GARDEN',
+    jewelry: 'JEWELRY',
+    others: 'OTHERS',
+    'real estate': 'REAL_ESTATE',
+    vehicles: 'VEHICLES',
+  };
+
+  return categoryKeys[categoryName.trim().toLowerCase()] || 'OTHERS';
+}
 
   private getCategoryIcon(categoryName: string): string {
     const normalizedName = categoryName.trim().toLowerCase();

@@ -129,39 +129,39 @@
     "TITLE_END": "Categoriile",
 
     "ITEMS": {
-      "Art": {
-        "NAME": "Artă",
-        "DESCRIPTION": "Picturi, sculpturi și opere de artă de colecție."
-      },
-      "Clothing": {
-        "NAME": "Îmbrăcăminte",
-        "DESCRIPTION": "Haine, încălțăminte și accesorii de modă."
-      },
-      "Electronics": {
-        "NAME": "Electronice",
-        "DESCRIPTION": "Telefoane, calculatoare și dispozitive electronice."
-      },
-      "Home & Garden": {
-        "NAME": "Casă și grădină",
-        "DESCRIPTION": "Mobilier, decorațiuni și produse pentru grădină."
-      },
-      "Jewelry": {
-        "NAME": "Bijuterii",
-        "DESCRIPTION": "Inele, coliere, ceasuri și accesorii valoroase."
-      },
-      "Others": {
-        "NAME": "Altele",
-        "DESCRIPTION": "Descoperă produse din alte categorii."
-      },
-      "Real Estate": {
-        "NAME": "Imobiliare",
-        "DESCRIPTION": "Case, apartamente, terenuri și proprietăți comerciale."
-      },
-      "Vehicles": {
-        "NAME": "Vehicule",
-        "DESCRIPTION": "Autoturisme, motociclete și alte vehicule."
-      }
-    }
+  "ART": {
+    "NAME": "Artă",
+    "DESCRIPTION": "Picturi, sculpturi și opere de artă de colecție."
+  },
+  "CLOTHING": {
+    "NAME": "Îmbrăcăminte",
+    "DESCRIPTION": "Haine, încălțăminte și accesorii de modă."
+  },
+  "ELECTRONICS": {
+    "NAME": "Electronice",
+    "DESCRIPTION": "Telefoane, calculatoare și dispozitive electronice."
+  },
+  "HOME_GARDEN": {
+    "NAME": "Casă și grădină",
+    "DESCRIPTION": "Mobilier, decorațiuni și produse pentru grădină."
+  },
+  "JEWELRY": {
+    "NAME": "Bijuterii",
+    "DESCRIPTION": "Inele, coliere, ceasuri și accesorii valoroase."
+  },
+  "OTHERS": {
+    "NAME": "Altele",
+    "DESCRIPTION": "Descoperă produse din alte categorii."
+  },
+  "REAL_ESTATE": {
+    "NAME": "Imobiliare",
+    "DESCRIPTION": "Case, apartamente, terenuri și proprietăți comerciale."
+  },
+  "VEHICLES": {
+    "NAME": "Vehicule",
+    "DESCRIPTION": "Autoturisme, motociclete și alte vehicule."
+  }
+}
   },
 
   "AUCTIONS": {

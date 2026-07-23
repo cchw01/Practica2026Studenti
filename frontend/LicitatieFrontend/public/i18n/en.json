@@ -130,39 +130,39 @@
     "TITLE_END": "Categories",
 
     "ITEMS": {
-      "Art": {
-        "NAME": "Art",
-        "DESCRIPTION": "Paintings, sculptures and collectible works of art."
-      },
-      "Clothing": {
-        "NAME": "Clothing",
-        "DESCRIPTION": "Clothing, footwear and fashion accessories."
-      },
-      "Electronics": {
-        "NAME": "Electronics",
-        "DESCRIPTION": "Phones, computers and electronic devices."
-      },
-      "Home & Garden": {
-        "NAME": "Home & Garden",
-        "DESCRIPTION": "Furniture, decorations and garden products."
-      },
-      "Jewelry": {
-        "NAME": "Jewelry",
-        "DESCRIPTION": "Rings, necklaces, watches and valuable accessories."
-      },
-      "Others": {
-        "NAME": "Others",
-        "DESCRIPTION": "Discover products from other categories."
-      },
-      "Real Estate": {
-        "NAME": "Real Estate",
-        "DESCRIPTION": "Houses, apartments, land and commercial properties."
-      },
-      "Vehicles": {
-        "NAME": "Vehicles",
-        "DESCRIPTION": "Cars, motorcycles and other vehicles."
-      }
-    }
+  "ART": {
+    "NAME": "Art",
+    "DESCRIPTION": "Paintings, sculptures and collectible works of art."
+  },
+  "CLOTHING": {
+    "NAME": "Clothing",
+    "DESCRIPTION": "Clothing, footwear and fashion accessories."
+  },
+  "ELECTRONICS": {
+    "NAME": "Electronics",
+    "DESCRIPTION": "Phones, computers and electronic devices."
+  },
+  "HOME_GARDEN": {
+    "NAME": "Home & Garden",
+    "DESCRIPTION": "Furniture, decorations and garden products."
+  },
+  "JEWELRY": {
+    "NAME": "Jewelry",
+    "DESCRIPTION": "Rings, necklaces, watches and valuable accessories."
+  },
+  "OTHERS": {
+    "NAME": "Others",
+    "DESCRIPTION": "Discover products from other categories."
+  },
+  "REAL_ESTATE": {
+    "NAME": "Real Estate",
+    "DESCRIPTION": "Houses, apartments, land and commercial properties."
+  },
+  "VEHICLES": {
+    "NAME": "Vehicles",
+    "DESCRIPTION": "Cars, motorcycles and other vehicles."
+  }
+}
   },
 
   "AUCTIONS": {
