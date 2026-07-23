@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+langchain-community
+langchain-ollama
+langdetect
+deep-translator
+chromadb
