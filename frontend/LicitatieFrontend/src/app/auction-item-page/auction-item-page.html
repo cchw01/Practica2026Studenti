@@ -112,7 +112,7 @@
                      [min]="auctionItem.CurrentPrice + 1"
                      [disabled]="isOwner() || isAuctionEnded" />
             </div>
-            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner() || isAuctionEnded">
+            <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner() || isReported || isAuctionEnded">
               {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
             </button>
           </div>
@@ -138,7 +138,7 @@
 
       <!-- Wishlist container (only visible when logged in) -->
       <div class="wishlist-container" *ngIf="authService.isLoggedIn()">
-        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()" [disabled]="isOwner()">
+        <button type="button" class="btn-wishlist" [class.in-wishlist]="isInWishlist" (click)="toggleWishlist()" [disabled]="isOwner() || isReported">
           <span class="heart-icon">{{ isInWishlist ? '❤️' : '🤍' }}</span>
           <span>{{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}</span>
         </button>
@@ -151,7 +151,10 @@
 
       <!-- Actions row: Share is always visible; Report Item stays login-gated -->
       <div class="actions-footer">
-        <button type="button" class="btn-report" *ngIf="authService.isLoggedIn()" [class.reported]="isReported" (click)="openReportModal()">
+        <button type="button" class="btn-report" *ngIf="authService.isLoggedIn()" 
+            [class.reported]="isReported" 
+            [disabled]="isOwner() || isReported"
+            (click)="openReportModal()">
           <span class="report-icon">🚩</span>
           <span>{{ isReported ? 'Item Reported' : 'Report Item' }}</span>
         </button>
