@@ -1,107 +1,179 @@
 <div class="forum-page">
     <main class="forum-container">
         <header class="forum-introduction">
-            <h1>Forum discussions</h1>
-            <p> Browse current discussions and participate in conversations with other users. </p>
+            <h1>{{ 'FORUM_PAGE.HEADER.TITLE' | translate }}</h1>
+            <p>{{ 'FORUM_PAGE.HEADER.DESCRIPTION' | translate }}</p>
         </header>
 
         <section class="discussion-section">
             
             <div class="search-bar">
-    <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        (ngModelChange)="resetPage()"
-        placeholder="Search discussions..."
-        aria-label="Search discussions"
-    />
-</div>
+                <input
+                    type="text"
+                    [(ngModel)]="searchQuery"
+                    (ngModelChange)="resetPage()"
+                    [placeholder]="'FORUM_PAGE.SEARCH.PLACEHOLDER' | translate"
+                    [attr.aria-label]="'FORUM_PAGE.SEARCH.ARIA_LABEL' | translate"
+                />
+            </div>
 
-<div class="discussion-toolbar">
-    @if (currentUserId !== null) {
-<a class="create-discussion-button" routerLink="/forum/new"> Start a discussion </a>
-} @else {
-<a class="create-discussion-button" routerLink="/login-page"> Log in to start a discussion </a>
-}
+            <div class="discussion-toolbar">
+                @if (currentUserId !== null) {
+                    <a class="create-discussion-button" routerLink="/forum/new">
+                        {{ 'FORUM_PAGE.ACTIONS.START_DISCUSSION' | translate }}
+                    </a>
+                } @else {
+                    <a class="create-discussion-button" routerLink="/login-page">
+                        {{ 'FORUM_PAGE.ACTIONS.LOGIN_TO_START' | translate }}
+                    </a>
+                }
 
                 <div class="sort-control">
-                    <select [(ngModel)]="sortOption" (ngModelChange)="resetPage()" aria-label="Sort discussions">
-                        <option value="latest">Latest first</option>
-                        <option value="oldest">Oldest first</option>
-                        <option value="comments">Most commented</option>
+                    <select
+                        [(ngModel)]="sortOption"
+                        (ngModelChange)="resetPage()"
+                        [attr.aria-label]="'FORUM_PAGE.SORT.ARIA_LABEL' | translate">
+
+                        <option value="latest">
+                            {{ 'FORUM_PAGE.SORT.LATEST' | translate }}
+                        </option>
+
+                        <option value="oldest">
+                            {{ 'FORUM_PAGE.SORT.OLDEST' | translate }}
+                        </option>
+
+                        <option value="comments">
+                            {{ 'FORUM_PAGE.SORT.MOST_COMMENTED' | translate }}
+                        </option>
                     </select>
                 </div>
 
                 <p class="discussion-total">
                     {{ visiblePosts.length }}
-                    {{ visiblePosts.length === 1 ? 'discussion' : 'discussions' }}
+                    {{
+                        (
+                            visiblePosts.length === 1
+                                ? 'FORUM_PAGE.COUNT.DISCUSSION'
+                                : 'FORUM_PAGE.COUNT.DISCUSSIONS'
+                        ) | translate
+                    }}
                 </p>
             </div>
 
             @if (isLoading) {
-            <div class="empty-state" aria-live="polite">
-                <h2>Loading discussions</h2>
-            </div>
-            } @else if (errorMessage) {
-            <div class="empty-state" role="alert">
-                <h2>Unable to load discussions</h2>
-                <p>{{ errorMessage }}</p>
-                <button type="button" class="retry-button" (click)="retryLoading()"> Try again </button>
-            </div>
-            } @else {
-            <div class="discussion-list">
-              @for (post of pagedPosts; track post.id) {
-                <a class="discussion-card" [routerLink]="['/forum', post.id]">
-                    <div class="discussion-row">
-                        <div class="author-avatar">
-                            {{ getInitials(post.userName, post.userId) }}
-                        </div>
-
-                        <div class="discussion-heading-block">
-                            <h2>{{ post.title }}</h2>
-                            <p class="discussion-author">
-                                Posted bys
-                                <strong> {{ getUserLabel(post.userId, post.userName) }} </strong>
-                            </p>
-                        </div>
-
-                        <p class="discussion-description"> {{ post.description }} </p>
-
-                        <time class="discussion-date" [attr.datetime]="post.date">
-                            {{ post.date | date: 'mediumDate' }}
-                        </time>
-                    </div>
-
-                    <div class="discussion-footer">
-                        <div class="discussion-comments">
-                            <div class="comment-icon" aria-hidden="true"></div>
-                            <p class="comment-count">
-                                {{ post.commentsCount }} {{ post.commentsCount === 1 ? 'comment' : 'comments' }}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                } @empty {
-                <div class="empty-state">
-                    <h2>No discussions available</h2>
-                    <p> There are currently no discussions in the forum. </p>
+                <div class="empty-state" aria-live="polite">
+                    <h2>{{ 'FORUM_PAGE.LOADING.TITLE' | translate }}</h2>
                 </div>
-                }
-            </div>
+            } @else if (errorMessage) {
+                <div class="empty-state" role="alert">
+                    <h2>{{ 'FORUM_PAGE.ERROR.TITLE' | translate }}</h2>
+                    <p>{{ errorMessage }}</p>
+
+                    <button
+                        type="button"
+                        class="retry-button"
+                        (click)="retryLoading()">
+                        {{ 'FORUM_PAGE.ACTIONS.TRY_AGAIN' | translate }}
+                    </button>
+                </div>
+            } @else {
+                <div class="discussion-list">
+                    @for (post of pagedPosts; track post.id) {
+                        <a
+                            class="discussion-card"
+                            [routerLink]="['/forum', post.id]">
+
+                            <div class="discussion-row">
+                                <div class="author-avatar">
+                                    {{ getInitials(post.userName, post.userId) }}
+                                </div>
+
+                                <div class="discussion-heading-block">
+                                    <h2>{{ post.title }}</h2>
+
+                                    <p class="discussion-author">
+                                        {{ 'FORUM_PAGE.POST.POSTED_BY' | translate }}
+                                        <strong>
+                                            {{ getUserLabel(post.userId, post.userName) }}
+                                        </strong>
+                                    </p>
+                                </div>
+
+                                <p class="discussion-description">
+                                    {{ post.description }}
+                                </p>
+
+                                <time
+                                    class="discussion-date"
+                                    [attr.datetime]="post.date">
+                                    {{ post.date | date: 'mediumDate' }}
+                                </time>
+                            </div>
+
+                            <div class="discussion-footer">
+                                <div class="discussion-comments">
+                                    <div
+                                        class="comment-icon"
+                                        aria-hidden="true">
+                                    </div>
+
+                                    <p class="comment-count">
+                                        {{ post.commentsCount }}
+                                        {{
+                                            (
+                                                post.commentsCount === 1
+                                                    ? 'FORUM_PAGE.COUNT.COMMENT'
+                                                    : 'FORUM_PAGE.COUNT.COMMENTS'
+                                            ) | translate
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    } @empty {
+                        <div class="empty-state">
+                            <h2>
+                                {{ 'FORUM_PAGE.EMPTY.TITLE' | translate }}
+                            </h2>
+
+                            <p>
+                                {{ 'FORUM_PAGE.EMPTY.DESCRIPTION' | translate }}
+                            </p>
+                        </div>
+                    }
+                </div>
             }
+
             @if (totalPages > 1) {
-<nav class="pagination" aria-label="Pagination">
-    <button type="button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+                <nav
+                    class="pagination"
+                    [attr.aria-label]="'FORUM_PAGE.PAGINATION.ARIA_LABEL' | translate">
 
-    @for (page of pageNumbers; track page) {
-    <button type="button" class="page-button" [class.active]="page === currentPage" (click)="goToPage(page)">
-        {{ page }}
-    </button>
-    }
+                    <button
+                        type="button"
+                        (click)="goToPage(currentPage - 1)"
+                        [disabled]="currentPage === 1">
+                        {{ 'FORUM_PAGE.PAGINATION.PREVIOUS' | translate }}
+                    </button>
 
-    <button type="button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
-</nav>
-}
+                    @for (page of pageNumbers; track page) {
+                        <button
+                            type="button"
+                            class="page-button"
+                            [class.active]="page === currentPage"
+                            (click)="goToPage(page)">
+                            {{ page }}
+                        </button>
+                    }
+
+                    <button
+                        type="button"
+                        (click)="goToPage(currentPage + 1)"
+                        [disabled]="currentPage === totalPages">
+                        {{ 'FORUM_PAGE.PAGINATION.NEXT' | translate }}
+                    </button>
+                </nav>
+            }
 
         </section>
     </main>
