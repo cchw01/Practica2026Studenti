@@ -83,6 +83,7 @@ export class ProfilePage implements OnInit {
   // --- Lists ---
   addedItems: Item[] = [];
   bidItems: Item[] = [];
+  outbidItems: Item[] = [];
   wishItems: Item[] = [];
   reviews: Review[] = [];
 
@@ -356,7 +357,44 @@ export class ProfilePage implements OnInit {
             status: this.translate.instant('PROFILE_PAGE.STATUS.WON'),
             image: this.getItemImage(item, items),
           }));
+        this.outbidItems = items
+          .filter((item: any) => {
+            const bids = item.BidList || item.bidList || [];
 
+            const hasBid = bids.some(
+              (b: any) => Number(b.bidderId || b.BidderId) === this.currentUserId,
+            );
+
+            const isSold = item.status === 'Sold' || item.Status === 'Sold';
+            const winnerId = item.WinnerId ?? item.winnerId ?? item.Winner?.id ?? item.Winner?.ID;
+
+            if (isSold && winnerId !== undefined && Number(winnerId) !== this.currentUserId) {
+              return true;
+            }
+
+            const isActive =
+              item.status === 'ActiveBid' ||
+              item.Status === 'ActiveBid' ||
+              item.status === 'Active' ||
+              item.Status === 'Active';
+            if (isActive && bids.length > 0) {
+              const highestBid = [...bids].sort(
+                (a: any, b: any) => (b.price || b.Price) - (a.price || a.Price),
+              )[0];
+              if (Number(highestBid.bidderId || highestBid.BidderId) !== this.currentUserId) {
+                return true;
+              }
+            }
+
+            return false;
+          })
+          .map((item: any) => ({
+            id: item.id || item.ID || 0,
+            title: item.name || item.Name || '',
+            price: item.currentPrice ?? item.CurrentPrice ?? 0,
+            status: 'Outbid',
+            image: this.getItemImage(item, items),
+          }));
         // Fetch wishlist items specifically from backend for current user
         this.UserService.getWishlist(this.currentUserId).subscribe({
           next: (wishlistItems: any[]) => {
@@ -458,6 +496,7 @@ export class ProfilePage implements OnInit {
     if (lower.includes('nowinner')) return 'badge-nowinner';
     if (lower.includes('validated')) return 'badge-validated';
     if (lower.includes('won')) return 'badge-won';
+    if (lower.includes('outbid')) return 'badge-nowinner';
     return 'badge-added';
   }
 
