@@ -510,10 +510,22 @@ export class ProfilePage implements OnInit {
   }
 
   saveEdit(): void {
+    const username = (this.editDraft.username || '').trim();
+    const name = (this.editDraft.name || '').trim();
+
+    if (username.length < 3) {
+      alert('Username-ul trebuie să aibă cel puțin 3 caractere.');
+      return;
+    }
+    if (name.length < 2) {
+      alert('Numele trebuie să aibă cel puțin 2 caractere.');
+      return;
+    }
+
     this.UserService.updateUser(
       this.currentUserId,
-      this.editDraft.username,
-      this.editDraft.name,
+      username,
+      name,
     ).subscribe({
       next: (updatedUser: any) => {
         // UserService.mapUser() returns UserReadDto with PascalCase fields (UserName, Name)
@@ -552,11 +564,13 @@ export class ProfilePage implements OnInit {
       error: (err: any) => {
         const errorMsg =
           (err.error && typeof err.error === 'string' ? err.error : err.error?.message) ||
+          (err.error?.errors ? Object.values(err.error.errors).flat().join(' ') : null) ||
           'A apărut o eroare la actualizarea profilului.';
         alert(errorMsg);
       },
     });
   }
+
 
   onAvatarSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

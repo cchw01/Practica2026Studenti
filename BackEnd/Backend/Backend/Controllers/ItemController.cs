@@ -2,10 +2,11 @@ using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 
 namespace Backend.Controllers
@@ -334,76 +335,6 @@ namespace Backend.Controllers
         }
 
         [Authorize]
-        [HttpPost("{id}/close")]
-        public ActionResult<AuctionItemResponseDto> CloseAuctionItem(int id)
-        {
-            try
-            {
-                var authenticatedUserId = GetAuthenticatedUserId();
-
-                if (authenticatedUserId == null)
-                    return Unauthorized();
-
-                var item = dataOps.GetTrackedAuctionItemById(id);
-
-                if (item == null)
-                    return NotFound("Auction not found.");
-
-                var isOwner = item.OwnerId == authenticatedUserId.Value;
-                var isAdmin = User.IsInRole("Admin");
-
-                if (!isOwner && !isAdmin)
-                    return Forbid();
-
-                if (
-                    item.Status == AuctionItem.StatusEnum.Sold ||
-                    item.Status == AuctionItem.StatusEnum.Expired
-                )
-                {
-                    return BadRequest("The auction has already been closed.");
-                }
-
-                if (item.EndDate > DateTime.Now && !isAdmin)
-                {
-                    return BadRequest(
-                        "The auction cannot be closed before its end date."
-                    );
-                }
-
-                var winningBid = bidDataOps.GetHighestBidByItemId(item.ID);
-
-                if (winningBid != null)
-                {
-                    item.WinnerId = winningBid.BidderId;
-                    item.CurrentPrice = winningBid.Price;
-                    item.Status = AuctionItem.StatusEnum.Sold;
-                }
-                else
-                {
-                    item.WinnerId = null;
-                    item.CurrentPrice = item.StartPrice;
-                    item.Status = AuctionItem.StatusEnum.Expired;
-                }
-
-                dataOps.SaveChanges();
-
-                var closedItem = dataOps.GetAuctionItemById(id);
-
-                if (closedItem == null)
-                    return NotFound();
-
-                return Ok(MapToResponseDto(closedItem));
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = ex.InnerException?.Message
-                    ?? ex.Message;
-
-                return BadRequest(errorMessage);
-            }
-        }
-
-        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult DeleteAuctionItem(int id)
         {
@@ -478,6 +409,35 @@ namespace Backend.Controllers
                 return userId;
 
             return null;
+        }
+
+        [Authorize]
+        [HttpPost("{id}/end")]
+        public ActionResult<AuctionItemResponseDto> EndAuction(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+                if (authenticatedUserId == null)
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+                if (item == null)
+                    return NotFound();
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+                if (!isOwner && !isAdmin)
+                    return Forbid();
+     
+                dataOps.ProcessAuctionEnd(item, bidDataOps);
+                var updatedItem = dataOps.GetAuctionItemById(id);
+
+                return Ok(MapToResponseDto(updatedItem!));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
