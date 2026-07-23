@@ -333,6 +333,16 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     // Update instantly (optimistic update)
     const originalState = this.isInWishlist;
     this.isInWishlist = !originalState;
+    
+    if (this.isInWishlist) {
+      this.toastAction = 'added';
+      this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
+    } else {
+      this.toastAction = 'removed';
+      this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
+    }
+    this.showWishlistToastMessage();
+
     try {
       this.cdr.detectChanges();
     } catch { }
@@ -340,9 +350,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     if (originalState) {
       this.userService.removeFromWishlist(currentUserId, itemId).subscribe({
         next: () => {
-          this.toastAction = 'removed';
-          this.toastMessage = `${this.auctionItem.Name} removed from Wishlist.`;
-          this.showWishlistToastMessage();
+          // Success
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
@@ -355,9 +363,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.userService.addToWishlist(currentUserId, itemId).subscribe({
         next: () => {
-          this.toastAction = 'added';
-          this.toastMessage = `${this.auctionItem.Name} added to Wishlist!`;
-          this.showWishlistToastMessage();
+          // Success
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
