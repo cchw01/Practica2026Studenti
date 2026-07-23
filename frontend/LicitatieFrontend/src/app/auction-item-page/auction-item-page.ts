@@ -169,7 +169,15 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.auctionItem.StartPrice = item.StartPrice ?? currentP;
       this.bidAmount = currentP + 10;
     }
+    const categoryId =
+      item.CategoryId ??
+      item.categoryId ??
+      item.Category?.Id ??
+      item.Category?.id;
 
+    if (categoryId !== undefined && categoryId !== null) {
+      this.auctionItem.CategoryId = Number(categoryId);
+    }
     if (item.Category) {
       this.auctionItem.Category =
         typeof item.Category === 'string'

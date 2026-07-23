@@ -169,8 +169,15 @@
         
 
       <!-- Report Button (only visible when logged in) -->
-      <div class="actions-footer" *ngIf="authService.isLoggedIn()">
-        <button type="button" class="btn-report" [class.reported]="isReported" (click)="openReportModal()">
+      <div class="actions-footer">
+        <button
+              *ngIf="authService.isLoggedIn()"
+              type="button"
+              class="btn-report"
+              [class.reported]="isReported"
+              [disabled]="isOwner() || isReported"
+              (click)="openReportModal()"
+          >
           <span class="report-icon">🚩</span>
           <span>{{ isReported ? 'Item Reported' : 'Report Item' }}</span>
         </button>
