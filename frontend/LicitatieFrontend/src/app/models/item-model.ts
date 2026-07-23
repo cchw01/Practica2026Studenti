@@ -24,4 +24,5 @@ export interface AuctionItem {
   PhotoList?: string[];
   ImageUrl?: string;
   isFavorite?: boolean;
+  HasBids?: boolean;
 }

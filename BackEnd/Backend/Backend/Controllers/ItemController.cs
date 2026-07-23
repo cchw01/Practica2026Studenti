@@ -299,6 +299,14 @@ namespace Backend.Controllers
                 if (!isOwner && !isAdmin)
                     return Forbid();
 
+                if (dataOps.HasBids(id))
+                {
+                    return Conflict(new
+                    {
+                        message =
+                            "Itemul nu mai poate fi editat deoarece a primit deja o ofertă."
+                    });
+                }
                 var category = categoryDataOps.GetCategoryById(
                     dto.CategoryId);
 
@@ -311,10 +319,14 @@ namespace Backend.Controllers
                 item.Name = dto.Name;
                 item.StartPrice = dto.StartPrice;
                 item.CategoryId = dto.CategoryId;
+                item.CurrentPrice = dto.StartPrice;
+item.WinnerId = null;
                 item.Description = dto.Description;
                 item.Location = dto.Location;
-                item.StartDate = dto.StartDate;
-                item.EndDate = dto.EndDate;
+                TimeSpan durationDays = item.EndDate - item.StartDate;
+                item.StartDate = DateTime.UtcNow;
+                item.EndDate = item.StartDate.Add(durationDays);
+                item.Status = AuctionItem.StatusEnum.Added; // Might want to make a separate "Edited" status later for clarity
 
                 dataOps.SaveChanges();
 
@@ -374,7 +386,7 @@ namespace Backend.Controllers
             }
         }
 
-        private static AuctionItemResponseDto MapToResponseDto(
+        private  AuctionItemResponseDto MapToResponseDto(
             AuctionItem item)
         {
             return new AuctionItemResponseDto
@@ -396,7 +408,8 @@ namespace Backend.Controllers
                 Status = item.Status,
                 StartDate = item.StartDate,
                 EndDate = item.EndDate,
-                ImageUrl = item.ImageUrl
+                ImageUrl = item.ImageUrl,
+                HasBids = dataOps.HasBids(item.ID)
             };
         }
 

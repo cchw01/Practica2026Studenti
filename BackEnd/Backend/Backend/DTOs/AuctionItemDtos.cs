@@ -130,5 +130,7 @@ namespace Backend.DTOs
         public DateTime EndDate { get; set; }
 
         public string? ImageUrl { get; set; }
+
+        public bool HasBids { get; set; }
     }
 }

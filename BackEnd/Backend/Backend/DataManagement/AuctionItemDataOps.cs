@@ -83,6 +83,12 @@ namespace Backend.DataManagement
             return item;
         }
 
+        public bool HasBids(int itemId)
+        {
+            return dbContext.Bids.Any(
+                bid => bid.BiddedItemId == itemId);
+        }
+
         public void SaveChanges()
         {
             dbContext.SaveChanges();

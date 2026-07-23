@@ -9,6 +9,7 @@ import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 import { TranslateService } from '@ngx-translate/core';
 import { ReportService } from '../services/report-service';
+import { CategoryService } from '../services/category-service';
 
 function mapReasonToBackend(reason: string): 'Spam' | 'Harassment' | 'InappropriateContent' | 'Fraud' | 'Other' {
   switch (reason) {
@@ -68,6 +69,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   private reportToastTimeout: any;
   private reportToastHideTimeout: any;
 
+  // Edit functionality
+  showEditModal: boolean = false;
+  editData: any = {};
+  categories: Category[] = [];
   errorMessage: string = '';
   countdownText: string = '';
   private timerInterval: any;
@@ -106,6 +111,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private itemService: ItemService,
     private reportService: ReportService,
+    private categoryService: CategoryService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -114,7 +120,18 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     this.selectedImageIndex = 0;
+    this.categoryService.getCategories().subscribe({
+    next: (categories) => {
+        this.categories = categories;
 
+        try {
+          this.cdr.markForCheck();
+        } catch {}
+      },
+      error: (err) => {
+        console.error('Could not load categories:', err);
+      }
+    });
     const auctionFromState = this.navState?.auction;
     if (auctionFromState) {
       this.setAuctionItemData(auctionFromState);
@@ -187,7 +204,15 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.auctionItem.StartPrice = item.StartPrice ?? currentP;
       this.bidAmount = currentP + 10;
     }
+    const categoryId =
+      item.CategoryId ??
+      item.categoryId ??
+      item.Category?.Id ??
+      item.Category?.id;
 
+    if (categoryId !== undefined && categoryId !== null) {
+      this.auctionItem.CategoryId = Number(categoryId);
+    }
     if (item.Category) {
       this.auctionItem.Category =
         typeof item.Category === 'string'
@@ -210,6 +235,10 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else if (item.OwnerId || item.ownerId) {
       this.auctionItem.OwnerId = Number(item.OwnerId || item.ownerId);
     }
+
+    this.auctionItem.HasBids =
+          item.HasBids ?? item.hasBids ?? false;
+
 
     if (item.StartDate || item.startDate) {
       this.auctionItem.StartDate = new Date(item.StartDate || item.startDate);
@@ -601,6 +630,164 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.cdr.markForCheck();
     } catch {}
   }
+  
+
+  openEditModal(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.redirectToLogin();
+      return;
+    }
+    if (!this.isOwner()) {
+      return;
+    }
+
+    if (this.auctionItem.HasBids) {
+      this.reportToastMessage =
+        'Itemul nu mai poate fi editat deoarece a primit deja o ofertă.';
+
+      this.showReportToast = true;
+      this.isReportToastHiding = false;
+
+      try {
+        this.cdr.markForCheck();
+      } catch {}
+
+      return;
+    }
+
+    this.editData = {
+      name: this.auctionItem.Name,
+      startPrice: this.auctionItem.StartPrice,
+      categoryId: this.auctionItem.CategoryId || this.auctionItem.Category?.Id || 1,
+      location: this.auctionItem.Location,
+      description: this.auctionItem.Description
+    };
+
+    this.showEditModal = true;
+
+    try {
+      this.cdr.markForCheck();
+    } catch { }
+  }
+
+  //Closing Modal
+  closeEditModal(): void {
+    this.showEditModal = false;
+    this.editData = {}; 
+    try {
+      this.cdr.markForCheck();
+    } catch { }
+  }
+
+  //Submit edits
+  
+  submitEdit(): void {
+    if (!this.isOwner()) {
+      return;
+    }
+
+    if (this.auctionItem.HasBids) {
+      this.reportToastMessage =
+        'Itemul nu mai poate fi editat deoarece a primit deja o ofertă.';
+
+      this.showReportToast = true;
+      this.isReportToastHiding = false;
+
+      return;
+    }
+    if (!this.editData.name?.trim()) {
+      this.reportToastMessage = 'Numele este obligatoriu.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (
+      this.editData.startPrice === null ||
+      this.editData.startPrice === undefined ||
+      Number(this.editData.startPrice) <= 0
+    ) {
+      this.reportToastMessage =
+        'Prețul de pornire trebuie să fie mai mare decât 0.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (!this.editData.categoryId) {
+      this.reportToastMessage = 'Categoria este obligatorie.';
+      this.showReportToast = true;
+      return;
+    }
+
+    if (!this.editData.location?.trim()) {
+      this.reportToastMessage = 'Locația este obligatorie.';
+      this.showReportToast = true;
+      return;
+    }
+
+    const itemToUpdate = { ...this.auctionItem };
+    itemToUpdate.Name = this.editData.name;
+    itemToUpdate.StartPrice = Number(this.editData.startPrice);
+    itemToUpdate.CategoryId = Number(this.editData.categoryId);
+    itemToUpdate.Description = this.editData.description;
+    itemToUpdate.Location = this.editData.location;
+
+    this.itemService.updateItem(itemToUpdate).subscribe({
+        next: (res: any) => {
+          this.showEditModal = false;
+          
+          // Change the ui for the user to see the updated data and that it's pending review
+          this.auctionItem.Name = itemToUpdate.Name;
+          this.auctionItem.StartPrice = itemToUpdate.StartPrice;
+          this.auctionItem.CategoryId = itemToUpdate.CategoryId;
+          const selectedCategory = this.categories.find(
+            category => category.Id === itemToUpdate.CategoryId
+          );
+
+          if (selectedCategory) {
+            this.auctionItem.Category = selectedCategory;
+          }
+          this.auctionItem.Description = itemToUpdate.Description;
+          this.auctionItem.Location = itemToUpdate.Location;
+          this.auctionItem.Status = 'Added' as any; // Reset status to pending
+          this.auctionItem.CurrentPrice = itemToUpdate.StartPrice;
+          this.bidAmount = itemToUpdate.StartPrice + 10;
+          // Success Toast
+          this.reportToastMessage = `Item updated and sent for Admin review!`;
+          this.showReportToast = true;
+          this.isReportToastHiding = false;
+
+          if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
+          if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
+
+          this.reportToastHideTimeout = setTimeout(() => {
+            this.isReportToastHiding = true;
+            try { this.cdr.markForCheck(); } catch { }
+          }, 1500);
+
+          this.reportToastTimeout = setTimeout(() => {
+            this.showReportToast = false;
+            this.isReportToastHiding = false;
+            try { this.cdr.markForCheck(); } catch { }
+          }, 2000);
+
+          try { this.cdr.markForCheck(); } catch { }
+        },
+        error: (err: any) => {
+          console.error('Failed to edit item:', err);
+          
+          // Error Toast
+          this.reportToastMessage =
+                  err.error?.message ||
+                  err.error ||
+                  'Error updating item. Please try again.';
+          this.showReportToast = true;
+          this.isReportToastHiding = false;
+          try { this.cdr.markForCheck(); } catch { }
+        }
+      });
+  }
+
+
 
   isOwner(): boolean {
     const currentUserId = this.authService.getCurrentUserId();

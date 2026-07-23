@@ -27,7 +27,7 @@ export class AuctionsPage implements OnInit, OnDestroy {
   isLoading: boolean = true;
   hasError: boolean = false;
   currentUserId: number = 0;
-
+ 
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,

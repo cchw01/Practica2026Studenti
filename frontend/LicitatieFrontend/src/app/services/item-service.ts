@@ -97,6 +97,7 @@ export class ItemService {
       StartDate: new Date(item.startDate || item.StartDate),
       EndDate: new Date(item.endDate || item.EndDate),
       BidList: item.bidList || item.BidList || [],
+      HasBids: item.hasBids ?? item.HasBids ?? false,
       PhotoList: parsedPhotoList,
       ImageUrl: mainImageUrl
     });
@@ -393,16 +394,8 @@ export class ItemService {
           observer.next(this.mapResponse(res));
           observer.complete();
         },
-        error: () => {
-          const items: AuctionItem[] = this.getLocalItems();
-          const index = items.findIndex(i => i.ID === item.ID);
-          if (index !== -1) {
-            items[index] = this.sanitizeItem(item);
-            localStorage.setItem(this.storageKey, JSON.stringify(items));
-            localStorage.setItem('local_auctions', JSON.stringify(items));
-          }
-          observer.next(this.sanitizeItem(item));
-          observer.complete();
+        error: (err) => {
+          observer.error(err);
         }
       });
     });
