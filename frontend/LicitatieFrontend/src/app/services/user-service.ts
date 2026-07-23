@@ -9,6 +9,7 @@ import { AuctionItem } from '../Models/item-model';
 })
 export class UserService {
   private readonly apiUrl = 'https://localhost:7137/api/User';
+  private readonly profilePictureApiUrl = 'https://localhost:7137/api/ProfilePicture';
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +21,7 @@ export class UserService {
       Email: u.email,
       Role: u.role,
       Rating: u.rating,
+      profilePictureName: u.profilePictureName,
     };
   }
 
@@ -43,6 +45,20 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
+  uploadProfilePicture(file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+    return this.http.post(`${this.profilePictureApiUrl}/upload`, formData, {
+      responseType: 'text',
+    });
+  }
+
+  getProfilePicture(userId: number): Observable<string> {
+    return this.http.get(`${this.profilePictureApiUrl}/${userId}`, {
+      responseType: 'text',
+    });
+  }
+
   // --- Operațiuni Wishlist ---
   addToWishlist(userId: number, itemId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/wishlist/${itemId}`, {});
@@ -60,7 +76,6 @@ export class UserService {
     // Când vei face tabela în backend, poți de-comenta linia de mai jos:
     // return this.http.post<void>(`${this.apiUrl}/${userId}/report`, { reason });
     
-    // Momentan simulăm succesul local:
     return new Observable<void>(observer => {
       console.log(`Utilizatorul ${userId} a fost raportat. Motiv: ${reason}`);
       observer.next();

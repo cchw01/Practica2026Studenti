@@ -28,97 +28,87 @@ export class HelpPageComponent implements OnInit {
   isLoggedIn = false;
 
   faqCategories: FaqCategory[] = [
-    {
-      title: '🚨 Licitații și Oferte',
-      faqs: [
-        {
-          question: 'How do I place a bid on an auction?',
-          answer:
-            'Go to the page of the item you want and enter your amount in the "Bid now" field. Your bid must be higher than the current price.',
-          isOpen: false,
-        },
-        {
-          question: 'Can I cancel a bid after placing it?',
-          answer:
-            'Bids are binding once placed and generally cannot be cancelled. Please make sure of your amount before confirming.',
-          isOpen: false,
-        },
-        {
-          question: 'How do I know if I won an auction?',
-          answer:
-            'You will receive an email and in-app notification when the auction ends and you have the highest bid.',
-          isOpen: false,
-        },
-      ],
-    },
-    {
-      title: '👤 Cont și Autentificare',
-      faqs: [
-        {
-          question: 'How do I create an account?',
-          answer:
-            'Click "Register" in the top menu, fill in your username, email, and password, then confirm your email address to activate your account.',
-          isOpen: false,
-        },
-        {
-          question: 'I forgot my password. What should I do?',
-          answer:
-            'Click "Forgot password?" on the login page and follow the instructions sent to your registered email to reset it.',
-          isOpen: false,
-        },
-      ],
-    },
-    {
-      title: '📦 Livrare și Plăți',
-      faqs: [
-        {
-          question: 'How is the item delivered after I win?',
-          answer:
-            'After payment confirmation, the seller will arrange shipping or pickup. Delivery details are exchanged through your account messages.',
-          isOpen: false,
-        },
-        {
-          question: 'What happens if the seller does not deliver the item?',
-          answer:
-            'Contact our support team immediately through the form below. We investigate all disputes and may suspend sellers who fail to deliver.',
-          isOpen: false,
-        },
-        {
-          question: 'Who pays for shipping?',
-          answer: 'Buyers pay shipping costs unless you opt to offer free shipping.',
-          isOpen: false,
-        },
-        {
-          question: 'When do I get paid?',
-          answer: 'Payouts are sent to your bank 3–5 business days after buyer payment clears.',
-          isOpen: false,
-        },
-      ],
-    },
-    {
-      title: '🏷️ Vânzare',
-      faqs: [
-        {
-          question: 'How do I list an item for sale?',
-          answer:
-            'Go to the "My Profile" section and click "Add Auction". Fill in the details and wait for admin validation.',
-          isOpen: false,
-        },
-        {
-          question: 'Can I edit or remove an auction after posting it?',
-          answer:
-            'You can edit or remove an auction only before it receives its first bid. After that, changes are locked to protect bidders.',
-          isOpen: false,
-        },
-        {
-          question: 'What if my item does not sell?',
-          answer: 'You can lower your reserve price and relist it, or offer it to the top bidder.',
-          isOpen: false,
-        },
-      ],
-    },
-  ];
-
+  {
+    title: 'HELP.FAQ_CATEGORIES.AUCTIONS.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.PLACE_BID.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.PLACE_BID.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.CANCEL_BID.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.CANCEL_BID.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.WIN_AUCTION.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.AUCTIONS.QUESTIONS.WIN_AUCTION.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.ACCOUNT.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.CREATE_ACCOUNT.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.CREATE_ACCOUNT.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.FORGOT_PASSWORD.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.ACCOUNT.QUESTIONS.FORGOT_PASSWORD.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.DELIVERY.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.ITEM_DELIVERY.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.ITEM_DELIVERY.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.NOT_DELIVERED.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.NOT_DELIVERED.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.SHIPPING_COST.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.SHIPPING_COST.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.PAYOUT.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.DELIVERY.QUESTIONS.PAYOUT.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+  {
+    title: 'HELP.FAQ_CATEGORIES.SELLING.TITLE',
+    faqs: [
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.LIST_ITEM.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.LIST_ITEM.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.EDIT_AUCTION.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.EDIT_AUCTION.ANSWER',
+        isOpen: false,
+      },
+      {
+        question: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.NOT_SOLD.QUESTION',
+        answer: 'HELP.FAQ_CATEGORIES.SELLING.QUESTIONS.NOT_SOLD.ANSWER',
+        isOpen: false,
+      },
+    ],
+  },
+];
   isChatOpen = false;
   isTyping = false;
   chatMessages: { sender: string; text: string }[] = [

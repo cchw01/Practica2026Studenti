@@ -1,81 +1,94 @@
 using Azure.Core;
-    using Backend.DataManagement;
-    using Backend.DTOs;
-    using Backend.Models;
-    using Backend.Services;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
+using Backend.DataManagement;
+using Backend.DTOs;
+using Backend.Models;
+using Backend.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
     {
-        [ApiController]
-        [Route("api/[controller]")]
-        public class UserController : ControllerBase
+        private readonly UserDataOps dataOps;
+        private readonly ProfilePictureDataOps profilePictureDataOps;
+        private readonly RefreshTokenDataOps refreshTokenDataOps;
+        private readonly TokenProvider tokenProvider;
+        private const int EXPIRES_IN = 900;
+        public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
         {
-            private readonly UserDataOps dataOps;
-            private readonly RefreshTokenDataOps refreshTokenDataOps;
-            private readonly TokenProvider tokenProvider;
-            private const int EXPIRES_IN = 900;
-            public UserController(ApplicationDbContext DbContext, TokenProvider tokenProvider, RefreshTokenDataOps refreshTokenDataOps)
-            {
-                dataOps = new UserDataOps(DbContext);
-                this.tokenProvider = tokenProvider;
-                this.refreshTokenDataOps = refreshTokenDataOps;
-            }
+            dataOps = new UserDataOps(DbContext);
+            profilePictureDataOps = new ProfilePictureDataOps(DbContext);
+            this.tokenProvider = tokenProvider;
+            this.refreshTokenDataOps = refreshTokenDataOps;
+        }
 
-            [HttpGet]
+        private string? GetProfilePictureName(User user)
+        {
+            if (user.ProfilePictureId == null)
+                return null;
+
+            var picture = profilePictureDataOps.GetProfilePictureById(user.ProfilePictureId.Value);
+            return picture?.name;
+        }
+
+        [HttpGet]
         public ActionResult<IEnumerable<UserReadDto>> GetUsers()
         {
-                try
-                {
-                    var users = dataOps.GetUsers();
-                    var userDtos = users.Select(u => new UserReadDto
-                    {
-                        ID = u.ID,
-                        UserName = u.UserName,
-                        Name = u.Name,
-                        Email = u.Email,
-                        Role = u.Role,
-                        Rating = u.Rating,
-                        PhoneNumber = u.PhoneNumber
-                    }).ToArray();
-                    return Ok(userDtos);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
-            }
-
-            [HttpGet("{id}")]
-            public ActionResult<UserReadDto> GetUser(int id)
+            try
             {
-                try
+                var users = dataOps.GetUsers();
+                var userDtos = users.Select(u => new UserReadDto
                 {
-                    var user = dataOps.GetUserById(id);
-
-                    if (user == null)
-                        return NotFound();
-
-                    var userDto = new UserReadDto
-                    {
-                        ID = user.ID,
-                        UserName = user.UserName,
-                        Name = user.Name,
-                        Email = user.Email,
-                        Role = user.Role,
-                        Rating = user.Rating,
-                        PhoneNumber = user.PhoneNumber
-                    };
-
-                    return Ok(userDto);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
-                }
+                    ID = u.ID,
+                    UserName = u.UserName,
+                    Name = u.Name,
+                    Email = u.Email,
+                    Role = u.Role,
+                    Rating = u.Rating,
+                    PhoneNumber = u.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(u)
+                }).ToArray();
+                return Ok(userDtos);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<UserReadDto> GetUser(int id)
+        {
+            try
+            {
+                var user = dataOps.GetUserById(id);
+
+                if (user == null)
+                    return NotFound();
+
+                var userDto = new UserReadDto
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = user.Role,
+                    Rating = user.Rating,
+                    PhoneNumber = user.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(user)
+                };
+
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpPost("register")]
         public ActionResult<User> Register(RegisterDto request)
@@ -148,30 +161,30 @@ namespace Backend.Controllers
             {
 
                 var refreshTokenFromRequest = Request.Cookies["refreshToken"];
-                if(refreshTokenFromRequest==null)
+                if (refreshTokenFromRequest == null)
                 {
                     return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
                 }
                 var token = refreshTokenDataOps.GetRefreshTokenByToken(refreshTokenFromRequest);
-                if(token==null)
+                if (token == null)
                 {
                     return Unauthorized("Refresh token invalid, se redirectioneaza la Login");
                 }
                 var user = dataOps.GetUserById(token.UserId);
-                if (user==null)
+                if (user == null)
                 {
                     return Unauthorized("Utilizator neconectat");
                 }
                 var refreshToken = refreshTokenDataOps.GetRefreshToken(user);
-                if(refreshToken == null)
+                if (refreshToken == null)
                 {
                     return Unauthorized("Refresh Token invalid, se redirectioneaza la Login");
                 }
-                else if(refreshToken.ExpiresAt < DateTime.Now)
+                else if (refreshToken.ExpiresAt < DateTime.Now)
                 {
                     return Unauthorized("Refresh Token expirat, se redirectioneaza la Login");
                 }
-                else if(refreshToken.Token == refreshTokenFromRequest)
+                else if (refreshToken.Token == refreshTokenFromRequest)
                 {
                     var accessToken = tokenProvider.GenerateAccesToken(user);
                     Response.Cookies.Delete("refreshToken");
@@ -191,7 +204,7 @@ namespace Backend.Controllers
                     return Unauthorized("Refresh Token expirat sau invalid, se redirectioneaza la Login");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -227,7 +240,8 @@ namespace Backend.Controllers
                     Email = user.Email,
                     Role = user.Role,
                     Rating = user.Rating,
-                    PhoneNumber=user.PhoneNumber
+                    PhoneNumber = user.PhoneNumber,
+                    ProfilePictureName = GetProfilePictureName(user)
                 };
 
                 return Ok(userRead);
@@ -271,7 +285,7 @@ namespace Backend.Controllers
                 Response.Cookies.Delete("refreshToken");
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -347,7 +361,3 @@ namespace Backend.Controllers
         }
     }
 }
-
-            
-        
-    
