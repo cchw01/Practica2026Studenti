@@ -6,7 +6,7 @@ import { AdminService } from '../../Models/admin/admin-service';
 import { AuthService } from '../../services/auth';
 import { CategoryService } from '../../services/category-service';
 
-type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages';
+type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages' | 'reports';
 
 @Component({
   selector: 'app-admin-page',
@@ -40,6 +40,10 @@ export class AdminPage implements OnInit {
   forumPosts: any[] = [];
   forumComments: any[] = [];
   categories: Category[] = [];
+
+  // NOU: proprietăți pentru tab-ul de Reports
+  reports: any[] = [];
+  reportsFilter: 'all' | 'pending' = 'pending';
 
   verifiedPostIds: Set<number> = new Set<number>();
 
@@ -127,6 +131,10 @@ export class AdminPage implements OnInit {
       case 'categories':
         this.loadCategories();
         break;
+
+      case 'reports':
+        this.loadReports();
+        break;
     }
   }
 
@@ -207,6 +215,44 @@ export class AdminPage implements OnInit {
         this.cdr.detectChanges();
       },
     });
+  }
+
+  // NOU: metode pentru Reports
+  loadReports(): void {
+    this.adminService.getReports().subscribe({
+      next: (data) => {
+        this.reports = data || [];
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading reports:', error);
+      },
+    });
+  }
+
+  get displayedReports(): any[] {
+    if (this.reportsFilter === 'pending') {
+      return this.reports.filter((r) => r.status === 'Pending');
+    }
+    return this.reports;
+  }
+
+  dismissReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'Dismissed').subscribe(() => this.loadReports());
+  }
+
+  resolveReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'ActionTaken').subscribe(() => this.loadReports());
+  }
+
+  removeReport(id: number): void {
+    const confirmed = confirm('Ștergi definitiv acest raport?');
+    if (!confirmed) return;
+    this.adminService.deleteReport(id).subscribe(() => this.loadReports());
+  }
+
+  setReportsFilter(filter: 'all' | 'pending'): void {
+    this.reportsFilter = filter;
   }
 
   approveAuction(id: number): void {

@@ -110,6 +110,10 @@ namespace Backend.Controllers
                 {
                     return BadRequest("Acest raport există deja.");
                 }
+                if (report.TargetType == ReportTargetType.User && report.ReportedUserId.HasValue)
+                {
+                    dataOps.BanUserIfThresholdReached(report.ReportedUserId.Value);
+                }
 
                 var created = dataOps.GetReportById(report.Id);
                 return Ok(MapToDTO(created!));
