@@ -87,13 +87,17 @@ export class UserPage implements OnInit {
     });
   }
 
-  loadUserProfile(): void {
+    loadUserProfile(): void {
     console.log('DEBUG: Se inițiază cererea de profil pentru ID-ul:', this.userId);
 
     this.userService.getUser(this.userId).subscribe({
       next: (userData) => {
         console.log('DEBUG: Date utilizator primite de la backend:', userData);
         this.user = userData;
+
+        const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+        this.isUserReported = reportedUsers.includes(Number(this.userId));
+
         this.loadUserActiveCategories();
         this.loadUserReviews();
         this.cdr.detectChanges();
@@ -209,7 +213,7 @@ export class UserPage implements OnInit {
     this.showReportForm = false;
     this.cdr.detectChanges();
   }
-  submitReport(): void {
+    submitReport(): void {
     if (!this.reportReason.trim()) return;
 
     const currentUserId = this.authService.getCurrentUserId();
@@ -234,11 +238,33 @@ export class UserPage implements OnInit {
 
         this.isUserReported = true;
 
+        const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+        if (!reportedUsers.includes(Number(this.userId))) {
+          reportedUsers.push(Number(this.userId));
+          localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
+        }
+
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error submitting user report:', err);
-        alert('A apărut o eroare la trimiterea raportului.');
+        const errMsg = typeof err.error === 'string' ? err.error : (err.error?.message || err.message || '');
+        
+        if (err.status === 400 && (errMsg.includes('deja') || errMsg.includes('exists') || errMsg.includes('există'))) {
+          this.showReportForm = false;
+          this.isUserReported = true;
+
+          const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+          if (!reportedUsers.includes(Number(this.userId))) {
+            reportedUsers.push(Number(this.userId));
+            localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
+          }
+          
+          this.reportSuccessMessage = `Ai raportat deja acest utilizator.`;
+          this.cdr.detectChanges();
+        } else {
+          alert('A apărut o eroare la trimiterea raportului.');
+        }
       },
     });
   }
