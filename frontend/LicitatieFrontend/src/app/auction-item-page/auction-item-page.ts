@@ -8,6 +8,21 @@ import { AuctionItem } from '../Models/item-model';
 import { Category } from '../Models/categoryItem';
 import { User, RoleEnum } from '../Models/user/user';
 import { TranslateService } from '@ngx-translate/core';
+import { ReportService } from '../services/report-service';
+
+function mapReasonToBackend(reason: string): 'Spam' | 'Harassment' | 'InappropriateContent' | 'Fraud' | 'Other' {
+  switch (reason) {
+    case 'Inappropriate Content':
+      return 'InappropriateContent';
+    case 'Fake or Counterfeit Item':
+      return 'Fraud';
+    case 'Misleading Description':
+    case 'Suspicious Bidding Activity':
+    case 'Other':
+    default:
+      return 'Other';
+  }
+}
 
 const defaultCategory = new Category({ Id: 1, name: 'Vehicles' });
 const defaultOwner = new User({
@@ -46,6 +61,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   reportReason: string = 'Inappropriate Content';
   reportDetails: string = '';
   isReported: boolean = false;
+  isSubmittingReport: boolean = false;
   showReportToast: boolean = false;
   reportToastMessage: string = '';
   isReportToastHiding: boolean = false;
@@ -89,6 +105,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     private bidService: BidService,
     private route: ActivatedRoute,
     private itemService: ItemService,
+    private reportService: ReportService,
   ) {
     const nav = this.router.getCurrentNavigation();
     this.navState = nav?.extras?.state;
@@ -111,6 +128,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           next: (liveItem) => {
             if (liveItem) {
               this.setAuctionItemData(liveItem);
+              this.checkIfReported();
             }
           },
           error: (err) => {
@@ -137,6 +155,24 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         error: (err) => console.error('Error fetching wishlist for item page', err),
       });
     }
+
+    this.checkIfReported();
+  }
+
+  private checkIfReported(): void {
+    const currentUserId = this.authService.getCurrentUserId();
+    const storageKey = currentUserId ? `reported_items_${currentUserId}` : null;
+
+    if (!storageKey) {
+      this.isReported = false;
+      return;
+    }
+
+    const reportedList: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    this.isReported = reportedList.includes(this.auctionItem.ID);
+    try {
+      this.cdr.markForCheck();
+    } catch { }
   }
 
   private setAuctionItemData(item: any): void {
@@ -437,51 +473,87 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   }
 
   submitReport(): void {
-    this.isReported = true;
-    this.showReportModal = false;
-
-    let reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
-    if (!reportedList.includes(this.auctionItem.ID)) {
-      reportedList.push(this.auctionItem.ID);
+    if (this.isSubmittingReport) {
+      return;
     }
-    localStorage.setItem('reported_items', JSON.stringify(reportedList));
 
-    let reportLogs: any[] = JSON.parse(localStorage.getItem('reported_items_details') || '[]');
-    reportLogs.push({
-      itemId: this.auctionItem.ID,
-      itemName: this.auctionItem.Name,
-      reason: this.reportReason,
-      details: this.reportDetails,
-      date: new Date().toISOString(),
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      this.redirectToLogin();
+      return;
+    }
+
+    this.isSubmittingReport = true;
+
+    const payload = {
+      targetType: 'AuctionItem',
+      targetId: this.auctionItem.ID,
+      reason: mapReasonToBackend(this.reportReason),
+      description: this.reportDetails?.trim() ? `${this.reportReason}: ${this.reportDetails.trim()}` : this.reportReason,
+      reporterId: currentUserId,
+    } as any;
+
+    this.reportService.addReport(payload).subscribe({
+      next: () => {
+        this.isReported = true;
+        this.isSubmittingReport = false;
+        this.showReportModal = false;
+
+        const storageKey = `reported_items_${currentUserId}`;
+        let reportedList: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        if (!reportedList.includes(this.auctionItem.ID)) {
+          reportedList.push(this.auctionItem.ID);
+        }
+        localStorage.setItem(storageKey, JSON.stringify(reportedList));
+
+        this.reportToastMessage = `Report submitted for review. Thank you!`;
+        this.showReportToast = true;
+        this.isReportToastHiding = false;
+
+        if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
+        if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
+
+        this.reportToastHideTimeout = setTimeout(() => {
+          this.isReportToastHiding = true;
+          try {
+            this.cdr.markForCheck();
+          } catch { }
+        }, 1500);
+
+        this.reportToastTimeout = setTimeout(() => {
+          this.showReportToast = false;
+          this.isReportToastHiding = false;
+          try {
+            this.cdr.markForCheck();
+          } catch { }
+        }, 2000);
+
+        this.reportDetails = '';
+        try {
+          this.cdr.markForCheck();
+        } catch { }
+      },
+      error: (err) => {
+        console.error('Error submitting item report:', err);
+        this.isSubmittingReport = false;
+
+        // Dacă e deja raportat (duplicate detection din backend), marcăm oricum ca raportat
+        if (err?.error?.includes && err.error.includes('există deja')) {
+          this.isReported = true;
+          const storageKey = `reported_items_${currentUserId}`;
+          let reportedList: number[] = JSON.parse(localStorage.getItem(storageKey) || '[]');
+          if (!reportedList.includes(this.auctionItem.ID)) {
+            reportedList.push(this.auctionItem.ID);
+          }
+          localStorage.setItem(storageKey, JSON.stringify(reportedList));
+        }
+
+        this.showReportModal = false;
+        try {
+          this.cdr.markForCheck();
+        } catch { }
+      },
     });
-    localStorage.setItem('reported_items_details', JSON.stringify(reportLogs));
-
-    this.reportToastMessage = `Report submitted for review. Thank you!`;
-    this.showReportToast = true;
-    this.isReportToastHiding = false;
-
-    if (this.reportToastTimeout) clearTimeout(this.reportToastTimeout);
-    if (this.reportToastHideTimeout) clearTimeout(this.reportToastHideTimeout);
-
-    this.reportToastHideTimeout = setTimeout(() => {
-      this.isReportToastHiding = true;
-      try {
-        this.cdr.markForCheck();
-      } catch {}
-    }, 1500);
-
-    this.reportToastTimeout = setTimeout(() => {
-      this.showReportToast = false;
-      this.isReportToastHiding = false;
-      try {
-        this.cdr.markForCheck();
-      } catch {}
-    }, 2000);
-
-    this.reportDetails = '';
-    try {
-      this.cdr.markForCheck();
-    } catch {}
   }
 
   prevImage(event: Event): void {

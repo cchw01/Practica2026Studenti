@@ -110,7 +110,7 @@
               <input id="bid" type="number" [(ngModel)]="bidAmount" class="bid-input"
                      placeholder="{{ 'AUCTION_ITEM_PAGE.BID.PLACEHOLDER' | translate }}"
                      [min]="auctionItem.CurrentPrice + 1"
-                     [disabled]="isOwner() || isAuctionEnded" />
+                     [disabled]="isOwner() || isReported || isAuctionEnded" />
             </div>
             <button type="button" class="btn-bid" (click)="placeBid()" [disabled]="isOwner() || isReported || isAuctionEnded">
               {{ 'AUCTION_ITEM_PAGE.BID.BUTTON' | translate }}
@@ -153,7 +153,7 @@
       <div class="actions-footer">
         <button type="button" class="btn-report" *ngIf="authService.isLoggedIn()" 
             [class.reported]="isReported" 
-            [disabled]="isOwner() || isReported"
+            [disabled] = "isOwner() || isReported"
             (click)="openReportModal()">
           <span class="report-icon">🚩</span>
           <span>{{ isReported ? 'Item Reported' : 'Report Item' }}</span>
@@ -195,7 +195,9 @@
       </div>
       <div class="modal-actions">
         <button type="button" class="btn-cancel" (click)="closeReportModal()">Cancel</button>
-        <button type="button" class="btn-submit-report" (click)="submitReport()">Submit Report</button>
+        <button type="button" class="btn-submit-report" [disabled]="isSubmittingReport" (click)="submitReport()">
+          {{ isSubmittingReport ? 'Submitting...' : 'Submit Report' }}
+        </button>
       </div>
     </div>
   </div>

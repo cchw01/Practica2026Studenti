@@ -12,10 +12,10 @@ import { ReportReason } from '../../Models/report/report-reason-enum';
 
 const REPORT_REASON_LABELS: { value: ReportReason; label: string }[] = [
   { value: 'Spam', label: 'Spam' },
-  { value: 'Harassment', label: 'Hărțuire' },
-  { value: 'InappropriateContent', label: 'Conținut nepotrivit' },
-  { value: 'Fraud', label: 'Fraudă' },
-  { value: 'Other', label: 'Alt motiv' },
+  { value: 'Harassment', label: 'Harassment' },
+  { value: 'InappropriateContent', label: 'Inappropriate content' },
+  { value: 'Fraud', label: 'Fraud' },
+  { value: 'Other', label: 'Other reason' },
 ];
 
 @Component({
