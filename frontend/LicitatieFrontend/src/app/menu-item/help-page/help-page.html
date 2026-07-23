@@ -8,18 +8,41 @@
 
   <div class="content-grid">
 
-    <!-- Interactive FAQ Section -->
+    <!-- FAQ Section, categorized -->
     <div class="card faq-card">
       <h2>{{ 'HELP.FAQ' | translate }}</h2>
-      <div class="faq-list">
-        <div class="faq-item" *ngFor="let faq of faqs; let i = index" (click)="toggleFaq(i)"
-             [class.active]="faq.isOpen">
-          <div class="faq-question">
-            <span>{{ faq.question }}</span>
-            <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
-          </div>
-          <div class="faq-answer" *ngIf="faq.isOpen">
-            {{ faq.answer }}
+
+      <div class="category-filter-chips">
+        <button
+          *ngFor="let cat of faqCategories; let i = index"
+          (click)="scrollToCategory(i)"
+          class="chip-btn">
+          {{ cat.title | translate }}
+        </button>
+      </div>
+
+      <div
+        class="faq-category"
+        *ngFor="let category of faqCategories; let cIndex = index"
+        [id]="'cat-' + cIndex">
+
+        <h3 class="category-title">{{ category.title | translate }}</h3>
+
+        <div class="faq-list">
+          <div
+            class="faq-item"
+            *ngFor="let faq of category.faqs; let fIndex = index"
+            (click)="toggleFaq(cIndex, fIndex)"
+            [class.active]="faq.isOpen">
+
+            <div class="faq-question">
+              <span>{{ faq.question | translate }}</span>
+              <span class="toggle-icon">{{ faq.isOpen ? '−' : '+' }}</span>
+            </div>
+
+            <div class="faq-answer" *ngIf="faq.isOpen">
+              {{ faq.answer | translate }}
+            </div>
           </div>
         </div>
       </div>
@@ -37,60 +60,165 @@
 
       <!-- Contact Form -->
       <div class="card form-card">
-        <h2>{{ 'HELP.TICKET' | translate }}</h2>
-        <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
-          <div class="input-group">
-            <input type="text" formControlName="name" [placeholder]="'CONTACT.FORM_NAME_PLACEHOLDER' | translate">
-          </div>
-          <div class="input-group">
-            <input type="email" formControlName="email" [placeholder]="'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate">
-          </div>
-          <!-- Type of Issue dropdown -->
-          <div class="input-group">
-            <select formControlName="issueType" class="form-select">
-              <option value="" disabled selected>{{ 'HELP.ISSUE_TYPE_PLACEHOLDER' | translate }}</option>
-              <option value="general">{{ 'CONTACT.FORM_ISSUE_OPTION_GENERAL' | translate }}</option>
-              <option value="technical">{{ 'CONTACT.FORM_ISSUE_OPTION_TECHNICAL' | translate }}</option>
-              <option value="billing">{{ 'CONTACT.FORM_ISSUE_OPTION_BILLING' | translate }}</option>
-              <option value="listing">{{ 'CONTACT.FORM_ISSUE_OPTION_LISTING' | translate }}</option>
-              <option value="account">{{ 'CONTACT.FORM_ISSUE_OPTION_ACCOUNT' | translate }}</option>
-              <option value="other">{{ 'CONTACT.FORM_ISSUE_OPTION_OTHER' | translate }}</option>
-            </select>
-          </div>
-          <div class="input-group">
-            <textarea formControlName="issue" rows="4"
-                      [placeholder]="'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate"></textarea>
-          </div>
-          <button type="submit" [disabled]="helpForm.invalid" class="submit-btn">
-            {{ 'HELP.REQUEST' | translate }}
-          </button>
-        </form>
-      </div>
+        <h2>{{ 'HELP.FORM' | translate }}</h2>
 
+        <ng-container *ngIf="isLoggedIn; else guestTemplate">
+          @if (!submitted) {
+            <form [formGroup]="helpForm" (ngSubmit)="onSubmitHelpForm()">
+
+              <div class="input-group">
+                <input
+                  type="text"
+                  formControlName="name"
+                  [placeholder]="'CONTACT.FORM_NAME_PLACEHOLDER' | translate">
+              </div>
+
+              <div class="input-group">
+                <input
+                  type="email"
+                  formControlName="email"
+                  [placeholder]="'CONTACT.FORM_EMAIL_PLACEHOLDER' | translate">
+              </div>
+
+              <div class="input-group">
+                <select formControlName="issueType" class="form-select">
+                  <option value="" disabled selected>
+                    {{ 'HELP.ISSUE_TYPE_PLACEHOLDER' | translate }}
+                  </option>
+
+                  <option value="general">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_GENERAL' | translate }}
+                  </option>
+
+                  <option value="technical">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_TECHNICAL' | translate }}
+                  </option>
+
+                  <option value="billing">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_BILLING' | translate }}
+                  </option>
+
+                  <option value="listing">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_LISTING' | translate }}
+                  </option>
+
+                  <option value="account">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_ACCOUNT' | translate }}
+                  </option>
+
+                  <option value="other">
+                    {{ 'CONTACT.FORM_ISSUE_OPTION_OTHER' | translate }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <textarea
+                  formControlName="issue"
+                  rows="4"
+                  [placeholder]="'CONTACT.FORM_MESSAGE_PLACEHOLDER' | translate">
+                </textarea>
+              </div>
+
+              <button
+                type="submit"
+                [disabled]="helpForm.invalid"
+                class="submit-btn">
+                {{ 'HELP.REQUEST' | translate }}
+              </button>
+            </form>
+
+          } @else {
+
+            <div class="form-success">
+              <div class="success-icon">✓</div>
+
+              <h3>
+                {{ 'CONTACT.FORM_SUCCESS_TITLE' | translate }}
+              </h3>
+
+              <p>
+                {{ 'CONTACT.FORM_SUCCESS_MESSAGE' | translate }}
+              </p>
+
+              <button
+                type="button"
+                class="btn-send-another"
+                (click)="sendAnother()">
+                {{ 'CONTACT.FORM_SEND_ANOTHER' | translate }}
+              </button>
+            </div>
+          }
+
+          <div *ngIf="submitError" class="form-error">
+            {{ submitError }}
+          </div>
+        </ng-container>
+
+        <ng-template #guestTemplate>
+          <div class="guest-cta">
+
+            <p class="guest-message">
+              {{ 'HELP.GUEST.MESSAGE' | translate }}
+            </p>
+
+            <div class="guest-actions">
+              <button
+                class="submit-btn guest-login-btn"
+                (click)="goToLogin()">
+                {{ 'HELP.GUEST.LOGIN' | translate }}
+              </button>
+
+              <button
+                class="submit-btn guest-register-btn"
+                (click)="goToRegister()">
+                {{ 'HELP.GUEST.REGISTER' | translate }}
+              </button>
+            </div>
+
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 
   <!-- AI Chat Widget -->
   <div class="chat-widget">
-    <button class="chat-toggle" (click)="toggleChat()" [class.chat-open]="isChatOpen">
-      {{ isChatOpen ? '✖' : '💬 ' + ('HELP.CHAT_BUTTON' | translate) }}
-    </button>
+
     <div class="chat-box" *ngIf="isChatOpen">
+
       <div class="chat-header">
-        <span class="status-dot"></span> {{ 'HELP.ASSISTANT' | translate }}
+        <span class="status-dot"></span>
+        {{ 'HELP.ASSISTANT' | translate }}
       </div>
+
       <div class="chat-messages">
-        <div *ngFor="let msg of chatMessages" class="message" [ngClass]="msg.sender">
+
+        <div
+          *ngFor="let msg of chatMessages"
+          class="message"
+          [ngClass]="msg.sender">
           {{ msg.text }}
         </div>
+
         <div class="message ai typing" *ngIf="isTyping">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
         </div>
+
       </div>
+
       <div class="chat-input-area">
-        <input type="text" #chatInput (keyup.enter)="sendMessage(chatInput)" [placeholder]="'HELP.CHAT_PLACEHOLDER' | translate">
+        <input
+          type="text"
+          #chatInput
+          (keyup.enter)="sendMessage(chatInput)"
+          [placeholder]="'HELP.CHAT_PLACEHOLDER' | translate">
+
         <button (click)="sendMessage(chatInput)">➤</button>
       </div>
+
     </div>
   </div>
 

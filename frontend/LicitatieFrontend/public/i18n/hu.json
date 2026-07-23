@@ -19,7 +19,31 @@
     "CALL_CENTER_HOURS": "Ügyfélszolgálati nyitvatartás",
     "SCHEDULE": "Hétfő–péntek, 09:00–17:00",
     "FOLLOW_US": "Kövess minket",
-    "SOCIAL_DESCRIPTION": "Maradj kapcsolatban velünk a közösségi médiában."
+    "SOCIAL_DESCRIPTION": "Maradj kapcsolatban velünk a közösségi médiában.",
+    "FORM_TITLE": "Küldj üzenetet",
+    "FORM_FULL_NAME_LABEL": "Teljes név",
+    "FORM_FULL_NAME_PLACEHOLDER": "pl. Kovács János",
+    "FORM_FULL_NAME_REQUIRED": "A teljes név megadása kötelező.",
+    "FORM_EMAIL_LABEL": "E-mail-cím",
+    "FORM_EMAIL_PLACEHOLDER": "pl. te@pelda.hu",
+    "FORM_EMAIL_REQUIRED": "Az e-mail-cím megadása kötelező.",
+    "FORM_EMAIL_INVALID": "Adj meg egy érvényes e-mail-címet.",
+    "FORM_ISSUE_TYPE_LABEL": "Probléma típusa",
+    "FORM_ISSUE_TYPE_REQUIRED": "Válaszd ki a probléma típusát.",
+    "FORM_ISSUE_OPTION_GENERAL": "Általános kérdés",
+    "FORM_ISSUE_OPTION_TECHNICAL": "Technikai támogatás",
+    "FORM_ISSUE_OPTION_BILLING": "Számlázás / Fizetés",
+    "FORM_ISSUE_OPTION_LISTING": "Hirdetéssel / aukcióval kapcsolatos probléma",
+    "FORM_ISSUE_OPTION_ACCOUNT": "Fiókkezelés",
+    "FORM_ISSUE_OPTION_OTHER": "Egyéb",
+    "FORM_MESSAGE_LABEL": "Írd le a problémát",
+    "FORM_MESSAGE_PLACEHOLDER": "Add meg a részleteket...",
+    "FORM_MESSAGE_REQUIRED": "Az üzenet megadása kötelező.",
+    "FORM_MESSAGE_MIN_LENGTH": "Az üzenetnek legalább 10 karakterből kell állnia.",
+    "FORM_SUBMIT": "Üzenet küldése",
+    "FORM_SUCCESS_TITLE": "Üzenet elküldve!",
+    "FORM_SUCCESS_MESSAGE": "Köszönjük, hogy kapcsolatba léptél velünk. A lehető leghamarabb válaszolunk.",
+    "FORM_SEND_ANOTHER": "Újabb üzenet küldése"
   },
   "LOGIN": {
     "TITLE": "Bejelentkezés",
@@ -28,7 +52,7 @@
     "EMAIL_REQUIRED": "Az e-mail-cím megadása kötelező",
     "EMAIL_INVALID": "Érvénytelen e-mail-formátum",
     "PASSWORD_LABEL": "Jelszó",
-    "PASSWORD_PLACEHOLDER": "Add meg a jelszavad",
+    "PASSWORD_PLACEHOLDER": "Add meg a jelszót",
     "PASSWORD_REQUIRED": "A jelszó megadása kötelező",
     "PASSWORD_MIN_LENGTH": "A jelszónak legalább 6 karakterből kell állnia",
     "SUBMIT": "Bejelentkezés",
@@ -71,53 +95,78 @@
       "EXPLORE_AUCTIONS": "Aukciók felfedezése",
       "START_SELLING": "Eladás indítása",
       "SEARCH_LABEL": "Termékek és aukciók keresése...",
-      "SEARCH_PLACEHOLDER": "Például: BMW, arany fülbevaló"
+      "SEARCH_PLACEHOLDER": "Példa: BMW, arany fülbevaló"
+    },
+    "ABOUT": {
+      "EYEBROW": "Rólunk",
+      "TITLE_START": "Kik",
+      "TITLE_END": "vagyunk",
+      "DESCRIPTION": "A BidSphere egy modern online aukciós platform, amely egyszerűvé, biztonságossá és izgalmassá teszi a licitálással történő vásárlást és eladást. Vásárlók és eladók ezreit kapcsoljuk össze számos kategóriában, mindenki számára átlátható és tisztességes folyamaton keresztül.",
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Biztonságos és megbízható",
+          "DESCRIPTION": "Minden tranzakció védett, így magabiztosan licitálhatsz."
+        },
+        "REALTIME": {
+          "TITLE": "Valós idejű licitálás",
+          "DESCRIPTION": "Kövesd élőben az árak változását, és ne maradj le egyetlen nyertes pillanatról sem."
+        },
+        "COMMUNITY": {
+          "TITLE": "Növekvő közösség",
+          "DESCRIPTION": "Vásárlók és eladók ezrei aktívak minden kategóriában."
+        }
+      }
     },
     "CATEGORIES": {
       "EYEBROW": "Kategóriák",
-      "TITLE_START": "Fedezd fel a",
-      "TITLE_END": "kategóriákat",
+      "TITLE_START": "Fedezd fel",
+      "TITLE_END": "Kategóriák",
       "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Technológia",
-          "DESCRIPTION": "Csúcstechnológiás eszközök és a legújabb elektronikai termékek."
+        "ART": {
+          "NAME": "Művészet",
+          "DESCRIPTION": "Festmények, szobrok és gyűjthető műalkotások."
         },
-        "AUTO_MOTORS": {
-          "NAME": "Autók és motorok",
-          "DESCRIPTION": "Autók, motorkerékpárok és ritka alkatrészek."
+        "CLOTHING": {
+          "NAME": "Ruházat",
+          "DESCRIPTION": "Ruhák, lábbelik és divatkiegészítők."
         },
-        "ART_COLLECTIBLES": {
-          "NAME": "Művészet és gyűjtemények",
-          "DESCRIPTION": "Exkluzív műalkotások és gyűjtemények."
+        "ELECTRONICS": {
+          "NAME": "Elektronika",
+          "DESCRIPTION": "Telefonok, számítógépek és elektronikus eszközök."
+        },
+        "HOME_GARDEN": {
+          "NAME": "Otthon és kert",
+          "DESCRIPTION": "Bútorok, dekorációk és kerti termékek."
+        },
+        "JEWELRY": {
+          "NAME": "Ékszerek",
+          "DESCRIPTION": "Gyűrűk, nyakláncok, órák és értékes kiegészítők."
+        },
+        "OTHERS": {
+          "NAME": "Egyéb",
+          "DESCRIPTION": "Fedezz fel termékeket más kategóriákból."
         },
         "REAL_ESTATE": {
           "NAME": "Ingatlan",
-          "DESCRIPTION": "Kivételes ingatlanok és telkek."
+          "DESCRIPTION": "Házak, lakások, telkek és kereskedelmi ingatlanok."
+        },
+        "VEHICLES": {
+          "NAME": "Járművek",
+          "DESCRIPTION": "Autók, motorkerékpárok és más járművek."
         }
       }
     },
     "AUCTIONS": {
       "EYEBROW": "Piactér",
       "TITLE_START": "Aktív",
-      "TITLE_END": "aukciók",
+      "TITLE_END": "Aukciók",
       "PLACE_BID": "Licitálás",
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW 7-es sorozat, 2022, kifogástalan állapot, egy tulajdonostól."
-        },
-        "GOLD_EARRINGS": {
-          "TITLE": "Arany fülbevaló",
-          "DESCRIPTION": "18 karátos arany fülbevaló hitelesített gyémántokkal."
-        },
-        "PATEK_PHILIPPE": {
-          "TITLE": "Patek Philippe karóra",
-          "DESCRIPTION": "Limitált kiadású gyűjtői karóra, dobozzal és tanúsítvánnyal."
-        },
-        "VILLA": {
-          "TITLE": "Villa",
-          "DESCRIPTION": "Luxusvilla medencével, öt hálószobával és panorámás kilátással."
-        }
+      "EMPTY": "Jelenleg nincs hamarosan lejáró aukció — nézz vissza rövidesen.",
+      "COUNTDOWN": {
+        "ENDED": "Lezárult",
+        "DAYS_HOURS": "{{days}}n {{hours}}ó van hátra",
+        "HOURS_MINUTES": "{{hours}}ó {{minutes}}p van hátra",
+        "MINUTES_SECONDS": "{{minutes}}p {{seconds}}mp van hátra"
       }
     }
   },
@@ -126,10 +175,87 @@
     "INFORMATION": "Találj gyors válaszokat, érj el minket telefonon, vagy beszélgess MI-asszisztensünkkel.",
     "FAQ": "❓ Gyakran ismételt kérdések",
     "SUPPORT": "📞 Gyors telefonos segítség",
-    "PROGRAM": "Hétfő–péntek: 09:00–18:00",
+    "PROGRAM": "Hétfő - péntek: 09:00 - 18:00",
     "FORM": "📝 Hibajegy nyitása",
     "REQUEST": "Kérelem küldése",
-    "ASSISTANT": "Élő virtuális asszisztens"
+    "ASSISTANT": "Élő virtuális asszisztens",
+    "ISSUE_TYPE_PLACEHOLDER": "Válaszd ki a probléma típusát",
+    "CHAT_PLACEHOLDER": "Írd be az üzeneted...",
+    "GUEST": {
+      "MESSAGE": "Hibajegy nyitásához és technikai támogatás igénybevételéhez be kell jelentkezned a fiókodba.",
+      "LOGIN": "Bejelentkezés",
+      "REGISTER": "Fiók létrehozása"
+    },
+    "FAQ_CATEGORIES": {
+      "AUCTIONS": {
+        "TITLE": "🚨 Aukciók és licitek",
+        "QUESTIONS": {
+          "PLACE_BID": {
+            "QUESTION": "Hogyan licitálhatok egy aukción?",
+            "ANSWER": "Nyisd meg a kívánt termék oldalát, és írd be az összeget a \"Licitálás most\" mezőbe. A licitednek magasabbnak kell lennie a jelenlegi árnál."
+          },
+          "CANCEL_BID": {
+            "QUESTION": "Visszavonhatom a licitemet a megtétele után?",
+            "ANSWER": "A licitek megtételük után kötelező érvényűek, és általában nem vonhatók vissza. Megerősítés előtt ellenőrizd az összeget."
+          },
+          "WIN_AUCTION": {
+            "QUESTION": "Honnan tudom, hogy megnyertem-e egy aukciót?",
+            "ANSWER": "E-mailt és alkalmazáson belüli értesítést kapsz, amikor az aukció véget ér, és a te licited a legmagasabb."
+          }
+        }
+      },
+      "ACCOUNT": {
+        "TITLE": "👤 Fiók és hitelesítés",
+        "QUESTIONS": {
+          "CREATE_ACCOUNT": {
+            "QUESTION": "Hogyan hozhatok létre fiókot?",
+            "ANSWER": "Kattints a felső menüben a \"Regisztráció\" lehetőségre, add meg a felhasználónevedet, e-mail-címedet és jelszavadat, majd erősítsd meg az e-mail-címedet a fiók aktiválásához."
+          },
+          "FORGOT_PASSWORD": {
+            "QUESTION": "Elfelejtettem a jelszavamat. Mit tegyek?",
+            "ANSWER": "Kattints a bejelentkezési oldalon az \"Elfelejtetted a jelszavad?\" lehetőségre, és kövesd a regisztrált e-mail-címedre küldött utasításokat."
+          }
+        }
+      },
+      "DELIVERY": {
+        "TITLE": "📦 Szállítás és fizetés",
+        "QUESTIONS": {
+          "ITEM_DELIVERY": {
+            "QUESTION": "Hogyan kapom meg a terméket, miután nyertem?",
+            "ANSWER": "A fizetés megerősítése után az eladó megszervezi a szállítást vagy az átvételt. A szállítás részleteit a fiókod üzenetein keresztül egyeztetitek."
+          },
+          "NOT_DELIVERED": {
+            "QUESTION": "Mi történik, ha az eladó nem szállítja le a terméket?",
+            "ANSWER": "Azonnal lépj kapcsolatba ügyfélszolgálatunkkal az alábbi űrlapon. Minden vitás ügyet kivizsgálunk, és felfüggeszthetjük azokat az eladókat, akik nem teljesítik a szállítást."
+          },
+          "SHIPPING_COST": {
+            "QUESTION": "Ki fizeti a szállítást?",
+            "ANSWER": "A szállítási költséget a vevő fizeti, kivéve, ha az eladó ingyenes szállítást kínál."
+          },
+          "PAYOUT": {
+            "QUESTION": "Mikor kapom meg a pénzt?",
+            "ANSWER": "A kifizetést a vevő fizetésének megerősítését követő 3–5 munkanapon belül utaljuk a bankszámládra."
+          }
+        }
+      },
+      "SELLING": {
+        "TITLE": "🏷️ Eladás",
+        "QUESTIONS": {
+          "LIST_ITEM": {
+            "QUESTION": "Hogyan tehetek fel egy terméket eladásra?",
+            "ANSWER": "Lépj a \"Profilom\" részhez, és kattints az \"Aukció hozzáadása\" gombra. Töltsd ki az adatokat, majd várd meg az adminisztrátori jóváhagyást."
+          },
+          "EDIT_AUCTION": {
+            "QUESTION": "Szerkeszthetem vagy törölhetem az aukciót a közzététel után?",
+            "ANSWER": "Az aukciót csak az első licit beérkezése előtt szerkesztheted vagy törölheted. Ezután a módosítások a licitálók védelme érdekében zárolva lesznek."
+          },
+          "NOT_SOLD": {
+            "QUESTION": "Mi történik, ha a termékem nem kel el?",
+            "ANSWER": "Csökkentheted a minimálárat és újra meghirdetheted a terméket, vagy felajánlhatod a legmagasabb licitálónak."
+          }
+        }
+      }
+    }
   },
   "AUCTIONS_PAGE": {
     "TITLE": "Aktív aukciók",
@@ -148,19 +274,45 @@
       "MANY": "aukció található"
     },
     "CURRENT_PRICE": "Jelenlegi ár",
+    "POSTED_BY": "Közzétette",
+    "YOU": "Te",
     "EMPTY": {
       "TITLE": "Nem található termék",
       "DESCRIPTION": "Jelenleg nincs a keresésednek megfelelő aktív aukció."
     },
     "TIME": {
       "ENDED": "Az aukció véget ért",
-      "LEFT": "hátralévő idő"
+      "LEFT": "hátra"
+    }
+  },
+  "SEARCH_PAGE": {
+    "TITLE": "Keresési eredmények",
+    "DESCRIPTION_WITH_QUERY": "Találatok erre: \"{{query}}\"",
+    "DESCRIPTION_EMPTY": "Keress aukciókat, felhasználókat vagy fórumbejegyzéseket a BidSphere-en",
+    "SEARCH_PLACEHOLDER": "Aukciók, felhasználók vagy fórumbejegyzések keresése...",
+    "LOADING": "Találatok betöltése...",
+    "TABS": {
+      "AUCTIONS": "Aukciók",
+      "USERS": "Felhasználók",
+      "FORUM": "Fórum"
+    },
+    "AUCTIONS_EMPTY": {
+      "TITLE": "Nem található aukció",
+      "DESCRIPTION": "Nincs a keresésednek megfelelő aukció."
+    },
+    "USERS_EMPTY": {
+      "TITLE": "Nem található felhasználó",
+      "DESCRIPTION": "Nincs a keresésednek megfelelő felhasználó."
+    },
+    "FORUM_EMPTY": {
+      "TITLE": "Nem található fórumbejegyzés",
+      "DESCRIPTION": "Nincs a keresésednek megfelelő beszélgetés."
     }
   },
   "ADD_ITEM_PAGE": {
     "BADGE": "🔨 Adj el a BidSphere-en",
     "TITLE": "Új aukciós termék hozzáadása",
-    "DESCRIPTION": "Töltsd ki az alábbi adatokat, hogy közzétedd a terméket aukcióra.",
+    "DESCRIPTION": "Töltsd ki az alábbi adatokat a termék aukcióra bocsátásához.",
     "FIELDS": {
       "NAME": "Termék neve *",
       "NAME_PLACEHOLDER": "pl. veterán kerékpár",
@@ -220,37 +372,66 @@
     "MESSAGE": "A keresett oldal nem létezik, vagy áthelyezték.",
     "BUTTON": "VISSZA A KEZDŐLAPRA"
   },
-  "FORUM": {
-    "TITLE": "Fórumbeszélgetések",
-    "DESCRIPTION": "Böngészd az aktuális beszélgetéseket, és kapcsolódj be más felhasználók eszmecseréibe.",
-    "START_DISCUSSION": "Beszélgetés indítása",
-    "LOGIN_TO_START": "Jelentkezz be beszélgetés indításához",
+  "FORUM_PAGE": {
+    "HEADER": {
+      "TITLE": "Fórumbeszélgetések",
+      "DESCRIPTION": "Böngészd az aktuális beszélgetéseket, és kapcsolódj be más felhasználók beszélgetéseibe."
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Beszélgetések keresése...",
+      "ARIA_LABEL": "Beszélgetések keresése"
+    },
+    "ACTIONS": {
+      "START_DISCUSSION": "Beszélgetés indítása",
+      "LOGIN_TO_START": "Jelentkezz be beszélgetés indításához",
+      "TRY_AGAIN": "Próbáld újra"
+    },
     "SORT": {
       "ARIA_LABEL": "Beszélgetések rendezése",
       "LATEST": "Legújabb elöl",
       "OLDEST": "Legrégebbi elöl",
       "MOST_COMMENTED": "Legtöbb hozzászólás"
     },
-    "DISCUSSION": "beszélgetés",
-    "DISCUSSIONS": "beszélgetés",
+    "COUNT": {
+      "DISCUSSION": "beszélgetés",
+      "DISCUSSIONS": "beszélgetés",
+      "COMMENT": "hozzászólás",
+      "COMMENTS": "hozzászólás"
+    },
     "LOADING": {
       "TITLE": "Beszélgetések betöltése"
     },
     "ERROR": {
-      "TITLE": "A beszélgetések nem tölthetők be",
-      "RETRY": "Próbáld újra"
+      "TITLE": "A beszélgetések nem tölthetők be"
     },
-    "POSTED_BY": "Közzétette",
-    "COMMENT": "hozzászólás",
-    "COMMENTS": "hozzászólás",
+    "POST": {
+      "POSTED_BY": "Közzétette"
+    },
     "EMPTY": {
-      "TITLE": "Nincsenek elérhető beszélgetések",
-      "MESSAGE": "Jelenleg nincs beszélgetés a fórumon."
+      "TITLE": "Nincs elérhető beszélgetés",
+      "DESCRIPTION": "Jelenleg nincs beszélgetés a fórumban."
+    },
+    "PAGINATION": {
+      "ARIA_LABEL": "Lapozás",
+      "PREVIOUS": "Előző",
+      "NEXT": "Következő"
     }
   },
   "NOTIFICATIONS": {
     "TRUE": "Értesítések",
-    "FALSE": "Még nincs értesítés."
+    "FALSE": "Még nincs értesítés.",
+    "OPEN_ARIA": "Értesítések megnyitása",
+    "DO_NOT_DISTURB": "Ne zavarjanak",
+    "LOADING": "Értesítések betöltése...",
+    "ACTIONS_ARIA": "Értesítési műveletek",
+    "MARKING_ALL_READ": "Megjelölés olvasottként...",
+    "MARK_ALL_READ": "Összes megjelölése olvasottként",
+    "DELETE": "Értesítés törlése",
+    "TYPES": {
+      "AuctionApproved": "A(z) \"{{itemName}}\" aukciódat jóváhagyták, és mostantól nyilvános!",
+      "AuctionRejected": "A(z) \"{{itemName}}\" aukciódat egy adminisztrátor elutasította.",
+      "SupportReply": "Egy adminisztrátor válaszolt a(z) {{date}} dátumú üzenetedre: {{reply}}"
+    }
   },
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Aukció részletei",
@@ -259,12 +440,12 @@
       "START_PRICE": "Kezdőár",
       "CATEGORY": "Kategória",
       "LOCATION": "Helyszín",
-      "STARTS_AT": "Kezdés",
+      "STARTS_AT": "Kezdés időpontja",
       "OWNER": "Tulajdonos",
       "ENDS": "Befejezés"
     },
     "BID": {
-      "TITLE": "Licitálás",
+      "TITLE": "Tedd meg a licited",
       "PLACEHOLDER": "Add meg a licit összegét",
       "BUTTON": "🔨 Licitálás",
       "MINIMUM": "Minimális licit:",
@@ -272,8 +453,34 @@
       "LOGIN_BUTTON": "Bejelentkezés licitáláshoz"
     },
     "WISHLIST": {
-      "ADD": "🤍 Hozzáadás a kívánságlistához",
-      "ADDED": "❤️ A kívánságlistán"
+      "ADD": "Hozzáadás a kívánságlistához",
+      "ADDED": "A kívánságlistán",
+      "TOAST_ADDED": "A terméket hozzáadtuk a kívánságlistádhoz.",
+      "TOAST_REMOVED": "A terméket eltávolítottuk a kívánságlistádról."
+    },
+    "ACTIONS": {
+      "REPORT_ITEM": "Termék jelentése",
+      "ITEM_REPORTED": "Termék jelentve"
+    },
+    "REPORT": {
+      "TITLE": "Aukció jelentése",
+      "DESCRIPTION": "Segíts megőrizni a BidSphere biztonságát. Válaszd ki az aukció jelentésének okát:",
+      "REASON_LABEL": "Ok",
+      "REASONS": {
+        "INAPPROPRIATE_CONTENT": "Nem megfelelő tartalom",
+        "MISLEADING_DESCRIPTION": "Félrevezető leírás",
+        "FAKE_ITEM": "Hamis vagy hamisított termék",
+        "SUSPICIOUS_BIDDING": "Gyanús licitálási tevékenység",
+        "OTHER": "Egyéb"
+      },
+      "DETAILS_LABEL": "További részletek (nem kötelező)",
+      "DETAILS_PLACEHOLDER": "Írd le a problémát...",
+      "CANCEL": "Mégse",
+      "SUBMIT": "Jelentés elküldése",
+      "TOAST": {
+        "SUCCESS": "Az aukció jelentése sikeresen megtörtént.",
+        "ERROR": "Az aukciót nem sikerült jelenteni."
+      }
     },
     "DESCRIPTION": {
       "TITLE": "Termékleírás"
@@ -301,7 +508,7 @@
     "REVIEWED_USER_ID": "Értékelt felhasználó azonosítója",
     "RATING": "Értékelés (0–5)",
     "RATING_ERROR": "Az értékelésnek 0 és 5 között kell lennie.",
-    "COMMENT": "Megjegyzés",
+    "COMMENT": "Hozzászólás",
     "ADD": "Hozzáadás",
     "UPDATE": "Frissítés",
     "CANCEL": "Mégse",
@@ -317,29 +524,60 @@
     "LOGOUT": "Kijelentkezés"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Vissza a beszélgetésekhez",
-    "LOADING_DISCUSSION_TITLE": "Beszélgetés betöltése",
-    "LOADING_DISCUSSION_MESSAGE": "A beszélgetés betöltése folyamatban van.",
-    "LOAD_DISCUSSION_ERROR": "A beszélgetés nem tölthető be",
-    "TRY_AGAIN": "Próbáld újra",
-    "DELETE_POST": "Törlés",
-    "POSTED_BY": "Közzétette",
-    "DISCUSSION": "Beszélgetés",
-    "COMMENT": "hozzászólás",
-    "COMMENTS": "hozzászólás",
-    "ADD_COMMENT": "Hozzászólás hozzáadása",
-    "COMMENT_PLACEHOLDER": "Írd ide a hozzászólásodat...",
-    "COMMENT_REQUIRED": "A hozzászólás megadása kötelező.",
-    "COMMENT_MIN_LENGTH": "A hozzászólásnak legalább 2 karakterből kell állnia.",
-    "COMMENT_MAX_LENGTH": "A hozzászólás legfeljebb 1000 karakter hosszú lehet.",
-    "PUBLISHING": "Közzététel...",
-    "PUBLISH_COMMENT": "Hozzászólás közzététele",
-    "LOGIN_REQUIRED": "Hozzászólás közzétételéhez be kell jelentkezned.",
-    "LOGIN": "Bejelentkezés",
-    "LOADING_COMMENTS": "Hozzászólások betöltése",
-    "LOAD_COMMENTS_ERROR": "A hozzászólások nem tölthetők be",
-    "DELETE_COMMENT": "Törlés",
-    "NO_COMMENTS": "Még nincs hozzászólás"
+    "BACK": "Vissza a beszélgetésekhez",
+    "POST": {
+      "LOADING_TITLE": "Beszélgetés betöltése",
+      "LOADING_MESSAGE": "A beszélgetés betöltése folyamatban van.",
+      "ERROR_TITLE": "A beszélgetés nem tölthető be",
+      "POSTED_BY": "Közzétette"
+    },
+    "ACTIONS": {
+      "REPORT": "Jelentés",
+      "EDIT": "Szerkesztés",
+      "DELETE": "Törlés",
+      "CANCEL": "Mégse",
+      "SAVE": "Mentés",
+      "RETRY": "Próbáld újra"
+    },
+    "EDIT_POST": {
+      "TITLE_LABEL": "Cím",
+      "TITLE_VALIDATION": "A címnek 3 és 150 karakter között kell lennie.",
+      "DESCRIPTION_LABEL": "Leírás",
+      "DESCRIPTION_VALIDATION": "A leírásnak 10 és 5000 karakter között kell lennie."
+    },
+    "COMMENTS": {
+      "TITLE": "Beszélgetés",
+      "COMMENT": "hozzászólás",
+      "COMMENTS": "hozzászólás",
+      "ADD_LABEL": "Hozzászólás hozzáadása",
+      "PLACEHOLDER": "Írd ide a hozzászólásodat...",
+      "VALIDATION": {
+        "REQUIRED": "A hozzászólás megadása kötelező.",
+        "MIN_LENGTH": "A hozzászólásnak legalább 2 karakterből kell állnia.",
+        "MAX_LENGTH": "A hozzászólás legfeljebb 1000 karakter hosszú lehet."
+      },
+      "PUBLISHING": "Közzététel...",
+      "PUBLISH": "Hozzászólás közzététele",
+      "LOGIN_REQUIRED": "Hozzászólás közzétételéhez be kell jelentkezned.",
+      "LOGIN": "Bejelentkezés",
+      "LOADING": "Hozzászólások betöltése",
+      "ERROR": "A hozzászólások nem tölthetők be",
+      "EMPTY": "Még nincs hozzászólás"
+    },
+    "REPORT": {
+      "TITLE": "Bejegyzés jelentése",
+      "DESCRIPTION": "Válaszd ki a beszélgetés jelentésének okát:",
+      "CANCEL": "Mégse",
+      "SUBMITTING": "Küldés...",
+      "SUBMIT": "Jelentés elküldése",
+      "REASONS": {
+        "SPAM": "Spam",
+        "INAPPROPRIATE_CONTENT": "Nem megfelelő tartalom",
+        "HARASSMENT": "Zaklatás vagy sértő viselkedés",
+        "MISLEADING_INFORMATION": "Félrevezető információ",
+        "OTHER": "Egyéb"
+      }
+    }
   },
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Vissza a beszélgetésekhez",
@@ -361,5 +599,121 @@
     "CANCEL": "Mégse",
     "CREATING": "Beszélgetés létrehozása...",
     "SUBMIT": "Beszélgetés indítása"
+  },
+  "PROFILE_PAGE": {
+    "PROFILE": {
+      "USERNAME_NOT_SET": "@felhasználónév nincs beállítva",
+      "NAME_NOT_SET": "A név nincs beállítva",
+      "EMAIL_NOT_SET": "Az e-mail-cím nincs beállítva",
+      "AVERAGE_SCORE": "Átlagos pontszám"
+    },
+    "BUTTONS": {
+      "EDIT_PROFILE": "Profil szerkesztése",
+      "LOG_OUT": "Kijelentkezés",
+      "ADD_ITEM": "Új termék hozzáadása",
+      "CHANGE_PHOTO": "Fénykép módosítása",
+      "HIDE_PASSWORD": "Jelszóbeállítások elrejtése",
+      "CHANGE_PASSWORD": "Jelszó módosítása",
+      "UPDATE_PASSWORD": "Jelszó frissítése",
+      "CANCEL": "Mégse",
+      "SAVE": "Módosítások mentése"
+    },
+    "THEME": {
+      "TITLE": "Téma testreszabása",
+      "DESCRIPTION": "Válassz a hangulatodhoz illő vizuális stílust.",
+      "LIGHT": "Világos",
+      "SUNSET": "Naplemente",
+      "OCEAN": "Óceán"
+    },
+    "SELL": {
+      "TITLE": "Új termék eladása",
+      "DESCRIPTION": "Készen állsz valamit meghirdetni?"
+    },
+    "SECTIONS": {
+      "ACTIVE_SALES": "Aktív eladásaim",
+      "WON_ITEMS": "Megnyert termékek",
+      "WISHLIST": "Kívánságlistám",
+      "REVIEWS": "Kapott értékelések"
+    },
+    "EMPTY": {
+      "ACTIVE_SALES": "Még nincs meghirdetett termék.",
+      "WON_ITEMS": "Még nincs megnyert termék.",
+      "WISHLIST": "Még nincs termék a kívánságlistádon.",
+      "REVIEWS": "Még nem kaptál értékelést."
+    },
+    "EDIT": {
+      "TITLE": "Profil szerkesztése",
+      "USERNAME": "Felhasználónév",
+      "FULL_NAME": "Teljes név",
+      "EMAIL": "E-mail",
+      "USERNAME_PLACEHOLDER": "pl. kovacs_janos",
+      "FULL_NAME_PLACEHOLDER": "pl. Kovács János",
+      "EMAIL_PLACEHOLDER": "pl. janos@email.hu"
+    },
+    "PASSWORD": {
+      "CURRENT": "Jelenlegi jelszó",
+      "NEW": "Új jelszó",
+      "CONFIRM": "Jelszó megerősítése",
+      "CURRENT_PLACEHOLDER": "Add meg a jelenlegi jelszót",
+      "NEW_PLACEHOLDER": "Add meg az új jelszót",
+      "CONFIRM_PLACEHOLDER": "Erősítsd meg az új jelszót",
+      "REQUIRED": "Minden mező kitöltése kötelező.",
+      "NOT_MATCH": "Az új jelszó és annak megerősítése nem egyezik.",
+      "SUCCESS": "A jelszó sikeresen frissítve!",
+      "ERROR": "Hiba történt a jelszó frissítésekor. Ellenőrizd a jelenlegi jelszavadat."
+    },
+    "STATUS": {
+      "ACTIVE": "Aktív",
+      "ADDED": "Hozzáadva",
+      "WON": "Megnyerve"
+    },
+    "DEFAULTS": {
+      "USER": "Felhasználó"
+    },
+    "ERRORS": {
+      "LOAD_CATEGORIES": "Hiba történt a kategóriák betöltésekor.",
+      "LOAD_ITEMS": "Hiba történt a termékek betöltésekor.",
+      "LOAD_REVIEWS": "Hiba történt az értékelések betöltésekor."
+    },
+    "MESSAGES": {
+      "PROFILE_UPDATED": "A profil sikeresen frissítve."
+    }
+  },
+  "USER_PAGE": {
+    "ACTIONS": {
+      "ADD_REVIEW": "⭐ Értékelés hozzáadása",
+      "REPORT_USER": "⚠️ Felhasználó jelentése",
+      "USER_REPORTED": "✔️ Felhasználó jelentve"
+    },
+    "COMMON": {
+      "CANCEL": "Mégse",
+      "CLOSE": "Bezárás"
+    },
+    "REPORT_MODAL": {
+      "TITLE": "@{{username}} felhasználó jelentése",
+      "DESCRIPTION": "Add meg a jelentés okát, hogy csapatunk ellenőrizhesse a fiók tevékenységét.",
+      "PLACEHOLDER": "Írd ide a jelentés okát...",
+      "SUBMIT": "Jelentés elküldése"
+    },
+    "REVIEW_MODAL": {
+      "TITLE": "Értékelés hozzáadása @{{username}} felhasználóhoz",
+      "DESCRIPTION": "Fontos számunkra a véleményed! Adj értékelést, és írj rövid hozzászólást a felhasználóval kapcsolatos tapasztalatodról.",
+      "PLACEHOLDER": "Írd ide az értékelésedet...",
+      "SUBMIT": "Értékelés elküldése"
+    },
+    "REVIEWS": {
+      "TITLE": "Felhasználói értékelések ({{count}})",
+      "YOU": "Te",
+      "EMPTY": "Ez a felhasználó még nem kapott értékelést."
+    },
+    "AUCTIONS": {
+      "TITLE": "A felhasználó aktív aukciói",
+      "FILTER_LABEL": "Szűrés kategória szerint:",
+      "ALL_CATEGORIES": "Összes kategória",
+      "CURRENT_PRICE": "Jelenlegi ár:",
+      "EMPTY": "Ennek a felhasználónak jelenleg nincs aktív aukciója ebben a kategóriában.",
+      "SHOW_LESS": "Kevesebb megjelenítése",
+      "SHOW_MORE": "Több megjelenítése"
+    }
   }
 }

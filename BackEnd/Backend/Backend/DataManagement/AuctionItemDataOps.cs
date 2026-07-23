@@ -28,15 +28,14 @@ namespace Backend.DataManagement
 
         public AuctionItem[] GetActiveAuctionItems()
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             return dbContext.AuctionItems
                 .AsNoTracking()
                 .Include(i => i.Category)
                 .Include(i => i.Owner)
                 .Include(i => i.Winner)
                 .Where(i =>
-                    (i.Status == AuctionItem.StatusEnum.Added ||
-                     i.Status == AuctionItem.StatusEnum.Validated ||
+                    (i.Status == AuctionItem.StatusEnum.Validated ||
                      i.Status == AuctionItem.StatusEnum.ActiveBid) &&
                     i.EndDate > now)
                 .OrderBy(i => i.EndDate)

@@ -2,20 +2,27 @@
 
 namespace Backend.DTOs
 {
-    // Pentru GET 
-    public class CategoryDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-    }
+        // Pentru GET 
+        public class CategoryDto
+        {
+                public int Id { get; set; }
 
-    // Pentru POST/PUT 
-    public class CategoryCreateDto
-    {
-        [Required(ErrorMessage = "Category name is required.")]
-        [StringLength(
-            25,
-            ErrorMessage = "Category name can have a maximum of 25 characters.")]
-        public string Name { get; set; } = string.Empty;
-    }
+                [Required]
+                [MaxLength(100)]
+                public string Name { get; set; }
+
+                [MaxLength(500)]
+                public string Description { get; set; } = string.Empty;
+        }
+
+        // Pentru POST/PUT 
+        public class CategoryCreateDto
+        {
+                [Required]
+                [MaxLength(100)]
+                public string Name { get; set; }
+
+                [MaxLength(500)]
+                public string Description { get; set; } = string.Empty;
+        }
 }

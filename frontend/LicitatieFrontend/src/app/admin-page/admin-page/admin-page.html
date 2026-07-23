@@ -1,60 +1,442 @@
-<div class="admin-page">
-  <h1>Admin panel</h1>
+<div class="vuexy-admin-container">
 
-  <div class="tabs">
-    <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">Statistici</button>
-    <button (click)="setTab('users')" [class.active]="activeTab === 'users'">Useri</button>
-    <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">Licitații de validat</button>
-  </div>
-
-  <div *ngIf="activeTab === 'stats' && stats" class="stats-grid">
-    <div class="stat-card"><h3>{{ stats.totalUsers }}</h3><p>Total useri</p></div>
-    <div class="stat-card"><h3>{{ stats.bannedUsers }}</h3><p>Useri banați</p></div>
-    <div class="stat-card"><h3>{{ stats.totalAuctions }}</h3><p>Total licitații</p></div>
-    <div class="stat-card"><h3>{{ stats.pendingValidation }}</h3><p>De validat</p></div>
-    <div class="stat-card"><h3>{{ stats.activeAuctions }}</h3><p>Active</p></div>
-    <div class="stat-card"><h3>{{ stats.totalForumPosts }}</h3><p>Postări forum</p></div>
-    <div class="stat-card"><h3>{{ stats.totalBids }}</h3><p>Total licitări</p></div>
-  </div>
-
-  <table *ngIf="activeTab === 'users'" class="admin-table">
-    <thead>
-      <tr>
-        <th>Nume</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th>Status</th>
-        <th>Acțiuni</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of users">
-        <td>{{ u.name }}</td>
-        <td>{{ u.email }}</td>
-        <td>
-          <select [value]="u.role" (change)="changeRole(u.id, $any($event.target).value)">
-            <option value="User">User</option>
-            <option value="Guest">Guest</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </td>
-        <td>{{ u.isBanned ? 'Banat' : 'Activ' }}</td>
-        <td>
-          <button (click)="toggleBan(u)">{{ u.isBanned ? 'Unban' : 'Ban' }}</button>
-          <button (click)="removeUser(u.id)" class="danger">Șterge</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="activeTab === 'auctions'" class="pending-list">
-    <div *ngFor="let item of pendingAuctions" class="pending-card">
-      <h3>{{ item.name }}</h3>
-      <p>{{ item.description }}</p>
-      <button (click)="validate(item.id)">Validează</button>
-      <button (click)="reject(item.id)" class="danger">Respinge</button>
-      <button (click)="removeAuction(item.id)" class="danger">Șterge definitiv</button>
+  <!-- SIDEBAR -->
+  <aside class="vuexy-sidebar">
+    <div class="sidebar-header">
+      <div class="vuexy-logo-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 22h9v-8h2v8h9L12 2z" />
+        </svg>
+      </div>
+      <span class="vuexy-brand-name">BidSphere</span>
     </div>
-    <p *ngIf="pendingAuctions.length === 0">Nimic de validat momentan.</p>
+
+    <!-- NAVIGATION BUTTONS -->
+    <div class="sidebar-nav-links">
+      <div class="menu-section-label">PLATFORM MANAGEMENT</div>
+      <button (click)="setTab('stats')" [class.active]="activeTab === 'stats'">
+        <span class="menu-icon"></span> Dashboard & Charts
+      </button>
+      <button (click)="setTab('auctions')" [class.active]="activeTab === 'auctions'">
+        <span class="menu-icon"></span> Auction Validation
+        <span *ngIf="pendingAuctions.length > 0" class="sidebar-badge">{{ pendingAuctions.length }}</span>
+      </button>
+      <button (click)="setTab('users')" [class.active]="activeTab === 'users'">
+        <span class="menu-icon"></span> Account Management
+      </button>
+      <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
+        <span class="menu-icon"></span> Forum Moderation
+        <span *ngIf="visibleForumPosts.length > 0" class="sidebar-badge">{{ visibleForumPosts.length }}</span>
+      </button>
+      <button (click)="setTab('categories')" [class.active]="activeTab === 'categories'">
+        <span class="menu-icon"></span> Product Categories
+      </button>
+      <button (click)="setTab('messages')" [class.active]="activeTab === 'messages'">
+  <span class="menu-icon"></span> Messages
+  <span *ngIf="unresolvedMessagesCount > 0" class="sidebar-badge">
+    {{ unresolvedMessagesCount }}
+  </span>
+</button>
+      <!-- NOU: buton Reports -->
+      <button (click)="setTab('reports')" [class.active]="activeTab === 'reports'">
+        <span class="menu-icon"></span> Reports
+      </button>
+    </div>
+
+    <!-- BOTTOM AREA: PROFILE + LOGOUT BUTTON -->
+    <div class="sidebar-footer-box">
+      <div class="admin-profile-info">
+        <div class="profile-image-avatar">{{ adminInitials }}</div>
+        <div class="profile-text-details">
+          <span class="profile-display-name">{{ adminName }}</span>
+          <span class="profile-display-role">Administrator</span>
+        </div>
+      </div>
+
+      <!-- BUTONUL DE LOGOUT ACCESIBIL RECONECTAT -->
+      <button class="vuexy-logout-sidebar-btn" (click)="logout()">
+        Logout ↗
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="vuexy-main-content">
+    <main class="vuexy-page-body">
+
+      <!-- TAB 2: DASHBOARD WITH CHARTS -->
+      <div *ngIf="activeTab === 'stats' && stats" class="vuexy-dashboard-view">
+        <div class="welcome-banner-card">
+          <h2>Hello, ADMIN! 👋</h2>
+          <p>The BidSphere monitoring system is active.</p>
+          <div class="banner-highlight-value">{{ pendingAuctions.length }} Auctions to review today</div>
+        </div>
+
+        <div class="vuexy-stats-row">
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper blue-bg">👥</div>
+            <div>
+              <h3>{{ stats.totalUsers || 0 }}</h3>
+              <p>Total Users</p>
+            </div>
+          </div>
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper red-bg">🚫</div>
+            <div>
+              <h3>{{ stats.bannedUsers || 0 }}</h3>
+              <p>Banned Users</p>
+            </div>
+          </div>
+          <div class="vuexy-card stat-item-box">
+            <div class="stat-icon-wrapper green-bg">📦</div>
+            <div>
+              <h3>{{ stats.totalAuctions || 0 }}</h3>
+              <p>Total Auctions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="vuexy-charts-grid">
+          <div class="vuexy-card chart-card-box">
+            <h4>Weekly Auction Activity</h4>
+            <div class="chart-container-svg">
+              <svg viewBox="0 0 400 150" class="line-chart-svg">
+                <path d="M 0,130 L 80,90 L 160,110 L 240,40 L 320,60 L 400,10" fill="none" stroke="#7367f0"
+                  stroke-width="4"></path>
+                <circle cx="80" cy="90" r="4" fill="#7367f0"></circle>
+                <circle cx="160" cy="110" r="4" fill="#7367f0"></circle>
+                <circle cx="240" cy="40" r="4" fill="#7367f0"></circle>
+                <circle cx="320" cy="60" r="4" fill="#7367f0"></circle>
+              </svg>
+            </div>
+            <div class="chart-labels">
+              <small>Mon</small><small>Tue</small><small>Wed</small><small>Thu</small><small>Fri</small><small>Sat</small>
+            </div>
+          </div>
+
+          <div class="vuexy-card chart-card-box">
+            <h4>User Reports vs. Resolutions</h4>
+            <div class="chart-container-svg">
+              <svg viewBox="0 0 200 150" class="bar-chart-svg">
+                <rect x="20" y="40" width="25" height="90" fill="#7367f0" rx="4"></rect>
+                <rect x="60" y="70" width="25" height="60" fill="#ea5455" rx="4"></rect>
+                <rect x="100" y="20" width="25" height="110" fill="#28c76f" rx="4"></rect>
+                <rect x="140" y="50" width="25" height="80" fill="#ff9f43" rx="4"></rect>
+              </svg>
+            </div>
+            <div class="chart-labels">
+              <small>Bans</small><small>Reports</small><small>Approvals</small><small>Tickets</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: AUCTION VALIDATION -->
+      <div *ngIf="activeTab === 'auctions'" class="vuexy-card table-responsive-wrapper">
+        <div class="card-header-title">Auctions submitted for review and approval</div>
+        <table class="vuexy-table">
+          <thead>
+            <tr>
+              <th>Product Title</th>
+              <th>Seller</th>
+              <th>Starting Price</th>
+              <th>Visibility Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of pendingAuctions">
+              <td><strong>{{ item.name }}</strong></td>
+              <td>{{ item.owner?.userName || 'Platform User' }}</td>
+              <td class="bold-price-cell">{{ item.startPrice }} RON</td>
+              <td>
+                <div class="user-actions-cell">
+                  <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Approve Listing</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Reject</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Delete Permanently</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="pendingAuctions.length === 0">
+              <td colspan="4" class="vuexy-empty-row">No auctions are currently waiting for moderation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TAB 1: ACCOUNT MANAGEMENT / STRIKE SYSTEM -->
+      <div *ngIf="activeTab === 'users'" class="users-tab-wrapper">
+
+        <div class="users-toolbar">
+          <input type="text" class="users-search-input" placeholder="Search by name or email..."
+            [(ngModel)]="userSearchTerm" (ngModelChange)="onUserSearchChange()" />
+          <select [(ngModel)]="userSortBy" (ngModelChange)="onUserSortChange()">
+            <option value="name">Sort by name</option>
+            <option value="email">Sort by email</option>
+            <option value="reports">Sort by reports</option>
+          </select>
+        </div>
+
+        <div class="users-view-toggle">
+          <button [class.active]="usersView === 'all'" (click)="setUsersView('all')">
+            All Users ({{ filteredUsers.length }})
+          </button>
+          <button [class.active]="usersView === 'reported'" (click)="setUsersView('reported')">
+            Reported ({{ reportedUsers.length }})
+          </button>
+        </div>
+
+        <div class="vuexy-card table-responsive-wrapper">
+          <table class="vuexy-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Reports</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of displayedUsers">
+                <td><strong>{{ user.userName }}</strong></td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="vuexy-badge" [class.text-danger-badge]="user.reports >= 3">
+                    {{ user.reports || 0 }} / 3
+                  </span>
+                </td>
+                <td>
+                  <span class="vuexy-pill" [class.pill-banned]="user.isBanned">{{ user.isBanned ? 'Banned' :
+                    'Active' }}</span>
+                </td>
+                <td class="text-right">
+                  <div class="user-actions-cell">
+                    <select [value]="user.role" (change)="changeRole(user.id, $any($event.target).value)">
+                      <option value="User">User</option>
+                      <option value="Guest">Guest</option>
+                      <option value="Admin">Admin</option>
+                    </select>
+                    <button *ngIf="!user.isBanned" class="vuexy-btn btn-vuexy-danger"
+                      (click)="banUser(user.id)">Ban</button>
+                    <button *ngIf="user.isBanned" class="vuexy-btn" (click)="unbanUser(user.id)">Unban</button>
+                    <button class="vuexy-btn btn-vuexy-danger" (click)="removeUser(user.id)">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="displayedUsers.length === 0">
+                <td colspan="5" class="vuexy-empty-row">
+                  {{ usersView === 'all' ? 'No users found.' : 'No reported users at the moment.' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- TAB 4: FORUM MODERATION -->
+      <div *ngIf="activeTab === 'forum'" class="vuexy-card">
+        <div class="card-header-title">Forum posts and comments moderation</div>
+        <div class="vuexy-list-stack">
+          <div *ngFor="let post of visibleForumPosts" class="vuexy-stack-item">
+            <div class="stack-left">
+              <span class="vuexy-author-headline">Posted by: @{{ post.userName || 'Membru' }}</span>
+              <h4>{{ post.title }}</h4>
+              <p class="forum-body-text">"{{ post.description }}"</p>
+            </div>
+
+            <div class="stack-actions">
+              <button class="vuexy-text-success-btn" (click)="markAsVerified(post.id)">Verified</button>
+              <button class="vuexy-text-danger-btn" (click)="deletePost(post.id)">Delete</button>
+            </div>
+          </div>
+          <!-- MODIFICAT: forumPosts.length -> visibleForumPosts.length -->
+          <div *ngIf="visibleForumPosts.length === 0" class="vuexy-empty-row">No inappropriate language has been detected.</div>
+        </div>
+      </div>
+
+      <!-- TAB 5: SUPPORT TICKETS -->
+      <div *ngIf="activeTab === 'messages'" class="users-tab-wrapper">
+
+  <div class="users-view-toggle">
+    <button [class.active]="messagesView === 'contact'" (click)="setMessagesView('contact')">
+      Contact ({{ unresolvedContactMessages.length }})
+    </button>
+    <button [class.active]="messagesView === 'help'" (click)="setMessagesView('help')">
+      Help ({{ unresolvedHelpMessages.length }})
+    </button>
+    <button [class.active]="messagesView === 'history'" (click)="setMessagesView('history')">
+      History ({{ resolvedMessagesCount }})
+    </button>
+  </div>
+
+  <div class="users-toolbar">
+    <input
+      type="text"
+      class="users-search-input"
+      placeholder="Search by name, email or text..."
+      [(ngModel)]="messageSearchTerm"
+    />
+  </div>
+
+  <div class="users-view-toggle" *ngIf="messagesView === 'history'">
+    <button [class.active]="historyFilter === 'all'" (click)="setHistoryFilter('all')">
+      Toate
+    </button>
+    <button [class.active]="historyFilter === 'contact'" (click)="setHistoryFilter('contact')">
+      Contact
+    </button>
+    <button [class.active]="historyFilter === 'help'" (click)="setHistoryFilter('help')">
+      Help
+    </button>
+  </div>
+  
+
+  <div class="vuexy-card">
+    <div class="vuexy-list-stack">
+      <div *ngFor="let msg of displayedMessages" class="vuexy-stack-item message-item">
+  <div class="stack-left">
+    <div class="message-header-row">
+      <span class="vuexy-author-headline">{{ msg.name }} — {{ msg.email }}</span>
+      <span *ngIf="msg.issueType" class="issue-type-badge">{{ msg.issueType }}</span>
+    </div>
+    <p class="forum-body-text">"{{ msg.message }}"</p>
+    <small>{{ msg.createdAt | date:'dd MMM, HH:mm' }}</small>
+    <span class="vuexy-pill" [class.pill-banned]="!msg.isResolved">{{ msg.isResolved ? 'Rezolvat' : 'Nerezolvat' }}</span>
+  </div>
+        <div class="stack-actions" *ngIf="!msg.isResolved">
+          <input
+            type="text"
+            placeholder="Write a reply"
+            [(ngModel)]="replyDrafts[msg.id]"
+            class="reply-input"
+          />
+          <button class="vuexy-btn btn-vuexy-success" (click)="resolveMessage(msg)">Resolve</button>
+          <button class="vuexy-text-danger-btn" (click)="deleteMessage(msg.id)">Delete</button>
+        </div>
+        <div class="stack-actions" *ngIf="msg.isResolved">
+          <button class="vuexy-text-danger-btn" (click)="deleteMessage(msg.id)">Delete</button>
+        </div>
+      </div>
+      <div *ngIf="displayedMessages.length === 0" class="vuexy-empty-row">No messages at the moment.</div>
+    </div>
+  </div>
+</div>
+
+      <!-- NOU: TAB 7: REPORTS -->
+      <div *ngIf="activeTab === 'reports'" class="users-tab-wrapper">
+
+        <div class="users-view-toggle">
+          <button [class.active]="reportsFilter === 'pending'" (click)="setReportsFilter('pending')">
+            Pending
+          </button>
+          <button [class.active]="reportsFilter === 'all'" (click)="setReportsFilter('all')">
+            All ({{ reports.length }})
+          </button>
+        </div>
+
+        <div class="vuexy-card">
+          <div class="vuexy-list-stack">
+            <div *ngFor="let report of displayedReports" class="vuexy-stack-item">
+              <div class="stack-left">
+                <span class="vuexy-author-headline">
+                  Reported by: @{{ report.reporterUserName || 'User #' + report.reporterId }}
+                </span>
+                <h4>{{ report.targetType }}: {{ report.targetDisplayName || '#' + report.targetId }}</h4>
+                <p class="forum-body-text">Reason: <strong>{{ report.reason }}</strong></p>
+                <p class="forum-body-text" *ngIf="report.description">"{{ report.description }}"</p>
+                <small>{{ report.createdAt | date:'dd MMM, HH:mm' }}</small>
+                <span class="vuexy-pill" [class.pill-banned]="report.status === 'Pending'">
+                  {{ report.status }}
+                </span>
+              </div>
+
+              <div class="stack-actions">
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn btn-vuexy-success" (click)="resolveReport(report.id)">Action Taken</button>
+                <button *ngIf="report.status === 'Pending'" class="vuexy-btn" (click)="dismissReport(report.id)">Dismiss</button>
+                <button class="vuexy-text-danger-btn" (click)="removeReport(report.id)">Delete</button>
+              </div>
+            </div>
+
+            <div *ngIf="displayedReports.length === 0" class="vuexy-empty-row">
+              No reports at the moment.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: CATEGORY MANAGEMENT -->
+      <div class="vuexy-categories-split" *ngIf="activeTab === 'categories'">
+        <div class="vuexy-card">
+          <div class="card-header-title">Create New Category</div>
+
+          <div class="vuexy-form-group">
+            <input #newCatName type="text" maxlength="100" placeholder="Category name">
+            <textarea #newCatDesc rows="3" maxlength="500"
+              placeholder="Short description"></textarea>
+
+            <button type="button" class="vuexy-btn-block" [disabled]="categorySubmitting || !newCatName.value.trim()"
+              (click)="addCategory(newCatName, newCatDesc)"> {{categorySubmitting? 'Saving...' : 'Add'}}
+            </button>
+          </div>
+
+          <div *ngIf="categoryErrorMessage" class="category-error-message"> {{ categoryErrorMessage }} </div>
+        </div>
+
+        <div class="vuexy-card table-responsive-wrapper">
+          <div class="card-header-title">Active Categories</div>
+
+          <div *ngIf="categoryLoading" class="vuexy-empty-row">Loading categories...</div>
+
+          <table *ngIf="!categoryLoading" class="vuexy-table category-table">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let cat of categories">
+                <td>
+                  <strong *ngIf="editingCategoryId !== cat.Id"> {{ cat.name }}</strong>
+                  <input *ngIf="editingCategoryId === cat.Id" class="category-edit-input" type="text" maxlength="100"
+                    [(ngModel)]="editingCategoryName">
+                </td>
+
+                <td>
+                  <small *ngIf="editingCategoryId !== cat.Id">{{cat.description ||'No description'}}</small>
+                  <textarea *ngIf="editingCategoryId === cat.Id" class="category-edit-textarea" rows="2" maxlength="500"
+                    [(ngModel)]="editingCategoryDescription"></textarea>
+                </td>
+
+                <td>
+                  <div *ngIf="editingCategoryId !== cat.Id" class="category-actions">
+                    <button type="button" class="vuexy-btn" (click)="startCategoryEdit(cat)">Edit</button>
+
+                    <button type="button" class="vuexy-btn btn-vuexy-danger"
+                      (click)="removeCategory(cat)">Delete</button>
+                  </div>
+
+                  <div *ngIf="editingCategoryId === cat.Id" class="category-actions">
+                    <button type="button" class="vuexy-btn btn-vuexy-success"
+                      [disabled]="categorySubmitting ||!editingCategoryName.trim()"
+                      (click)="saveCategoryEdit()">Save</button>
+                    <button type="button" class="vuexy-btn" [disabled]="categorySubmitting"
+                      (click)="cancelCategoryEdit()">Cancel</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr *ngIf="categories.length === 0">
+                <td colspan="3" class="vuexy-empty-row">No categories have been registered.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
   </div>
 </div>

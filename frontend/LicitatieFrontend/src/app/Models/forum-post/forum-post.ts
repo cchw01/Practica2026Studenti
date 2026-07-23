@@ -14,3 +14,17 @@ export class ForumPost{
         Object.assign(this, forumPost);
     }
 }
+export interface CreateReportDto {
+  targetType: 'ForumPost' | 'ForumComment';
+  targetId: number;
+  reason: string;
+  reporterId: number;
+}
+
+export const REPORT_REASONS: string[] = [
+  'Spam',
+  'Limbaj licențios',
+  'Conținut ofensator / hărțuire',
+  'Informații false',
+  'Alt motiv',
+];

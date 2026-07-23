@@ -100,7 +100,7 @@ namespace Backend.Controllers
 
                 var existingUser = dataOps.GetUserByUsername(request.UserName);
                 if (existingUser != null)
-                    return BadRequest("This username is already in use");
+                    return BadRequest(new { message = "This username is already in use" });
 
                 var user = new User
                 {
@@ -117,7 +117,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -290,14 +290,52 @@ namespace Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost("{userId}/wishlist/{itemId}")]
-        public IActionResult AddToWishlist(int userId, int itemId)
+
+        [HttpGet("{userId}/wishlist")]
+        public ActionResult<IEnumerable<AuctionItemResponseDto>> GetWishlist(int userId)
         {
             try
             {
-                var success = dataOps.AddToWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User or item not found, or item already in wishlist.");
+                var wishlist = dataOps.GetWishlist(userId);
+                if (wishlist == null)
+                    return NotFound("Utilizatorul nu a fost găsit.");
+
+                var response = wishlist.Select(item => new AuctionItemResponseDto
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    StartPrice = item.StartPrice,
+                    CurrentPrice = item.CurrentPrice,
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.Category?.name ?? string.Empty,
+                    Description = item.Description,
+                    Location = item.Location,
+                    OwnerId = item.OwnerId,
+                    OwnerUserName = item.Owner?.UserName ?? string.Empty,
+                    WinnerId = item.WinnerId,
+                    WinnerUserName = item.Winner?.UserName,
+                    Status = item.Status,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    ImageUrl = item.ImageUrl
+                });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{userId}/wishlist/{itemId}")]
+        public ActionResult AddToWishlist(int userId, int itemId)
+        {
+            try
+            {
+                var result = dataOps.AddToWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut adăuga produsul în wishlist.");
                 return Ok();
             }
             catch (Exception ex)
@@ -306,46 +344,14 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpGet("{userId}/wishlist")]
-        public ActionResult<IEnumerable<AuctionItemSummaryDto>> GetWishlist(int userId)
-        {
-            try
-            {
-                var items = dataOps.GetWishlist(userId);
-                if (items == null)
-                    return NotFound("User not found.");
-
-                // Map to DTO
-                var dtoList = items.Select(a => new AuctionItemSummaryDto
-                {
-                    ID = a.ID,
-                    Name = a.Name,
-                    StartPrice = a.StartPrice,
-                    CurrentPrice = a.CurrentPrice,
-                    Category = a.Category != null ? a.Category.name : string.Empty,
-                    Status = a.Status.ToString(),
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    OwnerName = a.OwnerId.ToString(),
-                    ImageUrl = a.ImageUrl ?? string.Empty
-                }).ToList();
-
-                return Ok(dtoList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpDelete("{userId}/wishlist/{itemId}")]
-        public IActionResult RemoveFromWishlist(int userId, int itemId)
+        public ActionResult RemoveFromWishlist(int userId, int itemId)
         {
             try
             {
-                var success = dataOps.RemoveFromWishlist(userId, itemId);
-                if (!success)
-                    return BadRequest("User, item not found, or item not in wishlist.");
+                var result = dataOps.RemoveFromWishlist(userId, itemId);
+                if (!result)
+                    return BadRequest("Nu s-a putut șterge produsul din wishlist.");
                 return Ok();
             }
             catch (Exception ex)
