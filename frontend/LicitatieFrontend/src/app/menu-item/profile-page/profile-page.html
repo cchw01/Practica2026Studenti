@@ -110,6 +110,21 @@
           <p class="empty-state" *ngIf="bidItems.length === 0">{{ 'PROFILE_PAGE.EMPTY.WON_ITEMS' | translate }}</p>
         </div>
       </div>
+      <!-- Outbid Items (Full Width) -->
+    <div class="profile-section full-width outbid-section">
+      <h2 class="section-title"><span class="section-icon"></span>Outbid Items</h2>
+      <div class="items-list" *ngIf="outbidItems.length > 0">
+        <div class="item-card" *ngFor="let item of outbidItems" (click)="goToItem(item.id)" style="cursor: pointer;">
+          <img [src]="item.image" alt="Item image" class="item-card-image" />
+          <div class="item-info">
+            <span class="item-title">{{ item.title }}</span>
+          </div>
+          <span class="item-price-badge">{{ item.price }} RON</span>
+          <span class="item-badge" [ngClass]="getBadgeClass(item.status)">{{ item.status }}</span>
+        </div>
+      </div>
+      <p class="empty-state" *ngIf="outbidItems.length === 0">You haven't been outbid on any items.</p>
+    </div>
 
       <!-- Wish List (Full Width) -->
       <div class="profile-section full-width wishlist-section">
