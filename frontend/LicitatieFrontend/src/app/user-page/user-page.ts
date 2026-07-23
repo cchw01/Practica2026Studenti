@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth';
 import { ReviewService } from '../services/review-service';
 import { AuctionItem } from '../Models/item-model';
 import { Review, ReviewCreate } from '../Models/review/review.model';
+import { ReportService } from '../services/report-service';
 
 @Component({
   selector: 'app-user-page',
@@ -67,14 +68,12 @@ export class UserPage implements OnInit {
     private itemService: ItemService,
     private authService: AuthService,
     private reviewService: ReviewService,
+    private reportService: ReportService,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getCurrentUserId();
-
-    const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
-    this.isUserReported = reportedUsers.includes(this.userId);
 
     this.route.paramMap.subscribe((params) => {
       this.currentUserId = this.authService.getCurrentUserId();
@@ -88,13 +87,17 @@ export class UserPage implements OnInit {
     });
   }
 
-  loadUserProfile(): void {
+    loadUserProfile(): void {
     console.log('DEBUG: Se inițiază cererea de profil pentru ID-ul:', this.userId);
 
     this.userService.getUser(this.userId).subscribe({
       next: (userData) => {
         console.log('DEBUG: Date utilizator primite de la backend:', userData);
         this.user = userData;
+
+        const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+        this.isUserReported = reportedUsers.includes(Number(this.userId));
+
         this.loadUserActiveCategories();
         this.loadUserReviews();
         this.cdr.detectChanges();
@@ -210,25 +213,58 @@ export class UserPage implements OnInit {
     this.showReportForm = false;
     this.cdr.detectChanges();
   }
-  submitReport(): void {
+    submitReport(): void {
     if (!this.reportReason.trim()) return;
-    this.userService.reportUser(this.userId, this.reportReason).subscribe({
+
+    const currentUserId = this.authService.getCurrentUserId();
+    if (!currentUserId) {
+      alert('Trebuie să fii autentificat pentru a raporta un utilizator.');
+      return;
+    }
+
+    const payload = {
+      targetType: 'User',
+      targetId: this.userId,
+      reason: 'Other',
+      description: this.reportReason.trim(),
+      reporterId: currentUserId,
+    } as any;
+
+    this.reportService.addReport(payload).subscribe({
       next: () => {
         this.showReportForm = false;
         this.reportSuccessMessage = `Utilizatorul a fost raportat cu succes pentru: "${this.reportReason}".`;
         this.reportReason = '';
 
         this.isUserReported = true;
-        let reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]');
-        if (!reportedUsers.includes(this.userId)) {
-          reportedUsers.push(this.userId);
+
+        const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+        if (!reportedUsers.includes(Number(this.userId))) {
+          reportedUsers.push(Number(this.userId));
+          localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
         }
-        localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
 
         this.cdr.detectChanges();
       },
       error: (err) => {
-        alert('A apărut o eroare la trimiterea raportului.');
+        console.error('Error submitting user report:', err);
+        const errMsg = typeof err.error === 'string' ? err.error : (err.error?.message || err.message || '');
+        
+        if (err.status === 400 && (errMsg.includes('deja') || errMsg.includes('exists') || errMsg.includes('există'))) {
+          this.showReportForm = false;
+          this.isUserReported = true;
+
+          const reportedUsers: number[] = JSON.parse(localStorage.getItem('reported_users') || '[]').map(Number);
+          if (!reportedUsers.includes(Number(this.userId))) {
+            reportedUsers.push(Number(this.userId));
+            localStorage.setItem('reported_users', JSON.stringify(reportedUsers));
+          }
+          
+          this.reportSuccessMessage = `Ai raportat deja acest utilizator.`;
+          this.cdr.detectChanges();
+        } else {
+          alert('A apărut o eroare la trimiterea raportului.');
+        }
       },
     });
   }

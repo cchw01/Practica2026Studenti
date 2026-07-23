@@ -11,9 +11,11 @@ namespace Backend.Controllers
     public class ReportController : ControllerBase
     {
         private readonly ReportDataOps dataOps;
+        private readonly ApplicationDbContext dbContext;
 
         public ReportController(ApplicationDbContext dbContext)
         {
+            this.dbContext = dbContext;
             dataOps = new ReportDataOps(dbContext);
         }
 
@@ -110,8 +112,24 @@ namespace Backend.Controllers
                 {
                     return BadRequest("Acest raport există deja.");
                 }
+                if (report.TargetType == ReportTargetType.User && report.ReportedUserId.HasValue)
+                {
+                    dataOps.BanUserIfThresholdReached(report.ReportedUserId.Value);
+                }
 
                 var created = dataOps.GetReportById(report.Id);
+
+                var notifOps = new NotificationDataOps(dbContext);
+
+                if (report.TargetType == ReportTargetType.User && report.ReportedUserId.HasValue)
+                {
+                    notifOps.Create(report.ReportedUserId.Value, "UserReported", new { });
+                }
+                else if (report.TargetType == ReportTargetType.ForumPost && created?.ReportedForumPost != null)
+                {
+                    notifOps.Create(created.ReportedForumPost.UserId, "PostReported", new { postTitle = created.ReportedForumPost.Title });
+                }
+
                 return Ok(MapToDTO(created!));
             }
             catch (Exception ex)
@@ -133,7 +151,7 @@ namespace Backend.Controllers
                 if (dto.Status.HasValue)
                 {
                     existing.Status = dto.Status.Value;
-                    
+
                     if (dto.Status.Value == ReportStatus.ActionTaken || dto.Status.Value == ReportStatus.Dismissed)
                     {
                         existing.ReviewedAt = DateTime.UtcNow;

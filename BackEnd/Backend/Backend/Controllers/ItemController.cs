@@ -2,10 +2,11 @@ using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 
 namespace Backend.Controllers
@@ -17,6 +18,7 @@ namespace Backend.Controllers
         private readonly AuctionItemDataOps dataOps;
         private readonly CategoryDataOps categoryDataOps;
         private readonly UserDataOps userDataOps;
+        private readonly BidDataOps bidDataOps;
         private readonly IWebHostEnvironment env;
 
         public AuctionItemController(
@@ -26,6 +28,7 @@ namespace Backend.Controllers
             dataOps = new AuctionItemDataOps(dbContext);
             categoryDataOps = new CategoryDataOps(dbContext);
             userDataOps = new UserDataOps(dbContext);
+            bidDataOps = new BidDataOps(dbContext);
             this.env = env;
         }
 
@@ -296,6 +299,14 @@ namespace Backend.Controllers
                 if (!isOwner && !isAdmin)
                     return Forbid();
 
+                if (dataOps.HasBids(id))
+                {
+                    return Conflict(new
+                    {
+                        message =
+                            "Itemul nu mai poate fi editat deoarece a primit deja o ofertă."
+                    });
+                }
                 var category = categoryDataOps.GetCategoryById(
                     dto.CategoryId);
 
@@ -308,10 +319,14 @@ namespace Backend.Controllers
                 item.Name = dto.Name;
                 item.StartPrice = dto.StartPrice;
                 item.CategoryId = dto.CategoryId;
+                item.CurrentPrice = dto.StartPrice;
+item.WinnerId = null;
                 item.Description = dto.Description;
                 item.Location = dto.Location;
-                item.StartDate = dto.StartDate;
-                item.EndDate = dto.EndDate;
+                TimeSpan durationDays = item.EndDate - item.StartDate;
+                item.StartDate = DateTime.UtcNow;
+                item.EndDate = item.StartDate.Add(durationDays);
+                item.Status = AuctionItem.StatusEnum.Added; // Might want to make a separate "Edited" status later for clarity
 
                 dataOps.SaveChanges();
 
@@ -371,7 +386,7 @@ namespace Backend.Controllers
             }
         }
 
-        private static AuctionItemResponseDto MapToResponseDto(
+        private  AuctionItemResponseDto MapToResponseDto(
             AuctionItem item)
         {
             return new AuctionItemResponseDto
@@ -393,7 +408,8 @@ namespace Backend.Controllers
                 Status = item.Status,
                 StartDate = item.StartDate,
                 EndDate = item.EndDate,
-                ImageUrl = item.ImageUrl
+                ImageUrl = item.ImageUrl,
+                HasBids = dataOps.HasBids(item.ID)
             };
         }
 
@@ -406,6 +422,35 @@ namespace Backend.Controllers
                 return userId;
 
             return null;
+        }
+
+        [Authorize]
+        [HttpPost("{id}/end")]
+        public ActionResult<AuctionItemResponseDto> EndAuction(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+                if (authenticatedUserId == null)
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+                if (item == null)
+                    return NotFound();
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+                if (!isOwner && !isAdmin)
+                    return Forbid();
+     
+                dataOps.ProcessAuctionEnd(item, bidDataOps);
+                var updatedItem = dataOps.GetAuctionItemById(id);
+
+                return Ok(MapToResponseDto(updatedItem!));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

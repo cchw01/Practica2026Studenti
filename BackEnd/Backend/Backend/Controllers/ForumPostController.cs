@@ -11,9 +11,11 @@ namespace Backend.Controllers
     public class ForumPostController : ControllerBase
     {
         private readonly ForumPostDataOps dataOps;
+        private readonly ApplicationDbContext dbContext;
 
         public ForumPostController(ApplicationDbContext DbContext)
         {
+            dbContext = DbContext;
             dataOps = new ForumPostDataOps(DbContext);
         }
 
@@ -33,7 +35,7 @@ namespace Backend.Controllers
                     Date = fp.Date,
                     CommentsCount = fp.Comments?.Count ?? 0
                 }).ToList();
-                
+
                 return Ok(dtos);
             }
             catch (Exception ex)
@@ -82,7 +84,7 @@ namespace Backend.Controllers
                     Title = createDto.Title,
                     Description = createDto.Description,
                     UserId = createDto.UserId,
-                    Date = DateTime.Now 
+                    Date = DateTime.Now
                 };
 
                 dataOps.AddForumPost(forumPost);
@@ -145,6 +147,12 @@ namespace Backend.Controllers
 
                 if (!isAuthor && !isAdmin)
                     return Forbid();
+
+                if (isAdmin && !isAuthor)
+                {
+                    var notifOps = new NotificationDataOps(dbContext);
+                    notifOps.Create(post.UserId, "PostDeleted", new { postTitle = post.Title });
+                }
 
                 dataOps.DeleteForumPost(id);
                 return Ok();

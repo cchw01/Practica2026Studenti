@@ -65,5 +65,14 @@ namespace Backend.DataManagement
                 .OrderByDescending(x => x.Date)
                 .ToArray();
         }
+        public Bid? GetHighestBidByItemId(int itemId)
+        {
+            return DbContext.Bids
+                .AsNoTracking()
+                .Where(b => b.BiddedItemId == itemId)
+                .OrderByDescending(b => b.Price)
+                .ThenByDescending(b => b.Date)
+                .FirstOrDefault();
+        }
     }
 }

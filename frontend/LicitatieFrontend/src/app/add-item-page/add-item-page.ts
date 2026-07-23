@@ -50,10 +50,21 @@ export class AddItemPage implements OnInit {
   }
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUserId();
-    if (userId) {
-      this.currentUserId = userId;
+    //verificam daca esti logat
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login-page']);
+      return;
     }
+
+    const currentUser = this.authService.getCurrentUser();
+
+    if (!currentUser || currentUser.role !== 'User') {
+      alert('Doar utilizatorii obișnuiți pot adăuga licitații.');
+      this.router.navigate(['/profile-page']);
+      return;
+    }
+    this.currentUserId = +currentUser.id || this.currentUserId;
+
     this.categoryService.getCategories().subscribe({
       next: (cats) => (this.categories = cats),
       error: (err) => console.error('Could not load categories', err),
@@ -75,11 +86,11 @@ export class AddItemPage implements OnInit {
       const file = files[i];
 
       if (!this.allowedTypes.includes(file.type)) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_TYPE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_TYPE');
         continue;
       }
       if (file.size > this.maxImageSize) {
-        this.imageError = this.translate.instant('ADD_ITEM_PAGE.ERRORS.IMAGE_SIZE');
+        this.imageError = this.translate.instant('ADD_ITEM_PAGE.VALIDATION.IMAGE_SIZE');
         continue;
       }
 
@@ -134,7 +145,7 @@ export class AddItemPage implements OnInit {
     this.itemService.createItemWithImage(formData).subscribe({
       next: () => {
         this.isError = false;
-        this.message = this.translate.instant('ADD_ITEM_PAGE.SUCCESS');
+        this.message = this.translate.instant('ADD_ITEM_PAGE.MESSAGES.SUCCESS');
         this.itemForm.reset({ durationDays: 3 });
         this.clearAllImages();
         this.isSubmitting = false;
@@ -142,7 +153,11 @@ export class AddItemPage implements OnInit {
       },
       error: (err) => {
         this.isError = true;
-        const errorMsg = err?.error?.message || err?.error || err?.message || 'A apărut o eroare la publicarea itemului.';
+        const errorMsg =
+          err?.error?.message ||
+          err?.error ||
+          err?.message ||
+          'A apărut o eroare la publicarea itemului.';
         this.message = typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg);
         this.isSubmitting = false;
       },

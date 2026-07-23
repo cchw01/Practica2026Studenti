@@ -91,7 +91,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly categoryService: CategoryService,
     private readonly cdr: ChangeDetectorRef,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   categories: HomeCategory[] = [];
   categoriesLoading = true;
@@ -178,7 +178,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   getRemainingLabel(endDate: Date): string {
     const diffMs = new Date(endDate).getTime() - Date.now();
-    if (diffMs <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+
+    if (diffMs <= 0) {
+      return this.translate.instant('HOME.AUCTIONS.COUNTDOWN.ENDED');
+    }
 
     const totalSeconds = Math.floor(diffMs / 1000);
     const days = Math.floor(totalSeconds / 86400);
@@ -186,9 +189,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    if (days > 0) return `${days}d ${hours}h left`;
-    if (hours > 0) return `${hours}h ${minutes}m left`;
-    return `${minutes}m ${seconds}s left`;
+    if (days > 0) {
+      return this.translate.instant(
+        'HOME.AUCTIONS.COUNTDOWN.DAYS_HOURS',
+        { days, hours }
+      );
+    }
+
+    if (hours > 0) {
+      return this.translate.instant(
+        'HOME.AUCTIONS.COUNTDOWN.HOURS_MINUTES',
+        { hours, minutes }
+      );
+    }
+
+    return this.translate.instant(
+      'HOME.AUCTIONS.COUNTDOWN.MINUTES_SECONDS',
+      { minutes, seconds }
+    );
   }
 
   getTimeUrgencyClass(endDate: Date): string {
@@ -408,14 +426,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.categories = (categories || [])
             .map((category) => {
               const name = String(category.name ?? (category as any).Name ?? '').trim();
+
               const description = String(
-                category.description ?? (category as any).Description ?? '',
-              ).trim();
+                category.description ?? (category as any).Description ?? '').trim();
 
               return {
                 name,
                 icon: this.getCategoryIcon(name),
-                description: description || 'No description available.',
+                description,
               };
             })
             .filter((category) => category.name.length > 0)
@@ -425,7 +443,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.cdr.detectChanges();
         },
         error: (error) => {
-          console.error('Eroare la încărcarea categoriilor', error);
+          console.error('Error loading categories:',error);
 
           this.categories = [];
           this.categoriesLoading = false;

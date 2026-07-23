@@ -6,7 +6,7 @@ import { AdminService } from '../../Models/admin/admin-service';
 import { AuthService } from '../../services/auth';
 import { CategoryService } from '../../services/category-service';
 
-type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages';
+type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages' | 'itemReports';
 
 @Component({
   selector: 'app-admin-page',
@@ -41,6 +41,15 @@ export class AdminPage implements OnInit {
   forumComments: any[] = [];
   categories: Category[] = [];
 
+  // Proprietăți pentru modalul de detalii rapoarte user
+  showUserReportsModal = false;
+  selectedUserForReports: any = null;
+  selectedUserReports: any[] = [];
+
+  // Proprietăți pentru tab-ul de Item Reports
+  itemReports: any[] = [];
+  itemReportsFilter: 'all' | 'pending' = 'pending';
+
   verifiedPostIds: Set<number> = new Set<number>();
 
   categoryLoading = false;
@@ -67,6 +76,7 @@ export class AdminPage implements OnInit {
 
   adminName = '';
   adminInitials = '';
+  adminId: number | null = null;
   usersView: 'all' | 'reported' = 'all';
 
   ngOnInit(): void {
@@ -77,6 +87,7 @@ export class AdminPage implements OnInit {
       return;
     }
     this.adminName = user?.name || 'Admin';
+    this.adminId = this.authService.getCurrentUserId();
     this.adminInitials = this.adminName
       .split(' ')
       .map((w: string) => w[0])
@@ -87,7 +98,8 @@ export class AdminPage implements OnInit {
     this.loadStats();
     this.loadAuctions();
     this.loadForum();
-    this.loadMessages(); // <- NOU, ca badge-ul de Mesaje sa fie corect de la inceput
+    this.loadMessages();
+    this.loadItemReports();
   }
 
   get visibleForumPosts(): any[] {
@@ -126,6 +138,10 @@ export class AdminPage implements OnInit {
 
       case 'categories':
         this.loadCategories();
+        break;
+
+      case 'itemReports':
+        this.loadItemReports();
         break;
     }
   }
@@ -209,6 +225,67 @@ export class AdminPage implements OnInit {
     });
   }
 
+  // Metode pentru modalul de detalii rapoarte user
+  viewUserReports(user: any): void {
+    this.selectedUserForReports = user;
+    this.adminService.getReports().subscribe({
+      next: (allReports) => {
+        this.selectedUserReports = (allReports || []).filter(
+          (r) => r.targetType === 'User' && r.targetId === user.id,
+        );
+        this.showUserReportsModal = true;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading user reports:', error);
+      },
+    });
+  }
+
+  closeUserReportsModal(): void {
+    this.showUserReportsModal = false;
+    this.selectedUserForReports = null;
+    this.selectedUserReports = [];
+  }
+
+  // Metode pentru tab-ul de Item Reports
+  loadItemReports(): void {
+    this.adminService.getReports().subscribe({
+      next: (allReports) => {
+        this.itemReports = (allReports || []).filter((r) => r.targetType === 'AuctionItem');
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading item reports:', error);
+      },
+    });
+  }
+
+  get displayedItemReports(): any[] {
+    if (this.itemReportsFilter === 'pending') {
+      return this.itemReports.filter((r) => r.status === 'Pending');
+    }
+    return this.itemReports;
+  }
+
+  setItemReportsFilter(filter: 'all' | 'pending'): void {
+    this.itemReportsFilter = filter;
+  }
+
+  dismissItemReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'Dismissed').subscribe(() => this.loadItemReports());
+  }
+
+  resolveItemReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'ActionTaken').subscribe(() => this.loadItemReports());
+  }
+
+  removeItemReport(id: number): void {
+    const confirmed = confirm('Delete this report permanently?');
+    if (!confirmed) return;
+    this.adminService.deleteReport(id).subscribe(() => this.loadItemReports());
+  }
+
   approveAuction(id: number): void {
     this.adminService.validateAuction(id).subscribe(() => this.loadAuctions());
   }
@@ -222,6 +299,10 @@ export class AdminPage implements OnInit {
   }
 
   banUser(id: number): void {
+    if (id === this.adminId) {
+      alert('You cannot ban your own account.');
+      return;
+    }
     this.adminService.banUser(id).subscribe(() => this.loadUsers());
   }
 
@@ -266,11 +347,19 @@ export class AdminPage implements OnInit {
     this.categorySubmitting = true;
 
     this.categoryService.addCategory(category).subscribe({
-      next: () => {
+      next: (createdCategory) => {
         nameInput.value = '';
         descriptionInput.value = '';
         this.categorySubmitting = false;
+        this.categoryErrorMessage = '';
 
+        // Adaugam noua categorie direct in lista locala, imediat, fara sa astept raspunsul de la GET
+        this.categories = [...this.categories, createdCategory].sort((a, b) =>
+          a.name.localeCompare(b.name),
+        );
+        this.cdr.detectChanges();
+
+        // Sincronizam si cu backend-ul, ca sa fim siguri ca lista e 100% la zi
         this.loadCategories();
       },
       error: (error: HttpErrorResponse) => {
@@ -526,5 +615,8 @@ export class AdminPage implements OnInit {
       return;
     }
     this.adminService.deleteMessage(id).subscribe(() => this.loadMessages());
+  }
+  onCategoryFieldChange(): void {
+    // gol intentionat — doar ca sa oblige Angular sa reevalueze [disabled] la fiecare litera tastata
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
@@ -15,10 +15,10 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   templateUrl: './auctions-page.html',
   styleUrls: ['./auctions-page.scss'],
 })
-export class AuctionsPage implements OnInit {
+export class AuctionsPage implements OnInit, OnDestroy {
   allItems: AuctionItem[] = [];
   filteredItems: AuctionItem[] = [];
-
+  timerInterval: any;
   categories: string[] = [];
   selectedCategory: string = '';
   searchText: string = '';
@@ -27,7 +27,7 @@ export class AuctionsPage implements OnInit {
   isLoading: boolean = true;
   hasError: boolean = false;
   currentUserId: number = 0;
-
+ 
   constructor(
     private itemService: ItemService,
     private route: ActivatedRoute,
@@ -83,6 +83,18 @@ export class AuctionsPage implements OnInit {
         console.error('Eroare la încărcarea categoriilor', error);
       },
     });
+
+    // Interval for updating the countdown timers every second
+    this.timerInterval = setInterval(() => {
+      this.cdr.detectChanges();
+    }, 1000);
+  }
+
+  // Makes it so the intrvl doesnt keep running when u leave the page
+  ngOnDestroy(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   loadActiveAuctions(): void {
@@ -198,17 +210,38 @@ export class AuctionsPage implements OnInit {
     }
   }
 
-  getRemainingTime(endDate: string | Date): string {
-    const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+ getRemainingTime(endDate: string | Date): string {
+  const diffMs = new Date(endDate).getTime() - Date.now();
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    if (days > 0) return `${days}d ${hours}h left`;
-    if (hours > 0) return `${hours}h ${mins}m left`;
-    return `${mins}m left`;
+  if (diffMs <= 0) {
+    return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
   }
+
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return this.translate.instant(
+      'AUCTIONS_PAGE.TIME.DAYS_HOURS',
+      { days, hours }
+    );
+  }
+
+  if (hours > 0) {
+    return this.translate.instant(
+      'AUCTIONS_PAGE.TIME.HOURS_MINUTES',
+      { hours, minutes }
+    );
+  }
+
+  return this.translate.instant(
+    'AUCTIONS_PAGE.TIME.MINUTES_SECONDS',
+    { minutes, seconds }
+  );
+}
 
   getTimeUrgencyClass(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();

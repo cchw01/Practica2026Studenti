@@ -106,8 +106,9 @@
           <div class="category-icon">
             <mat-icon>{{ category.icon }}</mat-icon>
           </div>
-          <h3>{{ category.name | translate }}</h3>
-          <p>{{ category.description | translate }}</p>
+
+          <h3>{{ category.name }}</h3>
+          <p>{{ category.description || 'No description available.' }}</p>
         </div>
         }
       </div>

@@ -91,76 +91,185 @@
     "SIGN_IN": "Autentifică-te"
   },
   "HOME": {
-    "HERO": {
-      "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
-      "TAG": "🔥 Licitații live în fiecare zi",
-      "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
-      "EXPLORE_AUCTIONS": "Explorează licitațiile",
-      "START_SELLING": "Începe să vinzi",
-      "SEARCH_LABEL": "Caută produse și licitații...",
-      "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
-    },
-    "ABOUT": {
-      "EYEBROW": "Despre noi",
-      "TITLE_START": "Cine",
-      "TITLE_END": "suntem",
-      "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitație simplă, sigură și captivantă. Conectăm mii de cumpărători și vânzători din numeroase categorii, printr-un proces transparent și corect pentru toți.",
-      "FEATURES": {
-        "SECURE": {
-          "TITLE": "Sigur și de încredere",
-          "DESCRIPTION": "Fiecare tranzacție este protejată, așa că poți licita cu încredere."
-        },
-        "REALTIME": {
-          "TITLE": "Licitații în timp real",
-          "DESCRIPTION": "Urmărește prețurile actualizate live și nu rata niciun moment câștigător."
-        },
-        "COMMUNITY": {
-          "TITLE": "Comunitate în creștere",
-          "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
-        }
+  "HERO": {
+    "TITLE": "LICITEAZĂ. CÂȘTIGĂ. REPETĂ.",
+    "TAG": "🔥 Licitații live în fiecare zi",
+    "DESCRIPTION": "Cea mai sigură platformă de licitații online. Vinde rapid sau descoperă oferte unice.",
+    "EXPLORE_AUCTIONS": "Explorează licitațiile",
+    "START_SELLING": "Începe să vinzi",
+    "SEARCH_LABEL": "Caută produse și licitații...",
+    "SEARCH_PLACEHOLDER": "Exemplu: BMW, cercei din aur"
+  },
+
+  "ABOUT": {
+    "EYEBROW": "Despre noi",
+    "TITLE_START": "Cine",
+    "TITLE_END": "Suntem",
+    "DESCRIPTION": "BidSphere este o platformă modernă de licitații online, creată pentru a face cumpărarea și vânzarea prin licitare simple, sigure și atractive. Conectăm mii de cumpărători și vânzători din numeroase categorii printr-un proces transparent și echitabil pentru toți.",
+
+    "FEATURES": {
+      "SECURE": {
+        "TITLE": "Sigur și de încredere",
+        "DESCRIPTION": "Fiecare tranzacție este protejată, astfel încât să poți licita cu încredere."
+      },
+      "REALTIME": {
+        "TITLE": "Licitare în timp real",
+        "DESCRIPTION": "Urmărește actualizarea prețurilor în timp real și nu rata momentul câștigător."
+      },
+      "COMMUNITY": {
+        "TITLE": "Comunitate în creștere",
+        "DESCRIPTION": "Mii de cumpărători și vânzători activi în fiecare categorie."
       }
-    },
-    "CATEGORIES": {
-      "EYEBROW": "Categorii",
-      "TITLE_START": "Explorează",
-      "TITLE_END": "categoriile",
-      "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Tehnologie",
-          "DESCRIPTION": "Gadgeturi de ultimă generație și cele mai noi produse electronice."
-        },
-        "AUTO_MOTORS": {
-          "NAME": "Auto și moto",
-          "DESCRIPTION": "Mașini, motociclete și piese rare."
-        },
-        "ART_COLLECTIBLES": {
-          "NAME": "Artă și obiecte de colecție",
-          "DESCRIPTION": "Opere de artă exclusive și colecții speciale."
-        },
-        "REAL_ESTATE": {
-          "NAME": "Imobiliare",
-          "DESCRIPTION": "Proprietăți și terenuri deosebite."
-        }
-      }
-    },
-    "AUCTIONS": {
-      "EYEBROW": "Piață",
-      "TITLE_START": "Licitații",
-      "TITLE_END": "active",
-      "PLACE_BID": "Licitează",
-      "EMPTY": "Momentan nu există licitații care se termină în curând — revino mai târziu."
     }
   },
-  "HELP": {
-    "TITLE": "Centrul de Ajutor",
-    "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru AI.",
-    "FAQ": "❓ Întrebări Frecvente",
-    "SUPPORT": "📞 Asistență Telefonică Rapidă",
-    "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
-    "FORM": "📝 Deschide un Tichet",
-    "REQUEST": "Trimite solicitarea",
-    "ASSISTANT": "Asistent Virtual Live"
+
+  "CATEGORIES": {
+    "EYEBROW": "Categorii",
+    "TITLE_START": "Explorează",
+    "TITLE_END": "Categoriile",
+
+    "ITEMS": {
+  "ART": {
+    "NAME": "Artă",
+    "DESCRIPTION": "Picturi, sculpturi și opere de artă de colecție."
   },
+  "CLOTHING": {
+    "NAME": "Îmbrăcăminte",
+    "DESCRIPTION": "Haine, încălțăminte și accesorii de modă."
+  },
+  "ELECTRONICS": {
+    "NAME": "Electronice",
+    "DESCRIPTION": "Telefoane, calculatoare și dispozitive electronice."
+  },
+  "HOME_GARDEN": {
+    "NAME": "Casă și grădină",
+    "DESCRIPTION": "Mobilier, decorațiuni și produse pentru grădină."
+  },
+  "JEWELRY": {
+    "NAME": "Bijuterii",
+    "DESCRIPTION": "Inele, coliere, ceasuri și accesorii valoroase."
+  },
+  "OTHERS": {
+    "NAME": "Altele",
+    "DESCRIPTION": "Descoperă produse din alte categorii."
+  },
+  "REAL_ESTATE": {
+    "NAME": "Imobiliare",
+    "DESCRIPTION": "Case, apartamente, terenuri și proprietăți comerciale."
+  },
+  "VEHICLES": {
+    "NAME": "Vehicule",
+    "DESCRIPTION": "Autoturisme, motociclete și alte vehicule."
+  }
+}
+  },
+
+  "AUCTIONS": {
+    "EYEBROW": "Piață",
+    "TITLE_START": "Licitații",
+    "TITLE_END": "Active",
+    "PLACE_BID": "Licitează",
+    "EMPTY": "Momentan nu există licitații care se încheie în curând.",
+
+    "COUNTDOWN": {
+  "ENDED": "Încheiată",
+  "DAYS_HOURS": "Mai sunt {{days}}z {{hours}}h",
+  "HOURS_MINUTES": "Mai sunt {{hours}}h {{minutes}}min",
+  "MINUTES_SECONDS": "Mai sunt {{minutes}}min {{seconds}}s"
+}
+  }
+},
+  "HELP": {
+  "TITLE": "Centru de ajutor",
+  "INFORMATION": "Găsește răspunsuri rapide, contactează-ne telefonic sau discută cu asistentul nostru virtual.",
+  "FAQ": "❓ Întrebări frecvente",
+  "SUPPORT": "📞 Asistență telefonică rapidă",
+  "PROGRAM": "Luni - Vineri: 09:00 - 18:00",
+  "FORM": "📝 Deschide un tichet",
+  "REQUEST": "Trimite solicitarea",
+  "ASSISTANT": "Asistent virtual disponibil",
+  "ISSUE_TYPE_PLACEHOLDER": "Selectează tipul problemei",
+  "CHAT_PLACEHOLDER": "Scrie mesajul tău...",
+
+  "GUEST": {
+    "MESSAGE": "Pentru a deschide un tichet și a primi asistență tehnică, trebuie să te autentifici în contul tău.",
+    "LOGIN": "Autentificare",
+    "REGISTER": "Creează un cont"
+  },
+  "FAQ_CATEGORIES": {
+  "AUCTIONS": {
+    "TITLE": "🚨 Licitații și oferte",
+    "QUESTIONS": {
+      "PLACE_BID": {
+        "QUESTION": "Cum plasez o ofertă la o licitație?",
+        "ANSWER": "Accesează pagina produsului dorit și introdu suma în câmpul „Licitează acum”. Oferta ta trebuie să fie mai mare decât prețul curent."
+      },
+      "CANCEL_BID": {
+        "QUESTION": "Pot anula o ofertă după ce am plasat-o?",
+        "ANSWER": "Ofertele devin obligatorii după plasare și, în general, nu pot fi anulate. Verifică suma cu atenție înainte de confirmare."
+      },
+      "WIN_AUCTION": {
+        "QUESTION": "Cum aflu dacă am câștigat o licitație?",
+        "ANSWER": "Vei primi un e-mail și o notificare în aplicație atunci când licitația se încheie și oferta ta este cea mai mare."
+      }
+    }
+  },
+
+  "ACCOUNT": {
+    "TITLE": "👤 Cont și autentificare",
+    "QUESTIONS": {
+      "CREATE_ACCOUNT": {
+        "QUESTION": "Cum îmi creez un cont?",
+        "ANSWER": "Apasă pe „Înregistrare” în meniul de sus, completează numele de utilizator, adresa de e-mail și parola, apoi confirmă adresa de e-mail pentru activarea contului."
+      },
+      "FORGOT_PASSWORD": {
+        "QUESTION": "Mi-am uitat parola. Ce trebuie să fac?",
+        "ANSWER": "Apasă pe „Ai uitat parola?” pe pagina de autentificare și urmează instrucțiunile trimise la adresa de e-mail asociată contului."
+      }
+    }
+  },
+
+  "DELIVERY": {
+    "TITLE": "📦 Livrare și plăți",
+    "QUESTIONS": {
+      "ITEM_DELIVERY": {
+        "QUESTION": "Cum este livrat produsul după ce câștig?",
+        "ANSWER": "După confirmarea plății, vânzătorul va organiza expedierea sau ridicarea produsului. Detaliile despre livrare sunt transmise prin mesajele contului tău."
+      },
+      "NOT_DELIVERED": {
+        "QUESTION": "Ce se întâmplă dacă vânzătorul nu livrează produsul?",
+        "ANSWER": "Contactează imediat echipa noastră de asistență folosind formularul de mai jos. Investigăm toate disputele și putem suspenda vânzătorii care nu livrează produsele."
+      },
+      "SHIPPING_COST": {
+        "QUESTION": "Cine plătește transportul?",
+        "ANSWER": "Cumpărătorul achită costurile de transport, cu excepția cazului în care vânzătorul oferă livrare gratuită."
+      },
+      "PAYOUT": {
+        "QUESTION": "Când primesc banii?",
+        "ANSWER": "Plata este transferată în contul tău bancar în termen de 3–5 zile lucrătoare după confirmarea plății cumpărătorului."
+      }
+    }
+  },
+
+  "SELLING": {
+    "TITLE": "🏷️ Vânzare",
+    "QUESTIONS": {
+      "LIST_ITEM": {
+        "QUESTION": "Cum listez un produs pentru vânzare?",
+        "ANSWER": "Accesează secțiunea „Profilul meu” și apasă pe „Adaugă licitație”. Completează detaliile și așteaptă validarea administratorului."
+      },
+      "EDIT_AUCTION": {
+        "QUESTION": "Pot modifica sau șterge o licitație după publicare?",
+        "ANSWER": "Poți modifica sau șterge o licitație numai înainte de primirea primei oferte. După aceea, modificările sunt blocate pentru protejarea participanților."
+      },
+      "NOT_SOLD": {
+        "QUESTION": "Ce se întâmplă dacă produsul meu nu se vinde?",
+        "ANSWER": "Poți reduce prețul de rezervă și republica produsul sau îl poți oferi participantului care a plasat cea mai mare ofertă."
+      }
+    }
+  }
+}
+},
   "AUCTIONS_PAGE": {
     "TITLE": "Licitații active",
     "DESCRIPTION": "Descoperă produse unice și licitează în timp real",
@@ -182,10 +291,12 @@
       "TITLE": "Nu au fost găsite produse",
       "DESCRIPTION": "Momentan nu există licitații active care să corespundă căutării tale."
     },
-    "TIME": {
-      "ENDED": "Licitația s-a încheiat",
-      "LEFT": "rămase"
-    }
+"TIME": {
+  "ENDED": "Licitația s-a încheiat",
+  "DAYS_HOURS": "{{days}}z {{hours}}h rămase",
+  "HOURS_MINUTES": "{{hours}}h {{minutes}}min rămase",
+  "MINUTES_SECONDS": "{{minutes}}min {{seconds}}s rămase"
+}
   },
 
   "CURRENT_PRICE": "Preț curent",
@@ -259,86 +370,160 @@
     "MESSAGE": "Pagina pe care o cauți nu există sau a fost mutată.",
     "BUTTON": "ÎNAPOI LA PAGINA PRINCIPALĂ"
   },
-  "FORUM": {
+  "FORUM_PAGE": {
+  "HEADER": {
     "TITLE": "Discuții pe forum",
-    "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu alți utilizatori.",
+    "DESCRIPTION": "Explorează discuțiile actuale și participă la conversații cu ceilalți utilizatori."
+  },
+
+  "SEARCH": {
+    "PLACEHOLDER": "Caută discuții...",
+    "ARIA_LABEL": "Caută discuții"
+  },
+
+  "ACTIONS": {
     "START_DISCUSSION": "Începe o discuție",
     "LOGIN_TO_START": "Autentifică-te pentru a începe o discuție",
-    "SORT": {
-      "ARIA_LABEL": "Sortează discuțiile",
-      "LATEST": "Cele mai recente",
-      "OLDEST": "Cele mai vechi",
-      "MOST_COMMENTED": "Cele mai comentate"
-    },
+    "TRY_AGAIN": "Încearcă din nou"
+  },
+
+  "SORT": {
+    "ARIA_LABEL": "Sortează discuțiile",
+    "LATEST": "Cele mai recente",
+    "OLDEST": "Cele mai vechi",
+    "MOST_COMMENTED": "Cele mai comentate"
+  },
+
+  "COUNT": {
     "DISCUSSION": "discuție",
     "DISCUSSIONS": "discuții",
-    "LOADING": {
-      "TITLE": "Se încarcă discuțiile"
-    },
-    "ERROR": {
-      "TITLE": "Discuțiile nu au putut fi încărcate",
-      "RETRY": "Încearcă din nou"
-    },
-    "POSTED_BY": "Publicat de",
     "COMMENT": "comentariu",
-    "COMMENTS": "comentarii",
-    "EMPTY": {
-      "TITLE": "Nu există discuții disponibile",
-      "MESSAGE": "În prezent, nu există discuții pe forum."
-    }
+    "COMMENTS": "comentarii"
   },
-  "NOTIFICATIONS": {
-  "TRUE": "Notificări",
-  "FALSE": "Nu există notificări încă.",
-  "TYPES": {
-    "AuctionApproved": "Licitația ta \"{{itemName}}\" a fost aprobată și e acum vizibilă public!",
-    "AuctionRejected": "Licitația ta \"{{itemName}}\" a fost respinsă de un administrator.",
-    "SupportReply": "Un administrator ți-a răspuns la mesajul {{date}}: {{reply}}"
+
+  "LOADING": {
+    "TITLE": "Se încarcă discuțiile"
+  },
+
+  "ERROR": {
+    "TITLE": "Discuțiile nu au putut fi încărcate"
+  },
+
+  "POST": {
+    "POSTED_BY": "Publicat de"
+  },
+
+  "EMPTY": {
+    "TITLE": "Nu există discuții disponibile",
+    "DESCRIPTION": "În prezent, nu există discuții pe forum."
+  },
+
+  "PAGINATION": {
+    "ARIA_LABEL": "Paginare",
+    "PREVIOUS": "Anterior",
+    "NEXT": "Următor"
   }
 },
-  "AUCTION_ITEM_PAGE": {
-    "HEADER_BADGE": "🏷️ Detalii licitație",
-    "INFO": {
-      "CURRENT_PRICE": "Preț curent",
-      "START_PRICE": "Preț de pornire",
-      "CATEGORY": "Categorie",
-      "LOCATION": "Locație",
-      "STARTS_AT": "Data începerii",
-      "OWNER": "Proprietar",
-      "ENDS": "Se încheie"
-    },
-    "BID": {
-      "TITLE": "Plasează oferta ta",
-      "PLACEHOLDER": "Introdu suma licitată",
-      "BUTTON": "🔨 Licitează",
-      "MINIMUM": "Oferta minimă:",
-      "LOGIN_TEXT": "Autentifică-te pentru a licita la acest produs.",
-      "LOGIN_BUTTON": "Autentificare pentru licitare"
-    },
-    "WISHLIST": {
-      "ADD": "🤍 Adaugă la favorite",
-      "ADDED": "❤️ În lista de favorite"
-    },
-    "DESCRIPTION": {
-      "TITLE": "Descriere produs"
-    },
-    "STATUS": {
-      "ACTIVE": "Activă",
-      "ENDED": "Încheiată",
-      "PENDING": "În așteptare"
-    },
-    "MESSAGES": {
-      "AUCTION_ENDED": "Licitația s-a încheiat.",
-      "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
-      "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
-    },
-    "COUNTDOWN": {
-      "DAYS": "z",
-      "HOURS": "h",
-      "MINUTES": "m",
-      "SECONDS": "s"
+  "NOTIFICATIONS": {
+    "TRUE": "Notificări",
+    "FALSE": "Nu există notificări încă.",
+    "OPEN_ARIA": "Deschide notificările",
+    "DO_NOT_DISTURB": "Nu deranja",
+    "LOADING": "Se încarcă notificările...",
+    "MARK_ALL_READ": "Marchează tot ca citit",
+    "MARKING_ALL_READ": "Se marchează...",
+    "ACTIONS_ARIA": "Acțiuni notificare",
+    "DELETE": "Șterge notificarea",
+    "TYPES": {
+      "AuctionApproved": "Licitația ta \"{{itemName}}\" a fost aprobată și e acum vizibilă public!",
+      "AuctionRejected": "Licitația ta \"{{itemName}}\" a fost respinsă de un administrator.",
+      "SupportReply": "Ai primit un răspuns la mesajul tău de {{issueType}} din {{date}}: \"{{reply}}\"",
+      "UserReported": "Ai primit un raport de la un alt utilizator.",
+      "PostReported": "Postarea ta de pe forum \"{{postTitle}}\" a fost raportată.",
+      "PostDeleted": "Postarea ta de pe forum \"{{postTitle}}\" a fost ștearsă de un moderator."
     }
   },
+  "AUCTION_ITEM_PAGE": {
+  "HEADER_BADGE": "🏷️ Detalii licitație",
+
+  "INFO": {
+    "CURRENT_PRICE": "Preț curent",
+    "START_PRICE": "Preț de pornire",
+    "CATEGORY": "Categorie",
+    "LOCATION": "Locație",
+    "STARTS_AT": "Începe la",
+    "OWNER": "Proprietar",
+    "ENDS": "Se încheie la"
+  },
+
+  "BID": {
+    "TITLE": "Plasează oferta ta",
+    "PLACEHOLDER": "Introdu valoarea ofertei",
+    "BUTTON": "🔨 Plasează oferta",
+    "MINIMUM": "Ofertă minimă:",
+    "LOGIN_TEXT": "Autentifică-te pentru a plasa o ofertă pentru acest produs.",
+    "LOGIN_BUTTON": "Autentificare pentru licitare"
+  },
+
+  "WISHLIST": {
+    "ADD": "Adaugă la favorite",
+    "ADDED": "În lista de favorite",
+    "TOAST_ADDED": "Produsul a fost adăugat la lista de favorite.",
+    "TOAST_REMOVED": "Produsul a fost eliminat din lista de favorite."
+  },
+
+  "ACTIONS": {
+    "REPORT_ITEM": "Raportează produsul",
+    "ITEM_REPORTED": "Produs raportat"
+  },
+
+  "REPORT": {
+    "TITLE": "Raportează licitația",
+    "DESCRIPTION": "Ajută-ne să păstrăm BidSphere în siguranță. Selectează motivul pentru care raportezi această licitație:",
+    "REASON_LABEL": "Motiv",
+
+    "REASONS": {
+      "INAPPROPRIATE_CONTENT": "Conținut neadecvat",
+      "MISLEADING_DESCRIPTION": "Descriere înșelătoare",
+      "FAKE_ITEM": "Produs fals sau contrafăcut",
+      "SUSPICIOUS_BIDDING": "Activitate de licitare suspectă",
+      "OTHER": "Alt motiv"
+    },
+
+    "DETAILS_LABEL": "Detalii suplimentare (opțional)",
+    "DETAILS_PLACEHOLDER": "Descrie problema...",
+    "CANCEL": "Anulează",
+    "SUBMIT": "Trimite raportarea",
+
+    "TOAST": {
+      "SUCCESS": "Licitația a fost raportată cu succes.",
+      "ERROR": "Licitația nu a putut fi raportată."
+    }
+  },
+
+  "DESCRIPTION": {
+    "TITLE": "Descrierea produsului"
+  },
+
+  "STATUS": {
+    "ACTIVE": "Activă",
+    "ENDED": "Încheiată",
+    "PENDING": "În așteptare"
+  },
+
+  "MESSAGES": {
+    "AUCTION_ENDED": "Licitația s-a încheiat.",
+    "BID_HIGHER_CURRENT": "Oferta trebuie să fie mai mare decât prețul curent.",
+    "BID_HIGHER_MINIMUM": "Oferta trebuie să fie mai mare decât prețul minim."
+  },
+
+  "COUNTDOWN": {
+    "DAYS": "z",
+    "HOURS": "h",
+    "MINUTES": "min",
+    "SECONDS": "s"
+  }
+},
   "REVIEWS": {
     "TITLE": "Recenzii",
     "REVIEWER_ID": "ID-ul autorului recenziei",
@@ -361,30 +546,71 @@
     "LOGOUT": "Deconectare"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
-    "LOADING_DISCUSSION_TITLE": "Se încarcă discuția",
-    "LOADING_DISCUSSION_MESSAGE": "Discuția este în curs de încărcare.",
-    "LOAD_DISCUSSION_ERROR": "Discuția nu a putut fi încărcată",
-    "TRY_AGAIN": "Încearcă din nou",
-    "DELETE_POST": "Șterge",
-    "POSTED_BY": "Publicat de",
-    "DISCUSSION": "Discuție",
+  "BACK": "Înapoi la discuții",
+
+  "POST": {
+    "LOADING_TITLE": "Se încarcă discuția",
+    "LOADING_MESSAGE": "Discuția se încarcă.",
+    "ERROR_TITLE": "Discuția nu a putut fi încărcată",
+    "POSTED_BY": "Publicat de"
+  },
+
+  "ACTIONS": {
+    "REPORT": "Raportează",
+    "EDIT": "Editează",
+    "DELETE": "Șterge",
+    "CANCEL": "Anulează",
+    "SAVE": "Salvează",
+    "RETRY": "Încearcă din nou"
+  },
+
+  "EDIT_POST": {
+    "TITLE_LABEL": "Titlu",
+    "TITLE_VALIDATION": "Titlul trebuie să conțină între 3 și 150 de caractere.",
+    "DESCRIPTION_LABEL": "Descriere",
+    "DESCRIPTION_VALIDATION": "Descrierea trebuie să conțină între 10 și 5000 de caractere."
+  },
+
+  "COMMENTS": {
+    "TITLE": "Discuție",
     "COMMENT": "comentariu",
     "COMMENTS": "comentarii",
-    "ADD_COMMENT": "Adaugă un comentariu",
-    "COMMENT_PLACEHOLDER": "Scrie comentariul tău aici...",
-    "COMMENT_REQUIRED": "Comentariul este obligatoriu.",
-    "COMMENT_MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
-    "COMMENT_MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere.",
+    "ADD_LABEL": "Adaugă un comentariu",
+    "PLACEHOLDER": "Scrie comentariul aici...",
+
+    "VALIDATION": {
+      "REQUIRED": "Comentariul este obligatoriu.",
+      "MIN_LENGTH": "Comentariul trebuie să conțină cel puțin 2 caractere.",
+      "MAX_LENGTH": "Comentariul nu poate depăși 1000 de caractere."
+    },
+
     "PUBLISHING": "Se publică...",
-    "PUBLISH_COMMENT": "Publică comentariul",
+    "PUBLISH": "Publică comentariul",
+
     "LOGIN_REQUIRED": "Trebuie să fii autentificat pentru a publica un comentariu.",
-    "LOGIN": "Autentifică-te",
-    "LOADING_COMMENTS": "Se încarcă comentariile",
-    "LOAD_COMMENTS_ERROR": "Comentariile nu au putut fi încărcate",
-    "DELETE_COMMENT": "Șterge",
-    "NO_COMMENTS": "Nu există comentarii încă"
+    "LOGIN": "Autentificare",
+
+    "LOADING": "Se încarcă comentariile",
+    "ERROR": "Comentariile nu au putut fi încărcate",
+    "EMPTY": "Nu există încă niciun comentariu"
   },
+
+  "REPORT": {
+    "TITLE": "Raportează postarea",
+    "DESCRIPTION": "Selectează motivul pentru care raportezi această discuție:",
+    "CANCEL": "Anulează",
+    "SUBMITTING": "Se trimite...",
+    "SUBMIT": "Trimite raportarea",
+
+    "REASONS": {
+      "SPAM": "Spam",
+      "INAPPROPRIATE_CONTENT": "Conținut neadecvat",
+      "HARASSMENT": "Hărțuire sau comportament abuziv",
+      "MISLEADING_INFORMATION": "Informații înșelătoare",
+      "OTHER": "Alt motiv"
+    }
+  }
+},
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Înapoi la discuții",
     "TITLE": "Începe o discuție",
@@ -511,6 +737,48 @@
   "FORUM_EMPTY": {
     "TITLE": "Nu au fost găsite postări pe forum",
     "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
+  }
+},
+"USER_PAGE": {
+  "ACTIONS": {
+    "ADD_REVIEW": "⭐ Adaugă o recenzie",
+    "REPORT_USER": "⚠️ Raportează utilizatorul",
+    "USER_REPORTED": "✔️ Utilizator raportat"
+  },
+
+  "COMMON": {
+    "CANCEL": "Anulează",
+    "CLOSE": "Închide"
+  },
+
+  "REPORT_MODAL": {
+    "TITLE": "Raportează utilizatorul @{{username}}",
+    "DESCRIPTION": "Te rugăm să introduci motivul raportării pentru ca echipa noastră să poată analiza activitatea contului.",
+    "PLACEHOLDER": "Scrie aici motivul raportării...",
+    "SUBMIT": "Trimite raportarea"
+  },
+
+  "REVIEW_MODAL": {
+    "TITLE": "Adaugă o recenzie pentru @{{username}}",
+    "DESCRIPTION": "Părerea ta contează! Oferă o notă și scrie un scurt comentariu despre experiența ta cu acest utilizator.",
+    "PLACEHOLDER": "Scrie aici părerea ta...",
+    "SUBMIT": "Trimite recenzia"
+  },
+
+  "REVIEWS": {
+    "TITLE": "Recenziile utilizatorului ({{count}})",
+    "YOU": "Tu",
+    "EMPTY": "Acest utilizator nu a primit nicio recenzie până acum."
+  },
+
+  "AUCTIONS": {
+    "TITLE": "Licitațiile active ale utilizatorului",
+    "FILTER_LABEL": "Filtrează după categorie:",
+    "ALL_CATEGORIES": "Toate categoriile",
+    "CURRENT_PRICE": "Preț curent:",
+    "EMPTY": "Acest utilizator nu are nicio licitație activă în această categorie în acest moment.",
+    "SHOW_LESS": "Arată mai puține",
+    "SHOW_MORE": "Vezi mai multe"
   }
 }
 }
