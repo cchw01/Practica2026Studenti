@@ -151,7 +151,10 @@
 
       <!-- Actions row: Share is always visible; Report Item stays login-gated -->
       <div class="actions-footer">
-        <button type="button" class="btn-report" *ngIf="authService.isLoggedIn()" [class.reported]="isReported" (click)="openReportModal()">
+        <button type="button" class="btn-report" *ngIf="authService.isLoggedIn()" 
+            [class.reported]="isReported" 
+            [disabled] = "isOwner() || isReported"
+            (click)="openReportModal()">
           <span class="report-icon">🚩</span>
           <span>{{ isReported ? 'Item Reported' : 'Report Item' }}</span>
         </button>
