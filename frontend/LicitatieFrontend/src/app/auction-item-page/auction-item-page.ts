@@ -78,7 +78,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
   private timerInterval: any;
 
   // ================= NEW: Debug control =================
-  public readonly showDebugControls = true; // set to false before final commit
+  public readonly showDebugControls = false; // set to false before final commit
 
   auctionItem: AuctionItem = {
     ID: 1,
