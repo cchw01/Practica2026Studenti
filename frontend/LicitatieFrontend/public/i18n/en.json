@@ -776,4 +776,46 @@
 "MESSAGES": {
   "PROFILE_UPDATED": "Profile updated successfully."
 }
+},
+"USER_PAGE": {
+  "ACTIONS": {
+    "ADD_REVIEW": "⭐ Add Review",
+    "REPORT_USER": "⚠️ Report User",
+    "USER_REPORTED": "✔️ User Reported"
+  },
+
+  "COMMON": {
+    "CANCEL": "Cancel",
+    "CLOSE": "Close"
+  },
+
+  "REPORT_MODAL": {
+    "TITLE": "Report user @{{username}}",
+    "DESCRIPTION": "Please enter the reason for the report so our team can review the account activity.",
+    "PLACEHOLDER": "Write the reason for the report here...",
+    "SUBMIT": "Submit Report"
+  },
+
+  "REVIEW_MODAL": {
+    "TITLE": "Add a review for @{{username}}",
+    "DESCRIPTION": "Your opinion matters! Give a rating and write a short comment about your experience with this user.",
+    "PLACEHOLDER": "Write your review here...",
+    "SUBMIT": "Submit Review"
+  },
+
+  "REVIEWS": {
+    "TITLE": "User reviews ({{count}})",
+    "YOU": "You",
+    "EMPTY": "This user has not received any reviews yet."
+  },
+
+  "AUCTIONS": {
+    "TITLE": "User's active auctions",
+    "FILTER_LABEL": "Filter by category:",
+    "ALL_CATEGORIES": "All categories",
+    "CURRENT_PRICE": "Current price:",
+    "EMPTY": "This user currently has no active auctions in this category.",
+    "SHOW_LESS": "Show less",
+    "SHOW_MORE": "Show more"
+  }
 }}

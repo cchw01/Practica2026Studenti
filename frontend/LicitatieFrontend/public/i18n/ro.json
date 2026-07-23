@@ -734,5 +734,47 @@
     "TITLE": "Nu au fost găsite postări pe forum",
     "DESCRIPTION": "Nu există discuții care să corespundă căutării tale."
   }
+},
+"USER_PAGE": {
+  "ACTIONS": {
+    "ADD_REVIEW": "⭐ Adaugă o recenzie",
+    "REPORT_USER": "⚠️ Raportează utilizatorul",
+    "USER_REPORTED": "✔️ Utilizator raportat"
+  },
+
+  "COMMON": {
+    "CANCEL": "Anulează",
+    "CLOSE": "Închide"
+  },
+
+  "REPORT_MODAL": {
+    "TITLE": "Raportează utilizatorul @{{username}}",
+    "DESCRIPTION": "Te rugăm să introduci motivul raportării pentru ca echipa noastră să poată analiza activitatea contului.",
+    "PLACEHOLDER": "Scrie aici motivul raportării...",
+    "SUBMIT": "Trimite raportarea"
+  },
+
+  "REVIEW_MODAL": {
+    "TITLE": "Adaugă o recenzie pentru @{{username}}",
+    "DESCRIPTION": "Părerea ta contează! Oferă o notă și scrie un scurt comentariu despre experiența ta cu acest utilizator.",
+    "PLACEHOLDER": "Scrie aici părerea ta...",
+    "SUBMIT": "Trimite recenzia"
+  },
+
+  "REVIEWS": {
+    "TITLE": "Recenziile utilizatorului ({{count}})",
+    "YOU": "Tu",
+    "EMPTY": "Acest utilizator nu a primit nicio recenzie până acum."
+  },
+
+  "AUCTIONS": {
+    "TITLE": "Licitațiile active ale utilizatorului",
+    "FILTER_LABEL": "Filtrează după categorie:",
+    "ALL_CATEGORIES": "Toate categoriile",
+    "CURRENT_PRICE": "Preț curent:",
+    "EMPTY": "Acest utilizator nu are nicio licitație activă în această categorie în acest moment.",
+    "SHOW_LESS": "Arată mai puține",
+    "SHOW_MORE": "Vezi mai multe"
+  }
 }
 }
