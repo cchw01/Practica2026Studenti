@@ -27,24 +27,27 @@ export class AuthService {
   }
 
   register(userData: any): Observable<any> {
-    const payload = {
-      UserName: userData.username || userData.UserName,
-      Name: userData.name || userData.Name,
-      Email: userData.email || userData.Email,
-      Password: userData.password || userData.Password,
-      PhoneNumber: userData.phoneNumber || userData.PhoneNumber,
-    };
+  const payload = {
+    UserName: userData.username || userData.UserName,
+    Name: userData.name || userData.Name,
+    Email: userData.email || userData.Email,
+    Password: userData.password || userData.Password,
+    PhoneNumber: userData.phoneNumber || userData.PhoneNumber
+  };
 
-    return this.http.post(`${this.apiUrl}/register`, payload);
+  return this.http.post(`${this.apiUrl}/register`, payload);
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http
-      .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
-      .pipe(
-        tap((res: any) => this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn })),
-      );
-  }
+  return this.http
+    .post(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+    .pipe(
+      tap((res: any) => {
+        // Backend-ul returnează { accessToken: "...", expiresIn: 900 }
+        this.setSession({ idToken: res.accessToken, expiresIn: res.expiresIn });
+      })
+    );
+}
 
   private setSession(authResult: any): void {
     if (!authResult) return;
