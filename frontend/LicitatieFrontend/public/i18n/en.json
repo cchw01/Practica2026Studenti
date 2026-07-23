@@ -479,23 +479,25 @@
   }
 },
 
-  "NOTIFICATIONS": {
-  "TRUE": "Notifications",
-  "FALSE": "No notifications yet.",
-  "OPEN_ARIA": "Open notifications",
-  "DO_NOT_DISTURB": "Do not disturb",
-  "LOADING": "Loading notifications...",
-  "ACTIONS_ARIA": "Notification actions",
-  "MARKING_ALL_READ": "Marking as read...",
-  "MARK_ALL_READ": "Mark all as read",
-  "DELETE": "Delete notification",
-
-  "TYPES": {
-    "AuctionApproved": "Your auction \"{{itemName}}\" was approved and is now public!",
-    "AuctionRejected": "Your auction \"{{itemName}}\" was rejected by an admin.",
-    "SupportReply": "An admin replied to your message from {{date}}: {{reply}}"
-  }
-},
+  "NOTIFICATIONS":{
+    "TRUE": "Notifications",
+    "FALSE": "No notifications yet.",
+    "OPEN_ARIA": "Open notifications",
+    "DO_NOT_DISTURB": "Do not disturb",
+    "LOADING": "Loading notifications...",
+    "MARK_ALL_READ": "Mark all as read",
+    "MARKING_ALL_READ": "Marking as read...",
+    "ACTIONS_ARIA": "Notification actions",
+    "DELETE": "Delete notification",
+    "TYPES": {
+      "AuctionApproved": "Your auction \"{{itemName}}\" was approved and is now publicly visible!",
+      "AuctionRejected": "Your auction \"{{itemName}}\" was rejected by an administrator.",
+      "SupportReply": "You got a reply to your {{issueType}} message from {{date}}: \"{{reply}}\"",
+      "UserReported": "You have received a report from another user.",
+      "PostReported": "Your forum post \"{{postTitle}}\" was reported.",
+      "PostDeleted": "Your forum post \"{{postTitle}}\" was removed by a moderator."
+    }
+  },
 
   "AUCTION_ITEM_PAGE": {
   "HEADER_BADGE": "🏷️ Auction Detail",
