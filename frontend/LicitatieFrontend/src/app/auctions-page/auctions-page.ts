@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionItem } from '../Models/item-model';
 import { ItemService } from '../services/item-service';
@@ -15,10 +15,10 @@ type SortOption = 'endingSoon' | 'priceLowHigh' | 'priceHighLow' | 'newest';
   templateUrl: './auctions-page.html',
   styleUrls: ['./auctions-page.scss'],
 })
-export class AuctionsPage implements OnInit {
+export class AuctionsPage implements OnInit, OnDestroy {
   allItems: AuctionItem[] = [];
   filteredItems: AuctionItem[] = [];
-
+  timerInterval: any;
   categories: string[] = [];
   selectedCategory: string = '';
   searchText: string = '';
@@ -83,6 +83,18 @@ export class AuctionsPage implements OnInit {
         console.error('Eroare la încărcarea categoriilor', error);
       },
     });
+
+    // Interval for updating the countdown timers every second
+    this.timerInterval = setInterval(() => {
+      this.cdr.detectChanges();
+    }, 1000);
+  }
+
+  // Makes it so the intrvl doesnt keep running when u leave the page
+  ngOnDestroy(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 
   loadActiveAuctions(): void {
