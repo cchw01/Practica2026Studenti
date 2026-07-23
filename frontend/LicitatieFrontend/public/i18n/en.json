@@ -303,10 +303,12 @@
     "DESCRIPTION": "There are currently no active auctions matching your search."
   },
 
-  "TIME": {
-    "ENDED": "Auction ended",
-    "LEFT": "left"
-  }
+    "TIME": {
+  "ENDED": "Auction ended",
+  "DAYS_HOURS": "{{days}}d {{hours}}h left",
+  "HOURS_MINUTES": "{{hours}}h {{minutes}}m left",
+  "MINUTES_SECONDS": "{{minutes}}m {{seconds}}s left"
+}
 
 },
 "SEARCH_PAGE": {
