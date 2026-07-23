@@ -2,10 +2,11 @@ using Backend.DataManagement;
 using Backend.DTOs;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 
 namespace Backend.Controllers
@@ -478,6 +479,65 @@ namespace Backend.Controllers
                 return userId;
 
             return null;
+        }
+
+        public AuctionItem? ProcessAuctionEnd(int auctionId, BidDataOps bidDataOps)
+        {
+            var item = dataOps.GetTrackedAuctionItemById(auctionId);
+            if (item == null) return null;
+
+            if (item.Status == AuctionItem.StatusEnum.Sold ||
+                item.Status == AuctionItem.StatusEnum.NoWinner ||
+                item.Status == AuctionItem.StatusEnum.Rejected)
+            {
+                return item; 
+            }
+            item.EndDate = DateTime.Now;
+            var bids = bidDataOps.GetBidsByItemId(auctionId);
+            if (bids != null && bids.Length > 0)
+            {
+                var highestBid = bids.OrderByDescending(b => b.Price).First();
+                item.Status = AuctionItem.StatusEnum.Sold;
+                item.WinnerId = highestBid.BidderId;
+            }
+            else
+            {
+                item.Status = AuctionItem.StatusEnum.NoWinner;
+            }
+            dataOps.SaveChanges();
+            return item;
+        }
+
+        [Authorize]
+        [HttpPost("{id}/end")]
+        public ActionResult<AuctionItemResponseDto> EndAuction(int id)
+        {
+            try
+            {
+                var authenticatedUserId = GetAuthenticatedUserId();
+
+                if (authenticatedUserId == null) 
+                    return Unauthorized();
+
+                var item = dataOps.GetTrackedAuctionItemById(id);
+
+                if (item == null) 
+                    return NotFound();
+
+                var isOwner = item.OwnerId == authenticatedUserId.Value;
+                var isAdmin = User.IsInRole("Admin");
+                if (!isOwner && !isAdmin) 
+                    return Forbid();
+
+                var endedItem = ProcessAuctionEnd(id, bidDataOps);
+
+                var updatedItem = dataOps.GetAuctionItemById(id);
+                return Ok(MapToResponseDto(updatedItem!));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
