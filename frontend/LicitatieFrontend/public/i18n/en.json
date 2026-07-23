@@ -173,10 +173,11 @@
     "EMPTY": "No auctions ending soon right now — check back shortly.",
 
     "COUNTDOWN": {
-      "DAYS_HOURS": "{{days}}d {{hours}}h left",
-      "HOURS_MINUTES": "{{hours}}h {{minutes}}m left",
-      "MINUTES_SECONDS": "{{minutes}}m {{seconds}}s left"
-    }
+  "ENDED": "Ended",
+  "DAYS_HOURS": "{{days}}d {{hours}}h left",
+  "HOURS_MINUTES": "{{hours}}h {{minutes}}m left",
+  "MINUTES_SECONDS": "{{minutes}}m {{seconds}}s left"
+}
   }
 },
 

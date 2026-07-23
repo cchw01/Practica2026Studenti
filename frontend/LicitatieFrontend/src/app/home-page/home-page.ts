@@ -176,20 +176,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     track.scrollBy({ left: direction * track.clientWidth * 0.9, behavior: 'smooth' });
   }
 
-  getRemainingLabel(endDate: Date): string {
-    const diffMs = new Date(endDate).getTime() - Date.now();
-    if (diffMs <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+getRemainingLabel(endDate: Date): string {
+  const diffMs = new Date(endDate).getTime() - Date.now();
 
-    const totalSeconds = Math.floor(diffMs / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    if (days > 0) return `${days}d ${hours}h left`;
-    if (hours > 0) return `${hours}h ${minutes}m left`;
-    return `${minutes}m ${seconds}s left`;
+  if (diffMs <= 0) {
+    return this.translate.instant('HOME.AUCTIONS.COUNTDOWN.ENDED');
   }
+
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return this.translate.instant(
+      'HOME.AUCTIONS.COUNTDOWN.DAYS_HOURS',
+      { days, hours }
+    );
+  }
+
+  if (hours > 0) {
+    return this.translate.instant(
+      'HOME.AUCTIONS.COUNTDOWN.HOURS_MINUTES',
+      { hours, minutes }
+    );
+  }
+
+  return this.translate.instant(
+    'HOME.AUCTIONS.COUNTDOWN.MINUTES_SECONDS',
+    { minutes, seconds }
+  );
+}
 
   getTimeUrgencyClass(endDate: Date): string {
     const minutesLeft = (new Date(endDate).getTime() - Date.now()) / (1000 * 60);

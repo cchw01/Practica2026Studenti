@@ -172,10 +172,11 @@
     "EMPTY": "Momentan nu există licitații care se încheie în curând.",
 
     "COUNTDOWN": {
-      "DAYS_HOURS": "Mai sunt {{days}}z {{hours}}h",
-      "HOURS_MINUTES": "Mai sunt {{hours}}h {{minutes}}min",
-      "MINUTES_SECONDS": "Mai sunt {{minutes}}min {{seconds}}s"
-    }
+  "ENDED": "Încheiată",
+  "DAYS_HOURS": "Mai sunt {{days}}z {{hours}}h",
+  "HOURS_MINUTES": "Mai sunt {{hours}}h {{minutes}}min",
+  "MINUTES_SECONDS": "Mai sunt {{minutes}}min {{seconds}}s"
+}
   }
 },
   "HELP": {
