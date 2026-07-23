@@ -26,7 +26,7 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Eroare internă.", detail = ex.Message });
+                return StatusCode(500, new { message = "error", detail = ex.Message });
             }
         }
 
@@ -36,17 +36,17 @@ namespace Backend.Controllers
             try
             {
                 if (!int.TryParse(id, out int userId))
-                    return BadRequest(new { message = "ID-ul trebuie să fie un număr întreg." });
+                    return BadRequest(new { message = "ID must be a number." });
 
                 var profile = _dataOps.GetProfileById(userId);
                 if (profile is null)
-                    return NotFound(new { message = $"Utilizatorul cu id='{id}' nu a fost găsit." });
+                    return NotFound(new { message = $"User with id='{id}' not found" });
 
                 return Ok(profile);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Eroare internă.", detail = ex.Message });
+                return StatusCode(500, new { message = "Error", detail = ex.Message });
             }
         }
 

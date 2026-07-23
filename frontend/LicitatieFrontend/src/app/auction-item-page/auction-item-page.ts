@@ -284,6 +284,11 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.errorMessage = 'The bid must be greater than the minimum price.';
       return;
     }
+    
+    if (this.bidAmount < this.auctionItem.CurrentPrice + 1) {
+      this.errorMessage = `The minimum bid is ${this.auctionItem.CurrentPrice + 1} RON.`;
+      return;
+    }
 
     const bidderId = this.authService.getCurrentUserId() || 0;
 

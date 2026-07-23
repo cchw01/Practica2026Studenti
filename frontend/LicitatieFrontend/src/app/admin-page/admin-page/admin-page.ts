@@ -6,7 +6,7 @@ import { AdminService } from '../../Models/admin/admin-service';
 import { AuthService } from '../../services/auth';
 import { CategoryService } from '../../services/category-service';
 
-type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages';
+type Tab = 'stats' | 'users' | 'auctions' | 'forum' | 'categories' | 'messages' | 'reports';
 
 @Component({
   selector: 'app-admin-page',
@@ -31,13 +31,19 @@ export class AdminPage implements OnInit {
 
   contactMessages: any[] = [];
   helpMessages: any[] = [];
-  messagesView: 'contact' | 'help' = 'contact';
+  messagesView: 'contact' | 'help' | 'history' = 'contact';
+  historyFilter: 'all' | 'contact' | 'help' = 'all';
+  messageSearchTerm = '';
   replyDrafts: { [id: number]: string } = {};
 
   pendingAuctions: any[] = [];
   forumPosts: any[] = [];
   forumComments: any[] = [];
   categories: Category[] = [];
+
+  // NOU: proprietăți pentru tab-ul de Reports
+  reports: any[] = [];
+  reportsFilter: 'all' | 'pending' = 'pending';
 
   verifiedPostIds: Set<number> = new Set<number>();
 
@@ -57,6 +63,7 @@ export class AdminPage implements OnInit {
     private cdr: ChangeDetectorRef,
   ) {
     const saved = localStorage.getItem('verifiedForumPostIds');
+
     if (saved) {
       this.verifiedPostIds = new Set(JSON.parse(saved));
     }
@@ -84,12 +91,16 @@ export class AdminPage implements OnInit {
     this.loadStats();
     this.loadAuctions();
     this.loadForum();
+    this.loadMessages(); // <- NOU, ca badge-ul de Mesaje sa fie corect de la inceput
   }
+
   get visibleForumPosts(): any[] {
     return this.forumPosts.filter((post) => !this.verifiedPostIds.has(post.id));
   }
+
   markAsVerified(id: number): void {
     this.verifiedPostIds.add(id);
+
     localStorage.setItem('verifiedForumPostIds', JSON.stringify([...this.verifiedPostIds]));
   }
 
@@ -100,20 +111,29 @@ export class AdminPage implements OnInit {
       case 'stats':
         this.loadStats();
         break;
+
       case 'users':
         this.loadUsers();
         break;
+
       case 'messages':
         this.loadMessages();
         break;
+
       case 'auctions':
         this.loadAuctions();
         break;
+
       case 'forum':
         this.loadForum();
         break;
+
       case 'categories':
         this.loadCategories();
+        break;
+
+      case 'reports':
+        this.loadReports();
         break;
     }
   }
@@ -136,7 +156,7 @@ export class AdminPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Eroare la încărcarea statisticilor:', error);
+        console.error('Error loading statistics:', error);
       },
     });
   }
@@ -156,7 +176,7 @@ export class AdminPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Eroare la încărcarea licitațiilor:', error);
+        console.error('Error loading auctions:', error);
       },
     });
   }
@@ -168,7 +188,7 @@ export class AdminPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Eroare la încărcarea forumului:', error);
+        console.error('Error loading the forum:', error);
       },
     });
   }
@@ -184,17 +204,55 @@ export class AdminPage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Eroare la încărcarea categoriilor:', error);
+        console.error('Error loading categories:', error);
 
         this.categories = [];
         this.categoryLoading = false;
         this.categoryErrorMessage = this.getCategoryErrorMessage(
           error,
-          'Categoriile nu au putut fi încărcate.',
+          'The categories could not be loaded.',
         );
         this.cdr.detectChanges();
       },
     });
+  }
+
+  // NOU: metode pentru Reports
+  loadReports(): void {
+    this.adminService.getReports().subscribe({
+      next: (data) => {
+        this.reports = data || [];
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading reports:', error);
+      },
+    });
+  }
+
+  get displayedReports(): any[] {
+    if (this.reportsFilter === 'pending') {
+      return this.reports.filter((r) => r.status === 'Pending');
+    }
+    return this.reports;
+  }
+
+  dismissReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'Dismissed').subscribe(() => this.loadReports());
+  }
+
+  resolveReport(id: number): void {
+    this.adminService.updateReportStatus(id, 'ActionTaken').subscribe(() => this.loadReports());
+  }
+
+  removeReport(id: number): void {
+    const confirmed = confirm('Ștergi definitiv acest raport?');
+    if (!confirmed) return;
+    this.adminService.deleteReport(id).subscribe(() => this.loadReports());
+  }
+
+  setReportsFilter(filter: 'all' | 'pending'): void {
+    this.reportsFilter = filter;
   }
 
   approveAuction(id: number): void {
@@ -222,7 +280,7 @@ export class AdminPage implements OnInit {
   }
 
   removeUser(userId: number): void {
-    const confirmed = confirm('Ești sigur? Se șterge definitiv utilizatorul.');
+    const confirmed = confirm('Are you sure? The user will be permanently deleted.');
 
     if (!confirmed) {
       return;
@@ -242,7 +300,7 @@ export class AdminPage implements OnInit {
     this.categoryErrorMessage = '';
 
     if (!name) {
-      this.categoryErrorMessage = 'Numele categoriei este obligatoriu.';
+      this.categoryErrorMessage = 'The category name is required.';
       return;
     }
 
@@ -262,12 +320,12 @@ export class AdminPage implements OnInit {
         this.loadCategories();
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Eroare la crearea categoriei:', error);
+        console.error('Error creating the category:', error);
 
         this.categorySubmitting = false;
         this.categoryErrorMessage = this.getCategoryErrorMessage(
           error,
-          'Categoria nu a putut fi creată.',
+          'The category could not be created.',
         );
         this.cdr.detectChanges();
       },
@@ -297,7 +355,7 @@ export class AdminPage implements OnInit {
     const description = this.editingCategoryDescription.trim();
 
     if (!name) {
-      this.categoryErrorMessage = 'Numele categoriei este obligatoriu.';
+      this.categoryErrorMessage = 'The category name is required.';
       return;
     }
 
@@ -317,12 +375,12 @@ export class AdminPage implements OnInit {
         this.loadCategories();
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Eroare la actualizarea categoriei:', error);
+        console.error('Error updating the category:', error);
 
         this.categorySubmitting = false;
         this.categoryErrorMessage = this.getCategoryErrorMessage(
           error,
-          'Categoria nu a putut fi actualizată.',
+          'The category could not be updated.',
         );
         this.cdr.detectChanges();
       },
@@ -330,7 +388,7 @@ export class AdminPage implements OnInit {
   }
 
   removeCategory(category: Category): void {
-    const confirmed = confirm(`Sigur vrei să ștergi categoria „${category.name}”?`);
+    const confirmed = confirm(`Are you sure you want to delete the "${category.name}" category?`);
 
     if (!confirmed) {
       return;
@@ -347,11 +405,11 @@ export class AdminPage implements OnInit {
         this.loadCategories();
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Eroare la ștergerea categoriei:', error);
+        console.error('Error deleting the category:', error);
 
         this.categoryErrorMessage = this.getCategoryErrorMessage(
           error,
-          'Categoria nu a putut fi ștearsă.',
+          'The category could not be deleted.',
         );
         this.cdr.detectChanges();
       },
@@ -399,6 +457,11 @@ export class AdminPage implements OnInit {
   get displayedUsers(): any[] {
     return this.usersView === 'all' ? this.filteredUsers : this.reportedUsers;
   }
+  get unresolvedMessagesCount(): number {
+    const unresolvedContact = this.contactMessages.filter((m) => !m.isResolved).length;
+    const unresolvedHelp = this.helpMessages.filter((m) => !m.isResolved).length;
+    return unresolvedContact + unresolvedHelp;
+  }
 
   setUsersView(view: 'all' | 'reported'): void {
     this.usersView = view;
@@ -423,12 +486,62 @@ export class AdminPage implements OnInit {
 
     return fallbackMessage;
   }
-  setMessagesView(view: 'contact' | 'help'): void {
+
+  setMessagesView(view: 'contact' | 'help' | 'history'): void {
     this.messagesView = view;
   }
 
+  setHistoryFilter(filter: 'all' | 'contact' | 'help'): void {
+    this.historyFilter = filter;
+  }
+
+  get unresolvedContactMessages(): any[] {
+    return this.contactMessages.filter((m) => !m.isResolved);
+  }
+
+  get unresolvedHelpMessages(): any[] {
+    return this.helpMessages.filter((m) => !m.isResolved);
+  }
+
+  get resolvedMessagesCount(): number {
+    const resolvedContact = this.contactMessages.filter((m) => m.isResolved).length;
+    const resolvedHelp = this.helpMessages.filter((m) => m.isResolved).length;
+    return resolvedContact + resolvedHelp;
+  }
+
   get displayedMessages(): any[] {
-    return this.messagesView === 'contact' ? this.contactMessages : this.helpMessages;
+    let source: any[];
+
+    if (this.messagesView === 'contact') {
+      source = this.unresolvedContactMessages;
+    } else if (this.messagesView === 'help') {
+      source = this.unresolvedHelpMessages;
+    } else {
+      const resolvedContact = this.contactMessages.filter((m) => m.isResolved);
+      const resolvedHelp = this.helpMessages.filter((m) => m.isResolved);
+
+      if (this.historyFilter === 'contact') {
+        source = resolvedContact;
+      } else if (this.historyFilter === 'help') {
+        source = resolvedHelp;
+      } else {
+        source = [...resolvedContact, ...resolvedHelp];
+      }
+    }
+
+    const term = this.messageSearchTerm.trim().toLowerCase();
+
+    if (!term) {
+      return source;
+    }
+
+    return source.filter(
+      (m) =>
+        m.name?.toLowerCase().includes(term) ||
+        m.email?.toLowerCase().includes(term) ||
+        m.message?.toLowerCase().includes(term) ||
+        m.issueType?.toLowerCase().includes(term),
+    );
   }
 
   loadMessages(): void {
@@ -436,6 +549,7 @@ export class AdminPage implements OnInit {
       this.contactMessages = data || [];
       this.cdr.detectChanges();
     });
+
     this.adminService.getHelpMessages().subscribe((data) => {
       this.helpMessages = data || [];
       this.cdr.detectChanges();
@@ -444,9 +558,19 @@ export class AdminPage implements OnInit {
 
   resolveMessage(msg: any): void {
     const reply = this.replyDrafts[msg.id] || '';
-    this.adminService.resolveMessage(msg.id, reply).subscribe(() => {
-      delete this.replyDrafts[msg.id];
-      this.loadMessages();
+    this.adminService.resolveMessage(msg.id, reply).subscribe({
+      next: () => {
+        delete this.replyDrafts[msg.id];
+        this.loadMessages();
+      },
+      error: (err) => console.error('Eroare la rezolvarea mesajului:', err),
     });
+  }
+  deleteMessage(id: number): void {
+    const confirmed = confirm('Ștergi definitiv acest mesaj?');
+    if (!confirmed) {
+      return;
+    }
+    this.adminService.deleteMessage(id).subscribe(() => this.loadMessages());
   }
 }

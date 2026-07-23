@@ -40,8 +40,15 @@ export class AuctionsPage implements OnInit {
   ) {}
 
   getCategoryName(item: AuctionItem): string {
-    if (!item || !item.Category) return '';
-    return typeof item.Category === 'string' ? item.Category : item.Category.name || '';
+    const category = (item?.Category ?? (item as any)?.category) as string | { name?: string; Name?: string } | undefined;
+
+    if (!category) { return ''; }
+
+    if (typeof category === 'string') {
+      return category.trim();
+    }
+
+    return String(category.name ?? category.Name ?? '').trim();
   }
 
   ngOnInit(): void {
@@ -62,12 +69,19 @@ export class AuctionsPage implements OnInit {
 
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
-        if (categories && categories.length > 0) {
-          const fetchedCatNames = categories.map((c) => c.name);
-          this.categories = Array.from(new Set([...this.categories, ...fetchedCatNames]));
-        }
+        this.categories = (categories || [])
+          .map((category) =>
+            String(category.name ?? (category as any).Name ?? '').trim(),
+          )
+          .filter((name) => name.length > 0)
+          .sort((a, b) => a.localeCompare(b));
+
+        this.applyFiltersAndSort();
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Eroare la încărcarea categoriilor', err),
+      error: (error) => {
+        console.error('Eroare la încărcarea categoriilor', error);
+      },
     });
   }
 
@@ -77,18 +91,11 @@ export class AuctionsPage implements OnInit {
 
     this.itemService.getActiveItems().subscribe({
       next: (items) => {
-        this.allItems = items;
-        // build category list from returned active items
-        const fromItems = [
-          ...new Set(items.filter((i) => i.Category?.name).map((i) => i.Category.name)),
-        ];
-        if (this.categories.length === 0) {
-          this.categories = fromItems;
-        }
+        this.allItems = items || [];
         this.applyFiltersAndSort();
         this.isLoading = false;
         this.cdr.detectChanges();
-        // Fetch wishlist only if logged in
+
         if (this.authService.isLoggedIn()) {
           this.userService.getWishlist(this.currentUserId).subscribe({
             next: (wishlistItems: any[]) => {
@@ -122,7 +129,9 @@ export class AuctionsPage implements OnInit {
     let result = [...this.allItems];
 
     if (this.selectedCategory) {
-      result = result.filter((i) => this.getCategoryName(i) === this.selectedCategory);
+      const selectedCategory = this.selectedCategory.trim().toLowerCase();
+
+      result = result.filter((item) => this.getCategoryName(item).toLowerCase() === selectedCategory);
     }
 
     if (this.searchText.trim()) {
@@ -189,17 +198,38 @@ export class AuctionsPage implements OnInit {
     }
   }
 
-  getRemainingTime(endDate: string | Date): string {
-    const diff = new Date(endDate).getTime() - new Date().getTime();
-    if (diff <= 0) return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
+ getRemainingTime(endDate: string | Date): string {
+  const diffMs = new Date(endDate).getTime() - Date.now();
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    if (days > 0) return `${days}d ${hours}h left`;
-    if (hours > 0) return `${hours}h ${mins}m left`;
-    return `${mins}m left`;
+  if (diffMs <= 0) {
+    return this.translate.instant('AUCTIONS_PAGE.TIME.ENDED');
   }
+
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (days > 0) {
+    return this.translate.instant(
+      'AUCTIONS_PAGE.TIME.DAYS_HOURS',
+      { days, hours }
+    );
+  }
+
+  if (hours > 0) {
+    return this.translate.instant(
+      'AUCTIONS_PAGE.TIME.HOURS_MINUTES',
+      { hours, minutes }
+    );
+  }
+
+  return this.translate.instant(
+    'AUCTIONS_PAGE.TIME.MINUTES_SECONDS',
+    { minutes, seconds }
+  );
+}
 
   getTimeUrgencyClass(endDate: Date): string {
     const diff = new Date(endDate).getTime() - new Date().getTime();

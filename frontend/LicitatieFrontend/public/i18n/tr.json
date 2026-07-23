@@ -1,61 +1,61 @@
 {
   "NAV": {
-    "HOME": "Ana sayfa",
-    "AUCTIONS": "Açık artırmalar",
+    "HOME": "Ana Sayfa",
+    "AUCTIONS": "Açık Artırmalar",
     "FORUM": "Forum",
     "CONTACT": "İletişim",
-    "LOGIN": "Giriş yap",
-    "REGISTER": "Kayıt ol",
-    "TOGGLE_MENU": "Gezinmeyi aç veya kapat",
-    "SELECT_LANGUAGE": "Dil seçin",
+    "LOGIN": "Giriş Yap",
+    "REGISTER": "Kayıt Ol",
+    "TOGGLE_MENU": "Gezinmeyi aç/kapat",
+    "SELECT_LANGUAGE": "Dil seç",
     "HELP": "Yardım",
     "ADD_AUCTION": "Açık artırma ekle"
   },
   "CONTACT": {
-    "TITLE": "Bize ulaşın",
-    "DESCRIPTION": "Sorularınız mı var? Ekibimiz size yardımcı olmaya hazır.",
+    "TITLE": "Bize Ulaşın",
+    "DESCRIPTION": "Sorunuz mu var? Ekibimiz size yardımcı olmaya hazır.",
     "EMAIL": "E-posta",
     "PHONE": "Telefon numarası",
-    "CALL_CENTER_HOURS": "Çağrı merkezi saatleri",
+    "CALL_CENTER_HOURS": "Çağrı Merkezi Saatleri",
     "SCHEDULE": "Pazartesi–Cuma, 09:00–17:00",
-    "FOLLOW_US": "Bizi takip edin",
-    "SOCIAL_DESCRIPTION": "Sosyal medyada bizimle bağlantıda kalın.", 
-     "FORM_TITLE": "Bize mesaj gönderin",
-  "FORM_FULL_NAME_LABEL": "Ad Soyad",
-  "FORM_FULL_NAME_PLACEHOLDER": "örn. Ahmet Yılmaz",
-  "FORM_FULL_NAME_REQUIRED": "Ad Soyad alanı zorunludur.",
-  "FORM_EMAIL_LABEL": "E-posta adresi",
-  "FORM_EMAIL_PLACEHOLDER": "örn. siz@example.com",
-  "FORM_EMAIL_REQUIRED": "E-posta adresi zorunludur.",
-  "FORM_EMAIL_INVALID": "Lütfen geçerli bir e-posta adresi girin.",
-  "FORM_ISSUE_TYPE_LABEL": "Sorun Türü",
-  "FORM_ISSUE_TYPE_REQUIRED": "Lütfen bir sorun türü seçin.",
-  "FORM_ISSUE_OPTION_GENERAL": "Genel Talep",
-  "FORM_ISSUE_OPTION_TECHNICAL": "Teknik Destek",
-  "FORM_ISSUE_OPTION_BILLING": "Faturalandırma / Ödeme",
-  "FORM_ISSUE_OPTION_LISTING": "İlan / Açık Artırma Sorunu",
-  "FORM_ISSUE_OPTION_ACCOUNT": "Hesap Yönetimi",
-  "FORM_ISSUE_OPTION_OTHER": "Diğer",
-  "FORM_MESSAGE_LABEL": "Sorununuzu açıklayın",
-  "FORM_MESSAGE_PLACEHOLDER": "Lütfen ayrıntıları belirtin...",
-  "FORM_MESSAGE_REQUIRED": "Mesaj alanı zorunludur.",
-  "FORM_MESSAGE_MIN_LENGTH": "Mesaj en az 10 karakter içermelidir.",
-  "FORM_SUBMIT": "Mesaj Gönder",
-  "FORM_SUCCESS_TITLE": "Mesaj gönderildi!",
-  "FORM_SUCCESS_MESSAGE": "Bizimle iletişime geçtiğiniz için teşekkür ederiz. En kısa sürede size geri dönüş yapacağız.",
-  "FORM_SEND_ANOTHER": "Başka bir mesaj gönder"
+    "FOLLOW_US": "Bizi Takip Edin",
+    "SOCIAL_DESCRIPTION": "Sosyal medyada bizimle bağlantıda kalın.",
+    "FORM_TITLE": "Bize mesaj gönderin",
+    "FORM_FULL_NAME_LABEL": "Ad Soyad",
+    "FORM_FULL_NAME_PLACEHOLDER": "örn. Ahmet Yılmaz",
+    "FORM_FULL_NAME_REQUIRED": "Ad soyad zorunludur.",
+    "FORM_EMAIL_LABEL": "E-posta Adresi",
+    "FORM_EMAIL_PLACEHOLDER": "örn. siz@ornek.com",
+    "FORM_EMAIL_REQUIRED": "E-posta zorunludur.",
+    "FORM_EMAIL_INVALID": "Lütfen geçerli bir e-posta adresi girin.",
+    "FORM_ISSUE_TYPE_LABEL": "Sorun Türü",
+    "FORM_ISSUE_TYPE_REQUIRED": "Lütfen bir sorun türü seçin.",
+    "FORM_ISSUE_OPTION_GENERAL": "Genel Soru",
+    "FORM_ISSUE_OPTION_TECHNICAL": "Teknik Destek",
+    "FORM_ISSUE_OPTION_BILLING": "Faturalandırma / Ödeme",
+    "FORM_ISSUE_OPTION_LISTING": "İlan / Açık Artırma Sorunu",
+    "FORM_ISSUE_OPTION_ACCOUNT": "Hesap Yönetimi",
+    "FORM_ISSUE_OPTION_OTHER": "Diğer",
+    "FORM_MESSAGE_LABEL": "Sorununuzu açıklayın",
+    "FORM_MESSAGE_PLACEHOLDER": "Lütfen ayrıntıları belirtin...",
+    "FORM_MESSAGE_REQUIRED": "Mesaj zorunludur.",
+    "FORM_MESSAGE_MIN_LENGTH": "Mesaj en az 10 karakter olmalıdır.",
+    "FORM_SUBMIT": "Mesaj Gönder",
+    "FORM_SUCCESS_TITLE": "Mesaj gönderildi!",
+    "FORM_SUCCESS_MESSAGE": "Bizimle iletişime geçtiğiniz için teşekkür ederiz. En kısa sürede size dönüş yapacağız.",
+    "FORM_SEND_ANOTHER": "Başka bir mesaj gönder"
   },
   "LOGIN": {
-    "TITLE": "Giriş yap",
+    "TITLE": "Giriş Yap",
     "EMAIL_LABEL": "E-posta",
     "EMAIL_PLACEHOLDER": "E-posta adresi",
-    "EMAIL_REQUIRED": "E-posta gereklidir",
+    "EMAIL_REQUIRED": "E-posta zorunludur",
     "EMAIL_INVALID": "Geçersiz e-posta biçimi",
     "PASSWORD_LABEL": "Şifre",
-    "PASSWORD_PLACEHOLDER": "Şifrenizi girin",
-    "PASSWORD_REQUIRED": "Şifre gereklidir",
+    "PASSWORD_PLACEHOLDER": "Şifreyi girin",
+    "PASSWORD_REQUIRED": "Şifre zorunludur",
     "PASSWORD_MIN_LENGTH": "Şifre en az 6 karakter olmalıdır",
-    "SUBMIT": "Giriş yap",
+    "SUBMIT": "Giriş Yap",
     "NO_ACCOUNT": "Hesabınız yok mu?",
     "REGISTER_HERE": "Buradan kayıt olun"
   },
@@ -63,25 +63,25 @@
     "TITLE": "Hesap oluştur",
     "USERNAME_LABEL": "Kullanıcı adı",
     "USERNAME_PLACEHOLDER": "Kullanıcı adı",
-    "USERNAME_REQUIRED": "Kullanıcı adı gereklidir.",
-    "FULL_NAME_LABEL": "Ad soyad",
+    "USERNAME_REQUIRED": "Kullanıcı adı zorunludur.",
+    "FULL_NAME_LABEL": "Ad Soyad",
     "FULL_NAME_PLACEHOLDER": "Ad soyad",
-    "FULL_NAME_REQUIRED": "Ad soyad gereklidir.",
+    "FULL_NAME_REQUIRED": "Ad soyad zorunludur.",
     "EMAIL_LABEL": "E-posta",
     "EMAIL_PLACEHOLDER": "E-posta",
-    "EMAIL_REQUIRED": "E-posta gereklidir.",
-    "EMAIL_INVALID": "Lütfen geçerli bir e-posta adresi girin.",
+    "EMAIL_REQUIRED": "E-posta zorunludur.",
+    "EMAIL_INVALID": "Lütfen geçerli bir e-posta girin.",
     "PASSWORD_LABEL": "Şifre",
     "PASSWORD_PLACEHOLDER": "Şifre",
-    "PASSWORD_REQUIRED": "Şifre gereklidir.",
+    "PASSWORD_REQUIRED": "Şifre zorunludur.",
     "PASSWORD_MIN_LENGTH": "Şifre en az 6 karakter olmalıdır.",
-    "CONFIRM_PASSWORD_LABEL": "Şifreyi onayla",
-    "CONFIRM_PASSWORD_PLACEHOLDER": "Şifreyi onaylayın",
+    "CONFIRM_PASSWORD_LABEL": "Şifreyi Onayla",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Şifreyi onayla",
     "CONFIRM_PASSWORD_REQUIRED": "Lütfen şifrenizi onaylayın.",
     "PASSWORDS_MISMATCH": "Şifreler eşleşmiyor.",
-    "PHONE_LABEL": "Telefon numarası",
-    "PHONE_PLACEHOLDER": "Telefon numarası (+40...)",
-    "PHONE_REQUIRED": "Telefon numarası gereklidir.",
+    "PHONE_LABEL": "Telefon Numarası",
+    "PHONE_PLACEHOLDER": "Telefon Numarası (+40...)",
+    "PHONE_REQUIRED": "Telefon numarası zorunludur.",
     "PHONE_INVALID": "Lütfen geçerli bir telefon numarası girin.",
     "SUBMIT": "Hesap oluştur",
     "ALREADY_HAVE_ACCOUNT": "Zaten bir hesabınız var mı?",
@@ -91,72 +91,174 @@
     "HERO": {
       "TITLE": "TEKLİF VER. KAZAN. TEKRARLA.",
       "TAG": "🔥 Her gün canlı açık artırmalar",
-      "DESCRIPTION": "En güvenli çevrim içi açık artırma platformu. Hızlıca satın ya da benzersiz fırsatlar yakalayın.",
-      "EXPLORE_AUCTIONS": "Açık artırmaları keşfet",
-      "START_SELLING": "Satışa başla",
+      "DESCRIPTION": "En güvenli çevrimiçi açık artırma platformu. Hızlı satın veya benzersiz fırsatlar yakalayın.",
+      "EXPLORE_AUCTIONS": "Açık Artırmaları Keşfet",
+      "START_SELLING": "Satışa Başla",
       "SEARCH_LABEL": "Ürün ve açık artırma ara...",
       "SEARCH_PLACEHOLDER": "Örnek: BMW, altın küpe"
     },
+    "ABOUT": {
+      "EYEBROW": "Hakkımızda",
+      "TITLE_START": "Biz",
+      "TITLE_END": "Kimiz",
+      "DESCRIPTION": "BidSphere, teklif vererek alım ve satımı basit, güvenli ve heyecan verici hâle getirmek için kurulmuş modern bir çevrimiçi açık artırma platformudur. Binlerce alıcı ve satıcıyı çok çeşitli kategorilerde herkes için şeffaf ve adil bir süreçle buluşturuyoruz.",
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Güvenli ve Güvenilir",
+          "DESCRIPTION": "Her işlem korunur; böylece güvenle teklif verebilirsiniz."
+        },
+        "REALTIME": {
+          "TITLE": "Gerçek Zamanlı Teklif",
+          "DESCRIPTION": "Fiyatların canlı olarak güncellenmesini izleyin ve kazanan anı kaçırmayın."
+        },
+        "COMMUNITY": {
+          "TITLE": "Büyüyen Topluluk",
+          "DESCRIPTION": "Her kategoride aktif binlerce alıcı ve satıcı."
+        }
+      }
+    },
     "CATEGORIES": {
       "EYEBROW": "Kategoriler",
-      "TITLE_START": "Kategorileri",
-      "TITLE_END": "keşfet",
+      "TITLE_START": "Keşfet",
+      "TITLE_END": "Kategoriler",
       "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Teknoloji",
-          "DESCRIPTION": "Son teknoloji cihazlar ve en yeni elektronik ürünler."
+        "ART": {
+          "NAME": "Sanat",
+          "DESCRIPTION": "Tablolar, heykeller ve koleksiyonluk sanat eserleri."
         },
-        "AUTO_MOTORS": {
-          "NAME": "Otomobil ve motosiklet",
-          "DESCRIPTION": "Otomobiller, motosikletler ve nadir parçalar."
+        "CLOTHING": {
+          "NAME": "Giyim",
+          "DESCRIPTION": "Giyim, ayakkabı ve moda aksesuarları."
         },
-        "ART_COLLECTIBLES": {
-          "NAME": "Sanat ve koleksiyon",
-          "DESCRIPTION": "Özel sanat eserleri ve koleksiyonlar."
+        "ELECTRONICS": {
+          "NAME": "Elektronik",
+          "DESCRIPTION": "Telefonlar, bilgisayarlar ve elektronik cihazlar."
+        },
+        "HOME_GARDEN": {
+          "NAME": "Ev ve Bahçe",
+          "DESCRIPTION": "Mobilyalar, dekorasyon ürünleri ve bahçe ürünleri."
+        },
+        "JEWELRY": {
+          "NAME": "Mücevher",
+          "DESCRIPTION": "Yüzükler, kolyeler, saatler ve değerli aksesuarlar."
+        },
+        "OTHERS": {
+          "NAME": "Diğerleri",
+          "DESCRIPTION": "Diğer kategorilerdeki ürünleri keşfedin."
         },
         "REAL_ESTATE": {
           "NAME": "Gayrimenkul",
-          "DESCRIPTION": "Seçkin mülkler ve arsalar."
+          "DESCRIPTION": "Evler, daireler, arsalar ve ticari mülkler."
+        },
+        "VEHICLES": {
+          "NAME": "Araçlar",
+          "DESCRIPTION": "Otomobiller, motosikletler ve diğer araçlar."
         }
       }
     },
     "AUCTIONS": {
-      "EYEBROW": "Pazar yeri",
+      "EYEBROW": "Pazar Yeri",
       "TITLE_START": "Aktif",
-      "TITLE_END": "açık artırmalar",
-      "PLACE_BID": "Teklif ver",
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW 7 Serisi, 2022, kusursuz durumda, tek sahipli."
-        },
-        "GOLD_EARRINGS": {
-          "TITLE": "Altın küpeler",
-          "DESCRIPTION": "Sertifikalı elmaslarla süslenmiş 18 ayar altın küpeler."
-        },
-        "PATEK_PHILIPPE": {
-          "TITLE": "Patek Philippe saat",
-          "DESCRIPTION": "Kutusu ve sertifikasıyla birlikte sınırlı üretim koleksiyon saati."
-        },
-        "VILLA": {
-          "TITLE": "Villa",
-          "DESCRIPTION": "Havuzlu, beş yatak odalı ve panoramik manzaralı lüks villa."
-        }
+      "TITLE_END": "Açık Artırmalar",
+      "PLACE_BID": "Teklif Ver",
+      "EMPTY": "Şu anda yakında sona erecek açık artırma yok — kısa süre sonra tekrar kontrol edin.",
+      "COUNTDOWN": {
+        "ENDED": "Sona Erdi",
+        "DAYS_HOURS": "{{days}}g {{hours}}sa kaldı",
+        "HOURS_MINUTES": "{{hours}}sa {{minutes}}dk kaldı",
+        "MINUTES_SECONDS": "{{minutes}}dk {{seconds}}sn kaldı"
       }
     }
   },
   "HELP": {
-    "TITLE": "Yardım merkezi",
+    "TITLE": "Yardım Merkezi",
     "INFORMATION": "Hızlı yanıtlar bulun, bize telefonla ulaşın veya yapay zekâ asistanımızla sohbet edin.",
-    "FAQ": "❓ Sıkça sorulan sorular",
-    "SUPPORT": "📞 Hızlı telefon desteği",
+    "FAQ": "❓ Sık Sorulan Sorular",
+    "SUPPORT": "📞 Hızlı Telefon Desteği",
     "PROGRAM": "Pazartesi - Cuma: 09:00 - 18:00",
-    "FORM": "📝 Destek talebi oluştur",
-    "REQUEST": "Talep gönder",
-    "ASSISTANT": "Canlı sanal asistan"
+    "FORM": "📝 Destek Talebi Aç",
+    "REQUEST": "Talep Gönder",
+    "ASSISTANT": "Canlı Sanal Asistan",
+    "ISSUE_TYPE_PLACEHOLDER": "Sorun türünü seçin",
+    "CHAT_PLACEHOLDER": "Mesajınızı yazın...",
+    "GUEST": {
+      "MESSAGE": "Destek talebi açmak ve teknik destek almak için hesabınıza giriş yapmanız gerekir.",
+      "LOGIN": "Giriş Yap",
+      "REGISTER": "Hesap Oluştur"
+    },
+    "FAQ_CATEGORIES": {
+      "AUCTIONS": {
+        "TITLE": "🚨 Açık Artırmalar ve Teklifler",
+        "QUESTIONS": {
+          "PLACE_BID": {
+            "QUESTION": "Bir açık artırmaya nasıl teklif veririm?",
+            "ANSWER": "İstediğiniz ürünün sayfasına gidin ve tutarınızı \"Şimdi teklif ver\" alanına girin. Teklifiniz mevcut fiyattan yüksek olmalıdır."
+          },
+          "CANCEL_BID": {
+            "QUESTION": "Teklif verdikten sonra iptal edebilir miyim?",
+            "ANSWER": "Teklifler verildikten sonra bağlayıcıdır ve genellikle iptal edilemez. Onaylamadan önce tutarınızdan emin olun."
+          },
+          "WIN_AUCTION": {
+            "QUESTION": "Bir açık artırmayı kazandığımı nasıl anlarım?",
+            "ANSWER": "Açık artırma sona erdiğinde ve en yüksek teklif sizde olduğunda e-posta ve uygulama içi bildirim alırsınız."
+          }
+        }
+      },
+      "ACCOUNT": {
+        "TITLE": "👤 Hesap ve Kimlik Doğrulama",
+        "QUESTIONS": {
+          "CREATE_ACCOUNT": {
+            "QUESTION": "Nasıl hesap oluştururum?",
+            "ANSWER": "Üst menüdeki \"Kayıt Ol\" seçeneğine tıklayın, kullanıcı adı, e-posta ve şifrenizi girin, ardından hesabınızı etkinleştirmek için e-posta adresinizi onaylayın."
+          },
+          "FORGOT_PASSWORD": {
+            "QUESTION": "Şifremi unuttum. Ne yapmalıyım?",
+            "ANSWER": "Giriş sayfasında \"Şifrenizi mi unuttunuz?\" seçeneğine tıklayın ve kayıtlı e-posta adresinize gönderilen talimatları izleyin."
+          }
+        }
+      },
+      "DELIVERY": {
+        "TITLE": "📦 Teslimat ve Ödemeler",
+        "QUESTIONS": {
+          "ITEM_DELIVERY": {
+            "QUESTION": "Kazandıktan sonra ürün nasıl teslim edilir?",
+            "ANSWER": "Ödeme onaylandıktan sonra satıcı kargo veya teslim alma işlemini düzenler. Teslimat ayrıntıları hesap mesajlarınız üzerinden paylaşılır."
+          },
+          "NOT_DELIVERED": {
+            "QUESTION": "Satıcı ürünü teslim etmezse ne olur?",
+            "ANSWER": "Aşağıdaki formu kullanarak hemen destek ekibimizle iletişime geçin. Tüm anlaşmazlıkları inceliyor ve teslimat yapmayan satıcıları askıya alabiliyoruz."
+          },
+          "SHIPPING_COST": {
+            "QUESTION": "Kargo ücretini kim öder?",
+            "ANSWER": "Satıcı ücretsiz kargo sunmadığı sürece kargo ücretini alıcı öder."
+          },
+          "PAYOUT": {
+            "QUESTION": "Ödememi ne zaman alırım?",
+            "ANSWER": "Ödemeler, alıcının ödemesi onaylandıktan sonra 3–5 iş günü içinde banka hesabınıza aktarılır."
+          }
+        }
+      },
+      "SELLING": {
+        "TITLE": "🏷️ Satış",
+        "QUESTIONS": {
+          "LIST_ITEM": {
+            "QUESTION": "Bir ürünü satışa nasıl çıkarırım?",
+            "ANSWER": "\"Profilim\" bölümüne gidin ve \"Açık Artırma Ekle\" seçeneğine tıklayın. Ayrıntıları doldurun ve yönetici onayını bekleyin."
+          },
+          "EDIT_AUCTION": {
+            "QUESTION": "Bir açık artırmayı yayımladıktan sonra düzenleyebilir veya kaldırabilir miyim?",
+            "ANSWER": "Bir açık artırmayı yalnızca ilk teklifini almadan önce düzenleyebilir veya kaldırabilirsiniz. Daha sonra, teklif verenleri korumak için değişiklikler kilitlenir."
+          },
+          "NOT_SOLD": {
+            "QUESTION": "Ürünüm satılmazsa ne olur?",
+            "ANSWER": "Rezerv fiyatını düşürüp ürünü yeniden listeleyebilir veya en yüksek teklifi verene sunabilirsiniz."
+          }
+        }
+      }
+    }
   },
   "AUCTIONS_PAGE": {
-    "TITLE": "Aktif açık artırmalar",
+    "TITLE": "Aktif Açık Artırmalar",
     "DESCRIPTION": "Benzersiz ürünleri keşfedin ve gerçek zamanlı teklif verin",
     "SEARCH_PLACEHOLDER": "Ada göre ara...",
     "ALL_CATEGORIES": "Tüm kategoriler",
@@ -166,28 +268,54 @@
       "PRICE_HIGH_LOW": "Fiyat: yüksekten düşüğe",
       "NEWEST": "En yeni"
     },
-    "ADD_ITEM": "Ürün ekle",
+    "ADD_ITEM": "Ürün Ekle",
     "RESULT": {
       "ONE": "açık artırma bulundu",
       "MANY": "açık artırma bulundu"
     },
-    "CURRENT_PRICE": "Güncel fiyat",
+    "CURRENT_PRICE": "Mevcut fiyat",
+    "POSTED_BY": "Yayımlayan",
+    "YOU": "Siz",
     "EMPTY": {
       "TITLE": "Ürün bulunamadı",
-      "DESCRIPTION": "Şu anda aramanızla eşleşen aktif bir açık artırma bulunmuyor."
+      "DESCRIPTION": "Şu anda aramanızla eşleşen aktif açık artırma yok."
     },
     "TIME": {
       "ENDED": "Açık artırma sona erdi",
       "LEFT": "kaldı"
     }
   },
+  "SEARCH_PAGE": {
+    "TITLE": "Arama Sonuçları",
+    "DESCRIPTION_WITH_QUERY": "\"{{query}}\" için sonuçlar gösteriliyor",
+    "DESCRIPTION_EMPTY": "BidSphere genelinde açık artırma, kullanıcı veya forum gönderisi arayın",
+    "SEARCH_PLACEHOLDER": "Açık artırma, kullanıcı veya forum gönderisi ara...",
+    "LOADING": "Sonuçlar yükleniyor...",
+    "TABS": {
+      "AUCTIONS": "Açık Artırmalar",
+      "USERS": "Kullanıcılar",
+      "FORUM": "Forum"
+    },
+    "AUCTIONS_EMPTY": {
+      "TITLE": "Açık artırma bulunamadı",
+      "DESCRIPTION": "Aramanızla eşleşen açık artırma yok."
+    },
+    "USERS_EMPTY": {
+      "TITLE": "Kullanıcı bulunamadı",
+      "DESCRIPTION": "Aramanızla eşleşen kullanıcı yok."
+    },
+    "FORUM_EMPTY": {
+      "TITLE": "Forum gönderisi bulunamadı",
+      "DESCRIPTION": "Aramanızla eşleşen tartışma yok."
+    }
+  },
   "ADD_ITEM_PAGE": {
-    "BADGE": "🔨 BidSphere'de satış yap",
-    "TITLE": "Yeni açık artırma ürünü ekle",
-    "DESCRIPTION": "Ürününüzü açık artırmaya yayımlamak için aşağıdaki bilgileri doldurun.",
+    "BADGE": "🔨 BidSphere'de Satış Yap",
+    "TITLE": "Yeni Açık Artırma Ürünü Ekle",
+    "DESCRIPTION": "Ürününüzü açık artırmada yayımlamak için aşağıdaki bilgileri doldurun.",
     "FIELDS": {
       "NAME": "Ürün adı *",
-      "NAME_PLACEHOLDER": "örn. klasik bisiklet",
+      "NAME_PLACEHOLDER": "örn. vintage bisiklet",
       "START_PRICE": "Başlangıç fiyatı (RON) *",
       "DURATION": "Açık artırma süresi (gün) *",
       "CATEGORY": "Kategori *",
@@ -199,38 +327,38 @@
     },
     "IMAGE": {
       "TITLE": "Ürün fotoğrafı",
-      "UPLOAD": "Bir resim yüklemek için tıklayın",
+      "UPLOAD": "Görsel yüklemek için tıklayın",
       "DETAILS": "JPG, PNG veya WEBP, en fazla 5 MB",
       "REMOVE": "Kaldır"
     },
     "BUTTONS": {
       "CANCEL": "İptal",
-      "PUBLISH": "Ürünü yayımla",
+      "PUBLISH": "Ürünü Yayımla",
       "PUBLISHING": "Yayımlanıyor..."
     },
     "VALIDATION": {
-      "NAME_REQUIRED": "Ad gereklidir.",
+      "NAME_REQUIRED": "Ad zorunludur.",
       "NAME_MIN": "Ad en az 3 karakter olmalıdır.",
-      "PRICE_REQUIRED": "Başlangıç fiyatı gereklidir.",
+      "PRICE_REQUIRED": "Başlangıç fiyatı zorunludur.",
       "PRICE_MIN": "Fiyat 0'dan büyük olmalıdır.",
       "DURATION": "Süre 1 ile 30 gün arasında olmalıdır.",
       "CATEGORY": "Lütfen bir kategori seçin.",
-      "LOCATION": "Konum gereklidir.",
-      "IMAGE_TYPE": "Yalnızca JPG, PNG veya WEBP resimlerine izin verilir.",
-      "IMAGE_SIZE": "Resim 5 MB'den küçük olmalıdır."
+      "LOCATION": "Konum zorunludur.",
+      "IMAGE_TYPE": "Yalnızca JPG, PNG veya WEBP görsellerine izin verilir.",
+      "IMAGE_SIZE": "Görsel 5 MB'den küçük olmalıdır."
     },
     "MESSAGES": {
-      "SUCCESS": "Ürün açık artırmaya başarıyla yayımlandı!",
-      "SUCCESS_LOCAL": "Ürün açık artırmaya başarıyla yayımlandı (yerel olarak kaydedildi — backend henüz hazır değil)."
+      "SUCCESS": "Ürün açık artırmada başarıyla yayımlandı!",
+      "SUCCESS_LOCAL": "Ürün açık artırmada başarıyla yayımlandı (yerel olarak kaydedildi - backend hazır değil)."
     }
   },
   "FOOTER": {
     "ABOUT_TITLE": "Hakkımızda",
-    "ABOUT_TEXT_1": "BidSphere, teklif vererek alım satımı basit, güvenli ve heyecanlı hâle getirmek için tasarlanmış modern bir çevrim içi açık artırma platformudur.",
-    "ABOUT_TEXT_2": "Çok çeşitli kategorilerde binlerce alıcı ve satıcıyı buluşturuyor, herkes için şeffaf ve adil bir teklif süreci sunuyoruz. İster iyi bir fırsat arıyor olun ister doğru alıcıya satış yapmak isteyin, BidSphere güvenle teklif vermeniz için gereken araçları ve güveni sağlar.",
+    "ABOUT_TEXT_1": "BidSphere, teklif vererek alım ve satımı basit, güvenli ve heyecan verici hâle getirmek için tasarlanmış modern bir çevrimiçi açık artırma platformudur.",
+    "ABOUT_TEXT_2": "Binlerce alıcı ve satıcıyı çok çeşitli kategorilerde buluşturuyor ve herkes için şeffaf, adil bir teklif süreci sunuyoruz. İster iyi bir fırsat arayın ister doğru alıcıya satış yapmak isteyin, BidSphere güvenle teklif vermeniz için gereken araçları ve güveni sağlar.",
     "LINKS": "Bağlantılar",
-    "HOME": "Ana sayfa",
-    "SERVICES": "Açık artırmalar",
+    "HOME": "Ana Sayfa",
+    "SERVICES": "Açık Artırmalar",
     "CONTACT": "İletişim",
     "HELP": "Yardım",
     "FORUM": "Forum",
@@ -244,73 +372,128 @@
     "MESSAGE": "Aradığınız sayfa mevcut değil veya taşınmış.",
     "BUTTON": "ANA SAYFAYA DÖN"
   },
-  "FORUM": {
-    "TITLE": "Forum tartışmaları",
-    "DESCRIPTION": "Güncel tartışmalara göz atın ve diğer kullanıcılarla yapılan sohbetlere katılın.",
-    "START_DISCUSSION": "Tartışma başlat",
-    "LOGIN_TO_START": "Tartışma başlatmak için giriş yapın",
+  "FORUM_PAGE": {
+    "HEADER": {
+      "TITLE": "Forum Tartışmaları",
+      "DESCRIPTION": "Güncel tartışmalara göz atın ve diğer kullanıcılarla sohbetlere katılın."
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Tartışmalarda ara...",
+      "ARIA_LABEL": "Tartışmalarda ara"
+    },
+    "ACTIONS": {
+      "START_DISCUSSION": "Tartışma başlat",
+      "LOGIN_TO_START": "Tartışma başlatmak için giriş yapın",
+      "TRY_AGAIN": "Tekrar dene"
+    },
     "SORT": {
       "ARIA_LABEL": "Tartışmaları sırala",
-      "LATEST": "Önce en yeniler",
-      "OLDEST": "Önce en eskiler",
+      "LATEST": "En yeniler önce",
+      "OLDEST": "En eskiler önce",
       "MOST_COMMENTED": "En çok yorumlanan"
     },
-    "DISCUSSION": "tartışma",
-    "DISCUSSIONS": "tartışma",
+    "COUNT": {
+      "DISCUSSION": "tartışma",
+      "DISCUSSIONS": "tartışma",
+      "COMMENT": "yorum",
+      "COMMENTS": "yorum"
+    },
     "LOADING": {
       "TITLE": "Tartışmalar yükleniyor"
     },
     "ERROR": {
-      "TITLE": "Tartışmalar yüklenemedi",
-      "RETRY": "Tekrar dene"
+      "TITLE": "Tartışmalar yüklenemedi"
     },
-    "POSTED_BY": "Yayımlayan",
-    "COMMENT": "yorum",
-    "COMMENTS": "yorum",
+    "POST": {
+      "POSTED_BY": "Yayımlayan"
+    },
     "EMPTY": {
       "TITLE": "Kullanılabilir tartışma yok",
-      "MESSAGE": "Şu anda forumda herhangi bir tartışma bulunmuyor."
+      "DESCRIPTION": "Forumda şu anda hiç tartışma yok."
+    },
+    "PAGINATION": {
+      "ARIA_LABEL": "Sayfalama",
+      "PREVIOUS": "Önceki",
+      "NEXT": "Sonraki"
     }
   },
   "NOTIFICATIONS": {
     "TRUE": "Bildirimler",
-    "FALSE": "Henüz bildirim yok."
+    "FALSE": "Henüz bildirim yok.",
+    "OPEN_ARIA": "Bildirimleri aç",
+    "DO_NOT_DISTURB": "Rahatsız etmeyin",
+    "LOADING": "Bildirimler yükleniyor...",
+    "ACTIONS_ARIA": "Bildirim işlemleri",
+    "MARKING_ALL_READ": "Okundu olarak işaretleniyor...",
+    "MARK_ALL_READ": "Tümünü okundu olarak işaretle",
+    "DELETE": "Bildirimi sil",
+    "TYPES": {
+      "AuctionApproved": "\"{{itemName}}\" açık artırmanız onaylandı ve artık herkese açık!",
+      "AuctionRejected": "\"{{itemName}}\" açık artırmanız bir yönetici tarafından reddedildi.",
+      "SupportReply": "Bir yönetici {{date}} tarihli mesajınıza yanıt verdi: {{reply}}"
+    }
   },
   "AUCTION_ITEM_PAGE": {
-    "HEADER_BADGE": "🏷️ Açık artırma ayrıntıları",
+    "HEADER_BADGE": "🏷️ Açık Artırma Ayrıntıları",
     "INFO": {
-      "CURRENT_PRICE": "Güncel fiyat",
-      "START_PRICE": "Başlangıç fiyatı",
+      "CURRENT_PRICE": "Mevcut Fiyat",
+      "START_PRICE": "Başlangıç Fiyatı",
       "CATEGORY": "Kategori",
       "LOCATION": "Konum",
-      "STARTS_AT": "Başlangıç",
-      "OWNER": "Sahibi",
+      "STARTS_AT": "Başlangıç Zamanı",
+      "OWNER": "Sahip",
       "ENDS": "Bitiş"
     },
     "BID": {
-      "TITLE": "Teklifinizi verin",
+      "TITLE": "Teklifinizi Verin",
       "PLACEHOLDER": "Teklif tutarını girin",
-      "BUTTON": "🔨 Teklif ver",
+      "BUTTON": "🔨 Teklif Ver",
       "MINIMUM": "Minimum teklif:",
       "LOGIN_TEXT": "Bu ürüne teklif vermek için giriş yapın.",
-      "LOGIN_BUTTON": "Teklif vermek için giriş yap"
+      "LOGIN_BUTTON": "Teklif Vermek İçin Giriş Yap"
     },
     "WISHLIST": {
-      "ADD": "🤍 İstek listesine ekle",
-      "ADDED": "❤️ İstek listesinde"
+      "ADD": "İstek Listesine Ekle",
+      "ADDED": "İstek Listesinde",
+      "TOAST_ADDED": "Ürün istek listenize eklendi.",
+      "TOAST_REMOVED": "Ürün istek listenizden kaldırıldı."
+    },
+    "ACTIONS": {
+      "REPORT_ITEM": "Ürünü Bildir",
+      "ITEM_REPORTED": "Ürün Bildirildi"
+    },
+    "REPORT": {
+      "TITLE": "Açık Artırmayı Bildir",
+      "DESCRIPTION": "BidSphere'i güvenli tutmamıza yardımcı olun. Bu açık artırmayı bildirmek için bir neden seçin:",
+      "REASON_LABEL": "Neden",
+      "REASONS": {
+        "INAPPROPRIATE_CONTENT": "Uygunsuz İçerik",
+        "MISLEADING_DESCRIPTION": "Yanıltıcı Açıklama",
+        "FAKE_ITEM": "Sahte veya Taklit Ürün",
+        "SUSPICIOUS_BIDDING": "Şüpheli Teklif Etkinliği",
+        "OTHER": "Diğer"
+      },
+      "DETAILS_LABEL": "Ek Ayrıntılar (İsteğe Bağlı)",
+      "DETAILS_PLACEHOLDER": "Sorunu açıklayın...",
+      "CANCEL": "İptal",
+      "SUBMIT": "Bildirimi Gönder",
+      "TOAST": {
+        "SUCCESS": "Açık artırma başarıyla bildirildi.",
+        "ERROR": "Açık artırma bildirilemedi."
+      }
     },
     "DESCRIPTION": {
-      "TITLE": "Ürün açıklaması"
+      "TITLE": "Ürün Açıklaması"
     },
     "STATUS": {
       "ACTIVE": "Aktif",
-      "ENDED": "Sona erdi",
+      "ENDED": "Sona Erdi",
       "PENDING": "Beklemede"
     },
     "MESSAGES": {
       "AUCTION_ENDED": "Açık artırma sona erdi.",
-      "BID_HIGHER_CURRENT": "Teklif, güncel fiyattan daha yüksek olmalıdır.",
-      "BID_HIGHER_MINIMUM": "Teklif, minimum fiyattan daha yüksek olmalıdır."
+      "BID_HIGHER_CURRENT": "Teklif mevcut fiyattan yüksek olmalıdır.",
+      "BID_HIGHER_MINIMUM": "Teklif minimum fiyattan yüksek olmalıdır."
     },
     "COUNTDOWN": {
       "DAYS": "g",
@@ -321,8 +504,8 @@
   },
   "REVIEWS": {
     "TITLE": "Değerlendirmeler",
-    "REVIEWER_ID": "Değerlendiren kullanıcı kimliği",
-    "REVIEWED_USER_ID": "Değerlendirilen kullanıcı kimliği",
+    "REVIEWER_ID": "Değerlendiren Kimliği",
+    "REVIEWED_USER_ID": "Değerlendirilen Kullanıcı Kimliği",
     "RATING": "Puan (0–5)",
     "RATING_ERROR": "Puan 0 ile 5 arasında olmalıdır.",
     "COMMENT": "Yorum",
@@ -341,29 +524,60 @@
     "LOGOUT": "Çıkış yap"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Tartışmalara dön",
-    "LOADING_DISCUSSION_TITLE": "Tartışma yükleniyor",
-    "LOADING_DISCUSSION_MESSAGE": "Tartışma yükleniyor.",
-    "LOAD_DISCUSSION_ERROR": "Tartışma yüklenemedi",
-    "TRY_AGAIN": "Tekrar dene",
-    "DELETE_POST": "Sil",
-    "POSTED_BY": "Yayımlayan",
-    "DISCUSSION": "Tartışma",
-    "COMMENT": "yorum",
-    "COMMENTS": "yorum",
-    "ADD_COMMENT": "Yorum ekle",
-    "COMMENT_PLACEHOLDER": "Yorumunuzu buraya yazın...",
-    "COMMENT_REQUIRED": "Yorum gereklidir.",
-    "COMMENT_MIN_LENGTH": "Yorum en az 2 karakter olmalıdır.",
-    "COMMENT_MAX_LENGTH": "Yorum 1000 karakteri aşamaz.",
-    "PUBLISHING": "Yayımlanıyor...",
-    "PUBLISH_COMMENT": "Yorumu yayımla",
-    "LOGIN_REQUIRED": "Yorum yayımlamak için giriş yapmanız gerekir.",
-    "LOGIN": "Giriş yap",
-    "LOADING_COMMENTS": "Yorumlar yükleniyor",
-    "LOAD_COMMENTS_ERROR": "Yorumlar yüklenemedi",
-    "DELETE_COMMENT": "Sil",
-    "NO_COMMENTS": "Henüz yorum yok"
+    "BACK": "Tartışmalara dön",
+    "POST": {
+      "LOADING_TITLE": "Tartışma yükleniyor",
+      "LOADING_MESSAGE": "Tartışma yükleniyor.",
+      "ERROR_TITLE": "Tartışma yüklenemedi",
+      "POSTED_BY": "Yayımlayan"
+    },
+    "ACTIONS": {
+      "REPORT": "Bildir",
+      "EDIT": "Düzenle",
+      "DELETE": "Sil",
+      "CANCEL": "İptal",
+      "SAVE": "Kaydet",
+      "RETRY": "Tekrar dene"
+    },
+    "EDIT_POST": {
+      "TITLE_LABEL": "Başlık",
+      "TITLE_VALIDATION": "Başlık 3 ile 150 karakter arasında olmalıdır.",
+      "DESCRIPTION_LABEL": "Açıklama",
+      "DESCRIPTION_VALIDATION": "Açıklama 10 ile 5000 karakter arasında olmalıdır."
+    },
+    "COMMENTS": {
+      "TITLE": "Tartışma",
+      "COMMENT": "yorum",
+      "COMMENTS": "yorum",
+      "ADD_LABEL": "Yorum ekle",
+      "PLACEHOLDER": "Yorumunuzu buraya yazın...",
+      "VALIDATION": {
+        "REQUIRED": "Yorum zorunludur.",
+        "MIN_LENGTH": "Yorum en az 2 karakter içermelidir.",
+        "MAX_LENGTH": "Yorum 1000 karakteri aşamaz."
+      },
+      "PUBLISHING": "Yayımlanıyor...",
+      "PUBLISH": "Yorumu yayımla",
+      "LOGIN_REQUIRED": "Yorum göndermek için giriş yapmanız gerekir.",
+      "LOGIN": "Giriş yap",
+      "LOADING": "Yorumlar yükleniyor",
+      "ERROR": "Yorumlar yüklenemedi",
+      "EMPTY": "Henüz yorum yok"
+    },
+    "REPORT": {
+      "TITLE": "Gönderiyi bildir",
+      "DESCRIPTION": "Bu tartışmayı bildirme nedenini seçin:",
+      "CANCEL": "İptal",
+      "SUBMITTING": "Gönderiliyor...",
+      "SUBMIT": "Bildirimi gönder",
+      "REASONS": {
+        "SPAM": "Spam",
+        "INAPPROPRIATE_CONTENT": "Uygunsuz içerik",
+        "HARASSMENT": "Taciz veya kötüye kullanım içeren davranış",
+        "MISLEADING_INFORMATION": "Yanıltıcı bilgi",
+        "OTHER": "Diğer"
+      }
+    }
   },
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Tartışmalara dön",
@@ -371,140 +585,135 @@
     "SUBTITLE": "Yeni bir tartışma oluşturun ve diğer forum kullanıcılarıyla paylaşın.",
     "TITLE_LABEL": "Başlık",
     "TITLE_PLACEHOLDER": "Açık bir tartışma başlığı girin",
-    "TITLE_REQUIRED": "Başlık gereklidir.",
+    "TITLE_REQUIRED": "Başlık zorunludur.",
     "TITLE_WHITESPACE": "Başlık yalnızca boşluklardan oluşamaz.",
-    "TITLE_MIN_LENGTH": "Başlık en az 3 karakter olmalıdır.",
+    "TITLE_MIN_LENGTH": "Başlık en az 3 karakter içermelidir.",
     "TITLE_MAX_LENGTH": "Başlık 150 karakteri aşamaz.",
     "DESCRIPTION_LABEL": "Açıklama",
     "DESCRIPTION_PLACEHOLDER": "Tartışmak istediğiniz konuyu açıklayın...",
-    "DESCRIPTION_REQUIRED": "Açıklama gereklidir.",
+    "DESCRIPTION_REQUIRED": "Açıklama zorunludur.",
     "DESCRIPTION_WHITESPACE": "Açıklama yalnızca boşluklardan oluşamaz.",
-    "DESCRIPTION_MIN_LENGTH": "Açıklama en az 10 karakter olmalıdır.",
+    "DESCRIPTION_MIN_LENGTH": "Açıklama en az 10 karakter içermelidir.",
     "DESCRIPTION_MAX_LENGTH": "Açıklama 5000 karakteri aşamaz.",
     "CREATE_ERROR": "Tartışma oluşturulamadı",
     "CANCEL": "İptal",
     "CREATING": "Tartışma oluşturuluyor...",
     "SUBMIT": "Tartışma başlat"
-  }, 
+  },
   "PROFILE_PAGE": {
-  "PROFILE": {
-    "USERNAME_NOT_SET": "@username ayarlanmamış",
-    "NAME_NOT_SET": "İsim ayarlanmamış",
-    "EMAIL_NOT_SET": "E-posta ayarlanmamış",
-    "AVERAGE_SCORE": "Ortalama Puan"
+    "PROFILE": {
+      "USERNAME_NOT_SET": "@kullanıcı adı ayarlanmamış",
+      "NAME_NOT_SET": "Ad ayarlanmamış",
+      "EMAIL_NOT_SET": "E-posta ayarlanmamış",
+      "AVERAGE_SCORE": "Ortalama Puan"
+    },
+    "BUTTONS": {
+      "EDIT_PROFILE": "Profili Düzenle",
+      "LOG_OUT": "Çıkış Yap",
+      "ADD_ITEM": "Yeni Ürün Ekle",
+      "CHANGE_PHOTO": "Fotoğrafı Değiştir",
+      "HIDE_PASSWORD": "Şifre Ayarlarını Gizle",
+      "CHANGE_PASSWORD": "Şifreyi Değiştir",
+      "UPDATE_PASSWORD": "Şifreyi Güncelle",
+      "CANCEL": "İptal",
+      "SAVE": "Değişiklikleri Kaydet"
+    },
+    "THEME": {
+      "TITLE": "Temayı Özelleştir",
+      "DESCRIPTION": "Ruh hâlinize uygun bir görsel stil seçin.",
+      "LIGHT": "Açık",
+      "SUNSET": "Gün Batımı",
+      "OCEAN": "Okyanus"
+    },
+    "SELL": {
+      "TITLE": "Yeni Bir Ürün Sat",
+      "DESCRIPTION": "Bir şey listelemeye hazır mısınız?"
+    },
+    "SECTIONS": {
+      "ACTIVE_SALES": "Aktif Satışlarım",
+      "WON_ITEMS": "Kazanılan Ürünler",
+      "WISHLIST": "İstek Listem",
+      "REVIEWS": "Alınan Değerlendirmeler"
+    },
+    "EMPTY": {
+      "ACTIVE_SALES": "Henüz ürün listelenmedi.",
+      "WON_ITEMS": "Henüz ürün kazanılmadı.",
+      "WISHLIST": "İstek listenizde henüz ürün yok.",
+      "REVIEWS": "Henüz değerlendirme alınmadı."
+    },
+    "EDIT": {
+      "TITLE": "Profili Düzenle",
+      "USERNAME": "Kullanıcı adı",
+      "FULL_NAME": "Ad Soyad",
+      "EMAIL": "E-posta",
+      "USERNAME_PLACEHOLDER": "örn. ahmet_yilmaz",
+      "FULL_NAME_PLACEHOLDER": "örn. Ahmet Yılmaz",
+      "EMAIL_PLACEHOLDER": "örn. ahmet@email.com"
+    },
+    "PASSWORD": {
+      "CURRENT": "Mevcut Şifre",
+      "NEW": "Yeni Şifre",
+      "CONFIRM": "Şifreyi Onayla",
+      "CURRENT_PLACEHOLDER": "Mevcut şifreyi girin",
+      "NEW_PLACEHOLDER": "Yeni şifreyi girin",
+      "CONFIRM_PLACEHOLDER": "Yeni şifreyi onaylayın",
+      "REQUIRED": "Tüm alanlar zorunludur.",
+      "NOT_MATCH": "Yeni şifre ve onayı eşleşmiyor.",
+      "SUCCESS": "Şifre başarıyla güncellendi!",
+      "ERROR": "Şifre güncellenirken hata oluştu. Lütfen mevcut şifrenizi kontrol edin."
+    },
+    "STATUS": {
+      "ACTIVE": "Aktif",
+      "ADDED": "Eklendi",
+      "WON": "Kazanıldı"
+    },
+    "DEFAULTS": {
+      "USER": "Kullanıcı"
+    },
+    "ERRORS": {
+      "LOAD_CATEGORIES": "Kategoriler yüklenirken hata oluştu.",
+      "LOAD_ITEMS": "Ürünler yüklenirken hata oluştu.",
+      "LOAD_REVIEWS": "Değerlendirmeler yüklenirken hata oluştu."
+    },
+    "MESSAGES": {
+      "PROFILE_UPDATED": "Profil başarıyla güncellendi."
+    }
   },
-
-  "BUTTONS": {
-    "EDIT_PROFILE": "Profili Düzenle",
-    "LOG_OUT": "Çıkış Yap",
-    "ADD_ITEM": "Yeni Ürün Ekle",
-    "CHANGE_PHOTO": "Fotoğrafı Değiştir",
-    "HIDE_PASSWORD": "Şifre Ayarlarını Gizle",
-    "CHANGE_PASSWORD": "Şifreyi Değiştir",
-    "UPDATE_PASSWORD": "Şifreyi Güncelle",
-    "CANCEL": "İptal",
-    "SAVE": "Değişiklikleri Kaydet"
-  },
-
-  "THEME": {
-    "TITLE": "Temayı Özelleştir",
-    "DESCRIPTION": "Ruh halinize uygun bir görsel stil seçin.",
-    "LIGHT": "Açık",
-    "SUNSET": "Gün Batımı",
-    "OCEAN": "Okyanus"
-  },
-
-  "SELL": {
-    "TITLE": "Yeni Ürün Sat",
-    "DESCRIPTION": "Bir şey listelemeye hazır mısınız?"
-  },
-
-  "SECTIONS": {
-    "ACTIVE_SALES": "Aktif Satışlarım",
-    "WON_ITEMS": "Kazanılan Ürünler",
-    "WISHLIST": "İstek Listem",
-    "REVIEWS": "Alınan Değerlendirmeler"
-  },
-
-  "EMPTY": {
-    "ACTIVE_SALES": "Henüz listelenmiş ürün yok.",
-    "WON_ITEMS": "Henüz kazanılmış ürün yok.",
-    "WISHLIST": "İstek listenizde henüz ürün yok.",
-    "REVIEWS": "Henüz değerlendirme almadınız."
-  },
-
-  "EDIT": {
-    "TITLE": "Profili Düzenle",
-    "USERNAME": "Kullanıcı adı",
-    "FULL_NAME": "Ad Soyad",
-    "EMAIL": "E-posta",
-
-    "USERNAME_PLACEHOLDER": "örn. ahmet_yilmaz",
-    "FULL_NAME_PLACEHOLDER": "örn. Ahmet Yılmaz",
-    "EMAIL_PLACEHOLDER": "örn. ahmet@email.com"
-  },
-
-  "PASSWORD": {
-    "CURRENT": "Mevcut Şifre",
-    "NEW": "Yeni Şifre",
-    "CONFIRM": "Şifreyi Onayla",
-
-    "CURRENT_PLACEHOLDER": "Mevcut şifreyi girin",
-    "NEW_PLACEHOLDER": "Yeni şifreyi girin",
-    "CONFIRM_PLACEHOLDER": "Yeni şifreyi onaylayın",
-
-    "REQUIRED": "Tüm alanlar zorunludur.",
-    "NOT_MATCH": "Yeni şifre ve onayı eşleşmiyor.",
-    "SUCCESS": "Şifre başarıyla güncellendi!",
-    "ERROR": "Şifre güncellenirken hata oluştu. Mevcut şifrenizi kontrol edin."
-  },
-
-  "STATUS": {
-    "ACTIVE": "Aktif",
-    "ADDED": "Eklendi",
-    "WON": "Kazanıldı"
-  },
-
-  "DEFAULTS": {
-    "USER": "Kullanıcı"
-  },
-
-  "ERRORS": {
-    "LOAD_CATEGORIES": "Kategoriler yüklenirken hata oluştu.",
-    "LOAD_ITEMS": "Ürünler yüklenirken hata oluştu.",
-    "LOAD_REVIEWS": "Değerlendirmeler yüklenirken hata oluştu."
-  },
-
-  "MESSAGES": {
-    "PROFILE_UPDATED": "Profil başarıyla güncellendi."
+  "USER_PAGE": {
+    "ACTIONS": {
+      "ADD_REVIEW": "⭐ Değerlendirme Ekle",
+      "REPORT_USER": "⚠️ Kullanıcıyı Bildir",
+      "USER_REPORTED": "✔️ Kullanıcı Bildirildi"
+    },
+    "COMMON": {
+      "CANCEL": "İptal",
+      "CLOSE": "Kapat"
+    },
+    "REPORT_MODAL": {
+      "TITLE": "@{{username}} kullanıcısını bildir",
+      "DESCRIPTION": "Ekibimizin hesap etkinliğini inceleyebilmesi için lütfen bildirim nedenini girin.",
+      "PLACEHOLDER": "Bildirim nedenini buraya yazın...",
+      "SUBMIT": "Bildirimi Gönder"
+    },
+    "REVIEW_MODAL": {
+      "TITLE": "@{{username}} için değerlendirme ekle",
+      "DESCRIPTION": "Görüşünüz önemli! Bir puan verin ve bu kullanıcıyla deneyiminiz hakkında kısa bir yorum yazın.",
+      "PLACEHOLDER": "Değerlendirmenizi buraya yazın...",
+      "SUBMIT": "Değerlendirmeyi Gönder"
+    },
+    "REVIEWS": {
+      "TITLE": "Kullanıcı değerlendirmeleri ({{count}})",
+      "YOU": "Siz",
+      "EMPTY": "Bu kullanıcı henüz değerlendirme almadı."
+    },
+    "AUCTIONS": {
+      "TITLE": "Kullanıcının aktif açık artırmaları",
+      "FILTER_LABEL": "Kategoriye göre filtrele:",
+      "ALL_CATEGORIES": "Tüm kategoriler",
+      "CURRENT_PRICE": "Mevcut fiyat:",
+      "EMPTY": "Bu kullanıcının şu anda bu kategoride aktif açık artırması yok.",
+      "SHOW_LESS": "Daha az göster",
+      "SHOW_MORE": "Daha fazla göster"
+    }
   }
-},
-"SEARCH_PAGE": {
-  "TITLE": "Arama sonuçları",
-  "DESCRIPTION_WITH_QUERY": "\"{{query}}\" için sonuçlar gösteriliyor",
-  "DESCRIPTION_EMPTY": "BidSphere genelinde açık artırmaları, kullanıcıları veya forum gönderilerini arayın",
-  "SEARCH_PLACEHOLDER": "Açık artırmaları, kullanıcıları veya forum gönderilerini arayın...",
-  "LOADING": "Sonuçlar yükleniyor...",
-
-  "TABS": {
-    "AUCTIONS": "Açık artırmalar",
-    "USERS": "Kullanıcılar",
-    "FORUM": "Forum"
-  },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "Açık artırma bulunamadı",
-    "DESCRIPTION": "Aramanızla eşleşen açık artırma bulunmamaktadır."
-  },
-
-  "USERS_EMPTY": {
-    "TITLE": "Kullanıcı bulunamadı",
-    "DESCRIPTION": "Aramanızla eşleşen kullanıcı bulunmamaktadır."
-  },
-
-  "FORUM_EMPTY": {
-    "TITLE": "Forum gönderisi bulunamadı",
-    "DESCRIPTION": "Aramanızla eşleşen tartışma bulunmamaktadır."
-  }
-}
 }

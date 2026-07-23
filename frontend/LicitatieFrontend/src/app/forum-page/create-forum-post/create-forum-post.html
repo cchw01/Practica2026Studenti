@@ -20,7 +20,7 @@
                     </label>
 
                     <input id="title" type="text" formControlName="title" maxlength="150"
-                        placeholder="Enter a clear discussion title" autocomplete="off">
+                        placeholder="{{ 'CREATE_POST.TITLE_PLACEHOLDER' | translate }}" autocomplete="off">
 
                     <div class="field-information">
                         <div class="validation-message">
@@ -65,7 +65,7 @@
                     </label>
 
                     <textarea id="description" formControlName="description" rows="10" maxlength="5000"
-                        placeholder=" 'CREATE_POST.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+                        placeholder="{{ 'CREATE_POST.DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
 
                     <div class="field-information">
                         <div class="validation-message">

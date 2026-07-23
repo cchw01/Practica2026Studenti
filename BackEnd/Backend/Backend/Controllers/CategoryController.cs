@@ -34,7 +34,7 @@ namespace Backend.Controllers
 
             if (category == null)
             {
-                return NotFound( "Categoria nu a fost găsită.");
+                return NotFound( "CCategory not found");
             }
 
             return Ok(MapToDto(category));
@@ -89,7 +89,7 @@ namespace Backend.Controllers
 
                 if (updatedCategory == null)
                 {
-                    return NotFound("Categoria nu a fost găsită.");
+                    return NotFound("Category not found");
                 }
 
                 return Ok(MapToDto(updatedCategory));
@@ -114,7 +114,7 @@ namespace Backend.Controllers
 
                 if (!deleted)
                 {
-                    return NotFound("Categoria nu a fost găsită.");
+                    return NotFound("Category not found");
                 }
 
                 return NoContent();

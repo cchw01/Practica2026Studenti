@@ -6,53 +6,51 @@
     "CONTACT": "Contacto",
     "LOGIN": "Iniciar sesión",
     "REGISTER": "Registrarse",
-    "TOGGLE_MENU": "Abrir o cerrar la navegación",
+    "TOGGLE_MENU": "Mostrar u ocultar la navegación",
     "SELECT_LANGUAGE": "Seleccionar idioma",
     "HELP": "Ayuda",
     "ADD_AUCTION": "Añadir subasta"
   },
-
   "CONTACT": {
     "TITLE": "Contáctanos",
     "DESCRIPTION": "¿Tienes alguna pregunta? Nuestro equipo está listo para ayudarte.",
     "EMAIL": "Correo electrónico",
     "PHONE": "Número de teléfono",
     "CALL_CENTER_HOURS": "Horario del centro de atención",
-    "SCHEDULE": "Lunes–Viernes, 09:00–17:00",
+    "SCHEDULE": "Lunes–viernes, 09:00–17:00",
     "FOLLOW_US": "Síguenos",
-    "SOCIAL_DESCRIPTION": "Mantente conectado con nosotros en las redes sociales.", 
-     "FORM_TITLE": "Envíanos un mensaje",
-  "FORM_FULL_NAME_LABEL": "Nombre completo",
-  "FORM_FULL_NAME_PLACEHOLDER": "p. ej. Juan Pérez",
-  "FORM_FULL_NAME_REQUIRED": "El nombre completo es obligatorio.",
-  "FORM_EMAIL_LABEL": "Correo electrónico",
-  "FORM_EMAIL_PLACEHOLDER": "p. ej. tu@ejemplo.com",
-  "FORM_EMAIL_REQUIRED": "El correo electrónico es obligatorio.",
-  "FORM_EMAIL_INVALID": "Por favor, introduce una dirección de correo electrónico válida.",
-  "FORM_ISSUE_TYPE_LABEL": "Tipo de incidencia",
-  "FORM_ISSUE_TYPE_REQUIRED": "Por favor, selecciona un tipo de incidencia.",
-  "FORM_ISSUE_OPTION_GENERAL": "Consulta general",
-  "FORM_ISSUE_OPTION_TECHNICAL": "Soporte técnico",
-  "FORM_ISSUE_OPTION_BILLING": "Facturación / Pago",
-  "FORM_ISSUE_OPTION_LISTING": "Problema con el anuncio / subasta",
-  "FORM_ISSUE_OPTION_ACCOUNT": "Gestión de la cuenta",
-  "FORM_ISSUE_OPTION_OTHER": "Otro",
-  "FORM_MESSAGE_LABEL": "Describe tu incidencia",
-  "FORM_MESSAGE_PLACEHOLDER": "Por favor, proporciona más detalles...",
-  "FORM_MESSAGE_REQUIRED": "El mensaje es obligatorio.",
-  "FORM_MESSAGE_MIN_LENGTH": "El mensaje debe tener al menos 10 caracteres.",
-  "FORM_SUBMIT": "Enviar mensaje",
-  "FORM_SUCCESS_TITLE": "¡Mensaje enviado!",
-  "FORM_SUCCESS_MESSAGE": "Gracias por ponerte en contacto con nosotros. Te responderemos lo antes posible.",
-  "FORM_SEND_ANOTHER": "Enviar otro mensaje"
+    "SOCIAL_DESCRIPTION": "Mantente en contacto con nosotros en las redes sociales.",
+    "FORM_TITLE": "Envíanos un mensaje",
+    "FORM_FULL_NAME_LABEL": "Nombre completo",
+    "FORM_FULL_NAME_PLACEHOLDER": "p. ej., Juan Pérez",
+    "FORM_FULL_NAME_REQUIRED": "El nombre completo es obligatorio.",
+    "FORM_EMAIL_LABEL": "Dirección de correo electrónico",
+    "FORM_EMAIL_PLACEHOLDER": "p. ej., tu@ejemplo.es",
+    "FORM_EMAIL_REQUIRED": "El correo electrónico es obligatorio.",
+    "FORM_EMAIL_INVALID": "Introduce una dirección de correo electrónico válida.",
+    "FORM_ISSUE_TYPE_LABEL": "Tipo de problema",
+    "FORM_ISSUE_TYPE_REQUIRED": "Selecciona un tipo de problema.",
+    "FORM_ISSUE_OPTION_GENERAL": "Consulta general",
+    "FORM_ISSUE_OPTION_TECHNICAL": "Soporte técnico",
+    "FORM_ISSUE_OPTION_BILLING": "Facturación / Pago",
+    "FORM_ISSUE_OPTION_LISTING": "Problema con anuncio / subasta",
+    "FORM_ISSUE_OPTION_ACCOUNT": "Gestión de la cuenta",
+    "FORM_ISSUE_OPTION_OTHER": "Otro",
+    "FORM_MESSAGE_LABEL": "Describe tu problema",
+    "FORM_MESSAGE_PLACEHOLDER": "Proporciona más detalles...",
+    "FORM_MESSAGE_REQUIRED": "El mensaje es obligatorio.",
+    "FORM_MESSAGE_MIN_LENGTH": "El mensaje debe tener al menos 10 caracteres.",
+    "FORM_SUBMIT": "Enviar mensaje",
+    "FORM_SUCCESS_TITLE": "¡Mensaje enviado!",
+    "FORM_SUCCESS_MESSAGE": "Gracias por contactarnos. Te responderemos lo antes posible.",
+    "FORM_SEND_ANOTHER": "Enviar otro mensaje"
   },
-
   "LOGIN": {
     "TITLE": "Iniciar sesión",
     "EMAIL_LABEL": "Correo electrónico",
     "EMAIL_PLACEHOLDER": "Dirección de correo electrónico",
     "EMAIL_REQUIRED": "El correo electrónico es obligatorio",
-    "EMAIL_INVALID": "El formato del correo electrónico no es válido",
+    "EMAIL_INVALID": "Formato de correo electrónico no válido",
     "PASSWORD_LABEL": "Contraseña",
     "PASSWORD_PLACEHOLDER": "Introduce la contraseña",
     "PASSWORD_REQUIRED": "La contraseña es obligatoria",
@@ -61,7 +59,6 @@
     "NO_ACCOUNT": "¿No tienes una cuenta?",
     "REGISTER_HERE": "Regístrate aquí"
   },
-
   "REGISTER": {
     "TITLE": "Crear una cuenta",
     "USERNAME_LABEL": "Nombre de usuario",
@@ -79,7 +76,7 @@
     "PASSWORD_REQUIRED": "La contraseña es obligatoria.",
     "PASSWORD_MIN_LENGTH": "La contraseña debe tener al menos 6 caracteres.",
     "CONFIRM_PASSWORD_LABEL": "Confirmar contraseña",
-    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirmar contraseña",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirma la contraseña",
     "CONFIRM_PASSWORD_REQUIRED": "Confirma tu contraseña.",
     "PASSWORDS_MISMATCH": "Las contraseñas no coinciden.",
     "PHONE_LABEL": "Número de teléfono",
@@ -90,290 +87,414 @@
     "ALREADY_HAVE_ACCOUNT": "¿Ya tienes una cuenta?",
     "SIGN_IN": "Iniciar sesión"
   },
-
   "HOME": {
     "HERO": {
       "TITLE": "PUJA. GANA. REPITE.",
-      "TAG": "🔥 Subastas en vivo todos los días",
-      "DESCRIPTION": "La plataforma de subastas en línea más segura. Vende rápidamente o encuentra ofertas únicas.",
+      "TAG": "🔥 Subastas en directo todos los días",
+      "DESCRIPTION": "La plataforma de subastas en línea más segura. Vende rápido o encuentra ofertas únicas.",
       "EXPLORE_AUCTIONS": "Explorar subastas",
       "START_SELLING": "Empezar a vender",
       "SEARCH_LABEL": "Buscar productos y subastas...",
       "SEARCH_PLACEHOLDER": "Ejemplo: BMW, pendientes de oro"
     },
-
     "ABOUT": {
       "EYEBROW": "Sobre nosotros",
       "TITLE_START": "Quiénes",
       "TITLE_END": "somos",
-      "DESCRIPTION": "BidSphere es una moderna plataforma de subastas en línea creada para hacer que comprar y vender mediante subastas sea simple, seguro y emocionante. Conectamos a miles de compradores y vendedores en una amplia variedad de categorías con un proceso transparente y justo para todos.",
-
+      "DESCRIPTION": "BidSphere es una moderna plataforma de subastas en línea creada para que comprar y vender mediante pujas sea sencillo, seguro y emocionante. Conectamos a miles de compradores y vendedores en una amplia variedad de categorías mediante un proceso transparente y justo para todos.",
       "FEATURES": {
         "SECURE": {
-          "TITLE": "Seguro y confiable",
-          "DESCRIPTION": "Cada transacción está protegida, para que puedas pujar con confianza."
+          "TITLE": "Seguro y fiable",
+          "DESCRIPTION": "Cada transacción está protegida para que puedas pujar con confianza."
         },
         "REALTIME": {
-          "TITLE": "Subastas en tiempo real",
-          "DESCRIPTION": "Observa los precios actualizarse en vivo y no te pierdas ningún momento ganador."
+          "TITLE": "Pujas en tiempo real",
+          "DESCRIPTION": "Observa cómo se actualizan los precios en directo y no te pierdas ninguna oportunidad de ganar."
         },
         "COMMUNITY": {
           "TITLE": "Comunidad en crecimiento",
-          "DESCRIPTION": "Miles de compradores y vendedores activos en cada categoría."
+          "DESCRIPTION": "Miles de compradores y vendedores activos en todas las categorías."
         }
       }
     },
-
     "CATEGORIES": {
       "EYEBROW": "Categorías",
-      "TITLE_START": "Explora las",
-      "TITLE_END": "categorías",
-
+      "TITLE_START": "Explorar",
+      "TITLE_END": "Categorías",
       "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Tecnología",
-          "DESCRIPTION": "Dispositivos de última generación y los productos electrónicos más recientes."
+        "ART": {
+          "NAME": "Arte",
+          "DESCRIPTION": "Pinturas, esculturas y obras de arte de colección."
         },
-
-        "AUTO_MOTORS": {
-          "NAME": "Automóviles y motos",
-          "DESCRIPTION": "Coches, motocicletas y piezas poco comunes."
+        "CLOTHING": {
+          "NAME": "Ropa",
+          "DESCRIPTION": "Ropa, calzado y accesorios de moda."
         },
-
-        "ART_COLLECTIBLES": {
-          "NAME": "Arte y coleccionables",
-          "DESCRIPTION": "Obras de arte exclusivas y colecciones especiales."
+        "ELECTRONICS": {
+          "NAME": "Electrónica",
+          "DESCRIPTION": "Teléfonos, ordenadores y dispositivos electrónicos."
         },
-
+        "HOME_GARDEN": {
+          "NAME": "Hogar y jardín",
+          "DESCRIPTION": "Muebles, decoraciones y productos de jardín."
+        },
+        "JEWELRY": {
+          "NAME": "Joyería",
+          "DESCRIPTION": "Anillos, collares, relojes y accesorios de valor."
+        },
+        "OTHERS": {
+          "NAME": "Otros",
+          "DESCRIPTION": "Descubre productos de otras categorías."
+        },
         "REAL_ESTATE": {
-          "NAME": "Bienes raíces",
-          "DESCRIPTION": "Propiedades y terrenos excepcionales."
+          "NAME": "Bienes inmuebles",
+          "DESCRIPTION": "Casas, apartamentos, terrenos y propiedades comerciales."
+        },
+        "VEHICLES": {
+          "NAME": "Vehículos",
+          "DESCRIPTION": "Coches, motocicletas y otros vehículos."
         }
       }
     },
-
     "AUCTIONS": {
       "EYEBROW": "Mercado",
-      "TITLE_START": "Subastas",
-      "TITLE_END": "activas",
+      "TITLE_START": "Activa",
+      "TITLE_END": "Subastas",
       "PLACE_BID": "Hacer una puja",
-      "EMPTY": "No hay subastas que finalicen pronto — vuelve a consultar en breve."
+      "EMPTY": "Ahora mismo no hay subastas que terminen pronto — vuelve a comprobarlo en breve.",
+      "COUNTDOWN": {
+        "ENDED": "Finalizada",
+        "DAYS_HOURS": "quedan {{days}} d {{hours}} h",
+        "HOURS_MINUTES": "quedan {{hours}} h {{minutes}} min",
+        "MINUTES_SECONDS": "quedan {{minutes}} min {{seconds}} s"
+      }
     }
   },
   "HELP": {
-  "TITLE": "Centro de Ayuda",
-  "INFORMATION": "Encuentra respuestas rápidas, contáctanos por teléfono o chatea con nuestro asistente de IA.",
-  "FAQ": "❓ Preguntas Frecuentes",
-  "SUPPORT": "📞 Asistencia Telefónica Rápida",
-  "PROGRAM": "Lunes - Viernes: 09:00 - 18:00",
-  "FORM": "📝 Abrir un Ticket",
-  "REQUEST": "Enviar solicitud",
-  "ASSISTANT": "Asistente Virtual en Vivo"
-  }
-  ,
-"AUCTIONS_PAGE": {
-  "TITLE": "Subastas activas",
-  "DESCRIPTION": "Descubre artículos únicos y puja en tiempo real.",
-
-  "SEARCH_PLACEHOLDER": "Buscar por nombre...",
-
-  "ALL_CATEGORIES": "Todas las categorías",
-
-  "SORT": {
-    "ENDING_SOON": "Finalizan pronto",
-    "PRICE_LOW_HIGH": "Precio: de menor a mayor",
-    "PRICE_HIGH_LOW": "Precio: de mayor a menor",
-    "NEWEST": "Más recientes"
+    "TITLE": "Centro de ayuda",
+    "INFORMATION": "Encuentra respuestas rápidas, contáctanos por teléfono o chatea con nuestro asistente de IA.",
+    "FAQ": "❓ Preguntas frecuentes",
+    "SUPPORT": "📞 Soporte telefónico rápido",
+    "PROGRAM": "Lunes - viernes: 09:00 - 18:00",
+    "FORM": "📝 Abrir un ticket",
+    "REQUEST": "Enviar solicitud",
+    "ASSISTANT": "Asistente virtual en directo",
+    "ISSUE_TYPE_PLACEHOLDER": "Selecciona el tipo de problema",
+    "CHAT_PLACEHOLDER": "Escribe tu mensaje...",
+    "GUEST": {
+      "MESSAGE": "Para abrir un ticket y recibir soporte técnico, debes iniciar sesión en tu cuenta.",
+      "LOGIN": "Iniciar sesión",
+      "REGISTER": "Crear cuenta"
+    },
+    "FAQ_CATEGORIES": {
+      "AUCTIONS": {
+        "TITLE": "🚨 Subastas y pujas",
+        "QUESTIONS": {
+          "PLACE_BID": {
+            "QUESTION": "¿Cómo hago una puja en una subasta?",
+            "ANSWER": "Ve a la página del artículo que deseas e introduce el importe en el campo \"Pujar ahora\". Tu puja debe ser superior al precio actual."
+          },
+          "CANCEL_BID": {
+            "QUESTION": "¿Puedo cancelar una puja después de hacerla?",
+            "ANSWER": "Las pujas son vinculantes una vez realizadas y, por lo general, no pueden cancelarse. Comprueba el importe antes de confirmar."
+          },
+          "WIN_AUCTION": {
+            "QUESTION": "¿Cómo sé si he ganado una subasta?",
+            "ANSWER": "Recibirás un correo electrónico y una notificación en la aplicación cuando finalice la subasta y tengas la puja más alta."
+          }
+        }
+      },
+      "ACCOUNT": {
+        "TITLE": "👤 Cuenta y autenticación",
+        "QUESTIONS": {
+          "CREATE_ACCOUNT": {
+            "QUESTION": "¿Cómo creo una cuenta?",
+            "ANSWER": "Haz clic en \"Registrarse\" en el menú superior, completa tu nombre de usuario, correo electrónico y contraseña, y luego confirma tu dirección de correo electrónico para activar la cuenta."
+          },
+          "FORGOT_PASSWORD": {
+            "QUESTION": "He olvidado mi contraseña. ¿Qué debo hacer?",
+            "ANSWER": "Haz clic en \"¿Has olvidado tu contraseña?\" en la página de inicio de sesión y sigue las instrucciones enviadas a tu dirección de correo electrónico registrada."
+          }
+        }
+      },
+      "DELIVERY": {
+        "TITLE": "📦 Entrega y pagos",
+        "QUESTIONS": {
+          "ITEM_DELIVERY": {
+            "QUESTION": "¿Cómo se entrega el artículo después de ganar?",
+            "ANSWER": "Tras la confirmación del pago, el vendedor organizará el envío o la recogida. Los detalles de entrega se intercambian mediante los mensajes de tu cuenta."
+          },
+          "NOT_DELIVERED": {
+            "QUESTION": "¿Qué ocurre si el vendedor no entrega el artículo?",
+            "ANSWER": "Contacta inmediatamente con nuestro equipo de soporte mediante el formulario de abajo. Investigamos todas las disputas y podemos suspender a los vendedores que no realicen la entrega."
+          },
+          "SHIPPING_COST": {
+            "QUESTION": "¿Quién paga el envío?",
+            "ANSWER": "El comprador paga los gastos de envío, salvo que el vendedor ofrezca envío gratuito."
+          },
+          "PAYOUT": {
+            "QUESTION": "¿Cuándo recibo el pago?",
+            "ANSWER": "Los pagos se transfieren a tu cuenta bancaria en un plazo de 3 a 5 días laborables después de confirmar el pago del comprador."
+          }
+        }
+      },
+      "SELLING": {
+        "TITLE": "🏷️ Venta",
+        "QUESTIONS": {
+          "LIST_ITEM": {
+            "QUESTION": "¿Cómo pongo un artículo a la venta?",
+            "ANSWER": "Ve a la sección \"Mi perfil\" y haz clic en \"Añadir subasta\". Completa los datos y espera la aprobación del administrador."
+          },
+          "EDIT_AUCTION": {
+            "QUESTION": "¿Puedo editar o eliminar una subasta después de publicarla?",
+            "ANSWER": "Solo puedes editar o eliminar una subasta antes de que reciba su primera puja. Después, los cambios quedan bloqueados para proteger a los pujadores."
+          },
+          "NOT_SOLD": {
+            "QUESTION": "¿Qué ocurre si mi artículo no se vende?",
+            "ANSWER": "Puedes reducir el precio de reserva y volver a publicar el artículo, u ofrecérselo al mejor postor."
+          }
+        }
+      }
+    }
   },
-
-  "ADD_ITEM": "Añadir artículo",
-
-  "RESULT": {
-    "ONE": "subasta encontrada",
-    "MANY": "subastas encontradas"
-  },
-
-  "CURRENT_PRICE": "Precio actual:",
-  "POSTED_BY": "Añadido por",
-  "YOU": "Tú",
-
-  "TIME": {
-    "ENDED": "Subasta finalizada",
-    "LEFT": "restantes"
-  },
-
-  "EMPTY": {
-    "TITLE": "No se encontraron artículos",
-    "DESCRIPTION": "Actualmente no hay subastas activas que coincidan con tu búsqueda."
-  }
-},
-
-"ADD_ITEM_PAGE": {
-  "BADGE": "🔨 Vende en BidSphere",
-  "TITLE": "Añadir un nuevo artículo a la subasta",
-  "DESCRIPTION": "Completa los siguientes datos para publicar tu artículo en la subasta.",
-
-  "FIELDS": {
-    "NAME": "Nombre del artículo *",
-    "NAME_PLACEHOLDER": "Ej.: Bicicleta vintage",
-
-    "START_PRICE": "Precio inicial (RON) *",
-
-    "DURATION": "Duración de la subasta (días) *",
-
-    "CATEGORY": "Categoría *",
-    "CATEGORY_PLACEHOLDER": "Selecciona una categoría",
-
-    "LOCATION": "Ubicación *",
-    "LOCATION_PLACEHOLDER": "Ej.: Brașov",
-
-    "DESCRIPTION": "Descripción",
-    "DESCRIPTION_PLACEHOLDER": "Describe el estado, el historial y los detalles del artículo..."
-  },
-
-  "IMAGE": {
-    "TITLE": "Fotografía del artículo",
-    "UPLOAD": "Haz clic para subir una imagen",
-    "DETAILS": "JPG, PNG o WEBP, máximo 5 MB",
-    "REMOVE": "Eliminar"
-  },
-
-  "BUTTONS": {
-    "CANCEL": "Cancelar",
-    "PUBLISH": "Publicar artículo",
-    "PUBLISHING": "Publicando..."
-  },
-
-  "VALIDATION": {
-    "NAME_REQUIRED": "El nombre es obligatorio.",
-    "NAME_MIN": "El nombre debe tener al menos 3 caracteres.",
-
-    "PRICE_REQUIRED": "El precio inicial es obligatorio.",
-    "PRICE_MIN": "El precio debe ser mayor que 0.",
-
-    "DURATION": "La duración debe estar entre 1 y 30 días.",
-
-    "CATEGORY": "Selecciona una categoría.",
-
-    "LOCATION": "La ubicación es obligatoria.",
-
-    "IMAGE_TYPE": "Solo se permiten imágenes JPG, PNG o WEBP.",
-    "IMAGE_SIZE": "La imagen debe ser inferior a 5 MB."
-  },
-
-  "MESSAGES": {
-    "SUCCESS": "¡El artículo se ha publicado correctamente en la subasta!",
-    "SUCCESS_LOCAL": "¡El artículo se ha publicado correctamente (guardado localmente; el backend aún no está listo)!"
-  }
-}, "FOOTER": {
-  "ABOUT_TITLE": "Sobre nosotros",
-  "ABOUT_TEXT_1": "BidSphere es una moderna plataforma de subastas en línea diseñada para hacer que comprar y vender mediante subastas sea sencillo, seguro y emocionante.",
-  "ABOUT_TEXT_2": "Conectamos a miles de compradores y vendedores de una amplia variedad de categorías, ofreciendo un proceso de subastas transparente y justo para todos. Tanto si buscas una gran oferta como si deseas vender al comprador adecuado, BidSphere te proporciona las herramientas y la confianza necesarias para pujar con seguridad.",
-
-  "LINKS": "Enlaces",
-  "HOME": "Inicio",
-  "SERVICES": "Subastas",
-  "CONTACT": "Contacto",
-  "HELP": "Ayuda",
-  "FORUM": "Foro",
-
-  "CONTACT_TITLE": "Contacto",
-
-  "SOCIAL": "Redes sociales",
-
-  "COPYRIGHT": "Todos los derechos reservados."
-},
-"NOT_FOUND": {
-  "CODE": "404",
-  "TITLE": "¡Ups! Página no encontrada",
-  "MESSAGE": "La página que estás buscando no existe o ha sido movida.",
-  "BUTTON": "VOLVER A LA PÁGINA PRINCIPAL"
-},
-
-  "FORUM": {
-    "TITLE": "Discusiones del foro",
-    "DESCRIPTION": "Explora las discusiones actuales y participa en conversaciones con otros usuarios.",
-
-    "START_DISCUSSION": "Iniciar una discusión",
-    "LOGIN_TO_START": "Inicia sesión para comenzar una discusión",
-
+  "AUCTIONS_PAGE": {
+    "TITLE": "Subastas activas",
+    "DESCRIPTION": "Descubre artículos únicos y puja en tiempo real",
+    "SEARCH_PLACEHOLDER": "Buscar por nombre...",
+    "ALL_CATEGORIES": "Todas las categorías",
     "SORT": {
-      "ARIA_LABEL": "Ordenar discusiones",
+      "ENDING_SOON": "Finaliza pronto",
+      "PRICE_LOW_HIGH": "Precio: de menor a mayor",
+      "PRICE_HIGH_LOW": "Precio: de mayor a menor",
+      "NEWEST": "Más recientes"
+    },
+    "ADD_ITEM": "Añadir artículo",
+    "RESULT": {
+      "ONE": "subasta encontrada",
+      "MANY": "subastas encontradas"
+    },
+    "CURRENT_PRICE": "Precio actual",
+    "POSTED_BY": "Publicado por",
+    "YOU": "Tú",
+    "EMPTY": {
+      "TITLE": "No se encontraron artículos",
+      "DESCRIPTION": "Actualmente no hay subastas activas que coincidan con tu búsqueda."
+    },
+    "TIME": {
+      "ENDED": "Subasta finalizada",
+      "LEFT": "restante"
+    }
+  },
+  "SEARCH_PAGE": {
+    "TITLE": "Resultados de búsqueda",
+    "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
+    "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
+    "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
+    "LOADING": "Cargando resultados...",
+    "TABS": {
+      "AUCTIONS": "Subastas",
+      "USERS": "Usuarios",
+      "FORUM": "Foro"
+    },
+    "AUCTIONS_EMPTY": {
+      "TITLE": "No se encontraron subastas",
+      "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
+    },
+    "USERS_EMPTY": {
+      "TITLE": "No se encontraron usuarios",
+      "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
+    },
+    "FORUM_EMPTY": {
+      "TITLE": "No se encontraron publicaciones del foro",
+      "DESCRIPTION": "No hay conversaciones que coincidan con tu búsqueda."
+    }
+  },
+  "ADD_ITEM_PAGE": {
+    "BADGE": "🔨 Vende en BidSphere",
+    "TITLE": "Añadir nuevo artículo a subasta",
+    "DESCRIPTION": "Completa los datos de abajo para publicar tu artículo en subasta.",
+    "FIELDS": {
+      "NAME": "Nombre del artículo *",
+      "NAME_PLACEHOLDER": "p. ej., bicicleta vintage",
+      "START_PRICE": "Precio inicial (RON) *",
+      "DURATION": "Duración de la subasta (días) *",
+      "CATEGORY": "Categoría *",
+      "CATEGORY_PLACEHOLDER": "Selecciona una categoría",
+      "LOCATION": "Ubicación *",
+      "LOCATION_PLACEHOLDER": "p. ej., Brașov",
+      "DESCRIPTION": "Descripción",
+      "DESCRIPTION_PLACEHOLDER": "Describe el estado, la historia y los detalles del artículo..."
+    },
+    "IMAGE": {
+      "TITLE": "Foto del artículo",
+      "UPLOAD": "Haz clic para subir una imagen",
+      "DETAILS": "JPG, PNG o WEBP, máx. 5 MB",
+      "REMOVE": "Eliminar"
+    },
+    "BUTTONS": {
+      "CANCEL": "Cancelar",
+      "PUBLISH": "Publicar artículo",
+      "PUBLISHING": "Publicando..."
+    },
+    "VALIDATION": {
+      "NAME_REQUIRED": "El nombre es obligatorio.",
+      "NAME_MIN": "El nombre debe tener al menos 3 caracteres.",
+      "PRICE_REQUIRED": "El precio inicial es obligatorio.",
+      "PRICE_MIN": "El precio debe ser superior a 0.",
+      "DURATION": "La duración debe estar entre 1 y 30 días.",
+      "CATEGORY": "Selecciona una categoría.",
+      "LOCATION": "La ubicación es obligatoria.",
+      "IMAGE_TYPE": "Solo se permiten imágenes JPG, PNG o WEBP.",
+      "IMAGE_SIZE": "La imagen debe ser inferior a 5 MB."
+    },
+    "MESSAGES": {
+      "SUCCESS": "¡Artículo publicado correctamente en subasta!",
+      "SUCCESS_LOCAL": "Artículo publicado correctamente en subasta (guardado localmente; el backend aún no está listo)."
+    }
+  },
+  "FOOTER": {
+    "ABOUT_TITLE": "Sobre nosotros",
+    "ABOUT_TEXT_1": "BidSphere es una moderna plataforma de subastas en línea diseñada para que comprar y vender mediante pujas sea sencillo, seguro y emocionante.",
+    "ABOUT_TEXT_2": "Conectamos a miles de compradores y vendedores en una amplia variedad de categorías, ofreciendo a todos un proceso de pujas transparente y justo. Tanto si buscas una gran oferta como si quieres vender al comprador adecuado, BidSphere te proporciona las herramientas y la confianza necesarias para pujar con seguridad.",
+    "LINKS": "Enlaces",
+    "HOME": "Inicio",
+    "SERVICES": "Subastas",
+    "CONTACT": "Contacto",
+    "HELP": "Ayuda",
+    "FORUM": "Foro",
+    "CONTACT_TITLE": "Contacto",
+    "SOCIAL": "Redes sociales",
+    "COPYRIGHT": "Todos los derechos reservados."
+  },
+  "NOT_FOUND": {
+    "CODE": "404",
+    "TITLE": "¡Vaya! Página no encontrada",
+    "MESSAGE": "La página que buscas no existe o ha sido trasladada.",
+    "BUTTON": "VOLVER AL INICIO"
+  },
+  "FORUM_PAGE": {
+    "HEADER": {
+      "TITLE": "Conversaciones del foro",
+      "DESCRIPTION": "Explora las conversaciones actuales y participa con otros usuarios."
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Buscar conversaciones...",
+      "ARIA_LABEL": "Buscar conversaciones"
+    },
+    "ACTIONS": {
+      "START_DISCUSSION": "Iniciar una conversación",
+      "LOGIN_TO_START": "Inicia sesión para comenzar una conversación",
+      "TRY_AGAIN": "Intentar de nuevo"
+    },
+    "SORT": {
+      "ARIA_LABEL": "Ordenar conversaciones",
       "LATEST": "Más recientes primero",
       "OLDEST": "Más antiguas primero",
       "MOST_COMMENTED": "Más comentadas"
     },
-
-    "DISCUSSION": "discusión",
-    "DISCUSSIONS": "discusiones",
-
+    "COUNT": {
+      "DISCUSSION": "conversación",
+      "DISCUSSIONS": "conversaciones",
+      "COMMENT": "comentario",
+      "COMMENTS": "comentarios"
+    },
     "LOADING": {
-      "TITLE": "Cargando discusiones"
+      "TITLE": "Cargando conversaciones"
     },
-
     "ERROR": {
-      "TITLE": "No se pudieron cargar las discusiones",
-      "RETRY": "Intentar de nuevo"
+      "TITLE": "No se pudieron cargar las conversaciones"
     },
-
-    "POSTED_BY": "Publicado por",
-
-    "COMMENT": "comentario",
-    "COMMENTS": "comentarios",
-
+    "POST": {
+      "POSTED_BY": "Publicado por"
+    },
     "EMPTY": {
-      "TITLE": "No hay discusiones disponibles",
-      "MESSAGE": "Actualmente no hay discusiones en el foro."
+      "TITLE": "No hay conversaciones disponibles",
+      "DESCRIPTION": "Actualmente no hay conversaciones en el foro."
+    },
+    "PAGINATION": {
+      "ARIA_LABEL": "Paginación",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Siguiente"
     }
   },
-
   "NOTIFICATIONS": {
     "TRUE": "Notificaciones",
-    "FALSE": "Aún no hay notificaciones."
+    "FALSE": "Aún no hay notificaciones.",
+    "OPEN_ARIA": "Abrir notificaciones",
+    "DO_NOT_DISTURB": "No molestar",
+    "LOADING": "Cargando notificaciones...",
+    "ACTIONS_ARIA": "Acciones de notificación",
+    "MARKING_ALL_READ": "Marcando como leído...",
+    "MARK_ALL_READ": "Marcar todo como leído",
+    "DELETE": "Eliminar notificación",
+    "TYPES": {
+      "AuctionApproved": "¡Tu subasta \"{{itemName}}\" ha sido aprobada y ya es pública!",
+      "AuctionRejected": "Tu subasta \"{{itemName}}\" ha sido rechazada por un administrador.",
+      "SupportReply": "Un administrador respondió a tu mensaje del {{date}}: {{reply}}"
+    }
   },
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Detalles de la subasta",
-
     "INFO": {
       "CURRENT_PRICE": "Precio actual",
       "START_PRICE": "Precio inicial",
       "CATEGORY": "Categoría",
       "LOCATION": "Ubicación",
-      "STARTS_AT": "Fecha de inicio",
+      "STARTS_AT": "Comienza el",
       "OWNER": "Propietario",
       "ENDS": "Finaliza"
     },
-
     "BID": {
-      "TITLE": "Haz tu oferta",
-      "PLACEHOLDER": "Introduce el importe de la oferta",
-      "BUTTON": "🔨 Ofertar",
-      "MINIMUM": "Oferta mínima:",
+      "TITLE": "Haz tu puja",
+      "PLACEHOLDER": "Introduce el importe de la puja",
+      "BUTTON": "🔨 Hacer una puja",
+      "MINIMUM": "Puja mínima:",
       "LOGIN_TEXT": "Inicia sesión para pujar por este artículo.",
-      "LOGIN_BUTTON": "Iniciar sesión para ofertar"
+      "LOGIN_BUTTON": "Iniciar sesión para pujar"
     },
-
     "WISHLIST": {
-      "ADD": "🤍 Añadir a favoritos",
-      "ADDED": "❤️ En favoritos"
+      "ADD": "Añadir a la lista de deseos",
+      "ADDED": "En la lista de deseos",
+      "TOAST_ADDED": "Artículo añadido a tu lista de deseos.",
+      "TOAST_REMOVED": "Artículo eliminado de tu lista de deseos."
     },
-
+    "ACTIONS": {
+      "REPORT_ITEM": "Denunciar artículo",
+      "ITEM_REPORTED": "Artículo denunciado"
+    },
+    "REPORT": {
+      "TITLE": "Denunciar subasta",
+      "DESCRIPTION": "Ayuda a mantener BidSphere seguro. Selecciona un motivo para denunciar esta subasta:",
+      "REASON_LABEL": "Motivo",
+      "REASONS": {
+        "INAPPROPRIATE_CONTENT": "Contenido inapropiado",
+        "MISLEADING_DESCRIPTION": "Descripción engañosa",
+        "FAKE_ITEM": "Artículo falso o falsificado",
+        "SUSPICIOUS_BIDDING": "Actividad de pujas sospechosa",
+        "OTHER": "Otro"
+      },
+      "DETAILS_LABEL": "Detalles adicionales (opcional)",
+      "DETAILS_PLACEHOLDER": "Describe el problema...",
+      "CANCEL": "Cancelar",
+      "SUBMIT": "Enviar denuncia",
+      "TOAST": {
+        "SUCCESS": "La subasta se ha denunciado correctamente.",
+        "ERROR": "No se pudo denunciar la subasta."
+      }
+    },
     "DESCRIPTION": {
       "TITLE": "Descripción del producto"
     },
-
     "STATUS": {
       "ACTIVE": "Activa",
       "ENDED": "Finalizada",
       "PENDING": "Pendiente"
     },
-
     "MESSAGES": {
-      "AUCTION_ENDED": "La subasta ha finalizado.",
-      "BID_HIGHER_CURRENT": "La oferta debe ser superior al precio actual.",
-      "BID_HIGHER_MINIMUM": "La oferta debe ser superior al precio mínimo."
+      "AUCTION_ENDED": "Subasta finalizada.",
+      "BID_HIGHER_CURRENT": "La puja debe ser superior al precio actual.",
+      "BID_HIGHER_MINIMUM": "La puja debe ser superior al precio mínimo."
     },
-
     "COUNTDOWN": {
       "DAYS": "d",
       "HOURS": "h",
@@ -384,7 +505,7 @@
   "REVIEWS": {
     "TITLE": "Reseñas",
     "REVIEWER_ID": "ID del autor de la reseña",
-    "REVIEWED_USER_ID": "ID del usuario evaluado",
+    "REVIEWED_USER_ID": "ID del usuario reseñado",
     "RATING": "Valoración (0–5)",
     "RATING_ERROR": "La valoración debe estar entre 0 y 5.",
     "COMMENT": "Comentario",
@@ -403,178 +524,196 @@
     "LOGOUT": "Cerrar sesión"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
-
-    "LOADING_DISCUSSION_TITLE": "Cargando la discusión",
-    "LOADING_DISCUSSION_MESSAGE": "La discusión se está cargando.",
-    "LOAD_DISCUSSION_ERROR": "No se pudo cargar la discusión",
-    "TRY_AGAIN": "Intentar de nuevo",
-
-    "DELETE_POST": "Eliminar",
-    "POSTED_BY": "Publicado por",
-
-    "DISCUSSION": "Discusión",
-    "COMMENT": "comentario",
-    "COMMENTS": "comentarios",
-
-    "ADD_COMMENT": "Añadir un comentario",
-    "COMMENT_PLACEHOLDER": "Escribe tu comentario aquí...",
-    "COMMENT_REQUIRED": "El comentario es obligatorio.",
-    "COMMENT_MIN_LENGTH": "El comentario debe contener al menos 2 caracteres.",
-    "COMMENT_MAX_LENGTH": "El comentario no puede superar los 1000 caracteres.",
-
-    "PUBLISHING": "Publicando...",
-    "PUBLISH_COMMENT": "Publicar comentario",
-
-    "LOGIN_REQUIRED": "Debes iniciar sesión para publicar un comentario.",
-    "LOGIN": "Iniciar sesión",
-
-    "LOADING_COMMENTS": "Cargando comentarios",
-    "LOAD_COMMENTS_ERROR": "No se pudieron cargar los comentarios",
-
-    "DELETE_COMMENT": "Eliminar",
-    "NO_COMMENTS": "Todavía no hay comentarios"
+    "BACK": "Volver a las conversaciones",
+    "POST": {
+      "LOADING_TITLE": "Cargando conversación",
+      "LOADING_MESSAGE": "La conversación se está cargando.",
+      "ERROR_TITLE": "No se pudo cargar la conversación",
+      "POSTED_BY": "Publicado por"
+    },
+    "ACTIONS": {
+      "REPORT": "Denunciar",
+      "EDIT": "Editar",
+      "DELETE": "Eliminar",
+      "CANCEL": "Cancelar",
+      "SAVE": "Guardar",
+      "RETRY": "Intentar de nuevo"
+    },
+    "EDIT_POST": {
+      "TITLE_LABEL": "Título",
+      "TITLE_VALIDATION": "El título debe tener entre 3 y 150 caracteres.",
+      "DESCRIPTION_LABEL": "Descripción",
+      "DESCRIPTION_VALIDATION": "La descripción debe tener entre 10 y 5000 caracteres."
+    },
+    "COMMENTS": {
+      "TITLE": "Conversación",
+      "COMMENT": "comentario",
+      "COMMENTS": "comentarios",
+      "ADD_LABEL": "Añadir un comentario",
+      "PLACEHOLDER": "Escribe tu comentario aquí...",
+      "VALIDATION": {
+        "REQUIRED": "El comentario es obligatorio.",
+        "MIN_LENGTH": "El comentario debe contener al menos 2 caracteres.",
+        "MAX_LENGTH": "El comentario no puede superar los 1000 caracteres."
+      },
+      "PUBLISHING": "Publicando...",
+      "PUBLISH": "Publicar comentario",
+      "LOGIN_REQUIRED": "Debes iniciar sesión para publicar un comentario.",
+      "LOGIN": "Iniciar sesión",
+      "LOADING": "Cargando comentarios",
+      "ERROR": "No se pudieron cargar los comentarios",
+      "EMPTY": "Aún no hay comentarios"
+    },
+    "REPORT": {
+      "TITLE": "Denunciar publicación",
+      "DESCRIPTION": "Selecciona el motivo para denunciar esta conversación:",
+      "CANCEL": "Cancelar",
+      "SUBMITTING": "Enviando...",
+      "SUBMIT": "Enviar denuncia",
+      "REASONS": {
+        "SPAM": "Spam",
+        "INAPPROPRIATE_CONTENT": "Contenido inapropiado",
+        "HARASSMENT": "Acoso o comportamiento abusivo",
+        "MISLEADING_INFORMATION": "Información engañosa",
+        "OTHER": "Otro"
+      }
+    }
   },
   "CREATE_POST": {
-    "BACK_TO_DISCUSSIONS": "Volver a las discusiones",
-    "TITLE": "Iniciar una discusión",
-    "SUBTITLE": "Crea una nueva discusión y compártela con los demás usuarios del foro.",
-
+    "BACK_TO_DISCUSSIONS": "Volver a las conversaciones",
+    "TITLE": "Iniciar una conversación",
+    "SUBTITLE": "Crea una nueva conversación y compártela con otros usuarios del foro.",
     "TITLE_LABEL": "Título",
-    "TITLE_PLACEHOLDER": "Introduce un título claro para la discusión",
+    "TITLE_PLACEHOLDER": "Introduce un título claro para la conversación",
     "TITLE_REQUIRED": "El título es obligatorio.",
     "TITLE_WHITESPACE": "El título no puede contener solo espacios.",
-    "TITLE_MIN_LENGTH": "El título debe contener al menos 3 caracteres.",
+    "TITLE_MIN_LENGTH": "El título debe tener al menos 3 caracteres.",
     "TITLE_MAX_LENGTH": "El título no puede superar los 150 caracteres.",
-
     "DESCRIPTION_LABEL": "Descripción",
-    "DESCRIPTION_PLACEHOLDER": "Describe el tema que deseas discutir...",
+    "DESCRIPTION_PLACEHOLDER": "Describe el tema que te gustaría tratar...",
     "DESCRIPTION_REQUIRED": "La descripción es obligatoria.",
     "DESCRIPTION_WHITESPACE": "La descripción no puede contener solo espacios.",
-    "DESCRIPTION_MIN_LENGTH": "La descripción debe contener al menos 10 caracteres.",
+    "DESCRIPTION_MIN_LENGTH": "La descripción debe tener al menos 10 caracteres.",
     "DESCRIPTION_MAX_LENGTH": "La descripción no puede superar los 5000 caracteres.",
-
-    "CREATE_ERROR": "No se pudo crear la discusión",
+    "CREATE_ERROR": "No se pudo crear la conversación",
     "CANCEL": "Cancelar",
-    "CREATING": "Creando la discusión...",
-    "SUBMIT": "Iniciar discusión"
-  }, 
-"PROFILE_PAGE": {
-  "PROFILE": {
-    "USERNAME_NOT_SET": "@nombre de usuario no establecido",
-    "NAME_NOT_SET": "Nombre no establecido",
-    "EMAIL_NOT_SET": "Correo electrónico no establecido",
-    "AVERAGE_SCORE": "Puntuación media"
+    "CREATING": "Creando conversación...",
+    "SUBMIT": "Iniciar conversación"
   },
-
-  "BUTTONS": {
-    "EDIT_PROFILE": "Editar perfil",
-    "LOG_OUT": "Cerrar sesión",
-    "ADD_ITEM": "Añadir artículo",
-    "CHANGE_PHOTO": "Cambiar foto",
-    "HIDE_PASSWORD": "Ocultar configuración de contraseña",
-    "CHANGE_PASSWORD": "Cambiar contraseña",
-    "UPDATE_PASSWORD": "Actualizar contraseña",
-    "CANCEL": "Cancelar",
-    "SAVE": "Guardar cambios"
+  "PROFILE_PAGE": {
+    "PROFILE": {
+      "USERNAME_NOT_SET": "@nombre de usuario no configurado",
+      "NAME_NOT_SET": "Nombre no configurado",
+      "EMAIL_NOT_SET": "Correo electrónico no configurado",
+      "AVERAGE_SCORE": "Puntuación media"
+    },
+    "BUTTONS": {
+      "EDIT_PROFILE": "Editar perfil",
+      "LOG_OUT": "Cerrar sesión",
+      "ADD_ITEM": "Añadir nuevo artículo",
+      "CHANGE_PHOTO": "Cambiar foto",
+      "HIDE_PASSWORD": "Ocultar configuración de contraseña",
+      "CHANGE_PASSWORD": "Cambiar contraseña",
+      "UPDATE_PASSWORD": "Actualizar contraseña",
+      "CANCEL": "Cancelar",
+      "SAVE": "Guardar cambios"
+    },
+    "THEME": {
+      "TITLE": "Personalizar tema",
+      "DESCRIPTION": "Elige un estilo visual que se adapte a tu estado de ánimo.",
+      "LIGHT": "Claro",
+      "SUNSET": "Atardecer",
+      "OCEAN": "Océano"
+    },
+    "SELL": {
+      "TITLE": "Vender un nuevo artículo",
+      "DESCRIPTION": "¿Listo para publicar algo?"
+    },
+    "SECTIONS": {
+      "ACTIVE_SALES": "Mis ventas activas",
+      "WON_ITEMS": "Artículos ganados",
+      "WISHLIST": "Mi lista de deseos",
+      "REVIEWS": "Reseñas recibidas"
+    },
+    "EMPTY": {
+      "ACTIVE_SALES": "Aún no hay artículos publicados.",
+      "WON_ITEMS": "Aún no has ganado ningún artículo.",
+      "WISHLIST": "Aún no hay artículos en tu lista de deseos.",
+      "REVIEWS": "Aún no has recibido reseñas."
+    },
+    "EDIT": {
+      "TITLE": "Editar perfil",
+      "USERNAME": "Nombre de usuario",
+      "FULL_NAME": "Nombre completo",
+      "EMAIL": "Correo electrónico",
+      "USERNAME_PLACEHOLDER": "p. ej., juan_perez",
+      "FULL_NAME_PLACEHOLDER": "p. ej., Juan Pérez",
+      "EMAIL_PLACEHOLDER": "p. ej., juan@email.es"
+    },
+    "PASSWORD": {
+      "CURRENT": "Contraseña actual",
+      "NEW": "Nueva contraseña",
+      "CONFIRM": "Confirmar contraseña",
+      "CURRENT_PLACEHOLDER": "Introduce la contraseña actual",
+      "NEW_PLACEHOLDER": "Introduce la nueva contraseña",
+      "CONFIRM_PLACEHOLDER": "Confirma la nueva contraseña",
+      "REQUIRED": "Todos los campos son obligatorios.",
+      "NOT_MATCH": "La nueva contraseña y su confirmación no coinciden.",
+      "SUCCESS": "¡Contraseña actualizada correctamente!",
+      "ERROR": "Error al actualizar la contraseña. Comprueba tu contraseña actual."
+    },
+    "STATUS": {
+      "ACTIVE": "Activa",
+      "ADDED": "Añadido",
+      "WON": "Ganado"
+    },
+    "DEFAULTS": {
+      "USER": "Usuario"
+    },
+    "ERRORS": {
+      "LOAD_CATEGORIES": "Error al cargar las categorías.",
+      "LOAD_ITEMS": "Error al cargar los artículos.",
+      "LOAD_REVIEWS": "Error al cargar las reseñas."
+    },
+    "MESSAGES": {
+      "PROFILE_UPDATED": "Perfil actualizado correctamente."
+    }
   },
-
-  "THEME": {
-    "TITLE": "Personalizar tema",
-    "DESCRIPTION": "Elige un estilo visual que se adapte a tu estado de ánimo.",
-    "LIGHT": "Claro",
-    "SUNSET": "Atardecer",
-    "OCEAN": "Océano"
-  },
-
-  "SELL": {
-    "TITLE": "Vender un artículo nuevo",
-    "DESCRIPTION": "¿Listo para publicar un artículo?"
-  },
-
-  "SECTIONS": {
-    "ACTIVE_SALES": "Mis ventas activas",
-    "WON_ITEMS": "Artículos ganados",
-    "WISHLIST": "Mi lista de deseos",
-    "REVIEWS": "Reseñas recibidas"
-  },
-
-  "EMPTY": {
-    "ACTIVE_SALES": "Todavía no has publicado artículos.",
-    "WON_ITEMS": "Todavía no has ganado ningún artículo.",
-    "WISHLIST": "Tu lista de deseos está vacía.",
-    "REVIEWS": "Todavía no has recibido reseñas."
-  },
-
-  "EDIT": {
-    "TITLE": "Editar perfil",
-    "USERNAME": "Nombre de usuario",
-    "FULL_NAME": "Nombre completo",
-    "EMAIL": "Correo electrónico",
-
-    "USERNAME_PLACEHOLDER": "ej. john_doe",
-    "FULL_NAME_PLACEHOLDER": "ej. Juan Pérez",
-    "EMAIL_PLACEHOLDER": "ej. juan@email.com"
-  },
-
-  "PASSWORD": {
-    "CURRENT": "Contraseña actual",
-    "NEW": "Nueva contraseña",
-    "CONFIRM": "Confirmar contraseña",
-
-    "CURRENT_PLACEHOLDER": "Introduce la contraseña actual",
-    "NEW_PLACEHOLDER": "Introduce la nueva contraseña",
-    "CONFIRM_PLACEHOLDER": "Confirma la nueva contraseña",
-
-    "REQUIRED": "Todos los campos son obligatorios.",
-    "NOT_MATCH": "La nueva contraseña y la confirmación no coinciden.",
-    "SUCCESS": "¡Contraseña actualizada correctamente!",
-    "ERROR": "Error al actualizar la contraseña. Comprueba tu contraseña actual."
-  },
-
-  "STATUS": {
-    "ACTIVE": "Activo",
-    "ADDED": "Añadido",
-    "WON": "Ganado"
-  }, 
-  "DEFAULTS": {
-  "USER": "Usuario"
-}, 
-"ERRORS": {
-  "LOAD_CATEGORIES": "Error al cargar las categorías.",
-  "LOAD_ITEMS": "Error al cargar los artículos.",
-  "LOAD_REVIEWS": "Error al cargar las reseñas."
-}, 
-"MESSAGES": {
-  "PROFILE_UPDATED": "Perfil actualizado con éxito."
-}
-},
-
-"SEARCH_PAGE": {
-  "TITLE": "Resultados de búsqueda",
-  "DESCRIPTION_WITH_QUERY": "Mostrando resultados para \"{{query}}\"",
-  "DESCRIPTION_EMPTY": "Busca subastas, usuarios o publicaciones del foro en BidSphere",
-  "SEARCH_PLACEHOLDER": "Buscar subastas, usuarios o publicaciones del foro...",
-  "LOADING": "Cargando resultados...",
-
-  "TABS": {
-    "AUCTIONS": "Subastas",
-    "USERS": "Usuarios",
-    "FORUM": "Foro"
-  },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "No se encontraron subastas",
-    "DESCRIPTION": "No hay subastas que coincidan con tu búsqueda."
-  },
-
-  "USERS_EMPTY": {
-    "TITLE": "No se encontraron usuarios",
-    "DESCRIPTION": "No hay usuarios que coincidan con tu búsqueda."
-  },
-
-  "FORUM_EMPTY": {
-    "TITLE": "No se encontraron publicaciones en el foro",
-    "DESCRIPTION": "No hay conversaciones que coincidan con tu búsqueda."
+  "USER_PAGE": {
+    "ACTIONS": {
+      "ADD_REVIEW": "⭐ Añadir reseña",
+      "REPORT_USER": "⚠️ Denunciar usuario",
+      "USER_REPORTED": "✔️ Usuario denunciado"
+    },
+    "COMMON": {
+      "CANCEL": "Cancelar",
+      "CLOSE": "Cerrar"
+    },
+    "REPORT_MODAL": {
+      "TITLE": "Denunciar al usuario @{{username}}",
+      "DESCRIPTION": "Introduce el motivo de la denuncia para que nuestro equipo pueda revisar la actividad de la cuenta.",
+      "PLACEHOLDER": "Escribe aquí el motivo de la denuncia...",
+      "SUBMIT": "Enviar denuncia"
+    },
+    "REVIEW_MODAL": {
+      "TITLE": "Añadir una reseña para @{{username}}",
+      "DESCRIPTION": "¡Tu opinión importa! Da una valoración y escribe un breve comentario sobre tu experiencia con este usuario.",
+      "PLACEHOLDER": "Escribe tu reseña aquí...",
+      "SUBMIT": "Enviar reseña"
+    },
+    "REVIEWS": {
+      "TITLE": "Reseñas del usuario ({{count}})",
+      "YOU": "Tú",
+      "EMPTY": "Este usuario aún no ha recibido ninguna reseña."
+    },
+    "AUCTIONS": {
+      "TITLE": "Subastas activas del usuario",
+      "FILTER_LABEL": "Filtrar por categoría:",
+      "ALL_CATEGORIES": "Todas las categorías",
+      "CURRENT_PRICE": "Precio actual:",
+      "EMPTY": "Este usuario no tiene actualmente subastas activas en esta categoría.",
+      "SHOW_LESS": "Mostrar menos",
+      "SHOW_MORE": "Mostrar más"
+    }
   }
-}}
+}

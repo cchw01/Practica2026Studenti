@@ -91,6 +91,25 @@ namespace Backend.DataManagement
                 .Where(report => report.Status == status)
                 .ToArray();
         }
+        public int GetUserReportCount(int userId)
+        {
+            return DbContext.Reports.Count(r =>
+                r.TargetType == ReportTargetType.User &&
+                r.ReportedUserId == userId);
+        }
+
+        public bool BanUserIfThresholdReached(int userId, int threshold = 3)
+        {
+            var count = GetUserReportCount(userId);
+            if (count < threshold) return false;
+
+            var user = DbContext.Users.Find(userId);
+            if (user == null || user.IsBanned) return false;
+
+            user.IsBanned = true;
+            DbContext.SaveChanges();
+            return true;
+        }
     }
     
 }

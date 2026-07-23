@@ -49,10 +49,99 @@
         </a>
       </div>
 
+      <a *ngIf="isAdmin()" routerLink="/admin" (click)="closeMenu()">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin</span>
+        </a>
+      </div>
+
       <!-- Actions -->
       <div class="nav-links-actions">
-        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="Add Auction"
-          title="Add Auction">
+
+        <!-- Language switcher -->
+        <div class="language-switcher">
+          <button type="button" mat-button class="language-dropdown-trigger" [matMenuTriggerFor]="languageMenu"
+            [attr.aria-label]="'NAV.SELECT_LANGUAGE' | translate">
+            <mat-icon>language</mat-icon>
+            <span>{{ currentLanguageLabel() }}</span>
+            <mat-icon class="dropdown-arrow">expand_more</mat-icon>
+          </button>
+
+          <mat-menu #languageMenu="matMenu">
+            <button mat-menu-item type="button" (click)="changeLanguage('en')">
+              <span class="language-code">EN </span>
+              <span> English</span>
+              <mat-icon *ngIf="isCurrentLanguage('en')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('ro')">
+              <span class="language-code">RO </span>
+              <span> Română</span>
+              <mat-icon *ngIf="isCurrentLanguage('ro')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('es')">
+              <span class="language-code">ES </span>
+              <span> Español</span>
+              <mat-icon *ngIf="isCurrentLanguage('es')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('fr')">
+              <span class="language-code">FR </span>
+              <span> French</span>
+              <mat-icon *ngIf="isCurrentLanguage('fr')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('de')">
+              <span class="language-code">DE </span>
+              <span> German</span>
+              <mat-icon *ngIf="isCurrentLanguage('de')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('hu')">
+              <span class="language-code">HU </span>
+              <span> Hungarian</span>
+              <mat-icon *ngIf="isCurrentLanguage('hu')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('it')">
+              <span class="language-code">IT </span>
+              <span> Italian</span>
+              <mat-icon *ngIf="isCurrentLanguage('it')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('pl')">
+              <span class="language-code">PL </span>
+              <span> Polish</span>
+              <mat-icon *ngIf="isCurrentLanguage('pl')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('el')">
+              <span class="language-code">EL </span>
+              <span> Greek</span>
+              <mat-icon *ngIf="isCurrentLanguage('el')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('tr')">
+              <span class="language-code"> TR</span>
+              <span> Turkish</span>
+              <mat-icon *ngIf="isCurrentLanguage('tr')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('sk')">
+              <span class="language-code">SK </span>
+              <span> Slovak</span>
+              <mat-icon *ngIf="isCurrentLanguage('sk')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('uk')">
+              <span class="language-code">UK </span>
+              <span> Ukrainian</span>
+              <mat-icon *ngIf="isCurrentLanguage('uk')" class="selected-language-icon">check</mat-icon>
+            </button>
+            <button mat-menu-item type="button" (click)="changeLanguage('sr')">
+              <span class="language-code">SR </span>
+              <span> Serbian</span>
+              <mat-icon *ngIf="isCurrentLanguage('sr')" class="selected-language-icon">check</mat-icon>
+            </button>
+          </mat-menu>
+        </div>
+
+
+
+      <!-- Actions -->
+      <div class="nav-links-actions">
+        <a routerLink="/profile-page" (click)="closeMenu()" class="btn-add-auction" aria-label="'NAV.ADD_AUCTION' | translate"
+          title="{{'NAV.ADD_AUCTION' | translate}}">
           <mat-icon>add</mat-icon>
         </a>
         <ng-container *ngIf="isLoggedIn(); else loggedOutActions">
@@ -61,10 +150,10 @@
         </ng-container>
         <ng-template #loggedOutActions>
           <div class="auth-pill">
-            <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">Login</a>
+            <a routerLink="/login-page" routerLinkActive="active" (click)="closeMenu()" class="auth-pill-link">{{'NAV.LOGIN' | translate}}</a>
             <span class="auth-pill-divider"></span>
             <a routerLink="/register-page" routerLinkActive="active" (click)="closeMenu()"
-              class="auth-pill-link">Register</a>
+              class="auth-pill-link">{{'NAV.REGISTER' | translate}}</a>
           </div>
         </ng-template>
       </div>

@@ -6,51 +6,51 @@
     "CONTACT": "Contatti",
     "LOGIN": "Accedi",
     "REGISTER": "Registrati",
-    "TOGGLE_MENU": "Apri o chiudi la navigazione",
-    "SELECT_LANGUAGE": "Seleziona la lingua",
+    "TOGGLE_MENU": "Attiva/disattiva navigazione",
+    "SELECT_LANGUAGE": "Seleziona lingua",
     "HELP": "Aiuto",
     "ADD_AUCTION": "Aggiungi asta"
   },
   "CONTACT": {
     "TITLE": "Contattaci",
     "DESCRIPTION": "Hai domande? Il nostro team è pronto ad aiutarti.",
-    "EMAIL": "E-mail",
+    "EMAIL": "Email",
     "PHONE": "Numero di telefono",
     "CALL_CENTER_HOURS": "Orari del call center",
-    "SCHEDULE": "Lunedì–venerdì, 09:00–17:00",
+    "SCHEDULE": "Lunedì–Venerdì, 09:00–17:00",
     "FOLLOW_US": "Seguici",
-    "SOCIAL_DESCRIPTION": "Resta in contatto con noi sui social media.", 
-     "FORM_TITLE": "Inviaci un messaggio",
-  "FORM_FULL_NAME_LABEL": "Nome completo",
-  "FORM_FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
-  "FORM_FULL_NAME_REQUIRED": "Il nome completo è obbligatorio.",
-  "FORM_EMAIL_LABEL": "Indirizzo e-mail",
-  "FORM_EMAIL_PLACEHOLDER": "es. tu@esempio.com",
-  "FORM_EMAIL_REQUIRED": "L'indirizzo e-mail è obbligatorio.",
-  "FORM_EMAIL_INVALID": "Inserisci un indirizzo e-mail valido.",
-  "FORM_ISSUE_TYPE_LABEL": "Tipo di problema",
-  "FORM_ISSUE_TYPE_REQUIRED": "Seleziona un tipo di problema.",
-  "FORM_ISSUE_OPTION_GENERAL": "Richiesta generale",
-  "FORM_ISSUE_OPTION_TECHNICAL": "Supporto tecnico",
-  "FORM_ISSUE_OPTION_BILLING": "Fatturazione / Pagamento",
-  "FORM_ISSUE_OPTION_LISTING": "Problema con annuncio / asta",
-  "FORM_ISSUE_OPTION_ACCOUNT": "Gestione dell'account",
-  "FORM_ISSUE_OPTION_OTHER": "Altro",
-  "FORM_MESSAGE_LABEL": "Descrivi il tuo problema",
-  "FORM_MESSAGE_PLACEHOLDER": "Fornisci maggiori dettagli...",
-  "FORM_MESSAGE_REQUIRED": "Il messaggio è obbligatorio.",
-  "FORM_MESSAGE_MIN_LENGTH": "Il messaggio deve contenere almeno 10 caratteri.",
-  "FORM_SUBMIT": "Invia messaggio",
-  "FORM_SUCCESS_TITLE": "Messaggio inviato!",
-  "FORM_SUCCESS_MESSAGE": "Grazie per averci contattato. Ti risponderemo il prima possibile.",
-  "FORM_SEND_ANOTHER": "Invia un altro messaggio"
+    "SOCIAL_DESCRIPTION": "Resta in contatto con noi sui social media.",
+    "FORM_TITLE": "Inviaci un messaggio",
+    "FORM_FULL_NAME_LABEL": "Nome completo",
+    "FORM_FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
+    "FORM_FULL_NAME_REQUIRED": "Il nome completo è obbligatorio.",
+    "FORM_EMAIL_LABEL": "Indirizzo email",
+    "FORM_EMAIL_PLACEHOLDER": "es. tu@esempio.it",
+    "FORM_EMAIL_REQUIRED": "L'email è obbligatoria.",
+    "FORM_EMAIL_INVALID": "Inserisci un indirizzo email valido.",
+    "FORM_ISSUE_TYPE_LABEL": "Tipo di problema",
+    "FORM_ISSUE_TYPE_REQUIRED": "Seleziona un tipo di problema.",
+    "FORM_ISSUE_OPTION_GENERAL": "Richiesta generale",
+    "FORM_ISSUE_OPTION_TECHNICAL": "Supporto tecnico",
+    "FORM_ISSUE_OPTION_BILLING": "Fatturazione / Pagamento",
+    "FORM_ISSUE_OPTION_LISTING": "Problema con inserzione / asta",
+    "FORM_ISSUE_OPTION_ACCOUNT": "Gestione dell'account",
+    "FORM_ISSUE_OPTION_OTHER": "Altro",
+    "FORM_MESSAGE_LABEL": "Descrivi il problema",
+    "FORM_MESSAGE_PLACEHOLDER": "Fornisci i dettagli...",
+    "FORM_MESSAGE_REQUIRED": "Il messaggio è obbligatorio.",
+    "FORM_MESSAGE_MIN_LENGTH": "Il messaggio deve contenere almeno 10 caratteri.",
+    "FORM_SUBMIT": "Invia messaggio",
+    "FORM_SUCCESS_TITLE": "Messaggio inviato!",
+    "FORM_SUCCESS_MESSAGE": "Grazie per averci contattato. Ti risponderemo il prima possibile.",
+    "FORM_SEND_ANOTHER": "Invia un altro messaggio"
   },
   "LOGIN": {
     "TITLE": "Accedi",
-    "EMAIL_LABEL": "E-mail",
-    "EMAIL_PLACEHOLDER": "Indirizzo e-mail",
-    "EMAIL_REQUIRED": "L’e-mail è obbligatoria",
-    "EMAIL_INVALID": "Formato e-mail non valido",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Indirizzo email",
+    "EMAIL_REQUIRED": "L'email è obbligatoria",
+    "EMAIL_INVALID": "Formato email non valido",
     "PASSWORD_LABEL": "Password",
     "PASSWORD_PLACEHOLDER": "Inserisci la password",
     "PASSWORD_REQUIRED": "La password è obbligatoria",
@@ -67,10 +67,10 @@
     "FULL_NAME_LABEL": "Nome completo",
     "FULL_NAME_PLACEHOLDER": "Nome completo",
     "FULL_NAME_REQUIRED": "Il nome completo è obbligatorio.",
-    "EMAIL_LABEL": "E-mail",
-    "EMAIL_PLACEHOLDER": "E-mail",
-    "EMAIL_REQUIRED": "L’e-mail è obbligatoria.",
-    "EMAIL_INVALID": "Inserisci un indirizzo e-mail valido.",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "Email",
+    "EMAIL_REQUIRED": "L'email è obbligatoria.",
+    "EMAIL_INVALID": "Inserisci un'email valida.",
     "PASSWORD_LABEL": "Password",
     "PASSWORD_PLACEHOLDER": "Password",
     "PASSWORD_REQUIRED": "La password è obbligatoria.",
@@ -90,58 +90,83 @@
   "HOME": {
     "HERO": {
       "TITLE": "OFFRI. VINCI. RIPETI.",
-      "TAG": "🔥 Aste dal vivo ogni giorno",
+      "TAG": "🔥 Aste live ogni giorno",
       "DESCRIPTION": "La piattaforma di aste online più sicura. Vendi rapidamente o trova offerte uniche.",
       "EXPLORE_AUCTIONS": "Esplora le aste",
       "START_SELLING": "Inizia a vendere",
       "SEARCH_LABEL": "Cerca prodotti e aste...",
-      "SEARCH_PLACEHOLDER": "Esempio: BMW, orecchini d’oro"
+      "SEARCH_PLACEHOLDER": "Esempio: BMW, orecchini d'oro"
+    },
+    "ABOUT": {
+      "EYEBROW": "Chi siamo",
+      "TITLE_START": "Chi",
+      "TITLE_END": "Siamo",
+      "DESCRIPTION": "BidSphere è una moderna piattaforma di aste online creata per rendere gli acquisti e le vendite tramite offerte semplici, sicuri ed entusiasmanti. Mettiamo in contatto migliaia di acquirenti e venditori in un'ampia gamma di categorie attraverso un processo trasparente ed equo per tutti.",
+      "FEATURES": {
+        "SECURE": {
+          "TITLE": "Sicuro e affidabile",
+          "DESCRIPTION": "Ogni transazione è protetta, così puoi fare offerte con fiducia."
+        },
+        "REALTIME": {
+          "TITLE": "Offerte in tempo reale",
+          "DESCRIPTION": "Guarda i prezzi aggiornarsi in diretta e non perdere mai un'occasione vincente."
+        },
+        "COMMUNITY": {
+          "TITLE": "Comunità in crescita",
+          "DESCRIPTION": "Migliaia di acquirenti e venditori attivi in ogni categoria."
+        }
+      }
     },
     "CATEGORIES": {
       "EYEBROW": "Categorie",
-      "TITLE_START": "Esplora le",
-      "TITLE_END": "categorie",
+      "TITLE_START": "Esplora",
+      "TITLE_END": "Categorie",
       "ITEMS": {
-        "TECHNOLOGY": {
-          "NAME": "Tecnologia",
-          "DESCRIPTION": "Dispositivi all’avanguardia e i prodotti elettronici più recenti."
+        "ART": {
+          "NAME": "Arte",
+          "DESCRIPTION": "Dipinti, sculture e opere d'arte da collezione."
         },
-        "AUTO_MOTORS": {
-          "NAME": "Auto e moto",
-          "DESCRIPTION": "Auto, motociclette e ricambi rari."
+        "CLOTHING": {
+          "NAME": "Abbigliamento",
+          "DESCRIPTION": "Abbigliamento, calzature e accessori moda."
         },
-        "ART_COLLECTIBLES": {
-          "NAME": "Arte e collezionismo",
-          "DESCRIPTION": "Opere d’arte esclusive e collezioni."
+        "ELECTRONICS": {
+          "NAME": "Elettronica",
+          "DESCRIPTION": "Telefoni, computer e dispositivi elettronici."
+        },
+        "HOME_GARDEN": {
+          "NAME": "Casa e giardino",
+          "DESCRIPTION": "Mobili, decorazioni e prodotti per il giardino."
+        },
+        "JEWELRY": {
+          "NAME": "Gioielli",
+          "DESCRIPTION": "Anelli, collane, orologi e accessori di valore."
+        },
+        "OTHERS": {
+          "NAME": "Altro",
+          "DESCRIPTION": "Scopri prodotti di altre categorie."
         },
         "REAL_ESTATE": {
           "NAME": "Immobili",
-          "DESCRIPTION": "Proprietà e terreni eccezionali."
+          "DESCRIPTION": "Case, appartamenti, terreni e immobili commerciali."
+        },
+        "VEHICLES": {
+          "NAME": "Veicoli",
+          "DESCRIPTION": "Automobili, motociclette e altri veicoli."
         }
       }
     },
     "AUCTIONS": {
       "EYEBROW": "Marketplace",
-      "TITLE_START": "Aste",
-      "TITLE_END": "attive",
-      "PLACE_BID": "Fai un’offerta",
-      "ITEMS": {
-        "BMW": {
-          "TITLE": "BMW",
-          "DESCRIPTION": "BMW Serie 7, 2022, condizioni impeccabili, unico proprietario."
-        },
-        "GOLD_EARRINGS": {
-          "TITLE": "Orecchini d’oro",
-          "DESCRIPTION": "Orecchini in oro 18 carati con diamanti certificati."
-        },
-        "PATEK_PHILIPPE": {
-          "TITLE": "Orologio Patek Philippe",
-          "DESCRIPTION": "Orologio da collezione in edizione limitata, con scatola e certificato inclusi."
-        },
-        "VILLA": {
-          "TITLE": "Villa",
-          "DESCRIPTION": "Villa di lusso con piscina, cinque camere da letto e vista panoramica."
-        }
+      "TITLE_START": "Attivo",
+      "TITLE_END": "Aste",
+      "PLACE_BID": "Fai un'offerta",
+      "EMPTY": "Al momento non ci sono aste in scadenza — torna a controllare tra poco.",
+      "COUNTDOWN": {
+        "ENDED": "Terminata",
+        "DAYS_HOURS": "{{days}}g {{hours}}h rimanenti",
+        "HOURS_MINUTES": "{{hours}}h {{minutes}}m rimanenti",
+        "MINUTES_SECONDS": "{{minutes}}m {{seconds}}s rimanenti"
       }
     }
   },
@@ -149,85 +174,188 @@
     "TITLE": "Centro assistenza",
     "INFORMATION": "Trova risposte rapide, contattaci telefonicamente o chatta con il nostro assistente IA.",
     "FAQ": "❓ Domande frequenti",
-    "SUPPORT": "📞 Assistenza telefonica rapida",
-    "PROGRAM": "Lunedì - venerdì: 09:00 - 18:00",
+    "SUPPORT": "📞 Supporto telefonico rapido",
+    "PROGRAM": "Lunedì - Venerdì: 09:00 - 18:00",
     "FORM": "📝 Apri un ticket",
     "REQUEST": "Invia richiesta",
-    "ASSISTANT": "Assistente virtuale in tempo reale"
+    "ASSISTANT": "Assistente virtuale live",
+    "ISSUE_TYPE_PLACEHOLDER": "Seleziona il tipo di problema",
+    "CHAT_PLACEHOLDER": "Scrivi il tuo messaggio...",
+    "GUEST": {
+      "MESSAGE": "Per aprire un ticket e ricevere assistenza tecnica, devi accedere al tuo account.",
+      "LOGIN": "Accedi",
+      "REGISTER": "Crea account"
+    },
+    "FAQ_CATEGORIES": {
+      "AUCTIONS": {
+        "TITLE": "🚨 Aste e offerte",
+        "QUESTIONS": {
+          "PLACE_BID": {
+            "QUESTION": "Come faccio a fare un'offerta in un'asta?",
+            "ANSWER": "Vai alla pagina dell'articolo desiderato e inserisci l'importo nel campo \"Fai un'offerta\". La tua offerta deve essere superiore al prezzo attuale."
+          },
+          "CANCEL_BID": {
+            "QUESTION": "Posso annullare un'offerta dopo averla effettuata?",
+            "ANSWER": "Le offerte sono vincolanti una volta effettuate e generalmente non possono essere annullate. Verifica l'importo prima di confermare."
+          },
+          "WIN_AUCTION": {
+            "QUESTION": "Come faccio a sapere se ho vinto un'asta?",
+            "ANSWER": "Riceverai un'email e una notifica nell'app quando l'asta termina e la tua offerta è la più alta."
+          }
+        }
+      },
+      "ACCOUNT": {
+        "TITLE": "👤 Account e autenticazione",
+        "QUESTIONS": {
+          "CREATE_ACCOUNT": {
+            "QUESTION": "Come faccio a creare un account?",
+            "ANSWER": "Fai clic su \"Registrati\" nel menu in alto, inserisci nome utente, email e password, quindi conferma il tuo indirizzo email per attivare l'account."
+          },
+          "FORGOT_PASSWORD": {
+            "QUESTION": "Ho dimenticato la password. Cosa devo fare?",
+            "ANSWER": "Fai clic su \"Password dimenticata?\" nella pagina di accesso e segui le istruzioni inviate al tuo indirizzo email registrato."
+          }
+        }
+      },
+      "DELIVERY": {
+        "TITLE": "📦 Consegna e pagamenti",
+        "QUESTIONS": {
+          "ITEM_DELIVERY": {
+            "QUESTION": "Come viene consegnato l'articolo dopo la vittoria?",
+            "ANSWER": "Dopo la conferma del pagamento, il venditore organizzerà la spedizione o il ritiro. I dettagli della consegna vengono scambiati tramite i messaggi del tuo account."
+          },
+          "NOT_DELIVERED": {
+            "QUESTION": "Cosa succede se il venditore non consegna l'articolo?",
+            "ANSWER": "Contatta immediatamente il nostro team di supporto utilizzando il modulo qui sotto. Esaminiamo tutte le controversie e possiamo sospendere i venditori che non effettuano la consegna."
+          },
+          "SHIPPING_COST": {
+            "QUESTION": "Chi paga la spedizione?",
+            "ANSWER": "L'acquirente paga le spese di spedizione, a meno che il venditore non offra la spedizione gratuita."
+          },
+          "PAYOUT": {
+            "QUESTION": "Quando ricevo il pagamento?",
+            "ANSWER": "I pagamenti vengono trasferiti sul tuo conto bancario entro 3–5 giorni lavorativi dalla conferma del pagamento dell'acquirente."
+          }
+        }
+      },
+      "SELLING": {
+        "TITLE": "🏷️ Vendita",
+        "QUESTIONS": {
+          "LIST_ITEM": {
+            "QUESTION": "Come faccio a mettere in vendita un articolo?",
+            "ANSWER": "Vai alla sezione \"Il mio profilo\" e fai clic su \"Aggiungi asta\". Compila i dettagli e attendi l'approvazione dell'amministratore."
+          },
+          "EDIT_AUCTION": {
+            "QUESTION": "Posso modificare o rimuovere un'asta dopo averla pubblicata?",
+            "ANSWER": "Puoi modificare o rimuovere un'asta solo prima che riceva la prima offerta. Dopodiché, le modifiche vengono bloccate per proteggere gli offerenti."
+          },
+          "NOT_SOLD": {
+            "QUESTION": "Cosa succede se il mio articolo non viene venduto?",
+            "ANSWER": "Puoi abbassare il prezzo di riserva e rimettere in vendita l'articolo oppure offrirlo al miglior offerente."
+          }
+        }
+      }
+    }
   },
   "AUCTIONS_PAGE": {
     "TITLE": "Aste attive",
-    "DESCRIPTION": "Scopri oggetti unici e fai offerte in tempo reale",
+    "DESCRIPTION": "Scopri articoli unici e fai offerte in tempo reale",
     "SEARCH_PLACEHOLDER": "Cerca per nome...",
     "ALL_CATEGORIES": "Tutte le categorie",
     "SORT": {
       "ENDING_SOON": "In scadenza",
-      "PRICE_LOW_HIGH": "Prezzo: dal più basso",
-      "PRICE_HIGH_LOW": "Prezzo: dal più alto",
+      "PRICE_LOW_HIGH": "Prezzo: dal più basso al più alto",
+      "PRICE_HIGH_LOW": "Prezzo: dal più alto al più basso",
       "NEWEST": "Più recenti"
     },
-    "ADD_ITEM": "Aggiungi oggetto",
+    "ADD_ITEM": "Aggiungi articolo",
     "RESULT": {
       "ONE": "asta trovata",
       "MANY": "aste trovate"
     },
     "CURRENT_PRICE": "Prezzo attuale",
+    "POSTED_BY": "Pubblicato da",
+    "YOU": "Tu",
     "EMPTY": {
-      "TITLE": "Nessun oggetto trovato",
+      "TITLE": "Nessun articolo trovato",
       "DESCRIPTION": "Al momento non ci sono aste attive corrispondenti alla tua ricerca."
     },
     "TIME": {
       "ENDED": "Asta terminata",
-      "LEFT": "rimanente"
+      "LEFT": "rimanenti"
+    }
+  },
+  "SEARCH_PAGE": {
+    "TITLE": "Risultati della ricerca",
+    "DESCRIPTION_WITH_QUERY": "Risultati per \"{{query}}\"",
+    "DESCRIPTION_EMPTY": "Cerca aste, utenti o post del forum su BidSphere",
+    "SEARCH_PLACEHOLDER": "Cerca aste, utenti o post del forum...",
+    "LOADING": "Caricamento dei risultati...",
+    "TABS": {
+      "AUCTIONS": "Aste",
+      "USERS": "Utenti",
+      "FORUM": "Forum"
+    },
+    "AUCTIONS_EMPTY": {
+      "TITLE": "Nessuna asta trovata",
+      "DESCRIPTION": "Non ci sono aste corrispondenti alla tua ricerca."
+    },
+    "USERS_EMPTY": {
+      "TITLE": "Nessun utente trovato",
+      "DESCRIPTION": "Non ci sono utenti corrispondenti alla tua ricerca."
+    },
+    "FORUM_EMPTY": {
+      "TITLE": "Nessun post del forum trovato",
+      "DESCRIPTION": "Non ci sono discussioni corrispondenti alla tua ricerca."
     }
   },
   "ADD_ITEM_PAGE": {
     "BADGE": "🔨 Vendi su BidSphere",
-    "TITLE": "Aggiungi un nuovo oggetto all’asta",
-    "DESCRIPTION": "Compila i dati qui sotto per pubblicare il tuo oggetto all’asta.",
+    "TITLE": "Aggiungi un nuovo articolo all'asta",
+    "DESCRIPTION": "Compila i dettagli qui sotto per pubblicare il tuo articolo all'asta.",
     "FIELDS": {
-      "NAME": "Nome dell’oggetto *",
-      "NAME_PLACEHOLDER": "es. bicicletta d’epoca",
-      "START_PRICE": "Prezzo iniziale (RON) *",
-      "DURATION": "Durata dell’asta (giorni) *",
+      "NAME": "Nome dell'articolo *",
+      "NAME_PLACEHOLDER": "es. Bicicletta vintage",
+      "START_PRICE": "Prezzo di partenza (RON) *",
+      "DURATION": "Durata dell'asta (giorni) *",
       "CATEGORY": "Categoria *",
       "CATEGORY_PLACEHOLDER": "Seleziona una categoria",
       "LOCATION": "Località *",
       "LOCATION_PLACEHOLDER": "es. Brașov",
       "DESCRIPTION": "Descrizione",
-      "DESCRIPTION_PLACEHOLDER": "Descrivi le condizioni, la storia e i dettagli dell’oggetto..."
+      "DESCRIPTION_PLACEHOLDER": "Descrivi le condizioni, la storia e i dettagli dell'articolo..."
     },
     "IMAGE": {
-      "TITLE": "Foto dell’oggetto",
-      "UPLOAD": "Fai clic per caricare un’immagine",
-      "DETAILS": "JPG, PNG o WEBP, massimo 5 MB",
+      "TITLE": "Foto dell'articolo",
+      "UPLOAD": "Fai clic per caricare un'immagine",
+      "DETAILS": "JPG, PNG o WEBP, max 5 MB",
       "REMOVE": "Rimuovi"
     },
     "BUTTONS": {
       "CANCEL": "Annulla",
-      "PUBLISH": "Pubblica oggetto",
-      "PUBLISHING": "Pubblicazione..."
+      "PUBLISH": "Pubblica articolo",
+      "PUBLISHING": "Pubblicazione in corso..."
     },
     "VALIDATION": {
       "NAME_REQUIRED": "Il nome è obbligatorio.",
       "NAME_MIN": "Il nome deve contenere almeno 3 caratteri.",
-      "PRICE_REQUIRED": "Il prezzo iniziale è obbligatorio.",
+      "PRICE_REQUIRED": "Il prezzo di partenza è obbligatorio.",
       "PRICE_MIN": "Il prezzo deve essere maggiore di 0.",
       "DURATION": "La durata deve essere compresa tra 1 e 30 giorni.",
       "CATEGORY": "Seleziona una categoria.",
       "LOCATION": "La località è obbligatoria.",
       "IMAGE_TYPE": "Sono consentite solo immagini JPG, PNG o WEBP.",
-      "IMAGE_SIZE": "L’immagine deve essere inferiore a 5 MB."
+      "IMAGE_SIZE": "L'immagine deve essere inferiore a 5 MB."
     },
     "MESSAGES": {
-      "SUCCESS": "L’oggetto è stato pubblicato con successo all’asta!",
-      "SUCCESS_LOCAL": "L’oggetto è stato pubblicato con successo all’asta (salvato localmente — il backend non è ancora pronto)."
+      "SUCCESS": "Articolo pubblicato con successo all'asta!",
+      "SUCCESS_LOCAL": "Articolo pubblicato con successo all'asta (salvato localmente - backend non pronto)."
     }
   },
   "FOOTER": {
     "ABOUT_TITLE": "Chi siamo",
-    "ABOUT_TEXT_1": "BidSphere è una moderna piattaforma di aste online progettata per rendere semplice, sicuro ed entusiasmante acquistare e vendere tramite offerte.",
-    "ABOUT_TEXT_2": "Mettiamo in contatto migliaia di acquirenti e venditori in un’ampia gamma di categorie, offrendo a tutti un processo di offerta trasparente ed equo. Che tu stia cercando un affare o voglia vendere all’acquirente giusto, BidSphere ti offre gli strumenti e la fiducia necessari per fare offerte in tutta sicurezza.",
+    "ABOUT_TEXT_1": "BidSphere è una moderna piattaforma di aste online progettata per rendere gli acquisti e le vendite tramite offerte semplici, sicuri ed entusiasmanti.",
+    "ABOUT_TEXT_2": "Mettiamo in contatto migliaia di acquirenti e venditori in un'ampia gamma di categorie, offrendo a tutti un processo di offerta trasparente ed equo. Che tu stia cercando un ottimo affare o sperando di vendere all'acquirente giusto, BidSphere ti offre gli strumenti e la fiducia necessari per fare offerte in sicurezza.",
     "LINKS": "Link",
     "HOME": "Home",
     "SERVICES": "Aste",
@@ -241,88 +369,143 @@
   "NOT_FOUND": {
     "CODE": "404",
     "TITLE": "Ops! Pagina non trovata",
-    "MESSAGE": "La pagina che stai cercando non esiste oppure è stata spostata.",
+    "MESSAGE": "La pagina che stai cercando non esiste o è stata spostata.",
     "BUTTON": "TORNA ALLA HOME"
   },
-  "FORUM": {
-    "TITLE": "Discussioni del forum",
-    "DESCRIPTION": "Sfoglia le discussioni attuali e partecipa alle conversazioni con gli altri utenti.",
-    "START_DISCUSSION": "Avvia una discussione",
-    "LOGIN_TO_START": "Accedi per avviare una discussione",
+  "FORUM_PAGE": {
+    "HEADER": {
+      "TITLE": "Discussioni del forum",
+      "DESCRIPTION": "Sfoglia le discussioni attuali e partecipa alle conversazioni con altri utenti."
+    },
+    "SEARCH": {
+      "PLACEHOLDER": "Cerca discussioni...",
+      "ARIA_LABEL": "Cerca discussioni"
+    },
+    "ACTIONS": {
+      "START_DISCUSSION": "Avvia una discussione",
+      "LOGIN_TO_START": "Accedi per avviare una discussione",
+      "TRY_AGAIN": "Riprova"
+    },
     "SORT": {
       "ARIA_LABEL": "Ordina discussioni",
-      "LATEST": "Più recenti",
-      "OLDEST": "Più vecchie",
+      "LATEST": "Più recenti prima",
+      "OLDEST": "Più vecchie prima",
       "MOST_COMMENTED": "Più commentate"
     },
-    "DISCUSSION": "discussione",
-    "DISCUSSIONS": "discussioni",
+    "COUNT": {
+      "DISCUSSION": "discussione",
+      "DISCUSSIONS": "discussioni",
+      "COMMENT": "commento",
+      "COMMENTS": "commenti"
+    },
     "LOADING": {
       "TITLE": "Caricamento delle discussioni"
     },
     "ERROR": {
-      "TITLE": "Impossibile caricare le discussioni",
-      "RETRY": "Riprova"
+      "TITLE": "Impossibile caricare le discussioni"
     },
-    "POSTED_BY": "Pubblicato da",
-    "COMMENT": "commento",
-    "COMMENTS": "commenti",
+    "POST": {
+      "POSTED_BY": "Pubblicato da"
+    },
     "EMPTY": {
       "TITLE": "Nessuna discussione disponibile",
-      "MESSAGE": "Al momento non ci sono discussioni nel forum."
+      "DESCRIPTION": "Al momento non ci sono discussioni nel forum."
+    },
+    "PAGINATION": {
+      "ARIA_LABEL": "Paginazione",
+      "PREVIOUS": "Precedente",
+      "NEXT": "Successivo"
     }
   },
   "NOTIFICATIONS": {
     "TRUE": "Notifiche",
-    "FALSE": "Nessuna notifica al momento."
+    "FALSE": "Nessuna notifica al momento.",
+    "OPEN_ARIA": "Apri notifiche",
+    "DO_NOT_DISTURB": "Non disturbare",
+    "LOADING": "Caricamento delle notifiche...",
+    "ACTIONS_ARIA": "Azioni di notifica",
+    "MARKING_ALL_READ": "Contrassegno come letto...",
+    "MARK_ALL_READ": "Segna tutto come letto",
+    "DELETE": "Elimina notifica",
+    "TYPES": {
+      "AuctionApproved": "La tua asta \"{{itemName}}\" è stata approvata ed è ora pubblica!",
+      "AuctionRejected": "La tua asta \"{{itemName}}\" è stata rifiutata da un amministratore.",
+      "SupportReply": "Un amministratore ha risposto al tuo messaggio del {{date}}: {{reply}}"
+    }
   },
   "AUCTION_ITEM_PAGE": {
-    "HEADER_BADGE": "🏷️ Dettagli dell’asta",
+    "HEADER_BADGE": "🏷️ Dettagli dell'asta",
     "INFO": {
       "CURRENT_PRICE": "Prezzo attuale",
-      "START_PRICE": "Prezzo iniziale",
+      "START_PRICE": "Prezzo di partenza",
       "CATEGORY": "Categoria",
       "LOCATION": "Località",
       "STARTS_AT": "Inizia il",
       "OWNER": "Proprietario",
-      "ENDS": "Termina il"
+      "ENDS": "Termina"
     },
     "BID": {
       "TITLE": "Fai la tua offerta",
-      "PLACEHOLDER": "Inserisci l’importo dell’offerta",
-      "BUTTON": "🔨 Fai un’offerta",
+      "PLACEHOLDER": "Inserisci l'importo dell'offerta",
+      "BUTTON": "🔨 Fai un'offerta",
       "MINIMUM": "Offerta minima:",
-      "LOGIN_TEXT": "Accedi per fare un’offerta su questo oggetto.",
+      "LOGIN_TEXT": "Accedi per fare un'offerta su questo articolo.",
       "LOGIN_BUTTON": "Accedi per offrire"
     },
     "WISHLIST": {
-      "ADD": "🤍 Aggiungi alla lista desideri",
-      "ADDED": "❤️ Nella lista desideri"
+      "ADD": "Aggiungi alla lista dei desideri",
+      "ADDED": "Nella lista dei desideri",
+      "TOAST_ADDED": "Articolo aggiunto alla tua lista dei desideri.",
+      "TOAST_REMOVED": "Articolo rimosso dalla tua lista dei desideri."
+    },
+    "ACTIONS": {
+      "REPORT_ITEM": "Segnala articolo",
+      "ITEM_REPORTED": "Articolo segnalato"
+    },
+    "REPORT": {
+      "TITLE": "Segnala asta",
+      "DESCRIPTION": "Aiutaci a mantenere BidSphere sicuro. Seleziona un motivo per segnalare questa asta:",
+      "REASON_LABEL": "Motivo",
+      "REASONS": {
+        "INAPPROPRIATE_CONTENT": "Contenuto inappropriato",
+        "MISLEADING_DESCRIPTION": "Descrizione fuorviante",
+        "FAKE_ITEM": "Articolo falso o contraffatto",
+        "SUSPICIOUS_BIDDING": "Attività di offerta sospetta",
+        "OTHER": "Altro"
+      },
+      "DETAILS_LABEL": "Dettagli aggiuntivi (facoltativi)",
+      "DETAILS_PLACEHOLDER": "Descrivi il problema...",
+      "CANCEL": "Annulla",
+      "SUBMIT": "Invia segnalazione",
+      "TOAST": {
+        "SUCCESS": "L'asta è stata segnalata con successo.",
+        "ERROR": "Non è stato possibile segnalare l'asta."
+      }
     },
     "DESCRIPTION": {
       "TITLE": "Descrizione del prodotto"
     },
     "STATUS": {
-      "ACTIVE": "Attiva",
+      "ACTIVE": "Attivo",
       "ENDED": "Terminata",
       "PENDING": "In attesa"
     },
     "MESSAGES": {
-      "AUCTION_ENDED": "L’asta è terminata.",
-      "BID_HIGHER_CURRENT": "L’offerta deve essere superiore al prezzo attuale.",
-      "BID_HIGHER_MINIMUM": "L’offerta deve essere superiore al prezzo minimo."
+      "AUCTION_ENDED": "Asta terminata.",
+      "BID_HIGHER_CURRENT": "L'offerta deve essere superiore al prezzo attuale.",
+      "BID_HIGHER_MINIMUM": "L'offerta deve essere superiore al prezzo minimo."
     },
     "COUNTDOWN": {
       "DAYS": "g",
       "HOURS": "h",
-      "MINUTES": "min",
+      "MINUTES": "m",
       "SECONDS": "s"
     }
   },
   "REVIEWS": {
     "TITLE": "Recensioni",
     "REVIEWER_ID": "ID del recensore",
-    "REVIEWED_USER_ID": "ID dell’utente recensito",
+    "REVIEWED_USER_ID": "ID dell'utente recensito",
     "RATING": "Valutazione (0–5)",
     "RATING_ERROR": "La valutazione deve essere compresa tra 0 e 5.",
     "COMMENT": "Commento",
@@ -341,29 +524,60 @@
     "LOGOUT": "Esci"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Torna alle discussioni",
-    "LOADING_DISCUSSION_TITLE": "Caricamento della discussione",
-    "LOADING_DISCUSSION_MESSAGE": "La discussione è in fase di caricamento.",
-    "LOAD_DISCUSSION_ERROR": "Impossibile caricare la discussione",
-    "TRY_AGAIN": "Riprova",
-    "DELETE_POST": "Elimina",
-    "POSTED_BY": "Pubblicato da",
-    "DISCUSSION": "Discussione",
-    "COMMENT": "commento",
-    "COMMENTS": "commenti",
-    "ADD_COMMENT": "Aggiungi un commento",
-    "COMMENT_PLACEHOLDER": "Scrivi qui il tuo commento...",
-    "COMMENT_REQUIRED": "Il commento è obbligatorio.",
-    "COMMENT_MIN_LENGTH": "Il commento deve contenere almeno 2 caratteri.",
-    "COMMENT_MAX_LENGTH": "Il commento non può superare i 1000 caratteri.",
-    "PUBLISHING": "Pubblicazione...",
-    "PUBLISH_COMMENT": "Pubblica commento",
-    "LOGIN_REQUIRED": "Devi aver effettuato l’accesso per pubblicare un commento.",
-    "LOGIN": "Accedi",
-    "LOADING_COMMENTS": "Caricamento dei commenti",
-    "LOAD_COMMENTS_ERROR": "Impossibile caricare i commenti",
-    "DELETE_COMMENT": "Elimina",
-    "NO_COMMENTS": "Nessun commento al momento"
+    "BACK": "Torna alle discussioni",
+    "POST": {
+      "LOADING_TITLE": "Caricamento della discussione",
+      "LOADING_MESSAGE": "La discussione è in fase di caricamento.",
+      "ERROR_TITLE": "Impossibile caricare la discussione",
+      "POSTED_BY": "Pubblicato da"
+    },
+    "ACTIONS": {
+      "REPORT": "Segnala",
+      "EDIT": "Modifica",
+      "DELETE": "Elimina",
+      "CANCEL": "Annulla",
+      "SAVE": "Salva",
+      "RETRY": "Riprova"
+    },
+    "EDIT_POST": {
+      "TITLE_LABEL": "Titolo",
+      "TITLE_VALIDATION": "Il titolo deve contenere tra 3 e 150 caratteri.",
+      "DESCRIPTION_LABEL": "Descrizione",
+      "DESCRIPTION_VALIDATION": "La descrizione deve contenere tra 10 e 5000 caratteri."
+    },
+    "COMMENTS": {
+      "TITLE": "Discussione",
+      "COMMENT": "commento",
+      "COMMENTS": "commenti",
+      "ADD_LABEL": "Aggiungi un commento",
+      "PLACEHOLDER": "Scrivi qui il tuo commento...",
+      "VALIDATION": {
+        "REQUIRED": "È richiesto un commento.",
+        "MIN_LENGTH": "Il commento deve contenere almeno 2 caratteri.",
+        "MAX_LENGTH": "Il commento non può superare 1000 caratteri."
+      },
+      "PUBLISHING": "Pubblicazione in corso...",
+      "PUBLISH": "Pubblica commento",
+      "LOGIN_REQUIRED": "Devi aver effettuato l'accesso per pubblicare un commento.",
+      "LOGIN": "Accedi",
+      "LOADING": "Caricamento dei commenti",
+      "ERROR": "Impossibile caricare i commenti",
+      "EMPTY": "Ancora nessun commento"
+    },
+    "REPORT": {
+      "TITLE": "Segnala post",
+      "DESCRIPTION": "Seleziona il motivo per cui segnali questa discussione:",
+      "CANCEL": "Annulla",
+      "SUBMITTING": "Invio in corso...",
+      "SUBMIT": "Invia segnalazione",
+      "REASONS": {
+        "SPAM": "Spam",
+        "INAPPROPRIATE_CONTENT": "Contenuto inappropriato",
+        "HARASSMENT": "Molestie o comportamento offensivo",
+        "MISLEADING_INFORMATION": "Informazioni fuorvianti",
+        "OTHER": "Altro"
+      }
+    }
   },
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Torna alle discussioni",
@@ -374,137 +588,132 @@
     "TITLE_REQUIRED": "Il titolo è obbligatorio.",
     "TITLE_WHITESPACE": "Il titolo non può contenere solo spazi.",
     "TITLE_MIN_LENGTH": "Il titolo deve contenere almeno 3 caratteri.",
-    "TITLE_MAX_LENGTH": "Il titolo non può superare i 150 caratteri.",
+    "TITLE_MAX_LENGTH": "Il titolo non può superare 150 caratteri.",
     "DESCRIPTION_LABEL": "Descrizione",
-    "DESCRIPTION_PLACEHOLDER": "Descrivi l’argomento che vorresti discutere...",
+    "DESCRIPTION_PLACEHOLDER": "Descrivi l'argomento che desideri discutere...",
     "DESCRIPTION_REQUIRED": "La descrizione è obbligatoria.",
     "DESCRIPTION_WHITESPACE": "La descrizione non può contenere solo spazi.",
     "DESCRIPTION_MIN_LENGTH": "La descrizione deve contenere almeno 10 caratteri.",
-    "DESCRIPTION_MAX_LENGTH": "La descrizione non può superare i 5000 caratteri.",
+    "DESCRIPTION_MAX_LENGTH": "La descrizione non può superare 5000 caratteri.",
     "CREATE_ERROR": "Impossibile creare la discussione",
     "CANCEL": "Annulla",
     "CREATING": "Creazione della discussione...",
     "SUBMIT": "Avvia discussione"
-  }, 
+  },
   "PROFILE_PAGE": {
-  "PROFILE": {
-    "USERNAME_NOT_SET": "@username non impostato",
-    "NAME_NOT_SET": "Nome non impostato",
-    "EMAIL_NOT_SET": "Email non impostata",
-    "AVERAGE_SCORE": "Punteggio medio"
+    "PROFILE": {
+      "USERNAME_NOT_SET": "@nome utente non impostato",
+      "NAME_NOT_SET": "Nome non impostato",
+      "EMAIL_NOT_SET": "Email non impostata",
+      "AVERAGE_SCORE": "Punteggio medio"
+    },
+    "BUTTONS": {
+      "EDIT_PROFILE": "Modifica profilo",
+      "LOG_OUT": "Esci",
+      "ADD_ITEM": "Aggiungi nuovo articolo",
+      "CHANGE_PHOTO": "Cambia foto",
+      "HIDE_PASSWORD": "Nascondi impostazioni password",
+      "CHANGE_PASSWORD": "Cambia password",
+      "UPDATE_PASSWORD": "Aggiorna password",
+      "CANCEL": "Annulla",
+      "SAVE": "Salva modifiche"
+    },
+    "THEME": {
+      "TITLE": "Personalizza tema",
+      "DESCRIPTION": "Scegli uno stile visivo adatto al tuo umore.",
+      "LIGHT": "Chiaro",
+      "SUNSET": "Tramonto",
+      "OCEAN": "Oceano"
+    },
+    "SELL": {
+      "TITLE": "Vendi un nuovo articolo",
+      "DESCRIPTION": "Pronto a pubblicare qualcosa?"
+    },
+    "SECTIONS": {
+      "ACTIVE_SALES": "Le mie vendite attive",
+      "WON_ITEMS": "Articoli vinti",
+      "WISHLIST": "La mia lista dei desideri",
+      "REVIEWS": "Recensioni ricevute"
+    },
+    "EMPTY": {
+      "ACTIVE_SALES": "Nessun articolo pubblicato.",
+      "WON_ITEMS": "Nessun articolo vinto.",
+      "WISHLIST": "Nessun articolo nella tua lista dei desideri.",
+      "REVIEWS": "Nessuna recensione ricevuta."
+    },
+    "EDIT": {
+      "TITLE": "Modifica profilo",
+      "USERNAME": "Nome utente",
+      "FULL_NAME": "Nome completo",
+      "EMAIL": "Email",
+      "USERNAME_PLACEHOLDER": "es. mario_rossi",
+      "FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
+      "EMAIL_PLACEHOLDER": "es. mario@email.it"
+    },
+    "PASSWORD": {
+      "CURRENT": "Password attuale",
+      "NEW": "Nuova password",
+      "CONFIRM": "Conferma password",
+      "CURRENT_PLACEHOLDER": "Inserisci la password attuale",
+      "NEW_PLACEHOLDER": "Inserisci la nuova password",
+      "CONFIRM_PLACEHOLDER": "Conferma la nuova password",
+      "REQUIRED": "Tutti i campi sono obbligatori.",
+      "NOT_MATCH": "La nuova password e la conferma non corrispondono.",
+      "SUCCESS": "Password aggiornata con successo!",
+      "ERROR": "Errore durante l'aggiornamento della password. Controlla la password attuale."
+    },
+    "STATUS": {
+      "ACTIVE": "Attivo",
+      "ADDED": "Aggiunto",
+      "WON": "Vinto"
+    },
+    "DEFAULTS": {
+      "USER": "Utente"
+    },
+    "ERRORS": {
+      "LOAD_CATEGORIES": "Errore durante il caricamento delle categorie.",
+      "LOAD_ITEMS": "Errore durante il caricamento degli articoli.",
+      "LOAD_REVIEWS": "Errore durante il caricamento delle recensioni."
+    },
+    "MESSAGES": {
+      "PROFILE_UPDATED": "Profilo aggiornato con successo."
+    }
   },
-
-  "BUTTONS": {
-    "EDIT_PROFILE": "Modifica profilo",
-    "LOG_OUT": "Disconnetti",
-    "ADD_ITEM": "Aggiungi nuovo articolo",
-    "CHANGE_PHOTO": "Cambia foto",
-    "HIDE_PASSWORD": "Nascondi impostazioni password",
-    "CHANGE_PASSWORD": "Cambia password",
-    "UPDATE_PASSWORD": "Aggiorna password",
-    "CANCEL": "Annulla",
-    "SAVE": "Salva modifiche"
-  },
-
-  "THEME": {
-    "TITLE": "Personalizza tema",
-    "DESCRIPTION": "Scegli uno stile visivo che corrisponda al tuo umore.",
-    "LIGHT": "Chiaro",
-    "SUNSET": "Tramonto",
-    "OCEAN": "Oceano"
-  },
-
-  "SELL": {
-    "TITLE": "Vendi un nuovo articolo",
-    "DESCRIPTION": "Pronto a mettere qualcosa in vendita?"
-  },
-
-  "SECTIONS": {
-    "ACTIVE_SALES": "Le mie vendite attive",
-    "WON_ITEMS": "Articoli vinti",
-    "WISHLIST": "La mia lista dei desideri",
-    "REVIEWS": "Recensioni ricevute"
-  },
-
-  "EMPTY": {
-    "ACTIVE_SALES": "Nessun articolo pubblicato al momento.",
-    "WON_ITEMS": "Nessun articolo vinto al momento.",
-    "WISHLIST": "Nessun articolo nella tua lista dei desideri.",
-    "REVIEWS": "Nessuna recensione ricevuta al momento."
-  },
-
-  "EDIT": {
-    "TITLE": "Modifica profilo",
-    "USERNAME": "Nome utente",
-    "FULL_NAME": "Nome completo",
-    "EMAIL": "Email",
-
-    "USERNAME_PLACEHOLDER": "es. mario_rossi",
-    "FULL_NAME_PLACEHOLDER": "es. Mario Rossi",
-    "EMAIL_PLACEHOLDER": "es. mario@email.com"
-  },
-
-  "PASSWORD": {
-    "CURRENT": "Password attuale",
-    "NEW": "Nuova password",
-    "CONFIRM": "Conferma password",
-
-    "CURRENT_PLACEHOLDER": "Inserisci la password attuale",
-    "NEW_PLACEHOLDER": "Inserisci la nuova password",
-    "CONFIRM_PLACEHOLDER": "Conferma la nuova password",
-
-    "REQUIRED": "Tutti i campi sono obbligatori.",
-    "NOT_MATCH": "La nuova password e la conferma non coincidono.",
-    "SUCCESS": "Password aggiornata con successo!",
-    "ERROR": "Errore durante l'aggiornamento della password. Controlla la password attuale."
-  },
-
-  "STATUS": {
-    "ACTIVE": "Attivo",
-    "ADDED": "Aggiunto",
-    "WON": "Vinto"
-  },
-
-  "DEFAULTS": {
-    "USER": "Utente"
-  },
-
-  "ERRORS": {
-    "LOAD_CATEGORIES": "Errore durante il caricamento delle categorie.",
-    "LOAD_ITEMS": "Errore durante il caricamento degli articoli.",
-    "LOAD_REVIEWS": "Errore durante il caricamento delle recensioni."
-  },
-
-  "MESSAGES": {
-    "PROFILE_UPDATED": "Profilo aggiornato con successo."
+  "USER_PAGE": {
+    "ACTIONS": {
+      "ADD_REVIEW": "⭐ Aggiungi recensione",
+      "REPORT_USER": "⚠️ Segnala utente",
+      "USER_REPORTED": "✔️ Utente segnalato"
+    },
+    "COMMON": {
+      "CANCEL": "Annulla",
+      "CLOSE": "Chiudi"
+    },
+    "REPORT_MODAL": {
+      "TITLE": "Segnala l'utente @{{username}}",
+      "DESCRIPTION": "Inserisci il motivo della segnalazione affinché il nostro team possa esaminare l'attività dell'account.",
+      "PLACEHOLDER": "Scrivi qui il motivo della segnalazione...",
+      "SUBMIT": "Invia segnalazione"
+    },
+    "REVIEW_MODAL": {
+      "TITLE": "Aggiungi una recensione per @{{username}}",
+      "DESCRIPTION": "La tua opinione conta! Assegna una valutazione e scrivi un breve commento sulla tua esperienza con questo utente.",
+      "PLACEHOLDER": "Scrivi qui la tua recensione...",
+      "SUBMIT": "Invia recensione"
+    },
+    "REVIEWS": {
+      "TITLE": "Recensioni dell'utente ({{count}})",
+      "YOU": "Tu",
+      "EMPTY": "Questo utente non ha ancora ricevuto recensioni."
+    },
+    "AUCTIONS": {
+      "TITLE": "Aste attive dell'utente",
+      "FILTER_LABEL": "Filtra per categoria:",
+      "ALL_CATEGORIES": "Tutte le categorie",
+      "CURRENT_PRICE": "Prezzo attuale:",
+      "EMPTY": "Questo utente non ha attualmente aste attive in questa categoria.",
+      "SHOW_LESS": "Mostra meno",
+      "SHOW_MORE": "Mostra altro"
+    }
   }
-},
-"SEARCH_PAGE": {
-  "TITLE": "Risultati della ricerca",
-  "DESCRIPTION_WITH_QUERY": "Risultati visualizzati per \"{{query}}\"",
-  "DESCRIPTION_EMPTY": "Cerca aste, utenti o post del forum su BidSphere",
-  "SEARCH_PLACEHOLDER": "Cerca aste, utenti o post del forum...",
-  "LOADING": "Caricamento dei risultati...",
-
-  "TABS": {
-    "AUCTIONS": "Aste",
-    "USERS": "Utenti",
-    "FORUM": "Forum"
-  },
-
-  "AUCTIONS_EMPTY": {
-    "TITLE": "Nessuna asta trovata",
-    "DESCRIPTION": "Non ci sono aste corrispondenti alla tua ricerca."
-  },
-
-  "USERS_EMPTY": {
-    "TITLE": "Nessun utente trovato",
-    "DESCRIPTION": "Non ci sono utenti corrispondenti alla tua ricerca."
-  },
-
-  "FORUM_EMPTY": {
-    "TITLE": "Nessun post del forum trovato",
-    "DESCRIPTION": "Non ci sono discussioni corrispondenti alla tua ricerca."
-  }
-}
 }

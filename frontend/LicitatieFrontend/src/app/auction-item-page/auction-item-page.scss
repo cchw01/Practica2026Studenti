@@ -1025,3 +1025,12 @@
   background: rgba(220, 53, 69, 0.12);
   color: #c0392b;
 }
+.btn-report:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(241, 245, 249, 0.8) !important;
+  border-color: #cbd5e1 !important;
+  color: #94a3b8 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
