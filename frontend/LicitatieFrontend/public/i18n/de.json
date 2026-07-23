@@ -155,32 +155,7 @@
     "REQUEST": "Anfrage senden",
     "ASSISTANT": "Virtueller Live-Assistent"
   },
-  "AUCTIONS_PAGE": {
-    "TITLE": "Aktive Auktionen",
-    "DESCRIPTION": "Entdecken Sie einzigartige Artikel und bieten Sie in Echtzeit",
-    "SEARCH_PLACEHOLDER": "Nach Namen suchen...",
-    "ALL_CATEGORIES": "Alle Kategorien",
-    "SORT": {
-      "ENDING_SOON": "Endet bald",
-      "PRICE_LOW_HIGH": "Preis: aufsteigend",
-      "PRICE_HIGH_LOW": "Preis: absteigend",
-      "NEWEST": "Neueste"
-    },
-    "ADD_ITEM": "Artikel hinzufügen",
-    "RESULT": {
-      "ONE": "Auktion gefunden",
-      "MANY": "Auktionen gefunden"
-    },
-    "CURRENT_PRICE": "Aktueller Preis",
-    "EMPTY": {
-      "TITLE": "Keine Artikel gefunden",
-      "DESCRIPTION": "Derzeit gibt es keine aktiven Auktionen, die Ihrer Suche entsprechen."
-    },
-    "TIME": {
-      "ENDED": "Auktion beendet",
-      "LEFT": "verbleibend"
-    }
-  },
+  "AUCTIONS_PAGE": { "TITLE": "Aktive Auktionen", "DESCRIPTION": "Entdecken Sie einzigartige Artikel und bieten Sie in Echtzeit", "SEARCH_PLACEHOLDER": "Nach Namen suchen...", "ALL_CATEGORIES": "Alle Kategorien", "SORT": { "ENDING_SOON": "Enden bald", "PRICE_LOW_HIGH": "Preis: aufsteigend", "PRICE_HIGH_LOW": "Preis: absteigend", "NEWEST": "Neueste" }, "ADD_ITEM": "Artikel hinzufügen", "LOADING": "Aktive Auktionen werden geladen...", "ERROR": { "TITLE": "Auktionen konnten nicht geladen werden", "DESCRIPTION": "Stellen Sie sicher, dass der Backend-Server läuft, und versuchen Sie es erneut.", "RETRY": "Erneut versuchen" }, "RESULT": { "ONE": "Auktion gefunden", "MANY": "Auktionen gefunden" }, "CURRENT_PRICE": "Aktueller Preis", "POSTED_BY": "Veröffentlicht von", "YOU": "Sie", "EMPTY": { "TITLE": "Keine Artikel gefunden", "DESCRIPTION": "Derzeit gibt es keine aktiven Auktionen, die Ihrer Suche entsprechen." }, "TIME": { "ENDED": "Auktion beendet", "LEFT": "verbleibend" } },
   "ADD_ITEM_PAGE": {
     "BADGE": "🔨 Auf BidSphere verkaufen",
     "TITLE": "Neuen Auktionsartikel hinzufügen",
@@ -346,30 +321,70 @@
     "LOGOUT": "Abmelden"
   },
   "FORUM_DETAILS": {
-    "BACK_TO_DISCUSSIONS": "Zurück zu den Diskussionen",
-    "LOADING_DISCUSSION_TITLE": "Diskussion wird geladen",
-    "LOADING_DISCUSSION_MESSAGE": "Die Diskussion wird geladen.",
-    "LOAD_DISCUSSION_ERROR": "Diskussion konnte nicht geladen werden",
-    "TRY_AGAIN": "Erneut versuchen",
-    "DELETE_POST": "Löschen",
-    "POSTED_BY": "Veröffentlicht von",
-    "DISCUSSION": "Diskussion",
+  "BACK": "Zurück zu den Diskussionen",
+
+  "POST": {
+    "LOADING_TITLE": "Diskussion wird geladen",
+    "LOADING_MESSAGE": "Die Diskussion wird geladen.",
+    "ERROR_TITLE": "Diskussion konnte nicht geladen werden",
+    "POSTED_BY": "Veröffentlicht von"
+  },
+
+  "ACTIONS": {
+    "REPORT": "Melden",
+    "EDIT": "Bearbeiten",
+    "DELETE": "Löschen",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern",
+    "RETRY": "Erneut versuchen"
+  },
+
+  "EDIT_POST": {
+    "TITLE_LABEL": "Titel",
+    "TITLE_VALIDATION": "Der Titel muss zwischen 3 und 150 Zeichen lang sein.",
+    "DESCRIPTION_LABEL": "Beschreibung",
+    "DESCRIPTION_VALIDATION": "Die Beschreibung muss zwischen 10 und 5000 Zeichen lang sein."
+  },
+
+  "COMMENTS": {
+    "TITLE": "Diskussion",
     "COMMENT": "Kommentar",
     "COMMENTS": "Kommentare",
-    "ADD_COMMENT": "Kommentar hinzufügen",
-    "COMMENT_PLACEHOLDER": "Schreiben Sie hier Ihren Kommentar...",
-    "COMMENT_REQUIRED": "Ein Kommentar ist erforderlich.",
-    "COMMENT_MIN_LENGTH": "Der Kommentar muss mindestens 2 Zeichen lang sein.",
-    "COMMENT_MAX_LENGTH": "Der Kommentar darf höchstens 1000 Zeichen lang sein.",
+    "ADD_LABEL": "Kommentar hinzufügen",
+    "PLACEHOLDER": "Schreiben Sie hier Ihren Kommentar...",
+    "PUBLISH": "Kommentar veröffentlichen",
     "PUBLISHING": "Wird veröffentlicht...",
-    "PUBLISH_COMMENT": "Kommentar veröffentlichen",
     "LOGIN_REQUIRED": "Sie müssen angemeldet sein, um einen Kommentar zu veröffentlichen.",
     "LOGIN": "Anmelden",
-    "LOADING_COMMENTS": "Kommentare werden geladen",
-    "LOAD_COMMENTS_ERROR": "Kommentare konnten nicht geladen werden",
-    "DELETE_COMMENT": "Löschen",
-    "NO_COMMENTS": "Noch keine Kommentare"
+    "LOADING": "Kommentare werden geladen",
+    "ERROR_TITLE": "Kommentare konnten nicht geladen werden",
+    "EMPTY": "Noch keine Kommentare",
+
+    "VALIDATION": {
+      "REQUIRED": "Ein Kommentar ist erforderlich.",
+      "MIN_LENGTH": "Der Kommentar muss mindestens 2 Zeichen lang sein.",
+      "MAX_LENGTH": "Der Kommentar darf höchstens 1000 Zeichen lang sein."
+    }
   },
+
+  "REPORT": {
+    "TITLE": "Beitrag melden",
+    "DESCRIPTION": "Wählen Sie den Grund aus, aus dem Sie diese Diskussion melden möchten:",
+    "SUBMIT": "Meldung absenden",
+    "SUBMITTING": "Wird gesendet...",
+
+    "REASONS": {
+      "INAPPROPRIATE_CONTENT": "Unangemessener Inhalt",
+      "HARASSMENT": "Belästigung oder beleidigendes Verhalten",
+      "SPAM": "Spam",
+      "MISLEADING_INFORMATION": "Irreführende Informationen",
+      "OTHER": "Sonstiges"
+    },
+
+    "SUCCESS": "Die Diskussion wurde erfolgreich gemeldet.",
+    "ERROR": "Die Meldung konnte nicht gesendet werden."
+  }
+},
   "CREATE_POST": {
     "BACK_TO_DISCUSSIONS": "Zurück zu den Diskussionen",
     "TITLE": "Diskussion starten",
@@ -511,5 +526,6 @@
     "TITLE": "Keine Forenbeiträge gefunden",
     "DESCRIPTION": "Es gibt keine Diskussionen, die Ihrer Suche entsprechen."
   }
-}
+},
+"AUCTION_DETAIL": { "NOT_FOUND": { "TITLE": "Auktion nicht gefunden", "DESCRIPTION": "Der Link ist möglicherweise ungültig oder die Auktion wurde entfernt." }, "INFO": { "CURRENT_PRICE": "Aktueller Preis", "STARTING_PRICE": "Startpreis", "CATEGORY": "Kategorie", "LOCATION": "Standort" }, "LOADING": "Wird geladen..." }
 }
