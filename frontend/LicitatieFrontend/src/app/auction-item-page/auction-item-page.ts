@@ -148,7 +148,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
           const targetId = (this.auctionItem as any)?.id || this.auctionItem?.ID || 0;
           const wishlistIds = (wishlistItems || []).map((w) => w.id || w.ID);
           this.isInWishlist = wishlistIds.includes(targetId);
-          try { this.cdr.markForCheck(); } catch { }
+          try {
+            this.cdr.markForCheck();
+          } catch {}
         },
         error: (err) => console.error('Error fetching wishlist for item page', err),
       });
@@ -257,10 +259,12 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.auctionItem.PhotoList = [];
     }
+    const reportedList: number[] = JSON.parse(localStorage.getItem('reported_items') || '[]');
+    this.isReported = reportedList.includes(this.auctionItem.ID);
 
     try {
       this.cdr.markForCheck();
-    } catch { }
+    } catch {}
   }
 
   ngOnDestroy(): void {
@@ -279,7 +283,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
       if (diff <= 0) {
         this.countdownText = 'Auction ended';
-        try { this.cdr.markForCheck(); } catch { }
+        try {
+          this.cdr.markForCheck();
+        } catch {}
         clearInterval(this.timerInterval);
         return;
       }
@@ -295,7 +301,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       const sStr = seconds.toString().padStart(2, '0') + 's';
 
       this.countdownText = `${dStr}${hStr}${mStr}${sStr}`;
-      try { this.cdr.markForCheck(); } catch { }
+      try {
+        this.cdr.markForCheck();
+      } catch {}
     };
 
     updateTimer();
@@ -314,7 +322,7 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.errorMessage = 'The bid must be greater than the minimum price.';
       return;
     }
-    
+
     if (this.bidAmount < this.auctionItem.CurrentPrice + 1) {
       this.errorMessage = `The minimum bid is ${this.auctionItem.CurrentPrice + 1} RON.`;
       return;
@@ -332,7 +340,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         next: (res) => {
           this.auctionItem.CurrentPrice = this.bidAmount;
           this.bidAmount = this.auctionItem.CurrentPrice + 10;
-          try { this.cdr.markForCheck(); } catch { }
+          try {
+            this.cdr.markForCheck();
+          } catch {}
         },
         error: (err) => {
           // Fallback local state if offline
@@ -342,7 +352,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
             typeof err.error === 'string'
               ? err.error
               : err.error?.message || err.message || 'Failed to place bid. Please try again.';
-          try { this.cdr.detectChanges(); } catch { }
+          try {
+            this.cdr.detectChanges();
+          } catch {}
         },
       });
   }
@@ -364,7 +376,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     // Update instantly (optimistic update)
     const originalState = this.isInWishlist;
     this.isInWishlist = !originalState;
-    try { this.cdr.detectChanges(); } catch { }
+    try {
+      this.cdr.detectChanges();
+    } catch {}
 
     if (originalState) {
       this.userService.removeFromWishlist(currentUserId, itemId).subscribe({
@@ -375,7 +389,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
-          try { this.cdr.detectChanges(); } catch { }
+          try {
+            this.cdr.detectChanges();
+          } catch {}
           console.error('Error removing from wishlist', err);
         },
       });
@@ -388,7 +404,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.isInWishlist = originalState; // Revert
-          try { this.cdr.detectChanges(); } catch { }
+          try {
+            this.cdr.detectChanges();
+          } catch {}
           console.error('Error adding to wishlist', err);
         },
       });
@@ -416,16 +434,22 @@ export class AuctionItemPage implements OnInit, OnDestroy {
 
     this.toastHideTimeout = setTimeout(() => {
       this.isToastHiding = true;
-      try { this.cdr.markForCheck(); } catch { }
+      try {
+        this.cdr.markForCheck();
+      } catch {}
     }, 800);
 
     this.toastTimeout = setTimeout(() => {
       this.showWishlistToast = false;
       this.isToastHiding = false;
-      try { this.cdr.markForCheck(); } catch { }
+      try {
+        this.cdr.markForCheck();
+      } catch {}
     }, 1200);
 
-    try { this.cdr.markForCheck(); } catch { }
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   // Report Modal & Handling
@@ -435,13 +459,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       return;
     }
     this.showReportModal = true;
-    try { this.cdr.markForCheck(); } catch { }
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   closeReportModal(): void {
     this.showReportModal = false;
     this.reportDetails = '';
-    try { this.cdr.markForCheck(); } catch { }
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   submitReport(): void {
@@ -534,7 +562,9 @@ export class AuctionItemPage implements OnInit, OnDestroy {
       this.selectedImageIndex =
         (this.selectedImageIndex - 1 + this.auctionItem.PhotoList.length) %
         this.auctionItem.PhotoList.length;
-      try { this.cdr.markForCheck(); } catch { }
+      try {
+        this.cdr.markForCheck();
+      } catch {}
     }
   }
 
@@ -542,13 +572,17 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     event.stopPropagation();
     if (this.auctionItem.PhotoList && this.auctionItem.PhotoList.length > 1) {
       this.selectedImageIndex = (this.selectedImageIndex + 1) % this.auctionItem.PhotoList.length;
-      try { this.cdr.markForCheck(); } catch { }
+      try {
+        this.cdr.markForCheck();
+      } catch {}
     }
   }
 
   goToImage(idx: number): void {
     this.selectedImageIndex = idx;
-    try { this.cdr.markForCheck(); } catch { }
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   setPeek(offset: number): void {
@@ -563,16 +597,22 @@ export class AuctionItemPage implements OnInit, OnDestroy {
     } else {
       this.peekOffset = offset;
     }
-    try { this.cdr.markForCheck(); } catch { }
+    try {
+      this.cdr.markForCheck();
+    } catch {}
   }
 
   isOwner(): boolean {
     const currentUserId = this.authService.getCurrentUserId();
     if (!currentUserId) return false;
-    const ownerId = this.auctionItem.OwnerId || (this.auctionItem.Owner as any)?.ID || (this.auctionItem.Owner as any)?.id;
+    const ownerId =
+      this.auctionItem.OwnerId ||
+      (this.auctionItem.Owner as any)?.ID ||
+      (this.auctionItem.Owner as any)?.id;
     return +ownerId === currentUserId;
   }
 
+  
   // ================= NEW: Computed getters =================
   get isAuctionEnded(): boolean {
     if (!this.auctionItem) return false;

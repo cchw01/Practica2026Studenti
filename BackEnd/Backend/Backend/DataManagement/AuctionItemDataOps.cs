@@ -88,5 +88,28 @@ namespace Backend.DataManagement
             dbContext.SaveChanges();
         }
 
+        public void ProcessAuctionEnd(AuctionItem item, BidDataOps bidDataOps)
+        {
+            if (item.Status == AuctionItem.StatusEnum.Sold ||
+                item.Status == AuctionItem.StatusEnum.NoWinner ||
+                item.Status == AuctionItem.StatusEnum.Rejected)
+            {
+                return;
+            }
+            item.EndDate = DateTime.Now;
+
+            var bids = bidDataOps.GetBidsByItemId(item.ID);
+            if (bids != null && bids.Length > 0)
+            {
+                var highestBid = bids.OrderByDescending(b => b.Price).First();
+                item.Status = AuctionItem.StatusEnum.Sold;
+                item.WinnerId = highestBid.BidderId;
+            }
+            else
+            {
+                item.Status = AuctionItem.StatusEnum.NoWinner;
+            }
+            dbContext.SaveChanges();
+        }
     }
 }

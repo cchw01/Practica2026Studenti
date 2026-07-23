@@ -367,16 +367,16 @@
       </div>
 
       <!-- TAB 6: CATEGORY MANAGEMENT -->
+       
       <div class="vuexy-categories-split" *ngIf="activeTab === 'categories'">
         <div class="vuexy-card">
           <div class="card-header-title">Create New Category</div>
 
           <div class="vuexy-form-group">
             <input #newCatName type="text" maxlength="100" placeholder="Category name">
-            <textarea #newCatDesc rows="3" maxlength="500"
-              placeholder="Short description"></textarea>
+<textarea #newCatDesc rows="3" maxlength="500" placeholder="Short description"></textarea>
 
-            <button type="button" class="vuexy-btn-block" [disabled]="categorySubmitting || !newCatName.value.trim()"
+            <button type="button" class="vuexy-btn-block"
               (click)="addCategory(newCatName, newCatDesc)"> {{categorySubmitting? 'Saving...' : 'Add'}}
             </button>
           </div>
