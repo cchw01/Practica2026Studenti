@@ -26,15 +26,15 @@
       </button>
       <button (click)="setTab('forum')" [class.active]="activeTab === 'forum'">
         <span class="menu-icon"></span> Forum Moderation
-        <span *ngIf="forumPosts.length > 0" class="sidebar-badge">{{ forumPosts.length }}</span>
+        <span *ngIf="visibleForumPosts.length > 0" class="sidebar-badge">{{ visibleForumPosts.length }}</span>
       </button>
       <button (click)="setTab('categories')" [class.active]="activeTab === 'categories'">
         <span class="menu-icon"></span> Product Categories
       </button>
       <button (click)="setTab('messages')" [class.active]="activeTab === 'messages'">
   <span class="menu-icon"></span> Messages
-  <span *ngIf="contactMessages.length + helpMessages.length > 0" class="sidebar-badge">
-    {{ contactMessages.length + helpMessages.length }}
+  <span *ngIf="unresolvedMessagesCount > 0" class="sidebar-badge">
+    {{ unresolvedMessagesCount }}
   </span>
 </button>
     </div>
@@ -136,7 +136,7 @@
               <th>Product Title</th>
               <th>Seller</th>
               <th>Starting Price</th>
-              <th class="text-right">Visibility Decision</th>
+              <th>Visibility Decision</th>
             </tr>
           </thead>
           <tbody>
@@ -144,10 +144,12 @@
               <td><strong>{{ item.name }}</strong></td>
               <td>{{ item.owner?.userName || 'Platform User' }}</td>
               <td class="bold-price-cell">{{ item.startPrice }} RON</td>
-              <td class="text-right">
-                <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Approve Listing</button>
-                <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Reject</button>
-                <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Delete Permanently</button>
+              <td>
+                <div class="user-actions-cell">
+                  <button class="vuexy-btn btn-vuexy-success" (click)="approveAuction(item.id)">Approve Listing</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="rejectAuction(item.id)">Reject</button>
+                  <button class="vuexy-btn btn-vuexy-danger" (click)="removeAuction(item.id)">Delete Permanently</button>
+                </div>
               </td>
             </tr>
             <tr *ngIf="pendingAuctions.length === 0">
@@ -164,7 +166,7 @@
           <input type="text" class="users-search-input" placeholder="Search by name or email..."
             [(ngModel)]="userSearchTerm" (ngModelChange)="onUserSearchChange()" />
           <select [(ngModel)]="userSortBy" (ngModelChange)="onUserSortChange()">
-            <option value="name">Sort by namee</option>
+            <option value="name">Sort by name</option>
             <option value="email">Sort by email</option>
             <option value="reports">Sort by reports</option>
           </select>
@@ -254,12 +256,37 @@
 
   <div class="users-view-toggle">
     <button [class.active]="messagesView === 'contact'" (click)="setMessagesView('contact')">
-      Contact ({{ contactMessages.length }})
+      Contact ({{ unresolvedContactMessages.length }})
     </button>
     <button [class.active]="messagesView === 'help'" (click)="setMessagesView('help')">
-      Help ({{ helpMessages.length }})
+      Help ({{ unresolvedHelpMessages.length }})
+    </button>
+    <button [class.active]="messagesView === 'history'" (click)="setMessagesView('history')">
+      History ({{ resolvedMessagesCount }})
     </button>
   </div>
+
+  <div class="users-toolbar">
+    <input
+      type="text"
+      class="users-search-input"
+      placeholder="Search by name, email or text..."
+      [(ngModel)]="messageSearchTerm"
+    />
+  </div>
+
+  <div class="users-view-toggle" *ngIf="messagesView === 'history'">
+    <button [class.active]="historyFilter === 'all'" (click)="setHistoryFilter('all')">
+      Toate
+    </button>
+    <button [class.active]="historyFilter === 'contact'" (click)="setHistoryFilter('contact')">
+      Contact
+    </button>
+    <button [class.active]="historyFilter === 'help'" (click)="setHistoryFilter('help')">
+      Help
+    </button>
+  </div>
+  
 
   <div class="vuexy-card">
     <div class="vuexy-list-stack">
@@ -281,6 +308,10 @@
             class="reply-input"
           />
           <button class="vuexy-btn btn-vuexy-success" (click)="resolveMessage(msg)">Resolve</button>
+          <button class="vuexy-text-danger-btn" (click)="deleteMessage(msg.id)">Delete</button>
+        </div>
+        <div class="stack-actions" *ngIf="msg.isResolved">
+          <button class="vuexy-text-danger-btn" (click)="deleteMessage(msg.id)">Delete</button>
         </div>
       </div>
       <div *ngIf="displayedMessages.length === 0" class="vuexy-empty-row">No messages at the moment.</div>
@@ -316,7 +347,7 @@
               <tr>
                 <th>Category Name</th>
                 <th>Description</th>
-                <th class="text-right">Actions</th>
+                <th>Actions</th>
               </tr>
             </thead>
 
@@ -334,7 +365,7 @@
                     [(ngModel)]="editingCategoryDescription"></textarea>
                 </td>
 
-                <td class="text-right">
+                <td>
                   <div *ngIf="editingCategoryId !== cat.Id" class="category-actions">
                     <button type="button" class="vuexy-btn" (click)="startCategoryEdit(cat)">Edit</button>
 

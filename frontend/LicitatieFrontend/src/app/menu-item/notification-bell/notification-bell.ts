@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 
 import { NotificationService } from '../../Models/notification/notification-service';
 import { AppNotification } from '../../Models/notification/notification';
@@ -28,9 +23,7 @@ export class NotificationBell implements OnInit, OnDestroy {
   private hiddenNotificationIds = new Set<number>();
   private readonly hiddenNotificationsKey = 'hiddenNotificationIds';
 
-  constructor(
-    private notificationService: NotificationService,
-  ) { }
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.loadHiddenNotificationIds();
@@ -66,14 +59,10 @@ export class NotificationBell implements OnInit, OnDestroy {
     this.notificationService.getMine().subscribe({
       next: (notifications) => {
         const visibleNotifications = notifications
-          .filter(
-            (notification) =>
-              !this.hiddenNotificationIds.has(notification.id),
-          )
+          .filter((notification) => !this.hiddenNotificationIds.has(notification.id))
           .sort(
             (first, second) =>
-              new Date(second.createdAt).getTime() -
-              new Date(first.createdAt).getTime(),
+              new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime(),
           );
 
         this.notifications.set(visibleNotifications);
@@ -92,8 +81,7 @@ export class NotificationBell implements OnInit, OnDestroy {
       next: (notifications) => {
         const visibleUnreadCount = notifications.filter(
           (notification) =>
-            !notification.isRead &&
-            !this.hiddenNotificationIds.has(notification.id),
+            !notification.isRead && !this.hiddenNotificationIds.has(notification.id),
         ).length;
 
         this.unreadCount.set(visibleUnreadCount);
@@ -113,9 +101,7 @@ export class NotificationBell implements OnInit, OnDestroy {
       next: () => {
         this.notifications.update((currentNotifications) =>
           currentNotifications.map((item) =>
-            item.id === notification.id
-              ? { ...item, isRead: true }
-              : item,
+            item.id === notification.id ? { ...item, isRead: true } : item,
           ),
         );
 
@@ -158,9 +144,7 @@ export class NotificationBell implements OnInit, OnDestroy {
     this.saveHiddenNotificationIds();
 
     this.notifications.update((currentNotifications) =>
-      currentNotifications.filter(
-        (item) => item.id !== notification.id,
-      ),
+      currentNotifications.filter((item) => item.id !== notification.id),
     );
 
     this.updateUnreadCountFromList();
@@ -169,10 +153,7 @@ export class NotificationBell implements OnInit, OnDestroy {
   toggleDoNotDisturb(enabled: boolean): void {
     this.doNotDisturb.set(enabled);
 
-    localStorage.setItem(
-      'notificationsDoNotDisturb',
-      String(enabled),
-    );
+    localStorage.setItem('notificationsDoNotDisturb', String(enabled));
   }
 
   showUnreadIndicator(): boolean {
@@ -194,14 +175,9 @@ export class NotificationBell implements OnInit, OnDestroy {
       return '';
     }
 
-    const differenceInMilliseconds = Math.max(
-      0,
-      now - createdTime,
-    );
+    const differenceInMilliseconds = Math.max(0, now - createdTime);
 
-    const seconds = Math.floor(
-      differenceInMilliseconds / 1_000,
-    );
+    const seconds = Math.floor(differenceInMilliseconds / 1_000);
 
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -230,40 +206,28 @@ export class NotificationBell implements OnInit, OnDestroy {
     return createdDate.toLocaleDateString('en-GB', {
       day: '2-digit',
       month: 'short',
-      year:
-        createdDate.getFullYear() !== new Date(now).getFullYear()
-          ? 'numeric'
-          : undefined,
+      year: createdDate.getFullYear() !== new Date(now).getFullYear() ? 'numeric' : undefined,
     });
   }
 
-  trackByNotificationId(
-    index: number,
-    notification: AppNotification,
-  ): number {
+  trackByNotificationId(index: number, notification: AppNotification): number {
     return notification.id;
   }
 
   private updateUnreadCountFromList(): void {
-    const count = this.notifications().filter(
-      (notification) => !notification.isRead,
-    ).length;
+    const count = this.notifications().filter((notification) => !notification.isRead).length;
 
     this.unreadCount.set(count);
   }
 
   private loadDoNotDisturbPreference(): void {
-    const savedPreference = localStorage.getItem(
-      'notificationsDoNotDisturb',
-    );
+    const savedPreference = localStorage.getItem('notificationsDoNotDisturb');
 
     this.doNotDisturb.set(savedPreference === 'true');
   }
 
   private loadHiddenNotificationIds(): void {
-    const savedIds = localStorage.getItem(
-      this.hiddenNotificationsKey,
-    );
+    const savedIds = localStorage.getItem(this.hiddenNotificationsKey);
 
     if (!savedIds) {
       return;
@@ -277,15 +241,10 @@ export class NotificationBell implements OnInit, OnDestroy {
       }
 
       this.hiddenNotificationIds = new Set(
-        parsedIds.filter(
-          (id): id is number => typeof id === 'number',
-        ),
+        parsedIds.filter((id): id is number => typeof id === 'number'),
       );
     } catch (error) {
-      console.error(
-        'Could not load hidden notification IDs:',
-        error,
-      );
+      console.error('Could not load hidden notification IDs:', error);
 
       localStorage.removeItem(this.hiddenNotificationsKey);
     }
@@ -296,5 +255,22 @@ export class NotificationBell implements OnInit, OnDestroy {
       this.hiddenNotificationsKey,
       JSON.stringify([...this.hiddenNotificationIds]),
     );
+  }
+
+  private parseStructured(n: AppNotification): { type: string; params: any } | null {
+    try {
+      const parsed = JSON.parse(n.message);
+      return parsed?.type ? { type: parsed.type, params: parsed.params || {} } : null;
+    } catch {
+      return null; // notificare veche, text simplu - nu-i JSON valid
+    }
+  }
+  getNotificationKey(n: AppNotification): string | null {
+    const s = this.parseStructured(n);
+    return s ? `NOTIFICATIONS.TYPES.${s.type}` : null;
+  }
+
+  getNotificationParams(n: AppNotification): Record<string, string> {
+    return this.parseStructured(n)?.params ?? {};
   }
 }

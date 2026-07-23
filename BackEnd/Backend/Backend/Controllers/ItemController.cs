@@ -7,7 +7,6 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {

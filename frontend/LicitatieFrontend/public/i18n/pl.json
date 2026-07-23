@@ -273,9 +273,14 @@
     }
   },
   "NOTIFICATIONS": {
-    "TRUE": "Powiadomienia",
-    "FALSE": "Brak nowych powiadomień."
-  },
+  "TRUE": "Powiadomienia",
+  "FALSE": "Brak nowych powiadomień.",
+  "TYPES": {
+    "AuctionApproved": "Twoja aukcja \"{{itemName}}\" została zatwierdzona i jest teraz publiczna!",
+    "AuctionRejected": "Twoja aukcja \"{{itemName}}\" została odrzucona przez administratora.",
+    "SupportReply": "Administrator odpowiedział na Twoją wiadomość z dnia {{date}}: {{reply}}"
+  }
+},
   "AUCTION_ITEM_PAGE": {
     "HEADER_BADGE": "🏷️ Szczegóły aukcji",
     "INFO": {

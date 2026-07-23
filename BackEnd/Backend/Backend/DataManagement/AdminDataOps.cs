@@ -51,11 +51,11 @@ namespace Backend.DataManagement
 
             if (status == AuctionItem.StatusEnum.Validated)
             {
-                notifOps.Create(item.OwnerId, $"Licitația ta \"{item.Name}\" a fost aprobată și e acum vizibilă public!");
+                notifOps.Create(item.OwnerId, "AuctionApproved", new { itemName = item.Name });
             }
             else if (status == AuctionItem.StatusEnum.Rejected)
             {
-                notifOps.Create(item.OwnerId, $"Licitația ta \"{item.Name}\" a fost respinsă de un administrator.");
+                notifOps.Create(item.OwnerId, "AuctionRejected", new { itemName = item.Name });
             }
         }
 
