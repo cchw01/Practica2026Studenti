@@ -31,5 +31,40 @@ namespace Backend.Services
             var tokenHandler = new JsonWebTokenHandler();
             return tokenHandler.CreateToken(tokenDescriptor);
         }
+
+        public string GeneratePasswordResetToken(User user)
+        {
+            string secretKey = configuration["Jwt:Secret"]
+                ?? throw new InvalidOperationException("Jwt:Secret is not configured.");
+
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(secretKey));
+
+            var credentials = new SigningCredentials(
+                securityKey,
+                SecurityAlgorithms.HmacSha256);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+            new Claim("id", user.ID.ToString()),
+            new Claim("email", user.Email),
+            new Claim("type", "password-reset")
+        }),
+
+                Expires = DateTime.UtcNow.AddMinutes(15),
+
+                SigningCredentials = credentials,
+
+                Issuer = configuration["Jwt:Issuer"],
+
+                Audience = configuration["Jwt:Audience"]
+            };
+
+            var tokenHandler = new JsonWebTokenHandler();
+
+            return tokenHandler.CreateToken(tokenDescriptor);
+        }
     }
 }

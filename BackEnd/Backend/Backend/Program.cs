@@ -33,7 +33,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<RefreshTokenDataOps>();
 builder.Services.AddScoped<TokenProvider>();
-
+builder.Services.AddScoped<EmailService>();
 if (string.IsNullOrWhiteSpace(jwtSecret))
 {
     throw new InvalidOperationException(
