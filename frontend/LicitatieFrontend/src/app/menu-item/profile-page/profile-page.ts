@@ -553,8 +553,16 @@ export class ProfilePage implements OnInit {
     reader.onload = () => {
       this.editDraft.avatarUrl = reader.result as string;
       this.editDraft.profilePictureBase64 = reader.result as string;
+      // FileReader este un API nativ de browser; callback-ul lui 'onload' nu e
+      // mereu prins automat de Angular/Zone.js, asa ca fortam explicit un ciclu
+      // de detectare a schimbarilor ca preview-ul sa apara imediat, din prima selectie.
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
+
+    // Resetam valoarea input-ului, altfel unele browsere nu mai declanseaza
+    // evenimentul (change) daca utilizatorul reselecteaza acelasi fisier.
+    input.value = '';
   }
 
   onChangePassword(): void {
